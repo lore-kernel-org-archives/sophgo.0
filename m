@@ -1,16 +1,16 @@
 Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0E1212F98
-	for <sophgo@lists.linux.dev>; Thu, 13 Feb 2025 10:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D5F214236
+	for <sophgo@lists.linux.dev>; Thu, 13 Feb 2025 10:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739441354; cv=none; b=f6ySM8YDz73mToUdOY8vkJAHXmwLD5P9Egs9rjnqsAEK7lCCDkvIoKHAzSfEH1SatjU/HPbRlTCPtjB1s9Af/xyZQ4kD4xB+d/oWNZM7zQRqAqczK7XowDNA+QKy2t63Z9LTMLVTLuln9pDrzf1VLeOFDArd1qFsqUE+h/7DuGE=
+	t=1739442144; cv=none; b=shjy0eMPB9rJnSTx2An3PYONpNC0a0Db8QhGAZ6rXgL69bv/7gUpiewt7IIALsBv+C6DSSIm6FMEDF7zdZAkcqTom4GnoCdp0H6Ejrwc8WKFmkJDNB8a9LylbCGnwl+SJevc9ibFcLk7ax20YHeTtDU1WZZGmnkIMNFt30hdSg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739441354; c=relaxed/simple;
-	bh=Y5FUp5kLJYW5mox92ZooldkZMGROpVAVdRn0fHlo0FI=;
+	s=arc-20240116; t=1739442144; c=relaxed/simple;
+	bh=p+GnX/qBn0tmrY1mpd3KjfQNTyibWtkyaubFDEJRmsI=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=jVmKi/2lRcOFHxpedPY0Ko0J4H8vfFG4K0HlOpP5XIfNyd+uwsjK0pOf8h5urcptoXIwCKp1ZPmlUpUVhmgCOhh838bjSi0VdDOv0T+YJXezMUNcnDYV3EKCOdWK21hk9BHCmbOFt9PUWtohiwAXXg2NgxkV64diF+Y8l6QRD3M=
+	 Content-Type:MIME-Version; b=Akk02FssUthS4a9C+glDHyZJ00mq60psC5OV39uCsQ6tb6c2d55p5X+h1caMa9NPryWh67IS+W08jMNJn3Y09W24S2mmDP5cBgl3S9GhXqMISaUhv2MAFYK6kS+pDl/2xnL7GsNI4k2eZ3k25fLSNrRxjxj1qZQ3+zZ9kxVOSeI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
@@ -18,33 +18,36 @@ Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
 	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tiW9T-00079j-E1; Thu, 13 Feb 2025 11:08:59 +0100
+	id 1tiWMC-0000vH-7c; Thu, 13 Feb 2025 11:22:08 +0100
 Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
 	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.96)
 	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tiW9T-000jXg-0a;
-	Thu, 13 Feb 2025 11:08:59 +0100
+	id 1tiWMB-000jZp-2V;
+	Thu, 13 Feb 2025 11:22:07 +0100
 Received: from pza by lupine with local (Exim 4.96)
 	(envelope-from <p.zabel@pengutronix.de>)
-	id 1tiW9T-0002x5-0P;
-	Thu, 13 Feb 2025 11:08:59 +0100
-Message-ID: <de7dedf98e2085c895a93ba56c4e5fa50e298d05.camel@pengutronix.de>
+	id 1tiWMB-0003C6-2H;
+	Thu, 13 Feb 2025 11:22:07 +0100
+Message-ID: <619128481807b279e5d3b7967b00e7f094dae7ba.camel@pengutronix.de>
 Subject: Re: [PATCH 1/4] dt-bindings: reset: add generic bit reset controller
 From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
- <aou@eecs.berkeley.edu>, Guo Ren <guoren@kernel.org>,  Uwe
- =?ISO-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, Yixun Lan
-	 <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Date: Thu, 13 Feb 2025 11:08:59 +0100
-In-Reply-To: <20250213020900.745551-2-inochiama@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Inochi Amaoto
+ <inochiama@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+  Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, Guo Ren
+ <guoren@kernel.org>, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=
+ <u.kleine-koenig@baylibre.com>, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
+ linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li
+ <looong.bin@gmail.com>
+Date: Thu, 13 Feb 2025 11:22:07 +0100
+In-Reply-To: <20250213-cordial-elated-grebe-57aaae@krzk-bin>
 References: <20250213020900.745551-1-inochiama@gmail.com>
 	 <20250213020900.745551-2-inochiama@gmail.com>
+	 <20250213-cordial-elated-grebe-57aaae@krzk-bin>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4-2 
@@ -59,98 +62,28 @@ X-SA-Exim-Mail-From: p.zabel@pengutronix.de
 X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
 X-PTX-Original-Recipient: sophgo@lists.linux.dev
 
-On Do, 2025-02-13 at 10:08 +0800, Inochi Amaoto wrote:
-> Some SoCs from Aspeed, Allwinner, Sophgo and Synopsys have
-> a simple reset controller by toggling bit. It is a hard time
-> for each device to add its own compatible to the driver.
-> Since this device share a common design, it is possible to
-> add a common device to reduce these unnecessary change.
+On Do, 2025-02-13 at 10:35 +0100, Krzysztof Kozlowski wrote:
+> On Thu, Feb 13, 2025 at 10:08:54AM +0800, Inochi Amaoto wrote:
+> > Some SoCs from Aspeed, Allwinner, Sophgo and Synopsys have
+> > a simple reset controller by toggling bit. It is a hard time
+> > for each device to add its own compatible to the driver.
+> > Since this device share a common design, it is possible to
+> > add a common device to reduce these unnecessary change.
 >=20
-> Add common binding for these kind generic reset controller.
+> SoC components are rarely that simple and even if it is just a bit,
+> usually it is part of one or few registers.
+
+Yes, in those cases (which are probably most of them), I would argue
+this binding doesn't really fit.
+
+> Anyway, there are already bindings for reset-simple and I do not
+> understand why this has to be duplicated.
+
+I think the motivation is to not have to add a new binding document and
+modify reset-simple.c every time there is a new SoC. I wonder if some
+of this can be mitigated by adding just the binding document similar to
+trivial-devices.yaml, without the actual "reset-simple" compatible.
+
 >=20
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  .../bindings/reset/reset-simple.yaml          | 42 +++++++++++++++++++
->  1 file changed, 42 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/reset/reset-simple.=
-yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/reset/reset-simple.yaml b/=
-Documentation/devicetree/bindings/reset/reset-simple.yaml
-> new file mode 100644
-> index 000000000000..77584e23e8e8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/reset/reset-simple.yaml
-> @@ -0,0 +1,42 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/reset/reset-simple.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Generic BIT Reset Controller
-> +
-> +maintainers:
-> +  - Inochi Amaoto <inochiama@gmail.com>
-> +
-> +description:
-> +  Some reset controller devices uses a simple method to perform
-> +  assert/deassert by toggling bit. Some SoCs from Aspeed, Allwinner,
-> +  Sophgo and Synopsys have this kind of reset controller instances.
-
-I think some properties should be documented that make reset
-controllers "simple" according to this binding.
-
-For example, right now, the reset-simple driver assumes the following:
-
-  - There is a single, contiguous range of 32-bit registers.
-  - All bits in each register directly control a reset line.
-     - There are no self-deasserting resets.
-     - There are no timing requirements.
-     - The bits are exclusively resets, nothing else.
-  - All bits behave the same, so all reset bits are either
-    active-high or all are active-low.
-  - The bits can be read back, but the read status may
-    be active-low independently from the writes.
-
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - reset-simple-high
-> +      - reset-simple-low
-
-I wonder if it would be better to have a single
-
-  compatible:
-    const: reset-simple
-
-and a boolean property, e.g.
-
-  active-low:
-    type: boolean
-
-like in leds/common.yaml. Also it should be documented clearly what
-this means for reads and writes.
-
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#reset-cells":
-> +    const: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#reset-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    reset-controller@1000000 {
-> +        compatible =3D "reset-simple-high";
-
-The example should probably include a SoC specific compatible?
-
 regards
 Philipp
