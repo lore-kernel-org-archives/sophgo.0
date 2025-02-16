@@ -1,45 +1,34 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C68BD26D
-	for <sophgo@lists.linux.dev>; Sun, 16 Feb 2025 15:48:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667C119CC28;
+	Sun, 16 Feb 2025 16:59:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739720885; cv=none; b=pUx8Tay5yMZ1E1xgQhQQp2iigyEWDqZnacc8tI5yyoSD4PFf11j1qepgVdDwaWZCFgC7mSiRDcAH4FkZYaWjyID6uVoKRfzfiWO1m01FHLsJqtAcdKayrbyUtOHqFKu6Jr/v/hzCkcqL1aUBfDdSsWU81I68C+oHdpRQ5nPfP5w=
+	t=1739725196; cv=none; b=m/4gUoCt7wX0aK6G3V1EbBPgZIEIw6kDMuqO+e5BmcFF5DI/vY0BLjVeXZo0CKupLl6oVd9BVx6b+9DshuflS6S8lNy23U199RMk6bMegrdsskFjNoj6boJHqbVM41qRIm/JVhcP3Bu/fMpsWKP7odv8UTYyxEtFtKTkGJmQB6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739720885; c=relaxed/simple;
-	bh=JqQMD0hqYOzs5dOw+guRhjn4l01nDPpTFW7xyP6E+tA=;
+	s=arc-20240116; t=1739725196; c=relaxed/simple;
+	bh=DhySorGZIc9kQXBR4kFIxyKQSoB8SqkmLxPlhPKbfkU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QinlKG4FuJe2XOjSZ8mdZCUjlXU3Jy4TEO7KAeUvoO1d9bEE6x1s2KZlQVqs+DDcDET3hrOregABTPZD13N4C0v71atQQo+xy49v8i1/dMXDWnTaL3Mq6hWJxyJA7yp1l6o2bq27EhNCOdX5NyvPn4vVR+orOK/xgFYKn8TtTxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=TH/sXzoG; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+	 Content-Type:Content-Disposition:In-Reply-To; b=F2c5RWR2FJNCCWfMm+lMZce1Y5tMyVcDozaEMjf3PMJikOB0HO0snuLyXddsj0ZGAZi7VhoC6MzjEp+/f6bXhKcodHSwRqjc4VnsK4l2YcEViuXWjlQ+W9c5vkdGFO0QsSz9xEiAyiyXBZQHDNnta8tvZPCgpnICd54arLts8u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=xkCExdn1; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="TH/sXzoG"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/FrEnAM0Ty8b3TT2wk1qUCREpGSXW5825yX1yLHlP7U=; b=TH/sXzoGZDKFZxyyyYNMJfCCcJ
-	haaiHeMXtkJd0EXixYhy5qRVdKxKvo6QU4s+3xu/7RPBJy8inXCaysxqUhpogLaQcnHn5agZHY7vC
-	ISA3JdH8ZIaySnObQY2s/fgesQH838h2X0hJ3Ddzde/x05GIMag/3XwrgarNWLs68l5ow65dSA6Ez
-	GZTTUyKV3vIU8VQAcZF8t39IRm/HYkxgn7wil+eIRf85b52fO03F2CLRoj36JaFDK0f/aQ/io0ge3
-	q8X+LcpW8NGBveQyqdM7nD9heEDOB1Jz6Zd2z8FuDZLqL3ahCTvqdWKkxt/Upnvkzk8EOTmfUfgiT
-	8owusuhQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:39494)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1tjgrh-0003Z0-1w;
-	Sun, 16 Feb 2025 15:47:29 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1tjgrW-0005Ji-15;
-	Sun, 16 Feb 2025 15:47:18 +0000
-Date: Sun, 16 Feb 2025 15:47:18 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="xkCExdn1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=SGjXFxJmVk/FKeJ46IrEjqRmgY6gQvmYuvqL1kDeGQ4=; b=xkCExdn11EsAZtDgmuPdYucM2j
+	bK3pZs2vK93GF1VCsaJw9PI1Rx6zDnUDYt3fCnsSGGmkrntc4cSBM6QhC8CwBAKoDhfZkXjhqumGV
+	mE26uEYC00UAVkIj4JZSjPkjpP2ho+epU+iwoSH56gh2332eCOTh7rsxa6Xvd0ngofbo=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1tjhzP-00Ehw8-Nx; Sun, 16 Feb 2025 17:59:31 +0100
+Date: Sun, 16 Feb 2025 17:59:31 +0100
+From: Andrew Lunn <andrew@lunn.ch>
 To: Inochi Amaoto <inochiama@gmail.com>
 Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -72,12 +61,13 @@ Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	sophgo@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next v5 3/3] net: stmmac: Add glue layer for Sophgo
- SG2044 SoC
-Message-ID: <Z7IIht2Q-iXEFw7x@shell.armlinux.org.uk>
+	Longbin Li <looong.bin@gmail.com>,
+	Romain Gantois <romain.gantois@bootlin.com>
+Subject: Re: [PATCH net-next v5 2/3] net: stmmac: platform: Add
+ snps,dwmac-5.30a IP compatible string
+Message-ID: <9dcab9aa-6d1e-4804-82ff-fb8dfa434df7@lunn.ch>
 References: <20250216123953.1252523-1-inochiama@gmail.com>
- <20250216123953.1252523-4-inochiama@gmail.com>
+ <20250216123953.1252523-3-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -86,46 +76,24 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250216123953.1252523-4-inochiama@gmail.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <20250216123953.1252523-3-inochiama@gmail.com>
 
-On Sun, Feb 16, 2025 at 08:39:51PM +0800, Inochi Amaoto wrote:
-> +static void sophgo_dwmac_fix_mac_speed(void *priv, unsigned int speed, unsigned int mode)
-> +{
-> +	struct sophgo_dwmac *dwmac = priv;
-> +	long rate;
-> +	int ret;
-> +
-> +	rate = rgmii_clock(speed);
-> +	if (rate < 0) {
-> +		dev_err(dwmac->dev, "invalid speed %u\n", speed);
-> +		return;
-> +	}
-> +
-> +	ret = clk_set_rate(dwmac->clk_tx, rate);
-> +	if (ret)
-> +		dev_err(dwmac->dev, "failed to set tx rate %ld: %pe\n",
-> +			rate, ERR_PTR(ret));
-> +}
+On Sun, Feb 16, 2025 at 08:39:50PM +0800, Inochi Amaoto wrote:
+> Add "snps,dwmac-5.30a" compatible string for 5.30a version that can avoid
+> to define some platform data in the glue layer.
+> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
 
-There are a bunch of other platform support in stmmac that are doing
-the same:
+Ideally, this would be two patches, one adding the
+stmmac_gmac4_compats[] with the existing compatibles, and then a patch
+adding snps,dwmac-5.30a. Logically, these are different, so two
+patches.
 
-dwmac-s32.c is virtually identical
-dwmac-imx.c does the same, although has some pre-conditions
-dwmac-dwc-qos-eth.c is virually identical but the two steps are split
-  across a bunch of register writes
-dwmac-starfive.c looks the same
-dwmac-rk.c also
-dwmac-intel-plat.c also
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-So, I wonder whether either this should be a helper, or whether core
-code should be doing this. Maybe something to look at as a part of
-this patch submission?
+    Andrew
 
-We really need to stop writing the same code in different ways and
-think more about how to reuse the code that's already present!
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+    Andrew
