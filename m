@@ -1,110 +1,162 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E4525A634
-	for <sophgo@lists.linux.dev>; Fri, 14 Feb 2025 09:48:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298DE18DB08
+	for <sophgo@lists.linux.dev>; Sun, 16 Feb 2025 12:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739526521; cv=none; b=We048Z0jBFpEM/kK+PkhtgLF/QnC3zZ/TRFkBImOkWai+rd9c2TdnydFSDrntHDFKH5J7Js/WYDRo5k5CfvR/vSiB2niQOiOQtSWb+Ha/j/pgneISeCwwXc92zQgTxKSid/6I8W1HgJwYzoREznFeG9TgOdVqPjCFq9/oZbH/VU=
+	t=1739709622; cv=none; b=C4Cuo0D0QmGQ0nLFSmCVefo40jJUiBHLg7GeBBr2KgwtWR8ZgiHtMr7RzoQO0MgldRiPy+sUPTAr4Ic9oSr13p1XXTULWIDj/78es9zbTfvjtoHZ0zXkpmAWhBWq/5cpS1jieaQS7O984rUnJAvPXyuOXjNtGs0s+oKBGhhc+NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739526521; c=relaxed/simple;
-	bh=U/XK9lxux++1rCX/XaU4m5VtyKNJ/y7QLLupUamyVUg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=dYDKxk2oMBGSQDhneg7VPoMiszavB0WQt9XtqwSpBiqG7dm5nABA18oj/8eOWXju2nTdQr2nIXgKEvyG3saUUlUg5QcoEd1YVqateaRTF8mBiwmZ9/k2lJ2fy5LpdccWNZFfGj/A6aH8XvMe0B35C/3p4enGGleVmIN4lOAK+uE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CWw52+N4; arc=none smtp.client-ip=209.85.218.46
+	s=arc-20240116; t=1739709622; c=relaxed/simple;
+	bh=eChtph/Tyvc00kHahpYDlz0Y5UiP6dhoC+pdUTtBAPA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HynLTXajsjI1/iZ07R+DV0yvURmGVBG92nVW3I0MSLWwUIfT/KQoxXBdB2MOJeX8baa9MA7ni59aY+IU5xupx5n1SIifR4AzgZSiPuaa0SXHJMg0Tkq0y9ByuATjgzsefvtm2ClaB7pdIIEcrqLGp2uKI8hEl/ieVLAVUDsrAi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FeJcz51j; arc=none smtp.client-ip=209.85.219.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CWw52+N4"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ab7d451f7c4so271059666b.0
-        for <sophgo@lists.linux.dev>; Fri, 14 Feb 2025 01:48:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FeJcz51j"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6e660740061so32018186d6.3
+        for <sophgo@lists.linux.dev>; Sun, 16 Feb 2025 04:40:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739526518; x=1740131318; darn=lists.linux.dev;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mkPFoVMQL/mYhcTcaki3q36SMLzV+i7Fu65c+D3vc5A=;
-        b=CWw52+N4fIr+pPmZSfyjlRAqXJZvxefF9HWE8eL2+VCbAqBBBVYD2PplwcpL0avvKD
-         i75FnuXEvabLmbpxemvj35P+nsh/25MOdZALcZ+e8NiR9XIJUOxw9FxRwBa+PP3ztGgy
-         i5qZjEOjwFSEZzZQ9V75cQqt0bPTFk+aVysZKS0bn+8wCmik3dSYHq8RnYGsJR+3crus
-         qukNhixcRuVh71Gtc8Y512ZMiKnun2zG9zxZn1TGNgjOxcc3NCz2eFWAPnIsjMk+SLoU
-         5PNAGqStb7hGKPuZuVw5EZh91kl/Fq5p7rdSv0sslGcCE0E07W1IvhzokveX8s+E+Zwu
-         fa5w==
+        d=gmail.com; s=20230601; t=1739709619; x=1740314419; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dGDs3HpGQkICOAu67lknk/dBvFr+k4sdCQo4X5U4Pgo=;
+        b=FeJcz51jk9mH+JHK5nOHjeNk951vwRLFx3NQ3GZk41ozZ9aJG7ubTtCIh8Y2Tdbhax
+         umzyVqmr9nWtHLhBw048GMokCZVU6gwycmsAayTUNIxWstkba60zz/AQqUTFZr5Ia47Z
+         Krcl5dHaZ4bAQVNmSeTmc17W/4GxExutYqMVZojn9ith0UqvXbGJ6m3frQ1m/Cl19Cii
+         OJfToa6hWoTWpqMe7Nf+0BnEHPS4MmX4lHpBsViAcLvC/swCd7VSwJz+lkZ47e+Y19QC
+         YN/FID20Ums0jafbUYJMve1sVHpDFJFCEfipXUYiwI+poMqdkjKsPn2G6XE1H9mxZ14e
+         zstA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739526518; x=1740131318;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mkPFoVMQL/mYhcTcaki3q36SMLzV+i7Fu65c+D3vc5A=;
-        b=fFI6U9E93G0jn4421iF8gx73r9DY8No3tRXPKOhCki42fFDfaqjwVtYx4n6GdE7uhF
-         Ox/TWUaAWuOMa91W3JwRGQUxsaBd+PCUHPWrvuB1Svhyp0/85LCmne3THGVyToo8RSn2
-         08PztjnjSaSHRUXaLR2DlcMph3SsKEJd2vF2Fha8mo3H00nepeoiOcC6o0r/Kdzt5uBm
-         UBf4/0L+40KtOp3lCPZwf60/HeeC8q6ziwun+h3CvgVGCJsPIyuu42XsxkDWfK7fV6Gf
-         19hzXHmIvfubYhjigKGZIVYQg2saIGFIjQf4VN1znsb3hcbeBBVvpJOjqYa3MVHLwE4a
-         qUjA==
-X-Forwarded-Encrypted: i=1; AJvYcCXq4v9L1oma4yBdZ/ATpnzvfHydtMsBAelBuKpM3XOwpkMkalzmDZObpIYQfpJQ0J4PHHoJi2w=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQX0BL4MWjkuS55gSsHKCespnx7/7y1IpMIhgMu/N0pC7W4Plf
-	TQlxUFZmUXju9jLIW9lhfvMduItmHuZxOfFLiO0V0Cqig3MxDpe7
-X-Gm-Gg: ASbGncsqqvQqBYgn6pI7//Xh3EMuOuTIY60diQ8YAAnAfbgH9hSrhbDAWRO5kiINtYK
-	/iWP8qPYmoslW1cO+St0k6quYkBKxuhWouZGLUoDMVZAppMAX+5MIx/Jn+j8fkakm82pO43auo6
-	3o6cY3kOeRwfkiEptXrxDUr7Hx/b6MRza1I+x+2g9vmd+d9vnuLjYz96LGyKKT3jEIBpaALxgkZ
-	JUuOQY1v35Y0G48A2zBqEwlHTFrP3BLN2i6peFqhrFEd1NkgfxJA6h+4UZ2KEcXgbAsDtFhtK/G
-	LLP5N/pj89LJkzn+y8UX51I9JHwESHiV
-X-Google-Smtp-Source: AGHT+IF/WMNFRvHaiGuGegW339Yn2o6KPOe0XOjLxo/ZqTX+q5ydw7HmVZEF28gC92P39HsPRvsXVA==
-X-Received: by 2002:a17:907:2cc5:b0:ab6:f4e7:52f9 with SMTP id a640c23a62f3a-ab7f33d1874mr1151153666b.25.1739526518067;
-        Fri, 14 Feb 2025 01:48:38 -0800 (PST)
-Received: from giga-mm.home ([2a02:1210:861b:6f00:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba5339db66sm309917866b.148.2025.02.14.01.48.37
+        d=1e100.net; s=20230601; t=1739709619; x=1740314419;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dGDs3HpGQkICOAu67lknk/dBvFr+k4sdCQo4X5U4Pgo=;
+        b=OVJD6BIadJsJ3hLUDmRwQR6lpW11aT7VkO/xbCSJwO7g40ELvSY+AZVeZhPRCTqhtm
+         O85+4yoIPZv6kbDzuask3aPTQKbA70tx11hfjjJfOk1AamwAXqRaDf6lDVBmBScTmmwZ
+         MlhTusJYjxztS2M2u20k8DzJVhK2Shib7ts19kMBhp2kHsmL0q1hRU4c99hfxmGRYi2R
+         /jm9A5e73mgVeQZyek7exyizFW3ZGRKG3tUfN48b0mCEvtkuQhnECZEBjRkBpxq2ZqxW
+         bPlqT2xNsg4hLTrtKUquOVufFb0gTzReELCnhwNGm2g5xINxbmfDOiiB+65qDCXULaHV
+         Vwjg==
+X-Forwarded-Encrypted: i=1; AJvYcCXghTvqCK9KirR4EZxBbl/SXRkbbn3Yli/dwQoGBp0vJIud72aBblmJ3EN6ljsMGbhWLkrXvOM=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz6i246wjp4pNoo1vAm9c6ZVZMgtPQPFtQ/gqwvBSukgyJmhsy7
+	lFNhZjdpmIaJ47hwb4ejRAFSGSfbRXOn6ZQ8IuqXLc5Ip5iktDXM
+X-Gm-Gg: ASbGncs0IAPjkGKrRZvIc8D8FzqdlIRdJ3ewUpaN8D6b4tbXIa9J7GII6DUBznP+IAo
+	/uAQy9P8JA8cNpFelbla8R1OmbJdv7oxec2JYegG0ycUXfS6rSojYy5NLNUpSAMRmxawBZWNnqZ
+	QFCd0W+QhSu0Y94xJdd5voA0Et108xU2yyKrasZhHo9bBPhu3flTc0Eq9IteTv84tTkiI0qM7Lx
+	K3FrGHgrC9ZIEM//5dyrddXFQROCJ91l/2fa6vEJzWrQ/YU+8Wbk2nhVm79bW5AF44=
+X-Google-Smtp-Source: AGHT+IEpfpOMHZ8O/1KvInhk3KcC7dM/mez8wsS2NuX284w3zcB/+PjufIWyqrWrlCFEXBwTJBBy2Q==
+X-Received: by 2002:ad4:5f0a:0:b0:6e0:ad33:36c with SMTP id 6a1803df08f44-6e66cc86d3cmr90601876d6.2.1739709619021;
+        Sun, 16 Feb 2025 04:40:19 -0800 (PST)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e65d77927csm41319936d6.10.2025.02.16.04.40.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 01:48:37 -0800 (PST)
-Message-ID: <c07e2096cedc993e8a23ccde44e7f47adbeff99b.camel@gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: update info for SOPHGO DEVICETREES and
- DRIVERS
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: Inochi Amaoto <inochiama@gmail.com>, Chen Wang <unicorn_wang@outlook.com>
-Cc: linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, Yixun Lan
-	 <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Date: Fri, 14 Feb 2025 10:48:36 +0100
-In-Reply-To: <20250212022831.244143-1-inochiama@gmail.com>
-References: <20250212022831.244143-1-inochiama@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.2 
+        Sun, 16 Feb 2025 04:40:18 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>
+Cc: netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH net-next v5 0/3] riscv: sophgo: Add ethernet support for SG2044
+Date: Sun, 16 Feb 2025 20:39:48 +0800
+Message-ID: <20250216123953.1252523-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Wed, 2025-02-12 at 10:28 +0800, Inochi Amaoto wrote:
-> Add mail list and wiki info for SOPHGO entry. Also change Inochi's
-> email as the old one can not be accessed.
->=20
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+The ethernet controller of SG2044 is Synopsys DesignWare IP with
+custom clock. Add glue layer for it.
 
-Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Changed from v4:
+- https://lore.kernel.org/netdev/20250209013054.816580-1-inochiama@gmail.com/
+1. apply Romain's tag
+2. patch 3: use device variable to replace &pdev->dev.
+3. patch 3: remove unused include.
+4. patch 3: make error message more useful.
 
-> ---
-> =C2=A0MAINTAINERS | 4 +++-
-> =C2=A01 file changed, 3 insertions(+), 1 deletion(-)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 896a307fa065..6b79681877d2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -22097,7 +22097,9 @@ F:	include/linux/sony-laptop.h
-> =C2=A0
-> =C2=A0SOPHGO DEVICETREES and DRIVERS
-> =C2=A0M:	Chen Wang <unicorn_wang@outlook.com>
-> -M:	Inochi Amaoto <inochiama@outlook.com>
-> +M:	Inochi Amaoto <inochiama@gmail.com>
-> +L:	sophgo@lists.linux.dev
-> +W:	https://github.com/sophgo/linux/wiki
-> =C2=A0T:	git https://github.com/sophgo/linux.git
-> =C2=A0S:	Maintained
-> =C2=A0N:	sophgo
+Changed from v3:
+- https://lore.kernel.org/netdev/20241223005843.483805-1-inochiama@gmail.com/
+1. rebase for 6.14.rc1
+2. remove the dependency requirement as it was already merged
+   into master.
 
---=20
-Alexander Sverdlin.
+Changed from RFC:
+- https://lore.kernel.org/netdev/20241101014327.513732-1-inochiama@gmail.com/
+1. patch 1: apply Krzysztof' tag
+
+Changed from v2:
+- https://lore.kernel.org/netdev/20241025011000.244350-1-inochiama@gmail.com/
+1. patch 1: merge the first and the second bindings patch to show the all
+            compatible change.
+2. patch 2: use of_device_compatible_match helper function to perform check.
+2. patch 3: remove unused include and sort the left.
+3. patch 3: fix wrong variable usage in sophgo_dwmac_fix_mac_speed
+4. patch 3: drop unused variable in the patch.
+
+Changed from v1:
+- https://lore.kernel.org/netdev/20241021103617.653386-1-inochiama@gmail.com/
+1. patch 2: remove sophgo,syscon as this mac delay is resolved.
+2. patch 2: apply all the properties unconditionally.
+3. patch 4: remove sophgo,syscon code as this mac delay is resolved.
+4. patch 4: use the helper function to compute rgmii clock.
+5. patch 4: use remove instead of remove_new for the platform driver.
+
+Inochi Amaoto (3):
+  dt-bindings: net: Add support for Sophgo SG2044 dwmac
+  net: stmmac: platform: Add snps,dwmac-5.30a IP compatible string
+  net: stmmac: Add glue layer for Sophgo SG2044 SoC
+
+ .../devicetree/bindings/net/snps,dwmac.yaml   |   4 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml     | 124 ++++++++++++++++++
+ drivers/net/ethernet/stmicro/stmmac/Kconfig   |  11 ++
+ drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
+ .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 107 +++++++++++++++
+ .../ethernet/stmicro/stmmac/stmmac_platform.c |  17 ++-
+ 6 files changed, 259 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+ create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+
+--
+2.48.1
 
