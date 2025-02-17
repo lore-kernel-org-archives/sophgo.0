@@ -1,36 +1,47 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16111A08DB;
-	Mon, 17 Feb 2025 13:26:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E79821CA07
+	for <sophgo@lists.linux.dev>; Mon, 17 Feb 2025 14:11:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739798767; cv=none; b=j8CCo9P1XwcZSofd5jM+QG7aqBRf4JDTsmz2eaKimmqAJmTsflBwFt02UcW3EdOE32h77/z8jBaALh2LJ9mq8+g0nOB6O0gKby6422q50bxgJ8bXxYuLt+KIhv/Mxn+Br+85nj5qakPDg8EQdPw2k+5R/Bt375UE4pKTw9Y6FtA=
+	t=1739801489; cv=none; b=FpuUtYzydqEbvV68O8d8ig540UTqPUnwxQO3u+MYXVt5ffJvGUdZ0OWdcw2q40adJIJVIQI8ySUrcaVcMHzSWTHm7CLDaMyN9GlolSjtwOgCrxahu5DpnesrNw+i4nhRrAj9br/A/ysS1HdqTtBf4vhRSXsnPMOHjiEnjbv8SOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739798767; c=relaxed/simple;
-	bh=43oxnBqxJyinpR9ySGaCso2MsjRwthDIeadlFWGfSYU=;
+	s=arc-20240116; t=1739801489; c=relaxed/simple;
+	bh=CgvLbbaqhZJh2aBng8GYA6OHX8pFtBK1DgD9dwP/Izo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rOD5MBBzRhITSAKo0v9a9W4aLRVbNQ9ikO3/c2CfCxWwyhpP7fXALO1dnramkcTvNnxkU5OlAmZ2hsJyL3Tqfm+cbfrJLzv1FDxTguUPtDsJLi4KCoucm7Tt/eEEBCxxYuhLof+Jn5FtcPwJhqwUtW+e/Uh1GQBuYIDVEkDZ1Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=xWEIyvI3; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	 Content-Type:Content-Disposition:In-Reply-To; b=e7v1n5T4yKMFGdnbgpWHk3YNX8RS9xKtPu5FjT0SdHt4VhVdJDseKaacQ0I/PnzLeCrQsORN8cU9I1V+td5bKKzWhZAu0PrP0PskLMvmB0ywz5CSsedxpLRmMqovAx9poVN/sQXbQajZZ1ydXMj3Lx5nQlMSP94L0/elGXakbvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=tpBEUbse; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="xWEIyvI3"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=n1lANnOPXNFw9+jCC+O+JmddS9eVCLKsMBkqQM9HxPs=; b=xWEIyvI3phTtqKVI7bTSQRyPcu
-	/NMHD76dJCeNa5jgn+xig73XONXqClF5J/EwDZ9+FeTkRFnqyVLjq5hXwd667RWD1lGbicbnXF5p0
-	ezpB0RAZGdCmgDma+ZKtx/xe8O7FOiHoSp77+dmaBtjv2fLJPg7fyXSWb8gxIAw+PEfk=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1tk17t-00Eycl-Uk; Mon, 17 Feb 2025 14:25:33 +0100
-Date: Mon, 17 Feb 2025 14:25:33 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="tpBEUbse"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+Tyg8b+xD0Br85DGNOgrIPE01EZSzRbYGNzNPsDnqag=; b=tpBEUbseu3svPJZjMXU0nSpYr8
+	GmffVj6GQ869k1Jh3niah2GmA3mLVEENfzotxr/MZcFH2FhCCIZZp9Kxnz9msHHPG5C3vOB6+kUR6
+	6+RgjsyJNUEgL+6lYKHDXyLR6/ewFtS87FmKFoT6ICF87RC/fVEfuEgPooJINzuvQmyjV2AyVv+vJ
+	YbKo0YZXyP0coO8OvabMIii2bRao+9FXH6GvaO7AaWwc839h0w6a9KrOGu1gVklIfC15Ikw1Jj9vX
+	kQjlQzNDVeKcCrSDBXVW9IiUYc+OsOsTXab9schzXS/+HNDTbVhhy9fSvNf09tdiCq2hPlM2Xz3M4
+	CM1EF8aw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:39042)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1tk1ps-0006pq-1t;
+	Mon, 17 Feb 2025 14:11:00 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1tk1pi-0006HQ-2v;
+	Mon, 17 Feb 2025 14:10:50 +0000
+Date: Mon, 17 Feb 2025 14:10:50 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
@@ -65,12 +76,13 @@ Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>,
 	Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH net-next v5 3/3] net: stmmac: Add glue layer for Sophgo
  SG2044 SoC
-Message-ID: <24eecc48-9061-4575-9e3b-6ef35226407a@lunn.ch>
+Message-ID: <Z7NDakd7zpQ_345D@shell.armlinux.org.uk>
 References: <20250216123953.1252523-1-inochiama@gmail.com>
  <20250216123953.1252523-4-inochiama@gmail.com>
  <Z7IIht2Q-iXEFw7x@shell.armlinux.org.uk>
  <5e481b95-3cf8-4f71-a76b-939d96e1c4f3@lunn.ch>
  <js3z3ra7fyg4qwxbly24xqpnvsv76jyikbhk7aturqigewllbx@gvus6ub46vow>
+ <24eecc48-9061-4575-9e3b-6ef35226407a@lunn.ch>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -79,17 +91,34 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <js3z3ra7fyg4qwxbly24xqpnvsv76jyikbhk7aturqigewllbx@gvus6ub46vow>
+In-Reply-To: <24eecc48-9061-4575-9e3b-6ef35226407a@lunn.ch>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-> I am not sure all whether devices has this clock, but it appears in
-> the databook. So I think it is possible to move this in the core so
-> any platform with these clock can reuse it.
+On Mon, Feb 17, 2025 at 02:25:33PM +0100, Andrew Lunn wrote:
+> > I am not sure all whether devices has this clock, but it appears in
+> > the databook. So I think it is possible to move this in the core so
+> > any platform with these clock can reuse it.
+> 
+> Great
+> 
+> The next problem will be, has everybody called it the same thing in
+> DT. Since there has been a lot of cut/paste, maybe they have, by
+> accident.
 
-Great
+Tegra186: "tx"
+imx: "tx"
+intel: "tx_clk"
+rk: "clk_mac_speed"
+s32: "tx"
+starfive: "tx"
+sti: "sti-ethclk"
 
-The next problem will be, has everybody called it the same thing in
-DT. Since there has been a lot of cut/paste, maybe they have, by
-accident.
+so 50% have settled on "tx" and the rest are doing their own thing, and
+that horse has already bolted.
 
-Thanks
-	Andrew
+I have some ideas on sorting this out, and I'm working on some patches
+today.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
