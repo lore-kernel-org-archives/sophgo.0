@@ -1,61 +1,61 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6321AED5C
-	for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 11:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8212D265CB8
+	for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 13:03:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739878505; cv=none; b=C3lyCYGhuHHWKLeKa+7H5GDQlO1sNlujeYxDYrzlR/IPoJOdL+OqyzGnds8Xe5WQvuQKDRd/SWQ80gUKAzKAhF21cFAJiyGx6O4/f9kf2AiR5vdbdMWawkXVsWHsYyZyg5cSn+APELHgo65winBG9KASu+fCEm2igxBPlbpoF54=
+	t=1739883809; cv=none; b=Ay8g154isFd55emX2WG8AxK+1XmHs9hPeSuy0qi4P76ayWT4zx+iJAeygUACYT4WYEhJsQ5/L8I4VaTEOfLfdPWtZU6qLZvWS51EXLAAw1fMJIfJvOf0a1ofLUm1nh8KreX8i89sTWcesUHklw+6yPduhXrakafOXISVn8Sjhjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739878505; c=relaxed/simple;
-	bh=0Ooo78SXds6E1nnEquaFe/2Vk0UC6/lAqlJ+KmDmEl4=;
+	s=arc-20240116; t=1739883809; c=relaxed/simple;
+	bh=flUlf8HSS8oigGTq4cDt8CaW81S8RWojiSVP5bbCKX8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kwl/yqylQCWjhuvmY+yBx5UKRF2tDWSRqoMnQKs0kmM05Zcz+FDhNaGcj6zuLbEJ3sB8zdgmdNSeEfz8+qPHEzA51VymMxVFq0ti+avLZJnLrRCaPEO+4gpahSurkcmyFriW3URsVrMcFuKAeJGeC+JGEzaD8ZBicTDw8Z2+5+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EBh5lvyO; arc=none smtp.client-ip=209.85.160.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=JjiwPmTOSTZRmQNT8osfjKD2CVITsQTS+UloZ+1eQJwXfD7+jEQ1yY2+HXO45pU4v7Nfbij0QhSpzlkjh77LhH9BSkKux8+OHcNPUJHHsPNVw/u8s2zDsosmLPRm/0WGMBrjzK71LtVdZ4M1uaFY5XKrA/g+Y4Z/mCEfgKl4Lc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hk+M5XYN; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EBh5lvyO"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-46c8474d8daso42043321cf.3
-        for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 03:35:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hk+M5XYN"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7be8efa231aso590004585a.2
+        for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 05:03:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739878502; x=1740483302; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1739883806; x=1740488606; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=afaSq1n/9Zx2C/a6yp1UZpzU8FTiNXOckROl9W+xe1U=;
-        b=EBh5lvyOwNQK4lttfUUHovtXCbJI37bvysBy0bfWKvQTe0JzsGNgZVWCuEfN4V6XG8
-         hFfCIrEhr2TlhSFrDwTsKhRNibr7lX+YeTIILtqQ/o+Jo6xZswtKLKIbpXEvAERhR5cT
-         hKz1+CKwu5LGUZxEy87Wk1nU41sJXvTth5r1KODzCki0gnBSDgW9oxOEFy7WiAqOjvVt
-         35GCcWgEPqdfl/ZVL95lbS4sOyCvr8lEmHuGgWa2Xm1OUuome+w0s5Rkaovlm+tD3EFA
-         qXGiV3jiIPQY9naRop8ZVRsdu8bt3hgmD6JRjpHeJn69ysZV67MzEZUaVJ8M4pRGHxco
-         OONw==
+        bh=shcHVe5ScV+KF73Cqgadpco0XHdM/Pvt/zjUdwF7k8A=;
+        b=hk+M5XYNIfvSk4xCludr1irM7qfDEEm4hU3ISViCziOC1y/U1QGQC5csDs21kUWng8
+         Zyav1/dXf6plcYhdRK+ua9yAul9MtWGMeLlB0nemMcXYYHlF20VMiYJEMha/uw+6CiIw
+         jrx+CZhKaZ35xe78DaHXktSBtWFQZczJ3QSUrd432toEmYPAn68jkk+7yRy6SF1P+RNI
+         LsjO9CrKgFLjPlhcDTZTwvPFooQGlcuRa8d7eHHlMBWtyv4xFavWY6eOK8aRJA1EpCBt
+         r/d35whl/FJJWp9ywzNkEhDqBwo+1ERB7U3j9sqUwFvmHDxPMRs9FJLHUFPBbDiAD3rO
+         qhng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739878502; x=1740483302;
+        d=1e100.net; s=20230601; t=1739883806; x=1740488606;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=afaSq1n/9Zx2C/a6yp1UZpzU8FTiNXOckROl9W+xe1U=;
-        b=EXMrxHJG9mzbtD2rT9b9Yu4jI3Matuv5/nFFJZqafO9BCEUEiB5MimoR8UjYsVR3FT
-         zgilfKuFPRMAtVn5F3UlXYB4xORsS5K5zzkfR6K6h7nJR3/+9v9G0peuWjJ39/k2puMR
-         Nx/klWuyX0PKG62gwN/HSV8vfa3ZaKrAoqmsRDqOk/Hf9mpxZ9tmN9UT2t2xwvHc3Y/X
-         Wee1CE5fcZJ+O59nbmnwwndAEN6kxMPJsknE9uLw2TALHXurWHexUoao5jN6RQz/wE15
-         Yz786qHlNHKlsd48Oaaa1rptiXQ7QE8TIErB/cogfUihQSs1yZ6hS0C5/XwrbWA19n9+
-         iLhA==
-X-Forwarded-Encrypted: i=1; AJvYcCWddHSYMYYcVnFYvy4pDzd9EDpkRRs+2VtC2VckTIuppmyY88TENgqMTVvDDvXmUW4kM4IJ/b8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzpoTLGKPcUZJ+WIO1KCZU3gzEaGsLKcl3U8QA/H/oVl3RRx//N
-	6/91aSayY/4oVEPpW0GIWdELm76dEKpSodYRwwiX1j1vr0gXsN8X
-X-Gm-Gg: ASbGncsVS6Io1/9eWfcdGmEedmKKncAy8DUNSfamNz/k061I4D7kEA9e4HtYuoBvoHf
-	ofTAZXapOSZnfcC9NmtfYMpqcaOPHtItLVqN8zXmXhJNpm/6jcr+l5pBT+mwuRCX3u4b4g0SPsc
-	QKc6DJQu9QEHyzGnbYrek60HH8N4v/USTfm8N6H1MD/gvDegJokEZS8YsLCsUhjbWh8WrwvRtGd
-	57q3h2S8H5SLHQeT0ETmhMpZSZoIPLl9ARfaPpmSNkvMig9QGxK3WHitM10bttrVUM=
-X-Google-Smtp-Source: AGHT+IFe6C/gSNnzxL8kV6UCXZr3P6tf9lX30/uxdZgxSpgJktrmUiTn4Zw2m+FrVeltIJ8PDsdvvQ==
-X-Received: by 2002:a05:622a:1803:b0:471:9cba:ad2c with SMTP id d75a77b69052e-471dbcc2e05mr196823821cf.11.1739878502351;
-        Tue, 18 Feb 2025 03:35:02 -0800 (PST)
+        bh=shcHVe5ScV+KF73Cqgadpco0XHdM/Pvt/zjUdwF7k8A=;
+        b=CpXZf/KODiSzisOmabMdjOx4hQvwfA3V7k1mf3+UR60HVaOljUf6m+/clqlfS31T6H
+         UgpZHkrNZ1+Dr8uS1L6K1PSTo2u7l06OZXn060Asx/xDhX7CYfbQcjU3sj3D9XprxNoH
+         BUhZCTwYOO7hB2bK1GcvHC5QZtE6uxIHEvTmRZ3NagcZCnTg/1YnBFiTwiR1Yli4fCIL
+         MyjXhN8TML2xfqOQGMF/+AlpX6D58b0d5IOovFhCdAVdhe6pN6iY7fIVP4RFg4bA8vAW
+         KdOKxMcsqgoLUowl3Q9CXU6aWrhSkVp37sRvlw5U0BE0MXIQ98Fjj6g73w2E3TGEKlsD
+         Iw/g==
+X-Forwarded-Encrypted: i=1; AJvYcCXtvv1+5SQlf4XZ0WHBnJIbxzz2lLFJUKLNWhC3/6vUyTAY4erDQO4NX65xp72bnrmqQVVzn8k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzBP4jIslrMYxlAAlTmhY2Qir0WQ9t4HKUqGW7FS03Usmm2DE5j
+	AWxMRPCNJokdlJbYgjxPKjP9Ow9/D/819xexp4NhZUzbCMMewO3V
+X-Gm-Gg: ASbGncujG4L/mUFlI1cxRM/ZUzZZ+LF8i7mfhXhsgj1eYYXJhDrat6sKIvd8UMBGs0v
+	8Bg+QJpvc/i/yXSsCPerJlz2E2XbmQ+Zb87JCTsugTVJ1omZZVZTml73yqFCTBVRDM8b4KakHyF
+	t5zq54oMLQyZQZRAYq1207ajzZ6+fdngrk7IHF95PL4GEWCEidXuYwrQgfrrVCqJeWYw1PwJAjM
+	eMDYUj/ZvWUJZa7BXV2A21PHmfvetDNlrQNZasBNOZAK5Uy+9rgrKDrBXr+qTSrrvU=
+X-Google-Smtp-Source: AGHT+IHMvBa2pdrsPXBeOhKSDCxofcBeoktPP7uW0o0YVj6yGzgsaMY5yizsS+ID7z1U76ykO/2aOg==
+X-Received: by 2002:a05:620a:31a2:b0:7c0:7ca3:b123 with SMTP id af79cd13be357-7c08aa98cdfmr1890605085a.46.1739883806193;
+        Tue, 18 Feb 2025 05:03:26 -0800 (PST)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-471f2b0476dsm19857671cf.28.2025.02.18.03.35.00
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c0a28e8700sm189185085a.113.2025.02.18.05.03.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 03:35:01 -0800 (PST)
-Date: Tue, 18 Feb 2025 19:34:47 +0800
+        Tue, 18 Feb 2025 05:03:25 -0800 (PST)
+Date: Tue, 18 Feb 2025 21:03:13 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: "Russell King (Oracle)" <linux@armlinux.org.uk>, 
 	Inochi Amaoto <inochiama@gmail.com>
@@ -78,9 +78,8 @@ Cc: Andrew Lunn <andrew@lunn.ch>, Andrew Lunn <andrew+netdev@lunn.ch>,
 	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH net-next v5 3/3] net: stmmac: Add glue layer for Sophgo
  SG2044 SoC
-Message-ID: <thc5oknaqaw54wghyxpx6nr4kbykxvpgkgvpqsnsp2osjlxgwv@dekgtkxoywrm>
-References: <20250216123953.1252523-4-inochiama@gmail.com>
- <Z7IIht2Q-iXEFw7x@shell.armlinux.org.uk>
+Message-ID: <rkcf6tmgv44uxof3oxsmzqduvc4bumtnsjlkvenxezu2tjrp6l@vy5rbr4p7f3d>
+References: <Z7IIht2Q-iXEFw7x@shell.armlinux.org.uk>
  <5e481b95-3cf8-4f71-a76b-939d96e1c4f3@lunn.ch>
  <js3z3ra7fyg4qwxbly24xqpnvsv76jyikbhk7aturqigewllbx@gvus6ub46vow>
  <24eecc48-9061-4575-9e3b-6ef35226407a@lunn.ch>
@@ -89,6 +88,7 @@ References: <20250216123953.1252523-4-inochiama@gmail.com>
  <Z7PEeGmNvlYD33rZ@shell.armlinux.org.uk>
  <6obom7jyciq2kqw5iuqlugbzbsebgd7ymnq2crlm565ybbz7de@n7o3tcqn5idi>
  <Z7Rjjo5nZ0gnCbzq@shell.armlinux.org.uk>
+ <thc5oknaqaw54wghyxpx6nr4kbykxvpgkgvpqsnsp2osjlxgwv@dekgtkxoywrm>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -97,111 +97,98 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z7Rjjo5nZ0gnCbzq@shell.armlinux.org.uk>
+In-Reply-To: <thc5oknaqaw54wghyxpx6nr4kbykxvpgkgvpqsnsp2osjlxgwv@dekgtkxoywrm>
 
-On Tue, Feb 18, 2025 at 10:40:14AM +0000, Russell King (Oracle) wrote:
-> On Tue, Feb 18, 2025 at 09:01:59AM +0800, Inochi Amaoto wrote:
-> > On Mon, Feb 17, 2025 at 11:21:28PM +0000, Russell King (Oracle) wrote:
-> > > On Tue, Feb 18, 2025 at 06:50:24AM +0800, Inochi Amaoto wrote:
-> > > > On Mon, Feb 17, 2025 at 02:10:50PM +0000, Russell King (Oracle) wrote:
-> > > > > On Mon, Feb 17, 2025 at 02:25:33PM +0100, Andrew Lunn wrote:
-> > > > > > > I am not sure all whether devices has this clock, but it appears in
-> > > > > > > the databook. So I think it is possible to move this in the core so
-> > > > > > > any platform with these clock can reuse it.
+On Tue, Feb 18, 2025 at 07:34:47PM +0800, Inochi Amaoto wrote:
+> On Tue, Feb 18, 2025 at 10:40:14AM +0000, Russell King (Oracle) wrote:
+> > On Tue, Feb 18, 2025 at 09:01:59AM +0800, Inochi Amaoto wrote:
+> > > On Mon, Feb 17, 2025 at 11:21:28PM +0000, Russell King (Oracle) wrote:
+> > > > On Tue, Feb 18, 2025 at 06:50:24AM +0800, Inochi Amaoto wrote:
+> > > > > On Mon, Feb 17, 2025 at 02:10:50PM +0000, Russell King (Oracle) wrote:
+> > > > > > On Mon, Feb 17, 2025 at 02:25:33PM +0100, Andrew Lunn wrote:
+> > > > > > > > I am not sure all whether devices has this clock, but it appears in
+> > > > > > > > the databook. So I think it is possible to move this in the core so
+> > > > > > > > any platform with these clock can reuse it.
+> > > > > > > 
+> > > > > > > Great
+> > > > > > > 
+> > > > > > > The next problem will be, has everybody called it the same thing in
+> > > > > > > DT. Since there has been a lot of cut/paste, maybe they have, by
+> > > > > > > accident.
 > > > > > > 
-> > > > > > Great
+> > > > > > Tegra186: "tx"
+> > > > > > imx: "tx"
+> > > > > > intel: "tx_clk"
+> > > > > > rk: "clk_mac_speed"
+> > > > > > s32: "tx"
+> > > > > > starfive: "tx"
+> > > > > > sti: "sti-ethclk"
 > > > > > > 
-> > > > > > The next problem will be, has everybody called it the same thing in
-> > > > > > DT. Since there has been a lot of cut/paste, maybe they have, by
-> > > > > > accident.
 > > > > > 
-> > > > > Tegra186: "tx"
-> > > > > imx: "tx"
-> > > > > intel: "tx_clk"
-> > > > > rk: "clk_mac_speed"
-> > > > > s32: "tx"
-> > > > > starfive: "tx"
-> > > > > sti: "sti-ethclk"
-> > > > > 
+> > > > > The dwc-qos-eth also use clock name "tx", but set the clock with
+> > > > > extra calibration logic.
 > > > > 
-> > > > The dwc-qos-eth also use clock name "tx", but set the clock with
-> > > > extra calibration logic.
-> > > 
-> > > Yep, that's what I meant by "Tegra186" above.
-> > > 
-> > > > > so 50% have settled on "tx" and the rest are doing their own thing, and
-> > > > > that horse has already bolted.
-> > > > > 
+> > > > Yep, that's what I meant by "Tegra186" above.
 > > > > 
-> > > > The "rx" clock in s32 also uses the same logic. I think the core also
-> > > > needs to take it, as this rx clock is also mentioned in the databook.
+> > > > > > so 50% have settled on "tx" and the rest are doing their own thing, and
+> > > > > > that horse has already bolted.
+> > > > > > 
+> > > > > 
+> > > > > The "rx" clock in s32 also uses the same logic. I think the core also
+> > > > > needs to take it, as this rx clock is also mentioned in the databook.
+> > > > 
+> > > > The "rx" clock on s32 seems to only be set to 125MHz, and the driver
+> > > > seems to be limited to RGMII.
+> > > > 
+> > > > This seems weird as the receive clock is supposed to be supplied by the
+> > > > PHY, and is recovered from the media (and thus will be 2.5, 25 or
+> > > > 125MHz as determined by the PHY.) So, I'm not sure that the s32 "rx"
+> > > > clock is really the clk_rx_i clock supplied to the DWMAC core.
+> > > > 
+> > > > Certainly on stm32mp151, it states that ETH_RX_CLK in RGMII mode will
+> > > > be 2.5, 25 or 125MHz provided by the PHY, and the clock tree indicates
+> > > > that ETH_RX_CLK in RGMII mode will be routed directly to the clk_rx_i
+> > > > input on the DWMAC(4) core.
+> > > > 
 > > > 
-> > > The "rx" clock on s32 seems to only be set to 125MHz, and the driver
-> > > seems to be limited to RGMII.
-> > > 
-> > > This seems weird as the receive clock is supposed to be supplied by the
-> > > PHY, and is recovered from the media (and thus will be 2.5, 25 or
-> > > 125MHz as determined by the PHY.) So, I'm not sure that the s32 "rx"
-> > > clock is really the clk_rx_i clock supplied to the DWMAC core.
-> > > 
-> > > Certainly on stm32mp151, it states that ETH_RX_CLK in RGMII mode will
-> > > be 2.5, 25 or 125MHz provided by the PHY, and the clock tree indicates
-> > > that ETH_RX_CLK in RGMII mode will be routed directly to the clk_rx_i
-> > > input on the DWMAC(4) core.
-> > > 
+> > > RGMII is not the problem. The databook says the RGMII clock (rx/tx)
+> > > follows this set rate logic. 
 > > 
-> > RGMII is not the problem. The databook says the RGMII clock (rx/tx)
-> > follows this set rate logic. 
+> > Sorry, I find this ambiguous. "This" doesn't tell me whether you are
+> > referring to either what s32 does (setting the "rx" clock to 125MHz
+> > only) or what RGMII spec says about RX_CLK (which is that it comes from
+> > the PHY and is 2.5/25/125MHz) which stm32mp151 agrees with and feeds
+> > the PHY's RX_CLK to the clk_rx_i inputs on the DWMAC in RGMII, GMII
+> > and MII modes.
+> > 
 > 
-> Sorry, I find this ambiguous. "This" doesn't tell me whether you are
-> referring to either what s32 does (setting the "rx" clock to 125MHz
-> only) or what RGMII spec says about RX_CLK (which is that it comes from
-> the PHY and is 2.5/25/125MHz) which stm32mp151 agrees with and feeds
-> the PHY's RX_CLK to the clk_rx_i inputs on the DWMAC in RGMII, GMII
-> and MII modes.
+> What I said follows the second, the clock is set at 2.5/25/125MHz
+> with speed at 10/100/1000Mbps. The only thing I can refer to is the
+> ip databook.
 > 
-
-What I said follows the second, the clock is set at 2.5/25/125MHz
-with speed at 10/100/1000Mbps. The only thing I can refer to is the
-ip databook.
-
-> clk_rx_i comes through a bunch of muxes on stm32mp151. When the clock
-> tree is configured for RMII mode, the rate on clk_rx_i depends on the
-> MAC speed (10/100Mbps).
+> > clk_rx_i comes through a bunch of muxes on stm32mp151. When the clock
+> > tree is configured for RMII mode, the rate on clk_rx_i depends on the
+> > MAC speed (10/100Mbps).
+> > 
 > 
-
-OK, I have no problem and find some descriptions related to this in
-the databook.
-
-> This suggests as far as the core is concerned, the clock supplied as
-> clk_rx_i isn't a fixed rate clock but depends on the speed just like
-> the transmit clock.
+> OK, I have no problem and find some descriptions related to this in
+> the databook.
 > 
-
-This is what I want to say. clk_rx_i is not fixed but the
-s32 uses it as a fixed one (This is the thing I felt weird).
-
-In fact, Non-fixed clk_rx_i is why I suggested adding the rx
-clock to the core at first. Since the drive may not use rx
-clock as the databook says, it is good to leave it alone.
-
-At last, it seems like that I need to improve my statement.
-I am sorry for it.
-
-> > For other things, I agree with you. A fixed "rx" clock does reach the
-> > limit of what I know. And the databook told nothing about it. As we
-> > can not determine the rx clock of s32 and it may be set for the phy,
-> > it will be better to not move it into the core.
+> > This suggests as far as the core is concerned, the clock supplied as
+> > clk_rx_i isn't a fixed rate clock but depends on the speed just like
+> > the transmit clock.
+> > 
 > 
-> I'm intending to leave s32's rx clock alone for this reason as it does
-> not match what I expect. Maybe on s32 there is a bunch of dividers
-> which are selected by the mac_speed_o signals from the core to divide
-> the 125MHz clock down to 25 or 2.5MHz for 100 and 10Mbps respectively.
-> As I don't know, it's safer that I leave it alone as that means the
-> "rx" clock used there is not clk_rx_i.
+> This is what I want to say. clk_rx_i is not fixed but the
+> s32 uses it as a fixed one (This is the thing I felt weird).
 > 
 
-Thanks for your explanation. This is OK for me.
+> In fact, Non-fixed clk_rx_i is why I suggested adding the rx
+> clock to the core at first. Since the drive may not use rx
+> clock as the databook says, it is good to leave it alone.
+
+Please ignore my wrong point, I mistake the direction of the
+rx clock. It is not provided by the mac, but the phy.
 
 Regards,
 Inochi
