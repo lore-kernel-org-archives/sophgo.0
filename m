@@ -1,94 +1,182 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851881474B8
-	for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 02:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2B1237707
+	for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 10:41:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739844737; cv=none; b=NxlyXNK2x9eDjk8S+XBMd68fuiv0mGflGqElZLW1RDl9aBE7iiJvDh24PkXI+jTrXNjbZgE/zGtI5pOHgWdwfIpWXjp1Wqaq6hZkc+02C+tLGHqBiqfSGReQd8TbA2a0BFWeBioPoF0HUCs1TI7GPz0Tw47RGjKTgVEccG+NRs8=
+	t=1739875265; cv=none; b=Dz32h3fMRNw4pZr7rgtZkJ6l8z4Ceu+iQElyFUm4lScGZtIKVWfOAsMqBX8e24XjYCJpyi0au0MfTPdi9b/VZYZz1wIXQAQeoS6oc7geuMVPYkUVYiL0PCtON5RJDyoH9IWQYHqeND1KLQ9wTOUPGOd2CebJoz21DHWs9b4zKOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739844737; c=relaxed/simple;
-	bh=fjBYlxbE1h/DOuOc31KToTPqxmYA7HMncRPrxjXgLg4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hLVNZnS1Se/OrXW5n0B56rgQBv8onVZ9fkGSIW+wJKoVARd+ucCEazpLk+cvB3uV3Q+M4W+bza/r12KCjAeUKx7gbHwik/WLVRkXdvIMZRucHidYXPctVv95hv0HaEgfbxanr9ClnayzjTGiKuNn6dljb4y5ZlOOphf0S0xIa0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VXo4u5f+; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739875265; c=relaxed/simple;
+	bh=76Az1Nrp9KPwWRLvYAkwkDtEEMlYOkX/gn4Wm54Ggeg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CtusZmfK7FZV+WIUFSNRStuaHN8XgLbWZ+XuN3ZltFiWXLw1L6LGe56i39ITg2hEN2kNANcvV5SY1XxvJWFFX1ej68U6dM23dyQPOZCDTlyXwOj9gPy7rgB6Vg3XDVMhGLrMQHJJtA3dTWi7ZLNDBuNSX8QbJr2paegGp+SFduo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=o6c4u2Hq; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXo4u5f+"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6dd43aa1558so45786206d6.0
-        for <sophgo@lists.linux.dev>; Mon, 17 Feb 2025 18:12:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739844735; x=1740449535; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nFj7UXaCbYXWJKfATJnfF3oNg/3GMNWA/XopD15wK6g=;
-        b=VXo4u5f+DHQcV9iWDWU9cjh4eXSj1cLk3YxDGmQyczGJ57MTcywYgTiyZa8bnbXwqb
-         FqbgJH5sZV0sy8P1IsIIbEm92u/fLBLMIncX3hvNz6xIvEzm8bex/Y9VjAwnsyKWG3zB
-         KN8VkTcUiHHkmL29Px0AIA4Ssk3utGfwLTgEX4KmxpjH/pvRwdLVgH6raL76ePZV1rbN
-         p2r3upMspvnj1md3gtcyUy6IyxSMHmkVHPz17yNcq0VOOkb4Xx6IWffl54RvFLM33cVv
-         AVmvgyJPnIfqtSiMYV7YFZJiLioM8vJzalFx9PAje0pRkRhVA7GyklBWgsOoLOCzNieT
-         jgPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739844735; x=1740449535;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nFj7UXaCbYXWJKfATJnfF3oNg/3GMNWA/XopD15wK6g=;
-        b=BXel06SXOdjBi4vl8yI+1GQqu19IS+vAx/muNiwDYNbktyD+B18UHJwwxpfLKMrI5f
-         5q+Yl6+IvOTm0o9s12baJnaPA1Pv6yX2VHKD9jNV8L53TILCrB0BRdEWJRECbJSZhsVD
-         ZlbOR1PmtBpRxqcMgB46QmYJtA+GCMwOgGDnDTM/8tDkHbwctrO/srd90dBPaFrebYGM
-         t4bc/KpqpG5HxEzkbWNlUjQPxEGaQfcnmcXxRzJrrddLpfRiqxnEDG5WCJfkH2dNUbFk
-         sTOxNg7zBPUVHzXrwjDsZCVArxd/vuR92KPOjp9wzhmcnKrmr8xzAjXuGqd+phwMWM0f
-         5Qmg==
-X-Forwarded-Encrypted: i=1; AJvYcCUr0h7ptmzZ2jD0KaBigGpZJ9DJM0dOXZFUdua/VQStPNx0JvdISgu2kQFuQsBzJfAocJsJJ20=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywd98FrVfrQsHXqLedyqB8NQqD+dfSbxMbMt0ivJ3EXrtpeoz5b
-	MMq4QIuIyjnyZH2gWrO7D59dPoyZMJsu1iVVqmllWBXhF2uJhkku
-X-Gm-Gg: ASbGnct5ljrekNBAbkW//CWReZIYvEIQJ9GXuft+rZt6s+WPyVMGA65MoFWmDZFVSIh
-	/+/9zOLKyl0B6QpYQkzDD7Cu+bcPOGD5RTb0G24mg6kj+nxfmTpyr8mvWUk2T3x4re6mhRsurGY
-	C7nFdrIRnVzudo2czD5klzS09a/XQHGaYbdoK7zAhCqUoqgmomhxUgH9nFIDHpwJjRiumkopMkq
-	m7aEf8KB4LiyUiwiqv++HxnolBpuXmoHX+M5BgIZuShf2ZaBrazKbSE5z9t93Ly1LM=
-X-Google-Smtp-Source: AGHT+IG6GhKW9alG2L/dAhy8Vk9gV9ZNg2jhx1jhDY57Z65ue1+h3rnzF/NdR78ODmApaHhRn3CMHw==
-X-Received: by 2002:a05:6214:1bcb:b0:6e6:6504:ea64 with SMTP id 6a1803df08f44-6e66ccab3c8mr159240376d6.11.1739844735358;
-        Mon, 17 Feb 2025 18:12:15 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e672c1e7f0sm29033026d6.114.2025.02.17.18.12.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 18:12:14 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	Yixun Lan <dlan@gentoo.org>,
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="o6c4u2Hq"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Z8u1HFNvQFj00JNaA7UaE7kZ0fKIp/C21Or6VG3Kq3c=; b=o6c4u2Hq6aOiw0zopooYt7wvcp
+	E3+jJCUM7nHq46JD0aXLOfQ5Jm9ZhiuFSdXnxjiWn9cVMEovMxHN7TD4ujzEjPQEVc6txt7E4gDph
+	BHWvbtGL9aaT4ZgG0CHp7d6oKKCXz32SmZ0jB9UccZ/92My6rP3+Y5OrkuvJ8ftIm4VjlE02Pbr4k
+	nIrWR3UsptipUVbzuYoaJvi8ShzHrPLpO88aDnZusLz1wytWrp0eazSi9VGFBz9Pa7EZgViJT1rCI
+	Ae0dUoitzhjc8huX/pRHtI95OX5/ZxGGj5lqlzmrV1FnqdO7uzbiTcQG61C0pcjWDafsPxQS+tWSX
+	ji52VNQQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48852)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1tkL1a-0001bu-2a;
+	Tue, 18 Feb 2025 10:40:22 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1tkL1S-0007CN-2u;
+	Tue, 18 Feb 2025 10:40:14 +0000
+Date: Tue, 18 Feb 2025 10:40:14 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	=?iso-8859-1?Q?Cl=E9ment_L=E9ger?= <clement.leger@bootlin.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Furong Xu <0x1207@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Serge Semin <fancer.lancer@gmail.com>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH] MAINTAINERS: update info for SOPHGO DEVICETREES and DRIVERS
-Date: Tue, 18 Feb 2025 10:12:00 +0800
-Message-ID: <173984471557.305421.11394944011706782554.b4-ty@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250212022831.244143-1-inochiama@gmail.com>
-References: <20250212022831.244143-1-inochiama@gmail.com>
+Subject: Re: [PATCH net-next v5 3/3] net: stmmac: Add glue layer for Sophgo
+ SG2044 SoC
+Message-ID: <Z7Rjjo5nZ0gnCbzq@shell.armlinux.org.uk>
+References: <20250216123953.1252523-1-inochiama@gmail.com>
+ <20250216123953.1252523-4-inochiama@gmail.com>
+ <Z7IIht2Q-iXEFw7x@shell.armlinux.org.uk>
+ <5e481b95-3cf8-4f71-a76b-939d96e1c4f3@lunn.ch>
+ <js3z3ra7fyg4qwxbly24xqpnvsv76jyikbhk7aturqigewllbx@gvus6ub46vow>
+ <24eecc48-9061-4575-9e3b-6ef35226407a@lunn.ch>
+ <Z7NDakd7zpQ_345D@shell.armlinux.org.uk>
+ <rsysy3p5ium5umzz34rtinppcu2b36klgjdtq5j4lm3mylbqbz@z44yeje5wgat>
+ <Z7PEeGmNvlYD33rZ@shell.armlinux.org.uk>
+ <6obom7jyciq2kqw5iuqlugbzbsebgd7ymnq2crlm565ybbz7de@n7o3tcqn5idi>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6obom7jyciq2kqw5iuqlugbzbsebgd7ymnq2crlm565ybbz7de@n7o3tcqn5idi>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, 12 Feb 2025 10:28:30 +0800, Inochi Amaoto wrote:
-> Add mail list and wiki info for SOPHGO entry. Also change Inochi's
-> email as the old one can not be accessed.
+On Tue, Feb 18, 2025 at 09:01:59AM +0800, Inochi Amaoto wrote:
+> On Mon, Feb 17, 2025 at 11:21:28PM +0000, Russell King (Oracle) wrote:
+> > On Tue, Feb 18, 2025 at 06:50:24AM +0800, Inochi Amaoto wrote:
+> > > On Mon, Feb 17, 2025 at 02:10:50PM +0000, Russell King (Oracle) wrote:
+> > > > On Mon, Feb 17, 2025 at 02:25:33PM +0100, Andrew Lunn wrote:
+> > > > > > I am not sure all whether devices has this clock, but it appears in
+> > > > > > the databook. So I think it is possible to move this in the core so
+> > > > > > any platform with these clock can reuse it.
+> > > > > 
+> > > > > Great
+> > > > > 
+> > > > > The next problem will be, has everybody called it the same thing in
+> > > > > DT. Since there has been a lot of cut/paste, maybe they have, by
+> > > > > accident.
+> > > > 
+> > > > Tegra186: "tx"
+> > > > imx: "tx"
+> > > > intel: "tx_clk"
+> > > > rk: "clk_mac_speed"
+> > > > s32: "tx"
+> > > > starfive: "tx"
+> > > > sti: "sti-ethclk"
+> > > > 
+> > > 
+> > > The dwc-qos-eth also use clock name "tx", but set the clock with
+> > > extra calibration logic.
+> > 
+> > Yep, that's what I meant by "Tegra186" above.
+> > 
+> > > > so 50% have settled on "tx" and the rest are doing their own thing, and
+> > > > that horse has already bolted.
+> > > > 
+> > > 
+> > > The "rx" clock in s32 also uses the same logic. I think the core also
+> > > needs to take it, as this rx clock is also mentioned in the databook.
+> > 
+> > The "rx" clock on s32 seems to only be set to 125MHz, and the driver
+> > seems to be limited to RGMII.
+> > 
+> > This seems weird as the receive clock is supposed to be supplied by the
+> > PHY, and is recovered from the media (and thus will be 2.5, 25 or
+> > 125MHz as determined by the PHY.) So, I'm not sure that the s32 "rx"
+> > clock is really the clk_rx_i clock supplied to the DWMAC core.
+> > 
+> > Certainly on stm32mp151, it states that ETH_RX_CLK in RGMII mode will
+> > be 2.5, 25 or 125MHz provided by the PHY, and the clock tree indicates
+> > that ETH_RX_CLK in RGMII mode will be routed directly to the clk_rx_i
+> > input on the DWMAC(4) core.
+> > 
 > 
-> 
+> RGMII is not the problem. The databook says the RGMII clock (rx/tx)
+> follows this set rate logic. 
 
-Applied to for-next, thanks!
+Sorry, I find this ambiguous. "This" doesn't tell me whether you are
+referring to either what s32 does (setting the "rx" clock to 125MHz
+only) or what RGMII spec says about RX_CLK (which is that it comes from
+the PHY and is 2.5/25/125MHz) which stm32mp151 agrees with and feeds
+the PHY's RX_CLK to the clk_rx_i inputs on the DWMAC in RGMII, GMII
+and MII modes.
 
-[1/1] MAINTAINERS: update info for SOPHGO DEVICETREES and DRIVERS
-      https://github.com/sophgo/linux/commit/8630ed6f2adc2dcc89ac601d27c3fe37a187dfec
+clk_rx_i comes through a bunch of muxes on stm32mp151. When the clock
+tree is configured for RMII mode, the rate on clk_rx_i depends on the
+MAC speed (10/100Mbps).
 
-Thanks,
-Inochi
+This suggests as far as the core is concerned, the clock supplied as
+clk_rx_i isn't a fixed rate clock but depends on the speed just like
+the transmit clock.
 
+> For other things, I agree with you. A fixed "rx" clock does reach the
+> limit of what I know. And the databook told nothing about it. As we
+> can not determine the rx clock of s32 and it may be set for the phy,
+> it will be better to not move it into the core.
+
+I'm intending to leave s32's rx clock alone for this reason as it does
+not match what I expect. Maybe on s32 there is a bunch of dividers
+which are selected by the mac_speed_o signals from the core to divide
+the 125MHz clock down to 25 or 2.5MHz for 100 and 10Mbps respectively.
+As I don't know, it's safer that I leave it alone as that means the
+"rx" clock used there is not clk_rx_i.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
