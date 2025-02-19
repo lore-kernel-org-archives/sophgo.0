@@ -1,115 +1,222 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B596134BD
-	for <sophgo@lists.linux.dev>; Wed, 19 Feb 2025 02:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAAA1EB18E;
+	Wed, 19 Feb 2025 14:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739930558; cv=none; b=RgHbacXvTb21zHrYoFAwvmx74d0iOnnmKC0e4xd8unaR7F2CyYPmze7zexaYcmTqoWGGRFzchXxPX3RZ06Ja/t+WH0QlexOqtfGBejtkJ7kyOYRw6XrJfoO2F/Bmdo4WjuIAuMjNHILc/7eoFC3M6hL7Lp8KJRuXzAO+iAXMlYw=
+	t=1739973604; cv=none; b=mNQEP6nY5FvdeQVIajBu8gdrQ+SE354Ik/QpawBz/S9KWFYomukEUqanf68l8wiDUTEDPHAHN8PpfrPXVar25K96uOyiLcSpswSrt7+SKpFR4sTdCf5pEUJTeXLkUIds1qTuM1nSbpjTK7hTmh5vaRMPKgKyD2mN0a/UpR6vvrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739930558; c=relaxed/simple;
-	bh=tSVYR1llQvTI5Kv99pwKgISlYZrlOljaKobqaa3fY8A=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UA9R7kUdDeoGUiHLTlrRcB5CGnFKPZA7qnHhr5jQQ5UEG4fT7MpDssn3Np2tseLKsKxQXwX46kPrTbKzak1E2hMKkQ7Z2YUiC2BMFLlnjRqtAta4s0U1rkycn247rZPGmpBM1t1VnrWe/BjjfoGAohBoBu2EiHRfXGR4nRA9w4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B6LUy3Tk; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739973604; c=relaxed/simple;
+	bh=6ZusAGCt8DmvwKekcN+BSAym8y589HIO8Pfps4RSgf4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=THNsNlHtjB6kBWb6GHUPgJAzhAaHyjprPJh7cXAqmsglPodV/id5VW0MWxm9yyomH7AevGWMQD/V0UjY40Tv43hmI5fIKumLNGT31G+n+CNeE1Ov+4leCyifAmLrfE2bXWGHfUsv5eho8CRZlQD61uwMYe4sXyIWrOsxcPozA2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XyxD30Nh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B6LUy3Tk"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e17d3e92d9so53660046d6.1
-        for <sophgo@lists.linux.dev>; Tue, 18 Feb 2025 18:02:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739930555; x=1740535355; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=980SAjG821KkBNdaRx+A15s8OgNFk4ezjXKzzUAttK8=;
-        b=B6LUy3TkyGT0ChwRN+U1GsY+JqaQPryXFpxac77QWTzBQ+b2hZrfJZQfdWLySOtvUl
-         jrzb0geMCwX6dQDZsLvVrTKrkXeLNuqi7KB+wYJjFqhfTvAfXuJQjT+RrnihcTN/VhbV
-         zsK4oVS2V95vG5VVVI9uVu+xW5oQfFMDz8EAEODQNnfU+Lt+Sxb6xW38zL0XCUJJ4QyW
-         dsPJgcafrioR3zyT6C6gXRMq+MrTgljJ4XpiWLbhcMoJ5MaAOWqaBjZueupsGuokBp+3
-         nRsfplZHRYUS72yulMAhZv5wOk21Myq1nhKxeqDH06Tr9v/l00gZ9lhu0XQDiB2OIWDV
-         BMqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739930555; x=1740535355;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=980SAjG821KkBNdaRx+A15s8OgNFk4ezjXKzzUAttK8=;
-        b=RnlP86VDm08wa/QEE8BGlF5hWpqo8I1mQUFu/vqeBRQHt071z2QqJbvrZiLS4dMekJ
-         7JoSJgYcufUBThUsjYQgCptyuJ241YMoPz3F43VodfVsUB/b1gQE01Lu1GNkWBBWOKEu
-         CuT1xJTZz/SoDQGiiWhg7tTnDIzECuVMJh9ENnl6IlmsqYxmE0NEf9vJY0uk1bv+mxux
-         QG53akw8qm9fsiDLYgsXJyEROC053MKL4Or23GBNUQwhmvKaVGLYmKMbFOntvtvGlDkW
-         PxgqPBvFJnEx1AE/6FuD2RBiNcSTIGodhsMQwJO6NzlA0C3CE/fzu4LKgzujszN7+hNQ
-         SfrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVMX1TVYNfDzeELiZFEtHMUVW7TV8dKULfDR2ysYu3+pLaly8MkasO2oaVhd2D6Rb88xtrclI0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz91bR7/Vlk4KHMPVAcMWVAN3QFltw672Ux+z0eByiWsgm3TUH1
-	PFX5/fWdyUsnw22eHHtXc9Dw5ysKVQ50CcqHFV1YIbeQi31LOZMS
-X-Gm-Gg: ASbGncvh1rD+U7AXkpxcxsxnKuP3xDQB2e2aAf//DeU4SMxDUb9krNgDuUjvck71i5f
-	q6xAYP0X4y9pXGsX6Caj3nOTHyDQhXWqe1FXWCjIvrW68v3/3uRiblecaXINCoyArPugy5bNhcN
-	YoGY+DvakNe3AOorRExlggVMZ4UfO7jgZok/tcuw7IGSjcLbdxw3re5UttYRWSa1JNQKVzaZLwJ
-	rJX4xkknOPtLxQOC7DfIEUy0sqoZEO4YgwXjMS0KReB5dfaRYegfx1FoJvRkLa2pgo=
-X-Google-Smtp-Source: AGHT+IFao5uYt/opWCP18gBhrPbDbhzTsVioAhM4PEXmi9PCMUnZww8XRVKOU3gkOFPTX9L4VDhHrw==
-X-Received: by 2002:ad4:5f0a:0:b0:6d3:fa03:23f1 with SMTP id 6a1803df08f44-6e66ccc1141mr227209846d6.13.1739930555333;
-        Tue, 18 Feb 2025 18:02:35 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e67ac30bafsm32452896d6.111.2025.02.18.18.02.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 18:02:34 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: aou@eecs.berkeley.edu,
-	unicorn_wang@outlook.com,
-	conor+dt@kernel.org,
-	guoren@kernel.org,
-	inochiama@outlook.com,
-	krzk+dt@kernel.org,
-	palmer@dabbelt.com,
-	paul.walmsley@sifive.com,
-	robh@kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	chao.wei@sophgo.com,
-	xiaoguang.xing@sophgo.com,
-	chunzhi.lin@sophgo.com,
-	sophgo@lists.linux.dev,
-	Chen Wang <unicornxw@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>
-Subject: Re: [PATCH 0/2] Add pwm-fan for Milk-V Pioneer
-Date: Wed, 19 Feb 2025 10:02:19 +0800
-Message-ID: <173993053303.993263.3269292978255036963.b4-ty@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <cover.1739351437.git.unicorn_wang@outlook.com>
-References: <cover.1739351437.git.unicorn_wang@outlook.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XyxD30Nh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD8F7C4CED1;
+	Wed, 19 Feb 2025 14:00:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1739973604;
+	bh=6ZusAGCt8DmvwKekcN+BSAym8y589HIO8Pfps4RSgf4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XyxD30Nhe6YpYKbVqAcwLSFdWrWdkr8UMwlbRcelUl+NHjeZNFl+ovapTnOxHdbmo
+	 U6iW805NuGZsY0w5I0KTfJy1TEvE1rJGWiIGsDwp/mNi7VxCpcts13ReFpEFUZO0gf
+	 msEbEHvkAc0hlm5njKOThBXXwVy6Wp1wSqY3A46hrysJzXjIPPifoKa+Da6vT5F+lk
+	 cB4toeJnVqijSBkCQ4c3iLIzmsQ9Yx1pLvWp2OkSEqXf7UMXB+FzTzOZFpB5kfSM5f
+	 CqzNlOJM+gKYItgy4+0MbqFb9KHnkZSm5QEHMVwjYwSeiRTGu27lb7sIoSj+xGHVW+
+	 Q9NED/SG9qUUA==
+Date: Wed, 19 Feb 2025 08:00:02 -0600
+From: Rob Herring <robh@kernel.org>
+To: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Cc: devicetree@vger.kernel.org, Lee Jones <lee@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC] dt-bindings: rtc: sophgo: add RTC support for Sophgo
+ CV1800 series SoC
+Message-ID: <20250219140002.GA2354937-robh@kernel.org>
+References: <20250216180924.2506416-1-alexander.sverdlin@gmail.com>
+ <20250218210630.GA872024-robh@kernel.org>
+ <03302dcb85408facaee075dfdc6cd72a4fddcc59.camel@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <03302dcb85408facaee075dfdc6cd72a4fddcc59.camel@gmail.com>
 
-On Wed, 12 Feb 2025 17:41:44 +0800, Chen Wang wrote:
-> From: Chen Wang <unicorn_wang@outlook.com>
+On Tue, Feb 18, 2025 at 10:41:31PM +0100, Alexander Sverdlin wrote:
+> Thank you for your feedback Rob!
 > 
-> Milk-V Pioneer uses fan as cooling-device, and speed of the fan is
-> controlled by the first channel of pwm controller of SG2042.
+> On Tue, 2025-02-18 at 15:06 -0600, Rob Herring wrote:
+> > > QUESTION:
+> > > 
+> > > I'm unsure about reg properties in the subnodes (child devices) of
+> > > RTCSYS:
+> > > - they will not be used anyway by the drivers because they genuinely
+> > > overlap (the whole point of going MFD) -- therefore the drivers will do
+> > > syscon_node_to_regmap(pdev->dev.parent->of_node)
+> > > - as I understood from the history of MFD dt bindings' submissions, regs
+> > > are encouraged, if can be specified
+> > > - overlapping regs cause dt_binding_check warnings:
+> > > Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.example.dts:34.19-39.15: Warning (unique_unit_address_if_enabled): /example-0/rtcsys@5025000/mcu@0: duplicate unit-address (also used in
+> > > node /example-0/rtcsys@5025000/pmu@0)
+> > > Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.example.dts:34.19-39.15: Warning (unique_unit_address_if_enabled): /example-0/rtcsys@5025000/mcu@0: duplicate unit-address (also used in
+> > > node /example-0/rtcsys@5025000/rtc@0)
+> > > 
+> > > Shall I remove the MMIO resources from the actual devices or rather ignore the warnings?
+> > 
+> > Ignore the warnings is not an option.
+> > 
+> > Removing makes since if the registers and bitfields are completely mixed 
+> > up. If they are, then I find it hard to believe the child nodes are 
+> > separate blocks. And if they aren't, then it should all be just 1 node. 
 > 
-> This patchset depends on another patchset for the SG2042 pwm controller,
-> the driver part is now on pwm/for-next [pwm-for-next] and the dts part is
-> now on sophgo/for-next [sophgo-for-next]. If you want to have a test,
-> you need to apply the corresponding patchset.
+> The HW vendor calls it "RTC". But this "RTC" is also responsible for the
+> whole power sequencing and [chip-wide] power management. And afterwards
+> they've put SRAM controller registers and remoteproc (independent 8051 core)
+> controller into the same address space (interleaved). I have hard times
+> to apply any strict logic here.
+> 
+> > You don't have to have child nodes to have separate drivers.
+> 
+> But if I don't utilize "simple-mfd" and children nodes, then I'd need
+> some MFD core driver registering the "cells" even though, there will be
+> no other functions in it?
+> 
+> On the other hand, maybe this is the way forward if we are unsure as
+> of now, which cells do we want to implement at all as a separate driver
+> and which ones are we going to combine in a single driver?..
+
+Those are all OS questions which have little to do with the DT binding. 
+Design the binding to best match the h/w.
+
+> > >   .../bindings/mfd/sophgo,cv1800b-rtcsys.yaml   | 222 ++++++++++++++++++
+> > >   1 file changed, 222 insertions(+)
+> > >   create mode 100644 Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.yaml
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.yaml b/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.yaml
+> > > new file mode 100644
+> > > index 000000000000..2dc7c2df15c1
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtcsys.yaml
+> > > @@ -0,0 +1,222 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/mfd/sophgo,cv1800b-rtcsys.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: Cvitek CV18xx/Sophgo SG200x Real Time Clock module
+> > > +
+> > > +maintainers:
+> > > +  - Alexander Sverdlin <alexander.sverdlin@gmail.com>
+> > > +  - sophgo@lists.linux.dev
+> > > +
+> > > +description:
+> > > +  The RTC (Real Time Clock) is an independently powered module in the chip. It
+> > > +  contains a 32KHz oscillator and a Power-On-Reset (POR) sub-module, which can
+> > > +  be used for time display and scheduled alarm produce. In addition, the
+> > > +  hardware state machine provides triggering and timing control for chip
+> > > +  power-on, power-off and reset.
+> > > +
+> > > +  Furthermore, the 8051 subsystem is located within RTCSYS and is independently
+> > > +  powered. System software can use the 8051 to manage wake conditions and wake
+> > > +  the system while the system is asleep, and communicate with external devices
+> > > +  through peripheral controllers.
+> > > +
+> > > +  Technical Reference Manual available at
+> > > +    https://github.com/sophgo/sophgo-doc/releases/download/sg2000-trm-v1.01/sg2000_trm_en.pdf
+> > > +
 > 
 > [...]
+> 
+> > 
+> > > +  "^sram@[0-9a-f]+$":
+> > > +    type: object
+> > > +    additionalProperties: false
+> > > +
+> > > +    description:
+> > > +      Provide 2KB of SRAM, which can host software code or temporary data.
+> > > +
+> > > +    properties:
+> > > +      compatible:
+> > > +        items:
+> > > +          - enum:
+> > > +              - sophgo,cv1800b-rtc-sram
+> > > +
+> > > +      reg:
+> > > +        maxItems: 1
+> > > +
+> > > +      clocks:
+> > > +        maxItems: 1
+> > > +
+> > > +    required:
+> > > +      - compatible
+> > > +
+> > > +required:
+> > > +  - compatible
+> > > +  - reg
+> > > +  - "#address-cells"
+> > > +  - "#size-cells"
+> > > +  - ranges
+> > > +
+> > > +additionalProperties:
+> > > +  type: object
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/clock/sophgo,cv1800.h>
+> > > +    #include <dt-bindings/interrupt-controller/irq.h>
+> > > +
+> > > +    rtcsys@5025000 {
+> > > +        compatible = "sophgo,cv1800b-rtcsys", "simple-mfd", "syscon";
+> > > +        reg = <0x5025000 0x2000>;
+> > > +        #address-cells = <1>;
+> > > +        #size-cells = <1>;
+> > > +        ranges = <0 0x5025000 0x2000>;
+> > > +
+> > > +        mcu@0 {
+> > > +            compatible = "sophgo,cv1800b-rtc-dw8051";
+> > > +            reg = <0x0 0x1000>;
+> > > +            clocks = <&clk CLK_SRC_RTC_SYS_0>;
+> > > +            sram = <&rtc_sram>;
+> > > +        };
+> > > +
+> > > +        pmu@0 {
+> > > +            compatible = "sophgo,cv1800b-rtc-pmu";
+> > > +            reg = <0x0 0x2000>;
+> > > +            interrupts = <18 IRQ_TYPE_LEVEL_HIGH>,
+> > > +                         <19 IRQ_TYPE_LEVEL_HIGH>;
+> > > +            interrupt-names = "longpress", "vbat";
+> > > +        };
+> > > +
+> > > +        rtc@0 {
+> > > +            compatible = "sophgo,cv1800b-rtc";
+> > > +            reg = <0 0x2000>;
+> > > +            interrupts = <17 IRQ_TYPE_LEVEL_HIGH>;
+> > > +            interrupt-names = "alarm";
+> > > +            clocks = <&clk CLK_RTC_25M>;
+> > > +        };
+> > > +
+> > > +        rtc_sram: sram@0 {
+> > > +            compatible = "sophgo,cv1800b-rtc-sram";
+> > > +            reg = <0x0 0x1000>;
+> > 
+> > How does the SRAM overlap registers?
+> 
+> Those are not SRAM cells mapped into this address space,
+> but rather several control registers controlling reset,
+> power and clock of the SRAM.
 
-Applied to for-next, thanks!
+The 'sram' property points to regions of SRAM memory. So what you have 
+is incorrect use of the property.
 
-[1/2] riscv: sophgo: dts: add pwm-fan for Milk-V Pioneer
-      https://github.com/sophgo/linux/commit/62cdf0a06dd5a650e4ca95b6f3a13daa48cf517a
-[2/2] riscv: sophgo: dts: add cooling maps for Milk-V Pioneer
-      https://github.com/sophgo/linux/commit/f047a9285f9f3fd5c0d5ae53af350b8b619e470a
-
-Thanks,
-Inochi
-
+Rob
