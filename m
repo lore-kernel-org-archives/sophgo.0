@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C301EF08D;
-	Fri, 21 Feb 2025 17:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529D8204694;
+	Fri, 21 Feb 2025 23:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740157308; cv=none; b=eiHm46doM3DU1K6LDjZMUXAQdEeMA39nRS4tczs9cPxXEWo0KC4kE12OO3JNjEcbZ0EbmqIMU3gahIx8RSIvyk2nNusMqp9LbHyNaIXScmVMrrTQ5LDLRMjDBNb1MGmHoU3YHAFTkJK4WfArxnlImk6jr6wsaHxRNfhrm3j7AWo=
+	t=1740181800; cv=none; b=WNeNMBjHd/0XChyFhPQRsfn7hNECt56FiPRB7vGNxmeWsArfOkdI1G4B+oSAGs4UAsJSgwv2Tbf364wlIR1xAplaIciTJcs+tmd0DBOu7+Yq0ahMcHpJOZdLYtkjhcIJvl7UadZXK3DIvsk4xKZsnE/tAH56mjtGCnrKjuxQaoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740157308; c=relaxed/simple;
-	bh=Nm2OwrU5Opm62TA7+IMK61wEIcI9SxvvGpqljE9y1TY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aFCwei4EK6pL5NOquqw10pXt8vWIPW6L/IcP/2lvNlJglBR+1WhUG85Y9SvkSzGZDJ0cdNWFkiRpYesDNYEM/Jrm5L1p6AWPAx7qRs5BjsrLIz1FUjym+phZxhWvuQyub8o8akMH0KS82u7mADzcJIK7VZcVin0lNLPGE20PKf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K7y4Lsqx; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1740181800; c=relaxed/simple;
+	bh=7nyMY4mFAeqXaY4AyfMQMXfQBWFBvvYOoJjP9MhKH6g=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=F+BY5lnvXAPasNk62OnB8yfxPCZ0yjxE7YimP/B/W1N21vBOV/eReDZAzpzT0SqMJYkRuLlmpqjg/sEwKW2DWwuru6zTvWxSDwFfn0vPW+Y4DWiHIqQrqJo/8XSfcOcbHTNfkPtSx+wpVlkESk1o3NB6L0A99Cu6KkEW5R03724=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ebzXRD7f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K7y4Lsqx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0ECC4CED6;
-	Fri, 21 Feb 2025 17:01:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ebzXRD7f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E5E9C4CED6;
+	Fri, 21 Feb 2025 23:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1740157307;
-	bh=Nm2OwrU5Opm62TA7+IMK61wEIcI9SxvvGpqljE9y1TY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=K7y4Lsqx4BYbpTnKHQfGDsoec/J3KB9jvHrvPrk2znKHh4QoRv/ohDcuGZKcgHyYq
-	 kk/nzq1fSotL4bLoISg5r5+1AVKCAaMhVgzj7iQg1OmH0dDK5QQdv2vpE+S1kkujuL
-	 oQWthL3n2/N8rUDLQBmh+6ytxEPUtvdanuzY+NJeZIVsbyhfnYOaowGQNM8sC4FFnR
-	 apgRSuoq81/o2/uO2m1txPtgolTFtgoTPTBKNMFV13LhfbstNFqtU5rROENANe0kwj
-	 khg5ncLk29/73De+NbI49b4PQUMnHqWHgZTKoda+BjzsXM2h+MLKjyKn/FzdInCbPW
-	 +yMZJ6Ql+GhYQ==
-Date: Fri, 21 Feb 2025 17:01:41 +0000
-From: Conor Dooley <conor@kernel.org>
+	s=k20201202; t=1740181799;
+	bh=7nyMY4mFAeqXaY4AyfMQMXfQBWFBvvYOoJjP9MhKH6g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ebzXRD7fV/Ixvgj7XqgttlHaThg3WUGKW8yUnOnyCWMx2md84LfMFxeaxPr5BKc12
+	 FGB2wrsPt3Uwg65UNNG/nb95tdPXbew7VdMIhM00g1Dn0pDeuAiSr1aUFI1d0z8gbq
+	 iWILf7txi/VGSlSsYX1hNot9bKuVUnL/W/cEyw/fIKp9P3f95HELNiew7T3Y4vhMtV
+	 r0D98tM4UbWejYZIvR2VB+SrrRySlhP1f/iFaKnMFmoyBeMSq5Du6WuwgHvQcT15Rm
+	 HIkLrKamIw0mDTxFcbe4I1DWWPYkR9yY2S8zwwwQ8mM6DcSDpKkpc5NSCq2xYowVTT
+	 nb2P3yw3NxN5Q==
+Date: Fri, 21 Feb 2025 17:49:58 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
 To: Inochi Amaoto <inochiama@gmail.com>
 Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
@@ -46,199 +46,193 @@ Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pci: Add Sophgo SG2044 PCIe host
-Message-ID: <20250221-cavalier-cramp-6235d4348013@spud>
-References: <20250221013758.370936-1-inochiama@gmail.com>
- <20250221013758.370936-2-inochiama@gmail.com>
+Subject: Re: [PATCH 2/2] PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
+Message-ID: <20250221234958.GA372914@bhelgaas>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="MwJINKVsaBRPsMGS"
-Content-Disposition: inline
-In-Reply-To: <20250221013758.370936-2-inochiama@gmail.com>
-
-
---MwJINKVsaBRPsMGS
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20250221013758.370936-3-inochiama@gmail.com>
 
-On Fri, Feb 21, 2025 at 09:37:55AM +0800, Inochi Amaoto wrote:
-> The pcie controller on the SG2044 is designware based with
-> custom app registers.
->=20
-> Add binding document for SG2044 PCIe host controller.
->=20
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  .../bindings/pci/sophgo,sg2044-pcie.yaml      | 125 ++++++++++++++++++
->  1 file changed, 125 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-p=
-cie.yaml
->=20
-> diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yam=
-l b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> new file mode 100644
-> index 000000000000..040dabe905e0
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> @@ -0,0 +1,125 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/sophgo,sg2044-pcie.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: DesignWare based PCIe Root Complex controller on Sophgo SoCs
-> +
-> +maintainers:
-> +  - Inochi Amaoto <inochiama@gmail.com>
-> +
-> +description: |+
-> +  SG2044 SoC PCIe Root Complex controller is based on the Synopsys Desig=
-nWare
-> +  PCIe IP and thus inherits all the common properties defined in
-> +  snps,dw-pcie.yaml.
-> +
-> +allOf:
-> +  - $ref: /schemas/pci/pci-host-bridge.yaml#
-> +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: sophgo,sg2044-pcie
-> +
-> +  reg:
-> +    items:
-> +      - description: Data Bus Interface (DBI) registers
-> +      - description: iATU registers
-> +      - description: Config registers
-> +      - description: Sophgo designed configuration registers
-> +
-> +  reg-names:
-> +    items:
-> +      - const: dbi
-> +      - const: atu
-> +      - const: config
-> +      - const: app
-> +
-> +  clocks:
-> +    items:
-> +      - description: core clk
-> +
-> +  clock-names:
-> +    items:
-> +      - const: core
-> +
-> +  dma-coherent: true
+On Fri, Feb 21, 2025 at 09:37:56AM +0800, Inochi Amaoto wrote:
+> Add support for DesignWare-based PCIe controller in SG2044 SoC.
 
-Why's this here? RISC-V is dma-coherent by default, with dma-noncoherent
-used to indicate systems/devices that are not.
+> @@ -341,6 +341,16 @@ config PCIE_ROCKCHIP_DW_EP
+>  	  Enables support for the DesignWare PCIe controller in the
+>  	  Rockchip SoC (except RK3399) to work in endpoint mode.
+>  
+> +config PCIE_SOPHGO_DW
+> +	bool "SOPHGO DesignWare PCIe controller"
 
-Cheers,
-Conor.
+What's the canonical styling of "SOPHGO"?  I see "Sophgo" in the
+subject line and in Chen Wang's SG2042 series.  Pick the official
+styling and use it consistently.
 
-> +
-> +  interrupt-controller:
-> +    description: Interrupt controller node for handling legacy PCI inter=
-rupts.
-> +    type: object
-> +
-> +    properties:
-> +      "#address-cells":
-> +        const: 0
-> +
-> +      "#interrupt-cells":
-> +        const: 1
-> +
-> +      interrupt-controller: true
-> +
-> +      interrupts:
-> +        items:
-> +          - description: combined legacy interrupt
-> +
-> +    required:
-> +      - "#address-cells"
-> +      - "#interrupt-cells"
-> +      - interrupt-controller
-> +      - interrupts
-> +
-> +    additionalProperties: false
-> +
-> +  msi-parent: true
-> +
-> +  ranges:
-> +    maxItems: 5
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    soc {
-> +      #address-cells =3D <2>;
-> +      #size-cells =3D <2>;
-> +
-> +      pcie@6c00400000 {
-> +        compatible =3D "sophgo,sg2044-pcie";
-> +        reg =3D <0x6c 0x00400000 0x0 0x00001000>,
-> +              <0x6c 0x00700000 0x0 0x00004000>,
-> +              <0x40 0x00000000 0x0 0x00001000>,
-> +              <0x6c 0x00780c00 0x0 0x00000400>;
-> +        reg-names =3D "dbi", "atu", "config", "app";
-> +        #address-cells =3D <3>;
-> +        #size-cells =3D <2>;
-> +        bus-range =3D <0x00 0xff>;
-> +        clocks =3D <&clk 0>;
-> +        clock-names =3D "core";
-> +        device_type =3D "pci";
-> +        dma-coherent;
-> +        linux,pci-domain =3D <0>;
-> +        msi-parent =3D <&msi>;
-> +        ranges =3D <0x01000000 0x0  0x00000000  0x40 0x10000000  0x0 0x0=
-0200000>,
-> +                 <0x42000000 0x0  0x00000000  0x0  0x00000000  0x0 0x040=
-00000>,
-> +                 <0x02000000 0x0  0x04000000  0x0  0x04000000  0x0 0x040=
-00000>,
-> +                 <0x43000000 0x42 0x00000000  0x42 0x00000000  0x2 0x000=
-00000>,
-> +                 <0x03000000 0x41 0x00000000  0x41 0x00000000  0x1 0x000=
-00000>;
-> +
-> +        interrupt-controller {
-> +          #address-cells =3D <0>;
-> +          #interrupt-cells =3D <1>;
-> +          interrupt-controller;
-> +          interrupt-parent =3D <&intc>;
-> +          interrupts =3D <64 IRQ_TYPE_LEVEL_HIGH>;
-> +        };
-> +      };
-> +    };
-> +...
-> --=20
-> 2.48.1
->=20
+Reorder this so the menuconfig menu items remain alphabetically
+sorted.
 
---MwJINKVsaBRPsMGS
-Content-Type: application/pgp-signature; name="signature.asc"
+> +	depends on ARCH_SOPHGO || COMPILE_TEST
+> +	depends on PCI_MSI
+> +	depends on OF
+> +	select PCIE_DW_HOST
+> +	help
+> +	  Enables support for the DesignWare PCIe controller in the
+> +	  SOPHGO SoC.
+> +
+>  config PCI_EXYNOS
+>  	tristate "Samsung Exynos PCIe controller"
+>  	depends on ARCH_EXYNOS || COMPILE_TEST
 
------BEGIN PGP SIGNATURE-----
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * PCIe host controller driver for Sophgo SoCs.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ7ixdQAKCRB4tDGHoIJi
-0r5bAQD2/xgf2z2mj+PfULdLhil9ssspRZH13YmMyPGC5sanWQD9F/3QXeB0ciDz
-5QbRlfDz98HUAUow/IaPa38AV/IlggU=
-=WAPh
------END PGP SIGNATURE-----
+Looks too generic, since Chen Wang's series says Sophgo SG2042 SoC is
+Cadence-based, so this driver apparently doesn't cover all Sophgo
+SoCs.
 
---MwJINKVsaBRPsMGS--
+> + *
+
+Spurious blank line.
+
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/irqchip/chained_irq.h>
+> +#include <linux/irqdomain.h>
+> +#include <linux/mfd/syscon.h>
+> +#include <linux/module.h>
+> +#include <linux/phy/phy.h>
+> +#include <linux/property.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +#include <linux/reset.h>
+> +
+> +#include "pcie-designware.h"
+> +
+> +#define to_sophgo_pcie(x)		dev_get_drvdata((x)->dev)
+> +
+> +#define PCIE_INT_SIGNAL			0xc48
+> +#define PCIE_INT_EN			0xca0
+> +
+> +#define PCIE_SIGNAL_INTX_SHIFT		5
+> +#define PCIE_INT_EN_INTX_SHIFT		1
+
+Define masks with GENMASK() and get rid of the _SHIFT #defines.
+
+> +#define PCIE_INT_EN_INT_SII		BIT(0)
+> +#define PCIE_INT_EN_INT_INTA		BIT(1)
+> +#define PCIE_INT_EN_INT_INTB		BIT(2)
+> +#define PCIE_INT_EN_INT_INTC		BIT(3)
+> +#define PCIE_INT_EN_INT_INTD		BIT(4)
+
+These are unused, drop them.
+
+> +#define PCIE_INT_EN_INT_MSI		BIT(5)
+> +
+> +struct sophgo_pcie {
+> +	struct dw_pcie pci;
+> +	void __iomem *app_base;
+> +	struct clk_bulk_data *clks;
+> +	unsigned int clk_cnt;
+> +	struct reset_control *rst;
+> +	struct irq_domain *irq_domain;
+
+Indent the member names to align vertically as most other drivers do.
+
+> +};
+> +
+> +static int sophgo_pcie_readl_app(struct sophgo_pcie *sophgo, u32 reg)
+> +{
+> +	return readl_relaxed(sophgo->app_base + reg);
+> +}
+> +
+> +static void sophgo_pcie_writel_app(struct sophgo_pcie *sophgo, u32 val, u32 reg)
+> +{
+> +	writel_relaxed(val, sophgo->app_base + reg);
+> +}
+> +
+> +static void sophgo_pcie_intx_handler(struct irq_desc *desc)
+> +{
+> +	struct dw_pcie_rp *pp = irq_desc_get_handler_data(desc);
+> +	struct irq_chip *chip = irq_desc_get_chip(desc);
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
+> +	unsigned long hwirq = PCIE_SIGNAL_INTX_SHIFT;
+> +	unsigned long reg;
+> +
+> +	chained_irq_enter(chip, desc);
+> +
+> +	reg = sophgo_pcie_readl_app(sophgo, PCIE_INT_SIGNAL);
+> +
+> +	for_each_set_bit_from(hwirq, &reg, PCI_NUM_INTX + PCIE_SIGNAL_INTX_SHIFT)
+
+Use FIELD_GET() here and iterate through PCI_NUM_INTX.  Then you don't
+need for_each_set_bit_from() and shouldn't need PCIE_SIGNAL_INTX_SHIFT
+here and below.
+
+> +		generic_handle_domain_irq(sophgo->irq_domain,
+> +					  hwirq - PCIE_SIGNAL_INTX_SHIFT);
+> +
+> +	chained_irq_exit(chip, desc);
+> +}
+> +
+> +static void sophgo_intx_mask(struct irq_data *d)
+> +{
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
+> +	unsigned long flags;
+> +	u32 val;
+> +
+> +	raw_spin_lock_irqsave(&pp->lock, flags);
+> +
+> +	val = sophgo_pcie_readl_app(sophgo, PCIE_INT_EN);
+> +	val &= ~BIT(d->hwirq + PCIE_INT_EN_INTX_SHIFT);
+
+FIELD_PREP().
+
+> +	sophgo_pcie_writel_app(sophgo, val, PCIE_INT_EN);
+> +
+> +	raw_spin_unlock_irqrestore(&pp->lock, flags);
+> +};
+> +
+> +static void sophgo_intx_unmask(struct irq_data *d)
+> +{
+> +	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
+> +	unsigned long flags;
+> +	u32 val;
+> +
+> +	raw_spin_lock_irqsave(&pp->lock, flags);
+> +
+> +	val = sophgo_pcie_readl_app(sophgo, PCIE_INT_EN);
+> +	val |= BIT(d->hwirq + PCIE_INT_EN_INTX_SHIFT);
+
+Ditto.
+
+> +	sophgo_pcie_writel_app(sophgo, val, PCIE_INT_EN);
+> +
+> +	raw_spin_unlock_irqrestore(&pp->lock, flags);
+> +};
+> +
+> +static void sophgo_intx_eoi(struct irq_data *d)
+> +{
+> +}
+> +
+> +static struct irq_chip sophgo_intx_irq_chip = {
+> +	.name			= "INTx",
+> +	.irq_mask		= sophgo_intx_mask,
+> +	.irq_unmask		= sophgo_intx_unmask,
+> +	.irq_eoi		= sophgo_intx_eoi,
+
+Name these ending with the irq_chip field names, e.g.,
+sophgo_intx_irq_mask(), to make them easier to find with grep.
+
+Bjorn
