@@ -1,204 +1,179 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7519224C67B
-	for <sophgo@lists.linux.dev>; Fri, 28 Feb 2025 09:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A6D26B2D5
+	for <sophgo@lists.linux.dev>; Fri, 28 Feb 2025 12:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740734454; cv=none; b=BYGDK23TPO3v9TJSiTHjCLEszhsCV5Sq371EZSRjFk7tPz2Yqb4jaBzb7Kdjrz33dqH65vFcJ9k4lxCrIsH7lDz/9L891Dpk7n4xracdNE9idv49pghskP3akiRGektNcTYhqdafPZ1tmoG7Zw8etBu82LtR98Su8cB/mwD+nEM=
+	t=1740746453; cv=none; b=FUK5uHRapv1rLY7sbFRsa6q7bWGVQeBbdzH40csjkOkxS9wAL+YOHQuOBemTY5EwjRXY6uKzJ+YXJR45iJXwdsOwvdabZSS9fZg9/Jx09UiW31DdtsyYD8rAhf5e59EbfhZE/9TVjxT/wGuHRxUltO5vN6L+sgp2snSk6/epFfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740734454; c=relaxed/simple;
-	bh=pT8SYiw0Jf3GK6+hkue2igSEx8l2G2tJjL2ie6IuEjQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=POBdjDQ/hvBHTaKeRiR2PpnrVvK+sWA8E214Z5ebjxnS8WfO9C5b/R/eLV8omObV1AxmC4tpdNF+8wQbOpRf01GJ8m6UwDSH4WpCxKjVnRXE0BDXsILVNTUaR2MGDrRJkNA/OAFj98kbGcsNRbWqw1Nk8CuMzWPFLfaoDzKqVc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WU6qhv6i; arc=none smtp.client-ip=209.85.222.181
+	s=arc-20240116; t=1740746453; c=relaxed/simple;
+	bh=pPMhzcYM3CTCeeRM3hVc0R8I+4MebI7ljV90QEYY07s=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XN5nIMnv660HePMYAGbd7vZH7w2WkJuuXnOpFnuBOfQ+WSTtuc5SqHbHjSdFa2ftseMk3dTsYTt/JZsd5vIFSvmrTzrjxX0KCBi9hyQjCvjD1Bek5XQeTyXZp5iEZtNqUoZiKM7EF7BAcK45C3FeQkYGVLlqG9VIhXeM4DCfgGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUNeXRi7; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WU6qhv6i"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c08b14baa9so162578085a.3
-        for <sophgo@lists.linux.dev>; Fri, 28 Feb 2025 01:20:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUNeXRi7"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2f9b9c0088fso3681749a91.0
+        for <sophgo@lists.linux.dev>; Fri, 28 Feb 2025 04:40:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740734451; x=1741339251; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dSPWzRvDH6bTdwnRoGnWYj88h3YoRDAMeqRglP+0iQ8=;
-        b=WU6qhv6ia+S8jGq5+GTzoxpBKW2jJ6SGk4pfkBy7qmCTaLp5RtN0ze0sqeQRFZKtZK
-         sh66NEQBJZlUyPNyv68L08ia7DEWFy6YE45wKxKfPsoPcspRpKB3axwcytylbKnK+99p
-         C+UaoE7BP2Un9GwC3ZdRY+ENyvrNMIstwWH0BYQKvUtTCchovNpVqsSXUMTVaLpixQQG
-         FL940Zms0Qz/v/qgLk9Wmc5pNC72oZHVBdsX1mjzBxdJMD90DqZK0hZgQI4/QqrCSuRK
-         usMY/GISRgy76DnUwblaJtp8Wk0b3rlTCM0vjLpKYNsaF/gdAn6OfZ/UeoLEJjQV7ZXX
-         UXOg==
+        d=gmail.com; s=20230601; t=1740746451; x=1741351251; darn=lists.linux.dev;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zaPjgAHsPYLWvjG1+7VgSdE4nc17PmUEpTLjntHG71c=;
+        b=KUNeXRi7nH+y/UZus5LRPXvWSCSWFewfRuRzmaLU7KYe02GSCdMw5hZU64d/QNU98F
+         XgEpmjhaM1bhdPEmtViMP4cEUD64FCFS5mfyY+jPIn2hDx91IjNfO3mAY3pdG3zqWsMH
+         kUx/cXQy4F8ZpUVb3M7f0vAhETTr7LMhXQ9yWNEh8qah5f+K4EDepxepoBlqd4X9kOVj
+         pvPKDxBk+84NXz+1RqECdMyyyl9mnlmYBDRQttuiUncKcB6c6DtUhumeLb8ZyTUw2MAS
+         pgBH5SJ0TkU1XTswmbMGq+s/yYvTDV6ZDAyIND6lbvAd4eqEUN7w/mq7bIhu+wvuv5wc
+         ZO/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740734451; x=1741339251;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dSPWzRvDH6bTdwnRoGnWYj88h3YoRDAMeqRglP+0iQ8=;
-        b=Htho9ZMzYMABFObbemaDVAn/ZN9s7w+1LhZpQT+aCCD/0Ycpl+fvNtL/XOjsIxBjb2
-         cvPzB/ocGgTR82CuTzSHX/x9ibBXieJ2opcSjxY60CLYVmXXtLy6AEqtW7gHbHTtAxU+
-         7dsT2i1jtvI/BQ0tljiKYB2NCrFI9R450agSjRtu+frqjYFkxZ8NAHU75pW0x3oQvbPs
-         beTqIQvcJEMfItIIhtuR363XohQd1s8d7gnppZUvIs9tW82j8+bhpwbY5Mujq0CI/PnI
-         yw4iRl1r63jJP+rvuJGRIzEPfTVfe/815iL3QGQbIwkpMhtD0iooNgmqhkFhYqSHll25
-         gMng==
-X-Forwarded-Encrypted: i=1; AJvYcCVcteJTlrwlDPpgHRcxm94ZdBpWajUThjLQlgG5X4qAAiDbjkPNIB4VOOlfT2wfqTzIPW3jOiU=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzzx5NPdcD1Ga3PlU48mPN2868nkx9WAFc0v4UqsiZ2VApWY8Aj
-	Y9nT5SrTQm2Ql2wkbDYmaf/9cSjERMKqZPI///8/T+/4HzSvbYY7
-X-Gm-Gg: ASbGnctTNZGLrtGU6ke8dmUHBR+rTZ7MMgPZWP0fZhGzltPBB1UYvTnkgn8fY/485iw
-	u90AefBt2tgGrrC6/ltj20cSiH7SxZE1xJmCgE0pigaFI10xkh4fb60jyBjVKs8dvXNFajE9pSg
-	ekAVswGyM/Vr4sCUV0dGeb4Z/osEFFY6eJAzC6WUucCKMUP915baoyTx0X1NMP0CNuc9GrZy5ZK
-	QnNTtJV+eBw+A/9ci4JGUZnJGmZbISo0adU5s9HIC7aBAOLSmaZHX921T1fWXu9HDGG6Y8zrjk5
-	Cw==
-X-Google-Smtp-Source: AGHT+IGaqnCcJ7W3QzbD5/MOWmJeyOSJ3VUovHm5pxJ14O5OpxxE+BEJWbEG0JBMkkwTfQFOvIVyFQ==
-X-Received: by 2002:a05:620a:44cd:b0:7c0:b714:7ec6 with SMTP id af79cd13be357-7c39c4cd13fmr388005285a.24.1740734451206;
-        Fri, 28 Feb 2025 01:20:51 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c378d9fec4sm222609485a.67.2025.02.28.01.20.50
+        d=1e100.net; s=20230601; t=1740746451; x=1741351251;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zaPjgAHsPYLWvjG1+7VgSdE4nc17PmUEpTLjntHG71c=;
+        b=qKXMug6t8iNBKwQS9lFVD01gsp91YMLRAFUc8VK+Gjbp632cQIuLDjj5Q/w4iDs/fh
+         ucRAhW7yMr3No5o8og65AG4smRqd6JdIY+cmVN5vqkUN9Y6KElka0CX9iL1mtJVLxyrV
+         /OAUemy8Sb4wZAYX+5/w5uQx5HlVVf3Dm8GXljbcFtVytndYuhiEyjcQhtENbzUgdo2R
+         bIp4N0B6p9OI0XCOtxtFXtTnDR0dIDdMv/hR9fuDZDY7TrAD1tAcd8EX+GkxzgSkN3fq
+         0S2783yyhz9YsP6I/+ziLW6P6pDpo5+Qu079UoSB6izq5vuDKeQNB5s4LLm5xLfg5Ecs
+         Qc+w==
+X-Forwarded-Encrypted: i=1; AJvYcCWEIf9HTBXPNTDi3u7zS+rRRUlSbX+1nYRUMGcLwakK5/8Il3GoEyWHFmWtLW9s2x8SX9gdfDw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywr0PcbuzZMJ76QXxkplQmrHxVrHl2XUZfm5CJhQGuU+yAXTUXp
+	F2fCTfTv1KOSuhJ6h6htxzF/ycuwkHFdu8C0Mw85lNYikcg2m7bT
+X-Gm-Gg: ASbGncvVpgAEQe/MPtTDb+2KErKyWWx8NnjmA8pJHk+UfNuplbMi3ox5lE4Ixd+2hR9
+	c9BmuuZoCc7U6wNs/+7yK64qMcKeXevQbzUyFX6i42iyPRIX2iOq/Qn6ne7g43sE+fKUEG4CTSP
+	S2a9pRuslfC2m5eSOkY2/etAgK8OR0JZF5AHfX3eKu7YsUkWzal0Ixh/QPGWPBxgD1M3j3pPVj7
+	uzdQYUlCpRNF2uVJ9zNAp8N/PTMJdct6mtjsUMol3ghDbGWgOl52dUa+tg70Pv2nh75tcv5ZojB
+	/FWQQl2dJKxT8w==
+X-Google-Smtp-Source: AGHT+IG2oguQtkP0baYvz7DFJRXL72Jyi0nbCU+efrgTYtEnyx8hDBEi/ILU1lDlG5ECXjkwwcxA3Q==
+X-Received: by 2002:a17:90b:498b:b0:2ee:8253:9a9f with SMTP id 98e67ed59e1d1-2fea1346613mr12045174a91.11.1740746450459;
+        Fri, 28 Feb 2025 04:40:50 -0800 (PST)
+Received: from [198.18.0.34] ([2401:b60:a::698:7eb])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fea676c55csm3624891a91.19.2025.02.28.04.40.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 01:20:50 -0800 (PST)
-Date: Fri, 28 Feb 2025 17:20:28 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Conor Dooley <conor@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Niklas Cassel <cassel@kernel.org>, 
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pci: Add Sophgo SG2044 PCIe host
-Message-ID: <je4falvfemkemlvdfzdmgc7jx2gz6grpbmo6hwtpedjm7xi2gk@jr4frv3tn3l5>
-References: <20250221013758.370936-1-inochiama@gmail.com>
- <20250221013758.370936-2-inochiama@gmail.com>
- <20250221-cavalier-cramp-6235d4348013@spud>
- <2egxw3r63cbsygpwqaltp4jjlkuwoh4rkwpgv4haj4sgz5sked@vkotadyk4g6y>
- <20250224-enable-progress-e3a47fdb625c@spud>
- <7ht3djv7zgrbkcvmdg6tp62nmxytlxzhaprsuvyeshyojhochn@ignvymxb3vfa>
- <20250225-lapel-unhappy-9e7978e270e4@spud>
- <ynefy5x672dlhctjzyhkitxoihuucxxki3xqvpimwpcedpfl2u@lmklah5egof4>
- <pbj22qvat76t74nppabekvyncc4ptt6wede4q6wfygbrzcj3ag@ruvt26eqiybu>
+        Fri, 28 Feb 2025 04:40:49 -0800 (PST)
+From: Zixian Zeng <sycamoremoon376@gmail.com>
+Date: Fri, 28 Feb 2025 20:40:23 +0800
+Subject: [PATCH v2] riscv: sophgo: dts: Add spi controller for SG2042
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pbj22qvat76t74nppabekvyncc4ptt6wede4q6wfygbrzcj3ag@ruvt26eqiybu>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com>
+X-B4-Tracking: v=1; b=H4sIALauwWcC/2XMywrCMBCF4Vcps3YkGRUaV75H6SJNJ+mAvZBIU
+ Ere3dity/9w+HZIHIUT3JsdImdJsi416NSAm+wSGGWsDaTopohaTD5g2gT54smys8rYAep7i+z
+ lfUhdX3uS9Frj54Cz/q3/RtaocTCtsTyaq9H6EWYrz7NbZ+hLKV//58KnngAAAA==
+X-Change-ID: 20250228-sfg-spi-e3f2aeca09ab
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@outlook.com>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, chao.wei@sophgo.com, 
+ xiaoguang.xing@sophgo.com, Zixian Zeng <sycamoremoon376@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1740746442; l=2729;
+ i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
+ bh=pPMhzcYM3CTCeeRM3hVc0R8I+4MebI7ljV90QEYY07s=;
+ b=MXqgr2mcGpw61fx8C5ZrYZfxi0VQxHbEiCtbasaOy/l+UsC9ySW1oMZiECMbe7Z6EzrpdMDf3
+ 8e33dSukgSJCTHvc6ot+tBqGiX8pxcZzdamJjhsWdceYQTAQyZI5FqC
+X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
+ pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
 
-On Fri, Feb 28, 2025 at 04:46:22PM +0800, Inochi Amaoto wrote:
-> On Fri, Feb 28, 2025 at 02:34:00PM +0800, Inochi Amaoto wrote:
-> > On Tue, Feb 25, 2025 at 11:35:23PM +0000, Conor Dooley wrote:
-> > > On Tue, Feb 25, 2025 at 07:48:59AM +0800, Inochi Amaoto wrote:
-> > > > On Mon, Feb 24, 2025 at 06:54:51PM +0000, Conor Dooley wrote:
-> > > > > On Sat, Feb 22, 2025 at 08:34:10AM +0800, Inochi Amaoto wrote:
-> > > > > > On Fri, Feb 21, 2025 at 05:01:41PM +0000, Conor Dooley wrote:
-> > > > > > > On Fri, Feb 21, 2025 at 09:37:55AM +0800, Inochi Amaoto wrote:
-> > > > > > > > The pcie controller on the SG2044 is designware based with
-> > > > > > > > custom app registers.
-> > > > > > > > 
-> > > > > > > > Add binding document for SG2044 PCIe host controller.
-> > > > > > > > 
-> > > > > > > > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > > > > > > > ---
-> > > > > > > >  .../bindings/pci/sophgo,sg2044-pcie.yaml      | 125 ++++++++++++++++++
-> > > > > > > >  1 file changed, 125 insertions(+)
-> > > > > > > >  create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> > > > > > > > 
-> > > > > > > > diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> > > > > > > > new file mode 100644
-> > > > > > > > index 000000000000..040dabe905e0
-> > > > > > > > --- /dev/null
-> > > > > > > > +++ b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> > > > > > > > @@ -0,0 +1,125 @@
-> > > > > > > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > > > > > > > +%YAML 1.2
-> > > > > > > > +---
-> > > > > > > > +$id: http://devicetree.org/schemas/pci/sophgo,sg2044-pcie.yaml#
-> > > > > > > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > > > > > > > +
-> > > > > > > > +title: DesignWare based PCIe Root Complex controller on Sophgo SoCs
-> > > > > > > > +
-> > > > > > > > +maintainers:
-> > > > > > > > +  - Inochi Amaoto <inochiama@gmail.com>
-> > > > > > > > +
-> > > > > > > > +description: |+
-> > > > > > > > +  SG2044 SoC PCIe Root Complex controller is based on the Synopsys DesignWare
-> > > > > > > > +  PCIe IP and thus inherits all the common properties defined in
-> > > > > > > > +  snps,dw-pcie.yaml.
-> > > > > > > > +
-> > > > > > > > +allOf:
-> > > > > > > > +  - $ref: /schemas/pci/pci-host-bridge.yaml#
-> > > > > > > > +  - $ref: /schemas/pci/snps,dw-pcie.yaml#
-> > > > > > > > +
-> > > > > > > > +properties:
-> > > > > > > > +  compatible:
-> > > > > > > > +    const: sophgo,sg2044-pcie
-> > > > > > > > +
-> > > > > > > > +  reg:
-> > > > > > > > +    items:
-> > > > > > > > +      - description: Data Bus Interface (DBI) registers
-> > > > > > > > +      - description: iATU registers
-> > > > > > > > +      - description: Config registers
-> > > > > > > > +      - description: Sophgo designed configuration registers
-> > > > > > > > +
-> > > > > > > > +  reg-names:
-> > > > > > > > +    items:
-> > > > > > > > +      - const: dbi
-> > > > > > > > +      - const: atu
-> > > > > > > > +      - const: config
-> > > > > > > > +      - const: app
-> > > > > > > > +
-> > > > > > > > +  clocks:
-> > > > > > > > +    items:
-> > > > > > > > +      - description: core clk
-> > > > > > > > +
-> > > > > > > > +  clock-names:
-> > > > > > > > +    items:
-> > > > > > > > +      - const: core
-> > > > > > > > +
-> > > > > > > > +  dma-coherent: true
-> > > > > > > 
-> > > > > > > Why's this here? RISC-V is dma-coherent by default, with dma-noncoherent
-> > > > > > > used to indicate systems/devices that are not.
-> > > > > > 
-> > > > > > The PCIe is dma coherent, but the SoC itself is marked as
-> > > > > > dma-noncoherent.
-> > > > > 
-> > > > > By "the SoC itself", do you mean that the bus that this device is on is
-> > > > > marked as dma-noncoherent? 
-> > > > 
-> > > > Yeah, I was told only PCIe device on SG2044 is dma coherent.
-> > > > The others are not.
-> > > > 
-> > > > > IMO, that should not be done if there are devices on it that are coherent.
-> > > > > 
-> > > > 
-> > > > It is OK for me. But I wonder how to handle the non coherent device
-> > > > in DT? Just Mark the bus coherent and mark all devices except the
-> > > > PCIe device non coherent?
-> > > 
-> > > Don't mark the bus anything (default is coherent) and mark the devices.
-> > 
-> > I think this is OK for me.
-> > 
-> 
-> In technical, I wonder a better way to "handle dma-noncoherent".
-> In the binding check, all devices with this property complains 
-> 
-> "Unevaluated properties are not allowed ('dma-noncoherent' was unexpected)"
-> 
+Add spi controllers for SG2042.
 
-> It is a pain as at least 10 devices' binding need to be modified.
-> So I wonder whether there is a way to simplify this.
-> 
+SG2042 uses the upstreamed Synopsys DW SPI IP.
 
-Ignore this, I misunderstood the dma device. it seems like 
-only dmac and eth needs it.
+Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+---
+For this spi controller patch, only bindings are included.
+This is tested on milkv-pioneer board. Using driver/spi/spidev.c
+for creating /dev/spidevX.Y and tools/spi/spidev_test for testing
+functionality.
+---
+Changes in v2:
+- rebase v1 to sophgo/master(github.com/sophgo/linux.git).
+- order properties in device node.
+- remove unevaluated properties `clock-frequency`.
+- set default status to disable.
+- Link to v1: https://lore.kernel.org/r/20250228-sfg-spi-v1-1-b989aed94911@gmail.com
+---
+ .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts |  8 +++++++
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 28 ++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
-Regards,
-Inochi
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+index be596d01ff8d33bcdbe431d9731a55ee190ad5b3..c43a807af2f827b5267afe5e4fdf6e9e857dfa20 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+@@ -72,6 +72,14 @@ &uart0 {
+ 	status = "okay";
+ };
+ 
++&spi0 {
++	status = "okay";
++};
++
++&spi1 {
++	status = "okay";
++};
++
+ / {
+ 	thermal-zones {
+ 		soc-thermal {
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index e62ac51ac55abd922b5ef796ba8c2196383850c4..500645147b1f8ed0a08ad3cafb38ea79cf57d737 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -545,5 +545,33 @@ sd: mmc@704002b000 {
+ 				      "timer";
+ 			status = "disabled";
+ 		};
++
++		spi0: spi@7040004000 {
++			compatible = "snps,dw-apb-ssi";
++			reg = <0x70 0x40004000 0x00 0x1000>;
++			clocks = <&clkgen GATE_CLK_APB_SPI>,
++					<&clkgen GATE_CLK_SYSDMA_AXI>;
++			interrupt-parent = <&intc>;
++			interrupts = <110 IRQ_TYPE_LEVEL_HIGH>;
++			#address-cells = <0x01>;
++			#size-cells = <0x00>;
++			num-cs = <0x02>;
++			resets = <&rstgen RST_SPI0>;
++			status = "disabled";
++		};
++
++		spi1: spi@7040005000 {
++			compatible = "snps,dw-apb-ssi";
++			reg = <0x70 0x40005000 0x00 0x1000>;
++			clocks = <&clkgen GATE_CLK_APB_SPI>,
++					<&clkgen GATE_CLK_SYSDMA_AXI>;
++			interrupt-parent = <&intc>;
++			interrupts = <111 IRQ_TYPE_LEVEL_HIGH>;
++			#address-cells = <0x01>;
++			#size-cells = <0x00>;
++			num-cs = <0x02>;
++			resets = <&rstgen RST_SPI1>;
++			status = "disabled";
++		};
+ 	};
+ };
+
+---
+base-commit: aa5ee7180ec41bb77c3e327e95d119f2294babea
+change-id: 20250228-sfg-spi-e3f2aeca09ab
+
+Best regards,
+-- 
+Zixian Zeng <sycamoremoon376@gmail.com>
+
