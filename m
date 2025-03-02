@@ -1,70 +1,71 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA101E7C10
-	for <sophgo@lists.linux.dev>; Sun,  2 Mar 2025 19:52:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522BC1EDA06
+	for <sophgo@lists.linux.dev>; Sun,  2 Mar 2025 19:52:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740945144; cv=none; b=R/94UotGKVl67gbxni06A8ubN+qhHE0gjOWfHtSMHI3/a1AjeJBp4dJwVd0TXX1rts9eos2LuVoHwO6Kg/YA/MGz4h1dwSTRbVgTkXJXKMK+RMkugIgVOqWL6fJj80jcIMYASSmKgfJ/W1Rl4Y1mNosLSPx+JdJIBflKQhW0/YY=
+	t=1740945146; cv=none; b=gYFPT2euX+cdZIeo43HMKeglPrHU2w/NSihcAEjn9rQXWu9g+yFsctz3F16di8i/jJOMamPGX11HlpnBnb+TdqYML1mtgvth/HIzUYUMhwNN5Yo43bjnC6GBS9db6cBTHN/AFWlybSr/VjSP0vHD+mLBj8xxr/RoaTy78WXGDWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740945144; c=relaxed/simple;
-	bh=Vf8pU4k/6I94NEvTRNngJqsiSOFMb1PByV25ql5hlew=;
+	s=arc-20240116; t=1740945146; c=relaxed/simple;
+	bh=UBLmED1236Hkrt5K8YwytJ8MX5lmhSsTZg1nQyDlAUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIG/yVG6ECQp0HDjq182WYT4d/f2pQS4AJWfayulybptynJG3OyS1mErs6qE6NCtm+G2gp0trAmLYYd9/0P9oA4WEwZowNGH4hLSByfBNlPrjLHx56aUvccgU+qJjvuALNwcmOkDvo7/C0VgBRs6hT+epelrHGlq/+Fonmm4CzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k08WREC6; arc=none smtp.client-ip=209.85.208.43
+	 MIME-Version; b=CaMAtG8TVOLxzHlVMob+RYeFlVS2r3pQmT9qb//vS6NbybYlP+PIGqLmOrzOElWgJK7vdGWW3XgFGPJpacv+wHm5669mzfmhCuw6qTPlixX8SyBOnAFowLKTbcPE8hAtQ3V6qR0ThXkWO07b59RWPSmhwI9s4xejIGQs7yI1mn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Elm2EjFV; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k08WREC6"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5e52c1c3599so1545650a12.2
-        for <sophgo@lists.linux.dev>; Sun, 02 Mar 2025 11:52:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Elm2EjFV"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5e52c1c3599so1545686a12.2
+        for <sophgo@lists.linux.dev>; Sun, 02 Mar 2025 11:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740945141; x=1741549941; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1740945142; x=1741549942; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5c4NPufpKoLHDbbT+GlLj3VGqCkTEQTVZclMQAkqv7A=;
-        b=k08WREC6RF39ggTWK+c8/S7RP+sfQLI66HZir4kAR4C9m/XN1xg74/PONziss/9jG+
-         85qpDWjaJLXHddP1LDNfxQTda4Qi7DoqG171EaD0ptW4R1jbnI7nZbGvTuylA/5/JYKI
-         9vO/cEVoieFICriNI8MHEzyLMCy4mqCd9zzEmvqrVH7OVzAA9tasrUpoitIeXNkz1PhN
-         D/HuktMbZstpttdt0JBKzPdaRHTjariauN91zrSc+VrWPQUQYg5GwaSXP0Z2LP18plKu
-         Jnld71rWLCF4+046f5mP9JyZfanxxIYYl/RaYTscedkflMwp8DEIrv9yJB4S+17Kh0aE
-         ZdMg==
+        bh=tBIPfPR4UgxUw2DZuLDEZ4PWQB7JnRoO7gZczhX9Dz4=;
+        b=Elm2EjFVlhn88WcEntOmiY7p/G/VQ9sbpIb/u3jg9Ekmde+m4/qR9RykHLtSGhBf9r
+         WaK9ZQAMHH8hzre9Lulo+2voW/7K4aSMKMQWRDcx+MnOJxyJ58M0BlQIKi0dzeJNItMi
+         2HXSM5RKafgdMW8gbhW0053I7WK5ecBpPXsHm76FgM6aQlAcJ8n1VGhEpq13As8n2xc4
+         dlNrEKK4BuuKKKcPl4o0z0nkUOwd6CT0XUJo2V4NkIPRbJOeV4z/8IVCetJ210cUazeI
+         IhkC7piVhFf/DhrBQqt8p4c3gKO+0hlQdyN65wSewPAh9hU36/BGwuhCSK8SaB0KW2yj
+         U75Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740945141; x=1741549941;
+        d=1e100.net; s=20230601; t=1740945142; x=1741549942;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5c4NPufpKoLHDbbT+GlLj3VGqCkTEQTVZclMQAkqv7A=;
-        b=mnNFw24Jph41sziZrk5Rd7apip2m4WV2ndllNgiG2EJPxnxioOrDeKR1T94ec+6Y03
-         aLynuDKb9gDR+I6/7iQhdlHoLUx7fQykVSxtz42topLA9/J1zTT/bAiDSBW4KvjPLrFC
-         NKMC0wlP/x9gI81OI2I2BK18c16hfTBY+WR1u0T46HJpjpNm/ea3KbEatjDdnvaN9kCd
-         Vxeqwu6V441GCjJQLsbESphZyVg5B0XTO98zh7AKZT0ImxVyUOJ0kRU3YAbu7Ioaf2oi
-         HaxBw23fUENghZ3ldBSdFbNUQca+jSR3elqmCOggG21N8Ve1d+4M1WwDHLvLPkn/rpqI
-         R0HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNq7sAbOxYmH1iYCL2SEKXFhFYIZj8IB18igfXsGvz2QSeJJDGb0Y6bb+9h/HBcsg/hDpeaGU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyrlnPRJkqbyli8s2GhUADWzq5b5koXCsxjuY5ZxWr+IsEjFC7u
-	kF/MuqFgJVyB7BP4RY0TM4GDcjDVaX9sXHBfP2cpyj+/Oi7AkgVt
-X-Gm-Gg: ASbGnctFI5ymqSwVnsQNfPicAA7nlvTE87f0jBncK1MK9EdXgNs4xF7Ztnh2ZzABU2J
-	6c0pc2bK4rNAPfpPZ6zhrowHGxmLwjtNgswKFZYw95hvhx5sUCGnzFfCOsBK5FTaXd1ToDtcMvb
-	nquNa8MquCUYY59xVDBKi5YEdhe24CFbSc1C8Ht236moNgV1eU7RMz3fVqvMHGJy+ItwCEmVzBX
-	mTsTiOjr5CD4ZgXvljHnQzqxA2os0X60vAMss+Cy8iqGWQ5Gr4IVhqz1FTAKFO9AyhPjHf7bnW7
-	QT+8N1IkQ3wwn1XnHdIZJdpo4+S6TSfaumPc7mUN5+t2xxK0GTgNVgo3zA==
-X-Google-Smtp-Source: AGHT+IHMRWSeokwzGm9sYVxt6NEktsQseTTVLAH9cmQzwWOcNzWx1ZDznjFLVkWHDK9J21xpb4xkkQ==
-X-Received: by 2002:a05:6402:528a:b0:5e5:437c:1daf with SMTP id 4fb4d7f45d1cf-5e5437c22a7mr3296240a12.16.1740945140979;
-        Sun, 02 Mar 2025 11:52:20 -0800 (PST)
+        bh=tBIPfPR4UgxUw2DZuLDEZ4PWQB7JnRoO7gZczhX9Dz4=;
+        b=qgdj4GLV/wGuwSPY6gNAmI0d8XqC6u5Ay/XImgxooUPE8F1wWwjtIR2KOcffQgPU4T
+         /9RnbQv7QLV6Fopl/ONN8+CuUDFicL1rig39GzwpmKdquTU2EzCxAOcE4aP0zDjR1oYo
+         3xeDKhP2nC6V++GdYoFIv4AGu6/7vChA/XITt/SgaJ+GFZP02rruvHGjp7lzjCv3EebO
+         /naYDBs6oXqu9vnvwU3gh30t2GqhM2tiCCWVehqDdtwNxU3hUSSP8cKktDvXjXiqypaH
+         lq/qQLUFGnLAxOCuNQ56UPcse669M6MDdEGIioZnXCI59z3JI5zwn8nHbU2J8DGJW3cB
+         yE+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVlPWDXQshh8ukmKFrzRZi6y3I0tkhnXqydd/614M7Sx9uV/tMt0kQrPPPLvt6n2ELy9/CGndw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yywl5Hit0++2Cq6VAOU6KIy4Rt1WerMSEUG9v35fem6BZnw17Jy
+	aJckaF/SVJToY9zpF4eQwlqXHj+WJWpLHOgXrxZOXjoNd0KfOP44
+X-Gm-Gg: ASbGnctO1GRso8ho7B8YLiIsyKgxHW5bxF5BI9RDXY8JYx0m5qlOrT8hS/nVTGMwSJX
+	rKg/VZVezLdVS+BMV3OhDVA8viLkrp+6IsBSb88/0ia/GMRFmQF1VB8lSvJu6E5f19FSNWifpD4
+	KeOCLsYyv0sDVTAhTGCx2zZMrpy2lN7e0TRHoym4CG/LN0RiMmd/cQjUj/yT8HGrJvLycp2szHC
+	ImzKVBpXt24oQIHjKzWw2OE6C4cuJGhM/1w6j2NnwyKt1n27dUxoYFq5OSnwoI9zZ7xKPRHaxnG
+	hv8YCjpPD2/TJGmPLXydc7ydm6tv2YluzL4Ph76E2ApdH3aGs2Rh7kzG7A==
+X-Google-Smtp-Source: AGHT+IFuq//yKaBD8TJ1fGUNSicZNMgRwkWcmO30Mxpb/rZWbY3IEDKofA4wWgUEzTrF67UfWfThGw==
+X-Received: by 2002:a05:6402:3715:b0:5e0:5605:211a with SMTP id 4fb4d7f45d1cf-5e4d6b0e4admr12438605a12.18.1740945142275;
+        Sun, 02 Mar 2025 11:52:22 -0800 (PST)
 Received: from giga-mm.. ([2a02:1210:861b:6f00:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c43a5acdsm5809705a12.77.2025.03.02.11.52.19
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c43a5acdsm5809705a12.77.2025.03.02.11.52.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 02 Mar 2025 11:52:20 -0800 (PST)
+        Sun, 02 Mar 2025 11:52:21 -0800 (PST)
 From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 To: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	linux-rtc@vger.kernel.org
-Cc: Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
+Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
 	Inochi Amaoto <inochiama@gmail.com>,
 	dlan@gentoo.org,
 	linux-kernel@vger.kernel.org,
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
 	Lee Jones <lee@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -74,11 +75,10 @@ Cc: Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	sophgo@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Subject: [PATCH v12 1/3] dt-bindings: mfd: sophgo: add RTC support for Sophgo CV1800 series SoC
-Date: Sun,  2 Mar 2025 20:51:54 +0100
-Message-ID: <20250302195205.3183174-2-alexander.sverdlin@gmail.com>
+	sophgo@lists.linux.dev
+Subject: [PATCH v12 2/3] mfd: sophgo: cv1800: rtcsys: New driver (handling RTC only)
+Date: Sun,  2 Mar 2025 20:51:55 +0100
+Message-ID: <20250302195205.3183174-3-alexander.sverdlin@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250302195205.3183174-1-alexander.sverdlin@gmail.com>
 References: <20250302195205.3183174-1-alexander.sverdlin@gmail.com>
@@ -90,123 +90,147 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jingbao Qiu <qiujingbao.dlmu@gmail.com>
+Add driver for Sophgo CV1800 series SoC RTC MFD. The RTC module comprises
+a 32kHz oscillator, Power-on-Reset (PoR) sub-module, HW state machine to
+control chip power-on, power-off and reset. Furthermore, the 8051 subsystem
+is located within RTCSYS including associated SRAM block.
 
-Add RTC devicetree binding for Sophgo CV1800 series SoC. The device is
-called RTC, but contains control registers of other HW blocks in its
-address space, most notably of Power-on-Reset (PoR) module, DW8051 IP
-(MCU core), accompanying SRAM, hence putting it in MFD subsystem.
+This patch only populates RTC sub-device.
 
-Signed-off-by: Jingbao Qiu <qiujingbao.dlmu@gmail.com>
 Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 ---
 Changelog:
 v12:
-- maintainer Jingbao Qiu <qiujingbao.dlmu@gmail.com> -> sophgo@lists.linux.dev
-- dropped Reviewed-by: Krzysztof Kozlowski
-- link to TRM
-- mentioned 8051 core in the description
-- binding is now MFD, not RTC
-- added "syscon" compatible
-- added "interrupt-names", "clock-names" (because of added PM/remoteproc)
-- main compatible "sophgo,cv1800-rtc" -> "sophgo,cv1800b-rtc"
+- new patch
 
- .../bindings/mfd/sophgo,cv1800b-rtc.yaml      | 86 +++++++++++++++++++
- 1 file changed, 86 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtc.yaml
+ MAINTAINERS                 |  1 +
+ drivers/mfd/Kconfig         | 14 ++++++++
+ drivers/mfd/Makefile        |  1 +
+ drivers/mfd/cv1800-rtcsys.c | 66 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 82 insertions(+)
+ create mode 100644 drivers/mfd/cv1800-rtcsys.c
 
-diff --git a/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtc.yaml b/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtc.yaml
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 92fc0eca7061..446156998380 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22185,6 +22185,7 @@ M:	Chen Wang <unicorn_wang@outlook.com>
+ M:	Inochi Amaoto <inochiama@outlook.com>
+ T:	git https://github.com/sophgo/linux.git
+ S:	Maintained
++F:	drivers/mfd/cv1800-rtcsys.c
+ N:	sophgo
+ K:	sophgo
+ 
+diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
+index 6b0682af6e32..842cc4d95c4b 100644
+--- a/drivers/mfd/Kconfig
++++ b/drivers/mfd/Kconfig
+@@ -285,6 +285,20 @@ config MFD_CS42L43_SDW
+ 	  Select this to support the Cirrus Logic CS42L43 PC CODEC with
+ 	  headphone and class D speaker drivers over SoundWire.
+ 
++config MFD_CV1800_RTCSYS
++	tristate "Sophgo CV1800 RTC MFD"
++	depends on ARCH_SOPHGO || COMPILE_TEST
++	select MFD_CORE
++	help
++	  If you say yes here you get support the RTC MFD driver for Sophgo
++	  CV1800 series SoC. The RTC module comprises a 32kHz oscillator,
++	  Power-on-Reset (PoR) sub-module, HW state machine to control chip
++	  power-on, power-off and reset. Furthermore, the 8051 subsystem is
++	  located within RTCSYS including associated SRAM block.
++
++	  This driver can also be built as a module. If so, the module will be
++	  called cv1800-rtcsys.
++
+ config MFD_MADERA
+ 	tristate "Cirrus Logic Madera codecs"
+ 	select MFD_CORE
+diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+index 9220eaf7cf12..3cf03ffeedbb 100644
+--- a/drivers/mfd/Makefile
++++ b/drivers/mfd/Makefile
+@@ -18,6 +18,7 @@ obj-$(CONFIG_MFD_CROS_EC_DEV)	+= cros_ec_dev.o
+ obj-$(CONFIG_MFD_CS42L43)	+= cs42l43.o
+ obj-$(CONFIG_MFD_CS42L43_I2C)	+= cs42l43-i2c.o
+ obj-$(CONFIG_MFD_CS42L43_SDW)	+= cs42l43-sdw.o
++obj-$(CONFIG_MFD_CV1800_RTCSYS)	+= cv1800-rtcsys.o
+ obj-$(CONFIG_MFD_ENE_KB3930)	+= ene-kb3930.o
+ obj-$(CONFIG_MFD_EXYNOS_LPASS)	+= exynos-lpass.o
+ obj-$(CONFIG_MFD_GATEWORKS_GSC)	+= gateworks-gsc.o
+diff --git a/drivers/mfd/cv1800-rtcsys.c b/drivers/mfd/cv1800-rtcsys.c
 new file mode 100644
-index 000000000000..b80d68502c48
+index 000000000000..72d11284f1de
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtc.yaml
-@@ -0,0 +1,86 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/mfd/sophgo,cv1800b-rtc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/mfd/cv1800-rtcsys.c
+@@ -0,0 +1,66 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Driver for Sophgo CV1800 series SoC RTC MFD
++ *
++ * The RTC module comprises a 32kHz oscillator, Power-on-Reset (PoR) sub-module,
++ * HW state machine to control chip power-on, power-off and reset. Furthermore,
++ * the 8051 subsystem is located within RTCSYS including associated SRAM block.
++ *
++ * Copyright (C) 2025 Alexander Sverdlin <alexander.sverdlin@gmail.com>
++ *
++ */
 +
-+title: Real Time Clock of the Sophgo CV1800 SoC
++#include <linux/mfd/core.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/property.h>
 +
-+description:
-+  The RTC (Real Time Clock) is an independently powered module in the chip. It
-+  contains a 32KHz oscillator and a Power-On-Reset (POR) sub-module, which can
-+  be used for time display and scheduled alarm produce. In addition, the
-+  hardware state machine provides triggering and timing control for chip
-+  power-on, power-off and reset.
++static struct resource cv1800_rtcsys_irq_resources[] = {
++	DEFINE_RES_IRQ_NAMED(0, "alarm"),
++};
 +
-+  Furthermore, the 8051 subsystem is located within RTCSYS and is independently
-+  powered. System software can use the 8051 to manage wake conditions and wake
-+  the system while the system is asleep, and communicate with external devices
-+  through peripheral controllers.
++static const struct mfd_cell cv1800_rtcsys_subdev[] = {
++	{
++		.name = "cv1800-rtc",
++		.num_resources = 1,
++		.resources = &cv1800_rtcsys_irq_resources[0],
++	},
++};
 +
-+  Technical Reference Manual available at
-+    https://github.com/sophgo/sophgo-doc/tree/main/SG200X/TRM
++static const struct mfd_cell cv1800_rtcsys_rtc_subdev =
++	MFD_CELL_NAME("cv1800-rtc");
 +
-+maintainers:
-+  - sophgo@lists.linux.dev
++static int cv1800_rtcsys_probe(struct platform_device *pdev)
++{
++	int irq;
 +
-+allOf:
-+  - $ref: /schemas/rtc/rtc.yaml#
++	irq = platform_get_irq_byname(pdev, "alarm");
++	if (irq < 0)
++		return irq;
++	cv1800_rtcsys_irq_resources[0].start = irq;
++	cv1800_rtcsys_irq_resources[0].end = irq;
 +
-+properties:
-+  compatible:
-+    items:
-+      - const: sophgo,cv1800b-rtc
-+      - const: syscon
++	return devm_mfd_add_devices(&pdev->dev, PLATFORM_DEVID_AUTO,
++				    cv1800_rtcsys_subdev,
++				    ARRAY_SIZE(cv1800_rtcsys_subdev),
++				    NULL, 0, NULL);
++}
 +
-+  reg:
-+    maxItems: 1
++static const struct of_device_id cv1800_rtcsys_of_match[] = {
++	{ .compatible = "sophgo,cv1800b-rtc" },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, cv1800_rtcsys_of_match);
 +
-+  interrupts:
-+    items:
-+      - description: RTC Alarm
-+      - description: RTC Longpress
-+      - description: VBAT DET
++static struct platform_driver cv1800_rtcsys_mfd = {
++	.probe	= cv1800_rtcsys_probe,
++	.driver	= {
++		.name		= "cv1800_rtcsys",
++		.of_match_table	= cv1800_rtcsys_of_match,
++	},
++};
++module_platform_driver(cv1800_rtcsys_mfd);
 +
-+  interrupt-names:
-+    items:
-+      - const: alarm
-+      - const: longpress
-+      - const: vbat
-+
-+  clocks:
-+    items:
-+      - description: RTC clock source
-+      - description: DW8051 MCU clock source
-+
-+  clock-names:
-+    items:
-+      - const: rtc
-+      - const: mcu
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - interrupt-names
-+  - clocks
-+  - clock-names
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/sophgo,cv1800.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    rtc@5025000 {
-+        compatible = "sophgo,cv1800b-rtc", "syscon";
-+        reg = <0x5025000 0x2000>;
-+        interrupts = <17 IRQ_TYPE_LEVEL_HIGH>,
-+                     <18 IRQ_TYPE_LEVEL_HIGH>,
-+                     <19 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names = "alarm", "longpress", "vbat";
-+        clocks = <&clk CLK_RTC_25M>,
-+                 <&clk CLK_SRC_RTC_SYS_0>;
-+        clock-names = "rtc", "mcu";
-+    };
++MODULE_AUTHOR("Alexander Sverdlin <alexander.sverdlin@gmail.com>");
++MODULE_DESCRIPTION("Sophgo CV1800 series SoC RTC MFD driver");
++MODULE_LICENSE("GPL");
 -- 
 2.48.1
 
