@@ -1,194 +1,257 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BD74219ED
-	for <sophgo@lists.linux.dev>; Sun,  2 Mar 2025 02:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD0F11B0406
+	for <sophgo@lists.linux.dev>; Sun,  2 Mar 2025 19:52:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740881949; cv=none; b=UZp9ALmW5sExphWEtBjqKo3qcoqFeaggDZJB2zj3Kbwtoi1vQVRCU8ey5siFbigyCQwM/XbpE71kvt66duExhlKszZVk7kx6DqMYSBNpBRBFQItvrfFeEupzTesqMBlY6npqdWUhd7RVNgEc/MPIoFGdF3FTrC5zhINpURB1Z/o=
+	t=1740945144; cv=none; b=AooXp7nMd6XOMkglAC9iN9UFFDVfElXmedT8MND95S4Nl96sUBanZ+CzazBybAY1rXwib/oVLMlKJKd2iyqhIigQLY9AKzJU5RwmtUFMkbyjQcGd7Xv3XpWmyFFmO/dP15hmCLj+1yHwuY3h5mV/YdY2cI40E5s4iu4l3Wjp06A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740881949; c=relaxed/simple;
-	bh=Q3jk66jHAAXQHX/Py7DUzr/pfHIcKPy2OogvHy2RdHE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bS/zxNPAyJ060UW7zM/McTOTjZQPmJ2OVEBbo0qsiTIhW6GZdYVjVUpaHLZv1tOKWH+UuTPr6kGMWN3cSUIa+WdDjPVaAd7IpG9Msf2ADv4RDbMwuH8okbZ5i3OyzRAUAJx8o9MY75IJpvcm5cyVj3XCDqNJAPJtDpk3FQFOHQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XK8QwlEt; arc=none smtp.client-ip=209.85.219.54
+	s=arc-20240116; t=1740945144; c=relaxed/simple;
+	bh=SUMryhbX0X9cF0USX1ziBqd4yeFj5ZOMJW6fQP26vYg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jnrzHAXPrbjSN51TMw+ogmaUm+ePgas32dxpENDJymg0IphdT3JD+rLgdCfa+28W5w6qpp5sFg+uJx+Ps7uifPVUtyftrIIA8yDT0VsQdQuv/K0Rd/PynBdmYszaquEx2keA+piwN152BTMam+k5bii5bwC+1tM49qxsPdnpID8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObKDRvtS; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XK8QwlEt"
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6e6c082eac0so32615116d6.0
-        for <sophgo@lists.linux.dev>; Sat, 01 Mar 2025 18:19:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObKDRvtS"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e4c0c12bccso6642412a12.1
+        for <sophgo@lists.linux.dev>; Sun, 02 Mar 2025 11:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740881946; x=1741486746; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oPjKRzzKrglUg+fYVwz0cgQwVYZBInp7nhcExhwtF6w=;
-        b=XK8QwlEtdcCVo2+ZBnKzn9A4Y5lp4UJyVUFV3vJpL+BP9SUIrZSr7J6ixivSq053Mj
-         SbkReFY0/vS1N3rJHW0NyMA1Lo47MY6KXf9gGb6qTRZ92t1ouN0M1g/InoQ4cxuqBlyo
-         nKvHHDIqzu7TwrEjXkJ6lxaXrBg2EuiscqNq/8hnUuXherZUrBuOKl3jestzgeBxnJJz
-         KV6XK3HOT5BJf8xNqIxb9Hg9VfQ17S0eI3DcLwFqiq5os9up8/LdpuWbRFjmE0y33Frj
-         TDZ5gAhL+Eb4kAb8qPRoquYd6sEQrmV01n72m3HqY3/m7gIGkpoBa0okQnn3whAKPhT0
-         jccw==
+        d=gmail.com; s=20230601; t=1740945140; x=1741549940; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fYP8t9F2eM7G3LZt0fHBklDkCmd8trcuPA/HoTpu2pc=;
+        b=ObKDRvtSeClZ2YmOsxTWCu7lkLsh9DElq7JQaKjWjTk3GCCrxilYzMPwY0u/E1B+r5
+         TqfUfAL4bn47BknIedHJQw472jiBTwT/rtTqEgo1HBH//f8bGER7g65NuBfJCtiMT7ep
+         aQNseKGLELoo9t2tqrjER3u/iQqba6uTZOj7f095Jw5Txcp6yhtRT2ohAcOsUYRSSl5U
+         N5/DNy/8k569M0QCoDY30SO7A3L7foM/LEc17N5zjM9QOeTPd0dURhLpYZEe8M63pHEq
+         AR1MTI5aeOs3/mNGusTce4/ICaR5HGqNIPtoaXVt3m2kbud23mW+EQZsl8Z3zh9VsVgx
+         u8MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740881946; x=1741486746;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oPjKRzzKrglUg+fYVwz0cgQwVYZBInp7nhcExhwtF6w=;
-        b=rd85Go4eS7ehMhqaolAzXiqJgd5S3MAsLKoAMkJA7JAUTqNr0mIuhXPyITk938Grbk
-         /F2XKT79DijYmDduur5SG8dYLKU5CnVLuQibZyE6OvduX7NFpiIGL6yenCZn548QBoZE
-         GpOz9VkCA5zav+2zht5QoUAh/+f26Kg+Zsa0kaYL3LoqLp0x0cvgZMVfPevdiZmYyZJP
-         aFRlw2I8JrTznhlUq8bNO5CgnolgoECJWWVkNBQB+D8SgyYSUnb/dIiY59Zp2yXeDqqo
-         QT0pyw9qzbA68ziywYU4YRiquFEEB2u1IztJwj4gsKmAkUGBSJTDWgYfDT0UYlArkotA
-         d+UQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV2K9Tn+nxcV2hb9UfT+4Itu2IBMbkv+XKOyi8lrMilD8tYKmjuamgdJb7wwLEnOswxoXrQYFo=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4zcHh2jnhEi+ykllMw8wYzdolLhPHB5ZRRPYi39JphQYSiW3s
-	u1YrrNGKIZwOZwk5NNB8G6wWM+DeRap89Ni+hIIKfr+9HBy27b6a
-X-Gm-Gg: ASbGncsXYM5+jUGg4oiAfLfWkrhbPeC+q3zwdrS7ub3umvZjQllm3RwgC0UEjuiR1z8
-	pK5HUeJq3k/zwyB+0oqg+iMHaoL2vke9EI6ga2yOKEx4RaEJGXyHucb8RgaabDZddWR80aofCns
-	DU6fkQ2SSrsRckkNRPNiP2BRmKAh8XB6ZXOvmfGdYVIirPCprbNiSFs8rU6D5OIdcB1XK+SWKnC
-	Scw4QaT32XJUDMoZGMhWESnR+mc+T9drg2OSV1dWVFP2rEyEpCHsAuy7z91HGYCNvo4umDOhxk8
-	7/PF6v00RJBkYaxRF8RZ
-X-Google-Smtp-Source: AGHT+IGrdEuBUkRKtS239DYTHqorXLkacSTFcSVvkbaNWolaWYlbaQEuA1xg/Dhtk3D1fi/XT3FAXQ==
-X-Received: by 2002:a05:6214:1bc9:b0:6e6:5d61:4f00 with SMTP id 6a1803df08f44-6e8a0c7da89mr139365716d6.4.1740881946305;
-        Sat, 01 Mar 2025 18:19:06 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c3b67458e0sm5920285a.57.2025.03.01.18.19.05
+        d=1e100.net; s=20230601; t=1740945140; x=1741549940;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fYP8t9F2eM7G3LZt0fHBklDkCmd8trcuPA/HoTpu2pc=;
+        b=Bh/ayackz7/7zRPr7brVwCmWGAuUNL/UbVZTdFie9+smF2W+ZsUassOj/B7V4yt7wk
+         oxfiaj4SoxwCmRZu2ruuGGzumt6YSvz5M6NeP6CPGCZuV0f0AzT57rt8fnrwinrkZQVm
+         eFQeRPEOl8alWITzVnThJVl0PrheZP6pAReD03ZD/Izk3W2wsSvM6pB1D/T0hJ6uYkGm
+         5HWVW/VDbgfnpwRhfKf+k49P1JT89G1UDYZt7iRBy9kmogAWjbxWGL2eyRKJVllgk1eu
+         3eKoAvC4mn5PyFltdbzikhnbVbzUJPxZWDUyoWvuDDzGFUyxi5LGf3tXTMCro1VWPtgW
+         hDag==
+X-Forwarded-Encrypted: i=1; AJvYcCW9svh8uK1SELU1YoHXBle1lOk5robCVab+Ddx6Rp8csga9ar2fp7Ifk3Qf2ZIZsen6CLfitUY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxinQKVLYLpvlDhWe6zKd377hhidOEtE63xtup6xYYV1qowKgGE
+	TngqlKPx/IyOJbTgPqjL55StQ3/yMzYNV1DMipju9+YSUh3Gnl1t
+X-Gm-Gg: ASbGncv6dYUHT2mPcjJs0nNGbHtbI6I8sALAZxJLhaxGHDNuVTBURf7RTVqnq0NwtQ+
+	zWWM4tAOCsTY2drhGXq86PAQbIfYotYS3i44qbI1Hhq4ScXrzd+P2W7GOe8KfEMh5MxHsmF/oL+
+	HCnybF71wgEZBxEdv/76AJxfwiTN6RdpUsBPKNgGG7R0PFC2+IFEKa5nDh1rTkQgxQg0o+cUGpB
+	h/enWMvybRMLTmNj3tlfY7jN2ZZeryauat/69XGbkYowGxmpNMaJWULiCtur6YBSxFOzVTDsasg
+	JUbfhyMRGjuitCUUboyrJRgw42LUGN9f9K543tw2eS5u+FqpBeHJHIlMTQ==
+X-Google-Smtp-Source: AGHT+IHxK+9x3N2RoBOpHXrRdxjUeE8wFstYk1+WdPhSYJmBzIWPQk2M+kfSD+vWEG2gL6GzseXg5w==
+X-Received: by 2002:a05:6402:2113:b0:5de:dfd0:9d20 with SMTP id 4fb4d7f45d1cf-5e4d6b6ea41mr11133730a12.24.1740945139838;
+        Sun, 02 Mar 2025 11:52:19 -0800 (PST)
+Received: from giga-mm.. ([2a02:1210:861b:6f00:82ee:73ff:feb8:99e3])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c43a5acdsm5809705a12.77.2025.03.02.11.52.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Mar 2025 18:19:05 -0800 (PST)
-Date: Sun, 2 Mar 2025 10:18:42 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Zixian Zeng <sycamoremoon376@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@outlook.com>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, chao.wei@sophgo.com, 
-	xiaoguang.xing@sophgo.com
-Subject: Re: [PATCH v2] riscv: sophgo: dts: Add spi controller for SG2042
-Message-ID: <fllmh65x7ke4sfolxbdod73fx3fm45w7gy7x4pgamxnbhztjvk@wqd56dzxaa37>
-References: <20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com>
+        Sun, 02 Mar 2025 11:52:19 -0800 (PST)
+From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+To: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-rtc@vger.kernel.org
+Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	dlan@gentoo.org,
+	linux-kernel@vger.kernel.org,
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
+	Lee Jones <lee@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	sophgo@lists.linux.dev
+Subject: [PATCH v12 0/3] riscv: rtc: sophgo: add rtc support for CV1800
+Date: Sun,  2 Mar 2025 20:51:53 +0100
+Message-ID: <20250302195205.3183174-1-alexander.sverdlin@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 28, 2025 at 08:40:23PM +0800, Zixian Zeng wrote:
-> Add spi controllers for SG2042.
-> 
-> SG2042 uses the upstreamed Synopsys DW SPI IP.
-> 
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> ---
-> For this spi controller patch, only bindings are included.
-> This is tested on milkv-pioneer board. Using driver/spi/spidev.c
-> for creating /dev/spidevX.Y and tools/spi/spidev_test for testing
-> functionality.
+Real Time Clock (RTC) is an independently powered module within the chip,
+which includes a 32KHz oscillator and a Power On Reset/POR submodule. It
+can be used for time display and timed alarm generation.
 
-I wonder whether this patch is tested (or at least can be
-tested), as I am not sure there are pins for spi or any
-onboard device on existing SG2042 board.
+This series aims to provide complete DT bindings, but the drivers are only
+focusing on RTC implementation. Possible Power Management and remoteproc
+can be implemented later (hence the RTC driver is using syscon, because
+MMIO space is really interleaved among different functions).
 
-> ---
-> Changes in v2:
-> - rebase v1 to sophgo/master(github.com/sophgo/linux.git).
-> - order properties in device node.
-> - remove unevaluated properties `clock-frequency`.
-> - set default status to disable.
-> - Link to v1: https://lore.kernel.org/r/20250228-sfg-spi-v1-1-b989aed94911@gmail.com
-> ---
->  .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts |  8 +++++++
->  arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 28 ++++++++++++++++++++++
->  2 files changed, 36 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> index be596d01ff8d33bcdbe431d9731a55ee190ad5b3..c43a807af2f827b5267afe5e4fdf6e9e857dfa20 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> @@ -72,6 +72,14 @@ &uart0 {
->  	status = "okay";
->  };
->  
-> +&spi0 {
-> +	status = "okay";
-> +};
-> +
-> +&spi1 {
-> +	status = "okay";
-> +};
-> +
->  / {
->  	thermal-zones {
->  		soc-thermal {
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> index e62ac51ac55abd922b5ef796ba8c2196383850c4..500645147b1f8ed0a08ad3cafb38ea79cf57d737 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> @@ -545,5 +545,33 @@ sd: mmc@704002b000 {
->  				      "timer";
->  			status = "disabled";
->  		};
-> +
-> +		spi0: spi@7040004000 {
-> +			compatible = "snps,dw-apb-ssi";
-> +			reg = <0x70 0x40004000 0x00 0x1000>;
+Series is tested on Milk-V Duo Module 01 EVB (SG2000 SoC).
 
-> +			clocks = <&clkgen GATE_CLK_APB_SPI>,
-> +					<&clkgen GATE_CLK_SYSDMA_AXI>;
+Changes since v11:
+- dropped restart handling (will be implemented in PSCI)
+- split RTC driver into MFD stub and a platform RTC driver
+- dropped Reviewed-by: Krzysztof Kozlowski from bindings, they've got a
+  rework
+- changed bindings maintainer from Jingbao Qiu <qiujingbao.dlmu@gmail.com>
+  to sophgo@lists.linux.dev
+- added link to TRM into bindings description
+- bindings: mentioned 8051 core in the description
+- bindings are now MFD, not RTC
+- bindings: added "syscon" compatible
+- bindings: added "interrupt-names", "clock-names" (because of added
+  PM/remoteproc)
+- bindings: main compatible "sophgo,cv1800-rtc" -> "sophgo,cv1800b-rtc"
+- new patch "mfd: sophgo: cv1800: rtcsys: New driver (handling RTC only)"
+- added both MFD and RTC drivers into MAINTAINERS file (N: K: entries
+  didn't apply)
+- RTC: depends on cv1800-rtcsys MFD driver
+- RTC: use syscon for regmap
+- RTC: get named clock from parent MFD
+Changes since v10:
+- only start RTC on set_time;
+Changes since v9:
+- further simplified bitmask macros;
+- unconditional RTC start (rtc_enable_sec_counter()), otherwise
+didn't start on SG2000;
+- dropped ANA_CALIB modification (has been forgotten in v8 with
+the drop of SW calibration to switch to HW calibration);
+- successfully tested on SG2000;
 
-Is the sysdma axi clock for the this device. IIRC is APB interface.
+Changes since v10:
+- only start RTC on set_time;
+- add machine restart handler (as separate patch 3/3);
 
-Also, Are these clock aligned? If not, use space to align the two
-clocks. You also need to add the clock-names here.
+Changes since v9:
+- picked up orphaned series;
+- further simplified bitmask macros;
+- unconditional RTC start (rtc_enable_sec_counter());
+- dropped ANA_CALIB modification;
+- successfully tested on SG2000;
 
-> +			interrupt-parent = <&intc>;
-> +			interrupts = <110 IRQ_TYPE_LEVEL_HIGH>;
+v9: https://lore.kernel.org/linux-riscv/20240428060848.706573-1-qiujingbao.dlmu@gmail.com/
 
-> +			#address-cells = <0x01>;
-> +			#size-cells = <0x00>;
-> +			num-cs = <0x02>;
+Changes since v8:
+- delete unused macros
+- using 0/1 instead of the DISABLE/ENABLE macro
+- pass in the correct pointer when applying for IRQ
+- convert the incoming pointer into an appropriate
+  structure pointer in the irq handler
 
-Just use decimal number, no hex there.
+v8: https://lore.kernel.org/all/20240204044143.415915-1-qiujingbao.dlmu@gmail.com/
 
-> +			resets = <&rstgen RST_SPI0>;
-> +			status = "disabled";
-> +		};
-> +
-> +		spi1: spi@7040005000 {
-> +			compatible = "snps,dw-apb-ssi";
-> +			reg = <0x70 0x40005000 0x00 0x1000>;
+Changes since v7:
+- pass checkpatch.pl --strict
+- using u32 replace uint32
+- using devm_kzalloc(*) replace
+  devm_kzalloc(sizeof())
+- sort header files alphabetically
+- delete unnecessary header files
+- fix wrap error
+- drop dependent description
+- using hardware automatic calibration replace
+  software calibration. see documentation 197 page
 
-> +			clocks = <&clkgen GATE_CLK_APB_SPI>,
-> +					<&clkgen GATE_CLK_SYSDMA_AXI>;
+v7: https://lore.kernel.org/all/20240122080500.2621-1-qiujingbao.dlmu@gmail.com/
+documentation: https://github.com/milkv-duo/duo-files/blob/main/duo/datasheet/CV1800B-CV1801B-Preliminary-Datasheet-full-en.pdf
 
-The same as above.
+Changes since v6:
+- completely delete POR dt node
+- remove syscon tag
+- use devm_regmap_init_mmio() replace
+  syscon_node_to_regmap
 
-> +			interrupt-parent = <&intc>;
-> +			interrupts = <111 IRQ_TYPE_LEVEL_HIGH>;
+v6: https://lore.kernel.org/all/20240115160600.5444-1-qiujingbao.dlmu@gmail.com/
 
-> +			#address-cells = <0x01>;
-> +			#size-cells = <0x00>;
-> +			num-cs = <0x02>;
+Changes since v5:
+- remove unnecessary lock
+- fix cv1800_rtc_alarm_irq_enable()
+- remove duplicate checks
+- using alrm->enabled instead of unconditionally
+  enabling
+- remove disable alarms on probe
+- using rtc_update_irq() replace mess of alarm
+- remove leak clk
+- useing devm_rtc_allocate_device() and
+  devm_rtc_register_device() instead old way
+- add judgment for rtc_enable_sec_counter()
+- add POR nodes in DTS. This POR device shares
+  the register region with the RTC device
 
-The same as above.
+v5: https://lore.kernel.org/all/20240108072253.30183-1-qiujingbao.dlmu@gmail.com/
 
-> +			resets = <&rstgen RST_SPI1>;
-> +			status = "disabled";
-> +		};
->  	};
->  };
-> 
-> ---
-> base-commit: aa5ee7180ec41bb77c3e327e95d119f2294babea
-> change-id: 20250228-sfg-spi-e3f2aeca09ab
-> 
-> Best regards,
-> -- 
-> Zixian Zeng <sycamoremoon376@gmail.com>
-> 
+Changes since v4:
+- remove POR dt-bindings because it empty
+- remove MFD dt-bindings because SoC does
+  not have MFDs
+- add syscon attribute to share registers
+  with POR
+
+v4: https://lore.kernel.org/all/20231229090643.116575-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v3:
+- temporarily not submitting RTC driver code
+  waiting for communication with IC designer
+- add MFD dt-bindings
+- add POR dt-bindings
+
+v3: https://lore.kernel.org/all/20231226100431.331616-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v2:
+- add mfd support for CV1800
+- add rtc to mfd
+- using regmap replace iomap
+- merge register address in dts
+
+v2: https://lore.kernel.org/lkml/20231217110952.78784-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v1
+- fix duplicate names in subject
+- using RTC replace RTC controller
+- improve the properties of dt-bindings
+- using `unevaluatedProperties` replace `additionalProperties`
+- dt-bindings passed the test
+- using `devm_platform_ioremap_resource()` replace
+  `platform_get_resource()` and `devm_ioremap_resource()`
+- fix random order of the code
+- fix wrong wrapping of the `devm_request_irq()` and map the flag with dts
+- using devm_clk_get_enabled replace `devm_clk_get()` and
+  `clk_prepare_enable()`
+- fix return style
+- add rtc clock calibration function
+- use spinlock when write register on read/set time
+
+v1: https://lore.kernel.org/lkml/20231121094642.2973795-1-qiujingbao.dlmu@gmail.com/
+
+Alexander Sverdlin (1):
+  mfd: sophgo: cv1800: rtcsys: New driver (handling RTC only)
+
+Jingbao Qiu (2):
+  dt-bindings: mfd: sophgo: add RTC support for Sophgo CV1800 series SoC
+  rtc: sophgo: add rtc support for Sophgo CV1800 SoC
+
+ .../bindings/mfd/sophgo,cv1800b-rtc.yaml      |  86 +++++++
+ MAINTAINERS                                   |   2 +
+ drivers/mfd/Kconfig                           |  14 ++
+ drivers/mfd/Makefile                          |   1 +
+ drivers/mfd/cv1800-rtcsys.c                   |  66 ++++++
+ drivers/rtc/Kconfig                           |  12 +
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-cv1800.c                      | 218 ++++++++++++++++++
+ 8 files changed, 400 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mfd/sophgo,cv1800b-rtc.yaml
+ create mode 100644 drivers/mfd/cv1800-rtcsys.c
+ create mode 100644 drivers/rtc/rtc-cv1800.c
+
+-- 
+2.48.1
+
