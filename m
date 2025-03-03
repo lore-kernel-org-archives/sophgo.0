@@ -1,137 +1,100 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DEB1F03E1
-	for <sophgo@lists.linux.dev>; Mon,  3 Mar 2025 09:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.154.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D1E1F3BAD
+	for <sophgo@lists.linux.dev>; Mon,  3 Mar 2025 11:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740993199; cv=none; b=o0N/7qweb8enTNGyOENxLnFHk2fDFVwthj+KLtuQ9PEWWyr0b4Kc7H8x4mob9RZ19pAn3+IFqRIU7dUdZk+UWI2ZbPBZdULCr1UOTPmOyaRvHaV0+gbEdWWG4WYO01lr9qi5dR+a9RT7p37nVNDPI72tL86e/Ha7/AV8uFKiRzA=
+	t=1741000638; cv=none; b=ajFkC7W63sFGOohvpUk/tCr1gLwqVsWg8q7EeFLIV6Zt/zMDAFk9IUGzpSic75TGgoyxhjtCDRbn5FCOVHuhLP0T8sJqaZi+ShXIJ61y5XHCtEJdAMYHh2UkbS/1+p2f5BsiIGqN/m7uRsxiRWzk+f3uLkcKwZyKrEHVYZWwH2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740993199; c=relaxed/simple;
-	bh=BtoQelzDR2YH4eJcJiAnN1ShwH9UMlztv91FI3QOKQM=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XNnEbG0PAvQtyNLsNVSw1mCTOsgym7AWShu36czjM+IKg9iIipO0uzUXYFIbKXOuasVaCk6miIs3okpQn1vx/bQFcNpcI3vOH+M8V9/B/DelkXG+0cPvETsGW1HKg4ERvaUR1sr33FD5EOTV6bDDjnFEGw0JvoQgTMznSk6g5eY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=QA+InjHe; arc=none smtp.client-ip=68.232.154.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	s=arc-20240116; t=1741000638; c=relaxed/simple;
+	bh=cYRg/UtQ+QTjULJEROcLmWlBc1Hr8j1abFv9RUnzzAg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kqLYrM/sj+bTgo4V0rrHu7XcG1goPX8E/bfAG/NpLLXiyryD4gLfSY8UsPqaMa4igJ2JxDWFOk//aN8ZLvAYfHC6VjMpxV77ogwsqLZq3QoaQVUTrOa30eEk27Q83hJdbjMygVZ8jZfL66mu2rs3zMOyOrRe5jAVymUH0Qr5xaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XG8lXjLs; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="QA+InjHe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1740993198; x=1772529198;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=BtoQelzDR2YH4eJcJiAnN1ShwH9UMlztv91FI3QOKQM=;
-  b=QA+InjHeqMw2h8BtxSN9YF3NcSoHnXswe7vo071hbRu2B3hu0GyErJF8
-   WHzBdnNfIQWbP4ZtFa8Kre4bCzigVVV/0pPCiM9LO791qS6tytGw/gZJb
-   cOUkipGp0BXxHSpVSHsCoeIz5zwaqL0RZG6PIVGCeJ1nhhokXv+FuZFek
-   PdlDOm7drxezI2P9hA74gV466pI4JNPL6Y2lr7AyfZ5U4DmiUzKCzQSZA
-   rS680nSZrHQ+gu98rkzjkWGGLpPVQyWV9U5tb5nVRHTN7cVK9qUdR+mxG
-   FOqKIVzfE2GEDb3eVLEqF2jgSU9uunGlvOM3CsYPvNguo8G8rTB/5brKc
-   A==;
-X-CSE-ConnectionGUID: zipm0jdkRfKil1sH3LekQQ==
-X-CSE-MsgGUID: HgnAMhUcRYiKVH8wTkC38Q==
-X-IronPort-AV: E=Sophos;i="6.13,329,1732604400"; 
-   d="asc'?scan'208";a="205866723"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa6.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 03 Mar 2025 02:13:16 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
- chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.35; Mon, 3 Mar 2025 02:13:01 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35 via Frontend
- Transport; Mon, 3 Mar 2025 02:12:58 -0700
-Date: Mon, 3 Mar 2025 09:12:12 +0000
-From: Conor Dooley <conor.dooley@microchip.com>
-To: damon <sycamoremoon376@gmail.com>
-CC: Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul
- Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@outlook.com>, Alexandre Ghiti <alex@ghiti.fr>,
-	<devicetree@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>, <sophgo@lists.linux.dev>,
-	<chao.wei@sophgo.com>, <xiaoguang.xing@sophgo.com>
-Subject: Re: [PATCH v2] riscv: sophgo: dts: Add spi controller for SG2042
-Message-ID: <20250303-demeanor-snowstorm-d3ca34450099@wendy>
-References: <20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com>
- <20250228-factual-rage-0e1e1e48b009@spud>
- <CAKyUbwXUPBceR1ArZeLLjs1VNyRW=DngZyLTUCDGPFvT9wKikw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XG8lXjLs"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6dd15d03eacso41130526d6.0
+        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 03:17:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741000636; x=1741605436; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eB+LhY6NNcyLq6FCMk8O4Y073ty4L6CdzDqfsuEgpeY=;
+        b=XG8lXjLsVwSyxeyiRpTJQ31ypQuwSjnnY/R77X/N+5QdnUuPEVnQxwD46ZdaUhkEj/
+         pefQHXj/012UtloGzQdPUiKreduAHQ7BXTrdgBMJaZe6tRuAWI1Hs/grzPUr9Ycm9z5s
+         jdfF6ynu/seSk17wDGL0qkh7+3J7atT4LG2HUWTZHyiOIXn9XR5HlDED5dPQMrhHIv4I
+         zk+Ucu//P8UJegOaorCG2CnPa2dg1FeOD7uefxRk4qshN01hUqSDSFT7NdaPezBDFhhR
+         covP4rbwOzDteBE7znBYgzVlrz7wOhtFRXX2B4XM8raw4r72pfrkHFyskj+tKwcy/h7I
+         YLxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741000636; x=1741605436;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eB+LhY6NNcyLq6FCMk8O4Y073ty4L6CdzDqfsuEgpeY=;
+        b=Qum5vXBLsEuQTVCBNzRNhhkAz5NRb6BW0yYaH0zQHcPxvYNuE6V8u+VwZRCtoVBKJc
+         U//JkyZEE1gahzcjr94xSa4dZlKRNMRzx8Eh9t/G6dply8JnkKa7YsmcqU9pUQPHbjri
+         +ZqsdUL7FXoYQSVSM1t96tTnwcSzY9P5bPB9fGOTxKaSid3BFf4kTs2q/qeOabcxyI9C
+         QO8/CH6ypXof4wrioYx/BDce7XO13rlYSbsetepvFIHaLC1MLC86LQkYB8p0n6sCUcu3
+         SjQCvHNaJXaTkZ3akhbwumQBnqWqM4jXy3b/eY7V89TkLj1QFSauV78yrQY53eiSQ+Yb
+         KaMA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRVOZlKHd8XwTyiJl8Ax3xvdQz7tURMyFPUV0o+7vP2kLKEFNUzMk2hOw+OCZSUruMXixs0M8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzlK0xI+lv1emicgDV4loFl5KgF7XyUehkKdBzYDoyuWJni1gL8
+	fmny4rZkdQj3lenA5vdWf6JQzc2OqGgTlwFSABRRnFp7q5g+9PpP
+X-Gm-Gg: ASbGnctYF7oWO09LPMNyheiCAk+BGmM2rg119m8x2+Y2ctfqlth+fdUSUR4VwDrn62I
+	rTh0RXJPzSFPpw/86t0UdcZMBxuD2exDZjsBEf9KNCTzk/gAtKyewLSyualhfLBbL+FkmUs8gpN
+	ilr9jK4pzruZYogLFvNnYgDBVcLlsa5CA4x/3FhEeeCL8DfMJ5Tmdr+r8MFGjaeFh4XwkhdOuCO
+	Lgwsa1UTr9TzxgYyr2O0bFe8ExO1HSGqz5S6GwBxh3zlDLdRibBqTTQwgPabaqwLlB436vMFoy0
+	yYGCiRo1xu7tHuKUhE0P
+X-Google-Smtp-Source: AGHT+IExxBgO8Ucotj8ysaakDRBJ+gx6CiwxNw3F8tva7qbBLpnfOcN6RBjW/nocidB/DXegCw9ccA==
+X-Received: by 2002:ad4:5002:0:b0:6e8:af23:b6f1 with SMTP id 6a1803df08f44-6e8af23b74emr84913546d6.10.1741000636169;
+        Mon, 03 Mar 2025 03:17:16 -0800 (PST)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e8972b9aa8sm52127166d6.0.2025.03.03.03.17.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Mar 2025 03:17:15 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-kernel@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH 0/2] irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
+Date: Mon,  3 Mar 2025 19:16:45 +0800
+Message-ID: <20250303111648.1337543-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yvO2V4zUqjO1jyjY"
-Content-Disposition: inline
-In-Reply-To: <CAKyUbwXUPBceR1ArZeLLjs1VNyRW=DngZyLTUCDGPFvT9wKikw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
---yvO2V4zUqjO1jyjY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Like Sophgo SG2042, SG2044 also uses an external interrupt controller
+to handle MSI/MSI-X. It supports more interrupt and has a different
+msi message address mapping.
 
-On Sat, Mar 01, 2025 at 09:41:14PM +0800, damon wrote:
-> On 25/02/28 06:22PM, Conor Dooley wrote:
-> > On Fri, Feb 28, 2025 at 08:40:23PM +0800, Zixian Zeng wrote:
+The patch follows Chen Wang's patch for SG2042 MSI controller [1],
+which is already merged into for-next.
 
-> > > diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot=
-/dts/sophgo/sg2042.dtsi
-> > > index e62ac51ac55abd922b5ef796ba8c2196383850c4..500645147b1f8ed0a08ad=
-3cafb38ea79cf57d737 100644
-> > > --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > > +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > > @@ -545,5 +545,33 @@ sd: mmc@704002b000 {
-> > >                                   "timer";
-> > >                     status =3D "disabled";
-> > >             };
-> > > +
-> > > +           spi0: spi@7040004000 {
-> > > +                   compatible =3D "snps,dw-apb-ssi";
-> >
-> > I thought were were dropping the use of "snps,dw-abp-ssi" in isolation,
-> > and starting to require soc-specific compatibles now.
-> >
-> That=E2=80=99s better, I will do it in next revision.
-> BTW, <https://lore.kernel.org/linux-riscv/20240703-garbage-explicit-bd95f=
-8deb716@wendy>
-> has similar situation,
-> those patches only create binding but not implement the compatible
-> property of "thead,th1520-spi=E2=80=9D in driver.
-> When kernel matching, it will find out there=E2=80=99s no compatible of
-> "thead,th1520-spi=E2=80=9D so fallback to "snps,dw-apb-ssi=E2=80=9D
+[1]: https://lore.kernel.org/all/cover.1740535748.git.unicorn_wang@outlook.com/
 
-> May I take you a few minutes for reason behind it? My understanding is
-> that using soc-specific compatible is better
-> for future maintaining, If the device actually comes with some unknown
-> quirks not present in the generic IP.
+Inochi Amaoto (2):
+  dt-bindings: interrupt-controller: Add Sophgo SG2044 MSI controller
+  irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
 
-Yup, that's pretty much it. Those quirks could be some sort of bug etc,
-or they could be an extra feature. Sometimes the specific compatible is
-only used to enforce constraints on what properties are allowed, but
-that's more of a thing for the more configurable IPs like the dwmac.
+ .../sophgo,sg2042-msi.yaml                    |  4 +-
+ drivers/irqchip/irq-sg2042-msi.c              | 86 ++++++++++++++++++-
+ 2 files changed, 85 insertions(+), 5 deletions(-)
 
-> And all we need to do for fixing is implementing the soc-specific
-> compatible property.
+--
+2.48.1
 
-Correct. You just need to add a specific compatible to the binding and
-to the dts, the driver will work just fine with the "fallback" dw one.
-
---yvO2V4zUqjO1jyjY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZ8VyawAKCRB4tDGHoIJi
-0j1iAQCyO+C9MUu181Bphcy8Tffe1bTfr7IWlfWuccIoHjOBhAD9HxKK0VwJzs9G
-QdA5iHSPF66wWVcdBRk99lm7Oi90sAM=
-=RlN7
------END PGP SIGNATURE-----
-
---yvO2V4zUqjO1jyjY--
