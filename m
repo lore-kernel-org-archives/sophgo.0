@@ -1,60 +1,62 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D1E1F3BAD
-	for <sophgo@lists.linux.dev>; Mon,  3 Mar 2025 11:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7119D1F8BC0
+	for <sophgo@lists.linux.dev>; Mon,  3 Mar 2025 11:17:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741000638; cv=none; b=ajFkC7W63sFGOohvpUk/tCr1gLwqVsWg8q7EeFLIV6Zt/zMDAFk9IUGzpSic75TGgoyxhjtCDRbn5FCOVHuhLP0T8sJqaZi+ShXIJ61y5XHCtEJdAMYHh2UkbS/1+p2f5BsiIGqN/m7uRsxiRWzk+f3uLkcKwZyKrEHVYZWwH2Y=
+	t=1741000641; cv=none; b=qosY4CCINCX92Sp/DI6hOKtFpXplwp7rNrRq8pvdXICwhFZyWXuxN/Ju72AdaBW1Umj4LQfrf1yi+Eucz/aXuc1fDYZxtIYGDFJIc9FxqjJVw021FGGmTxnq5ulL6pcm/LcUom/iVUdd4vzyTQBZAugtGEcIB7eLKgT2Mz4+DAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741000638; c=relaxed/simple;
-	bh=cYRg/UtQ+QTjULJEROcLmWlBc1Hr8j1abFv9RUnzzAg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kqLYrM/sj+bTgo4V0rrHu7XcG1goPX8E/bfAG/NpLLXiyryD4gLfSY8UsPqaMa4igJ2JxDWFOk//aN8ZLvAYfHC6VjMpxV77ogwsqLZq3QoaQVUTrOa30eEk27Q83hJdbjMygVZ8jZfL66mu2rs3zMOyOrRe5jAVymUH0Qr5xaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XG8lXjLs; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1741000641; c=relaxed/simple;
+	bh=Jqe8Y5KSRz+van0BhEQNwElHuoSXwhP7NXBrkvhu+5U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AlFrfkSfd2YSiIknuKO8Fk2UK4dWpOaE7RPN0h4Va99JYsdbr94DZzfJsx+SGB96TSPZUGIEeet4AY4t+IVyas/LvG4C9/wcFn3NeaRsFxKB/I89rUsKjvQl7bjcRaLrNQeDzrAZHQefqRFcg5zLcFjKLAW8iVRSCYCgGXzGt/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JrSfMBhX; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XG8lXjLs"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6dd15d03eacso41130526d6.0
-        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 03:17:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JrSfMBhX"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c0bb7328fbso491900185a.2
+        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 03:17:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741000636; x=1741605436; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eB+LhY6NNcyLq6FCMk8O4Y073ty4L6CdzDqfsuEgpeY=;
-        b=XG8lXjLsVwSyxeyiRpTJQ31ypQuwSjnnY/R77X/N+5QdnUuPEVnQxwD46ZdaUhkEj/
-         pefQHXj/012UtloGzQdPUiKreduAHQ7BXTrdgBMJaZe6tRuAWI1Hs/grzPUr9Ycm9z5s
-         jdfF6ynu/seSk17wDGL0qkh7+3J7atT4LG2HUWTZHyiOIXn9XR5HlDED5dPQMrhHIv4I
-         zk+Ucu//P8UJegOaorCG2CnPa2dg1FeOD7uefxRk4qshN01hUqSDSFT7NdaPezBDFhhR
-         covP4rbwOzDteBE7znBYgzVlrz7wOhtFRXX2B4XM8raw4r72pfrkHFyskj+tKwcy/h7I
-         YLxw==
+        d=gmail.com; s=20230601; t=1741000639; x=1741605439; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cac9SGeYgxlf0ZE2MBOLXGNfNfGSnO8PvB/fPnkfcsk=;
+        b=JrSfMBhX4ZCjvvdLhf1M77CRXQS2+7eoz5MBHX4YExWQaQMobzhvrZp1Xv07EAwU5u
+         R+TlP0TvFy1k9/ddQrLDLbma/qY+TFMTyCw5KDkCuOeghclqUji3TWJYgl1R0NPkYz6X
+         pxjSjjXGQPM8Ga81x4MgMzbbO16h07bvwZcV/h6cj+pAtXmgl7XMl6OXmtcKUfl1I02+
+         olJiJK2mLJiCowPrH69csQpf96SlwfkO7YLLUxC2nZF+1618lmmGSvO00kFxyJiiGu2o
+         prAD5wMFFeAm3BHB/yXIsxTw4I//t9LMuukdPEzAkBverKOLfVrkjOkuLA5ie3rXm6YU
+         gnFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741000636; x=1741605436;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eB+LhY6NNcyLq6FCMk8O4Y073ty4L6CdzDqfsuEgpeY=;
-        b=Qum5vXBLsEuQTVCBNzRNhhkAz5NRb6BW0yYaH0zQHcPxvYNuE6V8u+VwZRCtoVBKJc
-         U//JkyZEE1gahzcjr94xSa4dZlKRNMRzx8Eh9t/G6dply8JnkKa7YsmcqU9pUQPHbjri
-         +ZqsdUL7FXoYQSVSM1t96tTnwcSzY9P5bPB9fGOTxKaSid3BFf4kTs2q/qeOabcxyI9C
-         QO8/CH6ypXof4wrioYx/BDce7XO13rlYSbsetepvFIHaLC1MLC86LQkYB8p0n6sCUcu3
-         SjQCvHNaJXaTkZ3akhbwumQBnqWqM4jXy3b/eY7V89TkLj1QFSauV78yrQY53eiSQ+Yb
-         KaMA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRVOZlKHd8XwTyiJl8Ax3xvdQz7tURMyFPUV0o+7vP2kLKEFNUzMk2hOw+OCZSUruMXixs0M8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzlK0xI+lv1emicgDV4loFl5KgF7XyUehkKdBzYDoyuWJni1gL8
-	fmny4rZkdQj3lenA5vdWf6JQzc2OqGgTlwFSABRRnFp7q5g+9PpP
-X-Gm-Gg: ASbGnctYF7oWO09LPMNyheiCAk+BGmM2rg119m8x2+Y2ctfqlth+fdUSUR4VwDrn62I
-	rTh0RXJPzSFPpw/86t0UdcZMBxuD2exDZjsBEf9KNCTzk/gAtKyewLSyualhfLBbL+FkmUs8gpN
-	ilr9jK4pzruZYogLFvNnYgDBVcLlsa5CA4x/3FhEeeCL8DfMJ5Tmdr+r8MFGjaeFh4XwkhdOuCO
-	Lgwsa1UTr9TzxgYyr2O0bFe8ExO1HSGqz5S6GwBxh3zlDLdRibBqTTQwgPabaqwLlB436vMFoy0
-	yYGCiRo1xu7tHuKUhE0P
-X-Google-Smtp-Source: AGHT+IExxBgO8Ucotj8ysaakDRBJ+gx6CiwxNw3F8tva7qbBLpnfOcN6RBjW/nocidB/DXegCw9ccA==
-X-Received: by 2002:ad4:5002:0:b0:6e8:af23:b6f1 with SMTP id 6a1803df08f44-6e8af23b74emr84913546d6.10.1741000636169;
-        Mon, 03 Mar 2025 03:17:16 -0800 (PST)
+        d=1e100.net; s=20230601; t=1741000639; x=1741605439;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Cac9SGeYgxlf0ZE2MBOLXGNfNfGSnO8PvB/fPnkfcsk=;
+        b=axlg5PhEKE46XEBqf5cVY4U4yol4dJ6C4XfT+BCqobOVckHf0KQRY2nYG2nR9Tn8Li
+         g7R0s9u0xgrjN/gCn4LozByzVaDbev3dXXvyr9nEMjAEmzddO8Vrw/OafKfbJI4jO+YC
+         fDauSW7Oayj7f3Q5f9jc8351pkNkLZARMJFHwyPVzu4+p3tkwlJPy88S4xHSX3MLlF5w
+         0WmYj7x6NGarL0FlNldZ5NBXGB0hRffVLxlPWTD7Nrken1JWUV6MgdUzUxslMuT61Al5
+         K17dZcocI6CCTwDRLt1rtkaQfeETYSAvXLomcBiX3jM6CXAGXJbBfGDNRrUzsKbhqhcx
+         jwCw==
+X-Forwarded-Encrypted: i=1; AJvYcCX4w/ZIwdlN1HGsu232urzqsdElinYVnyVMGw4VrFrdEhGHkmucPPZpTXYK8HT4aJ9KMAQVzOo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwpZ9CkQNiXX3nZyuuQidpqBEGcsi5Sjsl5ZVFd7z1lg+MrfjGW
+	gsIz+jLUIvbcJ15N3VpXZjgqrwTza+rGFAc68uNg/7q3ppadOSm7
+X-Gm-Gg: ASbGncumSIhcJDolyKJEIz9qoc5a6RUCI9TV90Ss/I1NevPgSgSx8joz7nHAH+y6yek
+	rBfo/iAKpuYW7jiF/58jJ+zo4GcDPSHy7ELWcVRiyYx97kL7XGopvGuDi/1M3n0r8sf9JgwrPR7
+	cGOQI49IGF8Ld0iR7huslIg7sK5TN08VvvykszYqRHfGodEf1NbIa06Qlgetcq28RVOS2YW7Hnk
+	3dyNoxxiDmkqMK3LkWrKugmQbSDTHteTS8o3+1wZsXbv+gs4rZFJUXxOIm48TXuDBEqBdWzN2PY
+	VtVsNtZGxAZNeoXlT3Ax
+X-Google-Smtp-Source: AGHT+IGeFdXvURQ7vI0EQuXxHZtwK5gbsycOL767I0CGGnL7OmQ9+5cFegMcJb3QiTypWujcAD+s4g==
+X-Received: by 2002:a05:620a:1aa8:b0:7c0:b0ce:a577 with SMTP id af79cd13be357-7c39c4cd3f4mr2211231885a.25.1741000639324;
+        Mon, 03 Mar 2025 03:17:19 -0800 (PST)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e8972b9aa8sm52127166d6.0.2025.03.03.03.17.15
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e897653722sm52123386d6.36.2025.03.03.03.17.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 03:17:15 -0800 (PST)
+        Mon, 03 Mar 2025 03:17:19 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Rob Herring <robh@kernel.org>,
@@ -63,13 +65,16 @@ To: Thomas Gleixner <tglx@linutronix.de>,
 	Chen Wang <unicorn_wang@outlook.com>,
 	Inochi Amaoto <inochiama@gmail.com>
 Cc: linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 0/2] irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
-Date: Mon,  3 Mar 2025 19:16:45 +0800
-Message-ID: <20250303111648.1337543-1-inochiama@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: interrupt-controller: Add Sophgo SG2044 MSI controller
+Date: Mon,  3 Mar 2025 19:16:46 +0800
+Message-ID: <20250303111648.1337543-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250303111648.1337543-1-inochiama@gmail.com>
+References: <20250303111648.1337543-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -78,23 +83,31 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Like Sophgo SG2042, SG2044 also uses an external interrupt controller
-to handle MSI/MSI-X. It supports more interrupt and has a different
-msi message address mapping.
+Like SG2042, SG2044 uses a similar msi controller to provide MSI
+interrupt for PCIe controllers.
 
-The patch follows Chen Wang's patch for SG2042 MSI controller [1],
-which is already merged into for-next.
+Add support for the SG2044 msi controller
 
-[1]: https://lore.kernel.org/all/cover.1740535748.git.unicorn_wang@outlook.com/
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ .../bindings/interrupt-controller/sophgo,sg2042-msi.yaml      | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Inochi Amaoto (2):
-  dt-bindings: interrupt-controller: Add Sophgo SG2044 MSI controller
-  irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
-
- .../sophgo,sg2042-msi.yaml                    |  4 +-
- drivers/irqchip/irq-sg2042-msi.c              | 86 ++++++++++++++++++-
- 2 files changed, 85 insertions(+), 5 deletions(-)
-
---
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sophgo,sg2042-msi.yaml b/Documentation/devicetree/bindings/interrupt-controller/sophgo,sg2042-msi.yaml
+index e1ffd55fa7bf..f6b8b1d92f79 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sophgo,sg2042-msi.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sophgo,sg2042-msi.yaml
+@@ -18,7 +18,9 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: sophgo,sg2042-msi
++    enum:
++      - sophgo,sg2042-msi
++      - sophgo,sg2044-msi
+ 
+   reg:
+     items:
+-- 
 2.48.1
 
