@@ -1,78 +1,80 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E383189528
-	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 08:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B451FBCA9
+	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 08:36:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741076274; cv=none; b=U6ktvjYjAMhLY2QA+CnYSO6o6HtrGFSi9JkK5GjnQbI1yI1Ag/VDPfvKONQpOq9xTCLVEg3bI4TEZJWbq0MjujFQp8l89Da2FObroAC4uB3lnImLXEqHWCd8dzvOtjVyChF/FxgUD9JIupdruZ3Mwb0GWVMQ+bpbmv5D+eMsYFg=
+	t=1741077385; cv=none; b=ECcPbjP6JdGN/iY8eEX3oepAhVdEQ3mj73YdlAzYixycn1X7kwlOFojgwfN/rbY2W+vb8T0eBdqewkqrlVGDeE5e6ovoB69Ezctebi8Ax3G/rDgIP7StDi2ybgUO/WK+33r8qNdXwmdfRHsyI83LhMy7zBn4nBQHMfy3FVHS1bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741076274; c=relaxed/simple;
-	bh=2gvZFK7B2/ygORWICSDGt1IIAH1Q/EJuv9x/GA3yxW4=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version; b=tUGjD+qApK8CAU1nFTl3cUzavP5IljTq0m7BP8fT7A6RV6J5z+brm+SfcAFKw0FUDEzJlTctxblkJWlBkArW4pO5009q0EFkxcFtxSbW+mhyX8Lm6MKBxloxlmz/Nn7NCjNwuv7IpKEmo8PcY0pjF2+R0tBwp4OR8eLUHwKj/Lk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MTgJYD5r; arc=none smtp.client-ip=209.85.167.174
+	s=arc-20240116; t=1741077385; c=relaxed/simple;
+	bh=JlScFjY8QWH6alV3B7iC/P9dMhJjSb4OnuXww/4RGEw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NIQQQ69l2Cei6YqsJ9NN81S8aD3swMuLtl9ePofsDcegBLFS8mSEvbDZdprauAGjBX5d2sUU1+X/767u+pGzL+ng8u4bu43yz9nfeorG8SivV/Cyqf2S/2zYkF8yZ+EoSRnbw+aDnBtX3IHHvm1yyucmlWPQ7m0tht9QzVE9vSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/snGrdT; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MTgJYD5r"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3eb6b16f1a0so1485254b6e.3
-        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 00:17:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/snGrdT"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2239f8646f6so44781185ad.2
+        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 00:36:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741076272; x=1741681072; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJf71JyQpoB7ef3U1+KnZ33sVZVyCe8BDjmZzBJrNfo=;
-        b=MTgJYD5r/K04lZPk8mAAsQwIQ3CZND6hhEy5tYE+WAjf9E0EGxfSVuoOgIYbeOWDSY
-         hpLQiHhz5sSCGbLNM6mIVLJtyF5jcjAS9Zz4YXCgVEsgLsN8bAkeGUhgp+myQiqYgDjB
-         TcEFxN32BOrXcatXsAaRWuKZv4nyjzQ/odesJDjzHRNKzihmmdnLWkgRZDKBm6Ns0xWK
-         ObO5SysXPCXhpwUSnkQx5AVL+MR7otMDMJ+IZAS7C4mw1FHpya/abbTCiXUlZeIMX9F+
-         +FtXUqinQMEyne5Hy9ENA+VDdrdkgL/We+PdX653kHYfnQjf3+lNV+jDEiLYK8bjuZWB
-         5VpQ==
+        d=gmail.com; s=20230601; t=1741077383; x=1741682183; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UoXbxXKgyk87JlDdAMTtGXs2RE6Oglf8lNp5fJA+vrg=;
+        b=P/snGrdTjfGgb1OfdtKFXSy6Ducc6G6pvn8F5lsS8y5Lhe6A1F7jeLXAaGYFSN8wz5
+         CGRbMgwqltghyICFEyVvbM+0ToVXyWspsSgJnCR05jFcWKKWKzMojePsYFS9Gl6Nu8cC
+         t/MrnzdMatqfar9WGQvhSogQYdMXmG2N9/49OLDfw3+nX7tzuDMxJoQU5YFuAVK5Maxc
+         U+GrEBEbd/CY1czGpyMn6JfR6/2oJpSViIjbr/Vj1puJogRuWt5ZYlY/EVWKY5L5jEg+
+         VWh+G3ZKpK8rmsJcljrLfHy/C33YGRiw4hhU0fqY8SYal9sNRkauQPU9IOboqVxufC1I
+         M/FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741076272; x=1741681072;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJf71JyQpoB7ef3U1+KnZ33sVZVyCe8BDjmZzBJrNfo=;
-        b=aF7YKyrFdWfaruD3h1him6CfV9ZuKVfIcGvfcnogZTF2WT16tVUp94hgzmqslKTLsY
-         lMaXSJVy8hzwnEWX2iOxqiflitCXVf6IdaSiUHvDT+saO6AY8qkASIcdoAVDLjcY7XYI
-         +QjXss28Ia8gWK22AjJaJjtQUM0oXOpAAlYy0vxgricTFx0k6IVIFfFxG9wvzE/fHldH
-         AI5ZAXFeLLTOmAcGpbHETfuei5zTA+0Q2EAh4Kc8mAstLg3OV0nD9+Ungj2V2uSfoVMb
-         XuR15pyQiB69jkiCggWOD8T5Gmt1XfZ9X6SEYNlG5zkZmeyPGJjmuDiw8FvuDaH1K7Rc
-         FsgA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+y+vBuXJ21RDMoWx120ZrFDiYp6QMuHDd4uCwIWv0JQ5hgmfnjrxytv59jk78W2SUykNE8IU=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzefnz4CbUtkpivKxIm5pMjvSJA6aePmSt6Z5xy0KLqCbPl7Gjv
-	s8iqWCFghOiWCUJBRipOrUR1CXI5RtcDz9uO7AMU4+ln18gfweAl
-X-Gm-Gg: ASbGncsMZ+JCmo2PvJQhuXjX0w5IM6fe+nDPtCLv4IraWzJmRtRgnt8cUBwJiI2xdB+
-	tfhiw+9NVlg0K1qXZK1XackBWf0w20QalEJvlkoWPNhezjeBzy1fwz/qKZV+WUFyBgJRVXzRLrN
-	EAqPx25NnRoPxFBA08Vy/0PQI0B+9rXPnwUqoh93w10Hwq1L0RqAEu9UjRqfCrbI791f09+BwTH
-	PRX20uASFRoe1q0+ZMijk4jm/AumcRnEJF48HMy3Dut50MYBx+fjGPq7A5SNnAaT49B5iIwlcpx
-	kPUQPXCbYfKhsi6JriMyw68lOD0ld/4Qvh4mHTRAoF3EIzYn9vcYHso=
-X-Google-Smtp-Source: AGHT+IEzPzDeanddwsgQUTJLbFlFQskBte1JTGbzjSm17M9A3zitxeIjEZa1MG20CvbmO1rnKTczyw==
-X-Received: by 2002:a05:6808:308c:b0:3f4:1912:1064 with SMTP id 5614622812f47-3f558601f19mr11817650b6e.34.1741076272226;
-        Tue, 04 Mar 2025 00:17:52 -0800 (PST)
-Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72a0f80b6f5sm453009a34.38.2025.03.04.00.17.49
+        d=1e100.net; s=20230601; t=1741077383; x=1741682183;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UoXbxXKgyk87JlDdAMTtGXs2RE6Oglf8lNp5fJA+vrg=;
+        b=Av651DEodR46BwpRP0aKQgQV0zZToY6nbSWcqe6y+6QSn+WNAbcC/cWsv1TqqsEiSn
+         zCeC4EeQZHqbT984QiTTtyf3BArLymlT2xkjMQnPSCu5kv0rn9yYM5senZU/wXeetPkO
+         5/Kfr/eAb4wqjYKYx6+/2J9Tutidn+UG6OdchBqBr6UIwvv3zLsbC5n7aL7IQ0J7P151
+         /gU7Oqc6Uzevgn04A5nwvcXmx7wkUwx13Be7d2auKC9dLrexmb4K78YdLSmKNVqZd/AG
+         FvpoUOoiFNaCvd1jxr0TBoMDZZW0P7WLXLGpJ8mCVB8fByR3ywXKK2dIyAPyJrvuQB1L
+         qK1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUxB5xom3rrccU2X4vMjeTbsXAwXyjjTCbA7XMJvDm809GPpZRySNpWiu1VeIuZh5FVpm8Z9p0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzoRD+fn4+73gz45TWobBmCet0vRgaDV6nDIUZCcj98kMNCEOce
+	/N7lAwbsY0s/EPWMdsRBBkjzdBR+/V4/lviKJx57GabSqujFPSs3
+X-Gm-Gg: ASbGncvrN0w3aXDDv8i0lEKvVSAc39UwYOXOmX+OEdeXPjb7ZC5lWByPrArI83d9v8c
+	yOTRfmg9aVowfmIn03Gb5A4hDtXzSD0P3fTewPIZFoC2RQcrfs7W8R2kv5ioOiMwhpRDChgaztU
+	trmYkfxGPZlWmXra+6/n75HRCcsrZEi1uFltl1pqtKegYBHuogCBAegr/uKoYvgnk5TPPLV6OJo
+	1pgjgMYhWvwS6o2qRetsSz8gC35jWxKcMvU3FuSb0lyFdOhe8+cWOwSukmkQS6HuvyzADxe7q2+
+	qJm4/xsZC/iQhAhkOAy1Bb/g60Rac5434MAoweI=
+X-Google-Smtp-Source: AGHT+IHftL+KBeXBmrscPavFmNZrOosSLvGSCAflYbLbvZZUp4Q0oBIUi+ZQvunyvSVmM/kyQ7jFFA==
+X-Received: by 2002:a17:902:d2cb:b0:223:6747:f82b with SMTP id d9443c01a7336-22368f7b57dmr221738015ad.13.1741077382988;
+        Tue, 04 Mar 2025 00:36:22 -0800 (PST)
+Received: from cu.. ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-223504dc3b7sm90597735ad.173.2025.03.04.00.36.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 00:17:51 -0800 (PST)
-From: Chen Wang <unicornxw@gmail.com>
-To: lpieralisi@kernel.org,
-	kw@linux.com,
-	manivannan.sadhasivam@linaro.org,
-	robh@kernel.org,
-	bhelgaas@google.com,
-	s-vadapalli@ti.com,
-	thomas.richard@bootlin.com,
-	unicorn_wang@outlook.com,
-	bwawrzyn@cisco.com,
-	wojciech.jasko-EXT@continental-corporation.com,
-	kishon@kernel.org,
-	linux-pci@vger.kernel.org,
+        Tue, 04 Mar 2025 00:36:22 -0800 (PST)
+From: Longbin Li <looong.bin@gmail.com>
+To: Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Longbin Li <looong.bin@gmail.com>,
+	linux-spi@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev
-Subject: [PATCH] PCI: cadence: Fix NULL pointer error for ops
-Date: Tue,  4 Mar 2025 16:17:42 +0800
-Message-Id: <20250304081742.848985-1-unicornxw@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Subject: [PATCH v2 0/2] spi: sophgo: add Sophgo SPI NOR controller driver
+Date: Tue,  4 Mar 2025 16:35:41 +0800
+Message-ID: <20250304083548.10101-1-looong.bin@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -81,87 +83,38 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Chen Wang <unicorn_wang@outlook.com>
+Add SPI NOR driver for Sophgo, including read, write operations.
+This driver is only suitable for NOR flash.
 
-ops of struct cdns_pcie may be NULL, direct use
-will result in a null pointer error.
-
-Add checking of pcie->ops before using it.
-
-Fixes: 40d957e6f9eb ("PCI: cadence: Add support to start link and verify link status")
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
- drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
- drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
- 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index 8af95e9da7ce..9b9d7e722ead 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -452,7 +452,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
- 
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-index 204e045aed8c..56c3d6cdd70e 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence.c
-@@ -90,7 +90,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
-@@ -120,7 +120,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
- 	}
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index f5eeff834ec1..436630d18fe0 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -499,7 +499,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
- 
- static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->start_link)
-+	if (pcie->ops && pcie->ops->start_link)
- 		return pcie->ops->start_link(pcie);
- 
- 	return 0;
-@@ -507,13 +507,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- 
- static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->stop_link)
-+	if (pcie->ops && pcie->ops->stop_link)
- 		pcie->ops->stop_link(pcie);
- }
- 
- static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->link_up)
-+	if (pcie->ops && pcie->ops->link_up)
- 		return pcie->ops->link_up(pcie);
- 
- 	return true;
+Changes in v2:
 
-base-commit: 7eb172143d5508b4da468ed59ee857c6e5e01da6
--- 
-2.34.1
+  Fixed following issues as per comments from Yixun Lan, Chen Wang, Inochi Amaoto, thanks.
 
+  - Replaced "sophgo" to "sg2044" to avoid conflicts with other drivers.
+  - Improve driver code:
+    - Improve coding style.
+    - Removed the [PATCH 3/3] in previous submission that based on the baseline not submitted.
+    - Added error handler to destroy mutex if probe fail.
+
+Changes in v1:
+  You can simply review or test the patches at the link [1].
+
+Link: https://lore.kernel.org/linux-riscv/20250224101213.26003-1-looong.bin@gmail.com/ [1]
+---
+
+Longbin Li (2):
+  dt-bindings: spi: add SG2044 SPI NOR controller driver
+  spi: sophgo: add SG2044 SPI NOR controller driver
+
+ .../bindings/spi/spi-sg2044-nor.yaml          |  52 ++
+ drivers/spi/Kconfig                           |   9 +
+ drivers/spi/Makefile                          |   1 +
+ drivers/spi/spi-sg2044-nor.c                  | 500 ++++++++++++++++++
+ 4 files changed, 562 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
+ create mode 100644 drivers/spi/spi-sg2044-nor.c
+
+--
+2.48.1
