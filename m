@@ -1,60 +1,62 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9340D18CBF2
-	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 07:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4321F8BDD
+	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 07:13:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741072400; cv=none; b=ba9IOJ7JjkqDLgzt2n8Z3yLX14KdIYpgFk7C9TtBzVYJrF43B5lGthCBId8+EvIEWqbieD3VRMnPDG3UGa2iKnhTn4jxK8VP9JxvKazPzrJo+B5LQ1W81Tm3RLINvZF+GdEZsbv+ZsHXJQTjYHD+OOOX17GJ214vQC+GxDZxgas=
+	t=1741072403; cv=none; b=FuuyRXsrrbPBoiAymsTthh33UuYW0/a2tTo2dd7qoeLf9yerCvul9OeuhH8dH7y2BuWoceEWsrGC6YWAzvdUOYqeMnGrThsiEQ3/m3LwbH+oOg2r1ebS3d/U2MxwKEDi+mBuEvy1FolshR3P/c67iVvKhkeD44IhpeT/iLIvRHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741072400; c=relaxed/simple;
-	bh=gpr/gu0uMIzZiWGXCBHbF3MX1vSus63CKXmYmCWxdq0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Al8jgIrhKaU/mdSMQ1o0UaeBjd6TiqVEqfcAWlUJ5N+YG4WusMXrwQmhsZ0b551nr3m7qeCYmMbZvdHkautgr6Pw9RtpaSJe6G/yoL/ChyfT2rkHoG3pb0o2UK/wMwzWno1jJQxY4AxLKbeZteNEhgbWHYAWLNbNYSXMblfnSSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b4T8wwNN; arc=none smtp.client-ip=209.85.219.41
+	s=arc-20240116; t=1741072403; c=relaxed/simple;
+	bh=WVGXxBVXg1aTl+bt/UgUg63ySw9YcbgbqMypwQzqcBk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CBkA9bC1YUU0PqZMZWzpwfz5tERW0QJrCDMEuO+itxLcJN4ihj0qE/xo5D9bnTpkMm6B4ej+Kl4GcceFEVqmaoZZYus74xYeC0HeyrkKjZYYumQSsy6Ico4Ltl6vIvkna3uZkgeTE3X+p7V9ZR/eA/+/NF0cFbNCu8leQtuJ+Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UXUzDpiu; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b4T8wwNN"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6e41e17645dso52957686d6.2
-        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 23:13:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UXUzDpiu"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6e89bce647fso50439516d6.3
+        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 23:13:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741072397; x=1741677197; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=04t/KBfFwVvzecOXRhML0Qn2Gh7Rc4imVCzpNOWwyWQ=;
-        b=b4T8wwNNrVCRXhGsdtNcyQaXxj7RvlHnMXIT9+dOEKUuuMAgcibxk52PiaYLQj7TtS
-         f5Wpm318EhB6agXqkJJLpEsDahpSUgfvNvraITAFstAfr/ZDp54ObFyL5pivTQgF7rPA
-         gnA3izpCH9LxIIyAgJrRRs+CUEszd70/oYAFIGuSrTon06LyKcLtQjNe0mofMwZJ2TTI
-         /HURvlhvgeJx9MVF+b917N5TEaFsZGfD+rqZczYAyoJlihk/iImdA0jvjvKuW/ZlSBA9
-         uac9nFEg8doHNyN+mXLxg08X5Rpj/lTGOC80g4Q0f2TrC7FP7higLXYJZP/0MVCNPWso
-         KK0Q==
+        d=gmail.com; s=20230601; t=1741072400; x=1741677200; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qwq6vuPmMVxWBoFCtw5ASb1VQcjTGQ3SeY+f38l0crU=;
+        b=UXUzDpiuXXgZjK54i2eMFg0j+Z7bh9vDjVhAEkNVK8SDAMmXFgHLEyxkUOLPEFVi7z
+         zeTKfPlOBSGzpKIEOTKmfN+USebMArrQv9rMzeNZqJ3uf1Kf3t9QZlNZGNkP8mmHbTji
+         Z6BlHwqy6EHVgbn1o9+zPRenH1Y0J5tsE2HNYf8gPifZQAQMUTF64gBilgaIzUbxyutP
+         sB8MMzgYO+3nFm+PkJ7hM1mgD2jbnsT0rv5N5yFsvwZIcNLiSVbI0rUUyt4kiFxcwu2S
+         ff/nLgQLMKQ3d/noctY72esWAZe9hKX3k1Ywa7Vv+RmvBqH1HZFI9ltEVk6hE5bTbOTd
+         yd8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741072397; x=1741677197;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=04t/KBfFwVvzecOXRhML0Qn2Gh7Rc4imVCzpNOWwyWQ=;
-        b=wVfnaH/MaKTfKKhxiMF7jYUe7dNVMq/p7qR05jPRZw3mAx/IRsq6ZPaVk0Up6np64d
-         nN71bWqibzBr5B7TpV2tzk3QoZ0MM5er7SpuSKFpK2Msv/X7KVriZIsQaUZjjKzlOFIl
-         xQDR4Hn3xDUsEpqLhz2TaakK+/XKLggFfTyZK+prloM1waOrWXZupSFiOXGQmFfcDSII
-         GRRFSPqeZLcsWMMWyAae5n8biEYaj4Yvkj4VRLXkXQ+trXjVjBYqSCvNievft1r2tBWS
-         bi0BOGgz4SjCeV/iwfRkSNbvBkL5ePv8DyBo9JKFrDvQDxLWW85MRR+fQffbr9SKWNfe
-         E7FA==
-X-Forwarded-Encrypted: i=1; AJvYcCWrj06HWEVRtXuiWGRTUNfCRA1WYnoei9f9obxmUuavYLz1DzbX0euvPGcqpUi859eW8okIUhw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZhunIYxETurA7rEFVrw7iVRQ4gZPLFH346rlQ+C7lJHV+OEvL
-	1OErlhyiINNuekzZ+Ka0dnJ0EZ+g6lTMfKcnNb8hLVNQEZpaBmgx
-X-Gm-Gg: ASbGncuQuBQx6sCMTkXu2I0vQ3x9XV5NPz9f+u90XRQXPAlHsWLGS12n3eDk+ADhZ10
-	8IplTL7wDY1u6NqhRFzcz+Ij8z9voy5Gyab4XIO6Ste/opJILwJHYXD1oFRpXLP9qklTF+b0s8u
-	n8zXZrAoQAb3OP0zh7OSLf2yto5pf4x5GNgK65H44gZjOyHf3EC77X9p1o6EvO4FezN+ECLPHho
-	wabhI0NkMXT+QPQjlbnuosI9+SRyEFu/zjGDqAU3G8yGqCM0cputJW0hL+V41IQFxA6PDsngpTy
-	hH7ovQptqsj/b/rEyi9U
-X-Google-Smtp-Source: AGHT+IEKObI0ybp4bSeJ6S2BRkKmZEZlFbaJV85NGpcqaQnfX+y+IKf1GVvL/+XToao/2dp4HCiEoQ==
-X-Received: by 2002:a05:6214:2b0b:b0:6e6:5bec:13a0 with SMTP id 6a1803df08f44-6e8a0c9f140mr258457966d6.10.1741072397382;
-        Mon, 03 Mar 2025 23:13:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1741072400; x=1741677200;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qwq6vuPmMVxWBoFCtw5ASb1VQcjTGQ3SeY+f38l0crU=;
+        b=I8MTqta0k+mmhFhdKksgaUKghMN7FSHv0NdCYgytyuAJQou6i2UxV6aeRi4moSIa8z
+         5R1Tc88rEWBD1APJLJsTNvSDUu3LM2RkghQt1r4Cn3utVtQAEdVF/G9dpVh+yDD1yYNE
+         /xjTz7ZMgJoDUjtvSP3GjG4nXnbTTPZkP7V4lgb1qh0osCp7jYBt2Cmls6O4OvL2W0Lb
+         f3faYJCBNX512Vh5RWyCAEIasLw2zqLNlTGsW0Qyyo8HKZsK8L+M22GjJpWE3chLVrDp
+         aK2AizuVqdq8A+FsG5DDJB0RXT4IuBzAlCE9re+nZtxDjGbnloYZj/GG5CX32WTBnxzu
+         /s8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXZ5Qy2epvd+dqltZV+R+Xf3miCPa3ZogeauhswXuoLDrK68OQoGBulBK5Nmgo6M/e/TbuPBZw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyXA55s+iq4Wdttd1eJ0BA5r41ycJJ4aUxI48BArgD5VHqr6VgC
+	GbpGcpWpQp4Tw44eqExjBS/PpV3kUjhfRvUYFgVDUG971r8KksMf
+X-Gm-Gg: ASbGnctdylNgjPeX8y4q6uBWQHaF8MNWyy+jo0xUz42aS4uUrHwc3cVypJNWlAviYCE
+	SaowTGWV+qL+XNMWYcXwjvBXcBeU1hZpDFQhfsUMX8ZrPRtfZXNX/ZareNMTzqmnOUeNx90OfPs
+	1pFwV2/rMXf/C8mrvLy0Z3hoqk4wbpWe17+iVyg7vmm2bT+f9VQ1/ksHcY03aw7taZX3osWzYBS
+	aQsvxDKOW3GM8QUAhJTsqL6rcMDETvOqebQiZ4XsbrDpOTsamF+KxpbVq8mXs3YZgUfD25HNCuV
+	k2wSRy0z0DbC4e/nbmRs
+X-Google-Smtp-Source: AGHT+IEKSycuKiArRIB4aWqnh4JSLR0m/JXw8SZWd7kwiy/1aB9gpEr55GNFHqueYCWrKy1q0fPQNg==
+X-Received: by 2002:a05:6214:2aa1:b0:6e8:9957:e705 with SMTP id 6a1803df08f44-6e8a0d4a9f6mr259141056d6.34.1741072400555;
+        Mon, 03 Mar 2025 23:13:20 -0800 (PST)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-474691a1f2csm69783811cf.13.2025.03.03.23.13.16
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6e8bd85184csm33263806d6.49.2025.03.03.23.13.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 23:13:17 -0800 (PST)
+        Mon, 03 Mar 2025 23:13:20 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
@@ -78,10 +80,12 @@ Cc: linux-pci@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 0/2] riscv: sophgo Add PCIe support to Sophgo SG2044 SoC
-Date: Tue,  4 Mar 2025 15:12:36 +0800
-Message-ID: <20250304071239.352486-1-inochiama@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: pci: Add Sophgo SG2044 PCIe host
+Date: Tue,  4 Mar 2025 15:12:37 +0800
+Message-ID: <20250304071239.352486-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250304071239.352486-1-inochiama@gmail.com>
+References: <20250304071239.352486-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -90,39 +94,145 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sophgo's SG2044 SoC uses Synopsys Designware PCIe core
-to implement RC mode.
+The pcie controller on the SG2044 is designware based with
+custom app registers.
 
-For legacy interrupt, the PCIe controller on SG2044 implement
-its own legacy interrupt controller. For MSI/MSI-X, it use an
-external interrupt controller to handle.
+Add binding document for SG2044 PCIe host controller.
 
-The external MSI interrupt controller patch can be found on [1].
-As SG2044 needs a mirror change to support the way to send MSI
-message and different irq number.
-
-[1] https://lore.kernel.org/all/20250303111648.1337543-1-inochiama@gmail.com
-
-Changed from v1:
-- https://lore.kernel.org/all/20250221013758.370936-1-inochiama@gmail.comq
-1. patch 1: remove dma-coherent property
-2. patch 2: remove unused reset
-3. patch 2: fix Kconfig menu title and reorder the entry
-4. patch 2: use FIELD_GET/FIELD_PREP to simplify the code.
-5. patch 2: rename the irq handle function to match the irq_chip name
-
-Inochi Amaoto (2):
-  dt-bindings: pci: Add Sophgo SG2044 PCIe host
-  PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
-
- .../bindings/pci/sophgo,sg2044-pcie.yaml      | 122 ++++++++
- drivers/pci/controller/dwc/Kconfig            |  10 +
- drivers/pci/controller/dwc/Makefile           |   1 +
- drivers/pci/controller/dwc/pcie-dw-sophgo.c   | 270 ++++++++++++++++++
- 4 files changed, 403 insertions(+)
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ .../bindings/pci/sophgo,sg2044-pcie.yaml      | 122 ++++++++++++++++++
+ 1 file changed, 122 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
- create mode 100644 drivers/pci/controller/dwc/pcie-dw-sophgo.c
 
---
+diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
+new file mode 100644
+index 000000000000..2860d0f13146
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
+@@ -0,0 +1,122 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pci/sophgo,sg2044-pcie.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: DesignWare based PCIe Root Complex controller on Sophgo SoCs
++
++maintainers:
++  - Inochi Amaoto <inochiama@gmail.com>
++
++description: |+
++  SG2044 SoC PCIe Root Complex controller is based on the Synopsys DesignWare
++  PCIe IP and thus inherits all the common properties defined in
++  snps,dw-pcie.yaml.
++
++allOf:
++  - $ref: /schemas/pci/pci-host-bridge.yaml#
++  - $ref: /schemas/pci/snps,dw-pcie.yaml#
++
++properties:
++  compatible:
++    const: sophgo,sg2044-pcie
++
++  reg:
++    items:
++      - description: Data Bus Interface (DBI) registers
++      - description: iATU registers
++      - description: Config registers
++      - description: Sophgo designed configuration registers
++
++  reg-names:
++    items:
++      - const: dbi
++      - const: atu
++      - const: config
++      - const: app
++
++  clocks:
++    items:
++      - description: core clk
++
++  clock-names:
++    items:
++      - const: core
++
++  interrupt-controller:
++    description: Interrupt controller node for handling legacy PCI interrupts.
++    type: object
++
++    properties:
++      "#address-cells":
++        const: 0
++
++      "#interrupt-cells":
++        const: 1
++
++      interrupt-controller: true
++
++      interrupts:
++        items:
++          - description: combined legacy interrupt
++
++    required:
++      - "#address-cells"
++      - "#interrupt-cells"
++      - interrupt-controller
++      - interrupts
++
++    additionalProperties: false
++
++  msi-parent: true
++
++  ranges:
++    maxItems: 5
++
++required:
++  - compatible
++  - reg
++  - clocks
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    soc {
++      #address-cells = <2>;
++      #size-cells = <2>;
++
++      pcie@6c00400000 {
++        compatible = "sophgo,sg2044-pcie";
++        reg = <0x6c 0x00400000 0x0 0x00001000>,
++              <0x6c 0x00700000 0x0 0x00004000>,
++              <0x40 0x00000000 0x0 0x00001000>,
++              <0x6c 0x00780c00 0x0 0x00000400>;
++        reg-names = "dbi", "atu", "config", "app";
++        #address-cells = <3>;
++        #size-cells = <2>;
++        bus-range = <0x00 0xff>;
++        clocks = <&clk 0>;
++        clock-names = "core";
++        device_type = "pci";
++        linux,pci-domain = <0>;
++        msi-parent = <&msi>;
++        ranges = <0x01000000 0x0  0x00000000  0x40 0x10000000  0x0 0x00200000>,
++                 <0x42000000 0x0  0x00000000  0x0  0x00000000  0x0 0x04000000>,
++                 <0x02000000 0x0  0x04000000  0x0  0x04000000  0x0 0x04000000>,
++                 <0x43000000 0x42 0x00000000  0x42 0x00000000  0x2 0x00000000>,
++                 <0x03000000 0x41 0x00000000  0x41 0x00000000  0x1 0x00000000>;
++
++        interrupt-controller {
++          #address-cells = <0>;
++          #interrupt-cells = <1>;
++          interrupt-controller;
++          interrupt-parent = <&intc>;
++          interrupts = <64 IRQ_TYPE_LEVEL_HIGH>;
++        };
++      };
++    };
++...
+-- 
 2.48.1
 
