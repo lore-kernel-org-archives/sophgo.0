@@ -1,418 +1,196 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011032.outbound.protection.outlook.com [52.103.68.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4D21F9F61
-	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 07:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741072407; cv=none; b=kG578Rc2nPQCsKBjjv3c85wkySFu1ewZHyI4iWGHDbJOwJZF6yQeoig7IT8wVJbBA2aY7xtv+GGY1daAcJBSJUXTWENiJUXNDCNeb9tFsnKUr5XOb40MFLpJjRjNEMeeVIEjtiCd9AqcBPQzwkxsFjXlQxcctNSQsOdwx2RBEHQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741072407; c=relaxed/simple;
-	bh=kbGFW3DXNmNaI/LJicjMxyiKRsoi7BY1jdzzyDoctOo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QK3deLljQlmm74lUruekiC6m/8r4PCd7iOcpL4EoWmOSG3hUYm2k5nEUzCm924c9UrHyXs8mg9BCwXMB06hZOHOYXVXlqJXJ9qn/DjY5yJgK6UwkaHY/zZnpdbFEljagp1+wHRrUHPaAdgXAW3aIDdm0+UXjCipxyMweGSccQsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZUWlLPh2; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348051F8AD3
+	for <sophgo@lists.linux.dev>; Tue,  4 Mar 2025 07:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741074860; cv=fail; b=p819jgX9wqf6UOKM174QgJyGtpElWPNmMR40OD6d34cXQwEkpasluaS8QQPYpuFkYyLS8de2jNZyCMG14cYoUY3EuWdBNLpGpCuV/fqfvWlcYHLOAk/0RBEb93QGfzd9AdU1Zs3R4ZGyV3KlRLP4N7LXi7fv6sL67DxOjFL0+wQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741074860; c=relaxed/simple;
+	bh=9rKyYOkqG1QDOrJqZZRq1QoleLG5LP19KslAF94iUKE=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=M/rANLYblPyUDuCwGNDaC2B4oLJ41zob1qmXw8jaiyxdLgwrzuJ3OLcJJloSCEyt5STN/aWZIzhxsg4YKjs9xjvBgKOVJ/zHq70P9N8TICbcxtlFo2okNE8pL1PLHVuzjPpw51X2ptPXDkuqjXVQZQDLpfVZVMahXcJX4uufW5s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=YZ+Ev52f; arc=fail smtp.client-ip=52.103.68.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZUWlLPh2"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-471f4909650so47918011cf.2
-        for <sophgo@lists.linux.dev>; Mon, 03 Mar 2025 23:13:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741072405; x=1741677205; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rrdQz9Cgs/e9JZOqG5wHg9flLJAY+0kITfj7PWOImhU=;
-        b=ZUWlLPh2yYFjP/e+VCwR2EurFfcCTJvvLbbpV7HJ77FfXSIwFsXhv7X1SjYIHA+ApY
-         Pdy0kYQ9xqNDZUQN9WZ1cwVUbN/Eny9AljiTfzHrViQKWxTXTUb/guwOBB93EoQDLM7z
-         DttpIiZuFimf44pSsKv94HW8sPktSAKJpIjA++QGldLM26X7g+4buSqx4o2RKo/7Ttby
-         gXwsAh8OJTrFwG7BoF+KJon/xCd/99m0sCDbgl0U7lq8K5e8PLhfWaPldpgfpZtk/Ui8
-         SK+PIH0eq0nJ9gAl10WIZ5m3rsWethQ/4KahvSCopv4bG2mLzcnitb1iNYLsk6oUAH/V
-         9k5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741072405; x=1741677205;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rrdQz9Cgs/e9JZOqG5wHg9flLJAY+0kITfj7PWOImhU=;
-        b=NdHHtnlVpE/Z7a01OkloNIcmn5eJ0ZnWEq1wf+nnIeLrAAVe14MF+8YOR/vptklzpM
-         6MouN8Mqm/wtTA5kLVlbnGtEL/JCQP3rhmBm0eXLmtx5dAhxc7b/rxmP2I3uHDAYEAYA
-         KqA9V7lfRtU2uXppi/2rZZrDdNuWaNhL9bI+ne0RcOkQQt1/gvth51F2ScJSI8QJOuXb
-         KkL+7XWSXldl5cDmJofAiZ/ooRWIPHWRExv17Dg1/iZTE8keLri1GfnHvIhodPspdjcp
-         XWahxOrfXnD7axFFA7vSE4c5YJb6afltFcHoee/F9Ee8+PtZlVFnXv+CaGZGVi3Wcd1z
-         MUkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVLDWirnV33NdARbV/2M2kpMZwG1ouxhAeR4jz2Al4lGN4PxhkJvqCTwR+b395VZ7Sw4IPypzM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQlIVCcyb6Wh836ui0bZxqPQ++lny8qx+vWascanvogpu9dYrx
-	X9ONmqiK3n91C9ge1WBnBOlrym2iAgfWYmj3bjauIfershM+psRW
-X-Gm-Gg: ASbGncu3FVtJv8tPsqoEQd81vxPy+Dwubjw2tLXkP9DcY31nRvVj6UN6Bb2cSn8RqRL
-	zsNvI4o39bA1kCWmliBhdAN/K4Dc9BTZYu0bhKMt5KIMzM6YyGqauvCnQyDvCcs7T5jz3yUoIvT
-	/qyg78O9IU7MsfPvc0iihreYBgJerftXZOIPqP4ZA0kpdq/9L8+KTC1MXdILOTM2BpZNxTHT1Lz
-	iREp745V5M7hOKkpRTWD60vPb7kTjR5O/Gw0ikycRYzZJ2RaxQ9VzwyWViwdC5hp9sa4dsGF1be
-	aYx5V+7cGOd6DZ2nIf6W
-X-Google-Smtp-Source: AGHT+IEyqWPUhMGvruobgDMmuMPk0gKDbAAIQMmUTsNb1WXjMm/eOtaru71S38A51PS4dUF/LL7KkQ==
-X-Received: by 2002:a05:622a:352:b0:475:42d:ea0a with SMTP id d75a77b69052e-475042debfbmr320181cf.38.1741072403930;
-        Mon, 03 Mar 2025 23:13:23 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47500cef956sm3231951cf.54.2025.03.03.23.13.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Mar 2025 23:13:23 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
-	Niklas Cassel <cassel@kernel.org>
-Cc: linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 2/2] PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
-Date: Tue,  4 Mar 2025 15:12:38 +0800
-Message-ID: <20250304071239.352486-3-inochiama@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250304071239.352486-1-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="YZ+Ev52f"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LIBrVSfP0Vmn87YCfh0JN6+ldu/1poNdI+wdMjwbDsJvA09kvtXrBVYCJchc8vZd2G6U8RR+GxNhxNsLs/W8UN4Mm7vnZP8lGe/73fwAd9l8wlHr1r1M/P2ggtFF5C/NgdQFUceEv7Zk6fQf/Jj49a9gG3ENqy7E6tOYJq8Zt0YRNH6WLhEgyeHy/I6GFfasYjsuE9QwfBVGk46zYOVr2spT3DluMnQuCPytgv2guPcBJcv9zw+O+R1P9x63aOwtI2KsAGOeZFV+7h2wKGUhrZ4hoRUiajaSORfG5VU7gsX8MXByev1OBKRpRGctXDV0iPVowTHnOQbndLYRqSQs5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1F4R9RgzAqSdcG5gOVm2Xshnv98hHhzCkXlDEJBXbmA=;
+ b=MWS4izMLioNvIGl1cRmN9koNzBpUFsUVV1qBmtpQrHpUe7alRm25B+n1z8ILxaSNocVUwTiuP9ih8nh2ZPm1iFGIc73n8coNgU8kX1WSvHhZS5/1M6gzANO31R7nxo6aSzUR2ZCJRMNVhHT/4/+GdYYfy2gvXMjZsD6plQlG1/6dtgtvkvM33lv2mmIB75VJ00kJh+mvkpSWFIRNS55wDckRpvuFoZhp05Eq+YoPtByZgSR6CYzk8ZejDW+KhZWL1aeFYkfWYeZmsnrbG3BZGB+VEnLc19BiKWAAGGtIQLTeU1USr+P201LiC2YayMe6SUSbs2AY11dO03dBaroyGQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1F4R9RgzAqSdcG5gOVm2Xshnv98hHhzCkXlDEJBXbmA=;
+ b=YZ+Ev52fTwzBilHYpe0I4YARHniNZwg60+cDKDsg5+M2K4W2KZG5fKDeFYhARnUoQ/+LeyH94Nc9c8Af5MQEDdhehIUJfBds2j8gUZvLw8MqZ4HuHBffPNM1nODl0yS/hh3hl1fn2xHKx5vwccpr2kPkBFyTiGGLpfeXqsxVLhP+nARMDMZ03CZ5IBcPlcKh3i0PoYFSLxGVMdTQqA67KyINqtPaaYw6fzQdBEuDBnjcq2k8DNrV9Zw0bBr7XqEdRgAhy++t24tTZ60y49Spi24bPjvCjWWprd32OxoO8npZxOWyXMQ2L+MXyPyAzTxuncpJqNeDi9teCIlS5VySJA==
+Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:1eb::14) by PN0PR01MB5495.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:62::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8489.29; Tue, 4 Mar
+ 2025 07:54:03 +0000
+Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::1b4f:5587:7637:c5a5]) by PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::1b4f:5587:7637:c5a5%6]) with mapi id 15.20.8489.028; Tue, 4 Mar 2025
+ 07:54:03 +0000
+Message-ID:
+ <PN0PR01MB103930AC8CABC36771EAE089CFEC82@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 4 Mar 2025 15:53:57 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] riscv: sophgo Add PCIe support to Sophgo SG2044 SoC
+To: Inochi Amaoto <inochiama@gmail.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Johan Hovold <johan+linaro@kernel.org>,
+ Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+ Niklas Cassel <cassel@kernel.org>
+Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+ Longbin Li <looong.bin@gmail.com>
 References: <20250304071239.352486-1-inochiama@gmail.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <20250304071239.352486-1-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TY2PR0101CA0004.apcprd01.prod.exchangelabs.com
+ (2603:1096:404:92::16) To PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:1eb::14)
+X-Microsoft-Original-Message-ID:
+ <aa8807af-d9f8-4641-8a41-d484166a9f21@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN0PR01MB10393:EE_|PN0PR01MB5495:EE_
+X-MS-Office365-Filtering-Correlation-Id: a49b3459-ea8d-4fca-a4a7-08dd5af1bafc
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|7092599003|8060799006|5072599009|15080799006|6090799003|19110799003|461199028|1602099012|10035399004|4302099013|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?WER1eGRZMFgxUTJQWVVoZjF3WmtzV3FMTno3aDJ2S0xQcitqU1hycDhmWVZ0?=
+ =?utf-8?B?RTA4eUFXL29Dek56U21JS2lrZSszUDEwNGh2NEdob0V4L04yUFZQTTF1M0ZK?=
+ =?utf-8?B?Y1o5WFFnV09qOEJXdGdFM0IrMTFTbHFZK2RldnJObXlDcEhGQTJtd1k4c2h2?=
+ =?utf-8?B?WENvcTRWNzBlYThza2U0UDV5MzQydGR4ZDB5Q2FmcVpOQTdDbUhKOUYyS1VI?=
+ =?utf-8?B?U0JWaC9pd20xMU8wM05Ndkd6WjNDOExaM1AvMDVzOHZpWDE2ckJSSUl4bG8y?=
+ =?utf-8?B?ZzhHdTFEdnd5VmF3QUttR0s2cnpBSXRiVUo5RHhteEF2czJvOE1SNHBMR0xv?=
+ =?utf-8?B?MVFjMEFOdUpBOFQ2aUE1anozcVFOTmFITEVRQTNBb2paRjNlaHppa2xKNVFZ?=
+ =?utf-8?B?RUU1SEdoTTdHdzAyRUE0eWFseGhKNEZMUTQvc3BjVEZSMldjRklGeEo3ZGlj?=
+ =?utf-8?B?TlRmakFHL1BrYm1YcWRoelFDTlNGQVZMMG9iaHcwdDZSMEo4dmlFRWQ3cU56?=
+ =?utf-8?B?M2N0cTQwUkY4MlBvVTVWM0NldDZ3L2l3RjNNS2ZQZUtDb2lhLzh1VUxqMUF4?=
+ =?utf-8?B?OXhZTUVINkZGNEV2TlAzRWxPbytsK1EyYy9yMEc5UDlDMHljUXZIMkkyWEp3?=
+ =?utf-8?B?L0I3L29kbzRqc3lPL00xdEYxdWkyZ2N3ZFBMSk54RmY0Mm1BVVNsaXFKT0ts?=
+ =?utf-8?B?OVdQcDhUSWlkeVJoYlVla2hEVkF4ckZZUThwcWJEYUI2YnltQkVQeXBxYk1m?=
+ =?utf-8?B?Z21DZXZUME51bm1GUHJQNEM5K0dwbjNuS2Z0WUM1SXE1dkdpM2pIMkpXd2hO?=
+ =?utf-8?B?Q0hmRWhTSlRrb0MzZkc0ZTUxY0h5d3FaemVaaTREQ0NHakZxUGFnZzFhVjEr?=
+ =?utf-8?B?UXVlcXUzUzdKbDZWRW9kckxiTzU3Vjh4RzhNdTlEVzNvcmFEN3ROQnVaVngx?=
+ =?utf-8?B?L3lYWm9hek11WGtKdnk4SDN3dFM2QlZDY2ZGZStMRmdNN1o0aVU4VFJKbFpv?=
+ =?utf-8?B?QlBhaTRpQ0gwZFNiZ0VDSm1RZDArNXBFMDhKdXd2ZExvZ2lkMW1sRlRxOTFr?=
+ =?utf-8?B?bnhBaFNaN2xZZTl6YXlzSnlvNURMU0xDclE4cmgrV3FQV2NtM2lGazc3WVR1?=
+ =?utf-8?B?VmdLMWhneGRNVHJsd0t3ZVk1TUkzQ1dSNVNTRzd3QXlKSnhmL29TbG85b3NL?=
+ =?utf-8?B?Ym4ycURYNWFvenNBTW05MVdxZHM2VXpqY1lLRmgzQ0l0MkZJOXpvMGRxZTFa?=
+ =?utf-8?B?ZVRxOGJua2lpaWZUUzdQWWYxcy90OXl1S0hONHMyWXE3V2JyNGtxRXdIZjhI?=
+ =?utf-8?B?R0N5S2RTck5aTkdOUjVSaTlTTzd6c2pQWHExT2duTHRGTHRuK0lqdGtQd1Ni?=
+ =?utf-8?B?RVJmV040WURlTDhZekdWWjVXTGVyemFPVTh2U1ZRcGRaTGl4S0JwVjlHRVh4?=
+ =?utf-8?B?SGhnQ1F0NkROVnVPTHlVa1JYWll2L1FYQVkwVitVdVJOT1A4azVXUk9PWkQ5?=
+ =?utf-8?B?VmgxTVVzTDNGUGJ0bjg2ZXFzME5HaVo5SWFZOE94ZGZXdm5YcStjWWxpZFdJ?=
+ =?utf-8?B?d0YwOE8yWGRYam5SbklxRVNyS0lTQmtqUWVrWjZiNjQ0b0lIUmZFRkZBQ0Vt?=
+ =?utf-8?B?d3d5VXpqQXhXV0ZkTmNJZVdZeWp0UGRDR09DcXprQzY4VDFaemgyN3FYMHFl?=
+ =?utf-8?B?Q3o1UWZsZGRzMzV2RVlZOHBtMVkxY1FRMVpyQmhEVlFwd1dJa3hkSWRBPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bXZvR3ZJUTBkblBTUkl3VU9LcUxhVXEzSTVMek9KdXBHVXVxVlZzZi9GWU9w?=
+ =?utf-8?B?ekhiMjM3Nm1RL2w2UEg3VWhxOEhIREM5Z0llMW4ydHJ5R1ZLK1VBbEdnSUlS?=
+ =?utf-8?B?d1pSbm5ETmZhR0dWK2VsaFA1Uy80bWk3dEo0TFp4SHMxTFR2L1oydVdYSWto?=
+ =?utf-8?B?SG9tNmFBMm9lTHNvbElrV04xZkJDaDZlWHJ5Y2Jrdk1OWWtvOHdhY0dVS0dJ?=
+ =?utf-8?B?UHB4UENZaDJXVkl0aU5uMi9uZUxQV2YzQ1pPYndNWFhWcW4xRGE4Zm9jcXVs?=
+ =?utf-8?B?aU9iNEFyRnlsMjVtR0cwaGkyU1JnWmhVOEVNZUUzSVQ0RnJQWmRuV2REc09X?=
+ =?utf-8?B?V0s3ejBSdzJFWGxVM0lTb0JETzB5S1U5cURkOE5aMlE5RG1HdElhZTAzaGNq?=
+ =?utf-8?B?S2trWkQxMDh0QnRMY3k4cEpLVm00WlhTR0tEL2VMbUFGSzkzQTd2RS94cFMv?=
+ =?utf-8?B?TS9ybWlWV2JCamk5eXdMN21LUlEzdVMvYnFNSmFjTG0yU3NSK2o5Rm1lekE5?=
+ =?utf-8?B?U1g3Z0NOcEJlV3VtRWRqWGdUQmZ0WEoyalozNFZFem1ETVdCTzJYWDVTS3NO?=
+ =?utf-8?B?emFlSERaNTVZREpDYzVtZlVYOGxoc2N6QldOeUZMN25BWWhBWEMvVHVTV0ZN?=
+ =?utf-8?B?S1ZmOGJhZ3Q4SWhDZTRQTW1kdWNmY2QwaHJDc1k0aGVpTkNsSi8xR0I1SkJL?=
+ =?utf-8?B?Umd0SHpWbW9HQjJsaVpnc1VJMnVqRWRBYWVGR0VxcWlXN2d5QldSQWhOTmV4?=
+ =?utf-8?B?Z0ViZjhwV0k0aVhBbkI3TFRlTWZKNmd6dWVrQW1JVWdQc1FxSTVDeWlLd0xP?=
+ =?utf-8?B?aWxGeGVwT2tUWHVMTkFpMGlvQk5HQkN0QW5XOG56YUdRV3BEQURvOEd4ckpB?=
+ =?utf-8?B?M3NJWW1Eb0Nad2hxZ213VVhKOWFHN25YOWFCa2pOZTRlYXdHdDJ5R20zWkMr?=
+ =?utf-8?B?ejVQN0VjRlpReHRjb3ZXc1Rxc1pxRFJnOFpCR0p5ZnpuWkI2NTY5WVZodjUx?=
+ =?utf-8?B?SHk0WnJXUFNURFNoT2JjLzZNV0pmWGRVQlh1dTB2VWora1V0U3B6ME41VklI?=
+ =?utf-8?B?WDRUNXZnN1VkYmE1a2piZTNsRGt0S1M4dlB3L1BBOExMV21JUWthRDdoWDd2?=
+ =?utf-8?B?eHM1L1c5TVN5QnFBc3NaZzNSd1VUdVJZK2tYaDBsaDhYcjFQVlliTWdSKytP?=
+ =?utf-8?B?OFQ5c1dmL05LUjc0UkxkVElZQ3NjSmFzaDVzTnFyT2J5OTRyTWMxN1QrYjQw?=
+ =?utf-8?B?b3g0M0xSOHd3dW9MVzJiekRtbFFyVHJ2b2M3TElqZ29CUHJzNzNDcDFrcEdR?=
+ =?utf-8?B?aFJraGF6NTVwL2t5bnN6SkdROHNlQWZQQkhlMlhWS0FtaVljNzhIRk5yNmpC?=
+ =?utf-8?B?dWRvc25NS3VhRmJ2YnhkMGR3Mk9QVDRDeU93NWZsRVNodUNuYk1yMmViNHlP?=
+ =?utf-8?B?SnR6UmQzNzFUbDVIVjgraDd2Z25hSVRkcHBLTlNaeXlBOEtrVWhKUS9PQWVO?=
+ =?utf-8?B?WmF1bGdNaTB3ZVhNNFJsTVllUE9kY05pYVBXbkRwaU1hMzlLcmtSMjRqZXFP?=
+ =?utf-8?B?c252MHFONTJHZC9NMllWaGV0UlE1MTVoTTFwc1ZqMUxWUXVhTHBQemJ4OGVL?=
+ =?utf-8?B?QTUvUDMzR0FYOXE4K2J1NW1yVTZRZ25lWTdycEpkVkJibjlGTE5EbThRTENv?=
+ =?utf-8?B?eWpRcGUrTGt4VXNvNUZBQm8raUtvdzA4Z1VZUkozMFJNK1JTVXRxY1V3TkRs?=
+ =?utf-8?Q?dPJ+ZcaPlKPQdtADrvbfPjcLNSKvFLAmHk2g1uB?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a49b3459-ea8d-4fca-a4a7-08dd5af1bafc
+X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2025 07:54:02.9615
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB5495
 
-Add support for DesignWare-based PCIe controller in SG2044 SoC.
+I think it should be v2, right? :)
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- drivers/pci/controller/dwc/Kconfig          |  10 +
- drivers/pci/controller/dwc/Makefile         |   1 +
- drivers/pci/controller/dwc/pcie-dw-sophgo.c | 270 ++++++++++++++++++++
- 3 files changed, 281 insertions(+)
- create mode 100644 drivers/pci/controller/dwc/pcie-dw-sophgo.c
-
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index b6d6778b0698..004c384e25ad 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -381,6 +381,16 @@ config PCIE_UNIPHIER_EP
- 	  Say Y here if you want PCIe endpoint controller support on
- 	  UniPhier SoCs. This driver supports Pro5 SoC.
- 
-+config PCIE_SOPHGO_DW
-+	bool "Sophgo DesignWare PCIe controller"
-+	depends on ARCH_SOPHGO || COMPILE_TEST
-+	depends on PCI_MSI
-+	depends on OF
-+	select PCIE_DW_HOST
-+	help
-+	  Enables support for the DesignWare PCIe controller in the
-+	  Sophgo SoC.
-+
- config PCIE_SPEAR13XX
- 	bool "STMicroelectronics SPEAr PCIe controller"
- 	depends on ARCH_SPEAR13XX || COMPILE_TEST
-diff --git a/drivers/pci/controller/dwc/Makefile b/drivers/pci/controller/dwc/Makefile
-index a8308d9ea986..193150056dd3 100644
---- a/drivers/pci/controller/dwc/Makefile
-+++ b/drivers/pci/controller/dwc/Makefile
-@@ -18,6 +18,7 @@ obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
- obj-$(CONFIG_PCIE_ARMADA_8K) += pcie-armada8k.o
- obj-$(CONFIG_PCIE_ARTPEC6) += pcie-artpec6.o
- obj-$(CONFIG_PCIE_ROCKCHIP_DW) += pcie-dw-rockchip.o
-+obj-$(CONFIG_PCIE_SOPHGO_DW) += pcie-dw-sophgo.o
- obj-$(CONFIG_PCIE_INTEL_GW) += pcie-intel-gw.o
- obj-$(CONFIG_PCIE_KEEMBAY) += pcie-keembay.o
- obj-$(CONFIG_PCIE_KIRIN) += pcie-kirin.o
-diff --git a/drivers/pci/controller/dwc/pcie-dw-sophgo.c b/drivers/pci/controller/dwc/pcie-dw-sophgo.c
-new file mode 100644
-index 000000000000..3ed7cfe0b361
---- /dev/null
-+++ b/drivers/pci/controller/dwc/pcie-dw-sophgo.c
-@@ -0,0 +1,270 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Sophgo DesignWare based PCIe host controller driver
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/clk.h>
-+#include <linux/irqchip/chained_irq.h>
-+#include <linux/irqdomain.h>
-+#include <linux/module.h>
-+#include <linux/property.h>
-+#include <linux/platform_device.h>
-+
-+#include "pcie-designware.h"
-+
-+#define to_sophgo_pcie(x)		dev_get_drvdata((x)->dev)
-+
-+#define PCIE_INT_SIGNAL			0xc48
-+#define PCIE_INT_EN			0xca0
-+
-+#define PCIE_INT_SIGNAL_INTX		GENMASK(8, 5)
-+
-+#define PCIE_INT_EN_INTX		GENMASK(4, 1)
-+#define PCIE_INT_EN_INT_MSI		BIT(5)
-+
-+struct sophgo_pcie {
-+	struct dw_pcie		pci;
-+	void __iomem		*app_base;
-+	struct clk_bulk_data	*clks;
-+	unsigned int		clk_cnt;
-+	struct irq_domain	*irq_domain;
-+};
-+
-+static int sophgo_pcie_readl_app(struct sophgo_pcie *sophgo, u32 reg)
-+{
-+	return readl_relaxed(sophgo->app_base + reg);
-+}
-+
-+static void sophgo_pcie_writel_app(struct sophgo_pcie *sophgo, u32 val, u32 reg)
-+{
-+	writel_relaxed(val, sophgo->app_base + reg);
-+}
-+
-+static void sophgo_pcie_intx_handler(struct irq_desc *desc)
-+{
-+	struct dw_pcie_rp *pp = irq_desc_get_handler_data(desc);
-+	struct irq_chip *chip = irq_desc_get_chip(desc);
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
-+	unsigned long hwirq, reg;
-+
-+	chained_irq_enter(chip, desc);
-+
-+	reg = sophgo_pcie_readl_app(sophgo, PCIE_INT_SIGNAL);
-+	reg = FIELD_GET(PCIE_INT_SIGNAL_INTX, reg);
-+
-+	for_each_set_bit(hwirq, &reg, PCI_NUM_INTX)
-+		generic_handle_domain_irq(sophgo->irq_domain, hwirq);
-+
-+	chained_irq_exit(chip, desc);
-+}
-+
-+static void sophgo_intx_irq_mask(struct irq_data *d)
-+{
-+	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
-+	unsigned long flags;
-+	u32 val;
-+
-+	raw_spin_lock_irqsave(&pp->lock, flags);
-+
-+	val = sophgo_pcie_readl_app(sophgo, PCIE_INT_EN);
-+	val &= ~FIELD_PREP(PCIE_INT_EN_INTX, BIT(d->hwirq));
-+	sophgo_pcie_writel_app(sophgo, val, PCIE_INT_EN);
-+
-+	raw_spin_unlock_irqrestore(&pp->lock, flags);
-+};
-+
-+static void sophgo_intx_irq_unmask(struct irq_data *d)
-+{
-+	struct dw_pcie_rp *pp = irq_data_get_irq_chip_data(d);
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
-+	unsigned long flags;
-+	u32 val;
-+
-+	raw_spin_lock_irqsave(&pp->lock, flags);
-+
-+	val = sophgo_pcie_readl_app(sophgo, PCIE_INT_EN);
-+	val |= FIELD_PREP(PCIE_INT_EN_INTX, BIT(d->hwirq));
-+	sophgo_pcie_writel_app(sophgo, val, PCIE_INT_EN);
-+
-+	raw_spin_unlock_irqrestore(&pp->lock, flags);
-+};
-+
-+static void sophgo_intx_irq_eoi(struct irq_data *d)
-+{
-+}
-+
-+static struct irq_chip sophgo_intx_irq_chip = {
-+	.name			= "INTx",
-+	.irq_mask		= sophgo_intx_irq_mask,
-+	.irq_unmask		= sophgo_intx_irq_unmask,
-+	.irq_eoi		= sophgo_intx_irq_eoi,
-+};
-+
-+static int sophgo_pcie_intx_map(struct irq_domain *domain, unsigned int irq,
-+				irq_hw_number_t hwirq)
-+{
-+	irq_set_chip_and_handler(irq, &sophgo_intx_irq_chip, handle_fasteoi_irq);
-+	irq_set_chip_data(irq, domain->host_data);
-+
-+	return 0;
-+}
-+
-+static const struct irq_domain_ops intx_domain_ops = {
-+	.map = sophgo_pcie_intx_map,
-+};
-+
-+static int sophgo_pcie_init_irq_domain(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
-+	struct device *dev = sophgo->pci.dev;
-+	struct fwnode_handle *intc;
-+	int irq;
-+
-+	intc = device_get_named_child_node(dev, "interrupt-controller");
-+	if (!intc) {
-+		dev_err(dev, "missing child interrupt-controller node\n");
-+		return -ENODEV;
-+	}
-+
-+	irq = fwnode_irq_get(intc, 0);
-+	if (irq < 0) {
-+		dev_err(dev, "failed to get INTx irq number\n");
-+		fwnode_handle_put(intc);
-+		return irq;
-+	}
-+
-+	sophgo->irq_domain = irq_domain_create_linear(intc, PCI_NUM_INTX,
-+						      &intx_domain_ops, sophgo);
-+	fwnode_handle_put(intc);
-+	if (!sophgo->irq_domain) {
-+		dev_err(dev, "failed to get a INTx irq domain\n");
-+		return -EINVAL;
-+	}
-+
-+	return irq;
-+}
-+
-+static void sophgo_pcie_msi_enable(struct dw_pcie_rp *pp)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct sophgo_pcie *sophgo = to_sophgo_pcie(pci);
-+	unsigned long flags;
-+	u32 val;
-+
-+	raw_spin_lock_irqsave(&pp->lock, flags);
-+
-+	val = sophgo_pcie_readl_app(sophgo, PCIE_INT_EN);
-+	val |= PCIE_INT_EN_INT_MSI;
-+	sophgo_pcie_writel_app(sophgo, val, PCIE_INT_EN);
-+
-+	raw_spin_unlock_irqrestore(&pp->lock, flags);
-+}
-+
-+static int sophgo_pcie_host_init(struct dw_pcie_rp *pp)
-+{
-+	int irq;
-+
-+	irq = sophgo_pcie_init_irq_domain(pp);
-+	if (irq < 0)
-+		return irq;
-+
-+	irq_set_chained_handler_and_data(irq, sophgo_pcie_intx_handler,
-+					 pp);
-+
-+	sophgo_pcie_msi_enable(pp);
-+
-+	return 0;
-+}
-+
-+static const struct dw_pcie_host_ops sophgo_pcie_host_ops = {
-+	.init = sophgo_pcie_host_init,
-+};
-+
-+static int sophgo_pcie_clk_init(struct sophgo_pcie *sophgo)
-+{
-+	struct device *dev = sophgo->pci.dev;
-+	int ret;
-+
-+	ret = devm_clk_bulk_get_all_enabled(dev, &sophgo->clks);
-+	if (ret < 0)
-+		return dev_err_probe(dev, ret, "failed to get clocks\n");
-+
-+	sophgo->clk_cnt = ret;
-+
-+	return 0;
-+}
-+
-+static int sophgo_pcie_resource_get(struct platform_device *pdev,
-+				    struct sophgo_pcie *sophgo)
-+{
-+	sophgo->app_base = devm_platform_ioremap_resource_byname(pdev, "app");
-+	if (IS_ERR(sophgo->app_base))
-+		return dev_err_probe(&pdev->dev, PTR_ERR(sophgo->app_base),
-+				     "failed to map app registers\n");
-+
-+	return 0;
-+}
-+
-+static int sophgo_pcie_configure_rc(struct sophgo_pcie *sophgo)
-+{
-+	struct dw_pcie_rp *pp;
-+
-+	pp = &sophgo->pci.pp;
-+	pp->ops = &sophgo_pcie_host_ops;
-+
-+	return dw_pcie_host_init(pp);
-+}
-+
-+static int sophgo_pcie_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct sophgo_pcie *sophgo;
-+	int ret;
-+
-+	sophgo = devm_kzalloc(dev, sizeof(*sophgo), GFP_KERNEL);
-+	if (!sophgo)
-+		return -ENOMEM;
-+
-+	platform_set_drvdata(pdev, sophgo);
-+
-+	sophgo->pci.dev = dev;
-+
-+	ret = sophgo_pcie_resource_get(pdev, sophgo);
-+	if (ret)
-+		return ret;
-+
-+	ret = sophgo_pcie_clk_init(sophgo);
-+	if (ret)
-+		return ret;
-+
-+	return sophgo_pcie_configure_rc(sophgo);
-+}
-+
-+static const struct of_device_id sophgo_pcie_of_match[] = {
-+	{ .compatible = "sophgo,sg2044-pcie" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, sophgo_pcie_acpi_match);
-+
-+static const struct acpi_device_id sophgo_pcie_acpi_match[] = {
-+	{ "SOPHO000", 0 },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(acpi, sophgo_pcie_acpi_match);
-+
-+static struct platform_driver sophgo_pcie_driver = {
-+	.driver = {
-+		.name = "sophgo-dw-pcie",
-+		.of_match_table = sophgo_pcie_of_match,
-+		.acpi_match_table = sophgo_pcie_acpi_match,
-+		.suppress_bind_attrs = true,
-+	},
-+	.probe = sophgo_pcie_probe,
-+};
-+builtin_platform_driver(sophgo_pcie_driver);
--- 
-2.48.1
-
+On 2025/3/4 15:12, Inochi Amaoto wrote:
+> Sophgo's SG2044 SoC uses Synopsys Designware PCIe core
+> to implement RC mode.
+>
+> For legacy interrupt, the PCIe controller on SG2044 implement
+> its own legacy interrupt controller. For MSI/MSI-X, it use an
+> external interrupt controller to handle.
+>
+> The external MSI interrupt controller patch can be found on [1].
+> As SG2044 needs a mirror change to support the way to send MSI
+> message and different irq number.
+>
+> [1] https://lore.kernel.org/all/20250303111648.1337543-1-inochiama@gmail.com
+>
+> Changed from v1:
+> - https://lore.kernel.org/all/20250221013758.370936-1-inochiama@gmail.comq
+> 1. patch 1: remove dma-coherent property
+> 2. patch 2: remove unused reset
+> 3. patch 2: fix Kconfig menu title and reorder the entry
+> 4. patch 2: use FIELD_GET/FIELD_PREP to simplify the code.
+> 5. patch 2: rename the irq handle function to match the irq_chip name
+>
+> Inochi Amaoto (2):
+>    dt-bindings: pci: Add Sophgo SG2044 PCIe host
+>    PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
+>
+>   .../bindings/pci/sophgo,sg2044-pcie.yaml      | 122 ++++++++
+>   drivers/pci/controller/dwc/Kconfig            |  10 +
+>   drivers/pci/controller/dwc/Makefile           |   1 +
+>   drivers/pci/controller/dwc/pcie-dw-sophgo.c   | 270 ++++++++++++++++++
+>   4 files changed, 403 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
+>   create mode 100644 drivers/pci/controller/dwc/pcie-dw-sophgo.c
+>
+> --
+> 2.48.1
+>
