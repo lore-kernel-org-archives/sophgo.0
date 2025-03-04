@@ -1,54 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F95D253B75;
-	Tue,  4 Mar 2025 15:10:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D161A24C093;
+	Tue,  4 Mar 2025 15:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741101012; cv=none; b=CUwMnQ5W6bdCUmrlCvv6AWCBmDo5q74QavS3n97OxQ5qDXRwk14Gghujma7AVcljIHLhromoe1ZagB0rGMcrdbrzZno9QikXk3GxmrQd1xIuDUpkMxJm+qhPstxIK5/ngmipDFrAV4Fj/QQRFw/PzcwVPriWnhYqBElLJksjAe0=
+	t=1741101119; cv=none; b=izd/mMedgMhdFbOo2Sgq6sAgHoOuw56dme0Y/O0c+0cmjryqLN9XPucN8/tlAAIUf9UHeUv0R9mOn9MBhd2dMxE0/AMsxNoCaAWm9suh8MtZEACxToz/0h4A+e0nfOXv35Php3tTd5cSXOtamlSZDlJZUHPPqIB44XWnvAxiKRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741101012; c=relaxed/simple;
-	bh=FhKpjo3hcAiaiK1n/W7XQ2upO3brMlYqbq9MJay2QDU=;
+	s=arc-20240116; t=1741101119; c=relaxed/simple;
+	bh=4SIBqmrS42kkSMxCMQFChof+F0bMN3x2UOvDWptOUsk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GAGTYc08K7DXTUKYLARpEC8JrBbmjJviGqP8B5YfLIHafqqs2QnI0ljmswy876QU/fwIhiFHXDYdwFI++sJi6bsJ4Q7jPUPLxFJ63k0ADCGjqrmqsHc1FPOjzSGn56hOAJtKcmBe7a2eaH+/A3Z4/2/k6RzUIRT5vLvonhpwKwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCtdR3f0; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=tk0saRSALfHot2T0WLlp1/3QDaiRd8g9IufWj46xkcrDUo1e+ePLpCjGVWVlcl9a67JA3jLS719XVVZU7Dn+6G5zTaPyxDSqBAUOc8eCTKT5+g1f+PoRmK9s1sSCGWHVg+ulr5S47IsE4sP+oaTFjUS0nZbw9cZQxeFxy86xde8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f1RldajX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCtdR3f0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE67C4CEE5;
-	Tue,  4 Mar 2025 15:10:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f1RldajX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22280C4CEE5;
+	Tue,  4 Mar 2025 15:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741101011;
-	bh=FhKpjo3hcAiaiK1n/W7XQ2upO3brMlYqbq9MJay2QDU=;
+	s=k20201202; t=1741101119;
+	bh=4SIBqmrS42kkSMxCMQFChof+F0bMN3x2UOvDWptOUsk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=FCtdR3f0qQnfUb9jBESk9fU6fS7zr8s0lbOS829mYQt41QZYSWf9qfFPZuwZc+ZwO
-	 Xb3HS+NnA7KNa7lSPNHNDwNq0xQ552pwk3gmvc4whqM2jDOlKxtW8YjQGWFEEvwqVS
-	 cUSjVRGw6Glfps56nMIaw80kMMz//oyyk0/7ABLw0NJrVf0dzFyvf7wOsL+zBuZeiU
-	 8oLMtb0R0W262VOEGUtZsSlpMaQRjL6Ba3OVgkQlET1dbGFbPRBg3S1ai4LpOhrrHi
-	 8FCnavEfhAcHBt2vTbpY3/P++xIT/oYxnWYDOPwp7UfEOw683+jIdpWCc8seVU1DNl
-	 JyuC5IkWJqIlA==
-Date: Tue, 4 Mar 2025 09:10:09 -0600
-From: Rob Herring <robh@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	b=f1RldajXPHDVDaV8FrXpmlawZekNo7rfjLrH+iZk48PdTNBRRGoGXlRiD1dMOmiOK
+	 hdPWou5HpOvcLRH93nIoXnoYhrybdWjGDoYCEY6KjmM4THfuQMoeypD3sNZR50pLw3
+	 hoDsuVH5UnLQ8II5S35z2YdM3BZzZT84eDNImYf/MQIiBXd4SuOtjuJda3Jn3pHocW
+	 KaBXHJ0twf+ut9bhI+4tIH7Pfpsi4iTEx4VCI6WIuCQ8FpFOOiJSKVwWSaB2APzLFK
+	 oTX5LqnYHQ8rSsOU8Rljk4c76OrwGylKiU8s1/2pdz4l2fXAEK1tjyxpkrT64br/a/
+	 8THTVDr84zQXw==
+Date: Tue, 4 Mar 2025 09:11:57 -0600
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Longbin Li <looong.bin@gmail.com>
+Cc: linux-riscv@lists.infradead.org,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
+	devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>, linux-spi@vger.kernel.org,
 	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
-	Niklas Cassel <cassel@kernel.org>, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 1/2] dt-bindings: pci: Add Sophgo SG2044 PCIe host
-Message-ID: <20250304151009.GA2553244-robh@kernel.org>
-References: <20250304071239.352486-1-inochiama@gmail.com>
- <20250304071239.352486-2-inochiama@gmail.com>
+	linux-kernel@vger.kernel.org, Chen Wang <unicorn_wang@outlook.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, sophgo@lists.linux.dev,
+	Conor Dooley <conor+dt@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-bindings: spi: add SG2044 SPI NOR controller
+ driver
+Message-ID: <174110111660.2625891.8370014258934747237.robh@kernel.org>
+References: <20250304083548.10101-1-looong.bin@gmail.com>
+ <20250304083548.10101-2-looong.bin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -57,41 +51,18 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250304071239.352486-2-inochiama@gmail.com>
+In-Reply-To: <20250304083548.10101-2-looong.bin@gmail.com>
 
-On Tue, Mar 04, 2025 at 03:12:37PM +0800, Inochi Amaoto wrote:
-> The pcie controller on the SG2044 is designware based with
-> custom app registers.
+
+On Tue, 04 Mar 2025 16:35:42 +0800, Longbin Li wrote:
+> Add SPI NOR driver for SG2044, including read, write operations.
 > 
-> Add binding document for SG2044 PCIe host controller.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Signed-off-by: Longbin Li <looong.bin@gmail.com>
 > ---
->  .../bindings/pci/sophgo,sg2044-pcie.yaml      | 122 ++++++++++++++++++
->  1 file changed, 122 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
+>  .../bindings/spi/spi-sg2044-nor.yaml          | 52 +++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> new file mode 100644
-> index 000000000000..2860d0f13146
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
-> @@ -0,0 +1,122 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pci/sophgo,sg2044-pcie.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: DesignWare based PCIe Root Complex controller on Sophgo SoCs
-> +
-> +maintainers:
-> +  - Inochi Amaoto <inochiama@gmail.com>
-> +
-> +description: |+
-
-Don't need '|+' if no formatting to preserve.
-
-With that,
 
 Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+
