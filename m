@@ -1,48 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D161A24C093;
-	Tue,  4 Mar 2025 15:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB74264620;
+	Tue,  4 Mar 2025 17:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741101119; cv=none; b=izd/mMedgMhdFbOo2Sgq6sAgHoOuw56dme0Y/O0c+0cmjryqLN9XPucN8/tlAAIUf9UHeUv0R9mOn9MBhd2dMxE0/AMsxNoCaAWm9suh8MtZEACxToz/0h4A+e0nfOXv35Php3tTd5cSXOtamlSZDlJZUHPPqIB44XWnvAxiKRo=
+	t=1741109794; cv=none; b=GcmlYQEAItndsMayrK5agxe4sfHMEsjWPgr1sBjiXNF/TRnsuXyhab00DpuzF95iGvS0UBadVXr5Fzmil4MXru+gt/eE2AC4ICVrlS2S8j5LawznAuQYq14fPh1jNtDN4ZLrCuGSgHstVreKcY/ioNeDPqwE/uD07+gcn3XyGvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741101119; c=relaxed/simple;
-	bh=4SIBqmrS42kkSMxCMQFChof+F0bMN3x2UOvDWptOUsk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tk0saRSALfHot2T0WLlp1/3QDaiRd8g9IufWj46xkcrDUo1e+ePLpCjGVWVlcl9a67JA3jLS719XVVZU7Dn+6G5zTaPyxDSqBAUOc8eCTKT5+g1f+PoRmK9s1sSCGWHVg+ulr5S47IsE4sP+oaTFjUS0nZbw9cZQxeFxy86xde8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f1RldajX; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741109794; c=relaxed/simple;
+	bh=4xp4+anK14JQk+kT/F+uLJnv73+F1a80g9z7dafx3bU=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=M5he7FFJQnVA69of/h0GI9BP5U3eatkMFyy4iQnlHRJUmfxyaFPfr7lqbbwVIsle8VJwkDtGk0wCqOgGoUomPsPu0prb23aeXCSVOPdu85na3el4zAs+CMsAV3yW9cu4+5ewj38bVDU9z6Gcrxoe/qBzOswWgD1AO0H5AWsvSCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bKYyMLJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f1RldajX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22280C4CEE5;
-	Tue,  4 Mar 2025 15:11:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bKYyMLJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C95C4CEE7;
+	Tue,  4 Mar 2025 17:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741101119;
-	bh=4SIBqmrS42kkSMxCMQFChof+F0bMN3x2UOvDWptOUsk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f1RldajXPHDVDaV8FrXpmlawZekNo7rfjLrH+iZk48PdTNBRRGoGXlRiD1dMOmiOK
-	 hdPWou5HpOvcLRH93nIoXnoYhrybdWjGDoYCEY6KjmM4THfuQMoeypD3sNZR50pLw3
-	 hoDsuVH5UnLQ8II5S35z2YdM3BZzZT84eDNImYf/MQIiBXd4SuOtjuJda3Jn3pHocW
-	 KaBXHJ0twf+ut9bhI+4tIH7Pfpsi4iTEx4VCI6WIuCQ8FpFOOiJSKVwWSaB2APzLFK
-	 oTX5LqnYHQ8rSsOU8Rljk4c76OrwGylKiU8s1/2pdz4l2fXAEK1tjyxpkrT64br/a/
-	 8THTVDr84zQXw==
-Date: Tue, 4 Mar 2025 09:11:57 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Longbin Li <looong.bin@gmail.com>
-Cc: linux-riscv@lists.infradead.org,
+	s=k20201202; t=1741109794;
+	bh=4xp4+anK14JQk+kT/F+uLJnv73+F1a80g9z7dafx3bU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=bKYyMLJ+yOp+0aO9VyEpW+tSgo9qctpb7iguPytHoQU0sfJKJ+XoZAJZmaQkjyTfT
+	 hehyQtmSyO4BUnQZBl+mhm/sv2wrBZoIEYviegMRdxEJ7ET4WyniNFxMd4W+Rb3kTi
+	 V4pUatRzJzPAIaZ1OapVH/ueOT+AATjfwo/PhvKnT8xKN0v9sIquCXlF2f+VQfkpd2
+	 nROLiqP3ksHB+/N4ZvMOdbFJQC9N5s0sN2YamzMzDksrwVwOR5iuJQf1tKMdAM0Nig
+	 cnCboG+5xb+FcRmw2NSvQAEIEaIRnEld5eCqvecQ5KY0OWd1es3JFcFiU37U+HAXLH
+	 2Bi6Nt2CvY5AQ==
+Date: Tue, 4 Mar 2025 11:36:32 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	devicetree@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>, linux-spi@vger.kernel.org,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	linux-kernel@vger.kernel.org, Chen Wang <unicorn_wang@outlook.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, sophgo@lists.linux.dev,
 	Conor Dooley <conor+dt@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: spi: add SG2044 SPI NOR controller
- driver
-Message-ID: <174110111660.2625891.8370014258934747237.robh@kernel.org>
-References: <20250304083548.10101-1-looong.bin@gmail.com>
- <20250304083548.10101-2-looong.bin@gmail.com>
+	Chen Wang <unicorn_wang@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+	Niklas Cassel <cassel@kernel.org>, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH 2/2] PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
+Message-ID: <20250304173632.GA243820@bhelgaas>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -51,18 +55,27 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250304083548.10101-2-looong.bin@gmail.com>
+In-Reply-To: <20250304071239.352486-3-inochiama@gmail.com>
 
+On Tue, Mar 04, 2025 at 03:12:38PM +0800, Inochi Amaoto wrote:
+> Add support for DesignWare-based PCIe controller in SG2044 SoC.
 
-On Tue, 04 Mar 2025 16:35:42 +0800, Longbin Li wrote:
-> Add SPI NOR driver for SG2044, including read, write operations.
-> 
-> Signed-off-by: Longbin Li <looong.bin@gmail.com>
-> ---
->  .../bindings/spi/spi-sg2044-nor.yaml          | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
-> 
+> +static void sophgo_intx_irq_eoi(struct irq_data *d)
+> +{
+> +}
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+The empty .irq_eoi() is unusual.  Why do you need it?
 
+I see that the existence of chip->irq_eoi() makes a difference in
+chained_irq_enter() and chained_irq_exit(), but I'm surprised that
+this is the only driver in drivers/pci/controller/ that implements an
+empty .irq_eoi().
+
+A comment here about what is special would be helpful.
+
+> +static struct irq_chip sophgo_intx_irq_chip = {
+> +	.name			= "INTx",
+> +	.irq_mask		= sophgo_intx_irq_mask,
+> +	.irq_unmask		= sophgo_intx_irq_unmask,
+> +	.irq_eoi		= sophgo_intx_irq_eoi,
+> +};
