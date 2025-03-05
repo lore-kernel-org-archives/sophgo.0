@@ -1,124 +1,170 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B3B1C8610
-	for <sophgo@lists.linux.dev>; Wed,  5 Mar 2025 05:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 460FB1DFD83
+	for <sophgo@lists.linux.dev>; Wed,  5 Mar 2025 06:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741151928; cv=none; b=KADcYzki2XM6rEWPquin+Oj/LGrHChjg5YZDb6Gm9EgDbHJaV8+zv8aA89+av1r/cZ6bQ6EAa81Xn50iSCWQ64Y3CoGAOCvgM8PH4hzyE3yaYjraeL/HmHHg4IhGMQB9IfHL0AeqixLzWRyoGhdXna9LlMYRTfllfHJg7FHvczM=
+	t=1741156792; cv=none; b=C2HOatjIV50msU1GOEi8tngcjnHyYos8XmZDpubtvkPSg2wUNDd47hkmuD007ik6IfkCZ2SOhGhUP94LIKHcoIXrX9i5f95iThOGqNTae7CblXWRcpZWWv/a7z6DVZQgZuAK6BgrwS+43zyzlZ4rxDEq66bnpk0BDiJtIyrhLSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741151928; c=relaxed/simple;
-	bh=kC87oeOMtl04lb5WrpnzUnxVnwsFKi0GNcv5vmYteyc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jFq0O06BrJKVbx/UTh3SQX3w2lOBRPA54ecxewiJej5JrLMeGmVTtlOEivFMF1EKj0vE4awGq9fSh3fOCtmzQNfA3gm0DiNWAReYGiNfUEq3+0KfDmkcAiVF8oe1rHCQhW4Ay1PH/zZPHjl32udNpfoXn8le68soXFDdIo4nX98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gv+yQmER; arc=none smtp.client-ip=209.85.160.173
+	s=arc-20240116; t=1741156792; c=relaxed/simple;
+	bh=0odiSTYUNkwLcMWmJWPXdbE2gWNEYYCynJ47FWDc7Qs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G6uwjkYcMFp/CLE4KGJvWlCNMC3vwd+USvh+ooKlCUSgp25qy9WamEMHLjws2S6TuZBHu07G2IRwVWuMrd9PuY43oPzGWj1OnPPU2GNf4HWYv+zizCJO4PsnpJc7oPu86povdvZ1hhD+EMbG/gSbf/AZuXqs/V2QHsnrBJQl1qA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lbZkJ3rr; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gv+yQmER"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-47208e35f9cso74221351cf.3
-        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 21:18:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lbZkJ3rr"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c3b63dfebfso323652985a.3
+        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 22:39:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741151925; x=1741756725; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1P3+iYzJ+YpQ9FI2rKYP4r/ocmp23KFw2lq/RJsTz1Y=;
-        b=Gv+yQmERpEenEDH0f0/N5lA8CZo7mezHfRpisigdyWKoypPaX650F3JTHpmeUFH6Q8
-         9GdwDOChrVq5EA6GpI5GcHHLNIBrNbV6zK6qS/CN517L2uAnoGcgl4f35tPjfWXdTeRt
-         nRQIbpbN9vdposYmNVv8enlZsYOXvrg0sNz/F8xHhEDbe0A4gSJOxIrb3682vB2D/5dZ
-         oEAY+jEgu2q8bITQM9P3w8+pAd81nIa0UKj/SZXEy3l/XeZR8wgqoF5WkU6KKgfZf83e
-         zqE9z3FUozD3EDzEdre/fRTJgnoLU8AymYU4BVyqV3AgbMunPLWa6293ziDoIUG98Lqg
-         TXlA==
+        d=gmail.com; s=20230601; t=1741156790; x=1741761590; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SZA5b2x/fScL7d+i7eRMvLOrisXrqpzgaeKI+s5E2mY=;
+        b=lbZkJ3rr7Ln79RUB9xOSHFG2slgZCU9nU0FUBzHC7lX7AMbrFe5+ovQbvLB4iGONTt
+         RLBJIQiu0bQ3whWOlIXmXITaIEhZAYUMV7KedGNGQGjpy0qAZ1QAYPRyKpqclRWCc3fb
+         zHowSnaD40mZrKdskr2bd0lPsuHd9hTecqp98YWscNtDEm5sdXZolld6TElfmKy0IGYg
+         vKpoCKR9ylGB4dytMKI5FdW/2Q81Qdl4/7KmvTALMrZgUwoaStFO29M6J19KSgiKvOrd
+         Pui1h0xCULQk+RWLALdw+c4xpNEjdRfMISDVJ9QjMPan7kEbAlofE7LZxFnVjZr45rrs
+         1ODg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741151925; x=1741756725;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1P3+iYzJ+YpQ9FI2rKYP4r/ocmp23KFw2lq/RJsTz1Y=;
-        b=IlRsc3/IhC+Wt8+h+fffQdm5ssMik4hhIiWUxGk9uxaMvyiAs6VZdSGgP93IQNhlGb
-         Mb/5D01c3hv4+x7xCXsrVrdR5AP7RKQrMcGNxU/6VDvRNjjTRJZQOHew+SUPUGEcpW7Z
-         z6VOvjf7hF0ZfWIS794xk0J/86/GyGREQI+XbOHeWQA3leS0xGvYH8v0HarxJPhjNmrz
-         QsiLlboD901TuITto6wGc93K7z1WYdI7dTFPtAttpPDCrwAucLxiDbaXeTesOumk1V0O
-         gjSF/wkD5O+z5vUh7nC5x68JDj1xM1UqOyv2tNKLNNIpaMMaFnoYIAXPa6Crcqf7Y7Wy
-         RqUA==
-X-Forwarded-Encrypted: i=1; AJvYcCU01cLETE/fMQ1KRwdMgQEXex02hVBcO/cUG1zlRhboFDlZGbjQzHlbTnmU4gRJlq3mafqjDDI=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9e0H05e2g49bpv0wGllClOpWDIv3whgccjxLhCchPXu6lmsWz
-	dvtUoaLLrJv7wx7vHIXc5Dv0hlhHsnCKbvSprATPnhJMGsVdiCub
-X-Gm-Gg: ASbGncs4eEcAcjIKxd7wtQzog9YLdQfOSMtWuqspgry34ryMov4VL3FhGdz57kukLVc
-	w0adKZzPYzjfCJoeMzcpEQiABnyv8MRPKMBajX64UIGcruH4NoDhowj3gimXyMBNh0SGR/CwvNn
-	V8J4E1T7iRmSKTbpTJHqgEbvrn0Nmer+sz4PCF0UEMfJrQ4v3DaRCdJlQL09O9aTiBoF2KrDh0o
-	H8Cyk6mExVI186LyKs6ZUAmWY9OYi+91tZlXo7WC508PDZCImubd49GDvqLeMXNVyDp6A+lBBNM
-	JZb78EsCU8Choe7wsWoZ
-X-Google-Smtp-Source: AGHT+IEL+SRXWaxNqoLf2fRqsU51Nuz6KF+mx2D44cet7M+NDkMLl3pM/VonNiECdPjeLo+ew7jsDA==
-X-Received: by 2002:ac8:5715:0:b0:471:bbd5:aff2 with SMTP id d75a77b69052e-4750b23bd92mr21798421cf.10.1741151924641;
-        Tue, 04 Mar 2025 21:18:44 -0800 (PST)
+        d=1e100.net; s=20230601; t=1741156790; x=1741761590;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SZA5b2x/fScL7d+i7eRMvLOrisXrqpzgaeKI+s5E2mY=;
+        b=rQgauEV11XkI2TXR6MbTioTHfux4rrh/TfmMPQ8960LIUJYaiEdoiaJHzxDKwOKxgg
+         Jp8lmFrqLDI0yKFZXWPLnEgSJOgELc/w8iFFY/RyKTkIm45uXHHI4puhTLcF6Chi/RQR
+         AmVyXsIiTO9+MJjoB9oRBFUxTmqccjIpYIo0ZooQxiFI8s7FAvvq+b9PzCiwmzNzERA4
+         IvFRq1u/hSKR7ZsdrQ9lZGC1s8oZM4BaWtvXChdQ+TcdfzEzCkcarlExANj++4bcmxjZ
+         8WOP8PkwYjMatUMnosRYvvqbYatMKtowt8pcerGyHBSemDf9Co2gTq/Bi4rOkp/uMZ7b
+         ZPrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUu6zy1WBP8gFrje14BFp1j+g5KyC8E86MEKcp6CTfrji6GUpj5XdXNbLSENcllussbTnj3Z8M=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxiBUQEO00HLekEn0uM7lBiE6voxoPgI7Y7uCAv8u1Ikq9mtFfZ
+	0TeoaDbtm5WA5uVBfCe4pRPl4eKeHqlxV9XB/5tQRdPTLXvl8k+I
+X-Gm-Gg: ASbGncv0ZEwghmCMXwqatab4JD8V71EoH5gexfSfUupmEgpd9bhEmEBneXWC1u4BAqp
+	RJGCQOHr0+vIa0QiIjFdOyzBWezZv99cMfC4y7wSnbF5Y2QtMNVD9xXJg2EKqiM63h5Pqq9ErwW
+	zeESzn5guZN0sueHb4gQl6TGzMKEbVa3UwnfLztZjYsy45Y/cNRBEsfqpd3aqkDrrGKDIjhWhpl
+	AqHuFUe/n0XfGFOXJd1GIUmy6NQo9STuqntpVzu+b0p39AcnzNQWTgcfZySW/JmrHbC5tyfTZCO
+	gBXWwFsYsiuFRR5T2DyN
+X-Google-Smtp-Source: AGHT+IHQn5rcf/yZwl7qfbDraLVtkQEZKtE6MR9UkwRor+hKRVkXlhUT2tJZmUlvvrfGucfe6+0vEA==
+X-Received: by 2002:a05:620a:4899:b0:7c3:c01e:ad0a with SMTP id af79cd13be357-7c3d8ef2cd2mr402188285a.49.1741156790046;
+        Tue, 04 Mar 2025 22:39:50 -0800 (PST)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-474f73d8145sm27595631cf.55.2025.03.04.21.18.43
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c3cc0c20ffsm231314385a.91.2025.03.04.22.39.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 21:18:44 -0800 (PST)
-Date: Wed, 5 Mar 2025 13:18:17 +0800
+        Tue, 04 Mar 2025 22:39:49 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@gmail.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Johan Hovold <johan+linaro@kernel.org>, 
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>, Niklas Cassel <cassel@kernel.org>
-Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH 2/2] PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
-Message-ID: <borpjzjwtdeigqs4szogy2ozzqsqj3ucvppl3k6cdzfoukgdur@23wwl55dmrfj>
-References: <20250304071239.352486-1-inochiama@gmail.com>
- <20250304071239.352486-3-inochiama@gmail.com>
- <PN0PR01MB10393134B6BD714C1F070F0BEFEC82@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Furong Xu <0x1207@gmail.com>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>
+Cc: netdev@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-riscv@lists.infradead.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH net-next v6 0/4] riscv: sophgo: Add ethernet support for SG2044
+Date: Wed,  5 Mar 2025 14:39:12 +0800
+Message-ID: <20250305063920.803601-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <PN0PR01MB10393134B6BD714C1F070F0BEFEC82@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 05, 2025 at 07:57:14AM +0800, Chen Wang wrote:
-> 
-> On 2025/3/4 15:12, Inochi Amaoto wrote:
-> > Add support for DesignWare-based PCIe controller in SG2044 SoC.
-> > 
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > ---
-> >   drivers/pci/controller/dwc/Kconfig          |  10 +
-> >   drivers/pci/controller/dwc/Makefile         |   1 +
-> >   drivers/pci/controller/dwc/pcie-dw-sophgo.c | 270 ++++++++++++++++++++
-> Will this driver work for all sophgo chips using dw's IP? If not, it is
-> recommended to rename it to "pcie-dw-sg2044.c".
+The ethernet controller of SG2044 is Synopsys DesignWare IP with
+custom clock. Add glue layer for it.
 
-It should. As the DesignWare PCIe ip is widely used and I saw
-limit changed across the vendor. And the implement on SG2044
-is almost like the Synopsys one. I think it is possible to 
-represent all DesignWare based PCIe driver for the Sophgo SoCs.
+Changed from v5:
+- https://lore.kernel.org/netdev/20250216123953.1252523-1-inochiama@gmail.com/
+1. apply Andrew's tag for patch 2,3
+3. patch 1: add dma-noncoherent property.
+2. patch 2,3: separate original patch into 2 part
+4. patch 4: adopt new stmmac_set_clk_tx_rate helper function
 
-Also, please think twice before giving some suggestion like
-this. Although it is a good practice to keep the driver
-specifc. keeping everythings specifc make us miss some common
-things. 
+Changed from v4:
+- https://lore.kernel.org/netdev/20250209013054.816580-1-inochiama@gmail.com/
+1. apply Romain's tag
+2. patch 3: use device variable to replace &pdev->dev.
+3. patch 3: remove unused include.
+4. patch 3: make error message more useful.
 
-Regards,
-Inochi
+Changed from v3:
+- https://lore.kernel.org/netdev/20241223005843.483805-1-inochiama@gmail.com/
+1. rebase for 6.14.rc1
+2. remove the dependency requirement as it was already merged
+   into master.
 
-> >   3 files changed, 281 insertions(+)
-> >   create mode 100644 drivers/pci/controller/dwc/pcie-dw-sophgo.c
-> > 
-> > [...]
-> > +
-> > +static void sophgo_intx_irq_eoi(struct irq_data *d)
-> > +{
-> > +}
-> Why define this empty callback function? Please add a comment if it is
-> really needed.
+Changed from RFC:
+- https://lore.kernel.org/netdev/20241101014327.513732-1-inochiama@gmail.com/
+1. patch 1: apply Krzysztof' tag
 
-See https://lore.kernel.org/all/bxwsvluj6amgoelk7r55gqhmhjwpewnfyhvvw6zpxen7kqzvwc@fxcebjzo5axk/
+Changed from v2:
+- https://lore.kernel.org/netdev/20241025011000.244350-1-inochiama@gmail.com/
+1. patch 1: merge the first and the second bindings patch to show the all
+            compatible change.
+2. patch 2: use of_device_compatible_match helper function to perform check.
+2. patch 3: remove unused include and sort the left.
+3. patch 3: fix wrong variable usage in sophgo_dwmac_fix_mac_speed
+4. patch 3: drop unused variable in the patch.
+
+Changed from v1:
+- https://lore.kernel.org/netdev/20241021103617.653386-1-inochiama@gmail.com/
+1. patch 2: remove sophgo,syscon as this mac delay is resolved.
+2. patch 2: apply all the properties unconditionally.
+3. patch 4: remove sophgo,syscon code as this mac delay is resolved.
+4. patch 4: use the helper function to compute rgmii clock.
+5. patch 4: use remove instead of remove_new for the platform driver.
+
+Inochi Amaoto (4):
+  dt-bindings: net: Add support for Sophgo SG2044 dwmac
+  net: stmmac: platform: Group GMAC4 compatible check
+  net: stmmac: platform: Add snps,dwmac-5.30a IP compatible string
+  net: stmmac: Add glue layer for Sophgo SG2044 SoC
+
+ .../devicetree/bindings/net/snps,dwmac.yaml   |   4 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml     | 126 ++++++++++++++++++
+ drivers/net/ethernet/stmicro/stmmac/Kconfig   |  11 ++
+ drivers/net/ethernet/stmicro/stmmac/Makefile  |   1 +
+ .../ethernet/stmicro/stmmac/dwmac-sophgo.c    |  75 +++++++++++
+ .../ethernet/stmicro/stmmac/stmmac_platform.c |  17 ++-
+ 6 files changed, 229 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+ create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+
+--
+2.48.1
+
