@@ -1,62 +1,62 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DF81F418F
-	for <sophgo@lists.linux.dev>; Wed,  5 Mar 2025 06:40:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC311F8697
+	for <sophgo@lists.linux.dev>; Wed,  5 Mar 2025 06:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741156805; cv=none; b=gDXpqbH2qMafHLHZVLPXLBFqNF+9kTX5XjVyVZtTJZ4JRislk2hZSms1LHkZhfCsD9kkibtsrt7hbjRzIyinVaJgy6Ewav+KMd8mTEF/1Dis/DW9ID3mxI7DLOQC9NBFBFrDhFQ4BdS0f90h0jo2Da+zHnOF6aGxKTaGXyFd8JM=
+	t=1741156810; cv=none; b=WErpIp6RdWPo0YcJ3iLVujNWQYYC+GJZPDyD7KxVzKnMqKMql6n6qQuzz+hMMEcaY7cpqkM0sG5JC47VPlgBZH9nPNuEGnS2EaMaWopHADqqZ71PpabKdZCeIerQisnS492PzoAKfghdRitv2iYVHEgo0M/WGFksH3u31vOQRgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741156805; c=relaxed/simple;
-	bh=kmVtyRIsp60GI1eJ+DXHiPcXJHc/x7HJlATseKAAuY4=;
+	s=arc-20240116; t=1741156810; c=relaxed/simple;
+	bh=AGPOsmkN5Fae072sh/GeM7rngO+K7bS+aZizA0BpZdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X10jjnlKkWwjEeywaHCkO0+c0V+sf/SSX3gjdo6G6WxCj8gnU2ODekXOfUD6IwEjgeCiUzvkg35iQP2cwtaoNPo5v+sIvY9htpWrkhnT77PX6URXYUYAM+dRvGTmJi9euXM+PsZameIbJAiHC8s5XET5pcOHWKQIXgQrJKvVQ48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DCJsCHF6; arc=none smtp.client-ip=209.85.222.172
+	 MIME-Version; b=umPvNwlNkWCHcPY7k0ozJTbfGZglOaZQeipaXh7AA3lYwY1yKe5SXABmCs6iqR49TKmuz7ZgSztVwWIwsPF6ZCeOJhH96YPCUDtemZmaJ3DBqfIQgC1QVP1zwSr1o2latK2CDcXj08SujEpS5Z01mQ8VBbiKfzt27xkdvL0JRBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=McgR9rfc; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DCJsCHF6"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c3d591e50aso136606385a.0
-        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 22:40:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="McgR9rfc"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c3db4a6110so21003885a.0
+        for <sophgo@lists.linux.dev>; Tue, 04 Mar 2025 22:40:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741156803; x=1741761603; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741156807; x=1741761607; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/nls7kmdirsxklQsEsdMD6n3p+K9nTnYY1CAEZgsVHU=;
-        b=DCJsCHF6K1hRD1qgIA3N6ZiSa03OUaaZKcZdM7B+QRWTPkR5z3GvkmZNqNIcjROAQ7
-         m8xRSwZdpseb1YDd+pWlBkFbRtqNgO5GuD+gEO/GGWldO1Jd+xwz/T5xgbK2nyEXdtv6
-         B/rtQRQpjECDSJdpJIOqPZC7fhr+oTnzo9Yu4LDKy/hpehrfwtrsbHn8tiYSrqDl/+MG
-         rdwXa7UcrCejBcAIdaGI8V9mG7ZvB9up5IfVfz8wpI7TkeKkWqlCE1OPUEDNMj8ha4IS
-         JRXcej52Q2AmPdaxRsbiuOmd/y8Mn+uAl1RNMnKFP3royC6uljB7S6k+ZJo56fFP4rOU
-         PF8Q==
+        bh=cY6Pi0eVXjTj4iYGf3V3W021FfEKM0ai79ohmKI0mfc=;
+        b=McgR9rfcBf+XAO9Il5IN7S7WUPv7dZoPaS5gee/lVk9lAuzcvswtZU2lABOu25QCf/
+         b8MJmob3bvMf1Vj3msZMVQ7RtB5Cv6KYJd67fsGCrzuOA4/Sn+SYOmEi04ipfHEccFIa
+         WtVYnUQ8xTm1XVNPv1LtQ0rKW+TXd2Z2QKvu27aIvS2ZkDeEpN3JU7DoQM6j5YmtHLJ/
+         Aw3r1l6HU+iz+V36FTwDDY5JCTHD3dRsiZxJ8sGVeEUHVJvCBd8A3RD1MqFdHL3q8A9A
+         COG82XN3bn7r4hlqd0o0Q3hvTEyDbFmZjB1oaaeCbuXp62Ef0oLjBvT1wSl+UfDKRaeF
+         J/0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741156803; x=1741761603;
+        d=1e100.net; s=20230601; t=1741156807; x=1741761607;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/nls7kmdirsxklQsEsdMD6n3p+K9nTnYY1CAEZgsVHU=;
-        b=Q8yk0VBPE9s3Oz2JEhaM8vF+J4q8qQwh7I3y7so9rEoHcaOF6REiiTxSmLPYlnnFy/
-         JIgheYdBN7rr7ME77sZObluBpr6kK+YKZOBZj/RWh2PrZqQ24rFQtfBzdZI/Q/EHN0rg
-         PRqjV0xhCGuJyEM1f16ztX59fpPfFQmS+FVbVQ4j97b7p27Otacopm5pLOodu6b4ooFk
-         OSrpICGg+qbeD6qs96IyLtaIa9dN4SptPPcLdTx4N+jVU3gYOmFC5PWK8tgTnjSyMQhG
-         1ooMK9zw0xPi6Oa67OfWhOD5rI4NpayfrQ4oy4RRLj/ZqyVVw0ADPuyozWehLM5+8Pk9
-         8P2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUd8ujbZh/g6PyuZ5sFL+oKn6+/+KdS1OS/sck2kHoQpPf0ThTWb2HnUPvSt0Z6eK87TkmmpsI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxMLNayvbfTBcTyFw8WaRjimofLW3WjTw0ujlN7eNAQiujrD52a
-	f+DExCbrENO+Df6Rv+S4r0R3Q3veKEYvvzCCqBrV+1ZE4w7kYT0w
-X-Gm-Gg: ASbGncuWvd/WjyV8GIIju3amgp9CojwVZ/1mtChOsQT+1Vos4wXUCRi1dskqFWX5RpF
-	Hn1uUlQhHkVgC/B8CtLp1qrh+WAsIbRN7PthwOw2Yaqv3HVkXDfPeMmkOSMA/zpBAwbxSEq9qnr
-	J3hSVaxd0ZYTN8aSznwmVJkjX6F5h5EGBey/R/vTcc/uWyKyKdj6b6OvpwJG/ebmTb7MblHt5r1
-	dinWgr9sWCGyNF59DarhXNL8iVXSlaFimTq+2srnW1rVhyGs1VqSfaMetVrCxiRwp2eIYE0xj1T
-	+br5FpPvmwW9RQADS6b2
-X-Google-Smtp-Source: AGHT+IHvjwxT5WbMC7jnX9jkcACdhgQLJENaJZs+PW3Nv5C/K/7SkZFAn2aK/Z5GNbzrtFbbjPi8Rw==
-X-Received: by 2002:a05:620a:6288:b0:7c0:c2d7:5f2d with SMTP id af79cd13be357-7c3d8e7b411mr307853585a.28.1741156803205;
-        Tue, 04 Mar 2025 22:40:03 -0800 (PST)
+        bh=cY6Pi0eVXjTj4iYGf3V3W021FfEKM0ai79ohmKI0mfc=;
+        b=gfwXGoXJqPnYQqvqsx42vNKCnjLJ/9DfmH64qyM1i+Zf0HGLb1bxgBqqriU3x/8NE1
+         2ON4GYrMmStop3hIxs/cDBXBq5nwSIzV/pM8hPSZoPp7lj4ZtTZLvVzrYye6gEVcBmNX
+         kAW9N57p8xpWjWOY7hNMZy4p/ObSS6D4zitUdv8N8DoZtxOCpKR+w0/9H/k24p8uJYie
+         RoOtwYgwUOgeNeiegeAADsulteJNPHMKBpWFlYeTRuPfTW3jOA1DnbkXXP5tXfmeAm61
+         KHF1cdsVYMYhd2rU6XuG2QkHshWYKHfjSBt6Ihp53fhYt65oXruFvdD+mY3N1SBfXVBU
+         AjoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUWo2FHzTAjKL37cv8s9lvNIIaCcCS/TlTicakFvkotTjKv01B7Kk8nY0qKhMyykA3Q4o8i7Zk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzZk1pgkAWEjuzf5sRasOmzZUgqPCaiCUnv4UoVqzG77U0sEEdO
+	mn2NwhR4bkZofY+IY58vDiR1aPyWVSjK4gylWRyq49ioeFfvyvCX
+X-Gm-Gg: ASbGncuqzywN6RS6uYX4T8QHziPzhm+RoMXyohsr1WB57FweLgk9or1vI+cnJq23e4G
+	3iDiJHyApM3RGlzLow2WWUXmrI8A+DTxjyfwTozaa8uww9A4y79MiHlRA471mzDL6bpBGa9oEOK
+	WCPaGafzC/Bl4EpJkEO0EudwwCzI3IBakQOBjgJWzMLu3tLPTJS7+WOsj3RbhDYaZLoXyeniBuU
+	2/VraujZuiyxgI097HXv5DOCYz2v1zlW0TER2vxSSnPHRHMeACGxvM+tK+vwTNJHb/X5H5Sd6W0
+	SdM1NiTfEkAJblQouioP
+X-Google-Smtp-Source: AGHT+IGwtGEt3KqPtzEArH9EO6uoLdPaUjiF2hOKrwwHaDa+GSJgxxkM/g83OEgs0VgyrS2u3iChTw==
+X-Received: by 2002:a05:620a:2626:b0:7c3:c500:ca96 with SMTP id af79cd13be357-7c3d9172203mr291491985a.9.1741156807126;
+        Tue, 04 Mar 2025 22:40:07 -0800 (PST)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c3b67458e0sm409029085a.57.2025.03.04.22.40.01
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c3d9bcdcc3sm65443785a.60.2025.03.04.22.40.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Mar 2025 22:40:02 -0800 (PST)
+        Tue, 04 Mar 2025 22:40:06 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -94,11 +94,10 @@ Cc: netdev@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>
-Subject: [PATCH net-next v6 3/4] net: stmmac: platform: Add snps,dwmac-5.30a IP compatible string
-Date: Wed,  5 Mar 2025 14:39:15 +0800
-Message-ID: <20250305063920.803601-4-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH net-next v6 4/4] net: stmmac: Add glue layer for Sophgo SG2044 SoC
+Date: Wed,  5 Mar 2025 14:39:16 +0800
+Message-ID: <20250305063920.803601-5-inochiama@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250305063920.803601-1-inochiama@gmail.com>
 References: <20250305063920.803601-1-inochiama@gmail.com>
@@ -110,28 +109,131 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add "snps,dwmac-5.30a" compatible string for 5.30a version that can avoid
-to define some platform data in the glue layer.
+Adds Sophgo dwmac driver support on the Sophgo SG2044 SoC.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Romain Gantois <romain.gantois@bootlin.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/stmicro/stmmac/Kconfig   | 11 +++
+ drivers/net/ethernet/stmicro/stmmac/Makefile  |  1 +
+ .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 75 +++++++++++++++++++
+ 3 files changed, 87 insertions(+)
+ create mode 100644 drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index 4a3fe44b780d..8dc3bd6946c6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -412,6 +412,7 @@ static const char * const stmmac_gmac4_compats[] = {
- 	"snps,dwmac-4.20a",
- 	"snps,dwmac-5.10a",
- 	"snps,dwmac-5.20",
-+	"snps,dwmac-5.30a",
- 	NULL
- };
+diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+index 4cc85a36a1ab..b6ff51e1ebce 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
++++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
+@@ -181,6 +181,17 @@ config DWMAC_SOCFPGA
+ 	  for the stmmac device driver. This driver is used for
+ 	  arria5 and cyclone5 FPGA SoCs.
  
++config DWMAC_SOPHGO
++	tristate "Sophgo dwmac support"
++	depends on OF && (ARCH_SOPHGO || COMPILE_TEST)
++	default m if ARCH_SOPHGO
++	help
++	  Support for ethernet controllers on Sophgo RISC-V SoCs
++
++	  This selects the Sophgo SoC specific glue layer support
++	  for the stmmac device driver. This driver is used for the
++	  ethernet controllers on various Sophgo SoCs.
++
+ config DWMAC_STARFIVE
+ 	tristate "StarFive dwmac support"
+ 	depends on OF && (ARCH_STARFIVE || COMPILE_TEST)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
+index b26f0e79c2b3..594883fb4164 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/Makefile
++++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
+@@ -24,6 +24,7 @@ obj-$(CONFIG_DWMAC_ROCKCHIP)	+= dwmac-rk.o
+ obj-$(CONFIG_DWMAC_RZN1)	+= dwmac-rzn1.o
+ obj-$(CONFIG_DWMAC_S32)		+= dwmac-s32.o
+ obj-$(CONFIG_DWMAC_SOCFPGA)	+= dwmac-altr-socfpga.o
++obj-$(CONFIG_DWMAC_SOPHGO)	+= dwmac-sophgo.o
+ obj-$(CONFIG_DWMAC_STARFIVE)	+= dwmac-starfive.o
+ obj-$(CONFIG_DWMAC_STI)		+= dwmac-sti.o
+ obj-$(CONFIG_DWMAC_STM32)	+= dwmac-stm32.o
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+new file mode 100644
+index 000000000000..3303784cbbf8
+--- /dev/null
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+@@ -0,0 +1,75 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Sophgo DWMAC platform driver
++ *
++ * Copyright (C) 2024 Inochi Amaoto <inochiama@gmail.com>
++ */
++
++#include <linux/clk.h>
++#include <linux/module.h>
++#include <linux/mod_devicetable.h>
++#include <linux/platform_device.h>
++
++#include "stmmac_platform.h"
++
++static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
++				    struct plat_stmmacenet_data *plat_dat,
++				    struct stmmac_resources *stmmac_res)
++{
++	plat_dat->clk_tx_i = devm_clk_get_enabled(&pdev->dev, "tx");
++	if (IS_ERR(plat_dat->clk_tx_i))
++		return dev_err_probe(&pdev->dev, PTR_ERR(plat_dat->clk_tx_i),
++				     "failed to get tx clock\n");
++
++	plat_dat->flags |= STMMAC_FLAG_SPH_DISABLE;
++	plat_dat->set_clk_tx_rate = stmmac_set_clk_tx_rate;
++	plat_dat->multicast_filter_bins = 0;
++	plat_dat->unicast_filter_entries = 1;
++
++	return 0;
++}
++
++static int sophgo_dwmac_probe(struct platform_device *pdev)
++{
++	struct plat_stmmacenet_data *plat_dat;
++	struct stmmac_resources stmmac_res;
++	struct device *dev = &pdev->dev;
++	int ret;
++
++	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "failed to get platform resources\n");
++
++	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
++	if (IS_ERR(plat_dat))
++		return dev_err_probe(dev, PTR_ERR(plat_dat),
++				     "failed to parse DT parameters\n");
++
++	ret = sophgo_sg2044_dwmac_init(pdev, plat_dat, &stmmac_res);
++	if (ret)
++		return ret;
++
++	return stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
++}
++
++static const struct of_device_id sophgo_dwmac_match[] = {
++	{ .compatible = "sophgo,sg2044-dwmac" },
++	{ /* sentinel */ }
++};
++MODULE_DEVICE_TABLE(of, sophgo_dwmac_match);
++
++static struct platform_driver sophgo_dwmac_driver = {
++	.probe  = sophgo_dwmac_probe,
++	.remove = stmmac_pltfr_remove,
++	.driver = {
++		.name = "sophgo-dwmac",
++		.pm = &stmmac_pltfr_pm_ops,
++		.of_match_table = sophgo_dwmac_match,
++	},
++};
++module_platform_driver(sophgo_dwmac_driver);
++
++MODULE_AUTHOR("Inochi Amaoto <inochiama@gmail.com>");
++MODULE_DESCRIPTION("Sophgo DWMAC platform driver");
++MODULE_LICENSE("GPL");
 -- 
 2.48.1
 
