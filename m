@@ -1,122 +1,74 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2A363D;
-	Thu,  6 Mar 2025 05:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2541414A4F9;
+	Fri,  7 Mar 2025 00:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741239043; cv=none; b=XAn9mZvH9QJS2WRUAcfRbEVeXxpol39jNQj3OsnR04XUGfDFkLV29+1MfKIjU7BfFd/Ohu+l/tVR5n8Axue+WEwUorpiCCprheU9oPD7J8n5CtqJhk0KtjKmoUuMNGzU9Z1EIGO+0dnjaaFozxsJfNRS9RISCURU9bbiV7bdKx4=
+	t=1741309174; cv=none; b=Zitk01o8x/qn2myIdXbK+4uk7PIzP4fwqQapjt0Dp3eA1W3MFOGhJdP6C9dqGfpvPQG/9IrNJX0iiAZoAMNydfHot7qO9teaChXz9mrMfZ9v9IOtpnsWlFr+BbMI05BDtrJu84ecYdDduFqzsO48cAk6Hk2kZZBXGt5G2afMenw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741239043; c=relaxed/simple;
-	bh=21iO/G2bQw9K65JrUOqRRdhPgZGB06xxok6XVDEcObw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nc+df1CshBbfQuVwLWlbkvo1/K7jcaQGW+GxpylX77+ihQZKHM2VespxfHl4w+M9Lj3pFnppWL54RQG4AaF1brwm6CR94Vfimh7em2Ear1b6DDVRdbhIi6Mpxv3NX20W3u41ua9yl+FNOtLIjZperlIA6jd8Tj5RZnrgbx4t3GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QfMQ39WD; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1741309174; c=relaxed/simple;
+	bh=Cg2qsx4qx6dQxL2dKMoV09fLDr7a4hn6EBItwZqDGGk=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GjJ3UYmGZft34cQA8CnVpiQhu7LtU4zpqUXhHxC18ajtVYiPgWIBbfEMNu8qLvK2JukEDQiKNWkxOfQzWPzKMmfqbK7Lh3ODEa72yfj93GIt9b4CUI1FRMNSMagHpTQjzsUAAmeVNfypo6x3s6Fp2WQUxVPndxZs48BXKvBB6ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xx49e8od; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QfMQ39WD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1741239041; x=1772775041;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=21iO/G2bQw9K65JrUOqRRdhPgZGB06xxok6XVDEcObw=;
-  b=QfMQ39WD5a8McPhxNMScQqh2EjquCC4+mOvHz477tLbSuxJnF9ip8jyu
-   wo+PzYmnZuPCC0xY3w9nQhbfl3DdCqTRxyMOJQ5FYDNeWk1rHhQOiEeC7
-   Wvk5aZrCEVTlFOEDkRC6juXKxGoG7HXBniALuoQMnTZQZ6plCBMFDh3Vr
-   MpbA7cWE1GJxVgZUdoXc40iQYdCvfW1Ew8I5b6S/V+qp07g1iv/NygYNv
-   UmPyDXBcN7fy4nvkF539u61+8D5XH7cxFzs9yyy+FvgzX7ENtlRE8z0/q
-   vjnV5Qm+gmxxlcg6CqNgrr97rm3nMuxMnkmERGn6o9HDvGSeCUTejftvq
-   A==;
-X-CSE-ConnectionGUID: 1fNigxwzSmKGfZ6HesfaVg==
-X-CSE-MsgGUID: 9bN5EVTsSwCRUWRzNbzjKA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11363"; a="42258852"
-X-IronPort-AV: E=Sophos;i="6.14,225,1736841600"; 
-   d="scan'208";a="42258852"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Mar 2025 21:30:40 -0800
-X-CSE-ConnectionGUID: FOt1b/HPS/Kk/o/pTnuQsA==
-X-CSE-MsgGUID: F1Uayh3pT8GmKmLuuh1/nw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.14,225,1736841600"; 
-   d="scan'208";a="119602412"
-Received: from lkp-server02.sh.intel.com (HELO 76cde6cc1f07) ([10.239.97.151])
-  by fmviesa009.fm.intel.com with ESMTP; 05 Mar 2025 21:30:37 -0800
-Received: from kbuild by 76cde6cc1f07 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1tq3oX-000MaE-2x;
-	Thu, 06 Mar 2025 05:30:33 +0000
-Date: Thu, 6 Mar 2025 13:29:37 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-rtc@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Inochi Amaoto <inochiama@gmail.com>, dlan@gentoo.org,
-	linux-kernel@vger.kernel.org,
-	Jingbao Qiu <qiujingbao.dlmu@gmail.com>, Lee Jones <lee@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	sophgo@lists.linux.dev
-Subject: Re: [PATCH v12 2/3] mfd: sophgo: cv1800: rtcsys: New driver
- (handling RTC only)
-Message-ID: <202503061309.yjpOnrMo-lkp@intel.com>
-References: <20250302195205.3183174-3-alexander.sverdlin@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xx49e8od"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37826C4CEE0;
+	Fri,  7 Mar 2025 00:59:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741309173;
+	bh=Cg2qsx4qx6dQxL2dKMoV09fLDr7a4hn6EBItwZqDGGk=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Xx49e8odjgKN5abFOiSV4WP/FDGjg6AN+86g670RJ4qn7DNDD6tzDFYOf5sO6pYyg
+	 J9uIA95n5YPjL3ubaBjCrbvqO/lwtwbrBPvSulpqdMwTdF4+H5O+MSorPu282E7sIp
+	 WGJ05Mge/msv+7DjZ7soWwFlJCMjX5LTiP8Xndj5HiEDpr1Cfoizm0THFCdyq98nJs
+	 0s2TJysz2Q0ybXYPB42JpVxbGuwEYcntGG7VjIBoSJp7zY8QgZqRJdmtqUBYKoGKwK
+	 EncNbvLjrOCcLU5aGpV9/7TwEVK9R3DoU6vLDbykGzcGDCapLljk5XvGICRlR8A4ZY
+	 FITRCI7Qg0q2g==
+Date: Thu, 6 Mar 2025 16:59:31 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Paolo Abeni
+ <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Chen Wang
+ <unicorn_wang@outlook.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, Richard Cochran
+ <richardcochran@gmail.com>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Romain Gantois <romain.gantois@bootlin.com>, Hariprasad Kelam
+ <hkelam@marvell.com>, Jisheng Zhang <jszhang@kernel.org>, =?UTF-8?B?Q2w=?=
+ =?UTF-8?B?w6ltZW50IEzDqWdlcg==?= <clement.leger@bootlin.com>, "Jan Petrous
+ (OSS)" <jan.petrous@oss.nxp.com>, Simon Horman <horms@kernel.org>, Furong
+ Xu <0x1207@gmail.com>, Lothar Rubusch <l.rubusch@gmail.com>, Joe Hattori
+ <joe@pf.is.s.u-tokyo.ac.jp>, Bartosz Golaszewski
+ <bartosz.golaszewski@linaro.org>, Giuseppe Cavallaro
+ <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org,
+ Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next v6 0/4] riscv: sophgo: Add ethernet support for
+ SG2044
+Message-ID: <20250306165931.7ffefe3a@kernel.org>
+In-Reply-To: <20250305063920.803601-1-inochiama@gmail.com>
+References: <20250305063920.803601-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250302195205.3183174-3-alexander.sverdlin@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi Alexander,
+On Wed,  5 Mar 2025 14:39:12 +0800 Inochi Amaoto wrote:
+> The ethernet controller of SG2044 is Synopsys DesignWare IP with
+> custom clock. Add glue layer for it.
 
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on lee-mfd/for-mfd-next]
-[also build test WARNING on abelloni/rtc-next linus/master lee-mfd/for-mfd-fixes v6.14-rc5 next-20250305]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Sverdlin/dt-bindings-mfd-sophgo-add-RTC-support-for-Sophgo-CV1800-series-SoC/20250303-035433
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/lee/mfd.git for-mfd-next
-patch link:    https://lore.kernel.org/r/20250302195205.3183174-3-alexander.sverdlin%40gmail.com
-patch subject: [PATCH v12 2/3] mfd: sophgo: cv1800: rtcsys: New driver (handling RTC only)
-config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20250306/202503061309.yjpOnrMo-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250306/202503061309.yjpOnrMo-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202503061309.yjpOnrMo-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/mfd/cv1800-rtcsys.c:30:30: warning: 'cv1800_rtcsys_rtc_subdev' defined but not used [-Wunused-const-variable=]
-      30 | static const struct mfd_cell cv1800_rtcsys_rtc_subdev =
-         |                              ^~~~~~~~~~~~~~~~~~~~~~~~
-
-
-vim +/cv1800_rtcsys_rtc_subdev +30 drivers/mfd/cv1800-rtcsys.c
-
-    29	
-  > 30	static const struct mfd_cell cv1800_rtcsys_rtc_subdev =
-    31		MFD_CELL_NAME("cv1800-rtc");
-    32	
-
+Looks like we have a conflict on the binding, could you rebase
+against latest net-next/main and repost?
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+pw-bot: cr
