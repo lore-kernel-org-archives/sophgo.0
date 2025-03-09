@@ -1,125 +1,259 @@
-Received: from lelvem-ot02.ext.ti.com (lelvem-ot02.ext.ti.com [198.47.23.235])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C6D17583
-	for <sophgo@lists.linux.dev>; Fri,  7 Mar 2025 15:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269E646426
+	for <sophgo@lists.linux.dev>; Sun,  9 Mar 2025 20:26:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741360815; cv=none; b=tiEUsvFmd/MlOUhphQhy7szCfHCf3hnL5Ick9Mi70wfZtasl+vm5I5GJ7v4ILOBbBs5eJF72U/5mtFikZNrMevvxk/7bxnCb1qwZ4t5rtjc3vC2PuE4KFN//sW792sb1hGiPYUAwgoSlRHy8vo8q6p8hmaqWZF9fcWhsLJfh7bE=
+	t=1741552006; cv=none; b=EOIgyRi61ZX9mw4uL6XdrDYWzebRW+I4Zx/MLw8lMjb/uoy+ZmRh8E6Z4QKzRN+k0DRHvSvqCTadA5y9HDz99w1XvEH33sc+IWSTw4DnaYUnKcRKYOhalPKP1vLEzg2u99JkK75K8xt90CpCUkFwzXOw3qvqejdeDUoYSn39388=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741360815; c=relaxed/simple;
-	bh=I9v90QuvOYFQkO1/C5xGBSl3JhGgZd8frHszZDZ4isA=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HqYt1WfuWf0aJe0a816TI4bJ7IG878FrSvcWvVgCTGaEkBsz8cB30eoLjPChhz+XSmrrgGvQg1SndQV0nlq97b9rTORdSVWOj1zfuhY4FiZ42H/h4usD8trXSyGrlbznVjfYCGLhXYXNdnmbLTHCYFMbrU0RW7/2kBrg4HxYskg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=aVcQQYH4; arc=none smtp.client-ip=198.47.23.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+	s=arc-20240116; t=1741552006; c=relaxed/simple;
+	bh=e6f6FwB8+Da+oeApsP7aXsV/7WbfX1lqQUheMaHmi8M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pW2Xkxxt0NG76q8kPwYeM8/0caICbhCByUSx63mEPlbKn2qf8QRsueqywRTsfIcH3iumEa7gOU5NgGAPT4OHnqC786iq0h8aVxPQ0uaGUjQN43+hdETeFyk7foqHNj9yaD2MBan03xHWYGsTa+8DMkWvRmRSPaUG5K+c1M2G33Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fld6vfT1; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="aVcQQYH4"
-Received: from lelv0265.itg.ti.com ([10.180.67.224])
-	by lelvem-ot02.ext.ti.com (8.15.2/8.15.2) with ESMTPS id 527FJqdG394955
-	(version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 7 Mar 2025 09:19:52 -0600
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1741360792;
-	bh=YTzilPJdRmVeHy3CfMoVeWv44AxPr5bm5tl37FH45Yc=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=aVcQQYH4YmjTwASvChTUzHIWoflgHKVZfmjBdosy3FKeF+Hxkg3xagqte1ehjIKZ+
-	 zV8zX5YwoO/0RZeEqx62oCj2KUxj/fdnAceKTRDZbUtLxjK8KB5RkWVlzjT5KAovMB
-	 UjtMtN+fbFPh6w8Oahm+yOfk8+Or028RTvRHjoBM=
-Received: from DFLE106.ent.ti.com (dfle106.ent.ti.com [10.64.6.27])
-	by lelv0265.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 527FJqoa006291
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Fri, 7 Mar 2025 09:19:52 -0600
-Received: from DFLE108.ent.ti.com (10.64.6.29) by DFLE106.ent.ti.com
- (10.64.6.27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Fri, 7
- Mar 2025 09:19:51 -0600
-Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DFLE108.ent.ti.com
- (10.64.6.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Fri, 7 Mar 2025 09:19:51 -0600
-Received: from localhost (uda0492258.dhcp.ti.com [10.24.72.113])
-	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 527FJoai127353;
-	Fri, 7 Mar 2025 09:19:51 -0600
-Date: Fri, 7 Mar 2025 20:49:49 +0530
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
-To: Chen Wang <unicorn_wang@outlook.com>
-CC: Siddharth Vadapalli <s-vadapalli@ti.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Chen Wang <unicornxw@gmail.com>, <lpieralisi@kernel.org>,
-        <kw@linux.com>, <robh@kernel.org>, <bhelgaas@google.com>,
-        <thomas.richard@bootlin.com>, <bwawrzyn@cisco.com>,
-        <wojciech.jasko-EXT@continental-corporation.com>, <kishon@kernel.org>,
-        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sophgo@lists.linux.dev>
-Subject: Re: [PATCH] PCI: cadence: Fix NULL pointer error for ops
-Message-ID: <20250307151949.7rmxl22euubnzzpj@uda0492258>
-References: <20250304081742.848985-1-unicornxw@gmail.com>
- <PN0PR01MB10393C44D1F4B9189C52D31EBFED52@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
- <20250307134727.m57er2ky6e3dmftl@uda0492258>
- <PN0PR01MB10393326D387DD49EF563F787FED52@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fld6vfT1"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ac25520a289so399712266b.3
+        for <sophgo@lists.linux.dev>; Sun, 09 Mar 2025 13:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741552002; x=1742156802; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=liw16b1KD23GiAUtAaqgKFYJsvip4lft0wm9l86PGN4=;
+        b=Fld6vfT137+Pntc0VQVnmhGCVZzhlkh7z9+0qmILxHnhqx6HSsrcVOUC893M6EAiRu
+         QcUIQL+m5GC3+bNSTCfAUZj9IMBxVegzi1N3XDK5gH9Zw0rvAbd9CToTPz+4efNaZj1v
+         00sULK/Vp8thZkSl9EyoTqz5kY4Kbr0ZgwBGoOGzBjvUi213LertX/q26xwfwAd9Tmqp
+         jJyyh9ICYrovFeFdXRbAaqm1n+guxfxQ/+yjLL+OVbQrzxB0S9Ox+0X0jKj2jygmHskI
+         x1mg130hN/jW2z5t0T15TBsXhrxShuJ3ANVl/GhtFpqcKt5DzpgWudWcpb9/LmXKTt9+
+         pOIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741552002; x=1742156802;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=liw16b1KD23GiAUtAaqgKFYJsvip4lft0wm9l86PGN4=;
+        b=c+Kh3RDe2wsxM1m9Oaw93zi9fn7LWN4YLXeFPHkzUzTHcDwo0hpqwgyDZjFEtGfOE1
+         6RGni0sD2zaX4oIWbRvtL2Gy99w0A7383qjVrOXH6N8DuhWWQh+LfX+U5l+ppQb90aP1
+         pLhvOBVNFQjFbYyOyMXy5CJcYR32Tvwo6quyWsCgv/+/LMH6ktC39CimQtP8I7Xcxp+f
+         70P5kc+bCp7L87fQF6RB8FNscD7Ms3GZMeTyMYFPLRwtosSD7EWED79IVT0mrcX31c9b
+         ZIdvHdZFA1wMliGA7BE0To2sttrHheKDIK4DY1QAauPvPb+X3PZJs00wNrYiF3SUXz1l
+         jGQw==
+X-Gm-Message-State: AOJu0Yy8a+S5YBLdbW0U5VaMhQao02bt2ocB95zfXKYuLPqjzzFUnfvM
+	QTbhCsnYaJI2n+A+Q8GoQtOG+TxMgDCLnQk3CPYhNyn+HFayYFM2HZi1l6o7
+X-Gm-Gg: ASbGncsMcJ0i88fFNCsQoUI6pAQOVfKpNnhJSEeLHbtZIn5ZFCqx8DA0JxV/RnJFscp
+	3athXDfKfOqWcBCd5Xer75Lwocq81CnLDwP7gzMwtSQxrxHi0lnHifgBv3W9qGON2sALFsMNIkM
+	9yhRMnzONrbIFaQM4NCjua69cuQ4wx45vIzwYaLSKEei1VGQXZ6Tn+ucbiCcKggP9X6HxyYu4B0
+	5jVY5NR8M1Arny/V++mcqlviQEriooUhn03i3TxFR61CPZ63OLDpPQ+ky6cd2PqCTVMg9pE7jHu
+	Equ+3/BkDhrKvQQo5aTr68eaPNhYeNsB/hnH7v15MrZZxbp9X17wV/jnGQ==
+X-Google-Smtp-Source: AGHT+IECkRLoAD9m1S2lkKo+odvYuBgwUnE/shsxtqNAyxitlMH9qJO8yNmfUhNDUN5Avy1Oh54QSQ==
+X-Received: by 2002:a17:906:d283:b0:ac2:7dee:cb15 with SMTP id a640c23a62f3a-ac27deed088mr571861866b.33.1741552002053;
+        Sun, 09 Mar 2025 13:26:42 -0700 (PDT)
+Received: from giga-mm.. ([2a02:1210:861b:6f00:82ee:73ff:feb8:99e3])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ac27c7e29bbsm281833966b.92.2025.03.09.13.26.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Mar 2025 13:26:41 -0700 (PDT)
+From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+To: sophgo@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-rtc@vger.kernel.org
+Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Yangyu Chen <cyy@cyyself.name>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v13 0/3] rtc: sophgo: add rtc support for CV1800
+Date: Sun,  9 Mar 2025 21:26:22 +0100
+Message-ID: <20250309202629.3516822-1-alexander.sverdlin@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <PN0PR01MB10393326D387DD49EF563F787FED52@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
-X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
 
-On Fri, Mar 07, 2025 at 10:44:10PM +0800, Chen Wang wrote:
-> 
-> On 2025/3/7 21:47, Siddharth Vadapalli wrote:
-> > On Fri, Mar 07, 2025 at 09:07:35PM +0800, Chen Wang wrote:
-> > > Hello~
-> > > 
-> > > Any comment on this? Or can we have this bugfix patch picked for coming
-> > > v6.15?
-> > Is there a driver in Linux which is affected by the issue that you are
-> > trying to fix in this patch? Please point to the driver since I don't
-> > see such a driver.
-> > 
-> > Regards,
-> > Siddharth.
-> 
-> Oh, sorry I didn't explain the change history clearly. I am developing a
-> PCIe driver for a new soc (SG2042), and this PCIe controller uses cadence's
-> IP. In the code, I found that if I don't assign a value to cdns_pcie.ops, it
-> will crash during operation. At first, I didn't fix the bug in the cadence
-> code, but used a workaround in the SG2042 driver. Later in the code review,
-> Manivannan pointed out my problem and hoped that I would submit a patch to
-> fix this problem in the cadence driver.
-> 
-> Adding Manivannan who should know about this.
-> 
-> Please take a look at this: https://lore.kernel.org/linux-riscv/20250119122353.v3tzitthmu5tu3dg@thinkpad/.
-> For your convenience, I have excerpted some of the text below.
-> 
-> ```
-> 
-> > +static struct pci_ops sg2042_pcie_host_ops = {
-> > +    .map_bus    = cdns_pci_map_bus,
-> > +    .read        = sg2042_pcie_config_read,
-> > +    .write        = sg2042_pcie_config_write,
-> > +};
-> > +
-> > +/* Dummy ops which will be assigned to cdns_pcie.ops, which must be
-> !NULL. */
-> 
-> Because cadence code driver doesn't check for !ops? Please fix it instead.
-> And
-> the fix is trivial.
+Real Time Clock (RTC) is an independently powered module within the chip,
+which includes a 32KHz oscillator and a Power On Reset/POR submodule. It
+can be used for time display and timed alarm generation.
 
-Thank you for providing the context for this patch. Maybe the context
-should go into the commit message, but that's not a reason to block this
-patch, so:
+This series aims to provide complete DT bindings, but the drivers are only
+focusing on RTC implementation. Possible Power Management and remoteproc
+can be implemented later (hence the RTC driver is using syscon, because
+MMIO space is really interleaved among different functions).
 
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Series is tested on Milk-V Duo Module 01 EVB (SG2000 SoC).
 
-Regards,
-Siddharth.
+Changes since v12:
+- Moved bindings and stub driver from MFD into SOC subsystem
+
+Changes since v11:
+- dropped restart handling (will be implemented in PSCI)
+- split RTC driver into MFD stub and a platform RTC driver
+- dropped Reviewed-by: Krzysztof Kozlowski from bindings, they've got a
+  rework
+- changed bindings maintainer from Jingbao Qiu <qiujingbao.dlmu@gmail.com>
+  to sophgo@lists.linux.dev
+- added link to TRM into bindings description
+- bindings: mentioned 8051 core in the description
+- bindings are now MFD, not RTC
+- bindings: added "syscon" compatible
+- bindings: added "interrupt-names", "clock-names" (because of added
+  PM/remoteproc)
+- bindings: main compatible "sophgo,cv1800-rtc" -> "sophgo,cv1800b-rtc"
+- new patch "mfd: sophgo: cv1800: rtcsys: New driver (handling RTC only)"
+- added both MFD and RTC drivers into MAINTAINERS file (N: K: entries
+  didn't apply)
+- RTC: depends on cv1800-rtcsys MFD driver
+- RTC: use syscon for regmap
+- RTC: get named clock from parent MFD
+Changes since v10:
+- only start RTC on set_time;
+Changes since v9:
+- further simplified bitmask macros;
+- unconditional RTC start (rtc_enable_sec_counter()), otherwise
+didn't start on SG2000;
+- dropped ANA_CALIB modification (has been forgotten in v8 with
+the drop of SW calibration to switch to HW calibration);
+- successfully tested on SG2000;
+
+Changes since v10:
+- only start RTC on set_time;
+- add machine restart handler (as separate patch 3/3);
+
+Changes since v9:
+- picked up orphaned series;
+- further simplified bitmask macros;
+- unconditional RTC start (rtc_enable_sec_counter());
+- dropped ANA_CALIB modification;
+- successfully tested on SG2000;
+
+v9: https://lore.kernel.org/linux-riscv/20240428060848.706573-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v8:
+- delete unused macros
+- using 0/1 instead of the DISABLE/ENABLE macro
+- pass in the correct pointer when applying for IRQ
+- convert the incoming pointer into an appropriate
+  structure pointer in the irq handler
+
+v8: https://lore.kernel.org/all/20240204044143.415915-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v7:
+- pass checkpatch.pl --strict
+- using u32 replace uint32
+- using devm_kzalloc(*) replace
+  devm_kzalloc(sizeof())
+- sort header files alphabetically
+- delete unnecessary header files
+- fix wrap error
+- drop dependent description
+- using hardware automatic calibration replace
+  software calibration. see documentation 197 page
+
+v7: https://lore.kernel.org/all/20240122080500.2621-1-qiujingbao.dlmu@gmail.com/
+documentation: https://github.com/milkv-duo/duo-files/blob/main/duo/datasheet/CV1800B-CV1801B-Preliminary-Datasheet-full-en.pdf
+
+Changes since v6:
+- completely delete POR dt node
+- remove syscon tag
+- use devm_regmap_init_mmio() replace
+  syscon_node_to_regmap
+
+v6: https://lore.kernel.org/all/20240115160600.5444-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v5:
+- remove unnecessary lock
+- fix cv1800_rtc_alarm_irq_enable()
+- remove duplicate checks
+- using alrm->enabled instead of unconditionally
+  enabling
+- remove disable alarms on probe
+- using rtc_update_irq() replace mess of alarm
+- remove leak clk
+- useing devm_rtc_allocate_device() and
+  devm_rtc_register_device() instead old way
+- add judgment for rtc_enable_sec_counter()
+- add POR nodes in DTS. This POR device shares
+  the register region with the RTC device
+
+v5: https://lore.kernel.org/all/20240108072253.30183-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v4:
+- remove POR dt-bindings because it empty
+- remove MFD dt-bindings because SoC does
+  not have MFDs
+- add syscon attribute to share registers
+  with POR
+
+v4: https://lore.kernel.org/all/20231229090643.116575-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v3:
+- temporarily not submitting RTC driver code
+  waiting for communication with IC designer
+- add MFD dt-bindings
+- add POR dt-bindings
+
+v3: https://lore.kernel.org/all/20231226100431.331616-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v2:
+- add mfd support for CV1800
+- add rtc to mfd
+- using regmap replace iomap
+- merge register address in dts
+
+v2: https://lore.kernel.org/lkml/20231217110952.78784-1-qiujingbao.dlmu@gmail.com/
+
+Changes since v1
+- fix duplicate names in subject
+- using RTC replace RTC controller
+- improve the properties of dt-bindings
+- using `unevaluatedProperties` replace `additionalProperties`
+- dt-bindings passed the test
+- using `devm_platform_ioremap_resource()` replace
+  `platform_get_resource()` and `devm_ioremap_resource()`
+- fix random order of the code
+- fix wrong wrapping of the `devm_request_irq()` and map the flag with dts
+- using devm_clk_get_enabled replace `devm_clk_get()` and
+  `clk_prepare_enable()`
+- fix return style
+- add rtc clock calibration function
+- use spinlock when write register on read/set time
+
+v1: https://lore.kernel.org/lkml/20231121094642.2973795-1-qiujingbao.dlmu@gmail.com/
+
+Alexander Sverdlin (1):
+  soc: sophgo: cv1800: rtcsys: New driver (handling RTC only)
+
+Jingbao Qiu (2):
+  dt-bindings: soc: sophgo: add RTC support for Sophgo CV1800 series
+  rtc: sophgo: add rtc support for Sophgo CV1800 SoC
+
+ .../soc/sophgo/sophgo,cv1800b-rtc.yaml        |  86 +++++++
+ MAINTAINERS                                   |   2 +
+ drivers/rtc/Kconfig                           |  12 +
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-cv1800.c                      | 218 ++++++++++++++++++
+ drivers/soc/Kconfig                           |   1 +
+ drivers/soc/Makefile                          |   1 +
+ drivers/soc/sophgo/Kconfig                    |  24 ++
+ drivers/soc/sophgo/Makefile                   |   3 +
+ drivers/soc/sophgo/cv1800-rtcsys.c            |  63 +++++
+ 10 files changed, 411 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/sophgo/sophgo,cv1800b-rtc.yaml
+ create mode 100644 drivers/rtc/rtc-cv1800.c
+ create mode 100644 drivers/soc/sophgo/Kconfig
+ create mode 100644 drivers/soc/sophgo/Makefile
+ create mode 100644 drivers/soc/sophgo/cv1800-rtcsys.c
+
+-- 
+2.48.1
+
