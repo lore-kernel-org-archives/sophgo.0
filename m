@@ -1,62 +1,62 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68FC5234
-	for <sophgo@lists.linux.dev>; Mon, 10 Mar 2025 04:08:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267C635976
+	for <sophgo@lists.linux.dev>; Mon, 10 Mar 2025 04:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741579730; cv=none; b=Rm7UdbcsV05g25qCIa6duv2q8St786fU1wrwQ52IE+uJPmn9ZlRV12sHcqvsYpE0U31TybF7v58qoQGohBuSr5cckQaE7wtLtl8IP9mXGQtvOnPLfEt1PRrQdLYm4lflBbf1tw5o3hmHsaRkamRKLrcTt8SUx9DXcBHTtlA4GpQ=
+	t=1741580595; cv=none; b=SsKZJpK6Vn77ycDIvYTYgKSPrzMNsi8iHZg1gbysDyIhuPrjSUAiUGRmeY/0dDdTytIzYcbGYKqyBrCZW3/VIbRWnnyR7jZQww4tily1SDr5YplDy71wRNkXnDfvg3Wb5j6OzGNx2V4aWNaW58YRHD8IO5oXuSjyb264YGBrNG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741579730; c=relaxed/simple;
-	bh=fJYoS5wlG8QstMdby11IKTbGL41o3ycq8U79HfpMshw=;
+	s=arc-20240116; t=1741580595; c=relaxed/simple;
+	bh=62c0RD+YxE4Wo9QO1+8kjeiytsGGNxXazNbcwI6B09k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D6oeM4viID9ycNfIwL22l2hVdFXRKBmdPBEU3P4ugCacQ6diA/gzC9pAELRpccjVkk0EsLj59EJtosZ7uDz2f1pTxALSyHbPTJjzVVkyB3q478GPuph1V6mQGfkqVyf3qK7jr6qHtdyWVMFFFg1SigxHkk+BC4BAjGP6LI5u638=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RjhbIcOW; arc=none smtp.client-ip=209.85.222.172
+	 MIME-Version:Content-Type; b=lvqoMGwCb1GTKmQCWDOtMg6+EFEEXsZceShkIEOzC9OadMnhLgXmUoB6AF02bWG5qTOhvkKVouL1J6vLwmWrAH63A4f+q28a3sSL+cyN3ehmFTIlQV7cV9++d56gp5xNabKqloym0OTKIUAZFZ+TW+78TzyUKgF1h48+WB7LZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H2M5u9G5; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RjhbIcOW"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c2303a56d6so439836385a.3
-        for <sophgo@lists.linux.dev>; Sun, 09 Mar 2025 21:08:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H2M5u9G5"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-46c8474d8daso29343801cf.3
+        for <sophgo@lists.linux.dev>; Sun, 09 Mar 2025 21:23:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741579727; x=1742184527; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741580593; x=1742185393; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9VOuggK65iHL1WrZt7LgIkYldFFZ7T+Rk2QuSTsMBqc=;
-        b=RjhbIcOWQEGh4kn+LJGyocot+PeOp0CwGtEF+jmRytxaW/0rt2SnFg4Xzdw/lF7SYV
-         IgzwyXLW58PTEnFJOYw4WoG5lQDn2+8+AEz8mf6FKNxvXer8Kw/euupUh6AOrHMBYJgi
-         x28F8LlwnzvsWJIEG6fw2Y7ym8P0lQUl1fnyr7U+GKgdWjCGwwHgRnDScAPOmUJTB68b
-         oZ+w0Oh8OEurC1PcaNGDetzWXjmMVRIi6Y/Q5+tlv3jAgGszQFxNEWa/mcI3EGo8rF5V
-         dl+hS1AvttXnwSMntXaRXd/5qClqdw9B6qquFptYlHoLkChccABb6U9UhFVQtZYaqRFj
-         3VMQ==
+        bh=x0gvF91ZJdA8vs8FXl/3hN19Y7G+bneODyyzgzAJB8U=;
+        b=H2M5u9G5lSq6nSNSyA94EwqvH1Ofc+5St+z8ta6S4CidYoRnIiJ8XzUfthmv7jwme7
+         xluNHxzBc8/Zg9WQUfIXpjV5jfxHJk2LOnDikMALYXWlIh4DpLqm5g+0vRNGZYn+JQZB
+         43hNx2pWMWZpPTsLOe1O6kAN0o0Hz7lUeEKlwXo6eE4Ncb/tkQ29XdGkCWB/nL9iUU4t
+         3nk32dSS2lXCfuNY5xfFqsNG/UKjfwZRPN2f0Y8XTctMAiS0CSWpMmkdPiBe4Swxawst
+         9pyXl4S96I1Jfn6rIVyXAzaIwWKTHXNJ0OaZBcuRBNoh7eN7pwGLOkFC+G2NHBSfwucw
+         2Uqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741579727; x=1742184527;
+        d=1e100.net; s=20230601; t=1741580593; x=1742185393;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9VOuggK65iHL1WrZt7LgIkYldFFZ7T+Rk2QuSTsMBqc=;
-        b=Eref6s9aroIxao69gwwl6+UynaE3++fk5yXo2DAJKxBGwJ81MGtBKM7UTfbxGgZ3yK
-         07KrF6q5eD3AHymH8PUGUCJrt2wQbiEEs/GL+nLM8T3jfJYqrhz9DZ30DSBwQnwtpQ6a
-         hI8hV7z3mjza5drqfDnDshb/Kde5cUFCBUJSsrFTTN6fGqjfmllPkVPDPIUfEkhHyOxn
-         sMbPjAoLU5jzO+skaAjggOJT9oeMjhCW+yn5S6Mg+EiD83BEFWJXAfuxf2VZ4ymjOq8c
-         EB7bG6EWM1oqLTbvu0SpjFY5R1VaVxKWcq15S29CEM+bwhUlmivQlQDblNWjUaYucF27
-         QzJg==
-X-Forwarded-Encrypted: i=1; AJvYcCWFUfLQClquTDULXHagk3qIHSCop9GzKJOwVAMFglwNgJ/u09TX/zxA5Lr3yUwx2zhlc2QSWCE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzX5R9lus2RnbD6sJ3iqOYKFRNV3s/q4FWiwEL/b80rybp+N44T
-	om7r8d3dkzBbNna5RdFr+irO+fcNHUZZW1HDxo+awMVxPIsiIdbW
-X-Gm-Gg: ASbGncuBlkJEihii2jZKlGLlTNt0Vgsc4vYCSyl0wV6l5pyH8V60fs2r36M3A7oWDln
-	rBDR/6OlOgCS9Rkiy+hPjRthxkh2lob8foPFLLRzgifWJ5xOQ3d/f2xCGT+bb5BXbNM4ngpRDyb
-	/6QrCXh6mtT4MsW3MUHN9/sPWfBKARG1bIyhkCXAIshVkjTLSogn3cJaMcHyuqvkY/PXyHscM/O
-	470duHR1RaORiRwLB2Z9Zb8S2XOprsUu9NqH8A0I/L0n8UwSmnQTBpV/vloXRX2aRgNOxuwU1Ke
-	AI7ZqJQFSJ3JyL0LrOQD
-X-Google-Smtp-Source: AGHT+IF48MIEuo2MOFTyOtajCaIZ0VDeA9fTgytDQQC+qHk6FufxDgXmhh2qYRm3u0obvO/2DLZIOQ==
-X-Received: by 2002:a05:620a:278a:b0:7c3:c421:3e92 with SMTP id af79cd13be357-7c4e167830emr1619956585a.10.1741579726778;
-        Sun, 09 Mar 2025 21:08:46 -0700 (PDT)
+        bh=x0gvF91ZJdA8vs8FXl/3hN19Y7G+bneODyyzgzAJB8U=;
+        b=smnli6BqlDg05UUjgHZPRUsywSoGOHoabIuTsytbx1/Twr9bUQwSV1ObR8MKkMLYPU
+         /xNQFilsgx8taUheOUc0EDtGf3Y190gR84M2A9nQcZ4ksqb0tPuQszoGMLAw0NImcR8r
+         NnvJ88tDiay74i735Qf/ukmGCZ/ityhUAzG3Ra0sLVlNJmX5EIse0NXqvxOXOGdYy/ck
+         5Oa6CQhS6xU2OLckEUItTIFRXy/uNgBAaW15cUC7FVQXl3LeOakCe3raba/Q9Twwq67y
+         5n3yvfeVykmqYbbfhJzVaFQybGwGsTJCchBAC+jwCYH1JjYr0TXZGmY12t6PDNBabfkA
+         tASg==
+X-Forwarded-Encrypted: i=1; AJvYcCV37UiT5vEUKs5ML5bwOxObZVS+YLfo9/56qABDjp5d2ApWwRzqPiPwsuQmEMHNZ9z1puHiKeE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyH4s099ASQQYi2/xpQP8yHxGM9r2o9MXXdF66sAKIwRzr9IRwQ
+	0YEBGbYqclg3zUj7CWV78pEwTzNlneFTGqIY4YCRi/V3iHpbs979
+X-Gm-Gg: ASbGncs2+HmgmpzexorjbnkAHdu63saNE/ByrDHoeafOJRJ5eZPfoJmqWWI9oHmakSP
+	hfEpw5GshDu2PRInpGD3ZmwV9jxSSznp1hqWnYUALH3sqj/nQhF4bsCNpc2dWMec+QZ9GE3MBKU
+	wj+/LuYKPVQj7IID/JGDTjgixlr+bDmlPirmcserNB4Me0T3F1CYudjNXAJnE3kgVGAJZE4nHVr
+	Q1qJZ/5wrjBQFUA73KMZIUWzlfaeeq54GNbW+jgaCsSYzHZymrMj3jmxJKr1RtVUFoyMakC8Lwe
+	cPFwY82/1K1DqmG37dAj
+X-Google-Smtp-Source: AGHT+IFa5FvD8Q+HfgrKvsdng+6SJ6uYosnhp53MikJ0vblkdZDvMi04uamcmlnlcuzE7xdu4K+eFg==
+X-Received: by 2002:a05:622a:15ca:b0:475:a5a:113d with SMTP id d75a77b69052e-4761097d4e8mr175686521cf.14.1741580592911;
+        Sun, 09 Mar 2025 21:23:12 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c557e08ecasm36964685a.98.2025.03.09.21.08.45
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4768344ab36sm13774281cf.9.2025.03.09.21.23.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Mar 2025 21:08:46 -0700 (PDT)
+        Sun, 09 Mar 2025 21:23:12 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
@@ -74,8 +74,8 @@ Cc: linux-clk@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH v3 0/2] clk: sophgo: add SG2044 clock controller support
-Date: Mon, 10 Mar 2025 12:08:32 +0800
-Message-ID: <174157953239.287836.12496608762621997429.b4-ty@gmail.com>
+Date: Mon, 10 Mar 2025 12:23:03 +0800
+Message-ID: <174158054219.311416.9651103100123387748.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250226232320.93791-1-inochiama@gmail.com>
 References: <20250226232320.93791-1-inochiama@gmail.com>
@@ -100,12 +100,12 @@ On Thu, 27 Feb 2025 07:23:17 +0800, Inochi Amaoto wrote:
 > 
 > [...]
 
-Applied to for-next, thanks!
+Applied to sg2044/for-next, thanks!
 
 [1/2] dt-bindings: clock: sophgo: add clock controller for SG2044
-      https://github.com/sophgo/linux/commit/0332ae22ce09ce64f5e54fc2a24ed22073dbeb9d
+      https://github.com/sophgo/linux/commit/c90eac0946162efb7436098f25e21f02bc483ada
 [2/2] clk: sophgo: Add clock controller support for SG2044 SoC
-      https://github.com/sophgo/linux/commit/fcee6f2173e7f7fb39f35899faea282fd9b5ea30
+      https://github.com/sophgo/linux/commit/135418add3878dcd44483d0f2851f6f470a85395
 
 Thanks,
 Inochi
