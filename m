@@ -1,114 +1,72 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369A32673A4
-	for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 14:34:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E2A5464E;
+	Thu, 13 Mar 2025 19:38:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741876474; cv=none; b=R/vwQu1BMqadStINNDGMHikRjrDeWcyBaOtDx2tcGuf1y/0go5RhE8uLZi4tImCJgMtuSE+N0EjWDo3h56oHqGxYDk6cguHxEcY+rY5uAFg0nOUO5WoYTEI63CXe4t5NPkOf8QOvcbOS12hrkWbaH532DpedRlHD/KxUxDKk24g=
+	t=1741894716; cv=none; b=KOGM3A4X474Qpdhvul1uz3y5Rn6EL05cRgmZw2KtTDbIIW5qxa/pOCymPAs47Frmydz3U9v++YlPFcuH4XOAcEDBs0ZIYJMavDHfnv46UJtBKZAs0yqNnJAU6WYUsugXR6l2cAVdyUYWgbCcCk4x6QogClOHNBCMG5hfBsSIjMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741876474; c=relaxed/simple;
-	bh=UazzsAUWI6GAw0njs5UkMNVIT1Mhmutw/miu7AFOpo8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a6pXEadQt+7fkMid8rCqcgfarId2OLm3jbBQRfQ2xG+/OHNHeX0du5T6S5qSlxUHR3xXMGkX+IxsSr9DXtCzxKsY4uLNJgb3glfiZoZ1d2+8oP/LgycokMOGWl6caXOrp9x5nm1S7ycRc3Vxa/63qpKUMJWf8LCgHqGIogUbhBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XZtM6o+a; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1741894716; c=relaxed/simple;
+	bh=PJN9kuJafuaBlwl0mjM0aRG/llBd01Ca0mxiWYCJ1xE=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=XMsCyITj6OEzBAMboM1eVHrGrnQjFqAG2MiGVFQ4DTUKsGPzUPoBHfclLNyl7cXOJxGZortzU6d3A9dZ83evU6MMWN6cfVyiL80XVkdSQM82mEKubsYeHsz3klG8DilGWddevAQ5BVucKGE7GuqVT4wlq4wm92rE0WWmqy/ad30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BgePn02L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XZtM6o+a"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-301302a328bso2168627a91.2
-        for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 07:34:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741876470; x=1742481270; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GICFi0VoA04wMmuC8eF7tQ0MeFnd48JKTtPTlIjvHiI=;
-        b=XZtM6o+a+cQ4lh5BDcV2sCgLXFlZN9ir8j6pZdFYVhhzeqd+F2Rpx/r8Q5n1qIO71X
-         /vyAGkn8UgoJuslhu0QdX4lEFjf1O2YIpXexGlOmvMo63jCy66F1WKG90buF0ppzty2X
-         GQxI5KloPrQNT7bsItxsMhVnqlHSK/ypscNpmKKaszJ8G8uAVKN/6dq2YUiAfLp2hHbM
-         FVaYTntlAnQd6M5ub7XawPx3uj+F5+oB7HkltXICPo7NDUNpncEWmK9G9G8xIJ5e7OAK
-         KH/BcV7Qj1t0ehXdOBlHmkV72XqnoQGUCfbGYCSMNarodPB9HxG0fybWpNjhQ732E+rq
-         bKBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741876470; x=1742481270;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GICFi0VoA04wMmuC8eF7tQ0MeFnd48JKTtPTlIjvHiI=;
-        b=cTqmQLYygIWWCsaBIq5sCwYb8WQqCSpWrcZhLdmeSMWsKAH7zkJX9n/ZU4/HVpu7/z
-         pNqMgrdeEZHkhzeDTFRi5UwwJzOQKhvJcBmpWNLSLcFh+6CPrFQBYXYwJe6NWMdBUNxj
-         OfLtMGEBVWCPuSw1Y1GR2/g33EgcVJF2kXvFtkfE5DVZmtLwh0/HmLBjb6YNI0/mWcwG
-         55ME7D6V9P8VlWOPHhFhONuqcHF6qxlBNS1kEHkRsmRPBPV7UbV/qptjinCvwVdz5Iwg
-         M/fwBumrXjB934J816pPZiMVxUjLs2H+fa62MwnLY+CeYdYkraIfECFA7HD5hoJvXtrJ
-         QsBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXPvfDvWBV04ux7h5BRoppUwlg27/ckpAbNESjRXreotFEL+KGN1SIMzezbs7dO62aCGLf3uj4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxE29uEIXgFXGz+eZ77y2LrHm9GfOqAh/aS/0VibrfL/sLexQpQ
-	fLYGF80pfS3N136L0IaLyYTlutzZ4E8jt2qQ9pKr1bsW70uhx949
-X-Gm-Gg: ASbGncvHte3u/WvjfdGNxt+4cRDlyF6aQAaUQO8mmu2h1eSewhWTPT03NTvo7sHBQ9A
-	9aXmKpCB2P786SkMvLl3AmwCPjz25lw+jM//wVJc2POo5qQhflaDiZISJ4UmHm1kNYJpNh91GxR
-	v9kW+yXSWcpvh4cybJT2Gv3hcX87/Bg51VMeyvVf+nzd6Hyb1ruYmT2nWcTSMtnWRiZ9BoLa7G+
-	vRVTiePUoWUieErw0PLlsy/V23m1dMhoesa027T45FRuFTm4zY0ZlLE4GsunuoZW44GqyaXKQhU
-	dfXQjg4cm40SbQX0NQPq7ziy1w5xMgk=
-X-Google-Smtp-Source: AGHT+IGfaVAk+c9RAVXj/AWvec/u2Em3Jena5j9eOn/cnAaGId16whELS7F/FD8YOMC2w8PrpvsyVA==
-X-Received: by 2002:a17:90b:380e:b0:2f2:a664:df1a with SMTP id 98e67ed59e1d1-2ff7ce594ccmr39877404a91.2.1741876469920;
-        Thu, 13 Mar 2025 07:34:29 -0700 (PDT)
-Received: from localhost ([2a0f:7803:fac5:a7b6::1])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-30119265943sm3891865a91.36.2025.03.13.07.34.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 07:34:29 -0700 (PDT)
-Date: Thu, 13 Mar 2025 22:34:25 +0800
-From: Zixian Zeng <sycamoremoon376@gmail.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@outlook.com>, Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
-	chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, dlan@gentoo.org
-Subject: Re: [PATCH v3 2/2] riscv: sophgo: dts: Add spi controller for SG2042
-Message-ID: <ujqeq5do2xqf5jvepxaynaxridccalbjows7gid4ehyj7jduyk@2axt2thtet6z>
-References: <20250313-sfg-spi-v3-0-e686427314b2@gmail.com>
- <20250313-sfg-spi-v3-2-e686427314b2@gmail.com>
- <6262dfd2-9e0b-402e-bb03-a2174d544923@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BgePn02L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08813C4CEDD;
+	Thu, 13 Mar 2025 19:38:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1741894716;
+	bh=PJN9kuJafuaBlwl0mjM0aRG/llBd01Ca0mxiWYCJ1xE=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=BgePn02L7ieIWEOaT7+/eexPFW7pLTaLtdJF3ZTkBUzL2vwOwFJvLR9ARKMyfaoZS
+	 IfaOCBDlEM7pRKTB4t0kzLU/Yv1jP8MimRiq413dQIavNlrQbqQ/MjGqL9d+ouVBpi
+	 xl+ZKqfSMK6NyeZfb9Z5fpsI9pKmdqT+unXOdileCflox+Y93kiP2hCXK34kZTGxs9
+	 9u5ZyOK63DEIa0uEuyWp68kfiIQ4akwd9iZ1ekEwgl/5kZUzcmTKLHjJwIB6GozQeS
+	 T0gnGDXOj+s1fvdTcIx0WVsOCXPUFtbaS/sALs/CMm2kmHk8ZyTN6FgS7P/aruJ3mx
+	 3uW+VL+fR8oiQ==
+Message-ID: <be795c50ef61765784426b4b0fafd17b.sboyd@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6262dfd2-9e0b-402e-bb03-a2174d544923@kernel.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ih7hu6nyn3n4bntwljzo4suby5klxxj4vs76e57qmw65vujctw@khgo3qbgllio>
+References: <20250226232320.93791-1-inochiama@gmail.com> <20250226232320.93791-3-inochiama@gmail.com> <aab786e8c168a6cb22886e28c5805e7d.sboyd@kernel.org> <ih7hu6nyn3n4bntwljzo4suby5klxxj4vs76e57qmw65vujctw@khgo3qbgllio>
+Subject: Re: [PATCH v3 2/2] clk: sophgo: Add clock controller support for SG2044 SoC
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+To: Chen Wang <unicorn_wang@outlook.com>, Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
+Date: Thu, 13 Mar 2025 12:38:33 -0700
+User-Agent: alot/0.12.dev8+g17a99a841c4b
 
-On 25/03/13 02:43PM, Krzysztof Kozlowski wrote:
-> On 13/03/2025 14:11, Zixian Zeng wrote:
-> > Add spi controllers for SG2042.
-> > 
-> > SG2042 uses the upstreamed Synopsys DW SPI IP.
-> > 
-> > Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> > ---
-> >  arch/riscv/boot/dts/sophgo/sg2042.dtsi | 26 ++++++++++++++++++++++++++
-> >  1 file changed, 26 insertions(+)
-> > 
-> > diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > index e62ac51ac55abd922b5ef796ba8c2196383850c4..9e0ec64e91a2330698aea202c8f0a2ca1f7e0919 100644
-> > --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > @@ -545,5 +545,31 @@ sd: mmc@704002b000 {
-> >  				      "timer";
-> >  			status = "disabled";
-> >  		};
-> > +
-> > +		spi0: spi@7040004000 {
-> 
-> Does not look like you keep order by unit address (see DTS coding style).
-> 
-Thanks for reminding, I will read it more carefully.
-> 
-> Best regards,
-> Krzysztof
+Quoting Inochi Amaoto (2025-03-11 18:01:54)
+> On Tue, Mar 11, 2025 at 12:23:35PM -0700, Stephen Boyd wrote:
+> > Quoting Inochi Amaoto (2025-02-26 15:23:19)
+> > > diff --git a/drivers/clk/sophgo/clk-sg2044.c b/drivers/clk/sophgo/clk=
+-sg2044.c
+> > > new file mode 100644
+> > > index 000000000000..b4c15746de77
+> > > --- /dev/null
+> > > @@ -0,0 +1,2271 @@
+> > > +// SPDX-License-Identifier: GPL-2.0
+> > > +/*
+> > > + * Sophgo SG2042 clock controller Driver
+[...]
+> > > +};
+> > > +
+> > > +static struct sg2044_clk_common *sg2044_gate_commons[] =3D {
+> >=20
+> > Can these arrays be const?
+> >=20
+>=20
+> It can not be, we need a non const clk_hw to register. It is=20
+> defined in this structure. Although these array can be set as
+> "struct sg2044_clk_common * const", but I think this is kind
+> of meaningless.
 
-Best regards,
-Zixian Zeng
+Can't the array of pointers can be const so that it lives in RO memory?
