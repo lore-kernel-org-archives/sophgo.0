@@ -1,87 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5093F42AA9;
-	Thu, 13 Mar 2025 20:22:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E6B1F6694
+	for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 22:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741897351; cv=none; b=IqTf0H2OtCfpfES6pDZMu1oJS5gboVIejCfAGg17cmdWQJrlKkjus/UMyKoOVNwheNNR/KPlqyULBXENIBl5mB+zsm60OIh2TOvvQwAO3Ael24wjelgnPKg3v+LUXtpUzDL5eCS4gPENadaUcyKOcdHZtp7BAgZsVb510p6rasI=
+	t=1741905609; cv=none; b=BSBF7axxQTRzc4x+MF7jykkhIspnl0IZZgwpd/cigQzwyPLBff4J5LOQMp8wZC5akqG6xPmx4WTOhK5vFFK4bifnOEPfTw26S5WPUn6w0bjrYU5xwnp3qO7813Qkc2v4DULhxznmBUq4X9POKS4Fm+26FIjrfPdE5SY6Z+3iL58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741897351; c=relaxed/simple;
-	bh=2Ubrn3vw5OoeA0jFCkzjYo3i5zUpGJxfx7CRuIQHoUM=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=YyNserH5XL3MXocTA6QROOf6u2eTb0JniCCG+j6FwdBIjVLUAJuJ+Mk4Bs2D3KxNvQLquQEPW89WmRVWUrH/+kwInweC3y0FrtuIMSwl5BzHuHrEUT53eVyM6MEx+7u34DSEd8DEGtIAfCWTeTp9NHKvGjBdcrWjMqA/Bq8lkys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJjow640; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1741905609; c=relaxed/simple;
+	bh=bS4CPM4fAMakSodjoDheMW0OvhLE7InEn2vXq7j2aQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZnK5DzkRFyHEsVBnQMBErJyG8aRp1Dw4OY/TiWtwM5JpZRmu/cpGn8wqKdqXHChAbBScYZX6PEFx+Z9FmWejlmQ3/Njx/bEh12XXgK4/Q3RvOEQgd4OY/WFsu879aP80UQjcfh7MiOCd5Bbu5uD4GovPX+xKYlGjr6luWt43WSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLIXXX/h; arc=none smtp.client-ip=209.85.222.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJjow640"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A611EC4CEDD;
-	Thu, 13 Mar 2025 20:22:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741897350;
-	bh=2Ubrn3vw5OoeA0jFCkzjYo3i5zUpGJxfx7CRuIQHoUM=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=XJjow640+p8SFFIt3qd7pSc55KNUf2aPDnh5lFC7h7Tp/OGU02NUQ1KgmtGdblwd+
-	 XODsUZgTqEDlAwzaU8b8+x1cmywLuVsahRSiN80au+vheAXHAtC+s3fIolSgpUJBBC
-	 umINKQgxcqUjIw5pZW3KY07cGjnsG1otzBZcML2xd3FWe7GBhQMheq1sduVTtcL3eC
-	 h/f8JkJ2xUHaTaqVXBcdQGJbty+398gIzl8diIEj122H6uZdQxsVjoxD6u+KECMHG/
-	 b4d4OTBnYSxeG3mZcWeiImnh+vDak8EcKliw34XpTbpQBXNLzYDm4wiIlZ/7ZnyGCO
-	 kOwsRl6ln0DEw==
-Message-ID: <f5228d559599f0670e6cbf26352bd1f1.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLIXXX/h"
+Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-7c08fc20194so249780485a.2
+        for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 15:40:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1741905607; x=1742510407; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5MrpFY5DFdMA1Rw40JG71PEizmZhwbVE0ADaSH1zQRU=;
+        b=SLIXXX/hoAHHFnud0LEOyfs7wd69zWcTAHrJOIWjCNnA9o4ODwp+7aYw6M3sPQQj5Y
+         vMlJtMLIXOF2yqmrAZuy6qN7T9lrtwZTXvvYCGw2Du6REz5cUPhchxIaNV5rUp711zH2
+         0PuShI9i2rVf3BCAtT9F/Vk50t6GpO282pzf3JCixk++CkDSvbi2vlD1TTYyp8X3nIna
+         DHo8luXNwNL7Sr/f3f5y+YjAtOiLg9JiDlIdTGw0jk0aHnSJpS2qAmZWLjcqGuCteJZB
+         Cj5jEQQLuwZ29bphpUJTGmgIt9lNIJZ2cT9GiAaHtMb+11ZghDR2l4lacEL92ueHfbGv
+         O2cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1741905607; x=1742510407;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5MrpFY5DFdMA1Rw40JG71PEizmZhwbVE0ADaSH1zQRU=;
+        b=FR+imskMbuvtGygWo1LOspwA3JCg8f5RyL0PWplXOiBS3YoMnEbl2TIeIqas9H6uM1
+         Dc4skcKY77lEMew+8b3sEt+qmP6j6D7bqrhy+zK0+cfVQ8hz6XCyZFmYpoaN5mAbWx74
+         g3xDG10lmVhoAA7qQZpNY1aboN6KuF7UUsiZ6It5rg80ZVBqO/AO+YGYBWYUGWi9w0uo
+         a8KSzgYyhtCLOu0vh3Fy1hqjGhRd7WwSpiV4nXukiJbOylZZgCBjFSQxMZ54CTVwu6xV
+         aMmTVrmLw4JabzEqS/vo1TZSiSORLwcM3zUCab4hsSqLnjq04yvU/2CXknCtWDwdq8ux
+         iJBg==
+X-Forwarded-Encrypted: i=1; AJvYcCVgxGowl6fyk65JiuGpReGgWC7uzLdDYQlehL31zAc9XgRT8ooALY6GUk1FVEOphYi5hm5UoR0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzNaQ8WFrzZjsrx4tQNlz/CA7XdnsLAHqb0R1KSnW8islH1vnpO
+	HsF5nGj1UBdl1Do8e0clm6B+8kzLdOXk1SBbFjpaohykgBFPOUUd2+E0pHIh
+X-Gm-Gg: ASbGncs1I+TTskoLXHNgLA4oYvB7ZCy6Y32PgFnQP5B/1BKJlkRwMczGj6n09X7lGyj
+	yfKe9K47GJ0SjajYlpGxXlEACTLT8inz+b0juDxu5EnaPQ+8jzT6959/QYCUnw0akX02AjMxrGA
+	somb4B/376KzQ4KFW49QOMj7vBATPS4UNffxFrY+6vE+iJNP7rBcurRQrQfBrwuBlr3lnc+apFC
+	rW92gnYgcoeY6HZbcFK2VaDG4EvRFoGe5/Zgjg3i73onrOBGtEFMNtBEl6bLlx+ikQdRf/Nit4t
+	x5RYaHAshiDGvWRnxnHa
+X-Google-Smtp-Source: AGHT+IFRhA2NQTGrZIFmt7j5wHuvu1fLNd//sE55p9iAYnjLfff55St6JmFducqntDUIBkITMbvCLw==
+X-Received: by 2002:a05:620a:2727:b0:7c5:4de8:bf65 with SMTP id af79cd13be357-7c57c8f8fadmr13878585a.36.1741905607080;
+        Thu, 13 Mar 2025 15:40:07 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c573d6fb8fsm154595985a.72.2025.03.13.15.40.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Mar 2025 15:40:06 -0700 (PDT)
+Date: Fri, 14 Mar 2025 06:39:56 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Stephen Boyd <sboyd@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v3 2/2] clk: sophgo: Add clock controller support for
+ SG2044 SoC
+Message-ID: <3pgh622n6mnh63ih2olzmmcmqgxewpaumrqh6eeq3w6uobuiwy@cm7jxdkmle5u>
+References: <20250226232320.93791-1-inochiama@gmail.com>
+ <20250226232320.93791-3-inochiama@gmail.com>
+ <aab786e8c168a6cb22886e28c5805e7d.sboyd@kernel.org>
+ <ih7hu6nyn3n4bntwljzo4suby5klxxj4vs76e57qmw65vujctw@khgo3qbgllio>
+ <be795c50ef61765784426b4b0fafd17b.sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg>
-References: <20250226232320.93791-1-inochiama@gmail.com> <20250226232320.93791-2-inochiama@gmail.com> <2c00c1fba1cd8115205efe265b7f1926.sboyd@kernel.org> <epnv7fp3s3osyxbqa6tpgbuxdcowahda6wwvflnip65tjysjig@3at3yqp2o3vp> <f1d5dc9b8f59b00fa21e8f9f2ac3794b.sboyd@kernel.org> <x43v3wn5rp2mkhmmmyjvdo7aov4l7hnus34wjw7snd2zbtzrbh@r5wrvn3kxxwv> <b816b3d1f11b4cc2ac3fa563fe5f4784.sboyd@kernel.org> <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg>
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: sophgo: add clock controller for SG2044
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Chen Wang <unicorn_wang@outlook.com>, Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
-Date: Thu, 13 Mar 2025 13:22:28 -0700
-User-Agent: alot/0.12.dev8+g17a99a841c4b
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <be795c50ef61765784426b4b0fafd17b.sboyd@kernel.org>
 
-Quoting Inochi Amaoto (2025-03-12 18:08:11)
-> On Wed, Mar 12, 2025 at 04:43:51PM -0700, Stephen Boyd wrote:
-> > Quoting Inochi Amaoto (2025-03-12 16:29:43)
-> > > On Wed, Mar 12, 2025 at 04:14:37PM -0700, Stephen Boyd wrote:
-> > > > Quoting Inochi Amaoto (2025-03-11 16:31:29)
-> > > > >=20
-> > > > > > or if that syscon node should just have the #clock-cells proper=
-ty as
-> > > > > > part of the node instead.
-> > > > >=20
-> > > > > This is not match the hardware I think. The pll area is on the mi=
-ddle
-> > > > > of the syscon and is hard to be separated as a subdevice of the s=
-yscon
-> > > > > or just add  "#clock-cells" to the syscon device. It is better to=
- handle
-> > > > > them in one device/driver. So let the clock device reference it.
-> > > >=20
-> > > > This happens all the time. We don't need a syscon for that unless t=
-he
-> > > > registers for the pll are both inside the syscon and in the register
-> > > > space 0x50002000. Is that the case?=20
-> > >=20
-> > > Yes, the clock has two areas, one in the clk controller and one in
-> > > the syscon, the vendor said this design is a heritage from other SoC.
-> >=20
-> > My question is more if the PLL clk_ops need to access both the syscon
-> > register range and the clk controller register range. What part of the
-> > PLL clk_ops needs to access the clk controller at 0x50002000?
-> >=20
->=20
-> The PLL clk_ops does nothing, but there is an implicit dependency:
-> When the PLL change rate, the mux attached to it must switch to=20
-> another source to keep the output clock stable. This is the only
-> thing it needed.
+On Thu, Mar 13, 2025 at 12:38:33PM -0700, Stephen Boyd wrote:
+> Quoting Inochi Amaoto (2025-03-11 18:01:54)
+> > On Tue, Mar 11, 2025 at 12:23:35PM -0700, Stephen Boyd wrote:
+> > > Quoting Inochi Amaoto (2025-02-26 15:23:19)
+> > > > diff --git a/drivers/clk/sophgo/clk-sg2044.c b/drivers/clk/sophgo/clk-sg2044.c
+> > > > new file mode 100644
+> > > > index 000000000000..b4c15746de77
+> > > > --- /dev/null
+> > > > @@ -0,0 +1,2271 @@
+> > > > +// SPDX-License-Identifier: GPL-2.0
+> > > > +/*
+> > > > + * Sophgo SG2042 clock controller Driver
+> [...]
+> > > > +};
+> > > > +
+> > > > +static struct sg2044_clk_common *sg2044_gate_commons[] = {
+> > > 
+> > > Can these arrays be const?
+> > > 
+> > 
+> > It can not be, we need a non const clk_hw to register. It is 
+> > defined in this structure. Although these array can be set as
+> > "struct sg2044_clk_common * const", but I think this is kind
+> > of meaningless.
+> 
+> Can't the array of pointers can be const so that it lives in RO memory?
 
-I haven't looked at the clk_ops in detail (surprise! :) but that sounds
-a lot like the parent of the mux is the PLL and there's some "safe"
-source that is needed temporarily while the PLL is reprogrammed for a
-new rate. Is that right? I recall the notifier is in the driver so this
-sounds like that sort of design.
+Yeah, it can. I forgot this can also be set as RO. It is OK for me
+to fix that.
+
+Regards,
+Inochi
