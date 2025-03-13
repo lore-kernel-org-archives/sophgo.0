@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E2A5464E;
-	Thu, 13 Mar 2025 19:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5093F42AA9;
+	Thu, 13 Mar 2025 20:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741894716; cv=none; b=KOGM3A4X474Qpdhvul1uz3y5Rn6EL05cRgmZw2KtTDbIIW5qxa/pOCymPAs47Frmydz3U9v++YlPFcuH4XOAcEDBs0ZIYJMavDHfnv46UJtBKZAs0yqNnJAU6WYUsugXR6l2cAVdyUYWgbCcCk4x6QogClOHNBCMG5hfBsSIjMI=
+	t=1741897351; cv=none; b=IqTf0H2OtCfpfES6pDZMu1oJS5gboVIejCfAGg17cmdWQJrlKkjus/UMyKoOVNwheNNR/KPlqyULBXENIBl5mB+zsm60OIh2TOvvQwAO3Ael24wjelgnPKg3v+LUXtpUzDL5eCS4gPENadaUcyKOcdHZtp7BAgZsVb510p6rasI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741894716; c=relaxed/simple;
-	bh=PJN9kuJafuaBlwl0mjM0aRG/llBd01Ca0mxiWYCJ1xE=;
+	s=arc-20240116; t=1741897351; c=relaxed/simple;
+	bh=2Ubrn3vw5OoeA0jFCkzjYo3i5zUpGJxfx7CRuIQHoUM=;
 	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=XMsCyITj6OEzBAMboM1eVHrGrnQjFqAG2MiGVFQ4DTUKsGPzUPoBHfclLNyl7cXOJxGZortzU6d3A9dZ83evU6MMWN6cfVyiL80XVkdSQM82mEKubsYeHsz3klG8DilGWddevAQ5BVucKGE7GuqVT4wlq4wm92rE0WWmqy/ad30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BgePn02L; arc=none smtp.client-ip=10.30.226.201
+	 Subject:From:Cc:To:Date; b=YyNserH5XL3MXocTA6QROOf6u2eTb0JniCCG+j6FwdBIjVLUAJuJ+Mk4Bs2D3KxNvQLquQEPW89WmRVWUrH/+kwInweC3y0FrtuIMSwl5BzHuHrEUT53eVyM6MEx+7u34DSEd8DEGtIAfCWTeTp9NHKvGjBdcrWjMqA/Bq8lkys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJjow640; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BgePn02L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08813C4CEDD;
-	Thu, 13 Mar 2025 19:38:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJjow640"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A611EC4CEDD;
+	Thu, 13 Mar 2025 20:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1741894716;
-	bh=PJN9kuJafuaBlwl0mjM0aRG/llBd01Ca0mxiWYCJ1xE=;
+	s=k20201202; t=1741897350;
+	bh=2Ubrn3vw5OoeA0jFCkzjYo3i5zUpGJxfx7CRuIQHoUM=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=BgePn02L7ieIWEOaT7+/eexPFW7pLTaLtdJF3ZTkBUzL2vwOwFJvLR9ARKMyfaoZS
-	 IfaOCBDlEM7pRKTB4t0kzLU/Yv1jP8MimRiq413dQIavNlrQbqQ/MjGqL9d+ouVBpi
-	 xl+ZKqfSMK6NyeZfb9Z5fpsI9pKmdqT+unXOdileCflox+Y93kiP2hCXK34kZTGxs9
-	 9u5ZyOK63DEIa0uEuyWp68kfiIQ4akwd9iZ1ekEwgl/5kZUzcmTKLHjJwIB6GozQeS
-	 T0gnGDXOj+s1fvdTcIx0WVsOCXPUFtbaS/sALs/CMm2kmHk8ZyTN6FgS7P/aruJ3mx
-	 3uW+VL+fR8oiQ==
-Message-ID: <be795c50ef61765784426b4b0fafd17b.sboyd@kernel.org>
+	b=XJjow640+p8SFFIt3qd7pSc55KNUf2aPDnh5lFC7h7Tp/OGU02NUQ1KgmtGdblwd+
+	 XODsUZgTqEDlAwzaU8b8+x1cmywLuVsahRSiN80au+vheAXHAtC+s3fIolSgpUJBBC
+	 umINKQgxcqUjIw5pZW3KY07cGjnsG1otzBZcML2xd3FWe7GBhQMheq1sduVTtcL3eC
+	 h/f8JkJ2xUHaTaqVXBcdQGJbty+398gIzl8diIEj122H6uZdQxsVjoxD6u+KECMHG/
+	 b4d4OTBnYSxeG3mZcWeiImnh+vDak8EcKliw34XpTbpQBXNLzYDm4wiIlZ/7ZnyGCO
+	 kOwsRl6ln0DEw==
+Message-ID: <f5228d559599f0670e6cbf26352bd1f1.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
@@ -35,38 +35,53 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ih7hu6nyn3n4bntwljzo4suby5klxxj4vs76e57qmw65vujctw@khgo3qbgllio>
-References: <20250226232320.93791-1-inochiama@gmail.com> <20250226232320.93791-3-inochiama@gmail.com> <aab786e8c168a6cb22886e28c5805e7d.sboyd@kernel.org> <ih7hu6nyn3n4bntwljzo4suby5klxxj4vs76e57qmw65vujctw@khgo3qbgllio>
-Subject: Re: [PATCH v3 2/2] clk: sophgo: Add clock controller support for SG2044 SoC
+In-Reply-To: <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg>
+References: <20250226232320.93791-1-inochiama@gmail.com> <20250226232320.93791-2-inochiama@gmail.com> <2c00c1fba1cd8115205efe265b7f1926.sboyd@kernel.org> <epnv7fp3s3osyxbqa6tpgbuxdcowahda6wwvflnip65tjysjig@3at3yqp2o3vp> <f1d5dc9b8f59b00fa21e8f9f2ac3794b.sboyd@kernel.org> <x43v3wn5rp2mkhmmmyjvdo7aov4l7hnus34wjw7snd2zbtzrbh@r5wrvn3kxxwv> <b816b3d1f11b4cc2ac3fa563fe5f4784.sboyd@kernel.org> <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg>
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: sophgo: add clock controller for SG2044
 From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To: Chen Wang <unicorn_wang@outlook.com>, Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
-Date: Thu, 13 Mar 2025 12:38:33 -0700
+Date: Thu, 13 Mar 2025 13:22:28 -0700
 User-Agent: alot/0.12.dev8+g17a99a841c4b
 
-Quoting Inochi Amaoto (2025-03-11 18:01:54)
-> On Tue, Mar 11, 2025 at 12:23:35PM -0700, Stephen Boyd wrote:
-> > Quoting Inochi Amaoto (2025-02-26 15:23:19)
-> > > diff --git a/drivers/clk/sophgo/clk-sg2044.c b/drivers/clk/sophgo/clk=
--sg2044.c
-> > > new file mode 100644
-> > > index 000000000000..b4c15746de77
-> > > --- /dev/null
-> > > @@ -0,0 +1,2271 @@
-> > > +// SPDX-License-Identifier: GPL-2.0
-> > > +/*
-> > > + * Sophgo SG2042 clock controller Driver
-[...]
-> > > +};
-> > > +
-> > > +static struct sg2044_clk_common *sg2044_gate_commons[] =3D {
+Quoting Inochi Amaoto (2025-03-12 18:08:11)
+> On Wed, Mar 12, 2025 at 04:43:51PM -0700, Stephen Boyd wrote:
+> > Quoting Inochi Amaoto (2025-03-12 16:29:43)
+> > > On Wed, Mar 12, 2025 at 04:14:37PM -0700, Stephen Boyd wrote:
+> > > > Quoting Inochi Amaoto (2025-03-11 16:31:29)
+> > > > >=20
+> > > > > > or if that syscon node should just have the #clock-cells proper=
+ty as
+> > > > > > part of the node instead.
+> > > > >=20
+> > > > > This is not match the hardware I think. The pll area is on the mi=
+ddle
+> > > > > of the syscon and is hard to be separated as a subdevice of the s=
+yscon
+> > > > > or just add  "#clock-cells" to the syscon device. It is better to=
+ handle
+> > > > > them in one device/driver. So let the clock device reference it.
+> > > >=20
+> > > > This happens all the time. We don't need a syscon for that unless t=
+he
+> > > > registers for the pll are both inside the syscon and in the register
+> > > > space 0x50002000. Is that the case?=20
+> > >=20
+> > > Yes, the clock has two areas, one in the clk controller and one in
+> > > the syscon, the vendor said this design is a heritage from other SoC.
 > >=20
-> > Can these arrays be const?
+> > My question is more if the PLL clk_ops need to access both the syscon
+> > register range and the clk controller register range. What part of the
+> > PLL clk_ops needs to access the clk controller at 0x50002000?
 > >=20
 >=20
-> It can not be, we need a non const clk_hw to register. It is=20
-> defined in this structure. Although these array can be set as
-> "struct sg2044_clk_common * const", but I think this is kind
-> of meaningless.
+> The PLL clk_ops does nothing, but there is an implicit dependency:
+> When the PLL change rate, the mux attached to it must switch to=20
+> another source to keep the output clock stable. This is the only
+> thing it needed.
 
-Can't the array of pointers can be const so that it lives in RO memory?
+I haven't looked at the clk_ops in detail (surprise! :) but that sounds
+a lot like the parent of the mux is the PLL and there's some "safe"
+source that is needed temporarily while the PLL is reprogrammed for a
+new rate. Is that right? I recall the notifier is in the driver so this
+sounds like that sort of design.
