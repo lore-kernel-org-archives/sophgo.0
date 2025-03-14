@@ -1,89 +1,101 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5521F30C3
-	for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 23:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C32126BF9
+	for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 23:44:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741995746; cv=none; b=JovtNswj3NL4YC5WOqdUEXz85ReM+OiONORl7YcJ+0n7AOp73DLgoV65WOqUGkwZ5oX/7v+jrE0B3uWNx43O3Y1DBYr+ej8qcCkE/tbU6sRgA6ZNqKRthNhvmBLgQLPvBjcli3Sp5m6lZp+spy7OXcFtkzHf9/HT+CN5aryiRGE=
+	t=1741995892; cv=none; b=WZAquEhpvPi09XMcId52XzcHYOM/03k3A97nl5e0GD1B/LQXUXi1X9xv8EsudUaFnR5mbk8oW2VVnK9PKh+CGffKNIYYc3XBKAkEh8bcRlS1i73T+YWo1xsDzdLEJOgGX1jOzdjLdQbM+nUdgM9RRBmv7y0TnI0E1kGyAm5S2zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741995746; c=relaxed/simple;
-	bh=P1WjXnn2+IS+sm+04E3PeSfXgSx8kxihr/R+29fC4IQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kgU6ybL8AhD70EPVe8e3q5BdVez9gmsu+trIFW+bTFiRm7gOBPChmkw0G+YStHXZ6eX1TWXzCErygH+aItAb12GsgxP9zwFe6XgCO6Bb5CcwOFK6oKutuJYmWAYN401/gKABRzACX4lotF7OpfRSdPWMj2PV5m+Ixo4VjwOPfaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tZ1kT4tQ; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1741995892; c=relaxed/simple;
+	bh=wF+lsQ7mJEHmcAoxF0flsvm5gnamzI2adupFAmV8+HQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Iht0gFVkjJZkjdeO0qO4klvh32PhijcSHUoNyx8SYPsjQb8jzoLjqWS5ES1qJlDs9GVjYOKoHEtG/HKCXxgY55470EqB8BAWTyMp/GF7AlQ0FWGCQsmj2afBsUeJENktpOI6MZmhHn+YE1gu40tt/ji0QVh10JlQoxm+pMVspEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z8QpVDQs; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tZ1kT4tQ"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-549b159c84cso2676669e87.3
-        for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 16:42:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8QpVDQs"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47662449055so13014481cf.1
+        for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 16:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1741995743; x=1742600543; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P1WjXnn2+IS+sm+04E3PeSfXgSx8kxihr/R+29fC4IQ=;
-        b=tZ1kT4tQqdW7eb5/hNbw9j7MfM60lmC92qZw3l1nenPdA6UujzM6iPtksw570FnZkP
-         77pKjOlb2kv7OJ9s0Ex85+IJG9ENqvyJNOZ+fvkNstIo/gbCYLdWTv+QDR/xjZeNqZyo
-         dtjf91R0LGf5FK7T6CT6eLdHG08VepIwRaTATk+PNDVQ2dgfRIwcPda6s3WBMB4116go
-         pjzRPzsd0QU1LJ2jMcr+hLPtYrJmZmCAb1RlrIpLz/I53Yr0PkmThBuhjDwqrl7167bP
-         462M/n7J45b3ohG8MH/SvbayP/v9j6xOG61oj5rUace4DRms5d9TNMh+sqEt+ZIr5qXp
-         tWdA==
+        d=gmail.com; s=20230601; t=1741995889; x=1742600689; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+vjrDVi1XuD8YezTfvAJnDkQnfPVZJ0QiIFwJDMUcMU=;
+        b=Z8QpVDQs5IEzUFce3cbfVYx+ba/mqiiI5Xi/GDxDrfcebJpjQ3iKBH4U5mIv5kXBh6
+         QZXckgi8iHyIubBFrYjeR8V3/T+Pty7y05CnUNGc1Pom4MhY1rkXAGegouCffS8ceF0I
+         ntS5hh+oYe9+FoyRuGDIoocOuOwNvKgYUbMx8bQfHIIVW9zkOU8X3ltyr5sO0A8ySqNN
+         a0Wdj/A8O+YNeTzcpttckx0qC3cSS9722p1wsPlAuEGKkXhhZbjy9Y97tj/1oQzPbRo1
+         PKXlCx3csHQDCgd5HWmx/1IV4r9LZNxMgmvnY7TaIPcD8da372S8qnjyL9Q6dAsf7UEE
+         fv6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741995743; x=1742600543;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P1WjXnn2+IS+sm+04E3PeSfXgSx8kxihr/R+29fC4IQ=;
-        b=ji4x5NzJfKdRDHvJ2gtsAIRMDbWKeKtP5scM1T7uMvfJSBhfg9szMSYMahCKYZY7RF
-         R0kyS6YMwEOcJ1bes5ouLwZk5+ZkaLj2Xzb7Y6JhRTHld/K37dzPGdBbF+jLYBXk13ym
-         xz/ZdY0DJ7WceT4sZQCjyNyplBaFaGMYnzDf/BypHQk0E+SFNgam48wPOde10oluGPOy
-         kzlrnxaO1hJAdejySWcZFiTAqTZxKEXs7rPF9vw1TDoBvLYuNaDeq1C8ZL2semExm6iC
-         WJ3SOhpgyv7ftYzjsXgC/lUSZA5OtfDzAF3jWrlFuthUzjvn+ipbfLvF22tJ0zBpEifs
-         A1cg==
-X-Forwarded-Encrypted: i=1; AJvYcCVwUJ5cV2ei8las6J8UFPEZ6+VVthnu/YajLBjbLBKBpt4n6yi7Btq6JmJVRDi2qPAqlKdS1EM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw4Ib1vqojHboW3+CqDeCgLEH/nS0BFNjHsFV1hZmwmvfE6ozRU
-	6QemfLskU01uJFSBbGJEWtjqwdsogH7nv0EBSKy74rovghuElm7052zAftd3tU+iIvvXgQZud+T
-	XNxOU7bTKQywdRmHPd1XU6/umvXXp/hwiUEIqX2vXOPrK+BQH
-X-Gm-Gg: ASbGncthKCkToz28pVaydRkEGNRFwqDXCFBCuocsEnP9B5MdiiLsDWF+wYdGg6hQaj6
-	zaTLnIvjQFLvLJ6Xsbs/E8xkGlBPBH8zWKgf7rE0jvnccz9aGDpfiN8RvxM37meY0EgrQ/6CiLa
-	bV0hS9AFBvqXTbS9P4+RwN3Vg=
-X-Google-Smtp-Source: AGHT+IH2XrsL8yYl1YnEw5KjXw8pQrBhLhYCrdne0HwB7XZwvtkUckarOcWg0mzevQ8o+qQ4EgbgVcAmMqOmghDeBpo=
-X-Received: by 2002:a05:6512:39c3:b0:545:d72:95e5 with SMTP id
- 2adb3069b0e04-549c38f58e0mr1469764e87.7.1741995742834; Fri, 14 Mar 2025
- 16:42:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1741995889; x=1742600689;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+vjrDVi1XuD8YezTfvAJnDkQnfPVZJ0QiIFwJDMUcMU=;
+        b=Yx0q5uOF2DYBECcTtcpAGXVMkHdElwCDFHWwk5VzDeyrASIn1bki76y3O9uDyOCBMH
+         sRA+0wsGEB2wkkEQOGC8KAtAVC4F/S94lmemb2fW5cP0OHJ8H+s7MSXVT/DMMhmLDW4A
+         B6wK97O2YKXQmP6HNK6+N0q/bhc2gfJ5AOSFoGdIHR+8iBzU5aHN5Nv4sxPn68sa+of3
+         yttBd5i2uUMcTj8ReF5H/Cx9rKVn/y+R1lt/bPvhZXd4dJJgp9ADu1zvXDhUhzan5hrP
+         0HEcgLJBZjRQxR0dHxD0L4bl6ltpvlzYkmZVSpvwfBSbPXi/nkowVmTRH2dByEcblHl/
+         uoZw==
+X-Forwarded-Encrypted: i=1; AJvYcCWdu6DQLXPLpFAyreMt9uD7aIHrX3bTUSZOr7eB/qcsSvAvBuzw8lKD7+FvPSat8eJ8gc/atX8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwhnPg3FYYuaW/GYoprDIaOfabiGplTncILVSbZTZQKXpUZ9Wrz
+	U7k/VRPpzwNuNARXaroAGDowR4PGEwMa8oDk3a+8qL4onyPrdYd6
+X-Gm-Gg: ASbGnctINNPM00BqiDs/hFE8pWoRDzszlr8vnAEdjdJqGI2pHLJHt3BLrwUaI+noUrO
+	ZSd6X6PfWxi7AzdcGx9LaYFXjzKTFmuD4RlYZufpa0C9eXLOK44Yjt5N1GmoobW1DgwZPAMUBfs
+	RNDDRjGlAZRlclzffinlaL1bVN2F66IRZxd+7ZshsiHoQOCXMgJsKJOKGbmG5uL1ilpVrGUOgrt
+	80/Un+4HH4ql8RqGxrCCm5UUw+bRoIn98cvt+1ZtuPtQBkSlrPbhqtWf0302/U1X40i5rOh/G1B
+	DwA5yZ6HIkv0et3ojHrW
+X-Google-Smtp-Source: AGHT+IHRUH+t/ZNriz9AIIFDUvNwqNXSWGPqwO6hLy2CrfDloRoUEfYKSMvcUddQ0QqLGeQiqSDYOw==
+X-Received: by 2002:ad4:5946:0:b0:6e8:fe60:fdeb with SMTP id 6a1803df08f44-6eaeaa08163mr56420036d6.17.1741995889275;
+        Fri, 14 Mar 2025 16:44:49 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade254502sm29566866d6.59.2025.03.14.16.44.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Mar 2025 16:44:48 -0700 (PDT)
+Date: Sat, 15 Mar 2025 07:44:37 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Linus Walleij <linus.walleij@linaro.org>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>, 
+	soc@kernel.org, Conor Dooley <conor@kernel.org>, 
+	linux-riscv <linux-riscv@lists.infradead.org>, Xiaoguang Xing <xiaoguang.xing@sophgo.com>, 
+	Chao Wei <chao.wei@sophgo.com>, sophgo@lists.linux.dev
+Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v6.15
+Message-ID: <ilkznijefh5haqed3hpj5mynqiqoqvmzodes6os2cccy3tdxf7@zvv3o7k2eful>
+References: <PN0PR01MB1039398834809EEFB83AD25F5FED12@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+ <f65bba9b-726e-469a-8657-693bb640d75b@app.fastmail.com>
+ <CACRpkdb+U7CBMByZeYmNedv8jEhNXn_w3psJSfRi62diOBhGCg@mail.gmail.com>
+ <t5p5mssjmpbkwc3myfjnolzt23vo63px7zehsvwfp62mdrz7oi@qcrt3672ghxz>
+ <CACRpkdarxLiyfZJisyW3F_ipiOgOP189iqUkeGtuKKttHp8F1w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <PN0PR01MB1039398834809EEFB83AD25F5FED12@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
- <f65bba9b-726e-469a-8657-693bb640d75b@app.fastmail.com> <CACRpkdb+U7CBMByZeYmNedv8jEhNXn_w3psJSfRi62diOBhGCg@mail.gmail.com>
- <t5p5mssjmpbkwc3myfjnolzt23vo63px7zehsvwfp62mdrz7oi@qcrt3672ghxz>
-In-Reply-To: <t5p5mssjmpbkwc3myfjnolzt23vo63px7zehsvwfp62mdrz7oi@qcrt3672ghxz>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Sat, 15 Mar 2025 00:42:12 +0100
-X-Gm-Features: AQ5f1Jpu-cIvAEmPOEuCazdHtSeZTHJaPnNt4nIJ_esAuZFz_4ZvByvCeSjIFs4
-Message-ID: <CACRpkdarxLiyfZJisyW3F_ipiOgOP189iqUkeGtuKKttHp8F1w@mail.gmail.com>
-Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v6.15
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>, soc@kernel.org, 
-	Conor Dooley <conor@kernel.org>, linux-riscv <linux-riscv@lists.infradead.org>, 
-	Xiaoguang Xing <xiaoguang.xing@sophgo.com>, Chao Wei <chao.wei@sophgo.com>, sophgo@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACRpkdarxLiyfZJisyW3F_ipiOgOP189iqUkeGtuKKttHp8F1w@mail.gmail.com>
 
-On Sat, Mar 15, 2025 at 12:20=E2=80=AFAM Inochi Amaoto <inochiama@gmail.com=
-> wrote:
+On Sat, Mar 15, 2025 at 12:42:12AM +0100, Linus Walleij wrote:
+> On Sat, Mar 15, 2025 at 12:20 AM Inochi Amaoto <inochiama@gmail.com> wrote:
+> 
+> > I guess this means we should checkout the binding patch in Linus's tree
+> > and merge it without other driver patch? Or just take the binding patch
+> > from the patch serie and let the git ignore the same thing?
+> 
+> Either way works, it will not have the same hash so it will appear twice
+> in the history but it will be textually identical and git will sort it out.
+> 
 
-> I guess this means we should checkout the binding patch in Linus's tree
-> and merge it without other driver patch? Or just take the binding patch
-> from the patch serie and let the git ignore the same thing?
+Cool, we will have a try, and send a new PR if everything is 
+fine. Thanks.
 
-Either way works, it will not have the same hash so it will appear twice
-in the history but it will be textually identical and git will sort it out.
-
-Yours,
-Linus Walleij
+Regards,
+Inochi
