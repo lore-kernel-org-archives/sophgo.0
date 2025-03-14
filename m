@@ -1,134 +1,204 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011024.outbound.protection.outlook.com [52.103.68.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1091F5821
-	for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 22:46:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741905995; cv=none; b=URkZVxKY19yJ+sVIpwJ1L/EWhLbB9P0SbF93R8DozvfsGTHa54nfDzVJIov8+vXnG4u+Ev/ihDJIsR6gjlGeXfYfojHhHXXDRY2Oq37BTSWQUdjFhs8hHuSIupLf3hmyL0fAuHnh/3rmIGP4cLuPbR/do0Z6NJ1J74Q2paTlAwI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741905995; c=relaxed/simple;
-	bh=QOeWgJa3zFHIM7eilY1J0Y00uN0Q8k5nTUHUnDWrk3c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hdyH8tHFfyBJGVvBDWrHOoDFGQBmJugPOlBOe71jw319RcdaDfZPN0UMVEDGdkJlGML3zd5qQPzKx2Lq5C5m0voxTNCvC6GvYCq4e4fUCOFMIdKPUr3Ej8jjed1f909RP43iVu4DNLV3uc0InDIffg4anjQ1kQRAY2A0LqiADA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eSclR+6z; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D78F645
+	for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 00:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.24
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1741911111; cv=fail; b=Gxa+dwtywrnXTH/Zh0GeXAk8M65Yu/Bc64hybHkgxJ1kXtOpcgBZ3O/NIUvV3ar/MKrcjE8sFmDgvTIuHDQTfQYKqND2F6kdVlYAgB7N+h555SIU2ZvXNvQSSqldHSNhsA9hbXU2sEm0ZHtqyMio+tXI+ocGRlXgOazFWka03cY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1741911111; c=relaxed/simple;
+	bh=2t6tINF4252ZodYaarKjHsRMEOJYGj/c7fJpDAyFWhM=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=F9/Cq2tjG+gyyDnwkbehZbQKuwuly14rmOTto3HX+JLITqMDrVgKziKtHlTvA7JeY8cVS14Xn3JERagqJi7nSl6LmfTZSY/cDPR58q2gqZvitz9W6jxSuA4AVXJ5QmqW+5G3YKHkI8YYMgadPZ0yw31JTMpOWV/fJVHteFO3kvY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=MqVkpAgj; arc=fail smtp.client-ip=52.103.68.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eSclR+6z"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6e86b92d3b0so13470676d6.2
-        for <sophgo@lists.linux.dev>; Thu, 13 Mar 2025 15:46:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741905992; x=1742510792; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pydKdgNblpGj5h7sZOGmI2zMsvih3t2v6u7UCPYQDt4=;
-        b=eSclR+6z7ZdI5Oo2Wry0wVFjelP77SD9wI+ywyxoKuBP6n/XXa28Zxb2qyvaEwlTkQ
-         JsOjfCg+WIWphamqcTM9jRgxgtTwwgV9Ca/M8cPUMxOcu7yKleZjr6bCuPOCiBFYUEYJ
-         EPWhW8WTm7AL4Z1t+Zefr2VgDc6hh08cN/3TQjCNXlHhQCMoMa4WKVkvwuu5A6w34Sjo
-         fWW+ZH9v0uK/RIBaGbObtW19hMpQERly5JGXlSfQm8DnwP9VTI3FZluhFB6aL41LXQcs
-         /GGvBhNx06xmMXjIvw+RfEhKo63jlnJAWtSK75yOQ8adyUfCSmkYV/Jxl5UQmxdQxJUL
-         +Pxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741905992; x=1742510792;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pydKdgNblpGj5h7sZOGmI2zMsvih3t2v6u7UCPYQDt4=;
-        b=ZGWG609PEsdsQaR4bsKvESAGFQJpfofHe5i5pdIAOWho0EEwXIl3vGRSqoo4PbM24y
-         LX9+g++E3sK7AC8rQ6oFj2LwMOpRr5wrpYDkr3gnwVefc7GI9g/mrThYrIflLIn2cra6
-         t4CClXuy7qidcJQzcrvRof9coPpOd0pzwneAvu7Co+kV1RBJqGeQNtLtqwQFIykBZ0PF
-         12E3Aqai+ku/ZjEssmmdqZ07OGPCkSkgL0ao527vfuTZ+Zbr2RVnrKnqD2D2CIKsp/o1
-         dgb1ZyThCh37v6IfKFo6mY6KDHsgsbLG/r8n9lTm0HgHxrRO8bGk/jkZ703z6bsXvw1K
-         MZ2w==
-X-Forwarded-Encrypted: i=1; AJvYcCVNViANx+YQC6crI4Bzd6j+ZlGJoRH2rdoWzBBIgt7C7FyORyEAC8nUsd95UdzR/VLkaPD16pw=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yydog2WSUWSPZHEi7wZIk22wKXMC720dbQWz6Orb7RHFMm6mhK0
-	6WSg7eYssQK6IMNnOGRde4vVHRLrlDU5KLCDNAbz/vOn1L1NRQxP
-X-Gm-Gg: ASbGnctOwn6zu32vCMEYc/X/Lko1wYcL2SaSeYbbjJwq/i+pKqj1H86WtCPge529oM+
-	/15jmcOupOzutLKQFGwhkHWf6DkGUc2XYi7imRZZjNo+16L6FzzmM2EJS+GZsqiGSS4RjalGSmu
-	xUznTAqx9ftBwa1br62dHe9u/KCF2w5wjBKuoq/jQ44+oIjr+dDbpzl9JT8xDvs/HXCqgiWGXrg
-	b1OO0eQLtkIhwx8fCjjspjDjCUVD/9CclgDnobM0tVm/6OE766dOC5oP3R7MIPpDqHOnL+qdU36
-	suHmPLb8FJTPRCfZbQ5+
-X-Google-Smtp-Source: AGHT+IFqkOHBtuKsF1XowHyy1ib8FDyL6+pkzITiQkL+N8KWE76/yTSNJDscUTJ0dRbwpaXJOoTbcg==
-X-Received: by 2002:a05:6214:4009:b0:6e8:f3b0:fa33 with SMTP id 6a1803df08f44-6eaea9ed9e0mr3028786d6.8.1741905992624;
-        Thu, 13 Mar 2025 15:46:32 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade208e6bsm14898746d6.1.2025.03.13.15.46.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Mar 2025 15:46:32 -0700 (PDT)
-Date: Fri, 14 Mar 2025 06:46:22 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Stephen Boyd <sboyd@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
-	Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
-Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 1/2] dt-bindings: clock: sophgo: add clock controller
- for SG2044
-Message-ID: <txuujicelz5kbcnn3qyihwaspqrdc42z4kmijpwftkxlbofg2w@jsqmwj4lz662>
-References: <20250226232320.93791-1-inochiama@gmail.com>
- <20250226232320.93791-2-inochiama@gmail.com>
- <2c00c1fba1cd8115205efe265b7f1926.sboyd@kernel.org>
- <epnv7fp3s3osyxbqa6tpgbuxdcowahda6wwvflnip65tjysjig@3at3yqp2o3vp>
- <f1d5dc9b8f59b00fa21e8f9f2ac3794b.sboyd@kernel.org>
- <x43v3wn5rp2mkhmmmyjvdo7aov4l7hnus34wjw7snd2zbtzrbh@r5wrvn3kxxwv>
- <b816b3d1f11b4cc2ac3fa563fe5f4784.sboyd@kernel.org>
- <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg>
- <f5228d559599f0670e6cbf26352bd1f1.sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="MqVkpAgj"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZD8EC1FqDAjYA4hSz+9kUqFg026m/3cMYvKAts6Mr4hDSIgSD8e5fR9kGYv6LAB7/ufzk9EUB+w+ORXs1l0bUm+uvKr5eTj855RbZYYrlc70/mTFOlfJMJeI+NHqx9p8pXw6mZk2YfiQ0sRYulL9I63PRURr/etA7Rck8BwexFWZnwhqnmQIhTz2Isd3OtXtFzRzsw5AU1uyweek12KD758dcZlAJotpn6WNj+rn6TECC9jPLbOg0oP9vRaGlPjhIMJjIqXaUHBzi/nMJtjh4jTrX7PTk6YK2ImgTZtQkNysPOFW8nrkmtEqTYoQl1Ugp08Wguy7qw967qFWTVW5Sw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wQdcOThbgc4RrtMFGz8KsxJ+bD+xNw+EmDUAokxWx2g=;
+ b=kg6eJw69q6Y1pPAy4SXnudl5RvKm8uOzSbTbF4GD5FzAeP5ils1+hojO+wkTUBpikxABVte7v+wZMYQfJz32KL4EurOOPW+4sWtlG9Nk3SU6a7t0MdCU2VsHPTd/HLmZKknNhOGXM8/Zx/9jyUtP7k+tTQXv0eMxLxbaz1LJbzgFb0Y2rAgOWtvC2sOj1X7sZltnpXbk/TXeTKaUkbsw2Dini2U8ylBkd7YjpcWDPQqZa+z+9pdr9RNSiX/PtYAGEFB+NMShsZyH7zWbbAeZ7YGpHZR7ZtaQCFn9fx7cxMuL318kQek1ptDFjulc1y9uzJQp1f1P1gOg1f15pVEQeQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=wQdcOThbgc4RrtMFGz8KsxJ+bD+xNw+EmDUAokxWx2g=;
+ b=MqVkpAgjmA4CoIn8NHpbBnR54+1dVki1uVeMTMx/IUAJA9m/iTCXw+ENDDhQXEGjIOKGSM96iwDJA6nIHTJXTIW2ckvKZVGsDK6ghVkinmRr0dEohBLo9Ll9TDKFpQRaS7+2SQkhzEDLtNOmdvkPf0Xn0hiFghXkNPuGbfEueE7Xbn7kzVoJxH9XB8sRNuebz5VTaGbDMrcs5yguuC2vT+W4+juQNDGiCLnoD+vWddCCIpSI5jqL/jq4uBCo49WFnNNPMLV0GKaiQqfZN3+5piT2iAVPzB/LICDQv8VAkkfJlQoK8564bTUp+djXtS9ohp2KIDlB4oDr8BvoSo4vIA==
+Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:1eb::14) by MAZPR01MB7311.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:46::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8511.30; Fri, 14 Mar
+ 2025 00:11:41 +0000
+Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::1b4f:5587:7637:c5a5]) by PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::1b4f:5587:7637:c5a5%3]) with mapi id 15.20.8511.028; Fri, 14 Mar 2025
+ 00:11:41 +0000
+Message-ID:
+ <PN0PR01MB10393B82EB1038F184FD18894FED22@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
+Date: Fri, 14 Mar 2025 08:11:34 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/2] (no cover subject)
+To: Zixian Zeng <sycamoremoon376@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Inochi Amaoto <inochiama@outlook.com>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, chao.wei@sophgo.com,
+ xiaoguang.xing@sophgo.com, dlan@gentoo.org
+References: <20250313-sfg-spi-v3-0-e686427314b2@gmail.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <20250313-sfg-spi-v3-0-e686427314b2@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0025.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:192::10) To PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:1eb::14)
+X-Microsoft-Original-Message-ID:
+ <731ad3d1-0530-4b09-b9c7-25de816d82e1@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5228d559599f0670e6cbf26352bd1f1.sboyd@kernel.org>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN0PR01MB10393:EE_|MAZPR01MB7311:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0b50d33-dbf7-4afd-4440-08dd628ccbc2
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|7092599003|8060799006|15080799006|6090799003|5072599009|19110799003|461199028|3412199025|4302099013|10035399004|440099028|1602099012;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?ZjEza2pYa3hvUkJxQzB0YzVDektZVFFnMDdyRmhvSjFSYVNJU09IYndURXNH?=
+ =?utf-8?B?L1dkYmtPZTdvUkdNNUFVanFDWXBuMGxMV2h0NUozMGk1RklVc1A3K0hUb05p?=
+ =?utf-8?B?aUJac3JJclREZVhodW15bFh5OTFoOVFFeUQwZzQ2SEU5emRIbWJWWlE3WVl3?=
+ =?utf-8?B?VXJYWEJyQlptV1dtU1U2UkllNjMyZnBVeElBZnBnczFyMWxnNllTSjZWT2x1?=
+ =?utf-8?B?cEt6ZGVsTGV1bVdYcTFtaE5pSTducTNDNzcyalRCUVR0Tm1iaC82UzFQVE1D?=
+ =?utf-8?B?TlF0VjRmeDJ6bDF1ZHZNQU5MMktMM0dpUHpsVFhDeDRZV1YvSnZ4VU5ZcGl1?=
+ =?utf-8?B?VHNEakg1ODNVUk5BdXh1akk4WExjZURQS3dwSzlBeUpBc3RkT0s4YVlDdVlT?=
+ =?utf-8?B?TnZ3cGFwd1dONzU1WncrUDJQeDQ5V2FhQXhQTnhxbkI1M0lycTRGMlpqUWw2?=
+ =?utf-8?B?M2tRTm95bWhxSzYrZFlWM1A0TUhJbFZIWWZhNSt2RzFVWDdTWld3aFVpSEtU?=
+ =?utf-8?B?dUorVkVtb0lnOFNzYTB5NnVneWZpODJ3SEk0bVRmd1VGLzZJSlIrdmQxUi9P?=
+ =?utf-8?B?NHNNK2FwYUpGbWtvQkpUYXRDalFPQk5VNXJxY3J5a0NTK3htR2FJcnE2QTRi?=
+ =?utf-8?B?YUpuRjY5MHlUNmwvVWR1YVY5RzQyUlppbEtYMndhTndJYU1aYzVxaEdicG9I?=
+ =?utf-8?B?Y1ZUN3JLZnJBdVMzU3ZUbkFwVmkvT0FWN3lOQmxhZFBDZmx3ZXBPUXF5ZTNZ?=
+ =?utf-8?B?bFM0cnZTRm0yKzR1d2VuT2VMNnNKMzBEdmhOTllvc1J3VzNKWU1nTDdPWFJ2?=
+ =?utf-8?B?Yk5UTWxqV1hYUytwSVpOczIrV21zOWozM1FLY1BkNlltTDJ1bVBjYTlLYjFz?=
+ =?utf-8?B?eW85a1RnSmVYTUQ2K1VUalQvYjZxakY3QW13U0gvam1VbHhKQ3JYYW9KWkdM?=
+ =?utf-8?B?VTR6VHNRZ3R3TUp4b3V2WE5aQUl3M2pPTEpqTVhpNWwzQjhYN2xFcVNhVVN1?=
+ =?utf-8?B?ejdhYmsxbGxkQ1FkcjhpL25MR3BiV1pudUVXSjB3RlRmdVBvMm91TjB5dXdr?=
+ =?utf-8?B?eHk4SGcrN05RZ0NOT3M0d3hmUGFUTkJuM2c0WFZQWlRvNHRXSFFMK3A0NkFR?=
+ =?utf-8?B?Lzd6cmFXWWFmN1NaUXVpRXlkWGRRLzhEYzR1SUhqYnhIMnBoN1JKQTVneXd2?=
+ =?utf-8?B?dFJEcmtPdis3SmcxTXQwZHpjbkJIRzVaZmJRT2V2MEN5azZTL0YrczVCR3Rx?=
+ =?utf-8?B?V1BjVXlVR0hyQVhiNG53M291VXA3NTRuK2lYcnRuQVdDUDg5WHZ5TUdMUW1G?=
+ =?utf-8?B?RzcvZ0R1VEZ6TXZ4VTA5OWdjaTNPcmlodE0wUTZibGhJQmVBLzVHbXdhbm03?=
+ =?utf-8?B?RnVZUjlua3c4eHRpMEFJOEc4YnIza01BdnlKbW1Va0NZOTJaSC94azNXeCtl?=
+ =?utf-8?B?T1A2TXQzRGhoYjBtUFB5UFUyclFKeXNtS1lZcDkxN2R6Q2ZoT1JsbkNpblVT?=
+ =?utf-8?B?aVcvMmhEMWVQTXlhTCtlUFJNRGNYRmFab0F6Mk5HM0NyUkdFaXdKWVlweWtF?=
+ =?utf-8?B?WTlMNHF4RG5CcXFINFg5NzBKSDlaTGRIbk9HeDAyR0wwRFRoc3k4cnV1bThq?=
+ =?utf-8?B?dnNxQW1zWFNnbmNOTVgraXVVVDRlRld0Y0x3T3NiRU9zbTBaVDgxNGxIcUxC?=
+ =?utf-8?Q?IK3gW1yVrR/p8EFn2AbJ?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?YlcvZXV1RUtFU3k0TjQxM1JsL1pkamlObzA0b3VxVlJkQXRtZXBVZmlCMmFL?=
+ =?utf-8?B?cEdJM0tIcllObkpwMmM2NE1ZRFN4aGRRVVRPUGd2K2RQWW54Z2NQa1FGdC9l?=
+ =?utf-8?B?aVpKaU5XSWFkM2pHcUVoVXlCYUdDYjViVWxJOE9PWTVxUnJxQVAzR2c3ZHNi?=
+ =?utf-8?B?b2dOd3J3cHpvRkJSaC9mdnFvaWg1ZFkyRGFkcVF6aU43VnhtKzFOREwzTi9q?=
+ =?utf-8?B?Mk9MUEdWMEIxRXpyZnlWbmYwZjRJbWRDaVFiTldrV3RqU1pTei9uSEQ3aFF0?=
+ =?utf-8?B?MlNIVHZXQVJ6VUhqZTVUUGRvSUhQR3lPNGVqVW1yR3NYRVRxZ3hkaldUclBk?=
+ =?utf-8?B?YjJiRktpQ215djAwcXJMQlRDcGpuWll3VXo5ajhTcnVqeHB0NWlETmgvUlox?=
+ =?utf-8?B?S3ZydHFyMnNqMEFLdmVLeEhJTjVCd04rT1VORitCdS9BNzFJTEc1RW5TRmNz?=
+ =?utf-8?B?THVWeEkyVmJTaG8vNUtUOUxLbmh1UkNtZnZ3UGFwYnBRTExNdXZBNWtENFJs?=
+ =?utf-8?B?enJTdEdOWW1mazVtNGdjSFJ6TjNQNWdCN1JzVWczMnV3cWN6WXVhT1dOTkJo?=
+ =?utf-8?B?d0txUkhaM1JZSFFTK0podjFPQStMT3o4dlRzTm1pU3pnY04xL3d0ZlZZYVFK?=
+ =?utf-8?B?b3d3WU8yUW1tSlFHaHRCTGdNOTdGT0kyQU52SUxTaHFsYjZNZWNjN1E2ejFs?=
+ =?utf-8?B?eW1MelhLVk1QcC84U0dxOGVWYmIrVU92L2gwZU9qTUtHOFhsVzA1dUFseXNV?=
+ =?utf-8?B?ZkN5cFo1OS9ncnBvVEd6cDUwNlYvb3dab2szbU43Mi9RNG1OQTd2d1g0c3Ay?=
+ =?utf-8?B?c2d6QXBHMnd1TGY1UXR4a2VjRlBrYUExSkJsSDJPRzFUcE9oMUpRdS9vcVNT?=
+ =?utf-8?B?ditYR3dUcmpUY2Q5d0wrdkd4Wmp2alhRR29sZVcwNG1xdE95VjFpVXZTQTEy?=
+ =?utf-8?B?bFlrdTBiRDcxRWhHYXFReVpFcmtYOVhrUHBjTklOem1QS3pTN3JZUWJJMDBO?=
+ =?utf-8?B?MzZUSWh0ekFMQUhxcVBKVHBTQk5FU2c2azQ4STZZbGYrZ1pSVnlZWVVDQ3hK?=
+ =?utf-8?B?Q2pIV09kN3pJbHh1R0NROWxIaGZOZXFYYzhhQ3I5aW1QczlJRTljRTB0N3V1?=
+ =?utf-8?B?OHFyNXlQV0VEMUlVQVJ5dXNNeVpjTnJnYjJucEVNM1hOUUVOc01SV0twT0JF?=
+ =?utf-8?B?L25Sb0ZqdGlyMTRyNjJlTzdxcXdmZHNsVjRNSEJHOXU4MzYxL2NsNEN4YnB4?=
+ =?utf-8?B?MWJpbWlTUEFpNmxiSjNyUUZLcEFWMU84S1YrLytJNFBFeFpaWlZxSDdnQXls?=
+ =?utf-8?B?UXRURFd1enBDYVVYdE1yNk5KaXNWdVNvc0NKZzNIRVU2WllOQ0UzV3B4RDh4?=
+ =?utf-8?B?K243SWxXRmlqQVJkaHJqejZyblVOZGNIcGJnS1VNVTdOcmZKaTNKUEs1bklm?=
+ =?utf-8?B?eWhhcnBmeDM0UGdSZG8xeG16b0oxUlE2TDlRL0ZvK1BMNEJGSHNLSjdubDY5?=
+ =?utf-8?B?ZEhRWHE2c1gzdmc0U3hpZTFKUEtTVkwvMXM1WHl0cHFLUUpaUGVuejFHcXBS?=
+ =?utf-8?B?MTh6WFFaTllQbnJYc2w1SkxzaFJ6bGQvdEVJWGtwekk3VEh3YmNPMVlJSExS?=
+ =?utf-8?B?SUZId2hCTmRFVjFCdWI2UDFKVGdHRGpsbHhHRVNpWUNibGFGaklqMnNqNHdH?=
+ =?utf-8?B?dC9tWlFJQlRtN3ZIVTltM3g1U0lwS2dDbkFlMFlsb0FESmZqZFVZR0Q4anE0?=
+ =?utf-8?Q?9TXsWgRE7AuKdeoPFsN0LlmYCsbsUEK1+KWRU0R?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0b50d33-dbf7-4afd-4440-08dd628ccbc2
+X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Mar 2025 00:11:41.2332
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7311
 
-On Thu, Mar 13, 2025 at 01:22:28PM -0700, Stephen Boyd wrote:
-> Quoting Inochi Amaoto (2025-03-12 18:08:11)
-> > On Wed, Mar 12, 2025 at 04:43:51PM -0700, Stephen Boyd wrote:
-> > > Quoting Inochi Amaoto (2025-03-12 16:29:43)
-> > > > On Wed, Mar 12, 2025 at 04:14:37PM -0700, Stephen Boyd wrote:
-> > > > > Quoting Inochi Amaoto (2025-03-11 16:31:29)
-> > > > > > 
-> > > > > > > or if that syscon node should just have the #clock-cells property as
-> > > > > > > part of the node instead.
-> > > > > > 
-> > > > > > This is not match the hardware I think. The pll area is on the middle
-> > > > > > of the syscon and is hard to be separated as a subdevice of the syscon
-> > > > > > or just add  "#clock-cells" to the syscon device. It is better to handle
-> > > > > > them in one device/driver. So let the clock device reference it.
-> > > > > 
-> > > > > This happens all the time. We don't need a syscon for that unless the
-> > > > > registers for the pll are both inside the syscon and in the register
-> > > > > space 0x50002000. Is that the case? 
-> > > > 
-> > > > Yes, the clock has two areas, one in the clk controller and one in
-> > > > the syscon, the vendor said this design is a heritage from other SoC.
-> > > 
-> > > My question is more if the PLL clk_ops need to access both the syscon
-> > > register range and the clk controller register range. What part of the
-> > > PLL clk_ops needs to access the clk controller at 0x50002000?
-> > > 
-> > 
-> > The PLL clk_ops does nothing, but there is an implicit dependency:
-> > When the PLL change rate, the mux attached to it must switch to 
-> > another source to keep the output clock stable. This is the only
-> > thing it needed.
-> 
-> I haven't looked at the clk_ops in detail (surprise! :) but that sounds
-> a lot like the parent of the mux is the PLL and there's some "safe"
-> source that is needed temporarily while the PLL is reprogrammed for a
-> new rate. Is that right? I recall the notifier is in the driver so this
-> sounds like that sort of design.
+Hi, Zixian,
 
-You are right, this design is like what you say. And this design is 
-the reason that I prefer to just reference the syscon node but not
-setting the syscon with "#clock-cell".
+First, it looks like you forgot to write a subject line for your email.
+
+On 2025/3/13 21:11, Zixian Zeng wrote:
+> This is tested on milkv-pioneer board. Using driver/spi/spidev.c
+> for creating /dev/spidevX.Y and tools/spi/spidev_test for testing
+> functionality.
+Second, why is there no description of what was changed in the patch 
+set? Maybe it was missed.
+
+Introduction to testing can be used as supplementary information, but it 
+should not be the main body of this email.
+
+> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+> ---
+> Changes in v3:
+> - disable the spi status on sg2042-milkv-pioneer board
+Not "disable", should be "Remove", and please capitalize the first 
+letter of the sentences.
+> - create dt-binding of compatible property
+> - replace the general compatible property with SoC-specific in dts
+Another relatively important change is about the clock, which you seem 
+to have missed.
+> - Link to v2: https://lore.kernel.org/r/20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com
+>
+> Changes in v2:
+> - rebase v1 to sophgo/master(github.com/sophgo/linux.git).
+> - order properties in device node.
+> - remove unevaluated properties `clock-frequency`.
+> - set default status to disable.
+> - Link to v1: https://lore.kernel.org/r/20250228-sfg-spi-v1-1-b989aed94911@gmail.com
+>
+> ---
+> Zixian Zeng (2):
+>        spi: dt-bindings: snps,dw-apb-ssi: Add compatible for SOPHGO SG2042 SoC
+>        riscv: sophgo: dts: Add spi controller for SG2042
+>
+>   .../devicetree/bindings/spi/snps,dw-apb-ssi.yaml   |  4 ++++
+>   arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 26 ++++++++++++++++++++++
+>   2 files changed, 30 insertions(+)
+> ---
+> base-commit: aa5ee7180ec41bb77c3e327e95d119f2294babea
+> change-id: 20250228-sfg-spi-e3f2aeca09ab
+>
+> Best regards,
+
+BTW, I suggest you wait until 6.15-rc1 comes out before submitting the 
+next version, because I have already sent a PR to Arnd for Sophgo DTS.
 
 Regards,
-Inochi
+
+Chen
+
