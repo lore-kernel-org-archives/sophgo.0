@@ -1,63 +1,63 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C32126BF9
-	for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 23:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B964A06
+	for <sophgo@lists.linux.dev>; Sat, 15 Mar 2025 00:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1741995892; cv=none; b=WZAquEhpvPi09XMcId52XzcHYOM/03k3A97nl5e0GD1B/LQXUXi1X9xv8EsudUaFnR5mbk8oW2VVnK9PKh+CGffKNIYYc3XBKAkEh8bcRlS1i73T+YWo1xsDzdLEJOgGX1jOzdjLdQbM+nUdgM9RRBmv7y0TnI0E1kGyAm5S2zU=
+	t=1741999832; cv=none; b=B78APH/zjLQmogAqQVULnJbrT/q5oWVkiZaBAi9dAoFMaXzh0zgKoz9K7N6w6eAXzrICVSFSqWX8X5GoOYwgWUZ4ENgnphFhZFJpX2VSTLOrxrRLMTwWthYhsED0rxUKJcionhMYh2plc5n0BWcd64Db+bGfn5ANXBgTFmfYzvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1741995892; c=relaxed/simple;
-	bh=wF+lsQ7mJEHmcAoxF0flsvm5gnamzI2adupFAmV8+HQ=;
+	s=arc-20240116; t=1741999832; c=relaxed/simple;
+	bh=4ZHzDpFNmj0jXgDXu0digMqc5RDfhYEUTy3AxzDTkBs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Iht0gFVkjJZkjdeO0qO4klvh32PhijcSHUoNyx8SYPsjQb8jzoLjqWS5ES1qJlDs9GVjYOKoHEtG/HKCXxgY55470EqB8BAWTyMp/GF7AlQ0FWGCQsmj2afBsUeJENktpOI6MZmhHn+YE1gu40tt/ji0QVh10JlQoxm+pMVspEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z8QpVDQs; arc=none smtp.client-ip=209.85.160.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=D9dJpC+pTA3uho5gP5EKeaLlaDSejy5TOVn/l+TDFSvC0y9nmet/xVeaEBWbbkCGBiivboTuQTeRNBs+e7PEuz5PlNGhtf5NiCti5vAdcUR/Bo4YfhQwE3eXlbTrj1CBBFTUX4nIt9Xhwo/bJqD/FP6SGukHjdwjJG3ccD0o4ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hc0d+Hhf; arc=none smtp.client-ip=209.85.160.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z8QpVDQs"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-47662449055so13014481cf.1
-        for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 16:44:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hc0d+Hhf"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-476ae781d21so26769551cf.3
+        for <sophgo@lists.linux.dev>; Fri, 14 Mar 2025 17:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1741995889; x=1742600689; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1741999829; x=1742604629; darn=lists.linux.dev;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=+vjrDVi1XuD8YezTfvAJnDkQnfPVZJ0QiIFwJDMUcMU=;
-        b=Z8QpVDQs5IEzUFce3cbfVYx+ba/mqiiI5Xi/GDxDrfcebJpjQ3iKBH4U5mIv5kXBh6
-         QZXckgi8iHyIubBFrYjeR8V3/T+Pty7y05CnUNGc1Pom4MhY1rkXAGegouCffS8ceF0I
-         ntS5hh+oYe9+FoyRuGDIoocOuOwNvKgYUbMx8bQfHIIVW9zkOU8X3ltyr5sO0A8ySqNN
-         a0Wdj/A8O+YNeTzcpttckx0qC3cSS9722p1wsPlAuEGKkXhhZbjy9Y97tj/1oQzPbRo1
-         PKXlCx3csHQDCgd5HWmx/1IV4r9LZNxMgmvnY7TaIPcD8da372S8qnjyL9Q6dAsf7UEE
-         fv6g==
+        bh=XL0DMg+SaimZCHhr18HPXkZgkXm2yI2aAJewslZgM2o=;
+        b=Hc0d+HhfG0SDisuEN1v4Yg4ZIWo6PWm41T4r2PD8+/MX8U8M+Cn37xZy80L44RL5P/
+         iqgsNDjw2jWMImBJL/wNVHBz0FmfcH+PnlHE6tu3b1Z+c6gsMNFR/jheDHnc04oD4c3D
+         22peU2xm3cYugqftILisce9q32y3gdgVOyucE1m42YCKGeaMNsXInKSrISthPM6Bsuo4
+         EzUi0aMu2AjIbF67I9YsoSwq7IgY4DtvVUl6DmZeIUu8S8gyVVYquZy5/xXclWsvGwgt
+         WynuYx0ZywRDdRSgIcWDD6SeSlE8zIliS2q+D/aLqBjZOa/SCYADVPE6+gsrFxUMUwy8
+         dDZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1741995889; x=1742600689;
+        d=1e100.net; s=20230601; t=1741999829; x=1742604629;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+vjrDVi1XuD8YezTfvAJnDkQnfPVZJ0QiIFwJDMUcMU=;
-        b=Yx0q5uOF2DYBECcTtcpAGXVMkHdElwCDFHWwk5VzDeyrASIn1bki76y3O9uDyOCBMH
-         sRA+0wsGEB2wkkEQOGC8KAtAVC4F/S94lmemb2fW5cP0OHJ8H+s7MSXVT/DMMhmLDW4A
-         B6wK97O2YKXQmP6HNK6+N0q/bhc2gfJ5AOSFoGdIHR+8iBzU5aHN5Nv4sxPn68sa+of3
-         yttBd5i2uUMcTj8ReF5H/Cx9rKVn/y+R1lt/bPvhZXd4dJJgp9ADu1zvXDhUhzan5hrP
-         0HEcgLJBZjRQxR0dHxD0L4bl6ltpvlzYkmZVSpvwfBSbPXi/nkowVmTRH2dByEcblHl/
-         uoZw==
-X-Forwarded-Encrypted: i=1; AJvYcCWdu6DQLXPLpFAyreMt9uD7aIHrX3bTUSZOr7eB/qcsSvAvBuzw8lKD7+FvPSat8eJ8gc/atX8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwhnPg3FYYuaW/GYoprDIaOfabiGplTncILVSbZTZQKXpUZ9Wrz
-	U7k/VRPpzwNuNARXaroAGDowR4PGEwMa8oDk3a+8qL4onyPrdYd6
-X-Gm-Gg: ASbGnctINNPM00BqiDs/hFE8pWoRDzszlr8vnAEdjdJqGI2pHLJHt3BLrwUaI+noUrO
-	ZSd6X6PfWxi7AzdcGx9LaYFXjzKTFmuD4RlYZufpa0C9eXLOK44Yjt5N1GmoobW1DgwZPAMUBfs
-	RNDDRjGlAZRlclzffinlaL1bVN2F66IRZxd+7ZshsiHoQOCXMgJsKJOKGbmG5uL1ilpVrGUOgrt
-	80/Un+4HH4ql8RqGxrCCm5UUw+bRoIn98cvt+1ZtuPtQBkSlrPbhqtWf0302/U1X40i5rOh/G1B
-	DwA5yZ6HIkv0et3ojHrW
-X-Google-Smtp-Source: AGHT+IHRUH+t/ZNriz9AIIFDUvNwqNXSWGPqwO6hLy2CrfDloRoUEfYKSMvcUddQ0QqLGeQiqSDYOw==
-X-Received: by 2002:ad4:5946:0:b0:6e8:fe60:fdeb with SMTP id 6a1803df08f44-6eaeaa08163mr56420036d6.17.1741995889275;
-        Fri, 14 Mar 2025 16:44:49 -0700 (PDT)
+        bh=XL0DMg+SaimZCHhr18HPXkZgkXm2yI2aAJewslZgM2o=;
+        b=Dx6CDfQjTSB9N/dT7OJP50LmAhwVKl4inQ4vFjC9qZMXdO1i388hfrTk9XW29yqOLY
+         wiXHU3sPQETmavh1fpIgko9Xo+vBouHEk0s/uoYOxnfPIRiNUVNp0VWqUIJcmvCLPZ0D
+         MNtpLRqdMBu6s+MxUPvcHHulZ64/4muwoxRM9KItqyYTqLKpMD1PE+gYjTF1nNKurqc2
+         3qp36+Bno6yJW7K+QszK5Vh33vSMGQNzbl7DZXu44w6vEWuMnzZnNlEf8MRmf00v6jAK
+         lAV2eskoaZV0GqSDcgb4cKetorECKlUf+ciY++Ep9Rgb3I35F6INuYWQnm/2NHEMkLmo
+         LHWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVU146tZieRlwn9h1KtaKFgrhML2kRlok2qDPuQhKwg7Zdn7rZlG9f1mojQttIjbrDNxE5g6gM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxzNW88sdxT4Y1p2aQ6AaYe0og3UMmKVepgKrv5BhbNr0hos7wX
+	cjEYkI9jP54bi/k8uJT4S+qVZoRbDcks4B6Fnbl1JrrtOonQElhNUi0Zu+rN
+X-Gm-Gg: ASbGnctCzk4xcmw5GXvs9HbpooO9D0EZy87LcchTGsa61GO4DBNzFY93q0XExrV0etZ
+	ipZXMYsOz09IfkyIORGijNCLPF5s5JgXKLFnLt85EeG/wtGFR/BbYky9OXiQXAdp06tqSPDA17i
+	BVcvxQtUO2Vq3F/1fJqX5gADkCtjoPUuTA6UFRV1RuwXISFx8Q2NGBSJBoHVLznxB7voysg5WsL
+	6vPN52NsjoOfNsXnttkiMGnglfEwIgF9KgHPtsgsNohS2L50bOWMUHn/dMKA6SCKnZMqORn4xYc
+	8fY2qK1epdwobUNIerkV
+X-Google-Smtp-Source: AGHT+IFvQ9bf7j0bsVydFqN+0fJ+kH39Oh2c16QC7usKjIe+mizhREpZmPxq1sQHO0ujeh7++0yTiA==
+X-Received: by 2002:a05:622a:354:b0:476:9847:7c6e with SMTP id d75a77b69052e-476c814a7aamr67976661cf.19.1741999829372;
+        Fri, 14 Mar 2025 17:50:29 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6eade254502sm29566866d6.59.2025.03.14.16.44.48
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-476bb60aac8sm29093511cf.15.2025.03.14.17.50.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Mar 2025 16:44:48 -0700 (PDT)
-Date: Sat, 15 Mar 2025 07:44:37 +0800
+        Fri, 14 Mar 2025 17:50:28 -0700 (PDT)
+Date: Sat, 15 Mar 2025 08:50:12 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Linus Walleij <linus.walleij@linaro.org>, 
 	Inochi Amaoto <inochiama@gmail.com>
@@ -66,12 +66,13 @@ Cc: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>,
 	linux-riscv <linux-riscv@lists.infradead.org>, Xiaoguang Xing <xiaoguang.xing@sophgo.com>, 
 	Chao Wei <chao.wei@sophgo.com>, sophgo@lists.linux.dev
 Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v6.15
-Message-ID: <ilkznijefh5haqed3hpj5mynqiqoqvmzodes6os2cccy3tdxf7@zvv3o7k2eful>
+Message-ID: <futjsg55afhxz5whuve4qgnicdupedz4qgqbeox2pp6s5p4tfi@h6ueigflfs4m>
 References: <PN0PR01MB1039398834809EEFB83AD25F5FED12@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
  <f65bba9b-726e-469a-8657-693bb640d75b@app.fastmail.com>
  <CACRpkdb+U7CBMByZeYmNedv8jEhNXn_w3psJSfRi62diOBhGCg@mail.gmail.com>
  <t5p5mssjmpbkwc3myfjnolzt23vo63px7zehsvwfp62mdrz7oi@qcrt3672ghxz>
  <CACRpkdarxLiyfZJisyW3F_ipiOgOP189iqUkeGtuKKttHp8F1w@mail.gmail.com>
+ <ilkznijefh5haqed3hpj5mynqiqoqvmzodes6os2cccy3tdxf7@zvv3o7k2eful>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -81,21 +82,27 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACRpkdarxLiyfZJisyW3F_ipiOgOP189iqUkeGtuKKttHp8F1w@mail.gmail.com>
+In-Reply-To: <ilkznijefh5haqed3hpj5mynqiqoqvmzodes6os2cccy3tdxf7@zvv3o7k2eful>
 
-On Sat, Mar 15, 2025 at 12:42:12AM +0100, Linus Walleij wrote:
-> On Sat, Mar 15, 2025 at 12:20 AM Inochi Amaoto <inochiama@gmail.com> wrote:
+On Sat, Mar 15, 2025 at 07:44:37AM +0800, Inochi Amaoto wrote:
+> On Sat, Mar 15, 2025 at 12:42:12AM +0100, Linus Walleij wrote:
+> > On Sat, Mar 15, 2025 at 12:20 AM Inochi Amaoto <inochiama@gmail.com> wrote:
+> > 
+> > > I guess this means we should checkout the binding patch in Linus's tree
+> > > and merge it without other driver patch? Or just take the binding patch
+> > > from the patch serie and let the git ignore the same thing?
+> > 
+> > Either way works, it will not have the same hash so it will appear twice
+> > in the history but it will be textually identical and git will sort it out.
+> > 
 > 
-> > I guess this means we should checkout the binding patch in Linus's tree
-> > and merge it without other driver patch? Or just take the binding patch
-> > from the patch serie and let the git ignore the same thing?
-> 
-> Either way works, it will not have the same hash so it will appear twice
-> in the history but it will be textually identical and git will sort it out.
+> Cool, we will have a try, and send a new PR if everything is 
+> fine. Thanks.
 > 
 
-Cool, we will have a try, and send a new PR if everything is 
-fine. Thanks.
+It looks like there always is a duplicate commit, I think it will be
+better to hold this patch and submit it in the next cycle. Anyway,
+thanks for your suggestion.
 
 Regards,
 Inochi
