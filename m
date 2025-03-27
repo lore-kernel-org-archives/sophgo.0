@@ -1,187 +1,107 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010009.outbound.protection.outlook.com [52.103.68.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC12E17991
-	for <sophgo@lists.linux.dev>; Thu, 20 Mar 2025 00:18:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742429915; cv=fail; b=u0/6c+3CsLPR0ny9IbmXg3IvrJYAnYzf+8I921Xe7Ln6zjdNldMUnK6VHFU/E9/00iuAPPQH0Ir+maPa7G5KLNSXAvqKeL4AL56fj3jMImXorJJbFRQVuXr0oYTACUZnsZr056dx8U46fi1XYTbGb1/+3SvxW3gh3mS+lH2hiYA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742429915; c=relaxed/simple;
-	bh=4mw+O58EByRyXxr2Cu6dR24IpJOMpAUHZVbCIiA6riM=;
-	h=Message-ID:Date:Subject:References:To:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=nZz0UQ0sb//O548uLsT1n2mrstRDt6uDHOhonR/eaTQGr0ZT/66G+OXJw/OETROoCmf5PzsSOMNQrZJ27K/tTIUslinL/SF2+ozPCj1UFVmN0bx9L2gODl9Vlv/QYnVLocj+vkSqCkumaAUUbraV43oYKIZXyC1e92ICwMELcec=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=OoFPrHHa; arc=fail smtp.client-ip=52.103.68.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E31DDA3E;
+	Thu, 27 Mar 2025 21:21:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1743110517; cv=none; b=myt47fwdlyszYd4J2jZk9aAMMuyZAV/NpvSIc6JKUvjVo0ktF2zhpugtLd4R032DBG364NLixz6Q638pUxUc/kf9T1OLw0IZIb6g+2JCl3fO80Nem+Mw1NyF6RAdiDMkVOw/t1CbedAywLHpfS2bisKDRx69Jf4vajh6OSGRB98=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1743110517; c=relaxed/simple;
+	bh=u8ZF0qF61gU2yr4l1GcEiez+8svfoYCvfCPaIe/1iVQ=;
+	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
+	 Subject:From:Cc:To:Date; b=myhqIj4HvsYkCQJDCAoRw1WMXJOEOgWvxysQ+Q+fJdSMIVDAfb7q9XVZCLSnvocuz7CWmJv62Ttn/NJ6OT+ScaUS+aVrKANo+FZKJ8Azc0O9/IoL8xA8/0urU6vapjUNWwZA+H07OM2qof1HIGbjJUvgyyhhhcw4+tNBCXwQX/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ai4ncbLP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="OoFPrHHa"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MSVXdk3aJDfwJ2oiBmKZrIQsH+IdhSL82I4/HKqPoz/p1oFKbuf60VBMLy6ImVak7SoFtSclxtTuhYP1NWjEkErsSAM8/Q96/ZAUVk/JVrH+2PzHd8kFMVMZK+lWYX0HOMH6b67RN+oHDAgYCX8C4Bc4S6MfPLvDenar76rESeIVxSSUJtjaW510gfqyizXARnReUJAgxrl4BlVC45JwoafVCB65i6tS5l0rX3ugnMn6yQ4F6NbydYPetMngYpBGppZeCU1cVDVpiZdJjDE5I/AJXA72XvYXztE0ZzBtOZq0RRG3+dh2kKjiV3+BK3uTbOnIdQarl2OzN9MOBbgN9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ag0jJ3CGsLLTuP3A70V+yNqupKnsd6NlBuqE5rUcAcs=;
- b=RsQ/waS8+pUMIaMC368+9aNj/QTnuzYTEaCUexv9M1wni72rAQrLiBpRggfOPv9Z4U/uQTQYGr2IZLDBOlYGqEGM9RP3BbnquggnpZM5m6n9lPW+Ogca6UVfVA/OnOYzGZDMH6tlz4cf25+5xJBYS2bvPAC5AkIGa4PYNRBYQ1tuT3wmZchAZRn1BkLmgjGlR8R0jHSvNfc3eRLsheMmWtBteJUi/FYrEgrPVoKsrnZzRE8jbC44NgcwylIY7JER/KIoyC2jYkbq/J+9tYA3wVeAKgFfNr/A0ieZs9eKsjwHC7UaiBI5MMgGyLmsTHpp5JpG2OVc5sVdD2olFojCxg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ag0jJ3CGsLLTuP3A70V+yNqupKnsd6NlBuqE5rUcAcs=;
- b=OoFPrHHa6BaPPznG9jAjvrKxfc7F+38iUpiF1Q3DfyzZmwn0Ew7pjaK08En4KlrPYsl/QYdIcB+6QKgmoqzyL62NuOQWzhmBBkl4OP4xqtf+am6535s9EQ4yBhLbi2xvgmL/yHgIfO8vwq43FQNK0iKfUoMCeBpQWa5jsB9O6wFPz5d/FPNE3/EIaRXnTKoDgK8JO0Ojnaoe3QiF9x1Os+a8qpK64p3nBQfHMhWTWGPlhoZjtck/RJdz47QVWEYQfF1N8OFkbDuHThEy8jPKlvtJ4qAUDw0yCvZkU5XL5qThBIGnstA36KbE3v/NzNOOEeANh1hlj2NRsup6X228Tw==
-Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:1eb::14) by MAZPR01MB7809.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:21::10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8534.35; Thu, 20 Mar
- 2025 00:18:29 +0000
-Received: from PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1b4f:5587:7637:c5a5]) by PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::1b4f:5587:7637:c5a5%3]) with mapi id 15.20.8534.036; Thu, 20 Mar 2025
- 00:18:29 +0000
-Message-ID:
- <PN0PR01MB1039314C3ED91718F88FD7A5FFED82@PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 20 Mar 2025 08:18:20 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Fwd: [GIT PULL] RISC-V Sophgo Devicetrees for v6.15
-References: <174242233149.1211847.400595463610872578.git-patchwork-notify@kernel.org>
-To: sophgo@lists.linux.dev
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <174242233149.1211847.400595463610872578.git-patchwork-notify@kernel.org>
-X-Forwarded-Message-Id: <174242233149.1211847.400595463610872578.git-patchwork-notify@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TYAPR01CA0117.jpnprd01.prod.outlook.com
- (2603:1096:404:2a::33) To PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:1eb::14)
-X-Microsoft-Original-Message-ID:
- <c2ab0cd5-3be2-4b20-a149-a48b20edf518@outlook.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ai4ncbLP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65FFBC4CEE8;
+	Thu, 27 Mar 2025 21:21:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1743110517;
+	bh=u8ZF0qF61gU2yr4l1GcEiez+8svfoYCvfCPaIe/1iVQ=;
+	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+	b=Ai4ncbLPtDD/mCmM5268US4xjHplHR96SY+BXC6Akgvs4jQtv5d+ZUoiW0czlXnn0
+	 +pegTUWvsKLkeKLENJo17xxR+eGn5a6VDUGPOaNJBeOb0DEUQJ0eGy5VRcSUZRcQ8s
+	 Fzrj9aTER0weJGwnoxrdN/+5n06t6txAGRPUWi1bAFSmghjDZiDDuvAv0NvhK3gFfd
+	 ywqmAerv0ZEn5/20FBItOwE51ahI3+5d8sC9YuvG4vYYRoxnqvdH6Wrl16vIiH2N9j
+	 2l3yQBn2YcfnOVTW/MbClamU5oxeL90GiA7naF94gymnMfHTUnbdNv0S6PzWRwXuPP
+	 cGVIrf3FNfdWA==
+Message-ID: <a9626bfa7a481cee3178f3aa80721520@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN0PR01MB10393:EE_|MAZPR01MB7809:EE_
-X-MS-Office365-Filtering-Correlation-Id: d10b10e3-ea89-4f08-ce79-08dd6744bc31
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8022599003|461199028|19110799003|6090799003|15080799006|7092599003|8060799006|5072599009|10035399004|440099028|4302099013|3412199025|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?WHZRbXZzSHBuam5CaVowZDhmNDNkbytBS2RSQVlQdmloWXZORHYxMDl0VXBx?=
- =?utf-8?B?R3l5clRkcE02TUk2RzZNSHJ2RzhVMTdKQWpjRFVyWSs0K1VaUDZzZlgvU203?=
- =?utf-8?B?VWlCWVdTOXdPS2pRaHBxWUc2WDBXRkdZMmNEMW0ybHVnWElhSDVlc1g4bG9E?=
- =?utf-8?B?MFQzQXhiNktBUDcxRUNBdlFoV2k0OEpSQ2FlQ3FDc014aGlmYXZ2U3k3Mk5j?=
- =?utf-8?B?UHcyNXV0bFVxQmdFeXlRdmVlVDJnR0ZRSW5IU2c2YnRhZU1WcnluMzZTTUZk?=
- =?utf-8?B?OWxzeW5TWi9mT1pOa212aFlxWjR3ODY2bmJOTC9SYmI3ZnhLMmtvaWFRYkNa?=
- =?utf-8?B?UkNoUkQ3dCszbVlDMW9FVURBNGc5OEVXdTlZZ0hhcGxIdnF1WnhmdFZMam5P?=
- =?utf-8?B?TE5NUjkwV0l0TU9NbE9VUHJEYjNwd1B0c3BaM0JER2lJNkFGTWZQS1hha0I4?=
- =?utf-8?B?ZkJLN0VVejh6K3RrQXR6RkJ6Q1lnRVRPSi9lbENLenhzUGIxRFAxRmhvczdI?=
- =?utf-8?B?THA1d096UEplZnZYVkhPRG5scEZqVnlINkxlOTJxek1mS0FKb3FjSEJndEhz?=
- =?utf-8?B?RW9xMEQxT0YyY1llRlZuak9ESVZZWTlUSEVXQ1ErUEpuVHlwK2ZFb3RMdDJM?=
- =?utf-8?B?T3gzcC9IWlFrTnNTZDU3NW9YNzc3NWJMYkhUdGRtWUlKT2h4YmpmOW5peUFG?=
- =?utf-8?B?MVU4VDgwbWVRVXhxUHVOVFIyMi9zMGl3dFNaa09SNlN0RkRQakl4MmZMUUJ3?=
- =?utf-8?B?T3A0TmxTU3RKY3B6cnlXaGt6cUFYTDNDVXlLM1BZZ3BHZEdWZ1lzL0tqWFBB?=
- =?utf-8?B?ZW5pa1grUVJucjVjZjRWWnF4dzRRcCs3dEJLZVdWdEltVmtBVkRzaVY2NlZI?=
- =?utf-8?B?R01KaW9kZHNjNW5jRVAwdVloNVJrbWxuZzQ3WkdMR2ZxSmdSTDlZQjdEQ3RL?=
- =?utf-8?B?U0trWSsrRnVzUkVDdjdaT2lsWHVlVFh4Y0crdy85b3p5UVNxSGdEZEoxSjh4?=
- =?utf-8?B?bG9GZ3pBVWtCVUlRd21ueFdOSEtVbWhEMVpQNTFoNzhmUi9aN2R5WHhIRnE5?=
- =?utf-8?B?b3I5TytwUit4M3RvU3RnOGFLTVZaL1FBQ3pPUXpON2Z0aGwxQm10TG5OdjFO?=
- =?utf-8?B?MHUvdGR6WGdyVnh4MmNYNTVKNXRLdFplRjRGYmJDbEU2L09WeXI1c2Z0aXY1?=
- =?utf-8?B?a21PUVlaUXVaM0dvQnU2cnlVRit0MWJ6dy9DcWhXd1hUakpUSGxycHJwUWZv?=
- =?utf-8?B?SHhVamlQT1RQeDhoMzRBUW9RRFVOTGdEaHZTT1BiUEFyWjNjWlU5Z2R0bkpk?=
- =?utf-8?B?allvdGRRZnd6YzRUV3ZSYzM4cVhrMUJDcmFRbTZkd0hTZ3ZmSGd3cExqWmRZ?=
- =?utf-8?B?ODVoTElmd0pPSmlxRmduRXp1K3BMVG5ES0dqNGZoVmp1OGxsNXFFRUN2TTNx?=
- =?utf-8?B?dnhiL2Eyd0ZiVE5LdXMzb1Q3OUVtR0t0eUFPSWVtVmUxUFh3QzhHd0RiSGkw?=
- =?utf-8?B?Z1orY0xralhCMVZ0NXgvaFAzd3J6eTc2UlBBNHVaVDg0dUNzN29hYTNVMFBy?=
- =?utf-8?B?KzZWQVRmUjJQRytEUjU0MEUvQ0NqOHc2U0dPUzZPeXpBWHgyMWZDWC9GeitZ?=
- =?utf-8?B?ZWhndC9QSHlLT1pqVStIbVRVc0YxOUxoVlQwNGRPUXlBKzVFQTgybFF6d1hQ?=
- =?utf-8?B?UWc2Q3NhYVh3NU1hZ29FL0ViSnNqS1JMc2VTKzBwT1kzRXo1RDdBUHczTkxQ?=
- =?utf-8?B?d1FpbEJnMmZGeHlKb1lRYkphOXFuQU4ySXpkZWtyaVNwSmtnS2crUEJGbTRS?=
- =?utf-8?B?SkdtV0RzUkpkMmdiNVNaZz09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?THpLUDV1UXZxY09KMHpGRlg5Z040NEdia2F0aUdWMmhoemZURjUwQzY2clNI?=
- =?utf-8?B?di9Zc3U4NnRlb1FCbmFBS3NWOUg1Y3FNeW0vaEIvQlNCdjVGWXVlSWY3VXJD?=
- =?utf-8?B?c0Rrckl1VFpvUEFCTmRRVWMvRzMzWVd2UFJscitpMHZ6VVZxR0x5YUp3cW4w?=
- =?utf-8?B?RTBaTEM2WmlId1dLb2N2NGd3L0tnekd2cCtEYmdMUmxhTjZ3WW9FR05VMXNQ?=
- =?utf-8?B?MFdMUXBtOEErRmNGSEdyRUxSZEE5aXAwb3JzY3M5N0pUNnAybEtkSVdReWM4?=
- =?utf-8?B?aEJaR3dqRU90clRzOXBSTG83blZjS0g0OFBOaFpSU1ZEM0JxR0kzaHQ3WVNj?=
- =?utf-8?B?akVJb3JXWnNDWnF1dHB6UXhhY3NsQkJFeE9Fd3RJeVF5UFdpelk3djBwTEQ1?=
- =?utf-8?B?UDdXZmU2Yy9ZdTAyTDlSNEU4Mk1la2VHdXI5UjdmSWVjRVZsMnJ3cmdoQzJR?=
- =?utf-8?B?dEx3TmxqMDUvWFpPTm9iNmZoWUdaeDU3dCtaaHJkZ2JBcDREM1N6T3dQUkUw?=
- =?utf-8?B?TE1uclpGTEFIdG5WelBkMk9ZTFBUdnlEdjZKRW1rZ2d1cnQxdS92dkVKWFNH?=
- =?utf-8?B?aThJV2k5VlNIRXM3dTVYMys1aXpWM09aSFd6Z2RFTWlvTWIzMldNSmZ4akRU?=
- =?utf-8?B?ZnFURTJnRlFSZ3FtRWpGaktoaStSczUzN3ZTZTlHV29IYWMxRUErVEJocmkz?=
- =?utf-8?B?YmpIeUhUZzRMa2p1N1lHOE5JSzhKcklhZ05hMHNidTRTZEs3Q3FSWW5XWEVx?=
- =?utf-8?B?ejNiY3k2TE5GVmUydWRiRU1PNTJnZU0wcVlOUFpCUXc4UFpBb0hpSUxUQzl0?=
- =?utf-8?B?RlNCbEJzOWVaT2hWNXhBMGhmQy91OERLZ29GSW0waCtOVEd1Y2kyZWsvcXFa?=
- =?utf-8?B?b2FQN0RPRkErWHpveXhKZ29KeWRoelJhUHdmNlFvcStNSHNSYnF4YnN4WjZV?=
- =?utf-8?B?OFdHcGJxQ2d2QjFEbzBlQmlEdDlmMmR5L1dtZkYvajdnaEZSTy9WRWQ0Zzli?=
- =?utf-8?B?UHU1MTNiMzFrSlBMckJkR2ljWmNBbExQTk9RS0NvQ05MajhlQUpwWGd5KzQy?=
- =?utf-8?B?OUFlK3Bpa3dReHdMcHlFK3RTYU9CaTVSd2lkb1YvMTZqVTZlS2RTVGRMVUw4?=
- =?utf-8?B?VHlwbEZsZzdhN1hCWStQUjdqaDBkK2FuZDVZZ3lpR3dKMERSQy9jLy9QR3hP?=
- =?utf-8?B?UGJiRFJLOGtGR2hKTmg4eG5ZMTlnNGcyOGJjYklMSmtTV1R1VjI2Z2FXUXFy?=
- =?utf-8?B?S2FUWHNhK1gzSGI4TklzcTJydWp6UkxDV1JLdTNJWnZkUFhNbWhQSEx2MHhZ?=
- =?utf-8?B?RUJRYXZaM1UvMWJqaHJyd25qMWRYMlczdWRUMDRSRlFOOEsrQ2dPUER2cWcr?=
- =?utf-8?B?WTloaUxyajZ2Wm55ZXNJOWl4Y2luZHRRM2tsUWgyN3hMd3lPRFpCK3lPa1Bt?=
- =?utf-8?B?M2FGTGRnY1p4aWNFVmZIYUtJRnkxR3dvYW5JNmZwUXJEUkUzRGczbDJCMnlT?=
- =?utf-8?B?cHZuNUtxRHlvWDR6Mi9KZTlneUwwbFllQ3ZBSFk0cU05dEcybnN6TlBUcWRt?=
- =?utf-8?B?TDlwZVBLOGFhSUhDM3F2MGo3NktsbjZERkQ2T0N0UWR6bmpFTUNkRG5EdmlZ?=
- =?utf-8?B?QlducEhNV0k3K1k0Z3pEbnBzWlZEeXZRc2ZXbmh6SGVYNjQ5blJ4dFNIem1r?=
- =?utf-8?B?WXFtOGhFdURucFdsRFZrc2pDZldUNE1xSVp2TG56MzZCK1ZFSWNUam5hY3lC?=
- =?utf-8?Q?HRkHyDNIZTUwud8+Uo5CMN+9kLhyxEiNN/dDVlC?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d10b10e3-ea89-4f08-ce79-08dd6744bc31
-X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB10393.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Mar 2025 00:18:29.1887
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7809
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <txuujicelz5kbcnn3qyihwaspqrdc42z4kmijpwftkxlbofg2w@jsqmwj4lz662>
+References: <20250226232320.93791-1-inochiama@gmail.com> <20250226232320.93791-2-inochiama@gmail.com> <2c00c1fba1cd8115205efe265b7f1926.sboyd@kernel.org> <epnv7fp3s3osyxbqa6tpgbuxdcowahda6wwvflnip65tjysjig@3at3yqp2o3vp> <f1d5dc9b8f59b00fa21e8f9f2ac3794b.sboyd@kernel.org> <x43v3wn5rp2mkhmmmyjvdo7aov4l7hnus34wjw7snd2zbtzrbh@r5wrvn3kxxwv> <b816b3d1f11b4cc2ac3fa563fe5f4784.sboyd@kernel.org> <nxvuxo7lsljsir24brvghblk2xlssxkb3mfgx6lbjahmgr4kep@fvpmciimfikg> <f5228d559599f0670e6cbf26352bd1f1.sboyd@kernel.org> <txuujicelz5kbcnn3qyihwaspqrdc42z4kmijpwftkxlbofg2w@jsqmwj4lz662>
+Subject: Re: [PATCH v3 1/2] dt-bindings: clock: sophgo: add clock controller for SG2044
+From: Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Chen Wang <unicorn_wang@outlook.com>, Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Richard Cochran <richardcochran@gmail.com>, Rob Herring <robh@kernel.org>
+Date: Thu, 27 Mar 2025 14:21:55 -0700
+User-Agent: alot/0.12.dev8+g17a99a841c4b
 
+Quoting Inochi Amaoto (2025-03-13 15:46:22)
+> On Thu, Mar 13, 2025 at 01:22:28PM -0700, Stephen Boyd wrote:
+> > Quoting Inochi Amaoto (2025-03-12 18:08:11)
+> > > On Wed, Mar 12, 2025 at 04:43:51PM -0700, Stephen Boyd wrote:
+> > > > Quoting Inochi Amaoto (2025-03-12 16:29:43)
+> > > > > On Wed, Mar 12, 2025 at 04:14:37PM -0700, Stephen Boyd wrote:
+> > > > > > Quoting Inochi Amaoto (2025-03-11 16:31:29)
+> > > > > > >=20
+> > > > > > > > or if that syscon node should just have the #clock-cells pr=
+operty as
+> > > > > > > > part of the node instead.
+> > > > > > >=20
+> > > > > > > This is not match the hardware I think. The pll area is on th=
+e middle
+> > > > > > > of the syscon and is hard to be separated as a subdevice of t=
+he syscon
+> > > > > > > or just add  "#clock-cells" to the syscon device. It is bette=
+r to handle
+> > > > > > > them in one device/driver. So let the clock device reference =
+it.
+> > > > > >=20
+> > > > > > This happens all the time. We don't need a syscon for that unle=
+ss the
+> > > > > > registers for the pll are both inside the syscon and in the reg=
+ister
+> > > > > > space 0x50002000. Is that the case?=20
+> > > > >=20
+> > > > > Yes, the clock has two areas, one in the clk controller and one in
+> > > > > the syscon, the vendor said this design is a heritage from other =
+SoC.
+> > > >=20
+> > > > My question is more if the PLL clk_ops need to access both the sysc=
+on
+> > > > register range and the clk controller register range. What part of =
+the
+> > > > PLL clk_ops needs to access the clk controller at 0x50002000?
+> > > >=20
+> > >=20
+> > > The PLL clk_ops does nothing, but there is an implicit dependency:
+> > > When the PLL change rate, the mux attached to it must switch to=20
+> > > another source to keep the output clock stable. This is the only
+> > > thing it needed.
+> >=20
+> > I haven't looked at the clk_ops in detail (surprise! :) but that sounds
+> > a lot like the parent of the mux is the PLL and there's some "safe"
+> > source that is needed temporarily while the PLL is reprogrammed for a
+> > new rate. Is that right? I recall the notifier is in the driver so this
+> > sounds like that sort of design.
+>=20
+> You are right, this design is like what you say. And this design is=20
+> the reason that I prefer to just reference the syscon node but not
+> setting the syscon with "#clock-cell".
+>=20
 
-FYI
-
-
-
--------- Forwarded Message --------
-Subject: 	Re: [GIT PULL] RISC-V Sophgo Devicetrees for v6.15
-Date: 	Wed, 19 Mar 2025 22:12:11 +0000
-From: 	patchwork-bot+linux-soc@kernel.org
-To: 	Chen Wang <unicorn_wang@outlook.com>
-CC: 	soc@kernel.org
-
-
-
-Hello:
-
-This pull request was applied to soc/soc.git (for-next)
-by Arnd Bergmann <arnd@arndb.de>:
-
-On Mon, 17 Mar 2025 16:43:28 +0800 you wrote:
-> Hey Arnd,
->
-> Please pull dt changes for RISC-V/Sophgo.
->
-> Thanks,
->
-> Chen
->
-> [...]
-
-Here is the summary with links:
-- [GIT,PULL] RISC-V Sophgo Devicetrees for v6.15
-https://git.kernel.org/soc/soc/c/43adf498e91c
-
-You are awesome, thank you!
-
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+I don't see why a syscon phandle is preferred over #clock-cells. This
+temporary parent is still a clk, right? In my opinion syscon should
+never be used. It signals that we lack a proper framework in the kernel
+to handle something. Even in the "miscellaneous" register range sort of
+design, we can say that this grab bag of registers is exposing resources
+like clks or gpios, etc. as a one off sort of thing because it was too
+late to change other hardware blocks.
