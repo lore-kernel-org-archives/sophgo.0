@@ -1,331 +1,347 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0CF22DFAD
-	for <sophgo@lists.linux.dev>; Mon,  7 Apr 2025 07:22:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CE5224B1F;
+	Mon,  7 Apr 2025 09:38:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744010529; cv=none; b=UIbcSB+vNei3GJbBWxP9hYwP3duVe3BaGNh6f8Rq1Uzt2MHcnojPSL0VyFlXRFMElpEUgn7ntvaHkq151qWqFFRpOeJRptR9DkHuc4CkrOI8oYvmvfqX9VyFGAhjdEQQHngmACmYhktDJaAGHrHTMvY8nhilCaYr/Q1rqzmwRoQ=
+	t=1744018712; cv=none; b=Wejmt547k6ERvKa6HEOU8ufy58YuuA7y1O8iOOBH7C3CPofXE680om5YJR6qiVjMLwV8MRVghMxVO8Y/c8M5CmIqeMg/aqzFKmq5HeK4L0oOETgB9u2TpruXkMz6v8qiE43WFW9c3wEPO4sEDhbqVkmeqe8RPPJ+XeQXiXvd0/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744010529; c=relaxed/simple;
-	bh=4bpQaaZYT3oOYOMoscQm9Fkt/EmHq0F2jKOLiMaZtfw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRszMnDD38TIkdxF7NCbsd3RC/8wEHfFN5tO3uBlB+SeAoNTXQUcT5Lq7z87C72dHL5xkRFbQOvRhgZ+M7ewy6ZxpeeaIqcQsQUzo0fwSm/CTELnebfTDXq4PwIXUOmpj3WgiBVJDofhuFvJUfzGL+70kSwJVLYvhnxlj8AeQTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PCwRcSUT; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1744018712; c=relaxed/simple;
+	bh=6w3eFSHcGfr21TV3uewsU0b1m9Ul2CRPKvz+z6S4aBg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CmRPonia2ma52d/AvN+JPftZp4jEHzEW/zNNqE4d+RoyLnQ/YBZfGcreo38+lKxKaY3sRJJwpVYyyZnZIRmmGGhRZH4ykKWkVOzTKW+F2q8qR/Q+QAiIjzaHIXMiuu7RHxdlo5oMfmZErkOE1CFs3DaltLoWqy4ZTGpH+Cqrg5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s9R4+8vZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCwRcSUT"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7399838db7fso3387143b3a.0
-        for <sophgo@lists.linux.dev>; Mon, 07 Apr 2025 00:22:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744010527; x=1744615327; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GtPLSSpf2N4lxDacHDhTtYSx49Qgr/ixS+pBrLkhkxk=;
-        b=PCwRcSUT6ywGsJATR7yuBsYAj9FQDAPjvhH+6ViYlZc83weHvvMQMHOM9MBWauklZw
-         U3d26Tb+DYVPGF7KiI+2L9xjZj6yy2XVT6iisONlsJLinEpwaFL4NuHBvf/ubTvZRWwn
-         SuA6Q/5zmsU+aeyZqG9v9VIY8TZaoIwEa4YtxvsCenHOu99w46YM8c1JQMmRWfyks343
-         d/FEoCe+xEJGCQN9GODWrwJ0BfxUXotBb2aXG6NRhbGk5EbweSfN/9+9N4A2O59AqLcQ
-         9yKd0pJYS0n3CZHM8BM3eZVT3SGQ/UlRafNLunT37xrpOq50fP0qu/UbvbZGuN8+gbBy
-         jk4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744010527; x=1744615327;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GtPLSSpf2N4lxDacHDhTtYSx49Qgr/ixS+pBrLkhkxk=;
-        b=PL0wQEjh3ZdXCncNjaqg/hHjxzJON0j1xzD+ySQ0T1Fn/LXhAyxXXYXhW5cMjcPP8q
-         /v0UOUbUExY9TuyWLBFt0ocKbNjr4HjD2KHUt1djAX+mH9BXpA/uAxMyOa0igLtgQnv6
-         1KKc76pv9DoF2dn5pu9AkdSRusM6rDT4CMRTrjwl60pK7eGXVsq+snkeyZVVNrDAWCIl
-         +VYPdihemRtUtVmhXgR3+iSZJImKVTVNzTy2QLCLBkftytqJShzfNIcWkkalVjy44Uft
-         KCwSOZMvu/dZOhV+IpsgpOKNtIx5Ulb/IUWDj9uwxcARhocq/5k/VE3jyr42eOSZCNkD
-         KN1w==
-X-Forwarded-Encrypted: i=1; AJvYcCXp1PHMaAfAkiez5dziRXe6BqVqD6ifcZh+osHUzMCBQnqER17zGWqH/JrZqyTSS1M3eyVFCjY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwTJoouqFglPZTz7KOAsNV2Z1GkwQnMcqQPoj/QhT7rnNYQmyvB
-	U9G9AxqMN3ICy/UZaOF/iDp9u7pfdQWTrpQIIudBZj3FnGOMB1ixjIClWm+k
-X-Gm-Gg: ASbGncvC6K0seXsO4o4MJ14fbGqCTFfRwl2l1sF1NMzh4RIGRVkthnfuYpv4280AaUN
-	2+Rb0KL/+GtRmLJ/H8j+SIgBMo4gYCWvt109tGDjP6bGO05q/NGf6jMy892keFsUeeh4OaiFE6+
-	F3PSN834n+a8YdJJmiIIq1lW5hSV1avXGOQoQcnn/u91dqfMMzkgrB/ZmIgu2uY8IL4Q3znclAn
-	y3bAXFL2KFLeL1XaE+bLH+98wHPBVnTiKRV4X4s6xI1xhpJBum5ky3WIgbejvAWTj6fsbbfTFcG
-	NVgPAADlhawjFr+XAtdtu2gi+4C4+Q==
-X-Google-Smtp-Source: AGHT+IG6YjWDOoFfhOGabKSmYQA7ynJLnSYcujy3BxyjgzRY/wLB59ZJTu6yaZ1zWezt6WLB+UnmOQ==
-X-Received: by 2002:a05:6a00:ac4:b0:728:f21b:ce4c with SMTP id d2e1a72fcca58-739e5952278mr16715502b3a.5.1744010526532;
-        Mon, 07 Apr 2025 00:22:06 -0700 (PDT)
-Received: from cu.. ([199.182.234.55])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-739d97ee60dsm7787598b3a.40.2025.04.07.00.22.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 00:22:05 -0700 (PDT)
-From: Longbin Li <looong.bin@gmail.com>
-To: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: ghost <2990955050@qq.com>,
-	linux-pwm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 2/2] pwm: sophgo: add driver for SG2044
-Date: Mon,  7 Apr 2025 15:20:39 +0800
-Message-ID: <20250407072056.8629-3-looong.bin@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250407072056.8629-1-looong.bin@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9R4+8vZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09B23C4CEDD;
+	Mon,  7 Apr 2025 09:38:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1744018710;
+	bh=6w3eFSHcGfr21TV3uewsU0b1m9Ul2CRPKvz+z6S4aBg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=s9R4+8vZCq6IlmhaWl2Jy5wcRcJzMrxa2CdIvPMkG4H6ckvCj9a6pjxNzeGtcsk1u
+	 KSQXBY7lsEhi+aJA/Kd4qs5+Ii99z7jkRfyhSJNXtsOGNdn0NWPPmOTx2BgsF1OaBv
+	 pWceKRJPm0VGpIR1figoCYaMDBtXHetoCjzKVL2Grl4EuKpUpJ0Mw1+6Dp4d9PJCnE
+	 wfXTo8LJ6CA/UAg1wDmiMj51Vpq6dmUyPxlR2jIlmcNYfccBHFN1b9bTHmgXgw6AJz
+	 +cMTAmdHkr+bFlocUSMgBoYkoSUSc46t6vFHgzDEIgI3MXlz6vf4oPhkkPmbUrtR16
+	 dkdeqG1mCKT6Q==
+Date: Mon, 7 Apr 2025 11:38:27 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Longbin Li <looong.bin@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, ghost <2990955050@qq.com>, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 2/2] pwm: sophgo: add driver for SG2044
+Message-ID: <jnvlo3su4xzsvzte2s3noosycxae5uxhi3vusefpgq462ymqst@jgta6xxmcbtd>
 References: <20250407072056.8629-1-looong.bin@gmail.com>
+ <20250407072056.8629-3-looong.bin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pdievs2tczsk2og6"
+Content-Disposition: inline
+In-Reply-To: <20250407072056.8629-3-looong.bin@gmail.com>
 
-From: ghost <2990955050@qq.com>
 
-Add PWM controller for SG2044.
+--pdievs2tczsk2og6
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 2/2] pwm: sophgo: add driver for SG2044
+MIME-Version: 1.0
 
-Signed-off-by: Longbin Li <looong.bin@gmail.com>
----
- drivers/pwm/pwm-sophgo-sg2042.c | 162 +++++++++++++++++++++++++++-----
- 1 file changed, 138 insertions(+), 24 deletions(-)
+On Mon, Apr 07, 2025 at 03:20:39PM +0800, Longbin Li wrote:
+> From: ghost <2990955050@qq.com>
 
-diff --git a/drivers/pwm/pwm-sophgo-sg2042.c b/drivers/pwm/pwm-sophgo-sg2042.c
-index ff4639d849ce..c62e8c758d87 100644
---- a/drivers/pwm/pwm-sophgo-sg2042.c
-+++ b/drivers/pwm/pwm-sophgo-sg2042.c
-@@ -26,20 +26,22 @@
- #include <linux/pwm.h>
- #include <linux/reset.h>
+Huh, is that a real name?
 
--/*
-- * Offset RegisterName
-- * 0x0000 HLPERIOD0
-- * 0x0004 PERIOD0
-- * 0x0008 HLPERIOD1
-- * 0x000C PERIOD1
-- * 0x0010 HLPERIOD2
-- * 0x0014 PERIOD2
-- * 0x0018 HLPERIOD3
-- * 0x001C PERIOD3
-- * Four groups and every group is composed of HLPERIOD & PERIOD
-- */
--#define SG2042_PWM_HLPERIOD(chan) ((chan) * 8 + 0)
--#define SG2042_PWM_PERIOD(chan) ((chan) * 8 + 4)
-+#define REG_HLPERIOD		0x0
-+#define REG_PERIOD		0x4
-+#define REG_GROUP		0x8
-+#define REG_POLARITY		0x40
-+
-+#define REG_PWMSTART		0x44
-+#define REG_PWMUPDATE		0x4C
-+#define REG_SHIFTCOUNT		0x80
-+#define REG_SHIFTSTART		0x90
-+#define REG_PWM_OE		0xD0
-+
-+#define PWM_REG_NUM		0x80
-+
-+#define PWM_POLARITY_MASK(n) BIT(n)
-+#define PWM_HLPERIOD(chan) ((chan) * REG_GROUP + REG_HLPERIOD)
-+#define PWM_PERIOD(chan) ((chan) * REG_GROUP + REG_PERIOD)
+> Add PWM controller for SG2044.
+>=20
+> Signed-off-by: Longbin Li <looong.bin@gmail.com>
+> ---
+>  drivers/pwm/pwm-sophgo-sg2042.c | 162 +++++++++++++++++++++++++++-----
+>  1 file changed, 138 insertions(+), 24 deletions(-)
+>=20
+> diff --git a/drivers/pwm/pwm-sophgo-sg2042.c b/drivers/pwm/pwm-sophgo-sg2=
+042.c
+> index ff4639d849ce..c62e8c758d87 100644
+> --- a/drivers/pwm/pwm-sophgo-sg2042.c
+> +++ b/drivers/pwm/pwm-sophgo-sg2042.c
 
- #define SG2042_PWM_CHANNELNUM	4
+The Limitations paragraph needs updating. E.g. SG2044 seems to support
+polarity while SG2042 doesn't.
 
-@@ -51,6 +53,12 @@
- struct sg2042_pwm_ddata {
- 	void __iomem *base;
- 	unsigned long clk_rate_hz;
-+	struct mutex lock;
-+};
-+
-+struct sg2042_chip_data {
-+	const struct pwm_ops ops;
-+	bool atomic;
- };
+> @@ -26,20 +26,22 @@
+>  #include <linux/pwm.h>
+>  #include <linux/reset.h>
+>=20
+> -/*
+> - * Offset RegisterName
+> - * 0x0000 HLPERIOD0
+> - * 0x0004 PERIOD0
+> - * 0x0008 HLPERIOD1
+> - * 0x000C PERIOD1
+> - * 0x0010 HLPERIOD2
+> - * 0x0014 PERIOD2
+> - * 0x0018 HLPERIOD3
+> - * 0x001C PERIOD3
+> - * Four groups and every group is composed of HLPERIOD & PERIOD
+> - */
+> -#define SG2042_PWM_HLPERIOD(chan) ((chan) * 8 + 0)
+> -#define SG2042_PWM_PERIOD(chan) ((chan) * 8 + 4)
+> +#define REG_HLPERIOD		0x0
+> +#define REG_PERIOD		0x4
+> +#define REG_GROUP		0x8
 
- /*
-@@ -62,8 +70,8 @@ static void pwm_sg2042_config(struct sg2042_pwm_ddata *ddata, unsigned int chan,
- {
- 	void __iomem *base = ddata->base;
+REG_GROUP belongs to a different category than REG_PERIOD. So please use
+a different schema to name it (or drop it, see below).
 
--	writel(period_ticks, base + SG2042_PWM_PERIOD(chan));
--	writel(hlperiod_ticks, base + SG2042_PWM_HLPERIOD(chan));
-+	writel(period_ticks, base + PWM_PERIOD(chan));
-+	writel(hlperiod_ticks, base + PWM_HLPERIOD(chan));
- }
+> +#define REG_POLARITY		0x40
+> +
+> +#define REG_PWMSTART		0x44
+> +#define REG_PWMUPDATE		0x4C
+> +#define REG_SHIFTCOUNT		0x80
+> +#define REG_SHIFTSTART		0x90
 
- static int pwm_sg2042_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-@@ -104,8 +112,8 @@ static int pwm_sg2042_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	u32 hlperiod_ticks;
- 	u32 period_ticks;
+REG_SHIFTCOUNT and REG_SHIFTSTART are unused.
 
--	period_ticks = readl(ddata->base + SG2042_PWM_PERIOD(chan));
--	hlperiod_ticks = readl(ddata->base + SG2042_PWM_HLPERIOD(chan));
-+	period_ticks = readl(ddata->base + PWM_PERIOD(chan));
-+	hlperiod_ticks = readl(ddata->base + PWM_HLPERIOD(chan));
+> +#define REG_PWM_OE		0xD0
 
- 	if (!period_ticks) {
- 		state->enabled = false;
-@@ -123,13 +131,112 @@ static int pwm_sg2042_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
- 	return 0;
- }
+Actually I liked the old prefix better. E.g. "REG_POLARITY" looks more
+generic that it actually is.
 
--static const struct pwm_ops pwm_sg2042_ops = {
--	.apply = pwm_sg2042_apply,
--	.get_state = pwm_sg2042_get_state,
-+static void pwm_sg2044_config(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm, bool enabled)
-+{
-+	u32 pwm_value;
-+
-+	pwm_value = readl(ddata->base + REG_PWMSTART);
-+
-+	if (enabled)
-+		writel(pwm_value | BIT(pwm->hwpwm), ddata->base + REG_PWMSTART);
-+	else
-+		writel(pwm_value & ~BIT(pwm->hwpwm), ddata->base + REG_PWMSTART);
-+}
-+
-+static void pwm_sg2044_set_outputenable(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm,
-+					bool enabled)
-+{
-+	u32 pwm_value;
-+
-+	pwm_value = readl(ddata->base + REG_PWM_OE);
-+
-+	if (enabled)
-+		writel(pwm_value | BIT(pwm->hwpwm), ddata->base + REG_PWM_OE);
-+	else
-+		writel(pwm_value & ~BIT(pwm->hwpwm), ddata->base + REG_PWM_OE);
-+}
-+
-+static int pwm_sg2044_set_polarity(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm,
-+				   const struct pwm_state *state)
-+{
-+	enum pwm_polarity polarity;
-+	u32 pwm_value;
-+
-+	pwm_value = readl(ddata->base + REG_POLARITY);
-+
-+	polarity = state->polarity;
-+
-+	if (polarity == PWM_POLARITY_NORMAL)
-+		pwm_value &= ~BIT(pwm->hwpwm);
-+	else
-+		pwm_value |= BIT(pwm->hwpwm);
-+
-+	writel(pwm_value, ddata->base + REG_POLARITY);
-+
-+	return 0;
-+}
-+
-+static int pwm_sg2044_apply(struct pwm_chip *chip, struct pwm_device *pwm,
-+			    const struct pwm_state *state)
-+{
-+	struct sg2042_pwm_ddata *ddata = pwmchip_get_drvdata(chip);
-+	u32 hlperiod_ticks;
-+	u32 period_ticks;
-+
-+	if (!state->enabled) {
-+		pwm_sg2044_config(ddata, pwm, false);
-+		return 0;
-+	}
-+
-+	pwm_sg2044_set_polarity(ddata, pwm, state);
-+
-+	/*
-+	 * Duration of High level (duty_cycle) = HLPERIOD x Period_of_input_clk
-+	 * Duration of One Cycle (period) = PERIOD x Period_of_input_clk
-+	 */
-+	period_ticks = min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->period,
-+					       NSEC_PER_SEC), U32_MAX);
-+	hlperiod_ticks = min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->duty_cycle,
-+						 NSEC_PER_SEC), U32_MAX);
-+
-+	dev_dbg(pwmchip_parent(chip), "chan[%u]: PERIOD=%u, HLPERIOD=%u\n",
-+		pwm->hwpwm, period_ticks, hlperiod_ticks);
-+
-+	pwm_sg2042_config(ddata, pwm->hwpwm, period_ticks, hlperiod_ticks);
-+
-+	guard(mutex)(&ddata->lock);
-+
-+	/*
-+	 * re-enable PWMSTART to refresh the register period
-+	 */
-+	pwm_sg2044_config(ddata, pwm, false);
-+	pwm_sg2044_set_outputenable(ddata, pwm, true);
-+	pwm_sg2044_config(ddata, pwm, true);
-+
-+	return 0;
-+}
-+
-+static const struct sg2042_chip_data sg2042_chip_data = {
-+	.ops = {
-+		.apply = pwm_sg2042_apply,
-+		.get_state = pwm_sg2042_get_state,
-+	},
-+	.atomic = true,
-+};
-+
-+static const struct sg2042_chip_data sg2044_chip_data = {
-+	.ops = {
-+		.apply = pwm_sg2044_apply,
-+		.get_state = pwm_sg2042_get_state,
-+	},
-+	.atomic = false,
- };
+> +
+> +#define PWM_REG_NUM		0x80
 
- static const struct of_device_id sg2042_pwm_ids[] = {
--	{ .compatible = "sophgo,sg2042-pwm" },
-+	{ .compatible = "sophgo,sg2042-pwm",
-+	  .data = &sg2042_chip_data },
-+	{ .compatible = "sophgo,sg2044-pwm",
-+	  .data = &sg2044_chip_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, sg2042_pwm_ids);
-@@ -137,17 +244,24 @@ MODULE_DEVICE_TABLE(of, sg2042_pwm_ids);
- static int pwm_sg2042_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-+	const struct sg2042_chip_data *chip_data;
- 	struct sg2042_pwm_ddata *ddata;
- 	struct reset_control *rst;
- 	struct pwm_chip *chip;
- 	struct clk *clk;
- 	int ret;
+This is unused?
 
-+	chip_data = device_get_match_data(dev);
-+	if (!chip_data)
-+		return -ENODEV;
-+
- 	chip = devm_pwmchip_alloc(dev, SG2042_PWM_CHANNELNUM, sizeof(*ddata));
- 	if (IS_ERR(chip))
- 		return PTR_ERR(chip);
- 	ddata = pwmchip_get_drvdata(chip);
+> +
+> +#define PWM_POLARITY_MASK(n) BIT(n)
+> +#define PWM_HLPERIOD(chan) ((chan) * REG_GROUP + REG_HLPERIOD)
+> +#define PWM_PERIOD(chan) ((chan) * REG_GROUP + REG_PERIOD)
 
-+	mutex_init(&ddata->lock);
-+
- 	ddata->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(ddata->base))
- 		return PTR_ERR(ddata->base);
-@@ -170,8 +284,8 @@ static int pwm_sg2042_probe(struct platform_device *pdev)
- 	if (IS_ERR(rst))
- 		return dev_err_probe(dev, PTR_ERR(rst), "Failed to get reset\n");
+((chan) * 8 + 0) is IMHO better. I guess this is subjective because at
+least the *8 is repeated several times, but the advantage of not using a
+define for 8 (and 0 and 4) is that by looking at
 
--	chip->ops = &pwm_sg2042_ops;
--	chip->atomic = true;
-+	chip->ops = &chip_data->ops;
-+	chip->atomic = chip_data->atomic;
+	#define SG2042_PWM_HLPERIOD(chan) ((chan) * 8 + 0)
 
- 	ret = devm_pwmchip_add(dev, chip);
- 	if (ret < 0)
---
-2.48.1
+you immediatly see the offsets of the HLPERIOD register, while for
+
+	#define PWM_HLPERIOD(chan) ((chan) * REG_GROUP + REG_HLPERIOD)
+
+you have to lookup two additional symbols.
+
+Also PWM is a prefix that is too generic.
+
+>  #define SG2042_PWM_CHANNELNUM	4
+>=20
+> @@ -51,6 +53,12 @@
+>  struct sg2042_pwm_ddata {
+>  	void __iomem *base;
+>  	unsigned long clk_rate_hz;
+> +	struct mutex lock;
+
+What does this lock protect? Note that there is a chip lock that is held
+when .apply() is called, to serialize apply calls for a single chip. I
+guess this can and should be dropped.
+
+> +};
+> +
+> +struct sg2042_chip_data {
+> +	const struct pwm_ops ops;
+> +	bool atomic;
+>  };
+>=20
+>  /*
+> @@ -62,8 +70,8 @@ static void pwm_sg2042_config(struct sg2042_pwm_ddata *=
+ddata, unsigned int chan,
+>  {
+>  	void __iomem *base =3D ddata->base;
+>=20
+> -	writel(period_ticks, base + SG2042_PWM_PERIOD(chan));
+> -	writel(hlperiod_ticks, base + SG2042_PWM_HLPERIOD(chan));
+> +	writel(period_ticks, base + PWM_PERIOD(chan));
+> +	writel(hlperiod_ticks, base + PWM_HLPERIOD(chan));
+
+The register renaming adds really quite some noise that is actually
+unrelated to this patch. If you really think the register defines need
+renaming, do that in a separate patch (and justify it well).
+
+>  }
+>=20
+>  static int pwm_sg2042_apply(struct pwm_chip *chip, struct pwm_device *pw=
+m,
+> @@ -104,8 +112,8 @@ static int pwm_sg2042_get_state(struct pwm_chip *chip=
+, struct pwm_device *pwm,
+>  	u32 hlperiod_ticks;
+>  	u32 period_ticks;
+>=20
+> -	period_ticks =3D readl(ddata->base + SG2042_PWM_PERIOD(chan));
+> -	hlperiod_ticks =3D readl(ddata->base + SG2042_PWM_HLPERIOD(chan));
+> +	period_ticks =3D readl(ddata->base + PWM_PERIOD(chan));
+> +	hlperiod_ticks =3D readl(ddata->base + PWM_HLPERIOD(chan));
+>=20
+>  	if (!period_ticks) {
+>  		state->enabled =3D false;
+> @@ -123,13 +131,112 @@ static int pwm_sg2042_get_state(struct pwm_chip *c=
+hip, struct pwm_device *pwm,
+>  	return 0;
+>  }
+>=20
+> -static const struct pwm_ops pwm_sg2042_ops =3D {
+> -	.apply =3D pwm_sg2042_apply,
+> -	.get_state =3D pwm_sg2042_get_state,
+> +static void pwm_sg2044_config(struct sg2042_pwm_ddata *ddata, struct pwm=
+_device *pwm, bool enabled)
+> +{
+> +	u32 pwm_value;
+> +
+> +	pwm_value =3D readl(ddata->base + REG_PWMSTART);
+> +
+> +	if (enabled)
+> +		writel(pwm_value | BIT(pwm->hwpwm), ddata->base + REG_PWMSTART);
+> +	else
+> +		writel(pwm_value & ~BIT(pwm->hwpwm), ddata->base + REG_PWMSTART);
+> +}
+> +
+> +static void pwm_sg2044_set_outputenable(struct sg2042_pwm_ddata *ddata, =
+struct pwm_device *pwm,
+> +					bool enabled)
+> +{
+> +	u32 pwm_value;
+> +
+> +	pwm_value =3D readl(ddata->base + REG_PWM_OE);
+> +
+> +	if (enabled)
+> +		writel(pwm_value | BIT(pwm->hwpwm), ddata->base + REG_PWM_OE);
+> +	else
+> +		writel(pwm_value & ~BIT(pwm->hwpwm), ddata->base + REG_PWM_OE);
+> +}
+> +
+> +static int pwm_sg2044_set_polarity(struct sg2042_pwm_ddata *ddata, struc=
+t pwm_device *pwm,
+> +				   const struct pwm_state *state)
+> +{
+> +	enum pwm_polarity polarity;
+> +	u32 pwm_value;
+> +
+> +	pwm_value =3D readl(ddata->base + REG_POLARITY);
+> +
+> +	polarity =3D state->polarity;
+> +
+> +	if (polarity =3D=3D PWM_POLARITY_NORMAL)
+> +		pwm_value &=3D ~BIT(pwm->hwpwm);
+> +	else
+> +		pwm_value |=3D BIT(pwm->hwpwm);
+> +
+> +	writel(pwm_value, ddata->base + REG_POLARITY);
+
+I like this idiom better than the one used in
+pwm_sg2044_set_outputenable() and pwm_sg2044_config(). However drop the
+local variable polarity.
+
+> +	return 0;
+> +}
+> +
+> +static int pwm_sg2044_apply(struct pwm_chip *chip, struct pwm_device *pw=
+m,
+> +			    const struct pwm_state *state)
+> +{
+> +	struct sg2042_pwm_ddata *ddata =3D pwmchip_get_drvdata(chip);
+> +	u32 hlperiod_ticks;
+> +	u32 period_ticks;
+> +
+> +	if (!state->enabled) {
+> +		pwm_sg2044_config(ddata, pwm, false);
+> +		return 0;
+> +	}
+> +
+> +	pwm_sg2044_set_polarity(ddata, pwm, state);
+> +
+> +	/*
+> +	 * Duration of High level (duty_cycle) =3D HLPERIOD x Period_of_input_c=
+lk
+> +	 * Duration of One Cycle (period) =3D PERIOD x Period_of_input_clk
+> +	 */
+> +	period_ticks =3D min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->per=
+iod,
+> +					       NSEC_PER_SEC), U32_MAX);
+> +	hlperiod_ticks =3D min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->d=
+uty_cycle,
+> +						 NSEC_PER_SEC), U32_MAX);
+
+This is the same calculation as for sg2042. I think I'd put that in a
+function that is used by both variants.
+
+> +	dev_dbg(pwmchip_parent(chip), "chan[%u]: PERIOD=3D%u, HLPERIOD=3D%u\n",
+> +		pwm->hwpwm, period_ticks, hlperiod_ticks);
+
+Now that there are more register values, please add them all to the
+debug output.
+
+> +	pwm_sg2042_config(ddata, pwm->hwpwm, period_ticks, hlperiod_ticks);
+> +
+> +	guard(mutex)(&ddata->lock);
+> +
+> +	/*
+> +	 * re-enable PWMSTART to refresh the register period
+> +	 */
+> +	pwm_sg2044_config(ddata, pwm, false);
+
+pwm_sg2044_config() is conceptually different to pwm_sg2042_config().
+This is irritating, so please find a better name.
+
+> +	pwm_sg2044_set_outputenable(ddata, pwm, true);
+> +	pwm_sg2044_config(ddata, pwm, true);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct sg2042_chip_data sg2042_chip_data =3D {
+> +	.ops =3D {
+> +		.apply =3D pwm_sg2042_apply,
+> +		.get_state =3D pwm_sg2042_get_state,
+> +	},
+> +	.atomic =3D true,
+> +};
+> +
+> +static const struct sg2042_chip_data sg2044_chip_data =3D {
+> +	.ops =3D {
+> +		.apply =3D pwm_sg2044_apply,
+> +		.get_state =3D pwm_sg2042_get_state,
+> +	},
+> +	.atomic =3D false,
+
+If you drop the mutex don't forget to drop this one, too.
+
+>  };
+
+Best regards
+Uwe
+
+--pdievs2tczsk2og6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfznREACgkQj4D7WH0S
+/k5IGQgAuKXpR7T10Khnr9B2l20fU/CYqEoy5dSxjYN0+CoYrIAQuN06iXb2kGk7
+L62b9E0X9INBEJZClH5a6BpNVCOhkcDc+rs2XYL7Aq8248jVS74ybVoZByyRqi/b
+B5sKVoGbh+cHPJjmtVxzvUr83hedydWfqNt43tUfjhjsa5zUPmk+zUvsZ6qh2Jzw
+wH9jLYMmMH13kGrEo0szGFqM3DLI6UldaTIUBueFnZjHHxxct5cxFUwdLWGNoUvK
+xwmykjwSxOKLWqT0kQuot0gG9bxZFsd6O3s0Y9SADPcaUMYckc0uptjWaaQNifr5
+miGS4qqA5OBH+ZCZlche16tmPnzvxw==
+=xehm
+-----END PGP SIGNATURE-----
+
+--pdievs2tczsk2og6--
