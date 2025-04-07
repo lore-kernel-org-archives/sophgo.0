@@ -1,108 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E55242930;
-	Mon,  7 Apr 2025 12:31:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562C719F103;
+	Mon,  7 Apr 2025 13:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744029089; cv=none; b=VXWFKB5J2SUjFDwf2KSBNTVdIbun/owVKzDJAye6/+TC/fTUr2iKoMoue59PACe+VLy3wikMm76fq1HQjPzcHw+ogUiKuoEs9sSVIcVwYcTSUzP2x/Xx7XebuzcSRidqVJar6MwX2vjAiD+ZrPv1nt4g18ceIRbUvuJWoYRMmcA=
+	t=1744033100; cv=none; b=aibCLk12fAaV6YAjLR1UGGUgAPhBQLbyb/SvH6a2QF+GN+U4E57Wgyr9PTY3p7U76DU2l9MyrpOI5nQTWOIVYn0p5dikNNnVeai/ip2lT082SUFHAyxxVbEvxCserCloQLjv5+JcvrRIP+qqS7FxNW0iB2H6I7Bo68+MYjTeXts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744029089; c=relaxed/simple;
-	bh=mWLxrmUWg2QbduQqGeynDbNIO+EvNnvSdkJRvmJ0LSU=;
+	s=arc-20240116; t=1744033100; c=relaxed/simple;
+	bh=iJcvqyuDnRs1UUEVLb9o2DZdzokURwcVSh0sWsAF0WI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P6jaoiD9ETCtHs23/scy/B2M+ppd3j2FDOxZ17aV8Hq5FmZD1blstnD3qFIStSB/nvkCoF+BHv+7ZgjFx1EJDTPfNLaQe+e8ukRL/TfgvqZJ2/TYZSqcQK1GWW1g5hzfee1jKGbVJWk6ronSXXHUySA+rBtjLRM9PAZRB4iNpJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A/PTyzE6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=DIDmACw7QkWq7FaPMvEeo7yaDGRFP9Wd3dy/FW+K6OYG+lFuJEdaHQXDc76Ehc9AIYtJi4azTngU+RuD8MThUxcZ2z/nUe0ti2P5J0dLoIou+Poh7lznFoz+oY6NZynoegqHjGHgUTtZ7A4WdyDhc7GJTR5cjeECOxzp94Oshkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=shGgD5Gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A/PTyzE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C4DC4CEDD;
-	Mon,  7 Apr 2025 12:31:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="shGgD5Gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81925C4CEE9;
+	Mon,  7 Apr 2025 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744029088;
-	bh=mWLxrmUWg2QbduQqGeynDbNIO+EvNnvSdkJRvmJ0LSU=;
+	s=k20201202; t=1744033098;
+	bh=iJcvqyuDnRs1UUEVLb9o2DZdzokURwcVSh0sWsAF0WI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=A/PTyzE6r+rflOEinzc+cMW6/l5y6kQp7OPqVae68mCaiQ7GTyDb4zFGqxCCtqRZO
-	 fw/C8hh2QgUFKSMOQ8ohXgqw80kg60aFnnFLFZE+m8+ky7HhqMeVKSRzRWWQCifsyU
-	 Jxpc4nhL7K6QJmT3Lf5Hvcv3xbQREuJ9DtXwf0fLhUdPtuHqQaHZxbirTjHu0/yqht
-	 P5UzN7Ow+wjCcHsVirpm0CpaLg49nUKa5S33ljVugn50Rpkc/HB9fru2GPZPDr1lwt
-	 Lh/xjP0WKNTBqjf8TOIGCHz6ff+MztzPzfvrc0UR/DdLyfQuekYirLw0xobYwDtkAf
-	 hGK2L5T4ojH1A==
-Date: Mon, 7 Apr 2025 14:31:24 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
-To: Longbin Li <looong.bin@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, ghost <2990955050@qq.com>, 
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 1/2] dt-bindings: pwm: sophgo: add pwm controller for
- SG2044
-Message-ID: <jq55x7uhftvejninh56tzk32jtmmwa5wxzna5uxbkk5woi7zi5@6wrg2ctmyg7b>
-References: <20250407072056.8629-1-looong.bin@gmail.com>
- <20250407072056.8629-2-looong.bin@gmail.com>
+	b=shGgD5GcvoukPBR7IKo4QrWf9lMxSBN0wZOrqRrrC5X2KDzeGjC8MA3dF3eWVQ/L/
+	 VaMAiey9R8D3X7e75z/KSxv/EZH4m6hFVnbm4MuSEdLPI0pfjWa1i+iSYqpxSnGyNR
+	 syEa9hDIWIYB4Cfg/DfyGaIRLKhH6G9AqJG9FfMS9uz2VFi1iuMfZyJgL/79KZ4l0/
+	 Ur3cwy2t80bBXz6K/BopNTHi+rfENnFEuMK41pFxWB6eQDFbE6Qx13ILCe9X8dG0zX
+	 NK6u//exi8jzgWX6rsgwTxCloOg9TTTgQioF4Wtj5MZKw+ZccCvFFoU3/jjc4iOg8E
+	 hJPaHJIY1P87A==
+Date: Mon, 7 Apr 2025 08:38:17 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-i2c@vger.kernel.org, linux-riscv@lists.infradead.org,
+	Jisheng Zhang <jszhang@kernel.org>, Yixun Lan <dlan@gentoo.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, ghost <2990955050@qq.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Chen Wang <unicorn_wang@outlook.com>, linux-mmc@vger.kernel.org,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-hwmon@vger.kernel.org,
+	Longbin Li <looong.bin@gmail.com>, Jean Delvare <jdelvare@suse.com>,
+	devicetree@vger.kernel.org,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	linux-kernel@vger.kernel.org, Palmer Dabbelt <palmer@dabbelt.com>,
+	sophgo@lists.linux.dev, Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	Chao Wei <chao.wei@sophgo.com>
+Subject: Re: [PATCH 1/9] dt-bindings: timer: Add Sophgo SG2044 ACLINT timer
+Message-ID: <174403309704.2081482.4050249481827035310.robh@kernel.org>
+References: <20250407010616.749833-1-inochiama@gmail.com>
+ <20250407010616.749833-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7u4pfjk7u4y7yhpc"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250407072056.8629-2-looong.bin@gmail.com>
+In-Reply-To: <20250407010616.749833-2-inochiama@gmail.com>
 
 
---7u4pfjk7u4y7yhpc
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 1/2] dt-bindings: pwm: sophgo: add pwm controller for
- SG2044
-MIME-Version: 1.0
+On Mon, 07 Apr 2025 09:06:06 +0800, Inochi Amaoto wrote:
+> Like SG2042, SG2044 implements an enhanced ACLINT, so add necessary
+> compatible string for SG2044 SoC.
+> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  .../devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml      | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-Hello,
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-On Mon, Apr 07, 2025 at 03:20:38PM +0800, Longbin Li wrote:
-> diff --git a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml=
- b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
-> index bbb6326d47d7..e0e91aa237ec 100644
-> --- a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
-> +++ b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
-> @@ -17,7 +17,9 @@ allOf:
->=20
->  properties:
->    compatible:
-> -    const: sophgo,sg2042-pwm
-> +    enum:
-> +      - sophgo,sg2042-pwm
-> +      - sophgo,sg2044-pwm
-
-Given that the sg2044 has more registers (to e.g. implement different
-polarity), but the sg2042 registers are identical, I wonder if the 2044
-device should use:
-
-	compatible =3D "sophgo,sg2044-pwm", "sophgo,sg2042-pwm";
-
-Note, I'm unsure here, only providing input to people who are more
-knowledgeable in DT that I am.
-
-Best regards
-Uwe
-
---7u4pfjk7u4y7yhpc
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfzxZoACgkQj4D7WH0S
-/k73JAf/YF3lOc8ZTYHAVl5pC0RWr/ZB8pp9gKCGzYHdGYbogEGAgSewARKopzQ+
-ZEPmNeXoVEglTRPxfWXl0aDImSXG/NbOeA449I7kmpecXGHEX/iqwexGYR1kvNxh
-Yg8jl+bl2dxh/m+jw/KoCi2rpyq9jverosDJ0r3y/aum7lqd6LB8IPx1zsxcaQN9
-xXAuXOE4UnKaUSTZfRBqiwUvY0N62kg4/o/wFERPSdyKS3Tjfb7m8sTVy0rBoGEY
-s8SvRNjcapE/sSWqPsREl2XdULCQHlJ6CCMXk10oMisXB65FouAzb80ghiZ8WU+6
-0h9ascRYWtiItrTm/D854ODd/FgwmA==
-=GmB3
------END PGP SIGNATURE-----
-
---7u4pfjk7u4y7yhpc--
