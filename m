@@ -1,90 +1,89 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B5D1C54A6;
-	Mon,  7 Apr 2025 14:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D6BE1C5F28;
+	Mon,  7 Apr 2025 14:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744034862; cv=none; b=ruJEjIlGcoyGpRzosdbK6mFOgVy9MSUcmqv5CYeOry8k8MR/nuVe69mJ8XqBPMd1iAMfufUeG0DUMgOkkVrbIqamCu8vrFMUfwUA6G/ifGPFnvycu7Okelj/JDieyccjw1MyNAT7ykP6ZA3TF2WStJCIa/u6LsbAF0sUkijEZCY=
+	t=1744035081; cv=none; b=NG3x+fVuizKnoU/msvmlcMvS7khz+hPPe2uklRqnPI7y2VQOYwON3+eeKe41zh6DGjvxqbCX1rVFbm2CW3c2MibpD38tZ6SKDmeVVROzumotOhTzZyAIyv9P22nkWx1YxGfN0b2j4TXg2agzrGpVBn8QgNXHeOBVhW16ziTNdbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744034862; c=relaxed/simple;
-	bh=TaujOUNY4+EkrJXwK4q0mvwGc8rH8Q3ZdBnCxuWnWYM=;
+	s=arc-20240116; t=1744035081; c=relaxed/simple;
+	bh=kZUcAvHfg06pFUq3u0ppbMfjOjpMz7azG1mzNbRZCds=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WIlDIi1DCc0fyBvlmYZYfQFts1UmKSlv0d6C9k2PNuAV3BT9aGPLVkex41p6Cv1eMT3QnRobyqw7CyogMv5vkzZap2FRvdlq+BeldhsQR00wvk6uSWUejVp9nh331prquF2Aqvm90pyXB0BpwpfPMx0duH1KVsfycOmgtNBYTDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVtMEVp7; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=rUYuEBc+eNz7U5o/BIO7Ei1XxcEMaQ+hrXK6GLPNypJR9+5av+fGyerui1WNpJO9wN+cXXivaTmNNGwX5UhnTXiuwWXEZRpQCd2zWPEnMroC+91h9NjHsqxbqyjuxrSTuYO9jlIfC5SNjoVplj9pje9xxvZPs9IcZ2rJCgWrdVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DLsODXQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVtMEVp7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C053FC4CEDD;
-	Mon,  7 Apr 2025 14:07:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DLsODXQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB2DC4CEDD;
+	Mon,  7 Apr 2025 14:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1744034861;
-	bh=TaujOUNY4+EkrJXwK4q0mvwGc8rH8Q3ZdBnCxuWnWYM=;
+	s=k20201202; t=1744035081;
+	bh=kZUcAvHfg06pFUq3u0ppbMfjOjpMz7azG1mzNbRZCds=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BVtMEVp7APvFMAMDPfhn2yiDcq2izHGAQlMMWiPOoJwr+963UufgWNee3eLIFVFyU
-	 DfJY3Fjp+29pbzG9eo5FpmuOxsmDFCTMp+C1UleMdOibV3YOCTBep+huhmU1BMJP/M
-	 Dn55qS1ZvyrYeU0hMswrMaxHpk77qyncbDtsZYK7QShkChdL4UWZa+6SGpeLQ8vjM7
-	 gRdaghF80Olla4zzvrnEl4ySwUgoZR/+3suNZo8zhkQ5Iqog4w7/xEuN0S9oH7S+o8
-	 Qwqkj9mGIhRROpgvtO1SB4v2jXsM6fHHYFNzz6iIWT3KB/O/8m+JYJmyM34WoGkJhw
-	 vhIEoDBDfBYcw==
-Date: Mon, 7 Apr 2025 09:07:39 -0500
+	b=DLsODXQ6hUQvST6rpsd/56i2NZHg4QFuam+7YuMAvAIqqHs/DGMFXjuYdR4B1eqpj
+	 YQv+Zzut5lVsD/IqFdy+OvkoUmg+nxGgxkNDzlSffilACynbqFCaJzH2T5VPbMk3gn
+	 bUXhyDAV04SgHJLpTupeVxzpp1JVNo1MWsNu0VKOGgeEHcogj7ah3whTPAw0ciqmX+
+	 fq5op1+7RJJqaBu0+zDC2ZqoZxbByLbBc8quTJJpOtfMcP7tTBT2zKbEz68LDjNLSm
+	 FDYAeMPbbiuxsDUsfWADTCCXXvY/BXjMhjG+lNksaFW/dptlXhp0HGXvrPNp4H7SXg
+	 hVXNSPW2k/zSA==
+Date: Mon, 7 Apr 2025 09:11:19 -0500
 From: Rob Herring <robh@kernel.org>
-To: Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>
+Cc: Longbin Li <looong.bin@gmail.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Alexandre Ghiti <alex@ghiti.fr>, Mark Brown <broonie@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-spi@vger.kernel.org, sophgo@lists.linux.dev,
-	chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, dlan@gentoo.org
-Subject: Re: [PATCH v4 1/2] spi: dt-bindings: snps,dw-apb-ssi: Add compatible
- for SOPHGO SG2042 SoC
-Message-ID: <20250407140739.GA2174606-robh@kernel.org>
-References: <20250407-sfg-spi-v4-0-30ac949a1e35@gmail.com>
- <20250407-sfg-spi-v4-1-30ac949a1e35@gmail.com>
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	ghost <2990955050@qq.com>, linux-pwm@vger.kernel.org,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 1/2] dt-bindings: pwm: sophgo: add pwm controller for
+ SG2044
+Message-ID: <20250407141119.GA2192351-robh@kernel.org>
+References: <20250407072056.8629-1-looong.bin@gmail.com>
+ <20250407072056.8629-2-looong.bin@gmail.com>
+ <jq55x7uhftvejninh56tzk32jtmmwa5wxzna5uxbkk5woi7zi5@6wrg2ctmyg7b>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250407-sfg-spi-v4-1-30ac949a1e35@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <jq55x7uhftvejninh56tzk32jtmmwa5wxzna5uxbkk5woi7zi5@6wrg2ctmyg7b>
 
-On Mon, Apr 07, 2025 at 02:35:12PM +0800, Zixian Zeng wrote:
-> add compatible property to include "sophgo,sg2042-spi" for
-> the SOPHGO SG2042 SoC SPI Controller.
+On Mon, Apr 07, 2025 at 02:31:24PM +0200, Uwe Kleine-König wrote:
+> Hello,
 > 
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> ---
->  Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+> On Mon, Apr 07, 2025 at 03:20:38PM +0800, Longbin Li wrote:
+> > diff --git a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
+> > index bbb6326d47d7..e0e91aa237ec 100644
+> > --- a/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
+> > +++ b/Documentation/devicetree/bindings/pwm/sophgo,sg2042-pwm.yaml
+> > @@ -17,7 +17,9 @@ allOf:
+> > 
+> >  properties:
+> >    compatible:
+> > -    const: sophgo,sg2042-pwm
+> > +    enum:
+> > +      - sophgo,sg2042-pwm
+> > +      - sophgo,sg2044-pwm
 > 
-> diff --git a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> index bccd00a1ddd0ad92b437eed5b525a6ea1963db57..94102d94ed5dffe889a8a11c1c637d466713c208 100644
-> --- a/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> +++ b/Documentation/devicetree/bindings/spi/snps,dw-apb-ssi.yaml
-> @@ -88,6 +88,10 @@ properties:
->                - renesas,r9a06g032-spi # RZ/N1D
->                - renesas,r9a06g033-spi # RZ/N1S
->            - const: renesas,rzn1-spi   # RZ/N1
-> +      - description: SOPHGO SG2042 SoC SPI Controller
-> +        items:
-> +          - const: sophgo,sg2042-spi
-> +          - const: snps,dw-apb-ssi
+> Given that the sg2044 has more registers (to e.g. implement different
+> polarity), but the sg2042 registers are identical, I wonder if the 2044
+> device should use:
+> 
+> 	compatible = "sophgo,sg2044-pwm", "sophgo,sg2042-pwm";
+> 
+> Note, I'm unsure here, only providing input to people who are more
+> knowledgeable in DT that I am.
 
-This and all the other cases with snps,dw-apb-ssi fallback should be 
-combined into 1 entry.
+Depends if s/w only understanding "sophgo,sg2042-pwm" will work on the 
+2044. IOW, will a kernel without the driver change here work?
 
->        - description: T-HEAD TH1520 SoC SPI Controller
->          items:
->            - const: thead,th1520-spi
-> 
-> -- 
-> 2.49.0
-> 
+Rob
