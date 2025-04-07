@@ -1,62 +1,62 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E88C1CD15
-	for <sophgo@lists.linux.dev>; Mon,  7 Apr 2025 01:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3B53594A
+	for <sophgo@lists.linux.dev>; Mon,  7 Apr 2025 01:07:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1743988024; cv=none; b=AtI8427KkdzNnczJwGG/0uJfum+z6a4zXlGPyGpHc/TvItje4XfMZVKO2R5Q9ZD19AOfjtrilexrBi+Z14MsOfurSfgG/0S+npEidF98yXi/cBC+7/LIvexyB5vx3mYf/DQgBKmpYP1m6QN7MFnG9KBjWPSYt344bkeBZS26wNY=
+	t=1743988027; cv=none; b=TAtxLfStLycQ1enniHwkxjYO8AUupQd9kJ/16fs17n4I0btlfaMbXNx+CR91J8gHgGM+60epAgHISMPNQGvnLM5zZPdek1OicghXbfnINgm561ydlt5CBWCVYalYgkoyzSXBNFZB0iU9tenMKuDqOR1KLBYQX/eHVxTs6CtaC5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1743988024; c=relaxed/simple;
-	bh=zCo+Qwlnj+LFgJZXj+07HKs/ViAYB0ypXv4DMwLQ9CY=;
+	s=arc-20240116; t=1743988027; c=relaxed/simple;
+	bh=MSKaRW5gafhyLiU4k0T0vTbLtjm6e2qcb4N9zV6dVtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IUUsaSygH7+A/LTXDG5yxUPp7Pxu5wg9Ch5WVt47/FRRx/ZsAIdoNRMX1u3pKfEonV/hOrzAxcAE9RQCE0GPI2wgvO+9kvfaQKU4KXv05BuIz2EgeMUFyE6BOf8BS7SRZq/UDtrQbuCocTJK3FScdNjt7MeUbV4poSU/WhsTLH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GkHt6ZWT; arc=none smtp.client-ip=209.85.222.176
+	 MIME-Version; b=rj+3VRjRTLdJh5reJXjbkU90Jk+HeJPgq06b5+hoG2+jKYgv5EjNx6HchVxjfLyzIr0LTQ7vo685/Plan8HiSEtZQ/fVf4Dy/Ys0sGboXP61TOAKL4iDjeT/iimm/JI+x8m2aBrRtECi4lQnhcPZSoSTUaVAFF5qBBD7zel2wrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HKY9FMZc; arc=none smtp.client-ip=209.85.160.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GkHt6ZWT"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7c55500d08cso362861985a.0
-        for <sophgo@lists.linux.dev>; Sun, 06 Apr 2025 18:07:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HKY9FMZc"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-476805acddaso47308861cf.1
+        for <sophgo@lists.linux.dev>; Sun, 06 Apr 2025 18:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1743988021; x=1744592821; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1743988025; x=1744592825; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=siqPQU+FyAku8vhhn3ZUC1oR8uSZvTqCHGJlE8+8NrQ=;
-        b=GkHt6ZWTA8SgW4JYVaRGSqlkCTkZKhYTe1ro7SKwgH0hbR+P1q8SVX2v8kSnSpUUFY
-         MGsdxQt/UcO2WBZEENTOTyWA9EraipoapVupTPPcohDfRbWMN5Hjp4s0SMfxNrF3rasv
-         QfPltoN4bUmdxhb5kvGx7Hq8QBOfsaIICwHJbu6DGb7lY30GoU1LxVflzbcoNREsFEwv
-         xbji7G/bZLvI5EGgcJC4PME5zXzBKf10ke6SV2gl4+4UKrJn+HMoAuQtmtTvYuRF3wrd
-         5qPPknDckE0n3Wf/E7m82EFxJYynBDy/VJ52IpIxtBIsaFL8Lv5PG/Hh9KNp0tpGZtg0
-         Djog==
+        bh=+vsCaRl6PH5MXOUa90IYL4ZnfxU9+wZVMbRb1hNiJ9U=;
+        b=HKY9FMZchaBZnEQ/AxST9wLqu4iCSpf6PiFZSa2dvXJ3Q3vxwJM7eC4U14EkP5Njhf
+         P0p4K17EHsk8MGrW0umYAA3QorZ3SIzYWzuV58jtQELHZjLjSR7Y4RP6SLv3SyVqp6xa
+         vMxCfSTudoA9NXZhdExT9Vzee5b8Pr/XjRcec3knbx3G8/6jz2akjgtnomk0L/crmzf/
+         hh9NrlWYAhWUp+bC+qKwoIMnSc86qawZ8oSD7iJk6rWMClVTEweW/4ieVF0trN9tiX3m
+         vo+/wN8w0Tc5qFQd/cHpTNH/f0/1v/hgV+2zF7F0lIMEAX0D+ymeK8kj+1zGjh+kESj4
+         SXLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1743988021; x=1744592821;
+        d=1e100.net; s=20230601; t=1743988025; x=1744592825;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=siqPQU+FyAku8vhhn3ZUC1oR8uSZvTqCHGJlE8+8NrQ=;
-        b=vtFzTed4wC65+o7mwuE2M70tEC0eou1dy3Rb14tv4G9xBLRD/Sy4buwS6SJPC1/nzD
-         Vn7gNrVDkNTZGVBVU1HxfnuKqzW+tNTpWzMFhQ/6mJ2U/uy483QA06+nzsB+E/k6/8F5
-         tM6LXMu/gWdL8ZweIJIRLbZ5kZKxOoY77excEHJy0ZAV2ubZy0ILj4ofgAowKsLmi+lg
-         5Almj840D2KcQTzYwHDvuxTl/1alEv1Y9gMWf0ZQIa/T2dsnwK0cEkWFmtjlmTdz1BuD
-         8g3b4BWd0B4741MXy4BvxEaFrtqkWveiG+ODEM+2yLVkB5DLQVmQLVDJbjQ4x3MSQVB2
-         CCvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUNTR1tzGFXpWEmk2lG7cjZeAyjXTsxlpXptJPGztZr5tbylm7AmP8OPNmmWUjGfFoEHjHMI8I=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyPvr8d2pFBT8oW1IFyFqazjN/ZYuqw2huuyyHb5+oEkBnXb12N
-	6G5p3ZhVglgP6R6O4NGJhSWOtgo5+7aWrBR0GxqxfJ3lLrUlZjO2
-X-Gm-Gg: ASbGncvaU01/XfbXjHITNv/4weoRI1XpJ18cjLt+7UPr/ps9tgO1/M4PKqqncgn8wTh
-	bFBlUmfyobhASb8IfYP4GBz6vezSKrOUO2f24c//YDGKWaO4O9dojJiG79Dyde8xB/u+hXtjQ9f
-	5X3vhDAlxY7AsXDhD7HdvS32a6y4EiRkXOnJVfzHOwmoHMwtMz4Atyk3usS0HxVePAoler2My8d
-	aGS9g4mDcQGxUTsktbm4Xig0UF5Hdesx8GZumkuBt6ruE9/nxUVeGua4ohuAmyubyf/OOqTQgTd
-	OiBLhsDGVx50g8uP10ja
-X-Google-Smtp-Source: AGHT+IHOF406ZAY4FtFhD2l8xlyDvh5PHaA+xtI7orTdCQHDTm8ZGVImUr8k5ecrmbJiiqwwrdv5HQ==
-X-Received: by 2002:a05:620a:280a:b0:7c5:a5cc:bcb9 with SMTP id af79cd13be357-7c77dddd878mr1080915485a.56.1743988021428;
-        Sun, 06 Apr 2025 18:07:01 -0700 (PDT)
+        bh=+vsCaRl6PH5MXOUa90IYL4ZnfxU9+wZVMbRb1hNiJ9U=;
+        b=QZUk3Uvh5ag3Ppk7FwPSew0Ugn1IxBIkrhRHCI7Uc/kOeLxbJCxxa+WCA2PdCauPIV
+         Zpj+rzNdKYOgysPrR//b444fMXMvyEbEo5L27iuv2w+0WwffOxcbNbCFuT4sqv3gdzfC
+         TQrXjhdnlJxtxnQorc+JCJ/CQFidH1SzEnhXb2uP5Qzo8XREzpMYcOqAvtt5JzXuT21y
+         Rn2ceEiaa4dy2pMOe+kTULZRZqttIY0WL7I3lr+EhahDG2g8jcvWdxdxJRVf1eqFPFI+
+         5Cs9wzkZv1PpycdGsGr8yoWO4zIz2U4NkKOARYu/ksyuD+0wBhTw7CXI3kyVKw23RDmA
+         khig==
+X-Forwarded-Encrypted: i=1; AJvYcCVYBqVHgraKbQBksHPWQa5oHSxl/6JLvRT+i4zPepgywkrkWFtfHeg6yNUYQeIsLlBClhSYGWg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxwM0NUzBFXhhdK+u085XSV313CPum6pfOtWxOJJO4UAeRp3kiN
+	u5oZdjZy6nn/9gDvZInqx2/ohHOZAo+Ji7YbBFSXEJJxrcXjkCnX
+X-Gm-Gg: ASbGncsSWL6/FCL3TY5goukAkmmwP+xeRVz0uUjKSFo7vvZheDvd0pr7PJYIFPAUbuS
+	jZXo/t3Lk/WPkwwIQm7stF4G9nbRgJ/IQXXnHBuPsrFKoexD7RUMLjZ1ebZFOsHUkFHQhobllUh
+	u6lxYo6D2u5MsvU/yUSR8ki5TsSDzR+IUKDW0IgZG3LyihwwZNcxhzFslGhhCZOLdtROj+O5kmB
+	bm8jJyCUNQfWsF3pqasNcG4q8L/6DklxdGKKDEejvBBMZKNnzzoq0UkOMXKTI1fRqvOo+5KEacY
+	QQYeSuU++bk6sGJ2qZ41
+X-Google-Smtp-Source: AGHT+IFkuuxhR+U1DbKH3U1yTcluZAPfs3Z52K5B+BYtDKVGXg8KxpwvB9wBRVPiAyCI06NtDvnreQ==
+X-Received: by 2002:a05:622a:1189:b0:477:ea0:1b27 with SMTP id d75a77b69052e-4792598f38emr165080631cf.26.1743988024739;
+        Sun, 06 Apr 2025 18:07:04 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c76e96cf01sm528160285a.55.2025.04.06.18.07.00
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4791b059870sm53342001cf.14.2025.04.06.18.07.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Apr 2025 18:07:01 -0700 (PDT)
+        Sun, 06 Apr 2025 18:07:04 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jean Delvare <jdelvare@suse.com>,
 	Guenter Roeck <linux@roeck-us.net>,
@@ -89,9 +89,9 @@ Cc: linux-hwmon@vger.kernel.org,
 	linux-mmc@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 2/9] dt-bindings: interrupt-controller: Add Sophgo SG2044 CLINT mswi
-Date: Mon,  7 Apr 2025 09:06:07 +0800
-Message-ID: <20250407010616.749833-3-inochiama@gmail.com>
+Subject: [PATCH 3/9] dt-bindings: interrupt-controller: Add Sophgo SG2044 PLIC
+Date: Mon,  7 Apr 2025 09:06:08 +0800
+Message-ID: <20250407010616.749833-4-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250407010616.749833-1-inochiama@gmail.com>
 References: <20250407010616.749833-1-inochiama@gmail.com>
@@ -103,26 +103,28 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As SG2044 also implements an enhanced ACLINT as SG204, add necessary
-compatible string for SG2044 SoC.
+The SG2044 implement a standard T-HEAD C900 PLIC, which is
+already supported by the kernel.
+
+Add compatible string for Sophgo SG2044 plic.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- .../bindings/interrupt-controller/thead,c900-aclint-mswi.yaml    | 1 +
+ .../bindings/interrupt-controller/sifive,plic-1.0.0.yaml         | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
-index 065f2544b63b..d6fb08a54167 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
-@@ -14,6 +14,7 @@ properties:
-     items:
-       - enum:
-           - sophgo,sg2042-aclint-mswi
-+          - sophgo,sg2044-aclint-mswi
-       - const: thead,c900-aclint-mswi
- 
-   reg:
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+index 3dfe425909d1..ffc4768bad06 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+@@ -70,6 +70,7 @@ properties:
+               - sophgo,cv1812h-plic
+               - sophgo,sg2002-plic
+               - sophgo,sg2042-plic
++              - sophgo,sg2044-plic
+               - thead,th1520-plic
+           - const: thead,c900-plic
+       - items:
 -- 
 2.49.0
 
