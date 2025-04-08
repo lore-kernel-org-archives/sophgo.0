@@ -1,79 +1,71 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB6925FA03
-	for <sophgo@lists.linux.dev>; Tue,  8 Apr 2025 05:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812EA1B21AA
+	for <sophgo@lists.linux.dev>; Tue,  8 Apr 2025 05:05:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744088563; cv=none; b=J5Ma7CMpvSoEVAfPG9Qm6u7Ywi2uf7mB51IoTGOysjfKTIA3G9a7nXbjq8eZiFeHVWtG2lcSWIG9uxzUBTREXNR/h5+GfTCvbhydb2nfHVdS4gkmC89EvD1ofP8K5VUHX288N0MIeOYb8hF5yT36CLnshPsPyV7zqUtoE4LSwo4=
+	t=1744088711; cv=none; b=FfroWvcmzu76lrE/UP6JBNcWo2gd379rXRS/p8GIxd5Iu/BHtBhSqccNgcj/yt+2a0qC46m8SOExAXVe6Jv6+EzmpP7Z9AY+vfalOMI2OW1IKXir60F3re48VIz/9VoASuLyUeQPfnL1GbE9UVCJFZHV6POTCTJIWVmmr4wPcJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744088563; c=relaxed/simple;
-	bh=4l+o4OGRPWFJRjD8V+YVsupkeWNPcXnlPD7DsuUNeXs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MgA0T7konPLDxGGnFTB3XSUNsOCxPET9WssTL2Sj5HbxLsejKR/I6GoUz6lQ29BbICevrWvhF+dVHIsyWoJZCNt3mVCSdU3TQc9SUbG6rb5KSctJbzLQKi4U4cfXgQi+qjU/uTzb23lGmqUHrPXQVe953EHZceING72PtJJpits=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amsouNn3; arc=none smtp.client-ip=209.85.222.180
+	s=arc-20240116; t=1744088711; c=relaxed/simple;
+	bh=r4sYCI3eGCFomhagjqBsfMEbGtkD0EgGMYSVpN8jcZQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AENc9gpI0WBATXhrjtaXidX1/70u3eHLYnYqE0yEqRNyAKf/1y2TTPGy2HeH0VeZeAKzzgMSLomrYecB4RNcNCarSoWChfEsHQf7jthwd20V8IJT6xUZ/qhM0Ux6uN1Xw2mUAZmDE3jl0fwp9r4yB/fBy+D2wZNNG0K04/NtYIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cYMIyC/c; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amsouNn3"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c5e2fe5f17so515546485a.3
-        for <sophgo@lists.linux.dev>; Mon, 07 Apr 2025 22:02:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cYMIyC/c"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6e8f94c2698so27114366d6.0
+        for <sophgo@lists.linux.dev>; Mon, 07 Apr 2025 22:05:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744088561; x=1744693361; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0lMUff57GYX4CzxAbSN/48C3ZVAAUNRCdX4B0uVlZ+E=;
-        b=amsouNn31WwrQF0knOQJXJ2OvJsyPua/5tZ/gcOA4vlLIo5/+qE9jt7XQ2whU6KNkl
-         Mp+6rRDAbNcgnzr+MqrShQYwYitZpVL7hA5i4L9Tnp9ZjzwzvoMaSWbEfR1FiWYysNep
-         q7wRGfOs0CVWaV4WLxINaMAO1aAwxt5uCEirP7pi+Rk+rYs4jwX0XbjGBErocKYp/NEX
-         dS02MrtnbqrD3Bv3cQvpeJ/dmBzld+2bvPkpW9iJy4wEP5CX0YIwXyjDgmtnyYZd0jIt
-         uhWWpLrcrnXNye5AJsa9Zow2YgZQTbBYfzgm9X2gg2BBOxF0nT6g0fxVXVlVuH3AiKx2
-         nZ4A==
+        d=gmail.com; s=20230601; t=1744088709; x=1744693509; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hkLeiApJavmt3vffoFAIEtIa4orwTPaDg96MLZ0acMY=;
+        b=cYMIyC/cETU+gbeI3PFdtAnrIDNB0GsDdPMD1+I7s4v05m7KywSylkrluT5E/3uVtt
+         KABSNHIvKgvRrK3RsyZDpIiq8ImXVKNK63Hz/ZTC/0eQ3NFaVTTtym5zn/a92PtIJkHU
+         nNmYSFg2GDTMILnY9gRcp34CVf763KJd7WTcLDpnKpuQFttjtAbCBdQLw+/qwJre51LE
+         PjmGUTLwtFeMlSQGkNgfiffIXSHtRJDwSg7Ew30QcPCDEwOjCnkdwf4x2k20/RPJtk4j
+         YHca2VBx2cPWa2nOHzKJ/jekV4Xw706PVgSuxNfTfSh3Yskp8r3UXKsYwbMToV5rQheu
+         +nwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744088561; x=1744693361;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0lMUff57GYX4CzxAbSN/48C3ZVAAUNRCdX4B0uVlZ+E=;
-        b=CtO2uY3uhRdqKwPx5ymmNeopAkwseNio728slE1nK0y5htCNKy8H+i8BMcluumX9cl
-         oA73rv/ihHCLkP2Nl7anMn8Tj4YyKLirylJtncQwtfKL0D8mFA7764Fyope2yQpuJ5TG
-         bWbwnhxIwEF9ViAnDDuybsStxPl6xEjf5qgZuC9Tn/S1/TMpisWuQ+6+F+5nP3SF3Mw5
-         0FKMpFbQRWLE0xwHEmtvEDTHYuPCriiMYVmH9V21viQoC3+aTmflfF1psYIWMsJlCz0R
-         GXm6JKwfycBkFFQQDnxx37hk48J56A67/8TsRBE8MG91ikWbscADrrUoDASG1+ar4Xt+
-         alSw==
-X-Forwarded-Encrypted: i=1; AJvYcCXwISu7YnzzEHyithZxSnocbfj526e6E72o6vxfi5zwQL1BVXmWCV8jwGIoJjjW2eRBTHRh6lE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YycRc81I1cTufLDKuB53xQqYAzYhx7rzJmGvzTGXn7KUs2L9vqh
-	uGMYcFR7XLRBAIgTB6f2KtWmK9WOPPJRH+0smFrKKxEusDMG7XsK
-X-Gm-Gg: ASbGncvnLHpCSaVZkzjcCs4uiiOMVYOo+yQv1wNRgEob8BINbPcV9Y56nxrepCC75Kg
-	L3YH+25/cyGGXRHAvfJl0GB23eRe0tEGuIy2oyhtaWhT6ripk5E961Q99qa+HP+HWLJ0iAaEZPI
-	yZmPHmT6DTuWrGm7E3sTYm8AsTbjtt4UxWgUTD6YNzeFveOTUtQuFyUuSDTKA6vZTHTbJ+g08Q3
-	0qa0LElkHIGtF0ZhdornFntsb6/wmnkFW2j+kS5Lehbe7f7O4fOxEqdXm9dR/+m58zv+S1C8X3x
-	zt6fpCbeLNuf/nZZo5zV
-X-Google-Smtp-Source: AGHT+IGuSzrFyPWJt2trcansOZ3rfJX9pXHBBq4wLTrDbisJaG5tsy22yySc7YRo3G+CTYp8klrU8g==
-X-Received: by 2002:a05:620a:4607:b0:7c5:f696:f8e5 with SMTP id af79cd13be357-7c77dd8612cmr1566906185a.14.1744088560675;
-        Mon, 07 Apr 2025 22:02:40 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1744088709; x=1744693509;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hkLeiApJavmt3vffoFAIEtIa4orwTPaDg96MLZ0acMY=;
+        b=wGGoiKY67oV0JIHSh4ceeaB5KCm1cB+wM86QCJzgJ7Gu3qw7GPl807DOSgptdUIv16
+         rUlYtnNC/OlzDbdwX8Bv+E/ikH2EwmurPx89/yEbOGLsSESRUZ+cl+o/0J3c4wm6CH10
+         T5iOQr0CNd2tyFeeqtCK5Ha4rLgAYQwqY1vXX0UGJdwbkPxRQSbTR9pUSjEYlwRXiyAR
+         eCADgUzZR+DsYGqOGVLfkkz6LfymGQCKfcp3gVGnwGzwiSAD8i8rM21CIUkylMrsuibX
+         Ilfpnne9SYMHkVLhW0lfTCRx3Ynp+5tnXDg4n6KItLN4da0Ym4HVYSxhTGAk5MUZuO6Z
+         1dCw==
+X-Forwarded-Encrypted: i=1; AJvYcCUFftc8Q4rlNLF8VzCTQd4rjaoi/PXbg6a7NbuWXPL6aY4er/8w/sJsHtVzv6Uh3wNlvrLznss=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyvtSBz3CFxpWPfJcANU/q624Ru/xITMt2CPGFdBfdYFQNxRtMO
+	W9RnnyTusUzgqVGrlUSo3rxXioOCaU3gmHCeAloaRrqY32YMyFnX
+X-Gm-Gg: ASbGncu8ZymryFkjjvhq5CH0UZymrg5wlBFzNzjgs2YP3waOGEU0JO29gcCZ9ohyxNx
+	q+X99+63+GWmwJvjKSO2fARXR5dc1YEH3KBahzH3SKbO+fGgNUGcz8vjXimyg9l33mCwboPcxjL
+	hxy6WpIMiemVFO4H+yI44KHKHgYMNyAjJ6//8UBD8KTK2lBI0bAPufdRlzsO48CGEwT2lqhrjRq
+	5xDCVAe0Z47OlbFGtoPDw3zZWfAPkX6ENAVpN+rQuFYSXhrNZJyxehwukiqxt6MVvDgJuAOJ7sQ
+	pQi2SHEYI5tXkxV2Mikc
+X-Google-Smtp-Source: AGHT+IE/P5hOkSt+2na7U2vn2DvilUGNVGTLQZ4nZrqEyG305OPEIPkhMI2Sm9DlOvWaiHcJ6f2Gpw==
+X-Received: by 2002:a05:6214:2404:b0:6e6:630c:71e8 with SMTP id 6a1803df08f44-6f0584a4671mr273573796d6.7.1744088709430;
+        Mon, 07 Apr 2025 22:05:09 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c76ea587c2sm707724085a.81.2025.04.07.22.02.38
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6ef0f165350sm69164716d6.124.2025.04.07.22.05.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Apr 2025 22:02:39 -0700 (PDT)
+        Mon, 07 Apr 2025 22:05:08 -0700 (PDT)
+Date: Tue, 8 Apr 2025 13:04:32 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v3 4/4] irqchip/sg2042-msi: Add the Sophgo SG2044 MSI interrupt controller
-Date: Tue,  8 Apr 2025 13:01:45 +0800
-Message-ID: <20250408050147.774987-5-inochiama@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250408050147.774987-1-inochiama@gmail.com>
+To: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v3 0/4] irqchip/sg2042-msi: Add the Sophgo SG2044 MSI
+ interrupt controller
+Message-ID: <53p3hkwof2kyd2wujz5phvyeu7g6z6gb67hjthmdo74jn3fghi@cgbxxrisuw5y>
 References: <20250408050147.774987-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
@@ -81,125 +73,23 @@ List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250408050147.774987-1-inochiama@gmail.com>
 
-Add support for Sophgo SG2044 MSI interrupt controller.
+On Tue, Apr 08, 2025 at 01:01:41PM +0800, Inochi Amaoto wrote:
+> Like Sophgo SG2042, SG2044 also uses an external interrupt controller
+> to handle MSI/MSI-X. It supports more interrupt and has a different
+> msi message address mapping.
+> 
+> Changed from v2:
+> 1. patch 1: separate from patch 2 of v2 for better reviewing
+> 2. patch 2: separate from patch 2 of v2 for better reviewing
+> 3. patch 3: apply Chen'tag
+> 
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
----
- drivers/irqchip/irq-sg2042-msi.c | 61 ++++++++++++++++++++++++++++++--
- 1 file changed, 58 insertions(+), 3 deletions(-)
+This should be patch 2,3,4. I forgot the first is the binding.
+Sorry for the misleading.
 
-diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
-index 30a1d2bfd474..2935ca213306 100644
---- a/drivers/irqchip/irq-sg2042-msi.c
-+++ b/drivers/irqchip/irq-sg2042-msi.c
-@@ -19,8 +19,6 @@
- 
- #include "irq-msi-lib.h"
- 
--#define SG2042_MAX_MSI_VECTOR	32
--
- struct sg204x_msi_chip_info {
- 	const struct irq_chip		*irqchip;
- 	const struct msi_parent_ops	*parent_ops;
-@@ -44,7 +42,7 @@ struct sg204x_msi_chipdata {
- 	u32					irq_first;
- 	u32					num_irqs;
- 
--	DECLARE_BITMAP(msi_map, SG2042_MAX_MSI_VECTOR);
-+	unsigned long				*msi_map;
- 	struct mutex				msi_map_lock;
- 
- 	const struct sg204x_msi_chip_info	*chip_info;
-@@ -96,6 +94,35 @@ static const struct irq_chip sg2042_msi_middle_irq_chip = {
- 	.irq_compose_msi_msg	= sg2042_msi_irq_compose_msi_msg,
- };
- 
-+static void sg2044_msi_irq_ack(struct irq_data *d)
-+{
-+	struct sg204x_msi_chipdata *data = irq_data_get_irq_chip_data(d);
-+
-+	writel(0, (unsigned int *)data->reg_clr + d->hwirq);
-+	irq_chip_ack_parent(d);
-+}
-+
-+static void sg2044_msi_irq_compose_msi_msg(struct irq_data *d, struct msi_msg *msg)
-+{
-+	struct sg204x_msi_chipdata *data = irq_data_get_irq_chip_data(d);
-+	phys_addr_t doorbell = data->doorbell_addr + 4 * (d->hwirq / 32);
-+
-+	msg->address_lo = lower_32_bits(doorbell);
-+	msg->address_hi = upper_32_bits(doorbell);
-+	msg->data = d->hwirq % 32;
-+}
-+
-+static struct irq_chip sg2044_msi_middle_irq_chip = {
-+	.name			= "SG2044 MSI",
-+	.irq_ack		= sg2044_msi_irq_ack,
-+	.irq_mask		= irq_chip_mask_parent,
-+	.irq_unmask		= irq_chip_unmask_parent,
-+#ifdef CONFIG_SMP
-+	.irq_set_affinity	= irq_chip_set_affinity_parent,
-+#endif
-+	.irq_compose_msi_msg	= sg2044_msi_irq_compose_msi_msg,
-+};
-+
- static int sg204x_msi_parent_domain_alloc(struct irq_domain *domain, unsigned int virq, int hwirq)
- {
- 	struct sg204x_msi_chipdata *data = domain->host_data;
-@@ -175,6 +202,22 @@ static const struct msi_parent_ops sg2042_msi_parent_ops = {
- 	.init_dev_msi_info	= msi_lib_init_dev_msi_info,
- };
- 
-+#define SG2044_MSI_FLAGS_REQUIRED (MSI_FLAG_USE_DEF_DOM_OPS |	\
-+				   MSI_FLAG_USE_DEF_CHIP_OPS)
-+
-+#define SG2044_MSI_FLAGS_SUPPORTED (MSI_GENERIC_FLAGS_MASK |	\
-+				    MSI_FLAG_PCI_MSIX)
-+
-+static const struct msi_parent_ops sg2044_msi_parent_ops = {
-+	.required_flags		= SG2044_MSI_FLAGS_REQUIRED,
-+	.supported_flags	= SG2044_MSI_FLAGS_SUPPORTED,
-+	.chip_flags		= MSI_CHIP_FLAG_SET_EOI | MSI_CHIP_FLAG_SET_ACK,
-+	.bus_select_mask	= MATCH_PCI_MSI,
-+	.bus_select_token	= DOMAIN_BUS_NEXUS,
-+	.prefix			= "SG2044-",
-+	.init_dev_msi_info	= msi_lib_init_dev_msi_info,
-+};
-+
- static int sg204x_msi_init_domains(struct sg204x_msi_chipdata *data,
- 				   struct irq_domain *plic_domain, struct device *dev)
- {
-@@ -255,6 +298,12 @@ static int sg2042_msi_probe(struct platform_device *pdev)
- 
- 	mutex_init(&data->msi_map_lock);
- 
-+	data->msi_map = devm_bitmap_zalloc(&pdev->dev, data->num_irqs, GFP_KERNEL);
-+	if (!data->msi_map) {
-+		dev_err(&pdev->dev, "Unable to allocate msi mapping\n");
-+		return -ENOMEM;
-+	}
-+
- 	return sg204x_msi_init_domains(data, plic_domain, dev);
- }
- 
-@@ -263,8 +312,14 @@ static const struct sg204x_msi_chip_info sg2042_chip_info = {
- 	.parent_ops	= &sg2042_msi_parent_ops,
- };
- 
-+static const struct sg204x_msi_chip_info sg2044_chip_info = {
-+	.irqchip	= &sg2044_msi_middle_irq_chip,
-+	.parent_ops	= &sg2044_msi_parent_ops,
-+};
-+
- static const struct of_device_id sg2042_msi_of_match[] = {
- 	{ .compatible	= "sophgo,sg2042-msi", .data	= &sg2042_chip_info },
-+	{ .compatible	= "sophgo,sg2044-msi", .data	= &sg2044_chip_info },
- 	{ }
- };
- 
--- 
-2.49.0
-
+Thanks,
+Inochi
