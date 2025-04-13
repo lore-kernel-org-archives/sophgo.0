@@ -1,62 +1,62 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490B91A5B89
-	for <sophgo@lists.linux.dev>; Sun, 13 Apr 2025 22:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB9D1EBFF0
+	for <sophgo@lists.linux.dev>; Sun, 13 Apr 2025 22:36:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1744583759; cv=none; b=VVhW4c8wMOGR1SA7dCU+fHrJnRclLi1FYFNEy9gTp1qXMYGGyEIz8Qzj8FYRx9BuJc/6lNVr6fhQBY1sAtC3Ozl2xzbQTgZUNlBprnsPDew98JH53X0aLJ3DHxHpvIMfdzK6+VtEyHnMIt9cG70EOkyMbr6tJJ87cBsJEHsSWNI=
+	t=1744583763; cv=none; b=UsYp1B9NbZC08Se+tORbS7nA+22s856f/o1K/V2qiGKyclcAy+Ld7wPWpkKoi62oEPeJPHtLUxa7xafdxmWyxZGSKx+9+8wxRTZu07Qgldp9hwfLBJub+Zk8OzVZk1RfOxv6/MRaKUU4Dt3tpUYhHs7Tit8dVpxPUPmrFqb+RX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1744583759; c=relaxed/simple;
-	bh=FDmFvbO80mwMvPs0RwjUUodvCGymVKrln63MPnG1KsU=;
+	s=arc-20240116; t=1744583763; c=relaxed/simple;
+	bh=7dHme/Vx6fkQgu4u9qEbQyCY/VKmf6dVZl22pAWFhqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lwhjz2h8n5waRkrfrqIzH42jGLLeGwkgXlUGAkXOKU/Qt2/MSetpvMPvXhzSUJNlOz7tFuNzpYZZjwVK/+aKibNFdEjyVvpoYtONjxiq+9suwjIIHr+nPMwvJ/W/MEbPUaz6ufXqEsUkwNbnvbVd1pTdiBeFqKUBGA9ih4NgZJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IXx22+4E; arc=none smtp.client-ip=209.85.219.51
+	 MIME-Version; b=EQA/dAcEPMCDm3P1HcmEYeVunp9ZZiojUswvFroZCDoA9gdVWxF7rTkVNHJi5AmJdzSqw7UQmh9M57RQ1no60hqaZYWptIQgSiAZHdq6mDZFsvFTQpd1jDchsJdmRdVonRim+yXKbuIc9R3e5KEoUDFWqSOpdEpYp2qXNf3jlVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=no4wXh/F; arc=none smtp.client-ip=209.85.160.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IXx22+4E"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6ecfc7ed0c1so31595606d6.3
-        for <sophgo@lists.linux.dev>; Sun, 13 Apr 2025 15:35:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="no4wXh/F"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-47690a4ec97so37100301cf.2
+        for <sophgo@lists.linux.dev>; Sun, 13 Apr 2025 15:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1744583757; x=1745188557; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1744583760; x=1745188560; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=43CgDCBjHo6ngYeTK6tuHPUS/Q9xbMOQmyIqAS15iLM=;
-        b=IXx22+4E3p/8mgv/7xvYQ/K+63Z/x6ewEiEQ3HSW+s7I3EVs1tPQKk9240ZsUYkSDf
-         v8+AaMWevwVxWoPT7tXfunRn8ecdJWsBsxILieTWO3L544ICEGGhpWK6PkeeLJ7gfRGQ
-         BAzcR/a5hNSNuwxF58EIDUa6MiH8OfmXVZAjth0RieTfIgNPPF1cayR/pt32dRdIQQnt
-         V24N3DY5nq2wE4VDAsSjkKkzqcugSbwwjzN48DC+lIGX9jIS8ItuQrKRFylyiJaE1FAH
-         GI2a2hDo8njKvijX2DSR2LT6ppZOtkaGUKR5MKjuk6dpdh4bGGpyknRj4LAcw199PAj2
-         j6jA==
+        bh=fMOUZ6qRg9W4PB6CSqOFfx7Fn9U9SQfI0wC9q+7apzY=;
+        b=no4wXh/F5RzNug8p1WiqCaIFdDMFNCpcJJ+Sy3Q8rJUMBLsWTwsV0IjoT2mtvvdqO1
+         3ETmMhmaHH5ePRivQasVdkVjVcvfhwcfHAd9eMpNR0d5A0f+HfXaZmPtAmwWtXqndd7h
+         5S2YClM4MHT/YiMHNQjfV+N3C3TyYSIyMANDzV9Roy+T1G5wb9qo1Z4FwU83yuyUSTnh
+         V80eT+96nxiLQpA2gmjvQNI8IFibeL7mFbeQyUGuRnLBXtGejet5jzfIHuqfN8W8QEqF
+         F1cowmU3W7fvBiIzllgFmME1TDEi3+GVUWy4eAcbP1IpD6nsVgABrTHawSZurNW/a5pB
+         E9sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1744583757; x=1745188557;
+        d=1e100.net; s=20230601; t=1744583760; x=1745188560;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=43CgDCBjHo6ngYeTK6tuHPUS/Q9xbMOQmyIqAS15iLM=;
-        b=Gb8/6H5pVZfxZGKgSwvkEXzvDoUYmUogpLvxlc1wpJfkCEhixCKmd3keVr6pJe/N5M
-         uUfJN2vUB5JQhKxt0dcAZieIyBFOoZWXPoJo0alSPbqVEUsnHyRtCuQkvfXq5rJwbRJ9
-         Swts/yQtnuDQ8kRRqoljcutKXja0z9k03uiNEI5mKLszycC1T/429YO7146ywSG7L4eC
-         XnOPXfc1N5JRb/RHkupYg0RBo8bZcULbRm5fejVe1Zldb6tFb7VumCBZX62Cm0kBS931
-         8r2RRxBYbCteKR7MYpxZpNRaas3/N8/HqEKuxp/NfoyIujYMIXpr3NRAhFuwYQCG0pnK
-         x3Pg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAHfEGTQwdBR03vbWRdmJObXa22iPOBHjuEJpMzD48QpuGHCSa4RdWBbV38cLAxYb+cRZ5sNM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwR8ssQe5lYGRomBkZxtNX274Hj/Ay3uX1BdUmywowluV56ftEo
-	BKfwTPXJveqRnhpE1fIAqg3RR6tJvO5bN6MTPDyIIDa2JI6LEboe
-X-Gm-Gg: ASbGncsLcai6dEdrmctq763j/9HiDcoEKKu3JHFN1SwQk2P4EMIb8vUAIt1c75PdMvQ
-	9HH5O5SuDgqlrXfm3j0XpZE6IQ6X2+yxOuHUXXQFWLjipPl3j/feRTKLceuAWdlvVxxBJJgz8Xd
-	kX8a7eHX2BVos+/ppF9AaU7ObR+JFNYQGbsY3OYRP+JGQVR9BmUOAtyZAHB5gciHMneIizkVucQ
-	i1iB+0zBkOaQx00CKQo53rX/68CeJuVcmdw6z2Cf9x8aK9a6PPFYNJ6tRIY//9zbbXFwKTrKzMg
-	l+Q4nC49K1P++zlK
-X-Google-Smtp-Source: AGHT+IHgIwU8EKIYK2PDbSSxKKuKXD1TI7k5AoqJe5OL7pKcbt7fRbaJ6CDShheZnqef2sBXIGHehw==
-X-Received: by 2002:a05:6214:1ccb:b0:6ed:15ce:e33e with SMTP id 6a1803df08f44-6f230dc388bmr178446836d6.27.1744583756982;
-        Sun, 13 Apr 2025 15:35:56 -0700 (PDT)
+        bh=fMOUZ6qRg9W4PB6CSqOFfx7Fn9U9SQfI0wC9q+7apzY=;
+        b=fFAAH5qid02DipukxnUxS41OcSW8HBimK8C8h2p6Vz09gK4W4oBGUQTCu14lK8Ui6A
+         B+LyPoueZCSLc44P/6Lzf9nm1aJLyUNj9bsEI87zRfS3G0P4qcA7uzRYMrgjRDykzw6t
+         L7Hvc7vAut+EZgMkA3hwVbaSqiBtPeaEr1Qe0Wnujkse2jNDjtU34uRrk/BeTCmXsCSN
+         TJrHylGexdQFjRJ7sWCavMT6mem/GeJZQFwu+xNsBvmXBKjp10SMb8blaHHgFSYh0gLW
+         sBJGPSlf9RHrxZzrwCUFJUWdqT1b5akAjSxk/xP852T+LYYiCvo4If/rkkzS3SK+O4Li
+         xkWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUAwZ9vDuaKJyW4BDRDOgIMOBFfWITEMgBGQuGblKqQ2vcXbzTqz6C4LVEucoHeAMgd88brv6c=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz2UQzSkjUVL2+/GiWIw4tuSuxyJ6QMtrRi1XuSxMfR1YI903d8
+	2GJkhyh0mUrFySgGlb3llzvTGPBKdPLMG2OvrBhMH4Gb90ocTToj
+X-Gm-Gg: ASbGncugoj7D5fqhX8s07LBfIHJtxwemOPTSRPQDBEWF74SS8/0FJQ49LAfS/VNMytj
+	lDYU41S44ZxvuM1ZboXWtJFd4X19Xj9Z24Hk6R4ZUgdShg00BlH+yNlkrFs2XhYCoAo5ZuJDvzI
+	EOlejnsyMBcyp0YvIYHOHt/7uVsSsRko4Y+b+QKCPj/1zuo0KdRT3zOkLswoSlayReONFinwHfg
+	oeCU4TvQY28FH18s0aqhlcha93806ueSG18YWijRyKPvRpsGQmhlPDAIpuLlagVN2waK619CcnV
+	+TuT7Ni84aoLdzW0
+X-Google-Smtp-Source: AGHT+IF93rzEVWRRKOIxWAcvcau023Tgxa4/7nUy/JnIgvkSrZ8RcL6P1YK7x8N162WFUx0/ZurzFA==
+X-Received: by 2002:a05:622a:2d2:b0:476:8f41:7b8a with SMTP id d75a77b69052e-47977551e2dmr154754621cf.15.1744583760520;
+        Sun, 13 Apr 2025 15:36:00 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f0dea07f3esm70937336d6.76.2025.04.13.15.35.55
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4796eb0b581sm62137321cf.10.2025.04.13.15.35.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Apr 2025 15:35:56 -0700 (PDT)
+        Sun, 13 Apr 2025 15:36:00 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Jean Delvare <jdelvare@suse.com>,
 	Guenter Roeck <linux@roeck-us.net>,
@@ -88,9 +88,9 @@ Cc: linux-hwmon@vger.kernel.org,
 	linux-mmc@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v2 02/10] dt-bindings: timer: Add Sophgo SG2044 ACLINT timer
-Date: Mon, 14 Apr 2025 06:34:56 +0800
-Message-ID: <20250413223507.46480-3-inochiama@gmail.com>
+Subject: [PATCH v2 03/10] dt-bindings: interrupt-controller: Add Sophgo SG2044 CLINT mswi
+Date: Mon, 14 Apr 2025 06:34:57 +0800
+Message-ID: <20250413223507.46480-4-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250413223507.46480-1-inochiama@gmail.com>
 References: <20250413223507.46480-1-inochiama@gmail.com>
@@ -102,25 +102,25 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Like SG2042, SG2044 implements an enhanced ACLINT, so add necessary
+As SG2044 also implements an enhanced ACLINT as SG2042, add necessary
 compatible string for SG2044 SoC.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
 ---
- .../devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml      | 1 +
+ .../bindings/interrupt-controller/thead,c900-aclint-mswi.yaml    | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml b/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
-index 2e92bcdeb423..4ed30efe4052 100644
---- a/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
-+++ b/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
+index 065f2544b63b..d6fb08a54167 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-mswi.yaml
 @@ -14,6 +14,7 @@ properties:
      items:
        - enum:
-           - sophgo,sg2042-aclint-mtimer
-+          - sophgo,sg2044-aclint-mtimer
-       - const: thead,c900-aclint-mtimer
+           - sophgo,sg2042-aclint-mswi
++          - sophgo,sg2044-aclint-mswi
+       - const: thead,c900-aclint-mswi
  
    reg:
 -- 
