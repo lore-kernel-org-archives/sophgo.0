@@ -1,72 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5304679F5;
-	Thu, 24 Apr 2025 07:33:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76205179A3
+	for <sophgo@lists.linux.dev>; Fri, 25 Apr 2025 02:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745480001; cv=none; b=HS7PcaPMXkkTXzHPvPJWBgFe3ifDIGFImUl8fSPv+M27vzp3cIiUd5UuSj8CRgdgdBgfN0snkfwxEpRVa7WODBQiBTjVkImsVIRvLfujd7CTNfVln5Pilh47Koncm6RZAaXYSTgb6gdJ3K6Julag6dZTtqlbdX5ekpDzjphVPqI=
+	t=1745548113; cv=none; b=lejnqHpFneJYioJgNDnc8HtZra5QZzaJihl7JMC7+uforTDnAyonjiINC7O1tkqIQ+viiNQdYhZxkI1GYxPT1gGGHvaEvJO9LLm36DuKsPEU3ODotiZPjHvw8ErswhSfU1vOAU7x+Rr3ToJok9P1h073y1mIIEz4mCi8xawZXJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745480001; c=relaxed/simple;
-	bh=SuP8EraeigJb0KaR9dhLAlA0oVM0b7bWlw5kuLh8108=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OL0EB1uwycvqQj4SCtwTYM3BjXwCTZLrSNv9wz+pPw9N2gbo9qKfyeUog3EgTG8CcqZ2cPp2nMtdh3ZJX9LTX6rsboZl3XwmfIywXbd0GxAkfc5cOZh6Xgy8P0oHIsMN1wp2OUDhoINY1b0aIFKH316Q7BN5Nxw1RlAnIQOZ5so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NAn5IBCa; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1745548113; c=relaxed/simple;
+	bh=8wmermrE5M1bwblIgtOTe7sR30SfNY0obp+bchFCYvQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RU4UrsNUzTFv4ewYXd8Q+b1wo0INT3gqhBA7cM1wvRgGe3dEe7vPzRYi6ScnNuRzxQ3sVAk1AQ33gEEVSO+A+GqIjAfm0vNcgAtgUI0lqCFFI2EUQEsESTC4Oni30GjMJSCgtCf19npxniUd2FJqmD5OwSWy4Dazc/hOGi2R94A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IsMPfiIM; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NAn5IBCa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E2EC4CEE3;
-	Thu, 24 Apr 2025 07:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1745480000;
-	bh=SuP8EraeigJb0KaR9dhLAlA0oVM0b7bWlw5kuLh8108=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NAn5IBCa1HR8cgzP/yQgp/EiVv3myBY0mp+DotdwTIpXvXyZ14/MJUwmL6OdMvjUv
-	 KI8WGC0P/EY8lc2jDgnXraGmBOZs8wUK39z3R69blFJ54MTgb5/4QLvVHna+buVBNv
-	 GrmUcxdw+gpa6jwyC87fekJTv16cFXG5mp2R97yZGECyBfgX5X/slw0jch2C+MomMs
-	 wixVvFDPCXIzoGsFaR8gYX/kzKrb9Xb4PDWYfTfKK4lX13WCzgQPvOO3N2QsBISx4h
-	 iSOsD7gZKVAFrCoa2x76r1X62CE0B50BtKjwitjKBVFf2P6yFFWLqLN50jK8cF++aW
-	 EvDM3Pn7jCG+A==
-Date: Thu, 24 Apr 2025 09:33:18 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@outlook.com>, Alexandre Ghiti <alex@ghiti.fr>, Mark Brown <broonie@kernel.org>, 
-	Inochi Amaoto <inochiama@gmail.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, sophgo@lists.linux.dev, 
-	chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, dlan@gentoo.org, 
-	linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v5 1/3] spi: dt-bindings: snps,dw-apb-ssi: Merge
- duplicate compatible entry
-Message-ID: <20250424-awesome-caracara-of-priority-57f9dd@kuoka>
-References: <20250422-sfg-spi-v5-0-c7f6554a94a0@gmail.com>
- <20250422-sfg-spi-v5-1-c7f6554a94a0@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IsMPfiIM"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-309d2e8c20cso2223443a91.0
+        for <sophgo@lists.linux.dev>; Thu, 24 Apr 2025 19:28:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745548112; x=1746152912; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gWs7czVv33WD5QwKCbEc0JN2+JAvd6m2fpFPVxVDwgA=;
+        b=IsMPfiIM9sZqutHhlc+pPjNTEMQl/xLBSwEp7NLsPSylvDgM5UfyaK1q/wF2eekN8r
+         bvDv8KLVSlzcm+UFw4ccw49xriUQwv9fCz4ET8rAZMSTIedY2Ucc9za7kW03W/xYmmQ5
+         cQFs2frEreUU9HAf07AYMRmPl2WMSsJ+zieDkkqAIzeICC2+eb5PVeAyfFmNwbLnNMxe
+         gYhYL8ootEBQ3CtSLyOC5lB7vWTUIavLW/nQJW2YkRomZGSfXUbc01Jb6ZX6nRoUFPIk
+         29iafgLsZIx3sc+fK3ipkAI79gYakOw1343O1KemstLyl+Zu/rcgxsFxoJ7zfUg8bMAW
+         SrIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745548112; x=1746152912;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gWs7czVv33WD5QwKCbEc0JN2+JAvd6m2fpFPVxVDwgA=;
+        b=oVvGtXPLeiqnEnJOLMzAZRqrZUwPZMhK8moL8jUqhF2RVA53BkMn5IZbdFRY+RCK8Y
+         OUfN3gI5Q2jlpKJ8KI2+oLYR3R3xBcz2Yu+36uVqr2YpxJrispJiVbrUm7JhbVX/TcKI
+         +6c8AOpyLew5bGYSa/fr2hbenaLwf6yhUOO/+1GAo57bmTfRqFG8nUjn5QOEkSa7A8Za
+         GoxFyKZaJcEprqhX5h9iyWfRFuLjEBOcLqIi1e/obTJvKQN/UFjxwRX/hGa7t+awBFhe
+         g7jsrc/11QToLaCaUv3lB9T8y9IZtSNuRwbGmc7pYXGv32X1Bk4D0WGSEmT0nCLRcBno
+         M4ag==
+X-Forwarded-Encrypted: i=1; AJvYcCVCF0pH4dg0SY7q/AiICAzvzojj1ePxbrY5Qggu+jkbekWvm2FN5N8zSaVqNBdpuv5ZF7cIs/8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx6bPxxOnzIs/QBwcye+I5EA0KCaXDx+KpQrQQAvjA6Q5yrYr+C
+	J0WlaDMqTtt4YCDjlodN3+t3m+YYw81jHI4le7UoQ40DA6hRERdm
+X-Gm-Gg: ASbGncsgQmAtYljS7EAWlrZaBtIY2VYLPACUbqxjzQ+HlEoYbf+FwmFWTBPkbfn7H01
+	X/hoZcqI8rFUYcnV9ygyWFD1qnM0vKFDCuOjoFPbkaKcDovq2CIYsYEK4/PUjK0AALGC3G3F9wp
+	xCDRqD3i4UkQdbdxUFXE9H6OWoj60xiHFkFBfE2UEE/w10lqfDF6SCnk54fatqu46Ydc0zzy6MB
+	ZrCUmgh7GJnAYus+3oqlw6vd0LXGWI5ox6JdbhGjRXMcFFrfV5g57Fk9O93cKqrE/G20CxpaJq4
+	BzB9For0vOtlYxw8apV/NDyZYVGFO/C+t7m6Y+kSon4PpCneiYEssMJD
+X-Google-Smtp-Source: AGHT+IGXRHecCFcL64rpDvSNx0T+kbwJIyVpg8y/+sbcGf/XoI8mdp3d7daOKwWfUyt8OoeRaQFhdg==
+X-Received: by 2002:a17:90b:4e87:b0:301:1c11:aa74 with SMTP id 98e67ed59e1d1-309f7e7027fmr1187414a91.28.1745548110992;
+        Thu, 24 Apr 2025 19:28:30 -0700 (PDT)
+Received: from [127.0.0.1] ([223.80.110.9])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-309f782d4a9sm365455a91.30.2025.04.24.19.28.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 19:28:30 -0700 (PDT)
+From: Zixian Zeng <sycamoremoon376@gmail.com>
+Subject: [PATCH v6 0/3] Add basic SPI support for SOPHGO SG2042 SoC
+Date: Fri, 25 Apr 2025 10:28:11 +0800
+Message-Id: <20250425-sfg-spi-v6-0-2dbe7bb46013@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250422-sfg-spi-v5-1-c7f6554a94a0@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADzzCmgC/3XOQW7DIBCF4atErEsFM2BDVrlHlcWABwepiSMTW
+ Y0i370kGyJXXb4R3y8eovCcuYj97iFmXnLJ06WO7mMn4okuI8s81C1AgVUATpY0ynLNkjEBcST
+ lKYj6+jpzyj+v0tex7lMut2m+v8KLfl7/NhYttQzeeeLBG6/1YTxT/v6M01k8Gwv846A6F0ICD
+ M4OircOm0ONzaFUkjvXGehRmwBbZ5ozqm/OVIeKYv0kaUa7dfbNATRnq4t96qw15A2pd7eu6y8
+ oCkCYfgEAAA==
+X-Change-ID: 20250228-sfg-spi-e3f2aeca09ab
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@outlook.com>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Mark Brown <broonie@kernel.org>, 
+ Inochi Amaoto <inochiama@gmail.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, 
+ sophgo@lists.linux.dev, chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, 
+ dlan@gentoo.org, linux-renesas-soc@vger.kernel.org, 
+ Zixian Zeng <sycamoremoon376@gmail.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1745548101; l=2302;
+ i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
+ bh=8wmermrE5M1bwblIgtOTe7sR30SfNY0obp+bchFCYvQ=;
+ b=7QwgjA4uNKIVGLxb1ctjXPQAAYavFTWZ6Y6YdPmSoLAuI9YIU1Ytgaum4LNiHoUPTHn47KJ97
+ rmaiwgO+wpHANGbzaIIIZcQtR+VK1L9NU75DipCTetUZKEuV4xbdVo8
+X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
+ pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
 
-On Tue, Apr 22, 2025 at 10:27:08AM GMT, Zixian Zeng wrote:
-> Microsemi Ocelot/Jaguar2, Renesas RZ/N1 and T-HEAD TH1520
-> SoC-specific compatibles, which eventually fallback to the
-> generic DW ssi compatible, it's better to combine them in single entry
-> 
-> Suggested-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> ---
->  .../devicetree/bindings/spi/snps,dw-apb-ssi.yaml       | 18 ++++++------------
->  1 file changed, 6 insertions(+), 12 deletions(-)
+Implemented basic SPI support for SG2042 SoC[1] using
+the upstreamed Synopsys DW-SPI IP.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The way of testing can be found here [2].
+
+Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+---
+Changes in v6:
+- patch 1: Apply Krzysztof's tag.
+- patch 2: Adjust enum to alphabetical order.
+- Link to v5: https://lore.kernel.org/r/20250422-sfg-spi-v5-0-c7f6554a94a0@gmail.com
+
+Changes in v5:
+- patch 1: New patch merges all vendors fall back to snps,dw-apb-ssi into one entry
+- Link to v4: https://lore.kernel.org/r/20250407-sfg-spi-v4-0-30ac949a1e35@gmail.com
+
+Changes in v4:
+- Adjust the order of spi nodes.
+- Place the binding after Renesas.
+- Fix the description issues of patches.
+- Link to v3: https://lore.kernel.org/r/20250313-sfg-spi-v3-0-e686427314b2@gmail.com
+
+Changes in v3:
+- Remove the spi status on sg2042-milkv-pioneer board.
+- Remove clock GATE_CLK_SYSDMA_AXI from spi. [3]
+- Create dt-binding of compatible property.
+- Replace the general compatible property with SoC-specific in dts.
+- Link to v2: https://lore.kernel.org/r/20250228-sfg-spi-v2-1-8bbf23b85d0e@gmail.com
+
+Changes in v2:
+- Rebase v1 to sophgo/master(github.com/sophgo/linux.git).
+- Order properties in device node.
+- Remove unevaluated properties `clock-frequency`.
+- Set default status to disable.
+- Link to v1: https://lore.kernel.org/r/20250228-sfg-spi-v1-1-b989aed94911@gmail.com
+
+Link: https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/SPI.rst [1]
+Link:
+https://lore.kernel.org/all/CAKyUbwXqg13Ho7QHw8vV2W6OcObphwhQ8HUrZMDNBxrVxLmdug@mail.gmail.com/
+[2]
+Link: https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/clock.rst#clock-tree [3]
+
+---
+Zixian Zeng (3):
+      spi: dt-bindings: snps,dw-apb-ssi: Merge duplicate compatible entry
+      spi: dt-bindings: snps,dw-apb-ssi: Add compatible for SOPHGO SG2042 SoC
+      riscv: sophgo: dts: Add spi controller for SG2042
+
+ .../devicetree/bindings/spi/snps,dw-apb-ssi.yaml   | 19 ++++++----------
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 26 ++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 12 deletions(-)
+---
+base-commit: 8ffd015db85fea3e15a77027fda6c02ced4d2444
+change-id: 20250228-sfg-spi-e3f2aeca09ab
 
 Best regards,
-Krzysztof
+-- 
+Zixian Zeng <sycamoremoon376@gmail.com>
 
