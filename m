@@ -1,25 +1,45 @@
-Received: from mail-m49197.qiye.163.com (mail-m49197.qiye.163.com [45.254.49.197])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E8E25F7BA
-	for <sophgo@lists.linux.dev>; Mon, 28 Apr 2025 09:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.197
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745832297; cv=none; b=h1A4m4Wyh2wMQe1jTHPAEvYRMa8rnO2abeISJ3eDC2V4oHlv2g2LfDTHRhn4o9wm4I0l1gGrBUzJYwTleeLosr06OLmL1U7LoX/ccuVn1sG1ymsordHZ/KrcqtkOGYji+LYcLy174WXTCJL/B4hvjpUg+Hk5C1TAcqPx7J25waM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745832297; c=relaxed/simple;
-	bh=12svZieZzYZWxjZgqhIe9t35WfYRR9u0DVRJ0tz0wUk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ucYjTWzt4Cyl3jg78jAsMAsJsn7zssr1JnTEeohjd8JC4PCG5+W8jB8xNkmAJLPiwKUpw5VRhRee1m55E+QQSliihs2eDhPUKHSp2yB2SIdMSnhO16bvTIlgQmFE5mPKTNTZGOmo16UDB56208vzFD+j9xfhyxbpUZtgR25PPRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=45.254.49.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.99.221])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 13638c211;
-	Mon, 28 Apr 2025 17:24:44 +0800 (GMT+08:00)
-From: Ze Huang <huangze@whut.edu.cn>
-Date: Mon, 28 Apr 2025 17:24:36 +0800
-Subject: [PATCH] riscv: dts: sophgo: fix DMA data-width configuration for
- CV18xx
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144C526A0E3
+	for <sophgo@lists.linux.dev>; Mon, 28 Apr 2025 12:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745844042; cv=pass; b=rvCAKegH3veAHUkFr66JeVYvI/sdHuBwYwx4fi4iCmFsJRCQYyUMYE7GXnfmesNmdeNEWv81evrm0QLAErrFdSUiYoxnIwMCxIySjhHeBg8Hl4RjIM4ev83/pMtjq3CXxtAeWhVSJnWqzeuH1bTnkqWFgwE9YdjX/0pfdmBwekc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745844042; c=relaxed/simple;
+	bh=I2ykutjcqMllcHiAyUDYqj9tFTElKLZWG+XXLUCDh1o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Uuy67xWGsHHx6NgyNe1uUFgZ2comGr4B7Pm8D86rvIGuE46wbvvENinD4pe4nfJGX4pqpi+66rKONtbPRbZTM4z3Uckzftn7VySL/E78bm0aE2A69Z4wN8k6veGfnk2nkpkZXcbOcvaruHozFke5uQQZiw+bQ0EJpjP8z0FR8gc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=ByNxamx+; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="ByNxamx+"
+ARC-Seal: i=1; a=rsa-sha256; t=1745844025; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=b72DQ5n26fJtzQVXvruNxW6E2SVCIyBrz2X8MwKbNU/fkJMClkCBK5RbJzgdnM89Nw8dBAnYWaAXg+udyxipNuoqxEs1vVYfqTkZq8l8yErU6wSO7iOujuM1rh6yK/+1rB3p7eFUrskkIAlpAUpfcDKhgjNktfm3l7flFzhgIVI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1745844025; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=nXleTA7okadGYMFVNlngNJxDP/GdcVzOQQaijYrWvNo=; 
+	b=nS5qrotf5PDGIK/CXWGbFFPnONSwM5FBHL6nDJ3uYnUi+h4J7MrrnRJPE6LKRpcO7Rq1dYGBipPcup/nzVvR7c/Yf7OcUTgT3UFXV27ayHUs88oNy2cYY2gPXM3mgbmnYp7VmlVgYtF7Z99NfH0wyBEx92A3noAHgS6fUcsNde0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1745844025;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=nXleTA7okadGYMFVNlngNJxDP/GdcVzOQQaijYrWvNo=;
+	b=ByNxamx+1X0YI1lvAw3aRYsEQcMosXRbN/5u8Jux8v/0H7qY99nhrrT0+3uwY37O
+	7iNiFJdPq5rd4m/nozj21DjzMhpJZ5tQdPtVn7S5XwJlHP5TK7sQbwQuJORrxbJ983o
+	jwdBcTAkGtg29JQs6Dei4KNZ7RqhI1xNLBjYSOE4=
+Received: by mx.zohomail.com with SMTPS id 1745844023568786.1590715271197;
+	Mon, 28 Apr 2025 05:40:23 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v3 0/3] riscv: sophgo: add mailbox support for CV18XX
+ series SoC
+Date: Mon, 28 Apr 2025 20:39:43 +0800
+Message-Id: <20250428-cv18xx-mbox-v3-0-ed18dfd836d1@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -27,84 +47,80 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250428-duo-dma-config-v1-1-eb6ad836ca42@whut.edu.cn>
-X-B4-Tracking: v=1; b=H4sIAFNJD2gC/x3MQQqAIBBA0avIrBsw0YiuEi0sZ2oWaShFEN09a
- fkW/z9QKAsVGNQDmS4pkmJF2yhYNh9XQgnVYLRx2poew5kw7B6XFFlWZJotOdLOdgw1OjKx3P9
- wnN73A9YtdeFgAAAA
-X-Change-ID: 20250428-duo-dma-config-feb4e5e0546f
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA93D2gC/42NsQ6CMBRFf8V0FtK+FgpOloKLmhKRwRgHxaodF
+ AOGYAj/bmEzLm7v3Nx7XodqXRldo9mkQ5VuTG3KhwU6naDidnxctWPOlhFg8DAD4hQNCdrWuZ/
+ K1vEhgDPRhFNWILt4Vvpi2tG2P1i+mfpVVu9R3pAhRdkuSu1qHQHQIE5wLEgo/WTBCImAer6UT
+ CYw/6q5Is8GctONil2Vb1dKLV2p1mh40sCvGLzYCzHlnEch5SIQ9pRM4P/Ffd9/ACfv0HMcAQA
+ A
+X-Change-ID: 20250421-cv18xx-mbox-6282d1e1734c
+To: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@gmail.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Yuntao Dai <d1581209858@live.com>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, 
  Paul Walmsley <paul.walmsley@sifive.com>, 
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
  Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Yu Yuan <yu.yuan@sjtu.edu.cn>, Ze Huang <huange@whut.edu.cn>, 
- Ze Huang <huangze@whut.edu.cn>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1745832284; l=1588;
- i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
- bh=12svZieZzYZWxjZgqhIe9t35WfYRR9u0DVRJ0tz0wUk=;
- b=VsL7xRIWnuhLE4kowb4JUDpMfPxlbEViDoxG8TY53XCL6zQ5eUNaGE1UaXhWvpeWHcxq8kb7R
- WxsGNmqzWExApEkYjGCXuv6hkVnnV6A/2aukDchpmHMnL/V0FpH3zjp
-X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
- pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTEpJVk0eGUMfGk1KTEpCQlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVJSUpZV1kWGg8SFR0UWUFZT0tIVUpLSElMQktVSktLVUpCS0
-	tZBg++
-X-HM-Tid: 0a967bb691d503a1kunm13638c211
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6PxA6OTo5AzJOHTQtSAEBNisq
-	LjMaFEJVSlVKTE9OQ0hJSUJLT09PVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVJSUpZV1kIAVlBSEpOSjcG
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1745844011; l=2219;
+ i=junhui.liu@pigmoral.tech; s=20250223; h=from:subject:message-id;
+ bh=I2ykutjcqMllcHiAyUDYqj9tFTElKLZWG+XXLUCDh1o=;
+ b=jJZ5IkLBg9NY7bPou7wzBf2FP56Akx1X5JSTpBbXUq7V+WdLTGNRIQpLLWB8Gbs1zSO4ApEu1
+ HBuQTWXJj01CK26Yd9GOaAZTXujQWw+WNjccjAxJtEQ06b4sFfWr49S
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
+ pk=ZRZkOjG47iI+To+oAo2R4KIpMwtz8r0TffJ5/nO2tcg=
+X-ZohoMailClient: External
 
-The "snps,data-width" property[1] defines the AXI data width of the DMA
-controller as:
+Sophgo CV18XX series SoC has a mailbox module used to pass messages to
+asymmetric processors. It has a total of 8 channels, each channel has a
+length of 64bit.
 
-    width = 8 × (2^n) bits
+Tested on Milk-V Duo with CV1800B SoC, Milk-V Duo256M with SG2002 SoC
+and Milk-V Duo S with SG2000 SoC by the mailbox-test client.
 
-(0 = 8 bits, 1 = 16 bits, 2 = 32 bits, ..., 6 = 512 bits)
-where "n" is the value of "snps,data-width".
-
-For the CV18xx DMA controller, the correct AXI data width is 32 bits,
-corresponding to "snps,data-width = 2".
-
-Test results on Milkv Duo S can be found here [2].
-
-Link: https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/dma/snps%2Cdw-axi-dmac.yaml#L74 [1]
-Link: https://gist.github.com/Sutter099/4fa99bb2d89e5af975983124704b3861 [2]
-
-Co-developed-by: Yu Yuan <yu.yuan@sjtu.edu.cn>
-Signed-off-by: Yu Yuan <yu.yuan@sjtu.edu.cn>
-Signed-off-by: Ze Huang <huange@whut.edu.cn>
 ---
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+Changes in v3:
+- Update cv18x to CV18XX in commit messages and descriptions.
+- Remove the `interrupt-names` property in dt-bindings, dts and driver.
+- Move the mailbox node in dts to satisfy the address order.
+- Remove `OF` dependency in Kconfig and the driver.
+- Add copyright in the driver.
+- Reorder the processes in dt-bindings and change the `RECV_CPU` macro
+  definition from 2 to 1 in the driver.
+- Clean up and improve macro definitions and register access methods in
+  the driver.
+- Improve the return value handling in the interrupt handler functions.
+- Implement the `cv1800_last_tx_done` function.
+- Link to v2: https://lore.kernel.org/r/SYBP282MB223825D5903777B937A8A377C4A02@SYBP282MB2238.AUSP282.PROD.OUTLOOK.COM
+
+Changes in v2:
+- drop 'recvid' 'sender' in dt-bindings
+- fix compatible to 'cv1800-mailbox', and change filenames too
+- change #mbox-cell to 2, for <channel tagert_cpu>
+- add struct cv1800_mbox_chan_priv and function cv1800_mbox_xlate to extract
+  informations in mbox devicetree node of mailbox client
+- Link to v1: https://lore.kernel.org/r/SYBP282MB2238DE0DA19C6EF411B2356CC4CE2@SYBP282MB2238.AUSP282.PROD.OUTLOOK.COM
+
 ---
- arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Yuntao Dai (3):
+      dt-bindings: mailbox: add Sophgo CV18XX series SoC
+      riscv: dts: add mailbox for Sophgo CV18XX series SoC
+      mailbox: sophgo: add mailbox driver for CV18XX series SoC
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-index c18822ec849f353bc296965d2d600a3df314cff6..58cd546392e056a3bbdf9c27a73c050de1060fba 100644
---- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-@@ -341,7 +341,7 @@ dmac: dma-controller@4330000 {
- 					   1024 1024 1024 1024>;
- 			snps,priority = <0 1 2 3 4 5 6 7>;
- 			snps,dma-masters = <2>;
--			snps,data-width = <4>;
-+			snps,data-width = <2>;
- 			status = "disabled";
- 		};
- 
-
+ .../bindings/mailbox/sophgo,cv1800b-mailbox.yaml   |  57 ++++++
+ arch/riscv/boot/dts/sophgo/cv18xx.dtsi             |   7 +
+ drivers/mailbox/Kconfig                            |  10 +
+ drivers/mailbox/Makefile                           |   2 +
+ drivers/mailbox/cv1800-mailbox.c                   | 218 +++++++++++++++++++++
+ 5 files changed, 294 insertions(+)
 ---
 base-commit: b4432656b36e5cc1d50a1f2dc15357543add530e
-change-id: 20250428-duo-dma-config-feb4e5e0546f
+change-id: 20250421-cv18xx-mbox-6282d1e1734c
 
 Best regards,
 -- 
-Ze Huang <huangze@whut.edu.cn>
+Junhui Liu <junhui.liu@pigmoral.tech>
 
