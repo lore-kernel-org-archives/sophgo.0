@@ -1,86 +1,86 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D796178CC8
-	for <sophgo@lists.linux.dev>; Wed, 30 Apr 2025 01:27:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABC22DC770
+	for <sophgo@lists.linux.dev>; Wed, 30 Apr 2025 02:09:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745976448; cv=none; b=qzwopw3XyIj1QUP0UriI8fBG3HS8m8KxquWHTFGGQWUigu6kX1MxzJPik28nUZxmaDSgRQX2zXquRsh+YGf8CZB0upyuPqaKuSxgOkFgZg79WDWqNAIlEESPKaP5Wb1c7/Bt81A62staurBI099Ai11UArHzyMBuP+m39VJYYTo=
+	t=1745978992; cv=none; b=rPEXwrC1bnFUQ2v/bshRDuhKtn4EWDYxyCiHUok/6Zabi8uXDqXU0cLEkLKoJNk/dig8yUf/jq9zD0jaObDavaUCJFIwiN+AQGxuXN1jC2Kp2+ka8o9CNtE9w1DJOeihpf873Uax1UcGFfMlpXTD+EdkCjtCGawGH43deE8vXP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745976448; c=relaxed/simple;
-	bh=RhjF712UbqgYtp9EWURkqhcR5BVKX5yf45VgoY8oT7Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=et0xqqTNmRSHzACRlBkYxdNEgOSFt1YaO1u4Qx3ynLnjD4KMMCGgfPzaAhZcpsUkRBQztg8wZ69i4yxK0Uw6XJq0d2v+CSPOw6Mttvp9AMSfN51VbWWiv3lvqVmzGSFDNIJ8s9QLGwFT3ItIWEkfjSfQCKLxLvrdOlpciCqroAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAbLbhAQ; arc=none smtp.client-ip=209.85.160.171
+	s=arc-20240116; t=1745978992; c=relaxed/simple;
+	bh=dJDRfGSDRxXopbOKTfj5XmSOmmNS7V2PF5CY2+miZBM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g6FhU4C9oH/8EuHjRTgxV/AcDFria2xn8WnlFLG1EYCYKgnsfz8qr/hxhhLimLzMl2vY5LnDI+eWwIPYS3b5zIkiGdNRQEz9bS0LcEh8zlh/Zn1FuNkFnk3Xqx83nchuFFd/Am8ziE5/RNLPZrxmw7i1IsQFQitl8rmOr+rU+Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTHJBiL1; arc=none smtp.client-ip=209.85.160.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAbLbhAQ"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4775ce8a4b0so133016441cf.1
-        for <sophgo@lists.linux.dev>; Tue, 29 Apr 2025 18:27:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTHJBiL1"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-47691d82bfbso151193101cf.0
+        for <sophgo@lists.linux.dev>; Tue, 29 Apr 2025 19:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745976445; x=1746581245; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XmzBHSWrJXqE3C3PNQbdpQN7euXf4vxTIlTkBFth0w4=;
-        b=bAbLbhAQpqMQk8eL+zwoQL9lc8zs6IENdnRwBR5+anumHuOjYh/IRGfiiamUzuQeuC
-         2ycwDXQajc7GIWbYdsnMBvYDOYnefK3QQjMFYdMSfDcpjvh+9ms4voaBCrU13CAkWzkP
-         S44cUXorZCAoUb6pG1uSjky3gievYvZ+E5wMs6ycCz7c3RfcYvdxX7X5yIewQ5M/uOxK
-         DUY7gAJ0zf4XMuaGUGYpfkNjyy7L4TRLY6R/o4bLbVXYqbAQvpZ/0igBERid4RdAaDtX
-         6AZTaqd7J81IMVugBHhIevfKuaMXUrZgK7uev80lGPnNwCBYK3cnZ9XBmyO0f+tZR0KR
-         gQIA==
+        d=gmail.com; s=20230601; t=1745978990; x=1746583790; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMRCqnYomW+wsK1zzIEugxafFdeEE4BP1eOXuKoDm5I=;
+        b=hTHJBiL1M/HE568S0punhxC50SQCAahwESckm/QrqLlpLys7EiNrrq7errZv5a8FYN
+         QautpUpEwY8qIghP6GufLM6lEJPxRT9fXpSKyHuZWPZEJlNDNUbZKnXXqaJ/b8qFJOEH
+         VCaKBJrSmfmfSE+P4bxDkmwGvi9nAmvaiuaJGlAN6finK++wJsJS2IyE8p4vGgR0AYKE
+         nicnDlzinsvP07jdqQbenVcQAMMGWTCHfeESz575VoinfooUe6Wn1ABpeiH+NYF+GFNC
+         VZ37Mpj1zJAD+5EilXK1gk4mwnoy8heQmv5INOY7cblDJGHrFxD0rudN75+oHERg8+As
+         JWGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745976445; x=1746581245;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XmzBHSWrJXqE3C3PNQbdpQN7euXf4vxTIlTkBFth0w4=;
-        b=TnyWHp3nYJ3d5kr4pFAlZPijmDTwPWm2G04rKxHEdDni1nwyZtoM1lK/cn57WlAWo6
-         HkY/nhbrxTpWXfwz/f4sS4caHio6FuZgsQaE2EUXDT1UsIujrdChyjif64o2nMH/OwQU
-         ZG2KjhstLd6mlxLhkhi8W7qOsqSnVfTmV/r0bZaogIyTKkpCR4xJhJGEBZDmgtYbhYoZ
-         SM3xuDzRFgBlGxcrlIXCfURiWSqukun/47Ws9yOEbXcGa/cSVqq/SF9OjNehFvzhvg/h
-         aaA/VV+QI1gQOWZUKk7OUzA7X/lX0jvT7D0UG5/nebq8d5h727yz/QaDX0PbwhxVRPIE
-         c3kg==
-X-Forwarded-Encrypted: i=1; AJvYcCVk7XB6egU7S+DY4zaA8+rZTBQPl+iHOLvX0h/7VcB+4RPu78Ky8YtKJ0RzkEk1UxKhtjRYLzk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzKbVLThoJYtDvBAuCcaxgt+fWdBxYpJinbYYahGAv+/Ekfgyvd
-	BXAeXmMUTbic0iR003jpwXIQ9P12i4h0ZHYOSx4Xcw3sIoe0BnW+
-X-Gm-Gg: ASbGncudjvNQnbfg0/BbJEkYRaSqoGFRmMdezN+MEk4a/4i3OcYT3QYR4HKb1sF7t9n
-	6iCrTs0gcgRSf4wuY+0w1g17xXttv13dLF2oG+bSV36ZL3elNPcSRJYWQxrVuZ0F2KCRzT0hldN
-	U/Npllom1xulWyVLIfYvxzA0mMcJHGb9TXYnoeDaj+a1qJas2fMhPMKnd1XoY3EKzAy808avVNZ
-	gp+gfTOpt1IP53uty8sNrR1hyk7hxq3befx4+SJdzFfEA+8tVApLrbP0u1xCANKUt+VFOXCHxBc
-	Nn44QfjT4NFT1wvg
-X-Google-Smtp-Source: AGHT+IGFWLJP9DbY1SUq4pmQp5oCm1bDWLdLCh7cPRuw+TIOHViIIajVFMUCQtQPQg3PqSENOBVqfQ==
-X-Received: by 2002:a05:622a:558b:b0:477:64dd:5765 with SMTP id d75a77b69052e-489e69a432amr14109261cf.44.1745976445144;
-        Tue, 29 Apr 2025 18:27:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745978990; x=1746583790;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gMRCqnYomW+wsK1zzIEugxafFdeEE4BP1eOXuKoDm5I=;
+        b=BDgHZfVmVreXTfH3iNL8y1VLTEHC99kvyfix2C9xcF+auIYiJ575zrW60rsBmWjtfQ
+         J/L0rHJau/Uvn7805C0NVN4wa/PaqldZiyzt+cROwXH/tAn/KtycTki7/uBKdcFkkrlG
+         Kv2jxsmANC6C/akf200IRIk/0wELb7vdTb5Ep20FQS/PuNjCgQI46CBc5cmiN+B1jUbr
+         h3rxHcqzxkI/yhZXVHkQy5aBb6cKqSdNLeDZfwVZ8KLQ8nTt8AL1k7ad4u8I589vR9YL
+         eQLTbEIS9bdt/u5LMePr1ndD626MQ9CDLksMPHDLjeVBUE+vLbOqXMcfMGIDZ4vuAOn8
+         1p2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWnbMxXRsvDXW01bCa85dCF5ZcMF4bkdnbNdT77NnqIM9jKuGt2x7rDoohMY1jbDVSgIhl51cs=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz+4on7jTyhkGiPi8wyZlUfYbDzGlHiYabzzU/KCwFTBPZmqNsM
+	X9zie30++IaVvjET9ADKlD92aYlyMDZJTiiobVKnBU8DerA7RNLg
+X-Gm-Gg: ASbGncv3amnnEW3dQHcm5h2/rk5AgiQle+/6KLMRpRuBEfdhqdMECFrGQhYw1ejCyWn
+	9vBMb3WjmeFrWU8pFznos/F99qZMdA3KVucn/bLp0cze7MQGMirjXcd0N3dmmH1uCV6AWXs0iZK
+	PIZok+gB+Wqh+BvF4RVrim+TqJjZff9ZhGNMlV07BQ6j+brDpYNebSZEVypiPKB8OXPTUfl1adJ
+	T0MCMxy9VRVL6YasAGlIrRzfdAE9VmTIvbZOEgXhs1dVkwbXTV3yVpTFPYSMvOFN3QhPadBP2Bg
+	m63P8012hA5Lygp+
+X-Google-Smtp-Source: AGHT+IH3QEcqlp51tOnN2l6ZLTNjrQhnIbAtp++1IB7gybN/d7hCg0IFcRClQaapkL+poJtpoZTgVQ==
+X-Received: by 2002:a05:622a:2617:b0:476:60a1:3115 with SMTP id d75a77b69052e-489e63d86fbmr13994811cf.33.1745978990109;
+        Tue, 29 Apr 2025 19:09:50 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47ea16938d9sm86424311cf.55.2025.04.29.18.27.24
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47ea1ba2868sm86855891cf.74.2025.04.29.19.09.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 18:27:24 -0700 (PDT)
+        Tue, 29 Apr 2025 19:09:49 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
 	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 4/4] riscv: dts: sopgho: use SOC_PERIPHERAL_IRQ to calculate interrupt number
-Date: Wed, 30 Apr 2025 09:26:53 +0800
-Message-ID: <20250430012654.235830-5-inochiama@gmail.com>
+Subject: [PATCH 0/3] riscv: sophgo: cv18xx: dts rework, part 2
+Date: Wed, 30 Apr 2025 10:09:28 +0800
+Message-ID: <20250430020932.307198-1-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250430012654.235830-1-inochiama@gmail.com>
-References: <20250430012654.235830-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -89,271 +89,29 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since riscv and arm architecture use different interrupt definitions,
-use a macro SOC_PERIPHERAL_IRQ mask this difference.
+The part 2 of dts rework replaces precise compatible for existed clock device
+with old wildcard one.
 
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv1800b.dtsi |  2 ++
- arch/riscv/boot/dts/sophgo/cv180x.dtsi  | 44 ++++++++++++-------------
- arch/riscv/boot/dts/sophgo/cv1812h.dtsi |  2 ++
- arch/riscv/boot/dts/sophgo/cv181x.dtsi  |  2 +-
- arch/riscv/boot/dts/sophgo/sg2002.dtsi  |  2 ++
- 5 files changed, 29 insertions(+), 23 deletions(-)
+Inochi Amaoto (3):
+  dt-bindings: clock: sophgo: Use precise compatible for CV1800 series
+    SoC
+  clk: sophgo: Add support for newly added precise compatible
+  riscv: dts: sophgo: switch precise compatible for existed clock device
+    for CV18XX
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv1800b.dtsi b/arch/riscv/boot/dts/sophgo/cv1800b.dtsi
-index d0a627c086fb..88707cc13fb4 100644
---- a/arch/riscv/boot/dts/sophgo/cv1800b.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv1800b.dtsi
-@@ -3,6 +3,8 @@
-  * Copyright (C) 2023 Jisheng Zhang <jszhang@kernel.org>
-  */
- 
-+#define SOC_PERIPHERAL_IRQ(nr)	((nr) + 16)
-+
- #include <dt-bindings/pinctrl/pinctrl-cv1800b.h>
- #include "cv180x-cpus.dtsi"
- #include "cv180x.dtsi"
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index a4f957302094..ad5052bf36e5 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -38,7 +38,7 @@ porta: gpio-controller@0 {
- 				reg = <0>;
- 				interrupt-controller;
- 				#interrupt-cells = <2>;
--				interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <SOC_PERIPHERAL_IRQ(44) IRQ_TYPE_LEVEL_HIGH>;
- 			};
- 		};
- 
-@@ -56,7 +56,7 @@ portb: gpio-controller@0 {
- 				reg = <0>;
- 				interrupt-controller;
- 				#interrupt-cells = <2>;
--				interrupts = <61 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <SOC_PERIPHERAL_IRQ(45) IRQ_TYPE_LEVEL_HIGH>;
- 			};
- 		};
- 
-@@ -74,7 +74,7 @@ portc: gpio-controller@0 {
- 				reg = <0>;
- 				interrupt-controller;
- 				#interrupt-cells = <2>;
--				interrupts = <62 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <SOC_PERIPHERAL_IRQ(46) IRQ_TYPE_LEVEL_HIGH>;
- 			};
- 		};
- 
-@@ -92,7 +92,7 @@ portd: gpio-controller@0 {
- 				reg = <0>;
- 				interrupt-controller;
- 				#interrupt-cells = <2>;
--				interrupts = <63 IRQ_TYPE_LEVEL_HIGH>;
-+				interrupts = <SOC_PERIPHERAL_IRQ(47) IRQ_TYPE_LEVEL_HIGH>;
- 			};
- 		};
- 
-@@ -100,7 +100,7 @@ saradc: adc@30f0000 {
- 			compatible = "sophgo,cv1800b-saradc";
- 			reg = <0x030f0000 0x1000>;
- 			clocks = <&clk CLK_SARADC>;
--			interrupts = <100 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(84) IRQ_TYPE_LEVEL_HIGH>;
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			status = "disabled";
-@@ -125,7 +125,7 @@ i2c0: i2c@4000000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_I2C>, <&clk CLK_APB_I2C0>;
- 			clock-names = "ref", "pclk";
--			interrupts = <49 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(33) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -136,7 +136,7 @@ i2c1: i2c@4010000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_I2C>, <&clk CLK_APB_I2C1>;
- 			clock-names = "ref", "pclk";
--			interrupts = <50 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(34) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -147,7 +147,7 @@ i2c2: i2c@4020000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_I2C>, <&clk CLK_APB_I2C2>;
- 			clock-names = "ref", "pclk";
--			interrupts = <51 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(35) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -158,7 +158,7 @@ i2c3: i2c@4030000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_I2C>, <&clk CLK_APB_I2C3>;
- 			clock-names = "ref", "pclk";
--			interrupts = <52 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(36) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -169,14 +169,14 @@ i2c4: i2c@4040000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_I2C>, <&clk CLK_APB_I2C4>;
- 			clock-names = "ref", "pclk";
--			interrupts = <53 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(37) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
- 		uart0: serial@4140000 {
- 			compatible = "snps,dw-apb-uart";
- 			reg = <0x04140000 0x100>;
--			interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(28) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_UART0>, <&clk CLK_APB_UART0>;
- 			clock-names = "baudclk", "apb_pclk";
- 			reg-shift = <2>;
-@@ -187,7 +187,7 @@ uart0: serial@4140000 {
- 		uart1: serial@4150000 {
- 			compatible = "snps,dw-apb-uart";
- 			reg = <0x04150000 0x100>;
--			interrupts = <45 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(29) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_UART1>, <&clk CLK_APB_UART1>;
- 			clock-names = "baudclk", "apb_pclk";
- 			reg-shift = <2>;
-@@ -198,7 +198,7 @@ uart1: serial@4150000 {
- 		uart2: serial@4160000 {
- 			compatible = "snps,dw-apb-uart";
- 			reg = <0x04160000 0x100>;
--			interrupts = <46 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(30) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_UART2>, <&clk CLK_APB_UART2>;
- 			clock-names = "baudclk", "apb_pclk";
- 			reg-shift = <2>;
-@@ -209,7 +209,7 @@ uart2: serial@4160000 {
- 		uart3: serial@4170000 {
- 			compatible = "snps,dw-apb-uart";
- 			reg = <0x04170000 0x100>;
--			interrupts = <47 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(31) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_UART3>, <&clk CLK_APB_UART3>;
- 			clock-names = "baudclk", "apb_pclk";
- 			reg-shift = <2>;
-@@ -224,7 +224,7 @@ spi0: spi@4180000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_SPI>, <&clk CLK_APB_SPI0>;
- 			clock-names = "ssi_clk", "pclk";
--			interrupts = <54 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(38) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -235,7 +235,7 @@ spi1: spi@4190000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_SPI>, <&clk CLK_APB_SPI1>;
- 			clock-names = "ssi_clk", "pclk";
--			interrupts = <55 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(39) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -246,7 +246,7 @@ spi2: spi@41a0000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_SPI>, <&clk CLK_APB_SPI2>;
- 			clock-names = "ssi_clk", "pclk";
--			interrupts = <56 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(40) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
-@@ -257,14 +257,14 @@ spi3: spi@41b0000 {
- 			#size-cells = <0>;
- 			clocks = <&clk CLK_SPI>, <&clk CLK_APB_SPI3>;
- 			clock-names = "ssi_clk", "pclk";
--			interrupts = <57 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(41) IRQ_TYPE_LEVEL_HIGH>;
- 			status = "disabled";
- 		};
- 
- 		uart4: serial@41c0000 {
- 			compatible = "snps,dw-apb-uart";
- 			reg = <0x041c0000 0x100>;
--			interrupts = <48 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(32) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_UART4>, <&clk CLK_APB_UART4>;
- 			clock-names = "baudclk", "apb_pclk";
- 			reg-shift = <2>;
-@@ -275,7 +275,7 @@ uart4: serial@41c0000 {
- 		sdhci0: mmc@4310000 {
- 			compatible = "sophgo,cv1800b-dwcmshc";
- 			reg = <0x4310000 0x1000>;
--			interrupts = <36 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(20) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_AXI4_SD0>,
- 				 <&clk CLK_SD0>;
- 			clock-names = "core", "bus";
-@@ -285,7 +285,7 @@ sdhci0: mmc@4310000 {
- 		sdhci1: mmc@4320000 {
- 			compatible = "sophgo,cv1800b-dwcmshc";
- 			reg = <0x4320000 0x1000>;
--			interrupts = <38 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(22) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_AXI4_SD1>,
- 				 <&clk CLK_SD1>;
- 			clock-names = "core", "bus";
-@@ -295,7 +295,7 @@ sdhci1: mmc@4320000 {
- 		dmac: dma-controller@4330000 {
- 			compatible = "snps,axi-dma-1.01a";
- 			reg = <0x04330000 0x1000>;
--			interrupts = <29 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(13) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_SDMA_AXI>, <&clk CLK_SDMA_AXI>;
- 			clock-names = "core-clk", "cfgr-clk";
- 			#dma-cells = <1>;
-diff --git a/arch/riscv/boot/dts/sophgo/cv1812h.dtsi b/arch/riscv/boot/dts/sophgo/cv1812h.dtsi
-index d9580a2e1e7f..0974955e4e05 100644
---- a/arch/riscv/boot/dts/sophgo/cv1812h.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv1812h.dtsi
-@@ -3,6 +3,8 @@
-  * Copyright (C) 2023 Inochi Amaoto <inochiama@outlook.com>
-  */
- 
-+#define SOC_PERIPHERAL_IRQ(nr)	((nr) + 16)
-+
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/pinctrl/pinctrl-cv1812h.h>
- #include "cv180x-cpus.dtsi"
-diff --git a/arch/riscv/boot/dts/sophgo/cv181x.dtsi b/arch/riscv/boot/dts/sophgo/cv181x.dtsi
-index 5fd14dd1b14f..bbdb30653e9a 100644
---- a/arch/riscv/boot/dts/sophgo/cv181x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv181x.dtsi
-@@ -11,7 +11,7 @@ soc {
- 		emmc: mmc@4300000 {
- 			compatible = "sophgo,cv1800b-dwcmshc";
- 			reg = <0x4300000 0x1000>;
--			interrupts = <34 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(18) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_AXI4_EMMC>,
- 				 <&clk CLK_EMMC>;
- 			clock-names = "core", "bus";
-diff --git a/arch/riscv/boot/dts/sophgo/sg2002.dtsi b/arch/riscv/boot/dts/sophgo/sg2002.dtsi
-index 60709df12a22..6f09c9199102 100644
---- a/arch/riscv/boot/dts/sophgo/sg2002.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2002.dtsi
-@@ -3,6 +3,8 @@
-  * Copyright (C) 2024 Thomas Bonnefille <thomas.bonnefille@bootlin.com>
-  */
- 
-+#define SOC_PERIPHERAL_IRQ(nr)	((nr) + 16)
-+
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/pinctrl/pinctrl-sg2002.h>
- #include "cv180x-cpus.dtsi"
--- 
+ .../bindings/clock/sophgo,cv1800-clk.yaml           | 13 +++++++++----
+ arch/riscv/boot/dts/sophgo/cv1800b.dtsi             |  2 +-
+ arch/riscv/boot/dts/sophgo/cv1812h.dtsi             |  2 +-
+ arch/riscv/boot/dts/sophgo/sg2002.dtsi              |  2 +-
+ drivers/clk/sophgo/clk-cv1800.c                     |  3 +++
+ 5 files changed, 15 insertions(+), 7 deletions(-)
+
+
+base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+prerequisite-patch-id: 94fb3d26e017cf839b4dcb4bf85624614a94b9ac
+prerequisite-patch-id: 8f4a8bdead0e4e3d6904adbc0fd150b7dffefc85
+prerequisite-patch-id: b30e850690903c3ddc3d8bb77a99e97934dc9dde
+prerequisite-patch-id: 6e1117694a53a0059b145ad4751ec204cae0db35
+--
 2.49.0
 
