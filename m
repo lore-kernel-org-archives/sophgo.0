@@ -1,60 +1,62 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABC22DC770
-	for <sophgo@lists.linux.dev>; Wed, 30 Apr 2025 02:09:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1FEF14E2F2
+	for <sophgo@lists.linux.dev>; Wed, 30 Apr 2025 02:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745978992; cv=none; b=rPEXwrC1bnFUQ2v/bshRDuhKtn4EWDYxyCiHUok/6Zabi8uXDqXU0cLEkLKoJNk/dig8yUf/jq9zD0jaObDavaUCJFIwiN+AQGxuXN1jC2Kp2+ka8o9CNtE9w1DJOeihpf873Uax1UcGFfMlpXTD+EdkCjtCGawGH43deE8vXP8=
+	t=1745978996; cv=none; b=UiJX4invXlisCbLAQx3XrvDk30m/Fnly2QkCGYkmpc4aq/8nQ0TVqjuqC7Xr5AeANPzxBAYVKRxF49AVn4yWm8MAxY5aRf+ewI6Hw82vgS5BalPTvb+mxtt9OwW3Jbv6aqB5ItncYTfxboh5pJG6eNsBkTW0cTrZbL7NJkG8OsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745978992; c=relaxed/simple;
-	bh=dJDRfGSDRxXopbOKTfj5XmSOmmNS7V2PF5CY2+miZBM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g6FhU4C9oH/8EuHjRTgxV/AcDFria2xn8WnlFLG1EYCYKgnsfz8qr/hxhhLimLzMl2vY5LnDI+eWwIPYS3b5zIkiGdNRQEz9bS0LcEh8zlh/Zn1FuNkFnk3Xqx83nchuFFd/Am8ziE5/RNLPZrxmw7i1IsQFQitl8rmOr+rU+Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hTHJBiL1; arc=none smtp.client-ip=209.85.160.180
+	s=arc-20240116; t=1745978996; c=relaxed/simple;
+	bh=UJwi8S2oSOPUAClcHP/ida1jA2kT2gCpm9OIeZ8USW8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bT8yR/I4W7VoKcdllVYrN8OefjBVeXai0Z099msrQ2gQwVpXiw9Z6MbFivroWHLI549DaHUBtyfogtuoCLLfKeIk8ZYzXBu9jmIXVZNnUU/pE1StlKSYBrMrT3Y4JFYn5QYW0foBxDM9aVF2k/X79cJoKy/+OufrSzqzSX3Aniw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ew8JxK1d; arc=none smtp.client-ip=209.85.219.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hTHJBiL1"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-47691d82bfbso151193101cf.0
-        for <sophgo@lists.linux.dev>; Tue, 29 Apr 2025 19:09:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ew8JxK1d"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6f0ad744811so50643676d6.1
+        for <sophgo@lists.linux.dev>; Tue, 29 Apr 2025 19:09:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745978990; x=1746583790; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gMRCqnYomW+wsK1zzIEugxafFdeEE4BP1eOXuKoDm5I=;
-        b=hTHJBiL1M/HE568S0punhxC50SQCAahwESckm/QrqLlpLys7EiNrrq7errZv5a8FYN
-         QautpUpEwY8qIghP6GufLM6lEJPxRT9fXpSKyHuZWPZEJlNDNUbZKnXXqaJ/b8qFJOEH
-         VCaKBJrSmfmfSE+P4bxDkmwGvi9nAmvaiuaJGlAN6finK++wJsJS2IyE8p4vGgR0AYKE
-         nicnDlzinsvP07jdqQbenVcQAMMGWTCHfeESz575VoinfooUe6Wn1ABpeiH+NYF+GFNC
-         VZ37Mpj1zJAD+5EilXK1gk4mwnoy8heQmv5INOY7cblDJGHrFxD0rudN75+oHERg8+As
-         JWGQ==
+        d=gmail.com; s=20230601; t=1745978993; x=1746583793; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R4Oe7PG99/AZHHENXUgxt/svqannmrv3ouX9muUCFhc=;
+        b=Ew8JxK1dPC5WKMxN4ZuEIz7d8Lh3s7a7MIQWS3+/hvYBfZDFPUgBZ7KPCvrIcbRXr0
+         HT5pKPz98a0ahTLSKLa54sDoLOYrtXMWFxtAQkokpUR7K1KS+To3tu1V9wtFPERSUmjR
+         w77jdyIeqtwZfnhLSSyavZBGvkgG1UaNCWANOExiG3sUfcQvbtgyfkSuNn/CGcxsmEox
+         gNNJO/3DumUFDBi5rVGlvsh51qXOLpZtxiJgPxfpTMsGi6A7cmy3ykRr2/I6Lw9JJMwA
+         iR6GhN1etFtc3xs7wpKtD3W7ERJVaimcKaNQTqCggJIKQxk1MnguZ/ntgZjD+B3man0q
+         6ZJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745978990; x=1746583790;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gMRCqnYomW+wsK1zzIEugxafFdeEE4BP1eOXuKoDm5I=;
-        b=BDgHZfVmVreXTfH3iNL8y1VLTEHC99kvyfix2C9xcF+auIYiJ575zrW60rsBmWjtfQ
-         J/L0rHJau/Uvn7805C0NVN4wa/PaqldZiyzt+cROwXH/tAn/KtycTki7/uBKdcFkkrlG
-         Kv2jxsmANC6C/akf200IRIk/0wELb7vdTb5Ep20FQS/PuNjCgQI46CBc5cmiN+B1jUbr
-         h3rxHcqzxkI/yhZXVHkQy5aBb6cKqSdNLeDZfwVZ8KLQ8nTt8AL1k7ad4u8I589vR9YL
-         eQLTbEIS9bdt/u5LMePr1ndD626MQ9CDLksMPHDLjeVBUE+vLbOqXMcfMGIDZ4vuAOn8
-         1p2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWnbMxXRsvDXW01bCa85dCF5ZcMF4bkdnbNdT77NnqIM9jKuGt2x7rDoohMY1jbDVSgIhl51cs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz+4on7jTyhkGiPi8wyZlUfYbDzGlHiYabzzU/KCwFTBPZmqNsM
-	X9zie30++IaVvjET9ADKlD92aYlyMDZJTiiobVKnBU8DerA7RNLg
-X-Gm-Gg: ASbGncv3amnnEW3dQHcm5h2/rk5AgiQle+/6KLMRpRuBEfdhqdMECFrGQhYw1ejCyWn
-	9vBMb3WjmeFrWU8pFznos/F99qZMdA3KVucn/bLp0cze7MQGMirjXcd0N3dmmH1uCV6AWXs0iZK
-	PIZok+gB+Wqh+BvF4RVrim+TqJjZff9ZhGNMlV07BQ6j+brDpYNebSZEVypiPKB8OXPTUfl1adJ
-	T0MCMxy9VRVL6YasAGlIrRzfdAE9VmTIvbZOEgXhs1dVkwbXTV3yVpTFPYSMvOFN3QhPadBP2Bg
-	m63P8012hA5Lygp+
-X-Google-Smtp-Source: AGHT+IH3QEcqlp51tOnN2l6ZLTNjrQhnIbAtp++1IB7gybN/d7hCg0IFcRClQaapkL+poJtpoZTgVQ==
-X-Received: by 2002:a05:622a:2617:b0:476:60a1:3115 with SMTP id d75a77b69052e-489e63d86fbmr13994811cf.33.1745978990109;
-        Tue, 29 Apr 2025 19:09:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745978993; x=1746583793;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R4Oe7PG99/AZHHENXUgxt/svqannmrv3ouX9muUCFhc=;
+        b=DKmkmnnrFIV9AFjAd/lajr5+rLneZFIOtNi1aMxs3UCthiOFRdM3RbMCWft33NHRYX
+         0HsV0xEeCiPX/Xc0xPugvkYA61q5ngtBUzd1Sz6ySIYBGxlGgc/crb41SliToigOsfct
+         OpTJZyesAuKACNjrzIq/H8Fec6ypS++/XS9Oc1IOF+cXb2hSokhVGOMRXz7ouyTmEWV0
+         sDs9xc1WUnKbKbdSIEFohYk0tg76zjqFuH/G+3d4BekPcmaWjbcv77P/RgmU/sg3TKKR
+         r8IDdPLi+0gKSr9n8vuKM4tiq+DPq6Iv5RTYvPu9ORuv9lAMGXRqiATLoxTcU0FUYNQy
+         7CIw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrls+W6hNswfZOe/42R7JzR+fukF+Re/4+RLNpMZsungrpox1G61P2ooWPNhud3M0Pn5jSbWg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxdDNzq7dsxEULblHr2762S1U+CMQJ/GlvwjbDDP9J7mTlmAiOp
+	9twjENB4kwe1QoYekG9LWdbpeBXR28ZW+9LmyN014aED7KOlVU9H
+X-Gm-Gg: ASbGncu6kyEn1662bdvaedXr3jEna59Tx679L9ORuWynHR+s3Dem7IFcfkaIVH+lZOS
+	YvVXlPRO6AVbIQ0uHTmXowqEVGu4A42Ib2ddM8GODDoaA3tSPWQ8B5kvrRe4p2ndE9Z14qSjphG
+	QZHr95GgiNB454VFptETgzWGSEutVBaQffy9rZt6u0EyGG/2S3+73rXjXaSvz7ls/D0HQq7+h0i
+	qd0B+fCsuLHX9hOLS8Xu6puWSN/WlxlawyubY5EyZ08LFzeSUtWqRyhiDBZSeODx98dPrdvFuAC
+	Fj0Mo7hImoQn4FCJ
+X-Google-Smtp-Source: AGHT+IFl/15L7e190rP7iw7nPmXMdXFhJpjehDYpux7CYj2PcXkTXFwv+NJEHvRt1t5lmdRnXR6OJA==
+X-Received: by 2002:ad4:594d:0:b0:6e8:fe16:4d4f with SMTP id 6a1803df08f44-6f4fcee0e3emr26949656d6.26.1745978993602;
+        Tue, 29 Apr 2025 19:09:53 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-47ea1ba2868sm86855891cf.74.2025.04.29.19.09.48
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f4fe835410sm2791136d6.71.2025.04.29.19.09.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 19:09:49 -0700 (PDT)
+        Tue, 29 Apr 2025 19:09:53 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
@@ -77,10 +79,12 @@ Cc: linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 0/3] riscv: sophgo: cv18xx: dts rework, part 2
-Date: Wed, 30 Apr 2025 10:09:28 +0800
-Message-ID: <20250430020932.307198-1-inochiama@gmail.com>
+Subject: [PATCH 1/3] dt-bindings: clock: sophgo: Use precise compatible for CV1800 series SoC
+Date: Wed, 30 Apr 2025 10:09:29 +0800
+Message-ID: <20250430020932.307198-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250430020932.307198-1-inochiama@gmail.com>
+References: <20250430020932.307198-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -89,29 +93,41 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The part 2 of dts rework replaces precise compatible for existed clock device
-with old wildcard one.
+As previous binding uses a wildcard compatible for existed clock device
+of CV1800 series SoC, it is not suitable for existed requirement.
 
-Inochi Amaoto (3):
-  dt-bindings: clock: sophgo: Use precise compatible for CV1800 series
-    SoC
-  clk: sophgo: Add support for newly added precise compatible
-  riscv: dts: sophgo: switch precise compatible for existed clock device
-    for CV18XX
+Add new precise compatible for existed clock devices of CV1800 series
+SoCs.
 
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
  .../bindings/clock/sophgo,cv1800-clk.yaml           | 13 +++++++++----
- arch/riscv/boot/dts/sophgo/cv1800b.dtsi             |  2 +-
- arch/riscv/boot/dts/sophgo/cv1812h.dtsi             |  2 +-
- arch/riscv/boot/dts/sophgo/sg2002.dtsi              |  2 +-
- drivers/clk/sophgo/clk-cv1800.c                     |  3 +++
- 5 files changed, 15 insertions(+), 7 deletions(-)
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-
-base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
-prerequisite-patch-id: 94fb3d26e017cf839b4dcb4bf85624614a94b9ac
-prerequisite-patch-id: 8f4a8bdead0e4e3d6904adbc0fd150b7dffefc85
-prerequisite-patch-id: b30e850690903c3ddc3d8bb77a99e97934dc9dde
-prerequisite-patch-id: 6e1117694a53a0059b145ad4751ec204cae0db35
---
+diff --git a/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml b/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
+index 59ef41adb539..c52e130db887 100644
+--- a/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
++++ b/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
+@@ -11,10 +11,15 @@ maintainers:
+ 
+ properties:
+   compatible:
+-    enum:
+-      - sophgo,cv1800-clk
+-      - sophgo,cv1810-clk
+-      - sophgo,sg2000-clk
++    oneOf:
++      - const: sophgo,cv1800-clk
++        deprecated: true
++      - const: sophgo,cv1800b-clk
++      - const: sophgo,cv1810-clk
++        deprecated: true
++      - const: sophgo,cv1812h-clk
++      - const: sophgo,sg2000-clk
++      - const: sophgo,sg2002-clk
+ 
+   reg:
+     maxItems: 1
+-- 
 2.49.0
 
