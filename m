@@ -1,62 +1,62 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251751A8412
-	for <sophgo@lists.linux.dev>; Sun,  4 May 2025 10:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA231ACEDE
+	for <sophgo@lists.linux.dev>; Sun,  4 May 2025 10:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746355584; cv=none; b=t6FZfrGcZfJHFS/aiaWIhmDSIVoxFsd7dBic4PJAnzdS+91IPMVXkOpmbr6yzaXlopc1uQ/7S10H93W/FBehn/Tre0xvEYDnWlwicNTTxgzd1yBvMnTE8etVdXuZiIwBrWgkt1Kizt4HGUH/ji5sfPmdg8RUXRUDG/WqbU8dEi8=
+	t=1746355587; cv=none; b=j83ke97927epS+oFGbrID/VjKOriiXMPoIYFktamEb2ntBxQ/lpwp8cxy6tt3OxPqjfqWTZaibIhcpVi38hSfcQHIre6fArbtUHO2dALSW+U0q+sCH6v43TAR75czndy3m9AgWlq77PjSWwWrUbJLNMb2sVr5qsM7xbpHDO4Dp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746355584; c=relaxed/simple;
-	bh=IOUbTpGZZeI+nBZmuxYvdduSXGQt/jXYcXqsGvwMSC8=;
+	s=arc-20240116; t=1746355587; c=relaxed/simple;
+	bh=KPHrhHOyAQI630w7PvZZOGe3oBE60celgGMAIXnCCGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5kGDpY4L8z6CBfxp+5JwWRiBJp4Gpwh98OwoVtETMM/c7LCQ2PZlyksTz/hgBwryBCfa95cZ7zNn5jKh/qcnRZG7YcApZKWBsAb6PIzCSWRWCG7Owy1LYz7+WOO4vQtfsbBCGW981AJ6dmz6spR4DfobU8RY6GqPdhZV1TNino=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X+lTE9yE; arc=none smtp.client-ip=209.85.222.169
+	 MIME-Version; b=Co1U97Dk6eJfnQc/OCWTHoDB9vNSSWzCecGxCgQv95q2o8LdLtjqPClw7ihILjbNPsk+smcFXQBpSH8YbDKHQmYBvu6nCFXHQ1XdywPDlD5YZjplU6UlCOgdTg5VDGzJ1WYtXcJqv4LM028ca1kJbka8O3/mFPY+OfFOJBqqoDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zjd00RAP; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X+lTE9yE"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7c5a88b34a6so378661185a.3
-        for <sophgo@lists.linux.dev>; Sun, 04 May 2025 03:46:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zjd00RAP"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c5e39d1e0eso389854185a.1
+        for <sophgo@lists.linux.dev>; Sun, 04 May 2025 03:46:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746355581; x=1746960381; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1746355585; x=1746960385; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c0dBNsRLfozNYsO2JqfQXy110W8bkOtUjtTaQB8elP4=;
-        b=X+lTE9yEo/WPR2eXFa3PLK3E/9ouvgL5h2gjB8Iqn+IKVtm/H8CCODb2e4XdAWq5HH
-         EUDklQlPvxNLlWWA0JdECGxAf/SrgLsbydsMWvjSFruHC2dxAgyiKd9pGO+v3O/dR4gF
-         /7YgwBIcgYNSNLbkK23qHecYVvhC5cGyXK+quiUDUrTG/FFz31zVxOIaO4o8BqCQpYrG
-         j/YWqkpom+dbl1jwvtuZgOUDM/YXZ84CkTC6RsaM5d4Enj7a2CQ4YekPqqwcNKycuudd
-         Wm4BY4/meQP6uc9YoVq6qrqVK/UB59m1qJFBkST15vw4dqbluLc02fiZXzE4uZmW6jhy
-         +qBQ==
+        bh=luBGFn+jIcsRlGss1jEDVQja+DxK9mYI/muh+oug9tE=;
+        b=Zjd00RAPX+xRLONM9D085Vrr1/ZlmJEW6XVgURQYMbMxEDTHxw/nU8rbqhiivqOO3H
+         ESNkANoHD0J0aAZMF3gLGYLqYMkajsiUqizKCDSq/iDLz24K1mxZjlqVJ7Nb/C5CyjWB
+         FgGr/ddtBQjc/ekpuaRa7QsacEffNrD0bi4m4J4c9taPFAEFw5ycVkTvkaM037zz/S/j
+         E0CkKcB16889cMOtF86+jMdaRihGaFYzMixzES68KQx8t7qDny/iNFAPsrznFl+7TSm1
+         aX6ACyAlpU4X5W2uCca3+GpvTDUdG6ZLNplQ8jJj1dxHfWo1bBWA7QGT0xhn3jGqmT0c
+         A8LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746355581; x=1746960381;
+        d=1e100.net; s=20230601; t=1746355585; x=1746960385;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c0dBNsRLfozNYsO2JqfQXy110W8bkOtUjtTaQB8elP4=;
-        b=b3b1S3Vi+chu/AcATqNt6LaB7gYUt/0HMnhTxKTnTdYpzUW6SfxvYfOzBIpMS7K0Cc
-         uxsHZfik8dum9KMW2DX5uS0ICAN4a8nv+LZfcKrCVn3mh1BkYzu14Gn3xesm97+vsWw+
-         8khwZVyGsFpZt0+r/fBjmrvPG49zfdDVZfn0iHUn9JzYV5CBrCyoxWcAwGrMOkrr+Qoy
-         Glva/3ny4TDcbXN2eP87dEEsHHZ5yq4QGjAEH/XR9Yf7Gpoe9Be9E4YOLxP62cKnLZ8V
-         WkgodH7KRzuN+LfVDum4TQKwwKaoPB/Jcpomz7K4Qzhs7SNgbtNnWRXOSxEPfg3+50G+
-         K5rg==
-X-Forwarded-Encrypted: i=1; AJvYcCW8YdCQfiBGi7u3udVvP59DcCewLgSu4LIroaZu3tIFP6rgAzkWCYKfujcPyJTpNkXrgMaZHEs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxwpqJJS+8RdO81qhkrgLHb2N0sut/RPchgn/p3mapWVOwy1G6e
-	NBmOwIAuFOFVEl7XVonBKbA2dTZLzKV4TXgFI9XpjVwni1gXe45+
-X-Gm-Gg: ASbGnctzXIv6UuMZd8+caQMwBdpGEt5CykZ9mc6HbBXbR2Vqc0I8itcBbCoZ0GqPq0T
-	1OTvPako9OfFhHwVD+EiK7pvywgmwsuTeozTFOl/wZ/9kboo2yC2v8aEHmE1IaqLd4lNMgwJRzp
-	Et8gcsOEKCquRpHQf2XtQS36kaYeLyTvDZhCHZF7ubxC8yP1GDWHW+AaqzZhjkAFVov6IJBFgDS
-	E0nrxQ2SCN2CDy/ZFpbWCuxoj89s6iJHGO7cCokHpgvxTETdz3wg81oAQ2lJsJtBRZAhKvxT1Nv
-	XFxzSaYIkbnkyG4m
-X-Google-Smtp-Source: AGHT+IGYfcJI1KOo4mnYSm2aZ/wO68fNQbksb1q2N85JkbNZoHHGaOY6wCLzQBxd67wnG1djUIGKBQ==
-X-Received: by 2002:a05:620a:2a10:b0:7c5:99f9:6ada with SMTP id af79cd13be357-7cae3b0a53cmr471104785a.50.1746355580956;
-        Sun, 04 May 2025 03:46:20 -0700 (PDT)
+        bh=luBGFn+jIcsRlGss1jEDVQja+DxK9mYI/muh+oug9tE=;
+        b=APcAySbozRM1+MkRHmQ+ep6hvi/fGj20IXZzt8eWhib+9u6siIinxy2JgKwp/XPE1W
+         qvPThWJCQmJHUou0HBo6tBOr9eWFdJZQ4GIsA+B82IGBdIpcVAaZaYklqxuocIthB8BH
+         MfPQeAjDq1f4BH4tkXJ6H6H/tcuYOTOUxj7ml0bbaP5gCFSmu3++fN0JS6ie8ei9TNuj
+         57txWRM9jMbPQofjHarEfkvF1T5fjz2T7jHadlm6eWBqkjb3KucDdatXJsU/dk37QryJ
+         hMtSFWE4E9NZ2i8satwW51kgI6OGo66lC5UdwplWh8puLZilB2Qd479LMkaptTHRpfMS
+         M+zg==
+X-Forwarded-Encrypted: i=1; AJvYcCVCltk6slJ+SFhpf9oShIjqe5nZ+0PoYBIktQY7Zr7H1Jpl1ouTPxJJY4jWIKzlm11GQiYJ7aw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzySXMpuUWfNC58UNaxZDNzEwB3J/ZPZISP/mVQNqGe9MOV/2YC
+	IebJoSQy3SjRuS5FQZ7fHImfhzIvjZWdXRDOtjocEwED6mJdwpFV
+X-Gm-Gg: ASbGncvwm2WPuMzTdmwFwh71ojMDXdzgQj/hWPdU2QSgALD9JulRCUfclJE65v5m4Hd
+	cKgRyKe6hQd5bxfbkZ8s9fCUu2L9ng/0cB9z44ACOtCAoR716Sn9BK2ZxWjy7w5QvlTco1zNDX8
+	/hBry3/SFz99eMS+r5DmCsZNxzGq/JfzhvzsR0DvsritEpZiFrVoz8lz6WuaQ/Dqf0d442/mBSF
+	fsNEk+zST6+CYIQGpk3BD4coIJieOSsupa9xiU1XX+QoO1X++Jvy+k32kOOvpufJP4VnjXl8uI7
+	VyaVUOyOIj7dcH93
+X-Google-Smtp-Source: AGHT+IHc6JO110pytp4DT/Eq6cAK4dWSNom4k7fdULVNjvMMCHikTESlyYH63sW1mFS6wQgaea6AJw==
+X-Received: by 2002:a05:620a:1aa8:b0:7c5:5670:bd6f with SMTP id af79cd13be357-7cae3b0a352mr510352385a.53.1746355585056;
+        Sun, 04 May 2025 03:46:25 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cad23b5f46sm429527585a.20.2025.05.04.03.46.19
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cad242b587sm429752385a.77.2025.05.04.03.46.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 May 2025 03:46:20 -0700 (PDT)
+        Sun, 04 May 2025 03:46:24 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
@@ -79,9 +79,9 @@ Cc: linux-clk@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v2 1/3] dt-bindings: clock: sophgo: Use precise compatible for CV1800 series SoC
-Date: Sun,  4 May 2025 18:45:50 +0800
-Message-ID: <20250504104553.1447819-2-inochiama@gmail.com>
+Subject: [PATCH v2 2/3] clk: sophgo: Add support for newly added precise compatible
+Date: Sun,  4 May 2025 18:45:51 +0800
+Message-ID: <20250504104553.1447819-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250504104553.1447819-1-inochiama@gmail.com>
 References: <20250504104553.1447819-1-inochiama@gmail.com>
@@ -93,46 +93,27 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As previous binding uses a wildcard compatible for existed clock device
-of CV1800 series SoC, it is not suitable for existed requirement. The
-only exception is sophgo,sg2000-clk, it does match a real device, so
-keep it as is.
-
-Add new precise compatible for existed clock devices of CV1800 series
-SoCs and make old wildcard compatible deprecated.
+Add of device id definition for newly added precise compatible.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- .../bindings/clock/sophgo,cv1800-clk.yaml        | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/clk/sophgo/clk-cv1800.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml b/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
-index 59ef41adb539..379ce3e9e391 100644
---- a/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
-+++ b/Documentation/devicetree/bindings/clock/sophgo,cv1800-clk.yaml
-@@ -11,10 +11,18 @@ maintainers:
+diff --git a/drivers/clk/sophgo/clk-cv1800.c b/drivers/clk/sophgo/clk-cv1800.c
+index e0c4dc347579..a4116ac1adcb 100644
+--- a/drivers/clk/sophgo/clk-cv1800.c
++++ b/drivers/clk/sophgo/clk-cv1800.c
+@@ -1519,7 +1519,9 @@ static int cv1800_clk_probe(struct platform_device *pdev)
  
- properties:
-   compatible:
--    enum:
--      - sophgo,cv1800-clk
--      - sophgo,cv1810-clk
--      - sophgo,sg2000-clk
-+    oneOf:
-+      - enum:
-+          - sophgo,cv1800b-clk
-+          - sophgo,cv1812h-clk
-+          - sophgo,sg2000-clk
-+      - items:
-+          - const: sophgo,sg2002-clk
-+          - const: sophgo,sg2000-clk
-+      - const: sophgo,cv1800-clk
-+        deprecated: true
-+      - const: sophgo,cv1810-clk
-+        deprecated: true
- 
-   reg:
-     maxItems: 1
+ static const struct of_device_id cv1800_clk_ids[] = {
+ 	{ .compatible = "sophgo,cv1800-clk", .data = &cv1800_desc },
++	{ .compatible = "sophgo,cv1800b-clk", .data = &cv1800_desc },
+ 	{ .compatible = "sophgo,cv1810-clk", .data = &cv1810_desc },
++	{ .compatible = "sophgo,cv1812h-clk", .data = &cv1810_desc },
+ 	{ .compatible = "sophgo,sg2000-clk", .data = &sg2000_desc },
+ 	{ }
+ };
 -- 
 2.49.0
 
