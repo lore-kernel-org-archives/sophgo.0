@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103AB2FF281;
-	Mon,  5 May 2025 22:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B47375309;
+	Mon,  5 May 2025 22:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746483982; cv=none; b=h4p0mdXk/BKFa2yo+JAnY4pTRW9eGovJTc8n5PUsiWPamPJejGehLmgcMQfLclfwhKMh38RKpHZ++Y72rm+jt1njmjKxs8JJcjuRCHmBF5EqyESIOKEvNbjaGoPYpYHMda8wIcgwdOjSRrZonDd6yTYlrtcqz+P/lInwN70wz4E=
+	t=1746485261; cv=none; b=dBX0VwH2jZWEZZRfrHmvM+8VpIEnv4Qp5TMPP/SqY58EDjZYykqa6kIYL6yY+1eCj5zRuPMYvDicnYAfjZkaLkl1HTioDAJWd9S+sgFjBdbWPsBVHnyuKASWCmZ/7lLl44tmLh1sILAxfQa3PzFdp5sQ6eTOK9JwvqIIf5LBeEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746483982; c=relaxed/simple;
+	s=arc-20240116; t=1746485261; c=relaxed/simple;
 	bh=1j4dgteCUSZ7Abj/VzXKM8PzCdf0Yf0zwcztFml+q24=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PCGUA3mcqznfGvEvPR8uetCNzpLm00PS8ICLBoUuJ47H8wqPyUYW8wvcPcdwigteMIwM5qgRXeeiMIUmtNHZ2aggZ2Mqd4sv+sD25+eia07wJHPB8AQtKvdFBZSkrzAkqrPuysuCit6e8h3fy1S48/RYxNbzfaURXoqHRu4EdzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=grVYawDu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n7l5yBeNfrp6DxCsd0JX7/EFGlOiFsA+mP7ohtenEbwkOGzMEgdftTgDnFUFSwX1ofCD9RfOfif5qsoM/pXtu2WVS7YsGTUzzze2ZkAtAbPx5edr/Lp6STXugHmgLAazSC+YzlAgV9ql/pbToEXxSRw5Yd88R/ITc9xu8EbFUDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMvr6oxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="grVYawDu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AD3C4CEE4;
-	Mon,  5 May 2025 22:26:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMvr6oxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A955C4CEE4;
+	Mon,  5 May 2025 22:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746483981;
+	s=k20201202; t=1746485261;
 	bh=1j4dgteCUSZ7Abj/VzXKM8PzCdf0Yf0zwcztFml+q24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grVYawDuBYHu5x1u91ICC6o2t8Qm7w1fcwg68QkuhI1BGIipSJUsWJZd0PnzYBlIb
-	 xo+5KIADrErRsSO6VlrKnh6DEooS2gEaeain604kSQHNjI0LdePcirDnr/FeyoYvSa
-	 ylg5L90N/cCJYFP/vUlNIoqfSOfnIMDfAxxWpszNYDuPHODIbzkYOIfc8Dbvc8nCyV
-	 8wCZaeh8VVCD/+UuEcjZN18LWGFpPG40hP/ku7NkO+NSA3q86UIWoE5hYeoPkw7OkP
-	 TUxg6KSeCyWj+PoYUH/Ri5WmtKqIrDA9Fh+5ZEsXJyAIo/3KH1eQVLU+J73Gxx9fhK
-	 AHXIucN+s9WbA==
+	b=dMvr6oxXpYDLuoyY9B9Jwx57JC1S8d/kZv8HixNa6Ull97iRhBl3C0XMYo8CjfTx7
+	 op6OBVFdOCW6mupn+DDAIZjiuEP03wLxrADakKSl89eb3YZtI9LRoJJ3+uzYpHm6q3
+	 nlF7Y88UejbzwNXn0t9+alc4/ICiozFVcBjQmJSNxQu20b7kwTfqASY1XhDInxYWU5
+	 Xv2mJuVnHSG1MS/o0joVsT+dgOBz6jEnStAw5hNEpW5e2/g7a9j6m/il40dz/ei0ZG
+	 F18wrUfEbN07szCrf2mxFu2TuwX1jPsh+mbkfH+J+RlBv+KosbTOYaQRuLtbEoSpIk
+	 puKxO9NbFvIQA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -36,12 +36,12 @@ Cc: Inochi Amaoto <inochiama@gmail.com>,
 	harshit.m.mogalapalli@oracle.com,
 	linux-gpio@vger.kernel.org,
 	sophgo@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.14 303/642] pinctrl: sophgo: avoid to modify untouched bit when setting cv1800 pinconf
-Date: Mon,  5 May 2025 18:08:39 -0400
-Message-Id: <20250505221419.2672473-303-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.12 240/486] pinctrl: sophgo: avoid to modify untouched bit when setting cv1800 pinconf
+Date: Mon,  5 May 2025 18:35:16 -0400
+Message-Id: <20250505223922.2682012-240-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250505221419.2672473-1-sashal@kernel.org>
-References: <20250505221419.2672473-1-sashal@kernel.org>
+In-Reply-To: <20250505223922.2682012-1-sashal@kernel.org>
+References: <20250505223922.2682012-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -50,7 +50,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.14.5
+X-stable-base: Linux 6.12.26
 Content-Transfer-Encoding: 8bit
 
 From: Inochi Amaoto <inochiama@gmail.com>
