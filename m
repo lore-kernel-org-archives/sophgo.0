@@ -1,62 +1,62 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0DB1FBC92
-	for <sophgo@lists.linux.dev>; Tue,  6 May 2025 23:46:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F1DB21FF20
+	for <sophgo@lists.linux.dev>; Tue,  6 May 2025 23:46:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746575186; cv=none; b=WqGraT4aD5GTn2ZcmEk7PxNs8JSGDfJ4tHwsJPpP2/zKQqCaiJ+Wa+mLBtV9QZHiq5TWho42fHj8SjHxa5hNG/UyjsOz6k5VnRGdaI8Zg1ykujE+iHPGxyHBzyfWkJDSQ548CDBZ+CyEY0KQA8kUCXYrF8zr6XXMB5TJx1+EgwU=
+	t=1746575189; cv=none; b=dcemqh85xHSR2fU+DFCXJJbEDW6HZBdehm3E39SPN5gBsJ9gFtETQaRfEXNapm69wkbUhrMDxikQg7oJGEMiJj655FJRgYyXbHRNGq4TzeIMFDdTnhRe7baoUYH3tcBkEO4gXE0RmnPusLdXyu0d/K0ZEdBpzTfDiC2DRPFjibY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746575186; c=relaxed/simple;
-	bh=B6iRLx81tiF2365iKD/myCSIQNO1TeC7kdHgjWx2T9U=;
+	s=arc-20240116; t=1746575189; c=relaxed/simple;
+	bh=BVt+VRnTimWp4JzuHa95+Dqz8viq8EbnD6FOmmPQr/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tw1HLbYg5JuudoO1fvPRWLJGmjcu/JhApXfQfeyJ2YrwEs68PYU8OMGBohTtOhgWBF0oKRfU0GBCgYPL8ZzGFa0TIB8DLkLm4RDXH4xBJSdFRAufao1VtPLQnCPP9J21nVEAN8pJh7BU7vSzkjolegEHw4FkaovYcUgai4P2WR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZBVmPHAe; arc=none smtp.client-ip=209.85.222.175
+	 MIME-Version:Content-Type; b=P/NBEsfeVJYBToWznoo/ex3gjaYid3FxVbjyloDEi7ww/JOv0XilecXsTOuXmP5Z6qSlzula97ciiSTcKOFELfV9vg2JDzQbdATpTc/XbFaYpgkMSsI+p1DUr78lA4My1E7TUmFIXZyw3jM8+2lpRL7ihb+YVYJ+4Z77VDXc11c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0ujWo+q; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZBVmPHAe"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c542ffec37so744337385a.2
-        for <sophgo@lists.linux.dev>; Tue, 06 May 2025 16:46:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0ujWo+q"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6ecfa716ec1so73273216d6.2
+        for <sophgo@lists.linux.dev>; Tue, 06 May 2025 16:46:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746575183; x=1747179983; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1746575187; x=1747179987; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kNpUQ6GumF9/TU6uK+pRbTYeJUeB4xU1u30e/GuoHLE=;
-        b=ZBVmPHAe/6ppQZtK8LpsM7uUL1hwg8n1ONdB0AIY/6d2NLC26XGP6M8lizT24ORIXy
-         A/GT7okkSVhjGppytT9L0KuQ+uzbo7jr3t07/sOfflsLAhGP6r13FlUeRWbbcbf4e/ds
-         m5ExCDij6YjsHpxR/Z+mftjAes0EwXZdeApP140pFoWwAPicaepYiWRj0itYbeNRsqNX
-         0BmFSs9c20MNdOoOMgcA2PSvAE59JIBAXFtPITTSVoy0FRNauLEBxePh+FTmB9FAoCVO
-         t+3c+C2BlvZTSvL0P1i+DMEWZF06Dcj95Rj2IXSgH5fpUiwVZQC86IrT22vJHZdvN1fl
-         KcLA==
+        bh=eZFBhA4aKbh9bxYzKReOwT6rRAW6REfyh6NppyF3T58=;
+        b=Y0ujWo+qneKwONykMuYTzPw/fFqDr+JNkl76ScfLMESRydU4JxRnddhpB4UVneYfXQ
+         JjuRP7aAb5dqhMhZHzsTQJ0E5cdD+Q0I4L8KLXtSqI1bRTXGWdWDep5A8zrGa8cnzHa7
+         lnoMwgmHb20UplsOA3VWXI4OIuEC6aoa4BXDwnJ+wIl8ej4rUT64wBABG5W1O71DIQ51
+         2Dq/mNkYXnxYeOkFnKn3H0wf7x5lLBSDMzicFqWmza5VJEVSJUgEMrh7X4tUF8QJiG4C
+         FFuvk80Ko3R9yK8l9S30j+TUicwsAfdP9HZdBRoWfh6VacUvy/PfS6pXQkf4Jcouggyz
+         e72A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746575183; x=1747179983;
+        d=1e100.net; s=20230601; t=1746575187; x=1747179987;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kNpUQ6GumF9/TU6uK+pRbTYeJUeB4xU1u30e/GuoHLE=;
-        b=PghPkUioA81pAlIzFj9kwLPRRrMOJB27nR8QQ4WmTIXBy5YBmgo3YmgTzvNjac+jxQ
-         7+bc18dtsxuAh3QHaAyIaw+393VL1NB1TXoL7m24zKkOq4NuggJfHB4merGhVkIRN4fI
-         I39wT4yJrEL36WehdrRVQJBkOeA2B28OmHjYALRMneuAOh5dMA0n4fojn9GyL49yPnOB
-         krcHX8Y8GndeXrVvo/mRShxOcG03QDJjyk+f5N9N0iuJxpWuIB0Y3bEHtW9b1jeowcnl
-         3hjlugpxv3wAzIG5RMptXhvaRUgzjA1wsuTQlmYfIsweuMv9kmf18psxhvjUpLeRtEP+
-         9LXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUrm9w1ekTFLTWZRwYaa6sxnReHW8y3tts+Zi84Fr30rpTBwZZHFcughnCqb1k6bMjE/YXeFuk=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2yimi0wiXC4dPgpIxvZxzNEfjuwmEgzFytHCKzb3CwWrKv4AP
-	GaCACEJda80/WzdOWdwANHe5qzEVzg/SYiUtyx1YJ3dE0ucw88/W
-X-Gm-Gg: ASbGncsquEUzDA/FFWi//iNHNn7iUPaEYPK86vylyd1UnPFHvOx2gauyVx9Y2TMJWyr
-	99dCzbLHpQD98z6UYql4ZgkdtgV1tvyOFBstUam5lNynEHBqtMYsDlu6yqgQfcIyVtF6cbavHEa
-	jOK7osg3ASPPmLxrdsM6HglNHhP1exn70mBf0fbwWou1b9wNDCZ2M07tH/54+NUZR33VMAbDd8z
-	9f0FBkNp7ETSgCJF6BjDkGEjEIOd+w7FHE0L6+eQlrkqh/HIEoJ+fJVE8kOiNU/ssa4/bZ+3v0j
-	WgbeUdP5Px0htXS7RmyDy6jU9i0=
-X-Google-Smtp-Source: AGHT+IHeDbXh28cKEU2lNRj30EE82yC2TAKjYla28J2iicvKZY5F7e3fcCLy0NDluJznncuzGWfCsw==
-X-Received: by 2002:a05:620a:1724:b0:7ca:cd43:e46e with SMTP id af79cd13be357-7caf73fa4bfmr266382985a.36.1746575183537;
-        Tue, 06 May 2025 16:46:23 -0700 (PDT)
+        bh=eZFBhA4aKbh9bxYzKReOwT6rRAW6REfyh6NppyF3T58=;
+        b=RkavLqUu0dhOL+WgvdFhgAMkLOWIUBc+/MnPV+5lgoajs7vrNjUHLTzAV9H+xlMkES
+         WrFEyuMtCgBVBm2aAhyzDAs3TBuKoS5E0LCYReggF98GYxcjhi78hIjSlPhr2chY4i1T
+         wQYgoDzlMkapiLuqtn3MrqG6sRQZgF5gGbDckZ3XNUwBfhdxEuU9911rx1PsLT58hYFb
+         p7UcputpnwoSci7RQkzS3v7yYqaRQAG4VmHa9E6iYucq5700t45z3wqnK8KZXupPOjCI
+         MpmeaRtj4DQnQDUW8cWNOhhWykKtwCl9jwMT3zBnTQrUzJ2J28h5rZHMqwvCNwa5JE+2
+         dV8A==
+X-Forwarded-Encrypted: i=1; AJvYcCXuCLZFT4gtcp1cRveFKa6JwtvnKNmUt03fBkpbR8cRINi99sIcS714/1obJ8zE31qqxf5jzew=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzMwBqES1JdAIePiZ0IqJD2DOJVramCtQjs/xm3LN8IBYJ5nRzg
+	BXF1+17ZTk98m1hshSbI6GKUp+wszq4nXs8VN0q0oIruMd6dh8KP
+X-Gm-Gg: ASbGncvJVTTRbxLIzp65mhZHpyMTKVM8abBMKyx9jIf3/2bH7Lq+RzRkPxmCandqqbV
+	lv2HY2oXRMwjhB+nXmsCtm5YVa41Myb9PLQ7btaV9706Pasyb9Wsj3HCiK8tlkxMJgDoEwjQdFQ
+	9RA6GD/A4j4imaEPKA2+tCYO0ODoSnp+WNA+T+tqzrB846S978SmgFzo7/z4qA+V7x68yQxO+Qs
+	tSzbV4VZgkg8wDAV8jeyI+oA8o2UhxBDD9NjDl1bYEF/y6b7uji1ilFbXDj0MPiPOL835HhVBI8
+	AcvhWwyeQcWC2vIa
+X-Google-Smtp-Source: AGHT+IEjDlSavtkzKmbSQrqTC2t30r5tt5AL3W9m2wrwiZipklrvf6FkHZGOwnr9K59YfepX2GVs3A==
+X-Received: by 2002:a05:6214:f04:b0:6e8:f4e2:26ef with SMTP id 6a1803df08f44-6f542acd327mr19125306d6.31.1746575187083;
+        Tue, 06 May 2025 16:46:27 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7caf75b87casm46952985a.74.2025.05.06.16.46.22
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f5427e2023sm4083916d6.125.2025.05.06.16.46.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 16:46:23 -0700 (PDT)
+        Tue, 06 May 2025 16:46:26 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
@@ -64,27 +64,26 @@ To: Michael Turquette <mturquette@baylibre.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Nikita Shubin <nikita.shubin@maquefel.me>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Inochi Amaoto <inochiama@gmail.com>
 Cc: linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	netdev@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: Re: (subset) [PATCH v2 0/3] riscv: sophgo: cv18xx: dts rework, part 2
-Date: Wed,  7 May 2025 07:45:53 +0800
-Message-ID: <174657514013.201370.6246239358631068735.b4-ty@gmail.com>
+Subject: Re: (subset) [PATCH v5 0/5] clk: sophgo: add SG2044 clock controller support
+Date: Wed,  7 May 2025 07:45:54 +0800
+Message-ID: <174657514016.201370.7208767895794181355.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250504104553.1447819-1-inochiama@gmail.com>
-References: <20250504104553.1447819-1-inochiama@gmail.com>
+In-Reply-To: <20250418020325.421257-1-inochiama@gmail.com>
+References: <20250418020325.421257-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -94,27 +93,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Sun, 04 May 2025 18:45:49 +0800, Inochi Amaoto wrote:
-> The part 2 of dts rework replaces precise compatible for existed clock device
-> with old wildcard one.
+On Fri, 18 Apr 2025 10:03:19 +0800, Inochi Amaoto wrote:
+> The clock controller of SG2044 provides multiple clocks for various
+> IPs on the SoC, including PLL, mux, div and gates. As the PLL and
+> div have obvious changed and do not fit the framework of SG2042,
+> a new implement is provided to handle these.
 > 
-> Changed from v1:
-> - https://lore.kernel.org/all/20250430020932.307198-1-inochiama@gmail.com/
-> 1. patch 1: reused sophgo,sg2000-clk for sg2002.
-> 2. patch 1: mention sg2002 refer to a real device, not a wildcard one in
->             commit message.
-> 3. patch 2: fix wrong data for sophgo,cv1812h-clk.
-> 4. patch 2: remove compatible sophgo,sg2002-clk.
-> 5. patch 3: adapt the change of patch 1,2.
+> Changed from v4:
+> 1. patch 1,3: Applied Krzysztof's tag.
+> 2. patch 1: fix header path in description.
+> 3. patch 4: drop duplicated module alias.
+> 4. patch 5: make sg2044_clk_desc_data const.
 > 
 > [...]
 
 Applied to sophgo-clk-for-6.16-rc1, thanks!
 
-[1/3] dt-bindings: clock: sophgo: Use precise compatible for CV1800 series SoC
-      https://github.com/sophgo/linux/commit/6d880961f5f9b84d13fb4a0208c7405966bc3489
-[2/3] clk: sophgo: Add support for newly added precise compatible
-      https://github.com/sophgo/linux/commit/dd8bbae9fefeead76f20cd410a5a8299fcbad220
+[1/5] dt-bindings: soc: sophgo: Add SG2044 top syscon device
+      https://github.com/sophgo/linux/commit/e4b700d38957526fbcec6d7bb5890ad4c1192241
+[3/5] dt-bindings: clock: sophgo: add clock controller for SG2044
+      https://github.com/sophgo/linux/commit/1a215904986e48ce04ac8f24ecb5b18cb6beaf43
+[4/5] clk: sophgo: Add PLL clock controller support for SG2044 SoC
+      https://github.com/sophgo/linux/commit/ff5240793b0484187a836f6e1b7f0e376e0776ed
 
 Thanks,
 Inochi
