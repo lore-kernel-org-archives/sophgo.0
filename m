@@ -1,211 +1,165 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010015.outbound.protection.outlook.com [52.103.67.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B47375309;
-	Mon,  5 May 2025 22:47:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746485261; cv=none; b=dBX0VwH2jZWEZZRfrHmvM+8VpIEnv4Qp5TMPP/SqY58EDjZYykqa6kIYL6yY+1eCj5zRuPMYvDicnYAfjZkaLkl1HTioDAJWd9S+sgFjBdbWPsBVHnyuKASWCmZ/7lLl44tmLh1sILAxfQa3PzFdp5sQ6eTOK9JwvqIIf5LBeEw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746485261; c=relaxed/simple;
-	bh=1j4dgteCUSZ7Abj/VzXKM8PzCdf0Yf0zwcztFml+q24=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=n7l5yBeNfrp6DxCsd0JX7/EFGlOiFsA+mP7ohtenEbwkOGzMEgdftTgDnFUFSwX1ofCD9RfOfif5qsoM/pXtu2WVS7YsGTUzzze2ZkAtAbPx5edr/Lp6STXugHmgLAazSC+YzlAgV9ql/pbToEXxSRw5Yd88R/ITc9xu8EbFUDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMvr6oxX; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465E43098BA
+	for <sophgo@lists.linux.dev>; Tue,  6 May 2025 03:36:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746502623; cv=fail; b=E9VKH283NmfGKztr9ZNjjIxXf6iCVj0gpx1AAdvTMxYLb00LvnrR3DEnTCharkcmFcAaucBYkUT4uzU3TmfJDc7U9BIJph9A1WA08BwrgJ54Rspqar6T5BdY8zgmYU4dHwmdraCYD+jbGYzjmFmxpbIXn8dbLYrbCEdIBMYCgKg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746502623; c=relaxed/simple;
+	bh=lMyis3HJS/ZLAnmVi0ROqk8UHw4UBnZX2ecm4cUvqA4=;
+	h=Message-ID:Date:To:Cc:From:Subject:Content-Type:MIME-Version; b=i4IBvs+2vxPjqB7weTxZ6+z2mC328TGZyxxg1BZIwEni27dRFXf7WyH27TJXvzT04ytFY3/WuXuiAM5qYPgBKl971a1rBNulzulLEFPVmnXxghJIzdHDC5pMyGuoA5Rw/CZwXc6ypfrpNZwBxM0aZ2ng6fZ+c3wi2cem7kxTufM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=QQAUEoEg; arc=fail smtp.client-ip=52.103.67.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMvr6oxX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A955C4CEE4;
-	Mon,  5 May 2025 22:47:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1746485261;
-	bh=1j4dgteCUSZ7Abj/VzXKM8PzCdf0Yf0zwcztFml+q24=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dMvr6oxXpYDLuoyY9B9Jwx57JC1S8d/kZv8HixNa6Ull97iRhBl3C0XMYo8CjfTx7
-	 op6OBVFdOCW6mupn+DDAIZjiuEP03wLxrADakKSl89eb3YZtI9LRoJJ3+uzYpHm6q3
-	 nlF7Y88UejbzwNXn0t9+alc4/ICiozFVcBjQmJSNxQu20b7kwTfqASY1XhDInxYWU5
-	 Xv2mJuVnHSG1MS/o0joVsT+dgOBz6jEnStAw5hNEpW5e2/g7a9j6m/il40dz/ei0ZG
-	 F18wrUfEbN07szCrf2mxFu2TuwX1jPsh+mbkfH+J+RlBv+KosbTOYaQRuLtbEoSpIk
-	 puKxO9NbFvIQA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>,
-	unicorn_wang@outlook.com,
-	harshit.m.mogalapalli@oracle.com,
-	linux-gpio@vger.kernel.org,
-	sophgo@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.12 240/486] pinctrl: sophgo: avoid to modify untouched bit when setting cv1800 pinconf
-Date: Mon,  5 May 2025 18:35:16 -0400
-Message-Id: <20250505223922.2682012-240-sashal@kernel.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250505223922.2682012-1-sashal@kernel.org>
-References: <20250505223922.2682012-1-sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="QQAUEoEg"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=we4ylSOCLNBPU26pDqQyliKzcBY3Ov6qs2FEM6u1IQ9udYQ8XJpKUJMYi6goxdFTIB84AROLGLMYTkhq3h+HAnaShdTLFHb1Oe44npOrxBYRNKtliBIpDK/plnuNnDGYUh06BmZ0kVh9HfhIvw009GtGrcCjBkU8QDRiPXLIZm9s2sXajjeISauNSGtFIXW/R/bBA5CoD8DEmx16QUcw8oVU+9GYxbNkh/M5x858jVonhNj9XMpCYcgnDIthLVROnklGg59ti7e5BUNxkPjlsM7lQOPIzOknK/l9vR++4ppu+1y86Oxrnzw+vyTs74G2qSIoM5PhOnSI1gK28FUDwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bssOURB3wpvDvuVhsve68qXUUj/O5nRRJeVXweWXE98=;
+ b=ZXjhliIopPfpAMpVABc21howPAOqA8b3e8krCKhwWE83D7xyLQiScZLYe5iPFWyPO8wjt0IF1oxEXoA648RY1TGK9yJCqOxnXXNHArJuy5zd59lNoBmVNqaJq0SdRM4hvmlVF9mXTDGaPm6WCOYEvPBDifLjTGwW7BrFat2B24DKacxzDvYnQmZ1LON8HdyegdDL7WrP809sVz1XRiKX1+V1z99O22xSY4A2a4rOBkMNH3Bcr4mTPlqCf/x1nS4wVgt//Bkvjhx5HrwqcifErBgYCMoajqNdb0G7SgHAA1g3CR3S3osgP7ZE3yar84ZYVEM+M7uOhCZTYMwG5xOfog==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=bssOURB3wpvDvuVhsve68qXUUj/O5nRRJeVXweWXE98=;
+ b=QQAUEoEgcVwyQU2HvVKjqpOtlIJQgfMj8bioWJo21LIrMK113gfQJWS7bzI3ADm56iceRhrxfuCUeBRzyNmcxbsIu0+LNEMMMw6d2iGtC+pe+80+8WztTPp7FZuUoAZvGiyhnu4d6TgNkPohu2U2otLIMDWAAzmZWuIegvLsDOJF/2yOhkTb4bZfC0JOlftkiDNFs5VEQ666BWIzt1fghFBFzABiwAcZakihyMZkjZBWLS32hZM7fGzHmvCjt9B3U5w5NrgMQp76pnpdqrZ/kf8tn05Oj0mOdKwT6XaJImJ1x7VCiwtPtIDfAdUKgre3tPgrm6PYdvnWa9SlYjUktQ==
+Received: from MA0P287MB2262.INDP287.PROD.OUTLOOK.COM (2603:1096:a01:100::6)
+ by PN0P287MB1173.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:190::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.25; Tue, 6 May
+ 2025 03:36:55 +0000
+Received: from MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ca81:3600:b1e4:fcf4]) by MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
+ ([fe80::ca81:3600:b1e4:fcf4%4]) with mapi id 15.20.8699.026; Tue, 6 May 2025
+ 03:36:55 +0000
+Message-ID:
+ <MA0P287MB22625A31223E095B44640B43FE892@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
+Date: Tue, 6 May 2025 11:36:52 +0800
+User-Agent: Mozilla Thunderbird
+To: "linux-next@vger.kernel.org >> Linux Next Mailing List"
+ <linux-next@vger.kernel.org>, Stephen Rothwell <sfr@canb.auug.org.au>
+Cc: Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev,
+ Chen Wang <unicorn_wang@outlook.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+Subject: Please add two new branches for sophgo/linux.git
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0020.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:192::6) To MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:100::6)
+X-Microsoft-Original-Message-ID:
+ <0d359e3b-a525-4a21-a8f4-fd507bf0e873@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.12.26
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MA0P287MB2262:EE_|PN0P287MB1173:EE_
+X-MS-Office365-Filtering-Correlation-Id: 533c67b4-65c4-407a-6f2d-08dd8c4f3f0b
+X-MS-Exchange-SLBlob-MailProps:
+	Cq7lScuPrnoSu68Y5FdRDlCPOBk43FEtslcVioRXMekz/8Fd3fdCdhrWcZ1t7TFG5ZboZroPxeCne2lL3E8esyXh7jWXlyRn+iduaZfaJYv6Qvqv6VqbhVLkXl/d9BTjt5EDSXocr1kOWnchEXXbZpfJCgRDThI0qFNQX/Lzr1kXHLWoQNxlEXxaNV8io5Lq85vxDWjArzKiaSnctRDcFuNygLoUOW1KEp1C+xKLUWLxzUQA5sUEXFGZStKiG0Wi35QuYYGAjXONlvxxcUxeybucmsdvDRF86SYwmbgfx7KwY4vOSXbTRffCtk2y5tT6Yt/gmOwK0YmniNK3U71HVw8EDdjs3aFQ+9LR0CjgC25qfZqwTFyRi3CA7uOJcOqyUTw5TIdPtKIn9O5jJeM4TU9/LByoFQAhu1m6CNNo0Q8DMAI4yA4aTvOJWnWSn/WiQ2W/TLwmQpIrDN8PFJYH3Gum1WhR+a8+xY9FcB2sX/wKZIsw4tBOhjvMDbresSQNR+dzAXeZ1tVjoqEmIu0zGith8mb7bEDFe7bSLBe6xAeMsut1AMHzJFSdrnfaMScNMgN534avlSGnyUWZA5wyvLiP2b7DZ918Cu0N0TXLQAqV31QKHmwfNjBl3WWsgl4tBhErxSMfBSwrkSUxO7Y3oZcMtoGFgPErnE568lEgn3f3hlzCc+AVzDUJyjBJDMJnnrEFr2qfMvi9/VJ5aDnO4v7F8TMX1qG8FpzFQLa7VhufrSTKSZBKjEf24nADhdl/z87aoTNbukg=
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|19110799006|15080799009|8060799009|7092599006|5072599009|6090799003|5062599005|461199028|10035399007|440099028|3412199025|34005399003|1710799026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?M2xrYkVqSDkyVVNHQ2xZRytGQWJJdDhabVE2c1N6VXp2aEtYbFk3MDkrTDF1?=
+ =?utf-8?B?VXRsWFhIZ0x0U2Z1U3ZtUGFWV0l3SS96QXBkOTJpbXo2bXVCVHhoaXBHajlG?=
+ =?utf-8?B?RDlrNnZKT3lxeGZoVWVpVGlIQzNJcVdyOTJTNktzSEtEUDdqYlR2Q0VKOW51?=
+ =?utf-8?B?K0hzQUtKNVpIZzNBcE5XMW10ZGdOcUdmWWVLd1N3WjBmUHI1cVA3MG5kU0VB?=
+ =?utf-8?B?NUN5eU9NRkZEZ2FIejhSZkhydy9NbXhEL21XZWVac2ZpYTU0dlVsWVFPQms2?=
+ =?utf-8?B?S0RDZDNNR0xzUWZWczVZU0xsVEZPeEhNQVJvUW5jZG1FTzdyaUtDT2JNVDgz?=
+ =?utf-8?B?ekppM3EzL0JCRjJ4bWU2UzhUcjdtR2lBdVBReURKTDhOcGpRa0RLZGlBMTgr?=
+ =?utf-8?B?T2RqdWx5aHBqRzJFQ0JHOEowdDlEL2twdFRrRWlQU2t4ZTdDVy9LNWJBZis3?=
+ =?utf-8?B?d3o1QWZvZ2pQVi8xK0gxc2tjTlhueThtcW5RTHlJOWJncnhLS3R1K3FteXhD?=
+ =?utf-8?B?akMydFJCMGJWUTFoTUE0NEUyM0x2Rk5CT0VFU2xwVW5hUmY2UUJ4WUxKQjYw?=
+ =?utf-8?B?bmM2RkdhaTJkMWhJc2Y2QXRva0JsMVdwa21naTYweEcwT3BLL0lNbUZYU28z?=
+ =?utf-8?B?Ti9MNVdndk5aQ3dXbVZDRVJOQmRPU09jc3o4eHFsMzJGbFdzREZvZXdORDdo?=
+ =?utf-8?B?cW9NbGJEZHhVdFlBb2FRTXVjSVg4RE90b2I2N2JQZ1h4WUhjNFBIR3FHU3ZI?=
+ =?utf-8?B?cXlHY0Y1L0xZNkltVzR5NHU5RU5mOGVwbm9hOENxYmNOQkJmZWlLdmh2RVN3?=
+ =?utf-8?B?eU43aHpjRjhkQ0svVC9lQk9RZ1hKTUNhRzdMR2RBUzdQeGZuWW9GTWg2TVB5?=
+ =?utf-8?B?S1BhMkp5ZTZCRE1Dbk5HOU4xY1lnQUwvSVlFdkg5ZUZnSlNjaVg3NFVPMEV3?=
+ =?utf-8?B?bTVwTFZEbUJ2aWNzUVRBNTczY1Y3QTA5ZW11dENRbUx5eUg5RGo3cExTbjhl?=
+ =?utf-8?B?RTdNU2ZOdWhpRkVrcFNuZFhORS8rVlgzWkpJY0lqVDhPT3hGWkdoQlptRmRp?=
+ =?utf-8?B?YkJ0UjRzQjJOTnNFb1pMWllnRGVmT0JxM2tzSU9lQmFLQlN5eEdrR0hMTkdw?=
+ =?utf-8?B?ditYL3hSdER0aHZtN0J5aFNvV2dUc0t2ZHJsS1ZCenYvQVZ6S3RmNVoxb1Fa?=
+ =?utf-8?B?bE8wK2pXVW9aVzMzT1J4ZWkrbmNmVkJYS0wvMC9Hcno0L2lEWnM0QXp3U05q?=
+ =?utf-8?B?SERpYUpVeFZnT05KSHYrMlhvUndTTnEweVlpaU8wRDNmR0tJT0Jlcit1eFNJ?=
+ =?utf-8?B?ZUdQd3BCa282cmRram1IVXpvVTdKU3dTeGVWWVRXd2NiQm9MLzcvcTRDWW93?=
+ =?utf-8?B?UEZmZWFjMGNUSWRUb3pDb0FWWlRIc2VPRWFKcFh6WDJNYngwNDh0OEYvLzEz?=
+ =?utf-8?B?UVhjTGNTK2RXeTdwNW45OCsyd2lScmNsbWgzdmQzc3lMcU9jSVN3VHNJKzlI?=
+ =?utf-8?B?Q2pjc2FEalZMTGhVUnRwd294QWgyQVRZeGxRWjliTTBqVjd5N01VOGRLSUlo?=
+ =?utf-8?B?MVhXRFZTQktBWHZIcTBwUzBIVWl6eDJLNG91STJBSndOQjlubXFvUTJiemxY?=
+ =?utf-8?B?S3lWR2xHVEZkSHdpeEhVdGw0NUhZci9MMlo2aWkrTE1GUFhIWUd6ckR0TVVR?=
+ =?utf-8?B?WHZkaWdnQjVxdDhpKzFOODM5NXN2QXVacGRHVkNqTjZsWXJpbU1IbGt3PT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SWU2bnFmeHQvZFV3amJvSnhXL0d2M2dGbERQQ0syN3pKaEoxQ29lMHJUMHVp?=
+ =?utf-8?B?VVl2bUYrNnhjbnBzc1R3ZDdKSm1NWG1hR2F3eXJtUElJTG9tcHRTdDBRa2pL?=
+ =?utf-8?B?WjJoVG10VUhWTjhzUUhtNUwzaDlmdm8zRWRiY0tJRXdsK1p3NVdhVVQxMlhL?=
+ =?utf-8?B?dkw2NWVUWkJ5SzVIVmVZSWRISTZYbnZQdFRFTENvbXd4OTRLVzlJT0VpZ0U3?=
+ =?utf-8?B?WjdMdk16aE5NblNWK0NjUmQ4dHRISGlleUlGOC9NYm9EUWdMN3RRYXdCSU9l?=
+ =?utf-8?B?K2hNWDNIdWJnVWd4VUhrK0RCbmFjN1piTVA0cjVQMEFDQlEycXp5eC9VSHVD?=
+ =?utf-8?B?elFINS9HQjZoYmlBeU53OTBvbWRHb1BPUkRUMklzTEtxZFc3MHdoTnJBZThK?=
+ =?utf-8?B?MzNBekQrUVpCaExRZHlwUkxQMUVtYzk5M1lRQUpxd0ZiNnpMSzBUSXc5Vmhj?=
+ =?utf-8?B?US9SZTNCNXNvN1ByMXVNSTRoQ2k0bXcrbTFnMnFUNkg2TnJQVkFabUJxZ2hH?=
+ =?utf-8?B?V1dpQ0swTFE4ejFXcTRUTGpJQUppc0pWdzE1VEY4YndnQVlkWWhRRCtyVlFt?=
+ =?utf-8?B?ME4zcWYvdHdYUHZwTDg4dktwWThSK0dLeWhuZmFkUjdYV3NmZTJMazVtVHBQ?=
+ =?utf-8?B?ZDQ3RGxrM0tKMzFVOUk3NjB1SDEzcXE1WUlwQm1qa0k5Q2R2eER1Z0FPNmFx?=
+ =?utf-8?B?elZtSWhta2RVVEkwblRKa3ZvdlNMNTVnblg3anlrQzB6YklKTFl4VEFQVEh4?=
+ =?utf-8?B?NG5pTFk5VTBLNFV3NWplUkNtdGI0dUkvblpacEpxZFJHQ1BBbjBMRE14dGNJ?=
+ =?utf-8?B?QnlUZ3ZpdHVmT2VYcjNZbmhWcGdpTEtMOEpyMldZVDlVK2IwWGx1Sitxa3BS?=
+ =?utf-8?B?cENOU2QxM0lKU0hzTE83L0R4RjY1ZVNPVHhWc0d1amNUUlVRN1pUNUVFcE1Q?=
+ =?utf-8?B?Sy96a3dsWlBCeDBqN0ZjaWdKNWlvVEJheWtpdWpSWEN4c2hHNmdLWlFRcGt4?=
+ =?utf-8?B?eXlzcUJUeWJHbWtBT3E2Q2hnTFdwL3V2NHcxSnNqdzVidFRKakZpdUQwTkp1?=
+ =?utf-8?B?NXVSK1pBYVNiT0taNlI4VTlOTnB6c2gyUXJWcElaRWw0UDZQQXZ3N3dVNGVl?=
+ =?utf-8?B?cXRKZzc3Q3dWOE94aHZpdXZNeEd6ZEt1Z1lEQWNGK2JudjY4d21qUi92czNV?=
+ =?utf-8?B?bjJMSmJIMDQxeFc4UlNwbWwrMGxnNWR2ZDdsQ09wVmtUZE5aVTNUL013RGdh?=
+ =?utf-8?B?Y29PUUN0SmYraTI4dkk5K2Z0enpoSnhWVDNER2s1NWVWY2VvWE53NklBUENM?=
+ =?utf-8?B?cTVYaEhtYWVIaGhDNDVpN2M4dXc4dk05Z1JsRHo0VU8xTW5VRzFaK0ZZblZ0?=
+ =?utf-8?B?dC9DdEsrTUVNR1lxL3c3UFpqcDRzMEYyTXhCS1JIYjFKa0QxcXNwbitZZ01Y?=
+ =?utf-8?B?OUlNSjB2NTdxTzlqbXhnYnk2eXZSN0h6RmRlVHZYZExWNnl2REFrcmFkQnFH?=
+ =?utf-8?B?SEJsd3BrL2lVQXlxaHhHSzdQUWZFMC9zT3dNRFk4UWhPRUhJZ3hYUzQrWDJZ?=
+ =?utf-8?B?ZTRzelZDc3laTjVCVVdQSWtTVUFjYnNic2F1TE1Vb0p2aWdOZUVaK09ncER0?=
+ =?utf-8?B?QWtVZktRZ3pQVHIzbGZ5OVJuUVk2eTlSb2VwTFpwbzA3cllNblRRNVcvaWhY?=
+ =?utf-8?B?VEE1VE5CMmxtLzFtbEgyMkpOZmRueW5DeHYxeXJRWlNUWk9LN25zR0ZJRnFJ?=
+ =?utf-8?Q?0LsE+AhvryljfnRCqSpOuV0baTzPkmwgn8YVSjD?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 533c67b4-65c4-407a-6f2d-08dd8c4f3f0b
+X-MS-Exchange-CrossTenant-AuthSource: MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2025 03:36:54.9009
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0P287MB1173
 
-From: Inochi Amaoto <inochiama@gmail.com>
+Hi, Stephen,
 
-[ Upstream commit ef1a5121ae3da02372fcb66d9632ed3d47ad5637 ]
+We already have two branches for-next & fixes included in linux-next for 
+collecting DTS related patches for exiting tree: 
+https://github.com/sophgo/linux.git.
 
-When setting pinconf configuration for cv1800 SoC, the driver just writes
-the value. It may zero some bits of the pinconf register and cause some
-unexpected error. Add a mask to avoid this.
+Now I want to include two new branches in the linux-next to collect 
+drivers/soc related patches.
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Link: https://lore.kernel.org/20250211051801.470800-2-inochiama@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pinctrl/sophgo/pinctrl-cv18xx.c | 33 +++++++++++++++++--------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+branch for soc master: soc-for-next
 
-diff --git a/drivers/pinctrl/sophgo/pinctrl-cv18xx.c b/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
-index 57f2674e75d68..84b4850771ce2 100644
---- a/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
-+++ b/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
-@@ -574,10 +574,10 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 					 struct cv1800_pin *pin,
- 					 unsigned long *configs,
- 					 unsigned int num_configs,
--					 u32 *value)
-+					 u32 *value, u32 *mask)
- {
- 	int i;
--	u32 v = 0;
-+	u32 v = 0, m = 0;
- 	enum cv1800_pin_io_type type;
- 	int ret;
- 
-@@ -596,10 +596,12 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 		case PIN_CONFIG_BIAS_PULL_DOWN:
- 			v &= ~PIN_IO_PULLDOWN;
- 			v |= FIELD_PREP(PIN_IO_PULLDOWN, arg);
-+			m |= PIN_IO_PULLDOWN;
- 			break;
- 		case PIN_CONFIG_BIAS_PULL_UP:
- 			v &= ~PIN_IO_PULLUP;
- 			v |= FIELD_PREP(PIN_IO_PULLUP, arg);
-+			m |= PIN_IO_PULLUP;
- 			break;
- 		case PIN_CONFIG_DRIVE_STRENGTH_UA:
- 			ret = cv1800_pinctrl_oc2reg(pctrl, pin, arg);
-@@ -607,6 +609,7 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 				return ret;
- 			v &= ~PIN_IO_DRIVE;
- 			v |= FIELD_PREP(PIN_IO_DRIVE, ret);
-+			m |= PIN_IO_DRIVE;
- 			break;
- 		case PIN_CONFIG_INPUT_SCHMITT_UV:
- 			ret = cv1800_pinctrl_schmitt2reg(pctrl, pin, arg);
-@@ -614,6 +617,7 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 				return ret;
- 			v &= ~PIN_IO_SCHMITT;
- 			v |= FIELD_PREP(PIN_IO_SCHMITT, ret);
-+			m |= PIN_IO_SCHMITT;
- 			break;
- 		case PIN_CONFIG_POWER_SOURCE:
- 			/* Ignore power source as it is always fixed */
-@@ -621,10 +625,12 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 		case PIN_CONFIG_SLEW_RATE:
- 			v &= ~PIN_IO_OUT_FAST_SLEW;
- 			v |= FIELD_PREP(PIN_IO_OUT_FAST_SLEW, arg);
-+			m |= PIN_IO_OUT_FAST_SLEW;
- 			break;
- 		case PIN_CONFIG_BIAS_BUS_HOLD:
- 			v &= ~PIN_IO_BUS_HOLD;
- 			v |= FIELD_PREP(PIN_IO_BUS_HOLD, arg);
-+			m |= PIN_IO_BUS_HOLD;
- 			break;
- 		default:
- 			return -ENOTSUPP;
-@@ -632,17 +638,19 @@ static int cv1800_pinconf_compute_config(struct cv1800_pinctrl *pctrl,
- 	}
- 
- 	*value = v;
-+	*mask = m;
- 
- 	return 0;
- }
- 
- static int cv1800_pin_set_config(struct cv1800_pinctrl *pctrl,
- 				 unsigned int pin_id,
--				 u32 value)
-+				 u32 value, u32 mask)
- {
- 	struct cv1800_pin *pin = cv1800_get_pin(pctrl, pin_id);
- 	unsigned long flags;
- 	void __iomem *addr;
-+	u32 reg;
- 
- 	if (!pin)
- 		return -EINVAL;
-@@ -650,7 +658,10 @@ static int cv1800_pin_set_config(struct cv1800_pinctrl *pctrl,
- 	addr = cv1800_pinctrl_get_component_addr(pctrl, &pin->conf);
- 
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
--	writel(value, addr);
-+	reg = readl(addr);
-+	reg &= ~mask;
-+	reg |= value;
-+	writel(reg, addr);
- 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
- 
- 	return 0;
-@@ -662,16 +673,17 @@ static int cv1800_pconf_set(struct pinctrl_dev *pctldev,
- {
- 	struct cv1800_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
- 	struct cv1800_pin *pin = cv1800_get_pin(pctrl, pin_id);
--	u32 value;
-+	u32 value, mask;
- 
- 	if (!pin)
- 		return -ENODEV;
- 
- 	if (cv1800_pinconf_compute_config(pctrl, pin,
--					  configs, num_configs, &value))
-+					  configs, num_configs,
-+					  &value, &mask))
- 		return -ENOTSUPP;
- 
--	return cv1800_pin_set_config(pctrl, pin_id, value);
-+	return cv1800_pin_set_config(pctrl, pin_id, value, mask);
- }
- 
- static int cv1800_pconf_group_set(struct pinctrl_dev *pctldev,
-@@ -682,7 +694,7 @@ static int cv1800_pconf_group_set(struct pinctrl_dev *pctldev,
- 	struct cv1800_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
- 	const struct group_desc *group;
- 	const struct cv1800_pin_mux_config *pinmuxs;
--	u32 value;
-+	u32 value, mask;
- 	int i;
- 
- 	group = pinctrl_generic_get_group(pctldev, gsel);
-@@ -692,11 +704,12 @@ static int cv1800_pconf_group_set(struct pinctrl_dev *pctldev,
- 	pinmuxs = group->data;
- 
- 	if (cv1800_pinconf_compute_config(pctrl, pinmuxs[0].pin,
--					  configs, num_configs, &value))
-+					  configs, num_configs,
-+					  &value, &mask))
- 		return -ENOTSUPP;
- 
- 	for (i = 0; i < group->grp.npins; i++)
--		cv1800_pin_set_config(pctrl, group->grp.pins[i], value);
-+		cv1800_pin_set_config(pctrl, group->grp.pins[i], value, mask);
- 
- 	return 0;
- }
--- 
-2.39.5
+branch for soc pending-fixes: soc-fixes
+
+The patches in these braches will be sent to Arnd Bergmann and 
+soc@kernel.org.
+
+Thanks,
+
+Chen
 
