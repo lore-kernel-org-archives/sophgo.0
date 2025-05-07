@@ -1,257 +1,182 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010001.outbound.protection.outlook.com [52.103.67.1])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8B2134A8
-	for <sophgo@lists.linux.dev>; Wed,  7 May 2025 01:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.1
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746582468; cv=fail; b=fpEcZ/Np2P5B+dk4qaa344E85+UsNTUbMomX9VwSaKuX5knlhA/Xitu4jWVQZB9mh/PG1qBlfhyAMnvz/MA5W4KqJZMgFi/lLlNcYri9SC1BlGqypPBwR1oMmUlKi8nLWeMXhWZ8DnOP/itHw1FZaORmW4QYbtMlGKIo1Iv4ARU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746582468; c=relaxed/simple;
-	bh=FZntVLQFQvL8L+PujlYDBTfwxXCZZM8xD6nX/Lasmro=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=JEiiHZr4Tk5D2iVib1ZPyMjysdUliiJuPfxPWMoWv8y9wSR7deBbLTAzqxzNw6USmnflb1601ZhjTdGwEy6nJIBcV1PjTMdwfZZisR5YNvabTgLKFyXFyMPnrHaDKFtLLc25ShWEJ87nSDRKxkmM5bufUJJgA9NzLna4IcL54iI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=PPIboIYk; arc=fail smtp.client-ip=52.103.67.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145701FECCD;
+	Wed,  7 May 2025 06:07:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746598031; cv=none; b=uk4Mxcervpx1DvG9/W7gCFpnlBilSGuEYSV0p44XQ2I9QLFT0Qfs8UFx5Er7tiDVO6Nw6pNzhYot9dzmQeabtpDY4tJU0SdJLeDMuCKvaF9ayhg2/dQom4hegerVl/uh5VCf2K7ol2DJtRCnnYXKq5HwGs0zu4BH10MLttdiYxE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746598031; c=relaxed/simple;
+	bh=XJ3GmIEe0qHJJespiwekgd+syCW0uno2XczVjcXdZcw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CUVmEILYXpONIIIC2s3oWM+x3zW5cLAI5Xo2orA3Ymrua5L+J0NC/US+lzLTVvAT6BP3z0e8WuLFcRg0foaxDq/rKo+RFuAbz6L7q184RNasD6k75kcbdpbjrVJ32qqTOCYb0I1J8lKcO/euU5qA90P5xdG8yHETW25q2J+JJa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T1D5zzFC; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="PPIboIYk"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MvaiCCo8HbUN53t+VvouEBufyxIUnxRleF6xmTtRGB4K5IGIgx+EQqCSErNZmTI04lS14suEg5Ya9qiqiTdFnTRphslcAvaGOzO8hgMqkSL6fbRD9q2GCVMdyEqFBdW52ruqqicFwnUH+bZnZz3ZA4PhBtNRPdPV+rykDt5euo3o/tc9YG73YQhGzRCG3obtpZYNZvAc5rUun6EKH0wye9JW3v3wNg2d9RmjrrzN8NL0PQD+wOQTQEbwrxhcKlqZqMx8wVxZWK4YeW5H3NAHiwx3GdtG4IUmvu5+1rtM8cK1q/C2FmrlCt4jRDEN71nFt0KU3RTsIvkDV8R3mZDJ8A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Xcq2YGLzZXPvlBASLds0hbyqqs9kKFdeu4Zng9IEtMI=;
- b=ZgNkEbtvX4b5G5cbINMoSe5Txm6vF55pTJ/Af96Rw6x+8xe1/g2JFTTfNuA0zmIC2a7XzLHzBUNRrQrGIJ0GowWW6ML+4M7WE6r2C51+MsQT96+NHEoXBIhMD9N9BlNXJoNnDEAA5la+9c0DNy5WJo3JlR0cc8KadX69/2ztCfKuj+MplYQgz2YiF3NknX0aHPHcOAUzY0g5Oy74vnceWAP7XMRjtXclJVpNLQdT25Ek+xNbDuQCkcKDZVeg48VN22C/pjHB2TchQSRO4qTbFozXxhmjXLJKsjIkas7kQq4ngxqc5bIDuhXVUftn/McCMmTC2USpU8AghSWimdbl5g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Xcq2YGLzZXPvlBASLds0hbyqqs9kKFdeu4Zng9IEtMI=;
- b=PPIboIYk7qqn5rzydsWwoszOX3wjwCADZJ5z1vTAG0S7kokY/c0Rcvm2m0Zhpr4+nZ2yHeg3xjoV1OFyPZsmVm65lytoQKB4dNF3Xj+DIc2FRWQY2SdmOUdvgAFsk3jdW3EHhAE6bTR1/wKPgefK7Qv+/0N8j9BWlo6PzgLRUVWPCjLzIkrANvmztbhNWz6FJgvOET5YC0tiwOG2OeENNmLB0gpL8qzbhEt8b1IKdarllZaGIQLINMDaoZlaARWht4P/u1y0LX8QaeCEDlEkrgi7dXkEiCpAq5vTJds6we8Yk+4MVBN27Qv0f1GBrZorE326UQ7hFuh1EdJItQZvbw==
-Received: from MA0P287MB2262.INDP287.PROD.OUTLOOK.COM (2603:1096:a01:100::6)
- by PNXP287MB4098.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:28c::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.19; Wed, 7 May
- 2025 01:47:33 +0000
-Received: from MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
- ([fe80::ca81:3600:b1e4:fcf4]) by MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
- ([fe80::ca81:3600:b1e4:fcf4%5]) with mapi id 15.20.8722.018; Wed, 7 May 2025
- 01:47:33 +0000
-Message-ID:
- <MA0P287MB2262AE2E8C2765AFBE6D41DAFE88A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
-Date: Wed, 7 May 2025 09:47:24 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 4/4] riscv: dts: sophgo: add ethernet GMAC device
- for sg2042
-To: Inochi Amaoto <inochiama@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Richard Cochran <richardcochran@gmail.com>, Guo Ren <guoren@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>, Lothar Rubusch
- <l.rubusch@gmail.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Giuseppe Cavallaro <peppe.cavallaro@st.com>,
- Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
- Longbin Li <looong.bin@gmail.com>, Han Gao <rabenda.cn@gmail.com>
-References: <20250506093256.1107770-1-inochiama@gmail.com>
- <20250506093256.1107770-5-inochiama@gmail.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250506093256.1107770-5-inochiama@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TY4P301CA0023.JPNP301.PROD.OUTLOOK.COM
- (2603:1096:405:2b1::15) To MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:100::6)
-X-Microsoft-Original-Message-ID:
- <5f5663b7-ba40-4bf6-90d4-949532dcd7e0@outlook.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T1D5zzFC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1746598030; x=1778134030;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=XJ3GmIEe0qHJJespiwekgd+syCW0uno2XczVjcXdZcw=;
+  b=T1D5zzFCKLvFCtXOPrn/9m0EknzHjo1v8ZBJ8LIsw7pEEQ+DI0Py6DWs
+   UqNQLwvC3clHR3n+v+SPUbTqnct58a7Y1h2UHAGc4SjGlSC5HXD9CCjjE
+   1xrvWGBhSaaViDu1XE0vDLq7ZUD3BvTO0lwaCDXg7y+Zb60AQ4HZDo/Rg
+   hUOmr5g5EVZGoI8yoIGXMpKbG/epno8rywKzUcPw7MbYrcI/9Jrd5XE5X
+   b3HQ42ZaUJwvPM743EUOSP+bxxovTybDRKh9NTLtXAJW6QmXHuHvbFaTc
+   ShBwmPPeqHlJ0bq1oV06BdQmNdAxNbT+4HEWXGpkeOuZ3cJQwHNKCAYyt
+   Q==;
+X-CSE-ConnectionGUID: iB7HGyUwSWynHa6Ir/aDJg==
+X-CSE-MsgGUID: aWmI0sRpSL6usYocpPFv7Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11425"; a="48316398"
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="48316398"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 May 2025 23:07:09 -0700
+X-CSE-ConnectionGUID: mYUWIYhbR5efS8YdeLTv+A==
+X-CSE-MsgGUID: 8L47qrO8S56HbJmO3Re3Bw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,268,1739865600"; 
+   d="scan'208";a="136370562"
+Received: from lkp-server01.sh.intel.com (HELO 1992f890471c) ([10.239.97.150])
+  by orviesa007.jf.intel.com with ESMTP; 06 May 2025 23:07:06 -0700
+Received: from kbuild by 1992f890471c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uCXvr-00079S-0D;
+	Wed, 07 May 2025 06:07:03 +0000
+Date: Wed, 7 May 2025 14:06:20 +0800
+From: kernel test robot <lkp@intel.com>
+To: Junhui Liu <junhui.liu@pigmoral.tech>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Yuntao Dai <d1581209858@live.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v3 3/3] mailbox: sophgo: add mailbox driver for CV18XX
+ series SoC
+Message-ID: <202505071325.uHimwt0g-lkp@intel.com>
+References: <20250428-cv18xx-mbox-v3-3-ed18dfd836d1@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MA0P287MB2262:EE_|PNXP287MB4098:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5abd396b-2817-42b1-f374-08dd8d092289
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|6090799003|461199028|41001999006|5072599009|19110799006|7092599006|8060799009|15080799009|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TXkvMTJqdG9tWkxpcExuR3RSUkJ3T2lkM2x3a09tbmdEWWgrcy9Sb1NYV01I?=
- =?utf-8?B?U0EzVFkycFJDUlBrcHJSc2xhd2gvN3VhUk8xQ1R2bVBYeElDcWprTE9CWGlV?=
- =?utf-8?B?UWQwVTZGN0ZlZ1JMVlFmTHIrTmRIbndPcFpaeHp6RjVreUkwdzhiWGJiOVNP?=
- =?utf-8?B?ZnFTNTI1OVJ3bkxseE1zZWJXY3pNelFOUVdPK0k2NjY5eHc5R1dUMHBIbzNi?=
- =?utf-8?B?MHlLRWpLK2xzazlHaUk2ZnY2ZXBxRlNRWElaemJlMU95VGpRSTZLeTk3T0dr?=
- =?utf-8?B?OVBzV2sxMEtPYmRIaUExeHhlTGNLcTdZc0tLd1p3UlN0SkpXN1VWSGtreE94?=
- =?utf-8?B?NEQ0Y3I3MEVHeEl5MTl6bTZzWmV2WlRtUFlIaXM2VHpzQnZ6cXpxdEpJQWJo?=
- =?utf-8?B?dzVWSU9OM2FoS0w3Z0ZMZnowQ3hIbTU4RGRNSjQ3a3pFLzJ2OVROZC8rQ01Y?=
- =?utf-8?B?WlpXRFEwOFFOTjVFMEtkWWdRdGIrVzA4Z1NKYWtFRlVxZlU5MkhFaDloZ25S?=
- =?utf-8?B?RGFCY2c3bGdJMWRObEJlUUhjMi9ueHFpS3hjSnJCQ0E2aEVqZmVOMFphR1FH?=
- =?utf-8?B?T3B1d2xPVmtZV3k5aDRJVEtzdUFEVi93Smx2Q01oOURyemxPdGdNSCtnL1ds?=
- =?utf-8?B?UG5GVlg3UE15cDhuWHRSaFlJb1l0UklPTVJycDk4b3JleGdTcCs2RHB6a1NX?=
- =?utf-8?B?UFF3SldZMU1FOWlaUk5OTW9vUHJTNW1ROGtyQzRiVk5BNVQ1TnlCWEYyK1JS?=
- =?utf-8?B?TGVlbEZ6Ti91ekgydHFaQXBjMXBTQnE2K2JwbURidU03UVNJaDVJTUhsQzRB?=
- =?utf-8?B?TE5PYW5LelF4b1k5V21YYSt0Q3FFTk5rYnNZWVJIVzFJNjFuVFVBeHhYRjhY?=
- =?utf-8?B?SjZoN2l6SnA5Um1vaWRFeHdZQXhHb1YzdjF6alVuU2hiY1lFakRYVGk5bjZO?=
- =?utf-8?B?M2RNOTZnRC9wMmc1cW9aaE9vaUdtTi9iU0s5MCtQdFBBVE1MZzBybDJiamFj?=
- =?utf-8?B?TlNUVXdBbDRQZDNxK3VaZUp5bjhwR3VDbjE5VTlpVERkUlJtVmRDMU51RS9T?=
- =?utf-8?B?ZktLaEhDcFBFNDk2ank5Yk5CdEowWWhsRGl2N2xyUUdEYUtjWnRMQnltRkRy?=
- =?utf-8?B?VE9lSENwRW1CNisvaFNHRUZkb0dqcHU0eWQyeDdtYmtaRDdoQ1k2NWhQaEt3?=
- =?utf-8?B?dmFwMXRMMFp3aG9UMFZwWVYvRFNHL2N2T3BJQWd2SGwyTzBzRDk5U0s1YXha?=
- =?utf-8?B?N2xqbXBzaXNTMmoyRGl4Y2tUT2Y1b2JNVlJsM216UUVnVWtZQXVjMEdBRzZm?=
- =?utf-8?B?bk1jdDZwSGZiU2JGYTRIY0xCbVdEaUhkY0dpME9UU044Z2JzNmRuNk1nbUJm?=
- =?utf-8?B?QWFvaklwQ2VEM0FmcUFtblBGRGJhY1pJQmJEdk9rRjgxbVl3Q01ETGZlb2ds?=
- =?utf-8?B?SU9DRUhwK3NwdlhubmVEdUU1L0RKMVhTYmdTRktNSmVSTDFidTZ1MTd0YUFh?=
- =?utf-8?B?a1J5RUlBcVlDMTVWaGpDNXluVnVvSmxRN3BzY3NjLzdrZ1BXdzdLTHhvRDZn?=
- =?utf-8?Q?8lqU0kvQFoYfcXu6yIQsrPsaI=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bEhXNVlnN216K2hJdWVySTVkMG84U28xNmV0Ry84QkcxUmVLN0dlSk15QWRG?=
- =?utf-8?B?VVlBcjNyR2VyVDRGdU9MMmVwVlpWWEFPNG5GaTZDWGNuYnFPRDdWU25NWnBi?=
- =?utf-8?B?SjhtV3pMNFN4UFZvdndibVFqa2hUYjNmSlBONmwrOGdaN0F1Q0FqNXhFUGhE?=
- =?utf-8?B?Z0o3REdYWUNzdGU2STlZYXJCMDFrVFBmMXJHK202MDk1VVdSVDBYZkhCMUli?=
- =?utf-8?B?RkNockRHckVoU2NUTVdldStoT0JRWVhVY1Z6Z2F6eXlLWXJiUzVMc2lES3kv?=
- =?utf-8?B?djRsOXJqQk9Ga2poRUZrbEJ3TUowYS9UWVE2S0ZYOFhETFA2S1h2dXB3RTdC?=
- =?utf-8?B?SnIrU0JCS0NDQkhnRXhvRHdSZUF6dEFJUlcxaSt4QnpBY0hRV25BeFhCWlp4?=
- =?utf-8?B?Qkh4VnNaZ1B1dFg1WFBHQ2VWTFVEMDlEOXlselBRMHp5eGxSRjlpSEFTY2Nu?=
- =?utf-8?B?VGNSZ2V1bTRhYVhlYlZvNS84cW8wQ0ViTHJvb3dzWDNyMUk4Rk1SckNDUDJa?=
- =?utf-8?B?R2s4QVUvME1xd1RXN240d09uOFROOGh6a1V2aFpCcTVNd1VCK09OZ1dKOXBm?=
- =?utf-8?B?a2JqMkwwNGhjaEltNnoraTYycUg2RUk2U2pFQUhxMVo2Qy8wUXBhZ3VMUHcr?=
- =?utf-8?B?Y2luN25lbVNRN1M2WFlmSXdseUp3V2ZOTjBORkZQTlZlY1Jka25pcjZhaHJW?=
- =?utf-8?B?KzMwQUpoYUZUeVlpVUszQTFxcHZIVVFvcVArTUxNM0U1N0xwNjBlWUpMY0N6?=
- =?utf-8?B?OVJDUFA2bG94cUdydjRKaldnRzRIbS92NU0zSHJGNVR1bi9vc2FrbUpDME9i?=
- =?utf-8?B?OFZ3dC9uVEtzRTA2cXMxRERONTdtM2NFeUZaNnlla3FJSm5EMUJKcWxKK3k4?=
- =?utf-8?B?SVI1TzZncWtEcmQ2K2ZwcThVdVVJMXNlelNYY05oR0QwYmVNdmdVU29TSnJy?=
- =?utf-8?B?ME85LzNhekNXS2J6R0tDWHova2NlQ3JuVHJCNlY5YUhjWWtKYy80Y29wWFBv?=
- =?utf-8?B?THptOXphMXJiOHQwNTBDeWQvdFJIbjcvZ2RvMWdEbzNQMGRjb3c3cnM2c09W?=
- =?utf-8?B?RG1mb3hpRzNoWlZtSEduUUx4TXNuamxNL0F5Ukg5Z3VqZHByMDNiQUNtbVhu?=
- =?utf-8?B?YTdTNEpzejlya2xBbUhkQkFkUmhSRnlqaTI4RmtRUTJyYnRJdHNta21GR2ky?=
- =?utf-8?B?UmwzcEFIalV3NHBpdzc0NDc2MEVBeEFKYU1VS1FoSWxMK0NYOXc3K1ZuVjhX?=
- =?utf-8?B?ZTdqUGNocVA4K1NhUmhvbzJDNUYycHlRTm01bGFjTnkwV21tMnlvOGRsN3M2?=
- =?utf-8?B?Q1hCSFM5cFcyR3BZVEt2eU0wbUdiNU5DYjg5MGxRTWVtNGRiUDM0VTV4bHln?=
- =?utf-8?B?OFlzNFhsNi83MW81L0E4ZXN1Sis4aXBKOHMyVUhFOFdJOEpWM1ZEOXFJNStJ?=
- =?utf-8?B?cmg4Y281U1hKa0lHWDZQcDBOZSsxY0Fub0s3cWhidGw0UURBekx4aWNYaGtE?=
- =?utf-8?B?WktuMGhWSFFoamxoMEZQU3czeFR4R2lrSlZ4Z05FODhrRjIrNFBjU1FrS1l1?=
- =?utf-8?B?cWh1ZCtPYVNqdGVLaTQ5TjBxVnI0dkNTUGdOdG5Ib2cwemp2SkVOelkwcDdj?=
- =?utf-8?B?bGdZNFNZMGtBUDNWNlZnVzhLU3JVMUs0cjVTKzVxV0l2R21SZXhvYVhzMlR0?=
- =?utf-8?B?a0Y5UzBPQ2xhd2FuSk1KcTJtcitMbUVzcUpWZFgycmFOcDQyaElibWhPT1BR?=
- =?utf-8?Q?JujeHV2lWdKHabNqj3yFMsEsayX/j6PbzF7Y5eo?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5abd396b-2817-42b1-f374-08dd8d092289
-X-MS-Exchange-CrossTenant-AuthSource: MA0P287MB2262.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2025 01:47:33.3176
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXP287MB4098
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250428-cv18xx-mbox-v3-3-ed18dfd836d1@pigmoral.tech>
 
+Hi Junhui,
 
-On 2025/5/6 17:32, Inochi Amaoto wrote:
-> Add ethernet GMAC device node for the sg2042.
->
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Tested-by: Han Gao <rabenda.cn@gmail.com>
-> ---
->   arch/riscv/boot/dts/sophgo/sg2042.dtsi | 62 ++++++++++++++++++++++++++
->   1 file changed, 62 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> index f61de4788475..886c13cef6ba 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> @@ -543,6 +543,68 @@ uart0: serial@7040000000 {
->   			status = "disabled";
->   		};
->   
-> +		gmac0: ethernet@7040026000 {
-> +			compatible = "sophgo,sg2042-dwmac", "snps,dwmac-5.00a";
-> +			reg = <0x70 0x40026000 0x0 0x4000>;
-> +			clocks = <&clkgen GATE_CLK_AXI_ETH0>,
-> +				 <&clkgen GATE_CLK_PTP_REF_I_ETH0>,
-> +				 <&clkgen GATE_CLK_TX_ETH0>;
-> +			clock-names = "stmmaceth", "ptp_ref", "tx";
-> +			dma-noncoherent;
-> +			interrupt-parent = <&intc>;
-> +			interrupts = <132 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "macirq";
-> +			resets = <&rstgen RST_ETH0>;
-> +			reset-names = "stmmaceth";
-> +			snps,multicast-filter-bins = <0>;
-> +			snps,perfect-filter-entries = <1>;
-> +			snps,aal;
-> +			snps,tso;
-> +			snps,txpbl = <32>;
-> +			snps,rxpbl = <32>;
-> +			snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
-> +			snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
-> +			snps,axi-config = <&gmac0_stmmac_axi_setup>;
-> +			status = "disabled";
-> +
-> +			mdio {
-> +				compatible = "snps,dwmac-mdio";
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +			};
-> +
-> +			gmac0_mtl_rx_setup: rx-queues-config {
-> +				snps,rx-queues-to-use = <8>;
-> +				snps,rx-sched-wsp;
-> +				queue0 {};
-> +				queue1 {};
-> +				queue2 {};
-> +				queue3 {};
-> +				queue4 {};
-> +				queue5 {};
-> +				queue6 {};
-> +				queue7 {};
-> +			};
-> +
-> +			gmac0_mtl_tx_setup: tx-queues-config {
-> +				snps,tx-queues-to-use = <8>;
-> +				queue0 {};
-> +				queue1 {};
-> +				queue2 {};
-> +				queue3 {};
-> +				queue4 {};
-> +				queue5 {};
-> +				queue6 {};
-> +				queue7 {};
-> +			};
-> +
-> +			gmac0_stmmac_axi_setup: stmmac-axi-config {
-> +				snps,blen = <16 8 4 0 0 0 0>;
-> +				snps,wr_osr_lmt = <1>;
-> +				snps,rd_osr_lmt = <2>;
-> +			};
-> +		};
-> +
+kernel test robot noticed the following build warnings:
 
-LGTM.
+[auto build test WARNING on b4432656b36e5cc1d50a1f2dc15357543add530e]
 
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+url:    https://github.com/intel-lab-lkp/linux/commits/Junhui-Liu/dt-bindings-mailbox-add-Sophgo-CV18XX-series-SoC/20250428-221604
+base:   b4432656b36e5cc1d50a1f2dc15357543add530e
+patch link:    https://lore.kernel.org/r/20250428-cv18xx-mbox-v3-3-ed18dfd836d1%40pigmoral.tech
+patch subject: [PATCH v3 3/3] mailbox: sophgo: add mailbox driver for CV18XX series SoC
+config: m68k-randconfig-r121-20250429 (https://download.01.org/0day-ci/archive/20250507/202505071325.uHimwt0g-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 7.5.0
+reproduce: (https://download.01.org/0day-ci/archive/20250507/202505071325.uHimwt0g-lkp@intel.com/reproduce)
 
-Thanks,
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202505071325.uHimwt0g-lkp@intel.com/
 
-Chen
+sparse warnings: (new ones prefixed by >>)
+>> drivers/mailbox/cv1800-mailbox.c:64:50: sparse: sparse: cast removes address space '__iomem' of expression
+   drivers/mailbox/cv1800-mailbox.c:89:33: sparse: sparse: cast removes address space '__iomem' of expression
+>> drivers/mailbox/cv1800-mailbox.c:88:42: sparse: sparse: incorrect type in assignment (different address spaces) @@     expected unsigned long long [noderef] [usertype] __iomem * @@     got unsigned long long [usertype] * @@
+   drivers/mailbox/cv1800-mailbox.c:88:42: sparse:     expected unsigned long long [noderef] [usertype] __iomem *
+   drivers/mailbox/cv1800-mailbox.c:88:42: sparse:     got unsigned long long [usertype] *
+   drivers/mailbox/cv1800-mailbox.c:109:21: sparse: sparse: cast removes address space '__iomem' of expression
+>> drivers/mailbox/cv1800-mailbox.c:109:21: sparse: sparse: incorrect type in argument 1 (different address spaces) @@     expected void volatile [noderef] __iomem *dst @@     got unsigned long long [usertype] * @@
+   drivers/mailbox/cv1800-mailbox.c:109:21: sparse:     expected void volatile [noderef] __iomem *dst
+   drivers/mailbox/cv1800-mailbox.c:109:21: sparse:     got unsigned long long [usertype] *
 
->   		emmc: mmc@704002a000 {
->   			compatible = "sophgo,sg2042-dwcmshc";
->   			reg = <0x70 0x4002a000 0x0 0x1000>;
+vim +/__iomem +64 drivers/mailbox/cv1800-mailbox.c
+
+    54	
+    55	static irqreturn_t cv1800_mbox_isr(int irq, void *dev_id)
+    56	{
+    57		struct cv1800_mbox *mbox = (struct cv1800_mbox *)dev_id;
+    58		size_t i;
+    59		int ret = IRQ_NONE;
+    60	
+    61		for (i = 0; i < MAILBOX_MAX_CHAN; i++) {
+    62			if (mbox->content[i] && mbox->chans[i].cl) {
+    63				mbox_chan_received_data(&mbox->chans[i],
+  > 64							(void *)mbox->content[i]);
+    65				mbox->content[i] = NULL;
+    66				ret = IRQ_HANDLED;
+    67			}
+    68		}
+    69	
+    70		return ret;
+    71	}
+    72	
+    73	static irqreturn_t cv1800_mbox_irq(int irq, void *dev_id)
+    74	{
+    75		struct cv1800_mbox *mbox = (struct cv1800_mbox *)dev_id;
+    76		u8 set, valid;
+    77		size_t i;
+    78		int ret = IRQ_NONE;
+    79	
+    80		set = readb(mbox->mbox_base + MBOX_SET_INT_REG(RECV_CPU));
+    81	
+    82		if (!set)
+    83			return ret;
+    84	
+    85		for (i = 0; i < MAILBOX_MAX_CHAN; i++) {
+    86			valid = set & BIT(i);
+    87			if (valid) {
+  > 88				mbox->content[i] =
+    89					MBOX_CONTEXT_BASE_INDEX(mbox->mbox_base, i);
+    90				writeb(valid,
+    91				       mbox->mbox_base + MBOX_SET_CLR_REG(RECV_CPU));
+    92				writeb(~valid, mbox->mbox_base + MBOX_EN_REG(RECV_CPU));
+    93				ret = IRQ_WAKE_THREAD;
+    94			}
+    95		}
+    96	
+    97		return ret;
+    98	}
+    99	
+   100	static int cv1800_mbox_send_data(struct mbox_chan *chan, void *data)
+   101	{
+   102		struct cv1800_mbox_chan_priv *priv =
+   103			(struct cv1800_mbox_chan_priv *)chan->con_priv;
+   104		struct cv1800_mbox *mbox = dev_get_drvdata(chan->mbox->dev);
+   105		int idx = priv->idx;
+   106		int cpu = priv->cpu;
+   107		u8 en, valid;
+   108	
+ > 109		memcpy_toio(MBOX_CONTEXT_BASE_INDEX(mbox->mbox_base, idx),
+   110			    data, 8);
+   111	
+   112		valid = BIT(idx);
+   113		writeb(valid, mbox->mbox_base + MBOX_SET_CLR_REG(cpu));
+   114		en = readb(mbox->mbox_base + MBOX_EN_REG(cpu));
+   115		writeb(en | valid, mbox->mbox_base + MBOX_EN_REG(cpu));
+   116		writeb(valid, mbox->mbox_base + MBOX_SET_REG);
+   117	
+   118		return 0;
+   119	}
+   120	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
