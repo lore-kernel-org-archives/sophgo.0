@@ -1,105 +1,110 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9404EEADC;
-	Wed,  7 May 2025 00:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE071F5F6
+	for <sophgo@lists.linux.dev>; Wed,  7 May 2025 00:41:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746576685; cv=none; b=TDyyfbII0d+F/fxJYTwMIRBvA+y2jpUmo7JmekgblHJl8PTZG/1JTG5fLYUY4XNEC+1eNriX7hJiJg2viUFNjXHXXdOdIlTSo0eKqEE7WkYQEbQJP3umMFX4tgY7Rns9Bz7rVshL0B4fuXyv4MzoqogIe0LDC//I14z5VJ3V/zU=
+	t=1746578494; cv=none; b=B+1JQ3ys97fXnaNcHeudELteI5uEseH3bkT2BjyhITHOHcJXkRJixG759gleJHLryaCUeKfJYMkzTmsOj7g1YuNKlHWm0WFdMaS1NeaflDQHx4Ae7gqAxJf4dN6JVjVR276uNLYUL1UIGqxWFKE3z8335TVYeLAA41UUZeaUBkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746576685; c=relaxed/simple;
-	bh=G1qOCutaiBY5l/fT4RAeuVBxtwE5c+wjYJ9a5Eg6DZc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nP05S96E5CWCnagn85+WPMgDoqASPImmSd7ptNHXqJ2ugKNmNYQEzRRp++cG/+ynmptYrlqGKrR2w1soCDfXx/rqRodedvankpj6rXp2rDK0G2jvz50+U9qoCWT3Adu7OlS1TObAxJeOcX5WrOdvZjuTyJLhxyg/rmuFCo7qpR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Zga/Aob9; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1746578494; c=relaxed/simple;
+	bh=548Ai+V2mwoJ45UgqwGrbboTIZXoY4ulmIfeHhWTZvw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=SzaAoIsRL9RKY/CVKcDHwNHxTt5LR6Z1t0VbZohrIvhlv95PL70jZgdZep8lPJY7PsfXmeohxtQ2nFtqTnw1P668PfhUWQow2n0kNNCykKRfs9seUdTroI63SNqius6BoOGk5C6XtA82jdHJgfGFJpIS1vROVm1eDUM0QSoubx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U/cgXjmq; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Zga/Aob9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=98pflIFzNKHbzDVEXy4pjIzkWLVMBe8kC2mJxekYy5E=; b=Zga/Aob9wxV06lwi0mqp5S5X7v
-	D5tObw97kMGUxSSpg9nYOysSnSHxjdyf7RonaYzrUXSmb9Ruy9EKNemuQmj1nQDxs5JPZNTYLDlKM
-	ZfnI0EGgd+wu3r7qc2HjpxyDnmthD2HxAKtE84XCMVcnMqub4Pw9LRmCGmhWYJRElAts=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1uCSN6-00BpFN-Sr; Wed, 07 May 2025 02:10:48 +0200
-Date: Wed, 7 May 2025 02:10:48 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/cgXjmq"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6f0ad744811so53672026d6.1
+        for <sophgo@lists.linux.dev>; Tue, 06 May 2025 17:41:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746578492; x=1747183292; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zs0cbHUy/X1CPc3qXeHo09wKGdN2bsQRYveDoPtibro=;
+        b=U/cgXjmqKmqieOiMqOh4StbgJL7TK5HVAZdYPPd5Z9qD2Eiazjr2OfVS9GI7f6s2pF
+         DQtBAiQ6jFUz9xU1A/KIKrwanAiroSzUbuA5Yvo85L1THCEopcRwFiBDIdUunFzYGPoP
+         Tin8yWQexZsi8qSfJCjZg2Pfegjf/qWljT9B9fweb8diTQg+/CKzu+VETOvozqky+7S8
+         WE5tWsdJqaPBQXXzdneyRMqwvvl7r5eCoe1KkGhNyMoNNTOLp9cGEIGjOTkdTnuwhUy0
+         aKmkP/YzC86w6nSTIIpu4BVUDDLhat6x/Pnf97w9XofmJ1sq1H4vrviukbpI3+8p1L1Q
+         NRlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746578492; x=1747183292;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zs0cbHUy/X1CPc3qXeHo09wKGdN2bsQRYveDoPtibro=;
+        b=CtOWjeL4L3PiZwZ12mKlCr7QdBuyt0NMfpVJH2VvJdBpru5DT7CMTnhlBReNgCiq8G
+         vMAYi9M6TNOYYwbDfCN/PMv8C9F2fcuEi27RjtlZ8asSd80jooRY4f+iSgBhW2nL5UN+
+         lT26D0uqGGGfnW2hV7sX4wkxU/9E8ZHZX4e9zA3ecDghxUrn2aQ094/yJZqi8LE77N4S
+         rMDCvnmLJjHniHEhLjwZGV7rS0HQIjJuVFcT2KgY+1QjvydvSor9I760Id+6uihWromf
+         oNuhn1VEFlGnqEINM6WgT3w3pZfv4HM6fJNO1VsUaxvzZwqJAL/xmrWwyukUJsxDr5PD
+         4yiQ==
+X-Gm-Message-State: AOJu0YzOrSbhA5B3AyrX7gxcLHVCjeO4F2aG+YqKWjkJ/zZoNssZW90t
+	moRypSKs8MlEUnF6Gx3dRMKyzzcg5viFnkVKZ2+TfglvgoLpmDb6dbprTQ==
+X-Gm-Gg: ASbGncvjqacl+kBj5hiWKdIGl2LRZYWEbST/2d3PB+Ey3+2lV3/BWYcTaQWB7aCSWC7
+	IGmwCcBhYaKBI83oH5gRPQMRz2+kVVVGJnPhUl++VOCujftjv5fhLTLZoZ36NgqHZFkBehWA5Z4
+	lFuya/ZiderF0aYyY5yThahZAPMDhxRvPegkTvbX8wWa80xLtTgPf2BxT/5IWEmyCEjY5etoXCA
+	s0WpxgSdqLzaYCc/8Lo6UDxdkoMs6jmhg89T/aQEGK0jhDcNy8XUu+jVBjTebbxxxH3l9IsIf+Y
+	P3TkRPkQuVl5Ksfb
+X-Google-Smtp-Source: AGHT+IGVZ/pnRC0a6W8UhFRw6PLxdQ3rmQAvSYapKUv6I9ZAERpmmy7XYBPDgVEEHyeyj6Svq20t2w==
+X-Received: by 2002:a05:6214:5285:b0:6f4:c237:9709 with SMTP id 6a1803df08f44-6f542a4f69amr20264566d6.25.1746578491730;
+        Tue, 06 May 2025 17:41:31 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f5427813f7sm4965586d6.71.2025.05.06.17.41.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 17:41:31 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: sophgo@lists.linux.dev,
+	devicetree@vger.kernel.org,
+	linux-rtc@vger.kernel.org,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Guo Ren <guoren@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Lothar Rubusch <l.rubusch@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next 0/4] riscv: sophgo: Add ethernet support for
- SG2042
-Message-ID: <ffa044e2-ee9e-4a34-af6a-2e45294144f7@lunn.ch>
-References: <20250506093256.1107770-1-inochiama@gmail.com>
- <c7a8185e-07b7-4a62-b39b-7d1e6eec64d6@lunn.ch>
- <fgao5qnim6o3gvixzl7lnftgsish6uajlia5okylxskn3nrexe@gyvgrp72jvj6>
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Yangyu Chen <cyy@cyyself.name>,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v14 0/3] rtc: sophgo: add rtc support for CV1800
+Date: Wed,  7 May 2025 08:41:05 +0800
+Message-ID: <174657845776.270439.14182272430991202072.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250315224921.3627852-1-alexander.sverdlin@gmail.com>
+References: <20250315224921.3627852-1-alexander.sverdlin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fgao5qnim6o3gvixzl7lnftgsish6uajlia5okylxskn3nrexe@gyvgrp72jvj6>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 07, 2025 at 06:24:29AM +0800, Inochi Amaoto wrote:
-> On Tue, May 06, 2025 at 02:03:18PM +0200, Andrew Lunn wrote:
-> > On Tue, May 06, 2025 at 05:32:50PM +0800, Inochi Amaoto wrote:
-> > > The ethernet controller of SG2042 is Synopsys DesignWare IP with
-> > > tx clock. Add device id for it.
-> > > 
-> > > This patch can only be tested on a SG2042 x4 evb board, as pioneer
-> > > does not expose this device.
-> > 
-> > Do you have a patch for this EVB board? Ideally there should be a user
-> > added at the same time as support for a device.
-> > 
-> > 	Andrew
+On Sat, 15 Mar 2025 23:49:11 +0100, Alexander Sverdlin wrote:
+> Real Time Clock (RTC) is an independently powered module within the chip,
+> which includes a 32KHz oscillator and a Power On Reset/POR submodule. It
+> can be used for time display and timed alarm generation.
 > 
-> Yes, I have one for this device. And Han Gao told me that he will send
-> the board patch for the evb board. So I only send the driver.
-> And the fragment for the evb board is likes below, I think it is kind
-> of trivial:
+> This series aims to provide complete DT bindings, but the drivers are only
+> focusing on RTC implementation. Possible Power Management and remoteproc
+> can be implemented later (hence the RTC driver is using syscon, because
+> MMIO space is really interleaved among different functions).
 > 
-> &gmac0 {
-> 	phy-handle = <&phy0>;
-> 	phy-mode = "rgmii-txid";
+> [...]
 
-And this is why i ask, because this is broken. For more information,
-please see:
+Applied to soc-for-next, thanks!
 
-https://patchwork.kernel.org/project/netdevbpf/patch/20250430-v6-15-rc3-net-rgmii-delays-v2-1-099ae651d5e5@lunn.ch/
+[1/3] dt-bindings: soc: sophgo: add RTC support for Sophgo CV1800 series
+      https://github.com/sophgo/linux/commit/76517429dbfd8eca16fe85482cdb8024bbbd06bd
+[2/3] soc: sophgo: cv1800: rtcsys: New driver (handling RTC only)
+      https://github.com/sophgo/linux/commit/c8754c7deab4cbfa947fa2d656cbaf83771828ef
 
-	Andrew
+Thanks,
+Inochi
+
