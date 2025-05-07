@@ -1,87 +1,76 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65BD115B102
-	for <sophgo@lists.linux.dev>; Wed,  7 May 2025 12:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A804D25B67A
+	for <sophgo@lists.linux.dev>; Wed,  7 May 2025 12:12:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746619330; cv=none; b=kS8kl8VHHt/KPTC6VlKS2CGOtXxoz6DlJlO1jNZ581Vi1XBXDRpgvgaMHg1Z/EP+vKNN/5PIA4Z40ERZDRELnJYItMQ3NWPs97gE/RYH3OQTJUlinPPx1LK0Pq045Q+A0VcmSSR3HFox4xxgEeKbrZnrzeLQDHcW5/g0PbIJyEQ=
+	t=1746619963; cv=none; b=qgNsgIfumbF97PDFAmgyWbhwfNhfE1tjG6EXxXmC7h62JZHZ0izGbHwErtiIf8CfqPwpCDJZGaX5vGF7ayg6fln7/i4q5Hf/kvEYR75FjHI9U7pBf7pUzOMs64pRA3GzSz8xRNBpAKFz3To6sX/qPFSgL+pnz8JE4Ih1eJ/6Py0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746619330; c=relaxed/simple;
-	bh=G+gGUFnonfHfqvLJtT3/rMFE4bMTKjw81qinxKZTkP8=;
+	s=arc-20240116; t=1746619963; c=relaxed/simple;
+	bh=NTJibCf50CAjVuEafBvvdZitQuGBn8OdsxGG/m2j3pA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pVJ5vi1PcGGDHoGyhfPdY82HFxn3wH9UzVKLCkdURp83bQm5l2j9fNWOKNqWjEPJ2TOyYNQT1MutScbrYsIa2TadyjemYeXW0Mt+Wcd6xeBNDBFjaFPQnmfL+7vF4hzRprfNsay13MdRE9X8IvP078gNiN8x/5NOZJTQjKNVJ8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QQznUXOO; arc=none smtp.client-ip=209.85.219.44
+	 Content-Type:Content-Disposition:In-Reply-To; b=YzIcBWZQPlnG9yeBtlynUpsf/Oh8P+TOh5O5hfsAy0EuH5ntJGH/wAt6xqC5GIkY1ogdSkWTu9NMmtDzh1LYo6E4gXXi91ySu6E9pQN+xRM1nq6BZvcmFd/gP+GXhRiXzmzi0rLQRAOEF7x+LFoEI/Hdd7DhZc41xjZ9Ncqdpqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/4aLEA9; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QQznUXOO"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6ecf99dd567so90856246d6.0
-        for <sophgo@lists.linux.dev>; Wed, 07 May 2025 05:02:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/4aLEA9"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-477282401b3so75264111cf.1
+        for <sophgo@lists.linux.dev>; Wed, 07 May 2025 05:12:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746619328; x=1747224128; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1746619960; x=1747224760; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cB9Vli3Xxo4KwEG4QM0VC4PHMgHe2AYxc+yOmxy2QWQ=;
-        b=QQznUXOOJaVFWC8vk9hvcWgOcWgDWufZjcjoi7doWng4/cyq/UXaTNoTuPeifml0bH
-         5VZE0e9BqY/VbADMfOlkZ2KQzWttbDjMGLq3iwLKVJhsq5M/IyNfGhiSR/pJQsXCQFFa
-         0x65uju1xEmjdTyxyeuBSzBiik76B3rFYn4kBrtX1BxdbfSjbPXBlspR0kjJ3kvhHT6C
-         q4dZMBFODBvhOQ9lPMIybQwbPx2BbH+tROqKNW2CgMrgR+8GPJ5nHwYXH2msNDGHPrB/
-         17J0YMBTOqHIJl25NchldV0F1LEvHKSy7Jqbk1pYoK9TNu2ZXV/oz42d0beIbiukQeTP
-         cGYA==
+        bh=VPsoooWg4OqaRHlbly3mLyR5VjI9H02/rBL7wWZH720=;
+        b=e/4aLEA9GyXHQjkJPIudqO5M1cFvSNDAtbZNwtlgLfapoe0Y/rjuff3KWVNTVGepKU
+         jyo+d9CPsdRNr/GE4Nfn8PTfQz730Vfhcs/q8qru0I8dE215fHXo2O8885+lrzoy9YUb
+         h98CK6PCZZXVFGBJR60wBsPs/xWQGq8O/ac3tNDP5jVGnpFJv8STsR4Dy/BKHTYr4bAv
+         nuI4wmQXxOG4J1kc5rg3nPptlUHfU7ROAHTYL2sw4+aUUXRPF1DVBuonLBm9SxXhjmaJ
+         JtCU5P6XU6pbt8Rk59I/LVVkxcg/fh7vK2h+D7pqB50Or1U2XNZ8fgXXSDXNHb8CWvH5
+         E8BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746619328; x=1747224128;
+        d=1e100.net; s=20230601; t=1746619960; x=1747224760;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cB9Vli3Xxo4KwEG4QM0VC4PHMgHe2AYxc+yOmxy2QWQ=;
-        b=BqExZV9RQIQ2UKJw7+NYvOue4KdTH51+1KKcU1oyefvueMZK0gGDWW5OlXa1lKFajG
-         Uo+fmXMIPdsRybjgiaYQXsqYvXSlphd9OxqsiOBIrxnbfbbt7ywLnJYg1tOvuya3ndzQ
-         GL45lvz8fy1Bp1TijESfx+jU0y8LmxMdy6YxZ0TpyjDEdKzaelEgfe8Ea+W4N5xr2kkw
-         QrnUG22laaVrzry7ZddKBCRu5Ul38JLdC1KECGHhoqsuvEiUoB9H8sTlRfsd0rXv/Cjk
-         C7u+bEVgqJrmgaCkCbrtkyHA83Ifk9NJjOQFxFJFHYrl59Kpj1TRc7YnzrqvjKC8HvTW
-         jWhw==
-X-Forwarded-Encrypted: i=1; AJvYcCXrEEQ+SxJFep1YJ4W7fDEGyErJDcCRkA2R2VVZXeYL2TFJhCK9gpG/6c17eNZJMgD9M+EWwM0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1/DrbGR7f38ChARkCK6Sd4JcusN0bj+vpXcDwwfNx7UNKsHc3
-	3dWiADROm0aI20FZc0gRfjeWeqgTnw6l0yErXvbfuLvvgs7QkMcaCQ9qwA==
-X-Gm-Gg: ASbGncswbLHfHYIsKQ1UTQ+hE+hvzU3POl2vm2uBf2yDyxVR9CtaA5/xa9O5nEDf5Og
-	s1fMPa+ki9Wg89/1/xoKUUHH2ZgNsY64lvOI1F6qArmq3IsttnbCUmGhqb2Pm8WDEatnuzseVQN
-	fJDpf0tmU5jGVHiKjXjrO83nCpFiH92Vcwc30Et55LDxglYZoq3NSpdwF4g1RB5w1kEdDgSpuh0
-	ahQu5RFPqGs6crEW1JdL8dKdNXr2IqfATKJRVmeSb9bR1mMCIsgKPo4kG8cQ5R+KycHALUboOkN
-	04WpFNYQ9GHVufnK
-X-Google-Smtp-Source: AGHT+IGRl9BUi1WrHprzmvGHRtZmly2KUBbHCnPcITRG9+w3NMHRJoWIA8I9LxLmf29VDGt76SQFqg==
-X-Received: by 2002:ad4:5dc3:0:b0:6e8:ede1:237 with SMTP id 6a1803df08f44-6f542b31434mr45097126d6.43.1746619317492;
-        Wed, 07 May 2025 05:01:57 -0700 (PDT)
+        bh=VPsoooWg4OqaRHlbly3mLyR5VjI9H02/rBL7wWZH720=;
+        b=a9FPkADfxnFzBLqApy4bZclLuCzcYYMvhXIBxKjYBTyD8JwrdrRcuAL3nE3Acq3hii
+         +Jf4qUsJUppnflcTU+7uPBp/ecm+ESi0hEj2o+hKCSkjjmSSriSdOmb7RgZlF61sZKem
+         Igu26XipplhaoaYIcW1Kx2RCd6RxPBbkP3b7yQx2qBMUPm+Vcj5Q1ABLymgxqNU+mNCY
+         QJ8Vm8ts2w7Ayp7JME2l0kkrCPJQeRK3Z76TFzsgvzumBmHu0rFmPXD0aMDam0fmF1U7
+         YhKIdgikI95VINx4+sVHLWIBwG1hcLMJCZU+Dp2dHziJpebn3Iw1ZSxd+SI2UW2DZ3Up
+         yNmg==
+X-Forwarded-Encrypted: i=1; AJvYcCWCymWHHSL6T4T8vP+QajVH0mHDdqs4l2TDIs+Ol8vNhR2KVl7KxMLmycPPf9qPsIk1LXPku28=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzO6hy2ocTeaYKJ3hbKLX19kyUrp8ghstK83Tl0P0ra8hr7WV/m
+	m6SPJms2xAPjRLEVBj+AxMcO9JFV7tBOyZQNHayZuIOX1wmSE0QS
+X-Gm-Gg: ASbGncts6MBKK9UnTMpXcvrNosmrBaMfXY0ngKTkiiX0nPH+AvKDJ7yNeY/hSqpZCYO
+	GdycCiHnVRc3m/sJEyMwj7nfR/w8LDR5YSRR/fF4HNsdOq9zqLpXh+LA+Ef2DoxOZECUSulpfnR
+	o6Nr7QOGj1qTQ6Bzjpb7Dam9P83DGZunXmXKM+HWTZB73k3A3rJaEme33eGV93uInH5ZIFlBJJl
+	Xz4R4jbagUgCuq56RHDvxMK5g18Iq3baTt+wF0mMJvjiH+UAFFp1aVV6n+Gan0pgfVqOQOMhAK9
+	8rIxa2I25nYvxlNyGEqExhd6XRQ=
+X-Google-Smtp-Source: AGHT+IF+xAR2WQjzDO+vIUWI8jjxec8uqpCsBLzZkg9sR/PWtFFsNdHWPV68BfWwfEFlP9RAJp6xDQ==
+X-Received: by 2002:a05:622a:5c0b:b0:476:7e6b:d297 with SMTP id d75a77b69052e-4922795dce9mr48650121cf.41.1746619960390;
+        Wed, 07 May 2025 05:12:40 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f542647e03sm13464756d6.29.2025.05.07.05.01.54
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-49222d9eaa5sm13514401cf.49.2025.05.07.05.12.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 05:01:56 -0700 (PDT)
-Date: Wed, 7 May 2025 20:01:29 +0800
+        Wed, 07 May 2025 05:12:39 -0700 (PDT)
+Date: Wed, 7 May 2025 20:12:15 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+To: Junhui Liu <junhui.liu@pigmoral.tech>, Conor Dooley <conor@kernel.org>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Yuntao Dai <d1581209858@live.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
 	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Richard Cochran <richardcochran@gmail.com>, 
-	Guo Ren <guoren@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, 
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	Romain Gantois <romain.gantois@bootlin.com>, Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>, 
-	Lothar Rubusch <l.rubusch@gmail.com>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH net-next 0/4] riscv: sophgo: Add ethernet support for
- SG2042
-Message-ID: <2tu2mvwsnqdezjei5h43ko24vfave4c3ek2fjoatwsg72p6lpz@3vbtpmm7l73z>
-References: <20250506093256.1107770-1-inochiama@gmail.com>
- <c7a8185e-07b7-4a62-b39b-7d1e6eec64d6@lunn.ch>
- <fgao5qnim6o3gvixzl7lnftgsish6uajlia5okylxskn3nrexe@gyvgrp72jvj6>
- <ffa044e2-ee9e-4a34-af6a-2e45294144f7@lunn.ch>
+	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v3 2/3] riscv: dts: add mailbox for Sophgo CV18XX series
+ SoC
+Message-ID: <myug24f2rnscxracipkv2ghsjlv32qcyui6u4ckpwtaij6bw3x@yesvbm6vh5ls>
+References: <20250428-water-sermon-eefdfa511f8d@spud>
+ <183aa9ef25290278.6bcb31a17e34dfae.e6a8b825df767676@Jude-Air.local>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -90,44 +79,61 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ffa044e2-ee9e-4a34-af6a-2e45294144f7@lunn.ch>
+In-Reply-To: <183aa9ef25290278.6bcb31a17e34dfae.e6a8b825df767676@Jude-Air.local>
 
-On Wed, May 07, 2025 at 02:10:48AM +0200, Andrew Lunn wrote:
-> On Wed, May 07, 2025 at 06:24:29AM +0800, Inochi Amaoto wrote:
-> > On Tue, May 06, 2025 at 02:03:18PM +0200, Andrew Lunn wrote:
-> > > On Tue, May 06, 2025 at 05:32:50PM +0800, Inochi Amaoto wrote:
-> > > > The ethernet controller of SG2042 is Synopsys DesignWare IP with
-> > > > tx clock. Add device id for it.
-> > > > 
-> > > > This patch can only be tested on a SG2042 x4 evb board, as pioneer
-> > > > does not expose this device.
-> > > 
-> > > Do you have a patch for this EVB board? Ideally there should be a user
-> > > added at the same time as support for a device.
-> > > 
-> > > 	Andrew
+On Tue, Apr 29, 2025 at 02:44:10AM +0000, Junhui Liu wrote:
+> Hi Conor,
+> Thanks for you review.
+> 
+> The previous email accidentally lost some Cc lists :(, I'm sorry to
+> harass you.
+> 
+> On 28/04/2025 17:55, Conor Dooley wrote:
+> > On Mon, Apr 28, 2025 at 08:39:45PM +0800, Junhui Liu wrote:
+> >> From: Yuntao Dai <d1581209858@live.com>
+> >> 
+> >> Add mailbox node for Sophgo CV18XX series SoC.
+> >> 
+> >> Signed-off-by: Yuntao Dai <d1581209858@live.com>
+> >> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> >> ---
+> >>  arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 7 +++++++
+> >>  1 file changed, 7 insertions(+)
+> >> 
+> >> diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> >> index c18822ec849f353bc296965d2d600a3df314cff6..f7277288f03c024039054bdc4176fc95c2c8be52 100644
+> >> --- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> >> +++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
+> >> @@ -55,6 +55,13 @@ soc {
+> >>  		dma-noncoherent;
+> >>  		ranges;
+> >>  
+> >> +		mailbox: mailbox@1900000 {
+> >> +			compatible = "sophgo,cv1800b-mailbox";
+> >> +			reg = <0x01900000 0x1000>;
+> >> +			interrupts = <101 IRQ_TYPE_LEVEL_HIGH>;
+> >> +			#mbox-cells = <2>;
+> >> +		};
 > > 
-> > Yes, I have one for this device. And Han Gao told me that he will send
-> > the board patch for the evb board. So I only send the driver.
-> > And the fragment for the evb board is likes below, I think it is kind
-> > of trivial:
+> > No user added here, is there another series in the works that adds a
+> > user of the mailbox?
 > > 
-> > &gmac0 {
-> > 	phy-handle = <&phy0>;
-> > 	phy-mode = "rgmii-txid";
 > 
-> And this is why i ask, because this is broken. For more information,
-> please see:
+> There isn't an actual user node in this specific patch. I used a
+> `mailbox-test` node to verify the functionality in this patch series.
 > 
-> https://patchwork.kernel.org/project/netdevbpf/patch/20250430-v6-15-rc3-net-rgmii-delays-v2-1-099ae651d5e5@lunn.ch/
-> 
-> 	Andrew
 
-You are right, the right phy-mode is "rgmii-id", the delay is not
-added by the PCB. It seems to be better to ask for the vendor about
-the hardware design before copying params for vendor dts. Anyway,
-thanks for reviewing this.
+I am happy to see the way you test it. Can you add it to the cover?
+
+> The intended user for this mailbox is the `remoteproc` node. I plan to
+> submit the `remoteproc` driver patches once the corresponding reset
+> driver [1] is ready and merged.
+> 
+> link: https://lore.kernel.org/linux-riscv/20250209122936.2338821-1-inochiama@gmail.com/ [1]
+> 
+
+I will submit a version for this in the next rc1. I think you can submit
+you remoteproc patch in RFC to get it reviewed.
 
 Regards,
 Inochi
-
