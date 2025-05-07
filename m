@@ -1,76 +1,71 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A804D25B67A
-	for <sophgo@lists.linux.dev>; Wed,  7 May 2025 12:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FAB280028;
+	Wed,  7 May 2025 12:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746619963; cv=none; b=qgNsgIfumbF97PDFAmgyWbhwfNhfE1tjG6EXxXmC7h62JZHZ0izGbHwErtiIf8CfqPwpCDJZGaX5vGF7ayg6fln7/i4q5Hf/kvEYR75FjHI9U7pBf7pUzOMs64pRA3GzSz8xRNBpAKFz3To6sX/qPFSgL+pnz8JE4Ih1eJ/6Py0=
+	t=1746621463; cv=none; b=VaTjPQ8NTh032EXRDhvxee26Cccbcu0YdyjyqZtHnWLTQp3JQsIJFbhHB/URm2oue4MdufFqCr+k06Li58ktjHnkPc3XI9iIeXJl92xcMJSDoa7An6YXiOQBrxLdwbJj7HH2LwjnwJSmXhoFkUUL570qOn7kfLLp2W5SjoKjARw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746619963; c=relaxed/simple;
-	bh=NTJibCf50CAjVuEafBvvdZitQuGBn8OdsxGG/m2j3pA=;
+	s=arc-20240116; t=1746621463; c=relaxed/simple;
+	bh=xCGmUPVZuDdzuUKuQNbIIVf2waBPmWTdSstOrPdd0oE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YzIcBWZQPlnG9yeBtlynUpsf/Oh8P+TOh5O5hfsAy0EuH5ntJGH/wAt6xqC5GIkY1ogdSkWTu9NMmtDzh1LYo6E4gXXi91ySu6E9pQN+xRM1nq6BZvcmFd/gP+GXhRiXzmzi0rLQRAOEF7x+LFoEI/Hdd7DhZc41xjZ9Ncqdpqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e/4aLEA9; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=EGwqGd1MJWHR8glUNiNayBnfonzclZDr55WZIvgadXZrMzGJnTK8ZzdGNUCXO42PcHG9OghhfkZ2DzmQeACdJ0cb1e7RFGP6T3dh7unC31SfPZEw5TUYfvUZJKA9Bb7powLQtT6L+G5DwUHnC6hr50CeqBkMCCyAuD7HHOdc4pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=UxEUkuIl; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e/4aLEA9"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-477282401b3so75264111cf.1
-        for <sophgo@lists.linux.dev>; Wed, 07 May 2025 05:12:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746619960; x=1747224760; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VPsoooWg4OqaRHlbly3mLyR5VjI9H02/rBL7wWZH720=;
-        b=e/4aLEA9GyXHQjkJPIudqO5M1cFvSNDAtbZNwtlgLfapoe0Y/rjuff3KWVNTVGepKU
-         jyo+d9CPsdRNr/GE4Nfn8PTfQz730Vfhcs/q8qru0I8dE215fHXo2O8885+lrzoy9YUb
-         h98CK6PCZZXVFGBJR60wBsPs/xWQGq8O/ac3tNDP5jVGnpFJv8STsR4Dy/BKHTYr4bAv
-         nuI4wmQXxOG4J1kc5rg3nPptlUHfU7ROAHTYL2sw4+aUUXRPF1DVBuonLBm9SxXhjmaJ
-         JtCU5P6XU6pbt8Rk59I/LVVkxcg/fh7vK2h+D7pqB50Or1U2XNZ8fgXXSDXNHb8CWvH5
-         E8BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746619960; x=1747224760;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VPsoooWg4OqaRHlbly3mLyR5VjI9H02/rBL7wWZH720=;
-        b=a9FPkADfxnFzBLqApy4bZclLuCzcYYMvhXIBxKjYBTyD8JwrdrRcuAL3nE3Acq3hii
-         +Jf4qUsJUppnflcTU+7uPBp/ecm+ESi0hEj2o+hKCSkjjmSSriSdOmb7RgZlF61sZKem
-         Igu26XipplhaoaYIcW1Kx2RCd6RxPBbkP3b7yQx2qBMUPm+Vcj5Q1ABLymgxqNU+mNCY
-         QJ8Vm8ts2w7Ayp7JME2l0kkrCPJQeRK3Z76TFzsgvzumBmHu0rFmPXD0aMDam0fmF1U7
-         YhKIdgikI95VINx4+sVHLWIBwG1hcLMJCZU+Dp2dHziJpebn3Iw1ZSxd+SI2UW2DZ3Up
-         yNmg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCymWHHSL6T4T8vP+QajVH0mHDdqs4l2TDIs+Ol8vNhR2KVl7KxMLmycPPf9qPsIk1LXPku28=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzO6hy2ocTeaYKJ3hbKLX19kyUrp8ghstK83Tl0P0ra8hr7WV/m
-	m6SPJms2xAPjRLEVBj+AxMcO9JFV7tBOyZQNHayZuIOX1wmSE0QS
-X-Gm-Gg: ASbGncts6MBKK9UnTMpXcvrNosmrBaMfXY0ngKTkiiX0nPH+AvKDJ7yNeY/hSqpZCYO
-	GdycCiHnVRc3m/sJEyMwj7nfR/w8LDR5YSRR/fF4HNsdOq9zqLpXh+LA+Ef2DoxOZECUSulpfnR
-	o6Nr7QOGj1qTQ6Bzjpb7Dam9P83DGZunXmXKM+HWTZB73k3A3rJaEme33eGV93uInH5ZIFlBJJl
-	Xz4R4jbagUgCuq56RHDvxMK5g18Iq3baTt+wF0mMJvjiH+UAFFp1aVV6n+Gan0pgfVqOQOMhAK9
-	8rIxa2I25nYvxlNyGEqExhd6XRQ=
-X-Google-Smtp-Source: AGHT+IF+xAR2WQjzDO+vIUWI8jjxec8uqpCsBLzZkg9sR/PWtFFsNdHWPV68BfWwfEFlP9RAJp6xDQ==
-X-Received: by 2002:a05:622a:5c0b:b0:476:7e6b:d297 with SMTP id d75a77b69052e-4922795dce9mr48650121cf.41.1746619960390;
-        Wed, 07 May 2025 05:12:40 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-49222d9eaa5sm13514401cf.49.2025.05.07.05.12.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 05:12:39 -0700 (PDT)
-Date: Wed, 7 May 2025 20:12:15 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Junhui Liu <junhui.liu@pigmoral.tech>, Conor Dooley <conor@kernel.org>
-Cc: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Yuntao Dai <d1581209858@live.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v3 2/3] riscv: dts: add mailbox for Sophgo CV18XX series
- SoC
-Message-ID: <myug24f2rnscxracipkv2ghsjlv32qcyui6u4ckpwtaij6bw3x@yesvbm6vh5ls>
-References: <20250428-water-sermon-eefdfa511f8d@spud>
- <183aa9ef25290278.6bcb31a17e34dfae.e6a8b825df767676@Jude-Air.local>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="UxEUkuIl"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=5sPVrzUiQ+hehg1asUBhs/XYvzKveDurKf1FDpj71eU=; b=UxEUkuIlcl7krxdT+42I9uKAVB
+	YsgHWsOYxgVRqKwf7S8mlsuYxgynUv7Q9dX/JaEovXdfoebGLpb08RSV3kTRj4omig7NyEb6+V/rw
+	UceXPNJzvFZKjLe9487sxOqbkwnHbCPN4zSyyKGVVC3kyRHngUxW7FK4rGWfa2nyHZr4=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1uCe1T-00BsZW-F1; Wed, 07 May 2025 14:37:15 +0200
+Date: Wed, 7 May 2025 14:37:15 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Guo Ren <guoren@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Lothar Rubusch <l.rubusch@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next 0/4] riscv: sophgo: Add ethernet support for
+ SG2042
+Message-ID: <b4ce3e35-9255-4fc7-9c8d-4078b24ac3fa@lunn.ch>
+References: <20250506093256.1107770-1-inochiama@gmail.com>
+ <c7a8185e-07b7-4a62-b39b-7d1e6eec64d6@lunn.ch>
+ <fgao5qnim6o3gvixzl7lnftgsish6uajlia5okylxskn3nrexe@gyvgrp72jvj6>
+ <ffa044e2-ee9e-4a34-af6a-2e45294144f7@lunn.ch>
+ <2tu2mvwsnqdezjei5h43ko24vfave4c3ek2fjoatwsg72p6lpz@3vbtpmm7l73z>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -79,61 +74,48 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <183aa9ef25290278.6bcb31a17e34dfae.e6a8b825df767676@Jude-Air.local>
+In-Reply-To: <2tu2mvwsnqdezjei5h43ko24vfave4c3ek2fjoatwsg72p6lpz@3vbtpmm7l73z>
 
-On Tue, Apr 29, 2025 at 02:44:10AM +0000, Junhui Liu wrote:
-> Hi Conor,
-> Thanks for you review.
-> 
-> The previous email accidentally lost some Cc lists :(, I'm sorry to
-> harass you.
-> 
-> On 28/04/2025 17:55, Conor Dooley wrote:
-> > On Mon, Apr 28, 2025 at 08:39:45PM +0800, Junhui Liu wrote:
-> >> From: Yuntao Dai <d1581209858@live.com>
-> >> 
-> >> Add mailbox node for Sophgo CV18XX series SoC.
-> >> 
-> >> Signed-off-by: Yuntao Dai <d1581209858@live.com>
-> >> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> >> ---
-> >>  arch/riscv/boot/dts/sophgo/cv18xx.dtsi | 7 +++++++
-> >>  1 file changed, 7 insertions(+)
-> >> 
-> >> diff --git a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-> >> index c18822ec849f353bc296965d2d600a3df314cff6..f7277288f03c024039054bdc4176fc95c2c8be52 100644
-> >> --- a/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-> >> +++ b/arch/riscv/boot/dts/sophgo/cv18xx.dtsi
-> >> @@ -55,6 +55,13 @@ soc {
-> >>  		dma-noncoherent;
-> >>  		ranges;
-> >>  
-> >> +		mailbox: mailbox@1900000 {
-> >> +			compatible = "sophgo,cv1800b-mailbox";
-> >> +			reg = <0x01900000 0x1000>;
-> >> +			interrupts = <101 IRQ_TYPE_LEVEL_HIGH>;
-> >> +			#mbox-cells = <2>;
-> >> +		};
+On Wed, May 07, 2025 at 08:01:29PM +0800, Inochi Amaoto wrote:
+> On Wed, May 07, 2025 at 02:10:48AM +0200, Andrew Lunn wrote:
+> > On Wed, May 07, 2025 at 06:24:29AM +0800, Inochi Amaoto wrote:
+> > > On Tue, May 06, 2025 at 02:03:18PM +0200, Andrew Lunn wrote:
+> > > > On Tue, May 06, 2025 at 05:32:50PM +0800, Inochi Amaoto wrote:
+> > > > > The ethernet controller of SG2042 is Synopsys DesignWare IP with
+> > > > > tx clock. Add device id for it.
+> > > > > 
+> > > > > This patch can only be tested on a SG2042 x4 evb board, as pioneer
+> > > > > does not expose this device.
+> > > > 
+> > > > Do you have a patch for this EVB board? Ideally there should be a user
+> > > > added at the same time as support for a device.
+> > > > 
+> > > > 	Andrew
+> > > 
+> > > Yes, I have one for this device. And Han Gao told me that he will send
+> > > the board patch for the evb board. So I only send the driver.
+> > > And the fragment for the evb board is likes below, I think it is kind
+> > > of trivial:
+> > > 
+> > > &gmac0 {
+> > > 	phy-handle = <&phy0>;
+> > > 	phy-mode = "rgmii-txid";
 > > 
-> > No user added here, is there another series in the works that adds a
-> > user of the mailbox?
+> > And this is why i ask, because this is broken. For more information,
+> > please see:
 > > 
+> > https://patchwork.kernel.org/project/netdevbpf/patch/20250430-v6-15-rc3-net-rgmii-delays-v2-1-099ae651d5e5@lunn.ch/
+> > 
+> > 	Andrew
 > 
-> There isn't an actual user node in this specific patch. I used a
-> `mailbox-test` node to verify the functionality in this patch series.
-> 
+> You are right, the right phy-mode is "rgmii-id", the delay is not
+> added by the PCB. It seems to be better to ask for the vendor about
+> the hardware design before copying params for vendor dts. Anyway,
+> thanks for reviewing this.
 
-I am happy to see the way you test it. Can you add it to the cover?
+Please do figure this out. Since you are adding a new compatible, you
+have a bit more flexibility. If the MAC driver is doing something
+wrong, you can change its behaviour based on this new compatible
+without breaking other users of the driver using other compatibles.
 
-> The intended user for this mailbox is the `remoteproc` node. I plan to
-> submit the `remoteproc` driver patches once the corresponding reset
-> driver [1] is ready and merged.
-> 
-> link: https://lore.kernel.org/linux-riscv/20250209122936.2338821-1-inochiama@gmail.com/ [1]
-> 
-
-I will submit a version for this in the next rc1. I think you can submit
-you remoteproc patch in RFC to get it reviewed.
-
-Regards,
-Inochi
+	Andrew
