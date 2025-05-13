@@ -1,122 +1,182 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB071A304A
-	for <sophgo@lists.linux.dev>; Tue, 13 May 2025 20:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A480201267
+	for <sophgo@lists.linux.dev>; Tue, 13 May 2025 21:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747168318; cv=none; b=HmPSDKvQ3b8+52vriS+NnrezwcWbKIUZ02q6tPxZu1Q51aXH1vWR/vhVsInHadHfAzxOjudYpzogsYG/pnMtwtvtfZCExfFT7+n5j9w5QcLs8pwg1B11Iqk4tT5Bfn2kppol00xUI8NShCqxayGw9R7KZK3BziF3QTUIXlWbFhU=
+	t=1747171559; cv=none; b=EAAqVJvsVvAypti60d4b71R9jkkq8L+QTgGMeLoKFwh73RRzkIsewhNeVFzi4ZYWClQY76qowhGaG2M0imt5VgOpOL5X/PBVGbxMGrXXBDRQz3M7eqV1wIB42zlPb3zpy+XsGrTxLEs11HfqjFteiP4WRVqEnvbtYu7Xoxqnz2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747168318; c=relaxed/simple;
-	bh=jfRrkp9lyFao9Pp5oLQGET38LS9Y36udY/vg3tP6iQI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bj+eyHF2B6ymqxMDqhhpjxQ3U1Nj9/2XK10hrvYx3m1gtr82JfdEQifk/WGoeRgoBCDSevlF/z4JxqGaQjuGchWwTPBSDnzf44SizEsyHPbsAAFqjj5dw4wbdhB5LwYjZaW3RTxdbHVoKpnVCILPPjo0XqXt6CqJwaZsRDj8SWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBnQjV1z; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747171559; c=relaxed/simple;
+	bh=PONCw9RTCNN6nn6z1Uu6GiS7int2V5KAYeMXT763Scc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iLG5yBrsiT2a45XLoCNZk/+zT0f/mHc2zg/dLtyh1nJfpT+2CRdg8JKHfatx4MAoT4ghKqRmxcKdMHf76aGeFpteI4I1eOtslIcU53Z7OzQcVmnpExFX4P11Kpg714DxdCAjrwAjj7jYWlQkmMJ76UyhqVvGv2hSCZd/q6Juol8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b=hUw3MXW8; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBnQjV1z"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-acb5ec407b1so1042774466b.1
-        for <sophgo@lists.linux.dev>; Tue, 13 May 2025 13:31:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b="hUw3MXW8"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22fb33898bbso76499925ad.3
+        for <sophgo@lists.linux.dev>; Tue, 13 May 2025 14:25:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747168315; x=1747773115; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WCZ2i6E0I6gwRQJDyVBo1njeILo9WXLxHiX21CXlaCc=;
-        b=OBnQjV1zP0U334dXHfyLRFrskuo9Fr85azwIsfPdou7wwCx2gagIc2C/1+RBpS7N1Y
-         e+g/T+Kndk+DqwmLhwIGHIq9VLizXX/Ts01Go7IAXn3C4qKzDzZM6QmBkmKnm1O9/cMo
-         BMsmXuQIq33dlI2CtY6NSQCCVIC0K0hUVW/W2v2PZkCi4aNeIFcJCq7rJsVTZBJWXhmL
-         CZGPA1smEeH1UQl+oi5qWMYYyKqKmOcECG7fFTfwT/XqrbPUGBtQPqo5UbteMqU89Qow
-         Pb1XWTFeX/mvIKxzuep+AlYxF8SzCNGYYSmRYC7sOUK/ld5HSdFL9gQQ2bpZpJCxgRS3
-         O0Mg==
+        d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1747171556; x=1747776356; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=R3RlUrB9vsvdRLDB/WErlx/ApSJjbQf0jOu6HOFeS/w=;
+        b=hUw3MXW8pF6EZi2p3NtmzV92VwbOqo7WwzYgCq0UuQtK6iu1dEaS76GWmmD+RAAm6T
+         tGaiPzOfe8K2OI7rSPR/szTFMbif/2O1854oRoN5wVCX7T5yt581VccLj4h603nNu8hV
+         A88sYmSVs2v2SpFxz62a+3VbqIAi/8xR6iZp3TElK35IrvWiwtMR8hYWuaKUYNCk3BMy
+         GRpUDglxeyutIsR+Dv0ZdbZ+KmDSs0Jy1C+KBc7v9cWVfjQwhVGKh6h+oU58ePJ5wyKe
+         vqIabNUVrX8oFKTA5Y6JGCex+7Hgg8rB7xjYv088kJzY3gKy7A07ulquLXu1j658mYrB
+         C2qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747168315; x=1747773115;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WCZ2i6E0I6gwRQJDyVBo1njeILo9WXLxHiX21CXlaCc=;
-        b=wZlND8KTgzH9sbRBXzXfeAwiXO59BWU5pEJqhFOWagZNMdmQNwndRK37jdv388kv+2
-         Iru15Aynm/R4qXmQg8AHec88gKQ+qm8L2siPL4WPA9dpmHUEOWwaQXh2wBawF/nuitCH
-         CgtCSwJHP6GsaArrPF9EvSAh2Q488cnNK/cz+GIh22jf4g7NVhgOoXSEtCs2sS/soNVA
-         XbZiKhyzf9l2zl9U9eshJPrfVTcoAbRuAbfpMlqaYKL1d41JgkMMJEGCVoxLzCc2J3CX
-         ejrAtf7zWdMWonclX4z8x1IRxOLr3zMEHZ313X8EcTEx9N1kYDEajLKkH8WzBC5DW59A
-         7Qrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWw5uxFk6YJ8zxk404LWHd9sAy7M4gvQv5m9YbHePq519fQ8wEjo+ZtYMnigiPoNFg4YvpKON4=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx2VXcgkTYjvM14N9evGKkSawS4QbnS+YxLX0VA7WXFpdXaEDNP
-	tszMymxSbdgLblJffymoBCOcAJCWjOmTdxrNImlFQ0q79N30OnIoktFsZRrhXXY=
-X-Gm-Gg: ASbGncuxRHc1VmyxyKSMsVklvQKBPLCbdhqSBHZC4PG3X4xTiVcsf7sMrrKAYayOMy/
-	11zTGbsmF9bRHEwJO6rsLp59ulJusWrGDr6kw+8QenUbjvP6EBUgLGnL9UgqkidAmGGnW7EsV27
-	Ub0VMjLU2Da5dnVtPJCl7ZuQsydW3Ib6BmX3m1jol4z+aqes/tV7BGpMu+yIQAXg2y7bwimgOip
-	bCJ3OQoA3B4WLPp1870eS8D8hKFCSJ/NnzaMGrOzYqFbuc/+QhcQ2d5+kLfkpP/Z2R+dfFRG0tO
-	GpdoOSNgZ49iHEDtrboxkeb3qnJfnBiohKXxokTMOFDjXwx7nKgQ/wmol8RTM4Bo
-X-Google-Smtp-Source: AGHT+IHjQ1dMS6usnLiHaz4sXCz7Jck/zY0kS9uEoTI505F+c6LZUIo6wME/2RdA32p259FKoLkbrQ==
-X-Received: by 2002:a17:907:7d8e:b0:ad2:50ef:4930 with SMTP id a640c23a62f3a-ad4f715a442mr96322466b.33.1747168315249;
-        Tue, 13 May 2025 13:31:55 -0700 (PDT)
-Received: from giga-mm.. ([2a02:1210:8608:9200:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad2192c8508sm819349766b.9.2025.05.13.13.31.54
+        d=1e100.net; s=20230601; t=1747171556; x=1747776356;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=R3RlUrB9vsvdRLDB/WErlx/ApSJjbQf0jOu6HOFeS/w=;
+        b=kh/CMHZLne+zdTox+Ac1U5KtgukMD7nNDSkmmOZhFeXS+06PzW4OHXCfoeFYdTMgem
+         i7mWdMilwcad2M04I7xujS/0V+XmLThxfY3A0bm5Lnx2Et21uh0WHWCZXVRmsarkbZxR
+         rnMxAbmB306luoGgp022rzjAPLLLrG49vEKltT/eFmckWbexc1bEuFmdWurdwCI/EQuQ
+         eKD96yL5/Ks6bf2CML8fRI3oHuGPtbZHbLxHeCQTsUhl4+GrBC9HysjypPOV+Z9dVi9K
+         Nw5pHm6oImKDVqNIKhNQpn2lxnPkmdKde0aqNnPazELBk6kJufNIDbE0yaez2gAMXF7E
+         RpSg==
+X-Forwarded-Encrypted: i=1; AJvYcCX758msV5ZPZ584Y3IwjsUfI0OfuKisUIVaMtjgj0fxXRvU5texZEhL95mfzSpUz4BQ5NEMLvE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwuWKmBB5zj6Xlr04KQ6wRDo5Q5CrvN5kK1+dAlrpNK7qnrW0QP
+	F+8oP13m0z+SEZ8p/WDJsAd86g7/E/QRdCpycytJKQ6GAXoeKKyepte+mbq3w1U=
+X-Gm-Gg: ASbGncteosvyO5He8D9AkEkSTaLtVXNrC9EU3irstqisRNYh7GkPuAmxbbMh1TTdl9n
+	jiljkyZzwILmS9cm3MRnRfoVwspq6XpvYKJ42PMRTr9AwxI+Heac+YzPcZG61kcM69Dr7DZKtfJ
+	93cTP+s89XChhedxjqRCb3Gao4o7qlmH9bSeBcOwFPm7IgO6VVKhZGQxrq5F1mUsk0VntXANwxZ
+	tuMe1feuaHycB3XNPwuWcXq7shu2T7BjrY/ovCWas2QbPGMv7RBTIj7yb+BKBOG0c8/HyY/1MmM
+	RRFUbjy5a88Zi+7aVja9cVAIR2pZ4l8l6j9NcuvfFg==
+X-Google-Smtp-Source: AGHT+IFocb82Pc+xAg+z3CR+mX8T9Fb3IZ3K1KpdH6BlWRo7TmjZ95U0igx6DKwvn349WA6Uo5EwQA==
+X-Received: by 2002:a17:903:2f8d:b0:224:1ce1:a3f4 with SMTP id d9443c01a7336-23198116712mr13397695ad.1.1747171556281;
+        Tue, 13 May 2025 14:25:56 -0700 (PDT)
+Received: from ghost ([50.145.13.30])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc82a1965sm85249085ad.231.2025.05.13.14.25.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 May 2025 13:31:54 -0700 (PDT)
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	sophgo@lists.linux.dev
-Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+        Tue, 13 May 2025 14:25:55 -0700 (PDT)
+Date: Tue, 13 May 2025 14:25:53 -0700
+From: Charlie Jenkins <charlie@rivosinc.com>
+To: Chen Wang <unicorn_wang@outlook.com>
+Cc: Han Gao <rabenda.cn@gmail.com>, devicetree@vger.kernel.org,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] riscv: dts: sophgo: cv18xx: Add RTCSYS device node
-Date: Tue, 13 May 2025 22:31:25 +0200
-Message-ID: <20250513203128.620731-1-alexander.sverdlin@gmail.com>
-X-Mailer: git-send-email 2.49.0
+Subject: Re: [PATCH 1/2] riscv: dts: sophgo: Add xtheadvector to the sg2042
+ devicetree
+Message-ID: <aCO44SAoS2kIP61r@ghost>
+References: <cover.1746828006.git.rabenda.cn@gmail.com>
+ <af839bc200637e4eae1cb327c95ac98c82bccd52.1746828006.git.rabenda.cn@gmail.com>
+ <MA0P287MB22624E52A6647B43D53DCD2CFE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
+ <CAAT7Ki9zCYZ7u+nmQgSkgWgv+QSVb=miLRtcNQRfJFcd8JgcJg@mail.gmail.com>
+ <MA0P287MB2262FF6EFEC6D01796683DE6FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
+ <CAAT7Ki-vamEx2f+nTJbd=WeB815ZheJV=mm7ohzBoZrsoaQV+g@mail.gmail.com>
+ <MA0P287MB22629B5A1F6238FBBF9E3609FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <MA0P287MB22629B5A1F6238FBBF9E3609FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
 
-Add the RTCSYS MFD node: in Cvitek CV18xx and its successors RTC Subsystem
-is quite advanced and provides SoC power management functions as well.
+On Tue, May 13, 2025 at 06:05:20PM +0800, Chen Wang wrote:
+> Adding Charlie.
+> 
+> Hi, Charlie,
+> 
+> Can you please help confirm this? Is there something wrong with my
+> understanding? Copied here below for your quick reference:
+> 
+> > One more question is about writing value of "thead,vlenb". See bindings
+> > description in Documentation/devicetree/bindings/riscv/cpus.yaml:
+> > 
+> > ```
+> > 
+> >    thead,vlenb:
+> >      $ref: /schemas/types.yaml#/definitions/uint32
+> >      description:
+> >        VLEN/8, the vector register length in bytes. This property is
+> > required on
+> >        thead systems where the vector register length is not identical
+> > on all harts, or
+> >        the vlenb CSR is not available.
+> > 
+> > ```
+> > 
+> > What I am not sure about is whether we should write 128 or 128/8=16?
+> > Assuming VLEN of C910 is 128bit.
+> 
+> 
+> Thanks, Chen
+> 
+> On 2025/5/13 17:13, Han Gao wrote:
+> > > Assuming VLEN of C910 is 128bit.
+> > I refer to the value of c906 because c906 and c910/c920v1 have the same value.
+> > 
+> > Link: https://lore.kernel.org/linux-riscv/20241113-xtheadvector-v11-3-236c22791ef9@rivosinc.com/
+> > [1]
+> > 
+> > On Tue, May 13, 2025 at 4:06 PM Chen Wang <unicorn_wang@outlook.com> wrote:
+> > > 
+> > > On 2025/5/13 14:45, Han Gao wrote:
+> > > > You can use xxd to convert it.
+> > > > 
+> > > > cat /sys/devices/system/cpu/cpu63/of_node/thead,vlenb | xxd
+> > > > 00000000: 0000 0080                                ....
+> > > > 
+> > > > Regards,
+> > > > Han
+> > > I can read this after disable ERRATA_THEAD_GHOSTWRITE.
 
-The SoC family also contains DW8051 block (Intel 8051 compatible CPU core)
-and an associated SRAM. The corresponding control registers are mapped into
-RTCSYS address space as well.
+You can also pass "mitigations=off" as a kernel arg.
 
-Link: https://github.com/sophgo/sophgo-doc/tree/main/SG200X/TRM
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv180x.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> > > 
+> > > I recommend adding some explanation notes in the commit message. For
+> > > example, when we need to enable xtheadvector, the prerequisite is to
+> > > turn off "ERRATA_THEAD_GHOSTWRITE".
+> > > I found the relevant patch is
+> > > https://lore.kernel.org/linux-riscv/20241113-xtheadvector-v11-0-236c22791ef9@rivosinc.com/,
+> > > also hope adding this will help later people quickly understand and
+> > > avoid my mistakes.
+> > > 
+> > > One more question is about writing value of "thead,vlenb". See bindings
+> > > description in Documentation/devicetree/bindings/riscv/cpus.yaml:
+> > > 
+> > > ```
+> > > 
+> > >     thead,vlenb:
+> > >       $ref: /schemas/types.yaml#/definitions/uint32
+> > >       description:
+> > >         VLEN/8, the vector register length in bytes. This property is
+> > > required on
+> > >         thead systems where the vector register length is not identical
+> > > on all harts, or
+> > >         the vlenb CSR is not available.
+> > > 
+> > > ```
+> > > 
+> > > What I am not sure about is whether we should write 128 or 128/8=16?
+> > > Assuming VLEN of C910 is 128bit.
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index ed06c3609fb2..280c45bd3b3d 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -307,5 +307,17 @@ dmac: dma-controller@4330000 {
- 			snps,data-width = <2>;
- 			status = "disabled";
- 		};
-+
-+		rtc@5025000 {
-+			compatible = "sophgo,cv1800b-rtc", "syscon";
-+			reg = <0x5025000 0x2000>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(1) IRQ_TYPE_LEVEL_HIGH>,
-+				     <SOC_PERIPHERAL_IRQ(2) IRQ_TYPE_LEVEL_HIGH>,
-+				     <SOC_PERIPHERAL_IRQ(3) IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "alarm", "longpress", "vbat";
-+			clocks = <&clk CLK_RTC_25M>,
-+				 <&clk CLK_SRC_RTC_SYS_0>;
-+			clock-names = "rtc", "mcu";
-+		};
- 	};
- };
--- 
-2.49.0
+That's a bug. It should 16, but I had put it as 128 for the D1
+devicetree.
 
+- Charlie
+
+> > > 
+> > > Thanks,
+> > > 
+> > > Chen
+> > > 
