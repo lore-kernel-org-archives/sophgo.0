@@ -1,182 +1,108 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A480201267
-	for <sophgo@lists.linux.dev>; Tue, 13 May 2025 21:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ED51DFE8
+	for <sophgo@lists.linux.dev>; Wed, 14 May 2025 01:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747171559; cv=none; b=EAAqVJvsVvAypti60d4b71R9jkkq8L+QTgGMeLoKFwh73RRzkIsewhNeVFzi4ZYWClQY76qowhGaG2M0imt5VgOpOL5X/PBVGbxMGrXXBDRQz3M7eqV1wIB42zlPb3zpy+XsGrTxLEs11HfqjFteiP4WRVqEnvbtYu7Xoxqnz2I=
+	t=1747185430; cv=none; b=SPUdfrW5V4PABZpX8INfO/dY9Z4bHtuxVJYruxTSfXz+3gdIxHIQjZpxioMKD4HD/F1C2NH/G5CvAt+vu6ERN9mYwo1E11pBVSJocvcDM9ttcPcuEgsAPlMLctJvoo1VX5rHEYC7i+JlaakRWs2UNxRxN4aoDHC6SsCeKAg5hbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747171559; c=relaxed/simple;
-	bh=PONCw9RTCNN6nn6z1Uu6GiS7int2V5KAYeMXT763Scc=;
+	s=arc-20240116; t=1747185430; c=relaxed/simple;
+	bh=nSrQLIIz5NOYeKv3kZaGWloZT+mJKQ6M7Z/Z39vrA4M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iLG5yBrsiT2a45XLoCNZk/+zT0f/mHc2zg/dLtyh1nJfpT+2CRdg8JKHfatx4MAoT4ghKqRmxcKdMHf76aGeFpteI4I1eOtslIcU53Z7OzQcVmnpExFX4P11Kpg714DxdCAjrwAjj7jYWlQkmMJ76UyhqVvGv2hSCZd/q6Juol8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com; spf=pass smtp.mailfrom=rivosinc.com; dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b=hUw3MXW8; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rivosinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rivosinc.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=G9kttIrdSA4BDmVb5XdFaZEMNhbM2TFE/BCTLdNvhS9bdCu9yPsVwDdMf4YwRInw0NCporIIXmqAdbawdcXWTy5Um/JyMIqPhpdoNGTqqFTI+CYzvpKW7223lLJBwwNvGJdd6PNfm2Q4LUrrjfw7i0xL9loKMK45DiQSxGwnjko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y3Tswq4V; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rivosinc-com.20230601.gappssmtp.com header.i=@rivosinc-com.20230601.gappssmtp.com header.b="hUw3MXW8"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-22fb33898bbso76499925ad.3
-        for <sophgo@lists.linux.dev>; Tue, 13 May 2025 14:25:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y3Tswq4V"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f5373067b3so88991416d6.2
+        for <sophgo@lists.linux.dev>; Tue, 13 May 2025 18:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1747171556; x=1747776356; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=R3RlUrB9vsvdRLDB/WErlx/ApSJjbQf0jOu6HOFeS/w=;
-        b=hUw3MXW8pF6EZi2p3NtmzV92VwbOqo7WwzYgCq0UuQtK6iu1dEaS76GWmmD+RAAm6T
-         tGaiPzOfe8K2OI7rSPR/szTFMbif/2O1854oRoN5wVCX7T5yt581VccLj4h603nNu8hV
-         A88sYmSVs2v2SpFxz62a+3VbqIAi/8xR6iZp3TElK35IrvWiwtMR8hYWuaKUYNCk3BMy
-         GRpUDglxeyutIsR+Dv0ZdbZ+KmDSs0Jy1C+KBc7v9cWVfjQwhVGKh6h+oU58ePJ5wyKe
-         vqIabNUVrX8oFKTA5Y6JGCex+7Hgg8rB7xjYv088kJzY3gKy7A07ulquLXu1j658mYrB
-         C2qw==
+        d=gmail.com; s=20230601; t=1747185427; x=1747790227; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nEaVOh/9lfsZXQCmNPE6lSqX4P2H8nzTwz/gMp/qKyg=;
+        b=Y3Tswq4VTU7JgbHr1AulqAWBk3ql3tbLXBLtd09DVTh4HH1yYa3gmdvXe9VPKcKldQ
+         UKKlXQnay28G6nFsedzs3fzXyVivKLYnCQZ04ePbTgqjJ2k3xkdF7soWFRiR7hrm9Y9i
+         wk5BgHRLHKYEkBcw+7aq7xf2VGih7UuDChaGcKmXxhJA4HWWjkj3A+WgYzjxcST8cmRD
+         PW2mYvMtXVY1+aZsHhZw6JRffxdMKNWchIhPVnXBNoIKaQ+wWN6xbLeFlG0loBucIcsm
+         s7Sp7MJo+smclOvp0gOho+oVyG7ua6WcUX/UL6iolEwwTzBX/MYNSmI2BYHFwRR5O+Wj
+         jm4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747171556; x=1747776356;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=R3RlUrB9vsvdRLDB/WErlx/ApSJjbQf0jOu6HOFeS/w=;
-        b=kh/CMHZLne+zdTox+Ac1U5KtgukMD7nNDSkmmOZhFeXS+06PzW4OHXCfoeFYdTMgem
-         i7mWdMilwcad2M04I7xujS/0V+XmLThxfY3A0bm5Lnx2Et21uh0WHWCZXVRmsarkbZxR
-         rnMxAbmB306luoGgp022rzjAPLLLrG49vEKltT/eFmckWbexc1bEuFmdWurdwCI/EQuQ
-         eKD96yL5/Ks6bf2CML8fRI3oHuGPtbZHbLxHeCQTsUhl4+GrBC9HysjypPOV+Z9dVi9K
-         Nw5pHm6oImKDVqNIKhNQpn2lxnPkmdKde0aqNnPazELBk6kJufNIDbE0yaez2gAMXF7E
-         RpSg==
-X-Forwarded-Encrypted: i=1; AJvYcCX758msV5ZPZ584Y3IwjsUfI0OfuKisUIVaMtjgj0fxXRvU5texZEhL95mfzSpUz4BQ5NEMLvE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwuWKmBB5zj6Xlr04KQ6wRDo5Q5CrvN5kK1+dAlrpNK7qnrW0QP
-	F+8oP13m0z+SEZ8p/WDJsAd86g7/E/QRdCpycytJKQ6GAXoeKKyepte+mbq3w1U=
-X-Gm-Gg: ASbGncteosvyO5He8D9AkEkSTaLtVXNrC9EU3irstqisRNYh7GkPuAmxbbMh1TTdl9n
-	jiljkyZzwILmS9cm3MRnRfoVwspq6XpvYKJ42PMRTr9AwxI+Heac+YzPcZG61kcM69Dr7DZKtfJ
-	93cTP+s89XChhedxjqRCb3Gao4o7qlmH9bSeBcOwFPm7IgO6VVKhZGQxrq5F1mUsk0VntXANwxZ
-	tuMe1feuaHycB3XNPwuWcXq7shu2T7BjrY/ovCWas2QbPGMv7RBTIj7yb+BKBOG0c8/HyY/1MmM
-	RRFUbjy5a88Zi+7aVja9cVAIR2pZ4l8l6j9NcuvfFg==
-X-Google-Smtp-Source: AGHT+IFocb82Pc+xAg+z3CR+mX8T9Fb3IZ3K1KpdH6BlWRo7TmjZ95U0igx6DKwvn349WA6Uo5EwQA==
-X-Received: by 2002:a17:903:2f8d:b0:224:1ce1:a3f4 with SMTP id d9443c01a7336-23198116712mr13397695ad.1.1747171556281;
-        Tue, 13 May 2025 14:25:56 -0700 (PDT)
-Received: from ghost ([50.145.13.30])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc82a1965sm85249085ad.231.2025.05.13.14.25.54
+        d=1e100.net; s=20230601; t=1747185427; x=1747790227;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nEaVOh/9lfsZXQCmNPE6lSqX4P2H8nzTwz/gMp/qKyg=;
+        b=Jb2OBSrYIlIpLvPpt6+nwiS4hD4Bou8r3bh2/9CrNbpuiEvkCWUKY+pMOCINn+O+PE
+         D/HrtvCXCVvPjv1L/8c1mUa7q4qJhTsSmRaGw57Bv4/FbSFMohnRN+VKcQqNT2On4xGh
+         slyk9M8kQhXdZBuKJba2/p3fAO9UqwqTr8V4STR5IlQVrZ9CQpVf1//BYCCvInkZSw8U
+         6kHlfIt5GMuanxuU9qBRI1K4G6FHwHsN+U+ljZ8PdW4AZmCigDrOywssg0q3t+vatidS
+         c56Q5b36wV95IUz0QhCdrRq25UUHFRupUfCNbhbVv1sX4bB4MREGEPh+AXLfTLdhoy6v
+         valw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3YoCzh2gwm490XLf1jvDygyMew/FWBMnbBZ0s9JouQxFtDWmU8Nymublh1P1OwL7s44jasgw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyddXVwcGTKEit+gEfBeO9vCWu8GgXqXyIDWES8g7MAI/UaDMhm
+	KCkA3GwyeX2agGxt7GFiJlc6jnRhohjhPdpILs7zi/U3FK0gjlGL
+X-Gm-Gg: ASbGncsWfh90gkuRircnjgWv+WbZTUAc4AG9Lz6iz9zX+cjc24k+Oxg/3FxyWyjO3V2
+	LlQWMylyP/2Tx24DDCe5HEJ6PrMAoxRBxxw9LnXeCkOeGPSgFq80aDV3qsFQLancWeMHsxCBPFS
+	y6IT+YkBPdgWabtJkRXnXu1LVgOEvk7pEZ/lkv37VwiZ9wCtBmw/AZ8SmkTmMy4tCyErpSvAdB8
+	ebrixHDhxuFzqrayovS7eXZwckz/Nn0LLwv+cdGigyCheeqhmGuntfAYVxA1oWoS5v87/+/V0JE
+	X+1kZj2NZju5nhrJET2OOYQ8FJU=
+X-Google-Smtp-Source: AGHT+IFq80xt7wr+N4Is1nsHfkVqlHuQBXPmL2/8vRvaUgO/7OiqL00yD+wmu1pLVR3Zg8H9LoV5EQ==
+X-Received: by 2002:a05:6214:2468:b0:6d4:238e:35b0 with SMTP id 6a1803df08f44-6f896e4c936mr24184336d6.17.1747185427543;
+        Tue, 13 May 2025 18:17:07 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f6e39f588asm74175596d6.49.2025.05.13.18.17.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 May 2025 14:25:55 -0700 (PDT)
-Date: Tue, 13 May 2025 14:25:53 -0700
-From: Charlie Jenkins <charlie@rivosinc.com>
-To: Chen Wang <unicorn_wang@outlook.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, devicetree@vger.kernel.org,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] riscv: dts: sophgo: Add xtheadvector to the sg2042
- devicetree
-Message-ID: <aCO44SAoS2kIP61r@ghost>
-References: <cover.1746828006.git.rabenda.cn@gmail.com>
- <af839bc200637e4eae1cb327c95ac98c82bccd52.1746828006.git.rabenda.cn@gmail.com>
- <MA0P287MB22624E52A6647B43D53DCD2CFE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
- <CAAT7Ki9zCYZ7u+nmQgSkgWgv+QSVb=miLRtcNQRfJFcd8JgcJg@mail.gmail.com>
- <MA0P287MB2262FF6EFEC6D01796683DE6FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
- <CAAT7Ki-vamEx2f+nTJbd=WeB815ZheJV=mm7ohzBoZrsoaQV+g@mail.gmail.com>
- <MA0P287MB22629B5A1F6238FBBF9E3609FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
+        Tue, 13 May 2025 18:17:07 -0700 (PDT)
+Date: Wed, 14 May 2025 09:16:35 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Andi Shyti <andi.shyti@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>, Jisheng Zhang <jszhang@kernel.org>, 
+	Chao Wei <chao.wei@sophgo.com>, linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-mmc@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v2 02/10] dt-bindings: timer: Add Sophgo SG2044 ACLINT
+ timer
+Message-ID: <g45xqtuit7apkduwsfsmw7giqttrb7kjtobejs44rtslx37ynp@ugic2medlczo>
+References: <20250413223507.46480-1-inochiama@gmail.com>
+ <20250413223507.46480-3-inochiama@gmail.com>
+ <aCNYItP6SWImMvFv@mai.linaro.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <MA0P287MB22629B5A1F6238FBBF9E3609FE96A@MA0P287MB2262.INDP287.PROD.OUTLOOK.COM>
+In-Reply-To: <aCNYItP6SWImMvFv@mai.linaro.org>
 
-On Tue, May 13, 2025 at 06:05:20PM +0800, Chen Wang wrote:
-> Adding Charlie.
-> 
-> Hi, Charlie,
-> 
-> Can you please help confirm this? Is there something wrong with my
-> understanding? Copied here below for your quick reference:
-> 
-> > One more question is about writing value of "thead,vlenb". See bindings
-> > description in Documentation/devicetree/bindings/riscv/cpus.yaml:
+On Tue, May 13, 2025 at 04:33:06PM +0200, Daniel Lezcano wrote:
+> On Mon, Apr 14, 2025 at 06:34:56AM +0800, Inochi Amaoto wrote:
+> > Like SG2042, SG2044 implements an enhanced ACLINT, so add necessary
+> > compatible string for SG2044 SoC.
 > > 
-> > ```
-> > 
-> >    thead,vlenb:
-> >      $ref: /schemas/types.yaml#/definitions/uint32
-> >      description:
-> >        VLEN/8, the vector register length in bytes. This property is
-> > required on
-> >        thead systems where the vector register length is not identical
-> > on all harts, or
-> >        the vlenb CSR is not available.
-> > 
-> > ```
-> > 
-> > What I am not sure about is whether we should write 128 or 128/8=16?
-> > Assuming VLEN of C910 is 128bit.
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> > ---
 > 
+> Applied patch 2, thanks!
 > 
-> Thanks, Chen
-> 
-> On 2025/5/13 17:13, Han Gao wrote:
-> > > Assuming VLEN of C910 is 128bit.
-> > I refer to the value of c906 because c906 and c910/c920v1 have the same value.
-> > 
-> > Link: https://lore.kernel.org/linux-riscv/20241113-xtheadvector-v11-3-236c22791ef9@rivosinc.com/
-> > [1]
-> > 
-> > On Tue, May 13, 2025 at 4:06 PM Chen Wang <unicorn_wang@outlook.com> wrote:
-> > > 
-> > > On 2025/5/13 14:45, Han Gao wrote:
-> > > > You can use xxd to convert it.
-> > > > 
-> > > > cat /sys/devices/system/cpu/cpu63/of_node/thead,vlenb | xxd
-> > > > 00000000: 0000 0080                                ....
-> > > > 
-> > > > Regards,
-> > > > Han
-> > > I can read this after disable ERRATA_THEAD_GHOSTWRITE.
 
-You can also pass "mitigations=off" as a kernel arg.
+Thanks, as you take this patch, I will drop this one in our repo
+to avoid duplicate.
 
-> > > 
-> > > I recommend adding some explanation notes in the commit message. For
-> > > example, when we need to enable xtheadvector, the prerequisite is to
-> > > turn off "ERRATA_THEAD_GHOSTWRITE".
-> > > I found the relevant patch is
-> > > https://lore.kernel.org/linux-riscv/20241113-xtheadvector-v11-0-236c22791ef9@rivosinc.com/,
-> > > also hope adding this will help later people quickly understand and
-> > > avoid my mistakes.
-> > > 
-> > > One more question is about writing value of "thead,vlenb". See bindings
-> > > description in Documentation/devicetree/bindings/riscv/cpus.yaml:
-> > > 
-> > > ```
-> > > 
-> > >     thead,vlenb:
-> > >       $ref: /schemas/types.yaml#/definitions/uint32
-> > >       description:
-> > >         VLEN/8, the vector register length in bytes. This property is
-> > > required on
-> > >         thead systems where the vector register length is not identical
-> > > on all harts, or
-> > >         the vlenb CSR is not available.
-> > > 
-> > > ```
-> > > 
-> > > What I am not sure about is whether we should write 128 or 128/8=16?
-> > > Assuming VLEN of C910 is 128bit.
-
-That's a bug. It should 16, but I had put it as 128 for the D1
-devicetree.
-
-- Charlie
-
-> > > 
-> > > Thanks,
-> > > 
-> > > Chen
-> > > 
+Regards,
+Inochi
