@@ -1,137 +1,100 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BD92750F8
-	for <sophgo@lists.linux.dev>; Mon, 19 May 2025 11:43:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A6A201246;
+	Mon, 19 May 2025 12:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747655040; cv=none; b=g9RA9nPYYvNSeaHQLs38mTVnfdXk8TFNlvJ0k2DRbel7WV9m99lmrcdF0EW+uJdIOMKndKfwr1AI4pOz1kJUE5WqN8LNa+yxfjtQfBtEw2mqvkV36eA2MAgj9bga4laf9e2uyWHgvHX0MBjnCVndh/AqLf2A5j/D7yxGEAgYzCQ=
+	t=1747656116; cv=none; b=ZiQzqi4QEhX0o7Et5MDZva5HxWQRDQ6rBCjPcQvQAVAb3EYnf4wH1H0QvebFyOnpb/lC2Z0gCuQ/CdESPfPRIbfDsszOy0QsUJZD92RYSntxRO8Zn9gAKmTS0zVK3krGDCpa7N78hwRC0mKnfUrfuwbTkWgM5BHEBo45vCdLOAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747655040; c=relaxed/simple;
-	bh=MwH0W3o9aFeqh/fMQ2QtF4mamhL6Gz4btfQV+sSYBk8=;
+	s=arc-20240116; t=1747656116; c=relaxed/simple;
+	bh=Zf9gz2Q4q1qJ6K136JlNwatN69nhNVbGzKy8s8ubJ+o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UWVKIaq6QOykM1wznPlXchyC7+VAm9rKrbNd9ASyiw3WE2jsztNTKzYjUEgNyGAWzGu9UUcHmgH6a5/A5U1/cFAcjv0gNLJbW8DOi8w/o/rNpbDeqLG194DwmWdsec4WvhgyW4EfFRsNw88xF0IDzC4tv+fE03wdj/k/SyerXj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpcBx4RK; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=O9HEfqC0/qjUUJXqEYsf8jElaePkETDMpNuzZJOi6xqzGy/mPLxIwO7l2b0Fn9vU0YrAH9UdrSvGyAb7gx7dquFeNfj2OhhC1EetfdvupPWPDjPumS3j84EIhd1KlXI8Rbgk5Kvz1Gzze7mYueV4RLdKC8ne+w+oGbZj7WEbCmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lzlAp7kz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpcBx4RK"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6f8ce89468cso15172026d6.3
-        for <sophgo@lists.linux.dev>; Mon, 19 May 2025 04:43:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747655037; x=1748259837; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DdHsq5COThnaz/kT2PepDjGRRqibq5HBjdI+te70JDw=;
-        b=ZpcBx4RKRO3GyS1iqp6S5P8u1X/ZlnY9G6uXn48eCBMlcwS5nO2T3Y78vSuFYwDEpP
-         t8cqhUyNdZFqpgSzS7mmOsGhMDDFRV2F222CoqbczkwcDfuvFjzneEphJwO1Tsgca+Aj
-         xahrSVh6BHlgK/Rmk8i8WXrkWO/QCe10sbZyG+rEDFKhnglKrnMng/+RIovG5F5aptvp
-         ekhQOya+8r/zabJznVZohfeUlLtdENQ4G7n5T0Q4Gdss3wqSOO1AjDHATAUA08Tp+WDQ
-         o2LqZdttC/csZRoJIXPpegNDGTjMjvTjQvL52HXzR0AoYkqDn9TVuCYkH/3oNSMTinD3
-         bxzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747655037; x=1748259837;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DdHsq5COThnaz/kT2PepDjGRRqibq5HBjdI+te70JDw=;
-        b=SG2JxjPy9FDKHAS4T0Thq+mcoNLmMhRojMbVnSCtwdyHbjgiadM8B+PmBHtH+HB3yj
-         kF/l4+iZE0DUob8i5+cneAF/b9z15L4z2eW8flSan/ZbA1XdAWvkFSnDNT2ZCs5IzXsK
-         JkEHTsOirjQp2PgC2RYjw0olwMLkorkPov2GqRp2Bvaqdz0yesU81nY5EJ9Eq+edKdX9
-         9vx26zb12iEM+yQwzY9akmgekDKyuy2cU/VG2ZnBjEzHSkZQ7CEwhEk3SniQnT7fiLkZ
-         Nxn7kiNpk47e6P+szZQwQ9O1KO+8Dl3igI/PJEknTL0dC/lWYiU0q/jw8YHVVupiBsKv
-         Cqiw==
-X-Forwarded-Encrypted: i=1; AJvYcCXAfcTgMlaiDSnH5DxlWTi8YBLNujHJeDweZnRcs9nO2GY6bVILZ6+wHKZztd7mMax8nuejUvs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyVXN4cNPC23FAutooz3iit+GRZOYLHYn8Py2DYemLBFJa5hxPc
-	h1WgpXqvH3FtvuO0vm1HZQKTLHl4/3ipyVrz0ccQjOBrPYJ4XFiZnxIr
-X-Gm-Gg: ASbGnctkrIJqz+iLoPyWcvw+n7mvl9UutNHW1phSaqnlYEbzLf4FaNdTYE9M48REd/R
-	7poCZNwXakDbzJUrltga/XhfIW5ue4wRS+kg74OiEnX3FAwXmF5F6jN5tX3LVK4FdBr5YrrWxdq
-	xEDhnakqQlNZDxjJXuW2foBsM/wuo71/Nms59ysTTPFS1ecCuupE2GCTpiEbJQMa+STQRZ+jOsn
-	Vrft02DbMVAT4l8QvVsJQweoLZFJUpKzu9tzsyTCIk8v3Jz+kAw87yYkh7w8rqEGVaz04AaFjOX
-	OBsOfk1QTHnoeGU8bXsNVuh1AcO8q/mev7Ix1g==
-X-Google-Smtp-Source: AGHT+IHzi+wH4LTGbbgm7Y4TjS58PZ5Nah+7v2/J250yJ8XpMnfpx1miscgVUqmQCndfLGxyKsFvKA==
-X-Received: by 2002:a05:6214:2344:b0:6f0:e2d3:66bb with SMTP id 6a1803df08f44-6f8b0887e10mr173576876d6.43.1747655037154;
-        Mon, 19 May 2025 04:43:57 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f8b097a0absm55522516d6.100.2025.05.19.04.43.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 04:43:56 -0700 (PDT)
-Date: Mon, 19 May 2025 19:43:17 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Niklas Cassel <cassel@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
-	Shradha Todi <shradha.t@samsung.com>, Thippeswamy Havalige <thippeswamy.havalige@amd.com>, 
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Cc: linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v3 0/2] riscv: sophgo Add PCIe support to Sophgo SG2044
- SoC
-Message-ID: <77tip2z2mmuucsi4ackwubfdbyzgg2soaosmvbyrfl3iwrmmp3@icjunp4bsske>
-References: <20250504004420.202685-1-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lzlAp7kz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACF1C4CEE9;
+	Mon, 19 May 2025 12:01:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1747656116;
+	bh=Zf9gz2Q4q1qJ6K136JlNwatN69nhNVbGzKy8s8ubJ+o=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lzlAp7kzkoeCPmb5UunEHlWgmAl6Q6kbrRzx4rW7AoTfmckiFONvJq29T9drSlON3
+	 0WTijnMEjM1LxWh1MJ44JOmw/AXLRzUlRgFCnnbHP6m7yRtJ5uA1ripR22NSvNB32r
+	 kQYSTDTBa/fEC2p2ucqCtrtoAIS3bBAI+ESwcnaGqho5wBp0a7ZAzceHbP86hbsSY4
+	 k81oLtVguNRmvh1Caq0PNj5V++HjyH59/IC98Gx97Tw1mK/MVG/IyXU0/5pJsPLVBV
+	 BDFHQ/+Xh7csYJSI92XW2xtTnditMy/PgO5HTb6vo8NGS+RYH0Yz7XE+64KhtcUlGO
+	 yV+mxK1yLpdaw==
+Date: Mon, 19 May 2025 13:01:50 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Han Gao <rabenda.cn@gmail.com>
+Cc: devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	Guo Ren <guoren@kernel.org>, Chao Wei <chao.wei@sophgo.com>,
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] dt-bindings: riscv: add Sophgo SG2042_EVB_V1.X
+ bindings
+Message-ID: <20250519-geek-slept-8cae4fc6d548@spud>
+References: <cover.1747231254.git.rabenda.cn@gmail.com>
+ <b538e2b24eab8b740091d80ca76b20ef6014a4e5.1747231254.git.rabenda.cn@gmail.com>
+ <20250514-showplace-yahoo-e3c306355288@spud>
+ <CAAT7Ki9Fw0+Ntv+oFqr2R=EHnFZrT6KmyTPN2MCDDGvSn-Wi8A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="p3QpKvf7RfTC567z"
 Content-Disposition: inline
-In-Reply-To: <20250504004420.202685-1-inochiama@gmail.com>
+In-Reply-To: <CAAT7Ki9Fw0+Ntv+oFqr2R=EHnFZrT6KmyTPN2MCDDGvSn-Wi8A@mail.gmail.com>
 
-On Sun, May 04, 2025 at 08:44:17AM +0800, Inochi Amaoto wrote:
-> Sophgo's SG2044 SoC uses Synopsys Designware PCIe core
-> to implement RC mode.
-> 
-> For legacy interrupt, the PCIe controller on SG2044 implement
-> its own legacy interrupt controller. For MSI/MSI-X, it use an
-> external interrupt controller to handle.
-> 
-> The external MSI interrupt controller patch can be found on [1].
-> As SG2044 needs a mirror change to support the way to send MSI
-> message and different irq number.
-> 
-> [1] https://lore.kernel.org/all/20250413224922.69719-1-inochiama@gmail.com
-> 
-> Changed from v2:
-> - https://lore.kernel.org/all/20250304071239.352486-1-inochiama@gmail.com
-> 1. patch 1: remove "|+" for description
-> 2. patch 1: apply Rob's tag
-> 3. patch 2: remove empty irq_eoi and use handle_level_irq as the right
-> 	    irq handle function.
-> 
-> Changed from v1:
-> - https://lore.kernel.org/all/20250221013758.370936-1-inochiama@gmail.com
-> 1. patch 1: remove dma-coherent property
-> 2. patch 2: remove unused reset
-> 3. patch 2: fix Kconfig menu title and reorder the entry
-> 4. patch 2: use FIELD_GET/FIELD_PREP to simplify the code.
-> 5. patch 2: rename the irq handle function to match the irq_chip name
-> 
-> Inochi Amaoto (2):
->   dt-bindings: pci: Add Sophgo SG2044 PCIe host
->   PCI: sophgo-dwc: Add Sophgo SG2044 PCIe driver
-> 
->  .../bindings/pci/sophgo,sg2044-pcie.yaml      | 122 +++++++++
->  drivers/pci/controller/dwc/Kconfig            |  10 +
->  drivers/pci/controller/dwc/Makefile           |   1 +
->  drivers/pci/controller/dwc/pcie-dw-sophgo.c   | 258 ++++++++++++++++++
->  4 files changed, 391 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2044-pcie.yaml
->  create mode 100644 drivers/pci/controller/dwc/pcie-dw-sophgo.c
-> 
-> --
-> 2.49.0
-> 
 
-It is a long time for this series without any comment, I wonder
-that this patch could be picked for 6.16?
+--p3QpKvf7RfTC567z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Regard,
-Inochi
+On Sat, May 17, 2025 at 01:11:46AM +0800, Han Gao wrote:
+> On Thu, May 15, 2025 at 12:22=E2=80=AFAM Conor Dooley <conor@kernel.org> =
+wrote:
+> >
+> > On Wed, May 14, 2025 at 10:08:59PM +0800, Han Gao wrote:
+> > > Add DT binding documentation for the Sophgo SG2042_EVB_V1.X board [1].
+> >
+> > 1.x? Is the v1.0 something people can get their hands on, or just the
+> > v1.1?
+> > What differences do the boards have that are minimal enough that
+> > specific compatibles would not be required?
+> >
+>=20
+> First of all, v1.1 and v1.0 are compatible boards.
+> There is no difference between v1.1 and v1.0 from dts.
+>=20
+> Both v1.1 and v1.0 have been discontinued.
+> About 80 pieces of v1.1 are in the hands of community developers.
+
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+--p3QpKvf7RfTC567z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaCsdrgAKCRB4tDGHoIJi
+0kd5AQCYs1Sq3GD4kaz3DoAtIrt6+FU4CPdjvAtv8vhTf1N5uwD9FTZzafSC58rf
+8spnL07wKGQMM9LFZN9yxZ8RvCxKagU=
+=ZRoH
+-----END PGP SIGNATURE-----
+
+--p3QpKvf7RfTC567z--
