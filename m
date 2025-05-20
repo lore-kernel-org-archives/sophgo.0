@@ -1,100 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A6A201246;
-	Mon, 19 May 2025 12:01:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747656116; cv=none; b=ZiQzqi4QEhX0o7Et5MDZva5HxWQRDQ6rBCjPcQvQAVAb3EYnf4wH1H0QvebFyOnpb/lC2Z0gCuQ/CdESPfPRIbfDsszOy0QsUJZD92RYSntxRO8Zn9gAKmTS0zVK3krGDCpa7N78hwRC0mKnfUrfuwbTkWgM5BHEBo45vCdLOAM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747656116; c=relaxed/simple;
-	bh=Zf9gz2Q4q1qJ6K136JlNwatN69nhNVbGzKy8s8ubJ+o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O9HEfqC0/qjUUJXqEYsf8jElaePkETDMpNuzZJOi6xqzGy/mPLxIwO7l2b0Fn9vU0YrAH9UdrSvGyAb7gx7dquFeNfj2OhhC1EetfdvupPWPDjPumS3j84EIhd1KlXI8Rbgk5Kvz1Gzze7mYueV4RLdKC8ne+w+oGbZj7WEbCmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lzlAp7kz; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80AE20487E
+	for <sophgo@lists.linux.dev>; Tue, 20 May 2025 07:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747727135; cv=pass; b=XtG5jXLb7cOzQ4tWA2tCUhG3mRWjgwBOdynFkPUHOwdctNYHMH9lgdCjqUt2KlP1QNFDiRPJsWdXZjVgOfvqMIhTgllVU1KuECJuVC9hVFLDUT/5VqlhdSQuxcZyk06wh9V4Dn4KKp2vIHu8bVLN7oJ2J7SrLQEd1K8gp0mSEfI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747727135; c=relaxed/simple;
+	bh=3U9B5pWkLOSWxS23r0T243a2yQfl666xD/tiXonAWTg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OLjyGI3Y+EXxf5caKPrnF5EgmSvSXia37jO1Cv0gWKUt7+wtreYF2hPdsJNZektKi48CLwE77pCaz3q54mbSsSilAF9PbM43ZI8l9ZyQAP62D+FScG3L9yhdK71DtDY9FsyYNEtduILw7ACeodLt7gSi75u07ZC5s5eIUQ3lVxk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=dvScxM6I; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lzlAp7kz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACF1C4CEE9;
-	Mon, 19 May 2025 12:01:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1747656116;
-	bh=Zf9gz2Q4q1qJ6K136JlNwatN69nhNVbGzKy8s8ubJ+o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lzlAp7kzkoeCPmb5UunEHlWgmAl6Q6kbrRzx4rW7AoTfmckiFONvJq29T9drSlON3
-	 0WTijnMEjM1LxWh1MJ44JOmw/AXLRzUlRgFCnnbHP6m7yRtJ5uA1ripR22NSvNB32r
-	 kQYSTDTBa/fEC2p2ucqCtrtoAIS3bBAI+ESwcnaGqho5wBp0a7ZAzceHbP86hbsSY4
-	 k81oLtVguNRmvh1Caq0PNj5V++HjyH59/IC98Gx97Tw1mK/MVG/IyXU0/5pJsPLVBV
-	 BDFHQ/+Xh7csYJSI92XW2xtTnditMy/PgO5HTb6vo8NGS+RYH0Yz7XE+64KhtcUlGO
-	 yV+mxK1yLpdaw==
-Date: Mon, 19 May 2025 13:01:50 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Han Gao <rabenda.cn@gmail.com>
-Cc: devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
-	Guo Ren <guoren@kernel.org>, Chao Wei <chao.wei@sophgo.com>,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] dt-bindings: riscv: add Sophgo SG2042_EVB_V1.X
- bindings
-Message-ID: <20250519-geek-slept-8cae4fc6d548@spud>
-References: <cover.1747231254.git.rabenda.cn@gmail.com>
- <b538e2b24eab8b740091d80ca76b20ef6014a4e5.1747231254.git.rabenda.cn@gmail.com>
- <20250514-showplace-yahoo-e3c306355288@spud>
- <CAAT7Ki9Fw0+Ntv+oFqr2R=EHnFZrT6KmyTPN2MCDDGvSn-Wi8A@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="dvScxM6I"
+ARC-Seal: i=1; a=rsa-sha256; t=1747727114; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=gmkRO5oonKJByi8/gJOZpGu6mqQKR3Hv79GFdbu8cPnpNRLUfjxAZGGmIQo+j+3C24UzMDnw3TobN+2qkG18TQ5KjmtRTGtkX7OSY/bSUx2jytOvBHoyOWOSJoOCKuJjlv5WNao9hQEP9MPr3PhT4BRggKt3KuGW/TdRxNDpjsQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1747727114; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=MnIccHBLt77o7gktE4VbMWuql1FFClYZl7Z9VMV2mU4=; 
+	b=ncjOGjc+qBUf7vsf5NPE6Ao4DgKDglASu/yDV/n6Jnn+O3rzFgOdcD6oYGS83YgJd9r3FqGCaViShVm0tYJF3jdDTLmjqGsVhNV8SgwefsyFbjx+D/t8agbiUIznm+M5NvHEZrrdpCD0D6Ov+xUVA1diBETzfSeQF7eUq88hpLg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747727114;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+	bh=MnIccHBLt77o7gktE4VbMWuql1FFClYZl7Z9VMV2mU4=;
+	b=dvScxM6IKnD3qXabc2to1Nr5DXS+0ZdfaVAwg1MMbftr1Zw/zIcb6DmdUPJeqy7b
+	Oi39OCW/N3VwYwhRYatS6oeI5f3cZKmVr877MC4GSWjYdz74NavkrhpsYRtiMW3RE58
+	Jqr+e5hl5xhftycVcNLRY47A0zmH+NN2UuKcOnPA=
+Received: by mx.zohomail.com with SMTPS id 1747727112585692.5925758460581;
+	Tue, 20 May 2025 00:45:12 -0700 (PDT)
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+Subject: [PATCH v4 0/2] riscv: sophgo: add mailbox support for CV18XX
+ series SoC
+Date: Tue, 20 May 2025 15:44:22 +0800
+Message-Id: <20250520-cv18xx-mbox-v4-0-fd4f1c676d6e@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="p3QpKvf7RfTC567z"
-Content-Disposition: inline
-In-Reply-To: <CAAT7Ki9Fw0+Ntv+oFqr2R=EHnFZrT6KmyTPN2MCDDGvSn-Wi8A@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANYyLGgC/5WPsW6DMBCGXyXyXCPf2WDTKWDo0kZETTNUVYYUO
+ 8FSEyITIaqId69BXaJO3e473f+d/hvprHe2I4+LG/G2d51rzwHEw4LUzf58tNSZwAQZxkwg0Lo
+ HNQz09NkONEGFBixILmoSEhdvD26YbR+7wI3rrq3/nuU9TFuyec/XIbXKEbkqSlZkkOqkfBIAO
+ fI40VroEpd3Z1G23UwUrV+rIqq2by9V9RzpakWmJz3+FWNcxCnjUso85TJTWRi1yNj/xHwW/zZ
+ Xd817Thm1BpQ5GMUTA8uLO55av/+KrrZuyG4cxx9CHQHJXAEAAA==
+X-Change-ID: 20250421-cv18xx-mbox-6282d1e1734c
+To: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Yuntao Dai <d1581209858@live.com>, 
+ Junhui Liu <junhui.liu@pigmoral.tech>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1747727085; l=2931;
+ i=junhui.liu@pigmoral.tech; s=20250507; h=from:subject:message-id;
+ bh=3U9B5pWkLOSWxS23r0T243a2yQfl666xD/tiXonAWTg=;
+ b=p+fMjE7vUYGtXuuhgCSDK3E08ivevXbAJnRFEaKb/qikCEA2h7BuVKCPH8tfNe87KqSq8Jqtb
+ mgnvaVIcUy+D07gB0vV6liVSbsYglseodx161NLyNUZyRhneNPvv8oL
+X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
+ pk=d3i4H2mg9LUn4SQemoLAjLRQy0nTcyknIv6zgKMwiBA=
+X-ZohoMailClient: External
 
+Sophgo CV18XX series SoC has a mailbox module used to pass messages to
+asymmetric processors. It has a total of 8 channels, each channel has a
+length of 64bit.
 
---p3QpKvf7RfTC567z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Since the dts of cv18xx series are undergoing rework [1], the mailbox
+node is not added in dts. It will be added later with the user (the
+remoteproc node) together.
 
-On Sat, May 17, 2025 at 01:11:46AM +0800, Han Gao wrote:
-> On Thu, May 15, 2025 at 12:22=E2=80=AFAM Conor Dooley <conor@kernel.org> =
-wrote:
-> >
-> > On Wed, May 14, 2025 at 10:08:59PM +0800, Han Gao wrote:
-> > > Add DT binding documentation for the Sophgo SG2042_EVB_V1.X board [1].
-> >
-> > 1.x? Is the v1.0 something people can get their hands on, or just the
-> > v1.1?
-> > What differences do the boards have that are minimal enough that
-> > specific compatibles would not be required?
-> >
->=20
-> First of all, v1.1 and v1.0 are compatible boards.
-> There is no difference between v1.1 and v1.0 from dts.
->=20
-> Both v1.1 and v1.0 have been discontinued.
-> About 80 pieces of v1.1 are in the hands of community developers.
+Tested on Milk-V Duo with CV1800B SoC, Milk-V Duo256M with SG2002 SoC
+and Milk-V Duo S with SG2000 SoC by the mailbox-test client [2].
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+link: https://lore.kernel.org/sophgo/174710989159.597941.17259091695735282020.b4-ty@gmail.com/T/#m159cc72c6e4f89bfe14932f38ae93991e8cfa712 [1]
+link: https://gist.github.com/pigmoral/70d0d0164dff7f9b95f59df50ef309d8 [2]
 
---p3QpKvf7RfTC567z
-Content-Type: application/pgp-signature; name="signature.asc"
+---
+Changes in v4:
+- Move processor ID description to the mbox-cells property in
+  dt-bindings.
+- Drop the patch of adding mailbox node in dts for now.
+- Add missing `__iomem` in the `MBOX_CONTEXT_BASE_INDEX` macro.
+- Pass the address of the value read from the mailbox to
+  `mbox_chan_received_data()` instead of the mailbox's address.
+- Link to v3: https://lore.kernel.org/r/20250428-cv18xx-mbox-v3-0-ed18dfd836d1@pigmoral.tech
 
------BEGIN PGP SIGNATURE-----
+Changes in v3:
+- Update cv18x to CV18XX in commit messages and descriptions.
+- Remove the `interrupt-names` property in dt-bindings, dts and driver.
+- Move the mailbox node in dts to satisfy the address order.
+- Remove `OF` dependency in Kconfig and the driver.
+- Add copyright in the driver.
+- Reorder the processes in dt-bindings and change the `RECV_CPU` macro
+  definition from 2 to 1 in the driver.
+- Clean up and improve macro definitions and register access methods in
+  the driver.
+- Improve the return value handling in the interrupt handler functions.
+- Implement the `cv1800_last_tx_done` function.
+- Link to v2: https://lore.kernel.org/r/SYBP282MB223825D5903777B937A8A377C4A02@SYBP282MB2238.AUSP282.PROD.OUTLOOK.COM
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaCsdrgAKCRB4tDGHoIJi
-0kd5AQCYs1Sq3GD4kaz3DoAtIrt6+FU4CPdjvAtv8vhTf1N5uwD9FTZzafSC58rf
-8spnL07wKGQMM9LFZN9yxZ8RvCxKagU=
-=ZRoH
------END PGP SIGNATURE-----
+Changes in v2:
+- drop 'recvid' 'sender' in dt-bindings
+- fix compatible to 'cv1800-mailbox', and change filenames too
+- change #mbox-cell to 2, for <channel tagert_cpu>
+- add struct cv1800_mbox_chan_priv and function cv1800_mbox_xlate to extract
+  informations in mbox devicetree node of mailbox client
+- Link to v1: https://lore.kernel.org/r/SYBP282MB2238DE0DA19C6EF411B2356CC4CE2@SYBP282MB2238.AUSP282.PROD.OUTLOOK.COM
 
---p3QpKvf7RfTC567z--
+---
+Yuntao Dai (2):
+      dt-bindings: mailbox: add Sophgo CV18XX series SoC
+      mailbox: sophgo: add mailbox driver for CV18XX series SoC
+
+ .../bindings/mailbox/sophgo,cv1800b-mailbox.yaml   |  60 ++++++
+ drivers/mailbox/Kconfig                            |  10 +
+ drivers/mailbox/Makefile                           |   2 +
+ drivers/mailbox/cv1800-mailbox.c                   | 220 +++++++++++++++++++++
+ 4 files changed, 292 insertions(+)
+---
+base-commit: a5806cd506af5a7c19bcd596e4708b5c464bfd21
+change-id: 20250421-cv18xx-mbox-6282d1e1734c
+
+Best regards,
+-- 
+Junhui Liu <junhui.liu@pigmoral.tech>
+
