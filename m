@@ -1,115 +1,97 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4B323D29D
-	for <sophgo@lists.linux.dev>; Mon, 26 May 2025 16:23:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492A6155CBD;
+	Mon, 26 May 2025 16:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748276630; cv=none; b=jBujBHGtJFKzV6G/TBUPv61kp88flNC3JWJ5XqpFjuHyY8hpyFLDc0DP+HXve2adJN5dYVz1C/5gblRNOQblVSxoy22Y27A2sl5ZHbg5hVU5dyWjYR3T/1aRx3Y8RaLB0o5JNq8OUBwSolfWNykzxlLoey4tXrEyaqLxtoGv/MQ=
+	t=1748277106; cv=none; b=MztIF0/vo488zx5wp288TCc1nwuX2uATU3hGMb2LCaAfivlF8wI/8tG0Vszqb/MqZ8clzDr8sIZp22sTLipdHTif7W9voupCxFJLSTAFkxLyNP6eNCgt4BsnwbjU2mVo3daigN8easeuP/HyZNKUPIfN0rPtiRYKaFyHC2MokLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748276630; c=relaxed/simple;
-	bh=3rKM3t8ghJaT33UAt7ML5cI5/HQFX7a1T3aoNNJ6cRI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=V21npgkGbfxPe3ktK7j2rsRybwaldW0HEJWfony4elegPiFh4p1U3Xp7c/OBGwe70GZxsgm41muJqKU0uLaezxvv/YNCZlEj0/EDRnEa9nRrfZjEO79ItaNsb4573wCOy1Cd6IBwn9+2ZiY0xqD2z8Pzb2qx14lk0Bzxj3HCejU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.99.37])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 16718efe6;
-	Tue, 27 May 2025 00:23:41 +0800 (GMT+08:00)
-From: Ze Huang <huangze@whut.edu.cn>
-Date: Tue, 27 May 2025 00:23:35 +0800
-Subject: [PATCH] dt-bindings: pinctrl: k230: fix child node name patterns
+	s=arc-20240116; t=1748277106; c=relaxed/simple;
+	bh=YT9wI6X6eKRIxw4T8R1zmwTV55vpnD8iWP2TLnOFcV0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Arpka4Ryk1tcLyV+zWrSVVVeDZjk76JKp3sk+AQMcar1HHAqVZttiMMgoqyzJ1pAxxIer03lI2sRdHWq3HSc7n6fxh0JIbp+wYsFg+n2WfmFjn2Qk2fVDMAaC7qSZzleE6xdTFs5tGiiI5gj3+/0T2NG9DFXphC4BTFtca82YBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WYxZKwK/; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WYxZKwK/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAFEC4CEE7;
+	Mon, 26 May 2025 16:31:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748277104;
+	bh=YT9wI6X6eKRIxw4T8R1zmwTV55vpnD8iWP2TLnOFcV0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WYxZKwK/KFsB7CW8pwonS2jtgDfYQ8siAgGfuJepDBXyXuz2HlWSgalCkcdN7MxlA
+	 mWpCcsH9UCjj09CjcBw/J9HeiytKA67BgV0J7kPdPnGKVJAV+aFuiqfWGV4I4OOjto
+	 1H7yj42UeMLnb+FeBejoDIpumvYW1l7FMsujBz4Wk/RJn6g5QoTMW5Izj7UncPl8/E
+	 KxgRx6NKp5Ynv9qS4dZ6ZTiKu00t22fZYu7FTKw0BY8czhiCNndVe4DFjm22Nw3L7h
+	 J8ORewy4XxgMHkzxOSKDz0AzNEdlfP8PKnSnwq6nBo1RE1J7+s8noTT4gv9a5vsslC
+	 D1xI3eIPyE0vA==
+Date: Mon, 26 May 2025 18:31:42 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, =?utf-8?Q?Miqu=C3=A8l?= Raynal <miquel.raynal@bootlin.com>, 
+	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, Jingbao Qiu <qiujingbao.dlmu@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v8 0/2] riscv: pwm: sophgo: add pwm support for CV1800
+Message-ID: <uy4idpkmmyswci3o5dul3xwees7azrs2dhorjgb5lxipi4bllb@7lbldfrwdsj7>
+References: <20250509-pwm_sophgo-v8-0-cfaebeb8ee17@bootlin.com>
+ <sfqdke7xkxg3sr2acber6kjzbcnoay6bnu3enda2xe5wzdi6id@eqiqmkdeovlb>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-k230-binding-fix-v1-1-3c18ae5221ab@whut.edu.cn>
-X-B4-Tracking: v=1; b=H4sIAIaVNGgC/yWMywqDMBAAfyXsuVuSTSPUXykefGzsUoxtolIQ/
- 71LPc7AzA6Fs3CB2uyQeZMic1JwFwP9s00jowzKQJaCDVThi7zFTtIgacQoX/SOQow3H+/egmb
- vzKr/y0dzcubPqufllNC1hbGfp0mW2mzV1QVojuMHOm41f4sAAAA=
-X-Change-ID: 20250526-k230-binding-fix-3125ff43f930
-To: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@gmail.com>
-Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
- Ze Huang <huangze@whut.edu.cn>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1748276621; l=1885;
- i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
- bh=3rKM3t8ghJaT33UAt7ML5cI5/HQFX7a1T3aoNNJ6cRI=;
- b=s92TgKISQNeKR5510+Ky6wgaq4zbHjoGIaAAXPtBHjdq+sk3UaYAjX/xh7VS/BQA3ayAcvpcs
- Yjw8lrnp/GZDN7mFZcx6qqPGEY7iYYibLZggADmf+H0MSZIA1Z0Gwq5
-X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
- pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCHkxCVhoaGB9PGUhNQk4aQlYeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktISk5MTlVKS0tVSkJLS1
-	kG
-X-HM-Tid: 0a970d6831a803a1kunm4c5611af1d643
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Mxw6Kyo6EjEzCAxITSsxSyMD
-	TTdPCjFVSlVKTE9DSUxNTUlNT0hCVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
-	TFVKQ1VCQlVITFlXWQgBWUFISUJMNwY+
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="54dcx3cnffq3mo6y"
+Content-Disposition: inline
+In-Reply-To: <sfqdke7xkxg3sr2acber6kjzbcnoay6bnu3enda2xe5wzdi6id@eqiqmkdeovlb>
 
-Rename child node name patterns to align with conventions.
 
-    uart0-pins      =>   uart0-cfg
-        uart0-cfg            uart0-pins
+--54dcx3cnffq3mo6y
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v8 0/2] riscv: pwm: sophgo: add pwm support for CV1800
+MIME-Version: 1.0
 
-This avoids potential confusion and improves consistency with existing
-bindings like sophgo,sg2042-pinctrl and starfive,jh7110-aon-pinctrl.
+On Fri, May 09, 2025 at 08:14:57PM +0800, Inochi Amaoto wrote:
+> On Fri, May 09, 2025 at 11:45:42AM +0200, Thomas Bonnefille wrote:
+> > The Sophgo CV1800 chip provides a set of four independent
+> > PWM channel outputs.
+> > This series adds PWM controller support for Sophgo cv1800.
+> >=20
+> > Signed-off-by: Jingbao Qiu <qiujingbao.dlmu@gmail.com>
+> > [Thomas since v8]
+> > Signed-off-by: Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+> > ---
+>=20
+> As now we have pwm support for SG2042, I suggest sharing driver code and
+> binding file with SG2042.
 
-Fixes: 561f3e9d21a1 ("dt-bindings: pinctrl: Add support for canaan,k230 SoC")
-Signed-off-by: Ze Huang <huangze@whut.edu.cn>
----
- .../devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml          | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+How does the two relate? Is CV1800 the same as SG2042? I'd like to know
+before I spend time reviewing a driver that is better spent elsewhere.
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
-index 0b462eb6dfe169a292bf716503c03d029f1ac7ee..f4e0da0bf7fa30af5132644109dbd371ddfc0228 100644
---- a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
-@@ -22,7 +22,7 @@ properties:
-     maxItems: 1
- 
- patternProperties:
--  '-pins$':
-+  '-cfg$':
-     type: object
-     additionalProperties: false
-     description:
-@@ -30,7 +30,7 @@ patternProperties:
-       pinctrl groups available on the machine.
- 
-     patternProperties:
--      '-cfg$':
-+      '-pins$':
-         type: object
-         allOf:
-           - $ref: /schemas/pinctrl/pincfg-node.yaml
-@@ -112,8 +112,8 @@ examples:
-         compatible = "canaan,k230-pinctrl";
-         reg = <0x91105000 0x100>;
- 
--        uart2-pins {
--            uart2-pins-cfg {
-+        uart2-cfg {
-+            uart2-pins {
-                 pinmux = <0x503>, /* uart2 txd */
-                          <0x603>; /* uart2 rxd */
-                 slew-rate = <0>;
+Best regards
+Uwe
 
----
-base-commit: 0a4b866d08c6adaea2f4592d31edac6deeb4dcbd
-change-id: 20250526-k230-binding-fix-3125ff43f930
+--54dcx3cnffq3mo6y
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Best regards,
--- 
-Ze Huang <huangze@whut.edu.cn>
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmg0l2sACgkQj4D7WH0S
+/k5a1gf/f54OOoYAzuPvLt5o6CCQ3DSCXAq7CDs7YbZ8zzIa+csVxMp5km+CSpMA
+bK/j1YkZh60A/YMfiRTe+R9K44MHTUwjgrZUWMBj1Ac8r+vgWHxU2Ds3JhBDB2Vp
+a1yU5si47X2wOCVIgUzoZV9VnLIxQoOThWQEPgBHaCfBFnqPmrcQIgZbs6D8tVzF
+MNrUm7Z3wRfgelZtEwSlO0KpmLvwNLY9bcE4PQbIl9jNkrNlSjgUg9aAb0/U2ntQ
+ie0U6EiYDRGYs611qE5yIm/A/KIUaIPVUmK54wICuW2EkieCboDHEnK/4Ld/k+qE
+YmMtOp9hMvFBtm/7rj1ezySS9xUxWg==
+=pOHE
+-----END PGP SIGNATURE-----
+
+--54dcx3cnffq3mo6y--
