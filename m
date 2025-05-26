@@ -1,91 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575EE8460;
-	Mon, 26 May 2025 15:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4B323D29D
+	for <sophgo@lists.linux.dev>; Mon, 26 May 2025 16:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748272499; cv=none; b=pcWf9ZFT1QGgcUOuR/1A0kpNX3HY7nVl/0xryYILH2XTA02grIf/c6Lzt60IazNrN9CBhJy5kiIcpAC2yQur6sBaJ2p4FPmcpE5ulF4KA3Pgb2MobNzApGC8yqtOXluB4Padiv5En7kEd1vmJQ4EGJYFwtYf41OS5fEQto5H3uA=
+	t=1748276630; cv=none; b=jBujBHGtJFKzV6G/TBUPv61kp88flNC3JWJ5XqpFjuHyY8hpyFLDc0DP+HXve2adJN5dYVz1C/5gblRNOQblVSxoy22Y27A2sl5ZHbg5hVU5dyWjYR3T/1aRx3Y8RaLB0o5JNq8OUBwSolfWNykzxlLoey4tXrEyaqLxtoGv/MQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748272499; c=relaxed/simple;
-	bh=hFGRcfD0Y2n8tquVud5hBr54D9H+RrZF/YlhNIB3mp8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kj5LPx/91X4Pm+Iqs8JZDHdIVtMGfIKeMG+pBRMyk+agVN+sJqjHgwPex3xFwccO30aVBNafkFJ+Dtm5evx1jLXFLghMTFa3rVz6DphLrjrDkb1g3UeWwRytroXLwTXWSRwMy/fB4EE1eggp3QPTyYnp/FZa99wCAoNLZ+KRpH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d11PDPZw; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d11PDPZw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2BBC4CEE9;
-	Mon, 26 May 2025 15:14:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748272498;
-	bh=hFGRcfD0Y2n8tquVud5hBr54D9H+RrZF/YlhNIB3mp8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d11PDPZwjxXYqjOAS0hpdMCtQMffOYc96Z0AX5n2fka3qyWh35Qs6jXhlgTe7Sh3s
-	 QEp6vRfFQbqv0L0CTkR3ujXn6IrNJVCwnZMju/6qUoTlKr+1Lb7oX+8Xw45Eh4LlsX
-	 SP4TN5/frytZ2tl9d68YmZIWJkkJnrcGCr3uhm0RwJsZiDVnQzfbvon272Z3ILDM9Q
-	 4RgMjjyeMZ9Fdg4CJ4Ag3ivVHKARNjrJvvWJMAKnjL7vSzRSuKV5XcOUrIy05zizkr
-	 876DBdToY1mKDKetGx0LQwJMh6eBTzn5zpLatzX++1t+5o+qCBrX+KgKksbIHPtPGj
-	 iGd7Td8r1h2jA==
-Date: Mon, 26 May 2025 16:14:52 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Pratyush Yadav <pratyush@kernel.org>,
-	Michael Walle <mwalle@kernel.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Richard Weinberger <richard@nod.at>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Longbin Li <looong.bin@gmail.com>, linux-mtd@lists.infradead.org,
-	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
-	linux-spi@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 1/3] spi: dt-bindings: spi-sg2044-nor: Add SOPHGO
- SG2042
-Message-ID: <20250526-celery-penniless-adeed760308b@spud>
-References: <20250525-sfg-spifmc-v2-0-a3732b6f5ab4@gmail.com>
- <20250525-sfg-spifmc-v2-1-a3732b6f5ab4@gmail.com>
+	s=arc-20240116; t=1748276630; c=relaxed/simple;
+	bh=3rKM3t8ghJaT33UAt7ML5cI5/HQFX7a1T3aoNNJ6cRI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=V21npgkGbfxPe3ktK7j2rsRybwaldW0HEJWfony4elegPiFh4p1U3Xp7c/OBGwe70GZxsgm41muJqKU0uLaezxvv/YNCZlEj0/EDRnEa9nRrfZjEO79ItaNsb4573wCOy1Cd6IBwn9+2ZiY0xqD2z8Pzb2qx14lk0Bzxj3HCejU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
+Received: from [127.0.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [27.18.99.37])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 16718efe6;
+	Tue, 27 May 2025 00:23:41 +0800 (GMT+08:00)
+From: Ze Huang <huangze@whut.edu.cn>
+Date: Tue, 27 May 2025 00:23:35 +0800
+Subject: [PATCH] dt-bindings: pinctrl: k230: fix child node name patterns
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3cRYTBgHkSKip73E"
-Content-Disposition: inline
-In-Reply-To: <20250525-sfg-spifmc-v2-1-a3732b6f5ab4@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250527-k230-binding-fix-v1-1-3c18ae5221ab@whut.edu.cn>
+X-B4-Tracking: v=1; b=H4sIAIaVNGgC/yWMywqDMBAAfyXsuVuSTSPUXykefGzsUoxtolIQ/
+ 71LPc7AzA6Fs3CB2uyQeZMic1JwFwP9s00jowzKQJaCDVThi7zFTtIgacQoX/SOQow3H+/egmb
+ vzKr/y0dzcubPqufllNC1hbGfp0mW2mzV1QVojuMHOm41f4sAAAA=
+X-Change-ID: 20250526-k230-binding-fix-3125ff43f930
+To: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
+ Ze Huang <huangze@whut.edu.cn>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1748276621; l=1885;
+ i=huangze@whut.edu.cn; s=20250325; h=from:subject:message-id;
+ bh=3rKM3t8ghJaT33UAt7ML5cI5/HQFX7a1T3aoNNJ6cRI=;
+ b=s92TgKISQNeKR5510+Ky6wgaq4zbHjoGIaAAXPtBHjdq+sk3UaYAjX/xh7VS/BQA3ayAcvpcs
+ Yjw8lrnp/GZDN7mFZcx6qqPGEY7iYYibLZggADmf+H0MSZIA1Z0Gwq5
+X-Developer-Key: i=huangze@whut.edu.cn; a=ed25519;
+ pk=C3zfn/kH6oMJickaXBa8dxTZO68EBiD93F+tAenboRA=
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCHkxCVhoaGB9PGUhNQk4aQlYeHw5VEwETFhoSFy
+	QUDg9ZV1kYEgtZQVlJTFVKQ1VCQlVITFlXWRYaDxIVHRRZQVlPS0hVSktISk5MTlVKS0tVSkJLS1
+	kG
+X-HM-Tid: 0a970d6831a803a1kunm4c5611af1d643
+X-HM-MType: 10
+X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6Mxw6Kyo6EjEzCAxITSsxSyMD
+	TTdPCjFVSlVKTE9DSUxNTUlNT0hCVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlJ
+	TFVKQ1VCQlVITFlXWQgBWUFISUJMNwY+
 
+Rename child node name patterns to align with conventions.
 
---3cRYTBgHkSKip73E
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    uart0-pins      =>   uart0-cfg
+        uart0-cfg            uart0-pins
 
-On Sun, May 25, 2025 at 10:58:41PM +0800, Zixian Zeng wrote:
-> Add bindings for the SOPHGO SG2042 SPI-NOR flash controller,
-> which is compatible with SOPHGO SG2044.
->=20
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+This avoids potential confusion and improves consistency with existing
+bindings like sophgo,sg2042-pinctrl and starfive,jh7110-aon-pinctrl.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 561f3e9d21a1 ("dt-bindings: pinctrl: Add support for canaan,k230 SoC")
+Signed-off-by: Ze Huang <huangze@whut.edu.cn>
+---
+ .../devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml          | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---3cRYTBgHkSKip73E
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
+index 0b462eb6dfe169a292bf716503c03d029f1ac7ee..f4e0da0bf7fa30af5132644109dbd371ddfc0228 100644
+--- a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
+@@ -22,7 +22,7 @@ properties:
+     maxItems: 1
+ 
+ patternProperties:
+-  '-pins$':
++  '-cfg$':
+     type: object
+     additionalProperties: false
+     description:
+@@ -30,7 +30,7 @@ patternProperties:
+       pinctrl groups available on the machine.
+ 
+     patternProperties:
+-      '-cfg$':
++      '-pins$':
+         type: object
+         allOf:
+           - $ref: /schemas/pinctrl/pincfg-node.yaml
+@@ -112,8 +112,8 @@ examples:
+         compatible = "canaan,k230-pinctrl";
+         reg = <0x91105000 0x100>;
+ 
+-        uart2-pins {
+-            uart2-pins-cfg {
++        uart2-cfg {
++            uart2-pins {
+                 pinmux = <0x503>, /* uart2 txd */
+                          <0x603>; /* uart2 rxd */
+                 slew-rate = <0>;
 
------BEGIN PGP SIGNATURE-----
+---
+base-commit: 0a4b866d08c6adaea2f4592d31edac6deeb4dcbd
+change-id: 20250526-k230-binding-fix-3125ff43f930
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaDSFbAAKCRB4tDGHoIJi
-0vvRAQC1yxztI2Z6owktYW9zecEyYKO6H2lY5nM7yjC9X9ZNsQEAjHE9q523CcF7
-ugJZyD6pN+G7L/lRxhr81CKvhalv5wA=
-=aYhi
------END PGP SIGNATURE-----
+Best regards,
+-- 
+Ze Huang <huangze@whut.edu.cn>
 
---3cRYTBgHkSKip73E--
