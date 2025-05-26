@@ -1,111 +1,125 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE78F9E8
-	for <sophgo@lists.linux.dev>; Mon, 26 May 2025 22:43:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEBA16419
+	for <sophgo@lists.linux.dev>; Mon, 26 May 2025 22:48:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748299436; cv=none; b=OMd8U8Rs35y5rrlhyijAzmdO3cXvakFyRvnPGYKHCg41c34rOH+E3rhXEv0kW2Lw992xjElLoOIQXV2vbGmIV7JWc6GxVya+AJGErzwdQJRQUuuO6FNGk02hFTkYLGINgXgcNpF68JTS3Bw2vHa2Il/os+CBSUeIhPnOSHlhvf0=
+	t=1748299738; cv=none; b=gfVC0IFZB1vli0YWWdIOn6wzA08hX12xcWnRydm/EN07wbiW61qrUSfY09v3/LACKL8xkTNgGeeummIqxhgtmVflmIUGjBrTELI6ybvEvNS2cKQXUirLyyI8wXB0RcFJcWbTUtGmoLH9BkzHqag7dwR2AFRFW5uX43mf1RPMSP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748299436; c=relaxed/simple;
-	bh=Mi2Ff9KcvJlJ1I5165WQX0hXzW7MVIgLgJ+u7JSVo2M=;
+	s=arc-20240116; t=1748299738; c=relaxed/simple;
+	bh=uolzGkj7lS4cxGcaNey6Eo8aZi3ZI/PC2nzy7WLFnLE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nPwlg3DQqlh1OuRuJd2mZoO6e3DQnACA1yQ0R+NxyUi+TOzlG/LfuhladmEq0jUVEWYwmmJFu1o0mA+wd3hXNB9F9V20ml3B3sQjEoDCA5ozbQDSoY1websU6vGzWbV5MLFF02ZEjOc5sz7//k//q1TQd4ukfYPX/VFMH8pE12c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GFHbStLu; arc=none smtp.client-ip=209.85.219.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=lOg6o20M1vI7QBDKAUU3d9nnKfioGxmVHFlYTWSn6rFCo9Kx+vbzUfGdBkG+22vH453Wc6V/VWyFAAMusNpaUuvoeDUJD/mqzYm6Zn2eflahEx9zK80UjvrdKITgUIdeWotngGZe1yniGdE52V1KxY0B5LIujqgzCL7gWs4u7ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NBblu0nT; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GFHbStLu"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6faa63da2bcso16842526d6.2
-        for <sophgo@lists.linux.dev>; Mon, 26 May 2025 15:43:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBblu0nT"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c559b3eb0bso147187785a.1
+        for <sophgo@lists.linux.dev>; Mon, 26 May 2025 15:48:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748299433; x=1748904233; darn=lists.linux.dev;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wYcdN/ntCi0NW6y9Z+ruW/GeFwKcxSJjeh5zF0q4iZs=;
-        b=GFHbStLuB6Yva/WKK5iWwohPXc22Ex4IpY0K8ufiqGg4g+d0dXvykuMAbEKUpAlKZh
-         PZENRbLmIaEBx8t4Q4NT+Gxbw+Pscb6ZaN2RBmXf5V/+2j0lWaGvsoYXiKw8kSU/806u
-         gif1ksmdH+FlqhBilpSLrMK2gcJp8jtZoY8tGVvBQjLL7d4tMeeStw4NldZnV3V7W1Ax
-         jVR8ZWQLUuITr7wDxkYFVgdlBIdpMy05hIaAP7he2mY1/dKvjvgFUkK09ECEGlxRSbv7
-         98ryYPWSqSZuwm4v3GZV8K3ijbMteEBXmbsbQDbho/mqW6wrz+t1+S9Ag/tWqq0uctE0
-         Fv1Q==
+        d=gmail.com; s=20230601; t=1748299735; x=1748904535; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DxU+IS3NoOt3HdLFHXPgdhqzIwbodDbspZNewqvS2bY=;
+        b=NBblu0nTA7rtRL9V58aACFJbnE63QIlbe0vBhc90cCRFuo6eSXUZCmvUpu7o5qzANT
+         Ud8uRvTgni8Xickc8/YuwjgIBK5evTt0x+YtsFSYZoAzrGgMrpfOj48S4FbA4T3VbX/v
+         mIk5wGE1m7xEOkp2PXYruU5T6oSmeCR8Hz2W9iJ6N2VE631YWIO/bYt4ekYHF6O+SU6y
+         jQPCOa7fdVpCFk0Zszo6jTLYnWl1mKBtHFx/YXACPDndXxnbbe7y/Zy0uqCCcrY++6So
+         I/SRM4L+0IwpQUCjbY9nTRe+PuaQlAF2mF1PU5DpPdSY9+Vh5L5TkgqaqRipkKL+PzAe
+         FukA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748299433; x=1748904233;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wYcdN/ntCi0NW6y9Z+ruW/GeFwKcxSJjeh5zF0q4iZs=;
-        b=r7GiMyq1yEolQ9wYMI3FrRlXMyewGzujehG4e4WEMhPJRmg9ux2mePL4eRuInVcVKC
-         RborSTKS3z/HWABfDCvyFrb0PZkMEYKT2g8cD9meQlHPKyfFFLj9SpBmCaZ+unqN9h9w
-         Q+fd/epPhJ42eCnZtyKpMN4GRpg18MANK/IfdoeDcFDRFZZnLfX9m9+JrSHmV/C6vMXw
-         izqQZDTtYoVGqBPEK+5JKwrMi/FEdsPl3y3nRyyGYzj6SpTQgG+kgfUG1bV3gaNoAb9a
-         LoztlMpLjJYS1jec1vv/5EcMFzhdaeyNontEHZkwGfvSPTBS5Jv4aknVynoPj7H156Af
-         Nhtw==
-X-Forwarded-Encrypted: i=1; AJvYcCXFifgyTLS+sMTJO2tENM6CW3xkn9SkjHGslNSMjFwXN0I6kLmDeNbC383/u9KrKUnUCP4EG0Y=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw215mjCBLEOUmRr61i++nIZgemt4JfZqbSMtlw11FZs2ygUYjH
-	SLG24GIuTA41YSnOK8Elu02aViLcTOJdeki6+cBEyRkFKyAA2q1jZS5v
-X-Gm-Gg: ASbGncsWiO/xYzd1wBxIXaUXMvCr8TF4v2u2EnXUdaxklQaM3z1m1AhgJBw8SA9bGBa
-	DwbQJfGBWf73diIyQnXroSdbjnI8N0iDI07h0zPDFd9y7mphUXn2O3tREzVb4jltGh9bkNgc5cY
-	l2kamUPMYY9+NgvEEaKPI74mAnmhuVHkEIfTE8u9QNXY7/jI4VHGmHyOSjSOhnSRF+h776NByFf
-	fw7n9+YYsJ6/INy/A71sBMQ8aNJgOyK/EDEYyr2Pou+UqI5AxTa9/j2IEupMocnBeJaa1HwOQQD
-	6O7uJp6gxH2zFZscx/m4STlrss3F+E13ha5XUQ==
-X-Google-Smtp-Source: AGHT+IE6GrG91KwWKCqmvlXD/KUQzQglLbhJ+TsLp61QU4Z6DEm1+X0Gf8hRzNSZJMd0jsM2Dvj8rw==
-X-Received: by 2002:a05:6214:f04:b0:6f8:aec7:1cda with SMTP id 6a1803df08f44-6fa9d00a343mr172227576d6.17.1748299433456;
-        Mon, 26 May 2025 15:43:53 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748299735; x=1748904535;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DxU+IS3NoOt3HdLFHXPgdhqzIwbodDbspZNewqvS2bY=;
+        b=Gp2WQmvmiT8+yxP7koCdi8G2YqqByH5cPxQYY03mI9CjEoasosOKEdyDz3iJid9WKm
+         FIw0xoNwiRluHw8pVBM31V00c3/3Rwcnsc4N8ZrKCM/1LZ99V5z6+qu/XdcmghUJuMxC
+         nApDatpWemSlWQtRCyENzeQaelc1sDMa/jAIczXbeTgdpHoIFahlsSimnvL73wgPGncP
+         NyVkff+F/iTgNM+LEL1h/moT2H9AmKj6850Q8+BLNL9lt8VTuJNYAPJv+p3S2MZtYIzY
+         oXuMec18b/JB02BPWWe/oIFYfbbxwkyNzD6OFPX5JcGstRdnwSIXyctoY8nK/KRvGuUp
+         qWXg==
+X-Forwarded-Encrypted: i=1; AJvYcCVMSTA6ZNcESxMlQQGZE7K8HPEpFF5pj5Kwowg00y37Okiqo2lZ0BeYNvCTBwjFl5jZHDVnrYw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzQw6ULFAC8ZCcAiAgIpU93M/rr1SX7+yKPZufmwn5HCSXyW4Fm
+	WPbLkUW0x4vO4oVcZLp7M9x/GS67dDXnFFzAx1CK+02+LaU7bpwqvh6T6qzHWknF
+X-Gm-Gg: ASbGnctBqPyYKiCztuHZ2C455VDqeadxKdCrd3Rb32qJEOHemcbUVmKXrczMK3BvUC1
+	809owN5ivrs4KH9aErJAhuEdCqUx0H7MkX+pfk1CBueeEV88/Ah756J3GbhJC4yfn+7iMFKLcRr
+	BGTzUCVSrHLlomyNMCsRQvwhuLl7E1D7WTct1NYta68H1d0juQE0v8nJEmrJ/3vWeX9lOHLxny9
+	rhWMcE8bjUj2R8sBkhutwYaUm2S6W4EXRHgCQbdvP8fshNIRi9C4+KrSBgWCJkDB90013GdkTnV
+	hlt+Gxnj0vM2rrLLAPBqrG0hPME=
+X-Google-Smtp-Source: AGHT+IGb426KXAna7tUbXhwL2CIur79DWxmDcI/E5an7rbk9SRJUL7gdvaP3a93TzMAL6SvIIh8Q5w==
+X-Received: by 2002:ad4:4ea2:0:b0:6f5:41b8:47ed with SMTP id 6a1803df08f44-6fa9ce38689mr191223316d6.0.1748299735279;
+        Mon, 26 May 2025 15:48:55 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6faa481854esm29328266d6.22.2025.05.26.15.43.52
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6faa050c0b8sm36106276d6.74.2025.05.26.15.48.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 15:43:53 -0700 (PDT)
-Date: Tue, 27 May 2025 06:43:06 +0800
+        Mon, 26 May 2025 15:48:54 -0700 (PDT)
+Date: Tue, 27 May 2025 06:48:08 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
-	Thomas Petazzoni <thomas.petazzoni@bootlin.com>, =?utf-8?Q?Miqu=C3=A8l?= Raynal <miquel.raynal@bootlin.com>, 
-	linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, Jingbao Qiu <qiujingbao.dlmu@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v8 0/2] riscv: pwm: sophgo: add pwm support for CV1800
-Message-ID: <r65g6xww45zdnsuusobnzfg4pszjzkscg7t464e5eas2ycikzx@xed62astc3az>
-References: <20250509-pwm_sophgo-v8-0-cfaebeb8ee17@bootlin.com>
- <sfqdke7xkxg3sr2acber6kjzbcnoay6bnu3enda2xe5wzdi6id@eqiqmkdeovlb>
- <uy4idpkmmyswci3o5dul3xwees7azrs2dhorjgb5lxipi4bllb@7lbldfrwdsj7>
+To: Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] riscv: dts: sophgo: cv18xx: Add RTCSYS device node
+Message-ID: <ykswyhohgty646c5s7pow46dn5gjvgvpq7vq46kbh2gf2f5hub@xabjhqv7pzfn>
+References: <20250513203128.620731-1-alexander.sverdlin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <uy4idpkmmyswci3o5dul3xwees7azrs2dhorjgb5lxipi4bllb@7lbldfrwdsj7>
+In-Reply-To: <20250513203128.620731-1-alexander.sverdlin@gmail.com>
 
-On Mon, May 26, 2025 at 06:31:42PM +0200, Uwe Kleine-König wrote:
-> On Fri, May 09, 2025 at 08:14:57PM +0800, Inochi Amaoto wrote:
-> > On Fri, May 09, 2025 at 11:45:42AM +0200, Thomas Bonnefille wrote:
-> > > The Sophgo CV1800 chip provides a set of four independent
-> > > PWM channel outputs.
-> > > This series adds PWM controller support for Sophgo cv1800.
-> > > 
-> > > Signed-off-by: Jingbao Qiu <qiujingbao.dlmu@gmail.com>
-> > > [Thomas since v8]
-> > > Signed-off-by: Thomas Bonnefille <thomas.bonnefille@bootlin.com>
-> > > ---
-> > 
-> > As now we have pwm support for SG2042, I suggest sharing driver code and
-> > binding file with SG2042.
+On Tue, May 13, 2025 at 10:31:25PM +0200, Alexander Sverdlin wrote:
+> Add the RTCSYS MFD node: in Cvitek CV18xx and its successors RTC Subsystem
+> is quite advanced and provides SoC power management functions as well.
 > 
-> How does the two relate? Is CV1800 the same as SG2042? I'd like to know
-> before I spend time reviewing a driver that is better spent elsewhere.
+> The SoC family also contains DW8051 block (Intel 8051 compatible CPU core)
+> and an associated SRAM. The corresponding control registers are mapped into
+> RTCSYS address space as well.
+> 
+> Link: https://github.com/sophgo/sophgo-doc/tree/main/SG200X/TRM
+> Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+> ---
+>  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
 
-IIRC the pwm SG2044 is based on it on CV1800. And they both share some
-common logic with SG2042, like setting PERIOD register. So I request a
-merge for it.
+I am happy to see the rtc driver is merged. So I will queue this
+patch for the next rc1. If you need a rebase, please let me know.
 
-Regards,
-Inochi
+Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
+
+> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> index ed06c3609fb2..280c45bd3b3d 100644
+> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> @@ -307,5 +307,17 @@ dmac: dma-controller@4330000 {
+>  			snps,data-width = <2>;
+>  			status = "disabled";
+>  		};
+> +
+> +		rtc@5025000 {
+> +			compatible = "sophgo,cv1800b-rtc", "syscon";
+> +			reg = <0x5025000 0x2000>;
+> +			interrupts = <SOC_PERIPHERAL_IRQ(1) IRQ_TYPE_LEVEL_HIGH>,
+> +				     <SOC_PERIPHERAL_IRQ(2) IRQ_TYPE_LEVEL_HIGH>,
+> +				     <SOC_PERIPHERAL_IRQ(3) IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "alarm", "longpress", "vbat";
+> +			clocks = <&clk CLK_RTC_25M>,
+> +				 <&clk CLK_SRC_RTC_SYS_0>;
+> +			clock-names = "rtc", "mcu";
+> +		};
+>  	};
+>  };
+> -- 
+> 2.49.0
+> 
