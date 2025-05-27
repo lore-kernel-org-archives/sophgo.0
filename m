@@ -1,95 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D816C27F756;
-	Tue, 27 May 2025 16:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18434276057;
+	Tue, 27 May 2025 16:51:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364296; cv=none; b=MYnJsX097Cq6FysLUUFbXR2jaXVZWxes1/bHaOPyp3A3DueMZMzQ48cP+jSaaXzG0V/638jOjlSJejbaMw5xKqZxi1GYw6foRJy/ZoFrUc3yImELwL7bHaopDvY0DiiHPxDSIxhBIo3PZ9HpTbI/8vG8/SCd7Js5jUXMNkTIars=
+	t=1748364718; cv=none; b=cOHHukf66qgSu3XhEiUmxdeUViMRRw0lIWhDBQ5YQgwOyx44QLx8sLTpDDL48XelmSql7dByBafrmtC/Hjdf/CjCMDGLJrHx0VRDd6zQnpj1YTuWs/+akH0hAU/RKenSvseOFYac+LIqqF2nPqyIqA48tZbybzqhmigiRXcMoVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364296; c=relaxed/simple;
-	bh=/jj76ajhqfDNRJG/rDNhF9m8qFgvPrdlQW38Y/d1ho4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=G8Pi95fOc/xCjr5d71UZmwo0i9UublQScuwt7Ejgi2QbjdMjt9nccYiGpuGQujn6WsoEuIjXTDgAT3c6ZaSujFqcIj3q4TrwTFBQOEaJ5tlAPKaktHI2XfMgnMWVpBznuqpcpX9HN/IKixasT9pYPrvvU/NjLkTq/j9OM5Qf2n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XS/eYLBi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748364718; c=relaxed/simple;
+	bh=1QHtJ70y+rvjR6EHIWwb1H2O+LY90CK8zar6Avm1ejE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CDrB2QOoP7f6l8wh9XlgHHOfMWhhMAvBFhmspd2yt5LZQ5rHTcTdMM08jfHqcUXYw5k1nOqWAbeFIUzzvUvouutNM+F0MicfC8ycjfVUXqLXvdNNiT5Nda1Hbrvc3XktbnprvbfLE/j+vw4U/QDYCVjRUDmiZqN5uBGtuliS8sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7trjF/X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XS/eYLBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C984C4CEE9;
-	Tue, 27 May 2025 16:44:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7trjF/X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21BCC4CEEB;
+	Tue, 27 May 2025 16:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748364295;
-	bh=/jj76ajhqfDNRJG/rDNhF9m8qFgvPrdlQW38Y/d1ho4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=XS/eYLBiG9Kj5HpjFD9Mdod1eCkAnuyluBZpxjtfHIKHRNwSTjUQv56z9qDudfB59
-	 1cINU97WXtz+KvLbUjWVj4hHT7dR15FygrzgoCfyk3a8KnBDFOJxPcd152vBM/3MiB
-	 P+rwdLZgta1AaUnaY4nZ4gHhUMrYS0qtnMDKjl9HplWuDUIaDVo1+iANSa0mTjU6BG
-	 cw++bTqqwpFlE5AgMf7L2Rt2+U3bYy/SHXBvvlEXXlIgezaHbgNh/q1jVJ+0uMsCXX
-	 pi7FwG2lpb/5J7ByP/ekB4iysZxdExFvgOre+5S6Hah5G2Qu7Ykgxi+PAInmqoxjwJ
-	 0x/X91F06o55A==
-From: Mark Brown <broonie@kernel.org>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Pratyush Yadav <pratyush@kernel.org>, Michael Walle <mwalle@kernel.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Longbin Li <looong.bin@gmail.com>, 
- Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org, 
- sophgo@lists.linux.dev, linux-spi@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org
-In-Reply-To: <20250525-sfg-spifmc-v2-0-a3732b6f5ab4@gmail.com>
+	s=k20201202; t=1748364718;
+	bh=1QHtJ70y+rvjR6EHIWwb1H2O+LY90CK8zar6Avm1ejE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=q7trjF/Xiu4/dOXeYm3XARMbuTenNw4xm/v/XKKhQ3Qpz2BR/MmP9HbtTAWT9WNY2
+	 9Ue0cdZe2532DMrkxHXjLPtpiQBle4NzeiOBgrcgpWd6Ppx42XazvV31CdT8BbCy74
+	 9KQX1OYFF0SFkEiAAhHpgAtJ9/PnPEyhv0/MJTjyKbm++CfIKWkGfC9cRP2KpMvq6T
+	 ZGrFw2XqrcTHFs4x3c0tnOmGTbcE2umdCs2wXDsQ7CTP0SNXYrT97dRzF97KDK4DZa
+	 qTvN/hAkBUo3bs+vwWqNantVMjKirXvuqg+P6KDHImv4jJ4X0Hi5fj24rhi/sf9biw
+	 /tS8x5vXTdGbA==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: Zixian Zeng <sycamoremoon376@gmail.com>
+Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,  Pratyush Yadav
+ <pratyush@kernel.org>,  Michael Walle <mwalle@kernel.org>,  Miquel Raynal
+ <miquel.raynal@bootlin.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  Chen Wang
+ <unicorn_wang@outlook.com>,  Inochi Amaoto <inochiama@gmail.com>,  Mark
+ Brown <broonie@kernel.org>,  Rob Herring <robh@kernel.org>,  Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,  Paul
+ Walmsley <paul.walmsley@sifive.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+  Albert Ou <aou@eecs.berkeley.edu>,  Alexandre Ghiti <alex@ghiti.fr>,
+  Longbin Li <looong.bin@gmail.com>,  linux-mtd@lists.infradead.org,
+  linux-kernel@vger.kernel.org,  sophgo@lists.linux.dev,
+  linux-spi@vger.kernel.org,  devicetree@vger.kernel.org,
+  linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v2 3/3] riscv: dts: sophgo: Add SPI NOR node for SG2042
+In-Reply-To: <20250525-sfg-spifmc-v2-3-a3732b6f5ab4@gmail.com>
 References: <20250525-sfg-spifmc-v2-0-a3732b6f5ab4@gmail.com>
-Subject: Re: (subset) [PATCH v2 0/3] spi: sophgo: Add SPI NOR controller
- for SG2042
-Message-Id: <174836429126.109342.7717810791199744277.b4-ty@kernel.org>
-Date: Tue, 27 May 2025 17:44:51 +0100
+	<20250525-sfg-spifmc-v2-3-a3732b6f5ab4@gmail.com>
+Date: Tue, 27 May 2025 18:51:53 +0200
+Message-ID: <mafs05xhmro7q.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-c25d1
+Content-Type: text/plain
 
-On Sun, 25 May 2025 22:58:40 +0800, Zixian Zeng wrote:
-> Add support SPI NOR flash memory controller for SG2042, using upstreamed
-> SG2044 SPI NOR driver.
-> 
-> Tested on SG2042 Pioneer Box, read, write operations.
-> 
-> 
+On Sun, May 25 2025, Zixian Zeng wrote:
 
-Applied to
+> Add SPI-NOR controller and flash nodes to device tree for SG2042.
+>
+> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+> ---
+>  .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 18 ++++++++++++++++
+>  arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 24 ++++++++++++++++++++++
+>  2 files changed, 42 insertions(+)
+>
+> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+> index 34645a5f6038389cd00d4940947c6bb71d39ec6f..c59a819e35d3201c484bf98392aec14392a7eb04 100644
+> --- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+> +++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
+> @@ -68,6 +68,24 @@ &sd {
+>  	status = "okay";
+>  };
+>  
+> +&spifmc0 {
+> +	status = "okay";
+> +
+> +	flash@0 {
+> +		compatible = "jedec,spi-nor";
+> +		reg = <0>;
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+Shouldn't you also add other properties like spi-max-frequency or
+spi-{rx,tx}-bus-width? Same for the other flash.
 
-Thanks!
+> +	};
+> +};
+> +
+> +&spifmc1 {
+> +	status = "okay";
+> +
+> +	flash@0 {
+> +		compatible = "jedec,spi-nor";
+> +		reg = <0>;
+> +	};
+> +};
+> +
+>  &uart0 {
+>  	status = "okay";
+>  };
+[...]
 
-[1/3] spi: dt-bindings: spi-sg2044-nor: Add SOPHGO SG2042
-      commit: 8450f1e0d3d0e0b200eb14d14dfb8ef5ddb9bda9
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+-- 
+Regards,
+Pratyush Yadav
