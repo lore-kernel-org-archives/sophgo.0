@@ -1,125 +1,241 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEBA16419
-	for <sophgo@lists.linux.dev>; Mon, 26 May 2025 22:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EBB136E
+	for <sophgo@lists.linux.dev>; Tue, 27 May 2025 01:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748299738; cv=none; b=gfVC0IFZB1vli0YWWdIOn6wzA08hX12xcWnRydm/EN07wbiW61qrUSfY09v3/LACKL8xkTNgGeeummIqxhgtmVflmIUGjBrTELI6ybvEvNS2cKQXUirLyyI8wXB0RcFJcWbTUtGmoLH9BkzHqag7dwR2AFRFW5uX43mf1RPMSP8=
+	t=1748309605; cv=none; b=iEcbpIrN3K4MprfKBP4OYvLjTUGZpvMWc8ainc7fkq8ghyRiSSh2HfN2VbQA09oi16s5xFAit535MU4HjLheu+HXLojJa9+cfvouuCL/+HR6xfH4rsMSPyEzP89A5Pp43frdjr6znx4ZsW0P8gDFUv4+5MDIc9SapCcWk65k/eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748299738; c=relaxed/simple;
-	bh=uolzGkj7lS4cxGcaNey6Eo8aZi3ZI/PC2nzy7WLFnLE=;
+	s=arc-20240116; t=1748309605; c=relaxed/simple;
+	bh=3fzKUvCqrlK4HhYELjN5TpIfmG/9FcTorzD9b6D+M4M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lOg6o20M1vI7QBDKAUU3d9nnKfioGxmVHFlYTWSn6rFCo9Kx+vbzUfGdBkG+22vH453Wc6V/VWyFAAMusNpaUuvoeDUJD/mqzYm6Zn2eflahEx9zK80UjvrdKITgUIdeWotngGZe1yniGdE52V1KxY0B5LIujqgzCL7gWs4u7ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NBblu0nT; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=GgW587x0PIkklfyDdBw6Ohr4ggRYrku/D7/5DFzUqaxyHxPKsG/TjbmNTNKg+87dFOyugK7DTGvlchkMUmtTfhbZ44T5mVuSU3BHTQ602dr7HD7eUlMcC7re82ijXoACh+4azmGDDdKIwsMvwxXMUhspXs1MHCYSxF9Sl9WFVEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h1zmGjtj; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBblu0nT"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7c559b3eb0bso147187785a.1
-        for <sophgo@lists.linux.dev>; Mon, 26 May 2025 15:48:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h1zmGjtj"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-31118251071so1588087a91.1
+        for <sophgo@lists.linux.dev>; Mon, 26 May 2025 18:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748299735; x=1748904535; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DxU+IS3NoOt3HdLFHXPgdhqzIwbodDbspZNewqvS2bY=;
-        b=NBblu0nTA7rtRL9V58aACFJbnE63QIlbe0vBhc90cCRFuo6eSXUZCmvUpu7o5qzANT
-         Ud8uRvTgni8Xickc8/YuwjgIBK5evTt0x+YtsFSYZoAzrGgMrpfOj48S4FbA4T3VbX/v
-         mIk5wGE1m7xEOkp2PXYruU5T6oSmeCR8Hz2W9iJ6N2VE631YWIO/bYt4ekYHF6O+SU6y
-         jQPCOa7fdVpCFk0Zszo6jTLYnWl1mKBtHFx/YXACPDndXxnbbe7y/Zy0uqCCcrY++6So
-         I/SRM4L+0IwpQUCjbY9nTRe+PuaQlAF2mF1PU5DpPdSY9+Vh5L5TkgqaqRipkKL+PzAe
-         FukA==
+        d=gmail.com; s=20230601; t=1748309603; x=1748914403; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OvJ3qRY7vvlwo6L+qtgNdDTxVIpt1gweYQIVKsNpVWw=;
+        b=h1zmGjtj8kZxULDg1OuhAw6OfdbWWtdpjtH8ID54nyz+nCfPSAdT/ssv9ApEeVz3ZD
+         NHmao0I2PK13pzmen2tY3mx/1A3Sdro2XizCclLQB6qZNs/P4lZ613LPkQP/o+zMOCxm
+         MI5xC/7cbRqozdrXz1Dj5qyh8FhGHrnpm2LC5fsClsoFRbs4QwIaUtucd7Z7LUPAAXxe
+         HgD8g6EXkd8G4fsFmfeZfI46ufUFKNVXCIzZocTMMxHa15/koJ6El9ANOSbpbaB275cM
+         803w6v1/5hIiY/VDtYAbEyBzuhM3gEtm0YRHkQjzBwQT1tUR3hdnB46I+Rk5BZbnbeb/
+         A4tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748299735; x=1748904535;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DxU+IS3NoOt3HdLFHXPgdhqzIwbodDbspZNewqvS2bY=;
-        b=Gp2WQmvmiT8+yxP7koCdi8G2YqqByH5cPxQYY03mI9CjEoasosOKEdyDz3iJid9WKm
-         FIw0xoNwiRluHw8pVBM31V00c3/3Rwcnsc4N8ZrKCM/1LZ99V5z6+qu/XdcmghUJuMxC
-         nApDatpWemSlWQtRCyENzeQaelc1sDMa/jAIczXbeTgdpHoIFahlsSimnvL73wgPGncP
-         NyVkff+F/iTgNM+LEL1h/moT2H9AmKj6850Q8+BLNL9lt8VTuJNYAPJv+p3S2MZtYIzY
-         oXuMec18b/JB02BPWWe/oIFYfbbxwkyNzD6OFPX5JcGstRdnwSIXyctoY8nK/KRvGuUp
-         qWXg==
-X-Forwarded-Encrypted: i=1; AJvYcCVMSTA6ZNcESxMlQQGZE7K8HPEpFF5pj5Kwowg00y37Okiqo2lZ0BeYNvCTBwjFl5jZHDVnrYw=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQw6ULFAC8ZCcAiAgIpU93M/rr1SX7+yKPZufmwn5HCSXyW4Fm
-	WPbLkUW0x4vO4oVcZLp7M9x/GS67dDXnFFzAx1CK+02+LaU7bpwqvh6T6qzHWknF
-X-Gm-Gg: ASbGnctBqPyYKiCztuHZ2C455VDqeadxKdCrd3Rb32qJEOHemcbUVmKXrczMK3BvUC1
-	809owN5ivrs4KH9aErJAhuEdCqUx0H7MkX+pfk1CBueeEV88/Ah756J3GbhJC4yfn+7iMFKLcRr
-	BGTzUCVSrHLlomyNMCsRQvwhuLl7E1D7WTct1NYta68H1d0juQE0v8nJEmrJ/3vWeX9lOHLxny9
-	rhWMcE8bjUj2R8sBkhutwYaUm2S6W4EXRHgCQbdvP8fshNIRi9C4+KrSBgWCJkDB90013GdkTnV
-	hlt+Gxnj0vM2rrLLAPBqrG0hPME=
-X-Google-Smtp-Source: AGHT+IGb426KXAna7tUbXhwL2CIur79DWxmDcI/E5an7rbk9SRJUL7gdvaP3a93TzMAL6SvIIh8Q5w==
-X-Received: by 2002:ad4:4ea2:0:b0:6f5:41b8:47ed with SMTP id 6a1803df08f44-6fa9ce38689mr191223316d6.0.1748299735279;
-        Mon, 26 May 2025 15:48:55 -0700 (PDT)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6faa050c0b8sm36106276d6.74.2025.05.26.15.48.54
+        d=1e100.net; s=20230601; t=1748309603; x=1748914403;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OvJ3qRY7vvlwo6L+qtgNdDTxVIpt1gweYQIVKsNpVWw=;
+        b=Q1L9sf1xZ8WQveevVN7SyF1M/56PJbj3bkj9GeP4t0Zbn9hMXGwVE8M40cU9CETrJp
+         78lYOVEbBzDNJqwfj2OwIpDH/dkzELvqr5rh0Go9HdIeemC1/OogNL1n9eDcxJnGt1mS
+         THqzCrjzST07YAj0X7sjQCXXOgcH8wJOO2mQNiUz2LvbhzhC/N8VnebbuiT96zUBZamw
+         GJtsD0HSadrijQvySPZY4uwgXJKDYbdAfEYrcjgoEcJnXrXPk224Fa4UmtPqSbn2C1Z9
+         F7CpW0CfZDkEQEA2RJgrTcq9K81GYKi1jRgCZ72D2lDcDO1uWSTDP01CH4hb+Hst2Rzx
+         lLsA==
+X-Forwarded-Encrypted: i=1; AJvYcCUR8jx8a+tlEprx8rzR1tR9ELlD1WwfNL3BYzvTuvw6BamGxr5Jjj/2XCBTG617fkxVd/P7gks=@lists.linux.dev
+X-Gm-Message-State: AOJu0YywBo2YovLLjnW8rceX2PZKYMlJ2j+EUCdtwMZCj+EmS9aTTzxt
+	AlIISVkuhVOnB9G9gGLnmtg7HAniWl4P3uZzF3RBy9cpXcjKaXDqQ/Qy
+X-Gm-Gg: ASbGncu9YiFV14pfPfhBP8KUcCLUQ52nzveDk0q02CR5tFkT89YQ8jfbawIMQEJ1dyN
+	2jIirY/Dk2Q94VYuxR6ovi6xgT8P/NI6uati4GyirTTfnodUCxdOuZZEWBiegfZ1MwNrC2iOaFL
+	2zfCO1W9l80t19SMZcxeIX29GpBaJxC6kJ5MAzj1uuCD1cAVRzRgOXvkMnC9St5pF6uoXjCqBWp
+	YTYqzxEyrKL/W0Hlrnvbjsj34EZs09tILvJm8MEkkRzMDvUqhDJVC3fxRhFIPwGyF0bndda3sjZ
+	518KYxbMeeMwMGTzcRFAjP//X61hxoeToPTnYB0ICiYnsVfaMWSk
+X-Google-Smtp-Source: AGHT+IHIY+p1U9yGcxp85neZDiVtg1+leRzLjswY7T3Ox7/Uj83JLq+1T9pQYqyo3NpX7Ybgyie4yg==
+X-Received: by 2002:a17:90b:5110:b0:311:9c9a:58e5 with SMTP id 98e67ed59e1d1-3119c9a5d30mr4363503a91.24.1748309602855;
+        Mon, 26 May 2025 18:33:22 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-311a3f2eb6esm629071a91.22.2025.05.26.18.33.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 15:48:54 -0700 (PDT)
-Date: Tue, 27 May 2025 06:48:08 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev
+        Mon, 26 May 2025 18:33:22 -0700 (PDT)
+Date: Tue, 27 May 2025 09:33:20 +0800
+From: Longbin Li <looong.bin@gmail.com>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
 Cc: Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
 	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] riscv: dts: sophgo: cv18xx: Add RTCSYS device node
-Message-ID: <ykswyhohgty646c5s7pow46dn5gjvgvpq7vq46kbh2gf2f5hub@xabjhqv7pzfn>
-References: <20250513203128.620731-1-alexander.sverdlin@gmail.com>
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-pwm@vger.kernel.org, 
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v4 3/3] pwm: sophgo: add driver for SG2044
+Message-ID: <xgk2ac6zkfs34coefjcrol3aklob7sn7ob6qerhzf7yfa3dqdo@b54syid35obp>
+References: <20250428013501.6354-1-looong.bin@gmail.com>
+ <20250428013501.6354-4-looong.bin@gmail.com>
+ <jo4ustzbkswmeive5s4tepwhzeoeswa4knfihkzh6eylujeid4@dj2a2nzp2a5v>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250513203128.620731-1-alexander.sverdlin@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <jo4ustzbkswmeive5s4tepwhzeoeswa4knfihkzh6eylujeid4@dj2a2nzp2a5v>
 
-On Tue, May 13, 2025 at 10:31:25PM +0200, Alexander Sverdlin wrote:
-> Add the RTCSYS MFD node: in Cvitek CV18xx and its successors RTC Subsystem
-> is quite advanced and provides SoC power management functions as well.
+On Mon, May 26, 2025 at 05:06:25PM +0200, Uwe Kleine-König wrote:
+> On Mon, Apr 28, 2025 at 09:34:50AM +0800, Longbin Li wrote:
+> > Add PWM controller for SG2044 on base of SG2042.
+> > 
+> > Signed-off-by: Longbin Li <looong.bin@gmail.com>
+> > Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+> > ---
+> >  drivers/pwm/pwm-sophgo-sg2042.c | 89 ++++++++++++++++++++++++++++++++-
+> >  1 file changed, 87 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/pwm/pwm-sophgo-sg2042.c b/drivers/pwm/pwm-sophgo-sg2042.c
+> > index 23a83843ba53..5bb92c910540 100644
+> > --- a/drivers/pwm/pwm-sophgo-sg2042.c
+> > +++ b/drivers/pwm/pwm-sophgo-sg2042.c
+> > @@ -13,6 +13,9 @@
+> >   *   the running period.
+> >   * - When PERIOD and HLPERIOD is set to 0, the PWM wave output will
+> >   *   be stopped and the output is pulled to high.
+> > + * - SG2044 support polarity while SG2042 does not. When PWMSTART is
+> > + *   false, POLARITY being NORMAL will make output being low,
+> > + *   POLARITY being INVERSED will make output being high.
 > 
-> The SoC family also contains DW8051 block (Intel 8051 compatible CPU core)
-> and an associated SRAM. The corresponding control registers are mapped into
-> RTCSYS address space as well.
+> Without detailed knowledge about the hardware this isn't understandable.
+> What is PWMSTART? I think this can just read:
 > 
-> Link: https://github.com/sophgo/sophgo-doc/tree/main/SG200X/TRM
-> Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-> ---
->  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+> 	SG2044 supports both polarities, SG2042 only normal polarity.
+> 
+> The rest is an implementation detail.
+>
+
+I will modify that, thanks.
+ 
+> >   * See the datasheet [1] for more details.
+> >   * [1]:https://github.com/sophgo/sophgo-doc/tree/main/SG2042/TRM
+> 
+> This only describes SG2042, right? Can you please add a link for the new
+> variant?
 > 
 
-I am happy to see the rtc driver is merged. So I will queue this
-patch for the next rc1. If you need a rebase, please let me know.
+Sorry, there is no public document for SG2044.
 
-Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
-
-> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> index ed06c3609fb2..280c45bd3b3d 100644
-> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> @@ -307,5 +307,17 @@ dmac: dma-controller@4330000 {
->  			snps,data-width = <2>;
->  			status = "disabled";
->  		};
-> +
-> +		rtc@5025000 {
-> +			compatible = "sophgo,cv1800b-rtc", "syscon";
-> +			reg = <0x5025000 0x2000>;
-> +			interrupts = <SOC_PERIPHERAL_IRQ(1) IRQ_TYPE_LEVEL_HIGH>,
-> +				     <SOC_PERIPHERAL_IRQ(2) IRQ_TYPE_LEVEL_HIGH>,
-> +				     <SOC_PERIPHERAL_IRQ(3) IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "alarm", "longpress", "vbat";
-> +			clocks = <&clk CLK_RTC_25M>,
-> +				 <&clk CLK_SRC_RTC_SYS_0>;
-> +			clock-names = "rtc", "mcu";
-> +		};
->  	};
->  };
-> -- 
-> 2.49.0
+> >   */
+> > @@ -26,6 +29,10 @@
+> >  #include <linux/pwm.h>
+> >  #include <linux/reset.h>
+> > 
+> > +#define SG2044_PWM_POLARITY		0x40
+> > +#define SG2044_PWM_PWMSTART		0x44
+> > +#define SG2044_PWM_OE			0xd0
+> > +
+> >  #define SG2042_PWM_HLPERIOD(chan) ((chan) * 8 + 0)
+> >  #define SG2042_PWM_PERIOD(chan) ((chan) * 8 + 4)
+> > 
+> > @@ -72,8 +79,8 @@ static void pwm_set_dutycycle(struct pwm_chip *chip, struct pwm_device *pwm,
+> >  	period_ticks = min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->period, NSEC_PER_SEC), U32_MAX);
+> >  	hlperiod_ticks = min(mul_u64_u64_div_u64(ddata->clk_rate_hz, state->duty_cycle, NSEC_PER_SEC), U32_MAX);
+> > 
+> > -	dev_dbg(pwmchip_parent(chip), "chan[%u]: PERIOD=%u, HLPERIOD=%u\n",
+> > -		pwm->hwpwm, period_ticks, hlperiod_ticks);
+> > +	dev_dbg(pwmchip_parent(chip), "chan[%u]: ENABLE=%u, PERIOD=%u, HLPERIOD=%u, POLARITY=%u\n",
+> > +		pwm->hwpwm, state->enabled, period_ticks, hlperiod_ticks, state->polarity);
+> > 
+> >  	pwm_sg2042_config(ddata, pwm->hwpwm, period_ticks, hlperiod_ticks);
+> >  }
+> > @@ -123,6 +130,74 @@ static int pwm_sg2042_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+> >  	return 0;
+> >  }
+> > 
+> > +static void pwm_sg2044_set_start(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm,
+> > +				 bool enabled)
+> > +{
+> > +	u32 pwm_value;
+> > +
+> > +	pwm_value = readl(ddata->base + SG2044_PWM_PWMSTART);
 > 
+> Please use a variable name that matches the register this is used for.
+> 
+
+I will fix that.
+
+> > +	if (enabled)
+> > +		pwm_value |= BIT(pwm->hwpwm);
+> > +	else
+> > +		pwm_value &= ~BIT(pwm->hwpwm);
+> > +
+> > +	writel(pwm_value, ddata->base + SG2044_PWM_PWMSTART);
+> > +}
+> > +
+> > +static void pwm_sg2044_set_outputdir(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm,
+> > +				     bool enabled)
+> > +{
+> > +	u32 pwm_value;
+> > +
+> > +	pwm_value = readl(ddata->base + SG2044_PWM_OE);
+> > +
+> > +	if (enabled)
+> > +		pwm_value |= BIT(pwm->hwpwm);
+> > +	else
+> > +		pwm_value &= ~BIT(pwm->hwpwm);
+> > +
+> > +	writel(pwm_value, ddata->base + SG2044_PWM_OE);
+> > +}
+> > +
+> > +static void pwm_sg2044_set_polarity(struct sg2042_pwm_ddata *ddata, struct pwm_device *pwm,
+> > +				    const struct pwm_state *state)
+> > +{
+> > +	u32 pwm_value;
+> > +
+> > +	pwm_value = readl(ddata->base + SG2044_PWM_POLARITY);
+> > +
+> > +	if (state->polarity == PWM_POLARITY_NORMAL)
+> > +		pwm_value &= ~BIT(pwm->hwpwm);
+> > +	else
+> > +		pwm_value |= BIT(pwm->hwpwm);
+> > +
+> > +	writel(pwm_value, ddata->base + SG2044_PWM_POLARITY);
+> > +}
+> > +
+> > +static int pwm_sg2044_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+> > +			    const struct pwm_state *state)
+> > +{
+> > +	struct sg2042_pwm_ddata *ddata = pwmchip_get_drvdata(chip);
+> > +
+> > +	pwm_sg2044_set_polarity(ddata, pwm, state);
+> > +
+> > +	pwm_set_dutycycle(chip, pwm, state);
+> > +
+> > +	/*
+> > +	 * re-enable PWMSTART to refresh the register period
+> > +	 */
+> > +	pwm_sg2044_set_start(ddata, pwm, false);
+> 
+> I don't understand the effect of the START register. 
+> 
+
+PWMSTART[3:0] enable the output of the corresponding channel. Must re-enable
+it to refresh the register period when changed the duty cycle. I will find 
+a better name, thanks.
+
+> > +	if (!state->enabled)
+> > +		return 0;
+> > +
+> > +	pwm_sg2044_set_outputdir(ddata, pwm, true);
+> > +	pwm_sg2044_set_start(ddata, pwm, true);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static const struct sg2042_chip_data sg2042_chip_data = {
+> >  	.ops = {
+> >  		.apply = pwm_sg2042_apply,
+> 
+> Best regards
+> Uwe
+
+
