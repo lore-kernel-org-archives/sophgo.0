@@ -1,122 +1,100 @@
-Received: from mail-m155101.qiye.163.com (mail-m155101.qiye.163.com [101.71.155.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD832741B0
-	for <sophgo@lists.linux.dev>; Tue, 27 May 2025 15:07:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566222CCC0;
+	Tue, 27 May 2025 16:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748358477; cv=none; b=NAAPB9Rm2JXQ2ZXuh9/eYq1CBut2Q+RhnzPbrWQcslIC4oEwFKTkmg1MKFXK/Ua8S6Zp+XAfBeYciwsMl3F+57oAeG+09gK6RkGiA6jwjGBKrbS9yb0Ui4kxUUgAvym83CuAxkDu2MuA9xp1wbvt7r3arxbmRTwB0tK+XnqRdzc=
+	t=1748363456; cv=none; b=n6Mu/hcHeD6tHQTK1I+hNfnYpYr+GNnD2lcUC0KvbyFiTRSrMky/mb3sUXSzJ9258msIFGmWpGJm49HPS8ZJ4LtjzHkZUAwfdPbTSnVAkDOsWoEGOHmg8e1JbgrNio529sWZbHOIBVfGp3Jv9XRndBpge0gwIOHzOv9FPyWGYb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748358477; c=relaxed/simple;
-	bh=vqd5489V0avFdRMIy9tvgVQe9WcgN2RWYY5hv0QOid0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QKHt1UCw8hDkHRhYRitG5Hvgqwig/jsKeKGPxI6/g9U0mDzJ7yQhFl7sJQ0cF9NzEVH3WhNM4wksH3TKs66h36uVKtYHPactnZngiUgJ0U3z1EhK4pclBXbsKMwpxgJwrp/bc5cMpEtVRAEd5F/got1vNGtk6zi0TkWRwbaGFMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn; spf=pass smtp.mailfrom=whut.edu.cn; arc=none smtp.client-ip=101.71.155.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=whut.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=whut.edu.cn
-Received: from [198.18.0.1] (gy-adaptive-ssl-proxy-2-entmail-virt205.gy.ntes [113.57.237.88])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 1696b4356;
-	Tue, 27 May 2025 23:07:40 +0800 (GMT+08:00)
-Message-ID: <0b16c5df-94e2-43b0-876f-a5070ac71ba0@whut.edu.cn>
-Date: Tue, 27 May 2025 23:07:40 +0800
+	s=arc-20240116; t=1748363456; c=relaxed/simple;
+	bh=GuhC62725B74CDQxC/yoRR13F77zMV2WzAptKnXrRbI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f+Heec+KwqLeaO2TKO6TFwtk1SysPXu5hFLUQncc0ZhSNqYrN/3rABR+wsx2bQpdXyFvxuoeWhzmjvv6fD2kjQIxyb0uhQylR9AKXEOhCKJwp3jT8/FJz4VK6Vq/1z6uT6kQkTjP4ss0uc0xZrYgMRgqjcHOYTDPSd2xn9/JszU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PlNYqNDO; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PlNYqNDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DFFC4CEE9;
+	Tue, 27 May 2025 16:30:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1748363455;
+	bh=GuhC62725B74CDQxC/yoRR13F77zMV2WzAptKnXrRbI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=PlNYqNDOtOmMCyy3kUWVdLbu14efKch6HwKNvabIXOn3tGCFNL63UmKUlPWIqfSo1
+	 v/5Orf9OqD06ZD+KI5ruCMAcIwaFubWzmKsdYQfslCs5naZZPvcg3DuOsJviNiexUH
+	 VifC6ecM71J4rE45zvm78hpYSmOQ4yGW87MvipcQnmQ+kaYDN2Eohea0QrGJvdqWbI
+	 mTzqtjzSR7lbWQ2eLdsvRTQdfzETGN9eiVqJMTJhdl4ymC/mO9FD01pJiKcYEz2r9H
+	 98Ia7W3Zth5F2x6leXQbLg5zLzdggEoEPlqahdjkFS5j9UpGBX7f3ZJl5ra4q6/MJr
+	 KSWOaj5ldUpvA==
+From: Pratyush Yadav <pratyush@kernel.org>
+To: Zixian Zeng <sycamoremoon376@gmail.com>
+Cc: Michael Walle <mwalle@kernel.org>,  Tudor Ambarus
+ <tudor.ambarus@linaro.org>,  Pratyush Yadav <pratyush@kernel.org>,  Miquel
+ Raynal <miquel.raynal@bootlin.com>,  Richard Weinberger <richard@nod.at>,
+  Vignesh Raghavendra <vigneshr@ti.com>,  Chen Wang
+ <unicorn_wang@outlook.com>,  Inochi Amaoto <inochiama@gmail.com>,  Mark
+ Brown <broonie@kernel.org>,  Rob Herring <robh@kernel.org>,  Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,  Paul
+ Walmsley <paul.walmsley@sifive.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
+  Albert Ou <aou@eecs.berkeley.edu>,  Alexandre Ghiti <alex@ghiti.fr>,
+  Longbin Li <looong.bin@gmail.com>,  linux-mtd@lists.infradead.org,
+  linux-kernel@vger.kernel.org,  sophgo@lists.linux.dev,
+  linux-spi@vger.kernel.org,  devicetree@vger.kernel.org,
+  linux-riscv@lists.infradead.org,  dlan@gentoo.org,  ziyao@disroot.org
+Subject: Re: [PATCH 2/3] mtd: spi-nor: Add GD25LB512ME GigaDevice flash_info
+In-Reply-To: <aDCf84cRw0tmcAbm@calculate>
+References: <20250523-sfg-spifmc-v1-0-4cf16cf3fd2a@gmail.com>
+	<20250523-sfg-spifmc-v1-2-4cf16cf3fd2a@gmail.com>
+	<DA3HXNN7HTD2.2NUKORU5V6CS2@kernel.org> <aDCf84cRw0tmcAbm@calculate>
+Date: Tue, 27 May 2025 18:30:51 +0200
+Message-ID: <mafs0msayrp6s.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Linux)
-Subject: Re: [PATCH] dt-bindings: pinctrl: k230: fix child node name patterns
-To: Conor Dooley <conor@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- sophgo@lists.linux.dev
-References: <20250527-k230-binding-fix-v1-1-3c18ae5221ab@whut.edu.cn>
- <20250527-activism-container-4a9da77a8da1@spud>
-Content-Language: en-US
-From: Ze Huang <huangze@whut.edu.cn>
-In-Reply-To: <20250527-activism-container-4a9da77a8da1@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Spam-Status: e1kfGhgUHx5ZQUhXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaSkgfVh5CQhodTx1CTB9IT1YeHw5VEwETFhoSFy
-	QUDg9ZV1kYEgtZQVlKSkhVTkxVSUhMVUNDWVdZFhoPEhUdFFlBWU9CTFVISUxNQlVPVUhLS0pZBg
-	++
-X-HM-Tid: 0a971248f54b03a1kunm41ef4b31c6cea
-X-HM-MType: 10
-X-HM-Sender-Digest: e1kMHhlZQR0aFwgeV1kSHx4VD1lBWUc6N0k6Kio*KjEyUVZRFBYMTS0d
-	NioaCwxVSlVKTE9DSE5DT01OSElMVTMWGhIXVRMOGhUcAR47DBMOD1UeHw5VGBVFWVdZEgtZQVlK
-	SkhVTkxVSUhMVUNDWVdZCAFZQUhOTUo3Bg++
+Content-Type: text/plain
 
-On 5/27/25 10:36 PM, Conor Dooley wrote:
-> On Tue, May 27, 2025 at 12:23:35AM +0800, Ze Huang wrote:
->> Rename child node name patterns to align with conventions.
->>
->>      uart0-pins      =>   uart0-cfg
->>          uart0-cfg            uart0-pins
->>
->> This avoids potential confusion and improves consistency with existing
->> bindings like sophgo,sg2042-pinctrl and starfive,jh7110-aon-pinctrl.
->>
->> Fixes: 561f3e9d21a1 ("dt-bindings: pinctrl: Add support for canaan,k230 SoC")
-> You're changing something merged in October of last year, which is an
-> ABI break, for what seems like a cosmetic change to me. What makes this
-> worth it? Consistency with some devices by other vendors isn't a strong
-> argument I don't think.
+On Sat, May 24 2025, Zixian Zeng wrote:
 
-Thanks for the feedback.
+> Hi, Michael, Thank you for your reviews.
+>
+> On Fri, May 23, 2025 at 01:16:50PM +0200, Michael Walle wrote:
+>> Hi,
+>> 
+>> > Add GD25LB512ME SPI-NOR flash information
+>> 
+>> Please have a look at [1].
+>> 
+>> This flash supports SFDP, do you really need a new entry in the
+>> flashdb? Could you try without it?
+>> 
+>> In any case, could you please dump the SFDP see [1], too.
+>> 
+>> [1] https://docs.kernel.org/driver-api/mtd/spi-nor.html
+>> 
+>> -michael
+>
+> I was following the testing requirements from [1].
+> Before that, I have applied the patch:
+> "mtd: spi-nor: Add GD25LB512ME GigaDevice flash_info"
+> Because without this patch, the spi-nor device cannot be detected normally.
+>
+> ------------------------------- LOG ------------------------------------
+> root@localhost ~ # dmesg | grep -i spi
+> [   10.199526] spi-nor spi0.0: supply vcc not found, using dummy regulator
+> [   11.206477] spi-nor spi0.0: unrecognized JEDEC id bytes: c8 67 1a ff c8 67
+> [   11.213691] spi-nor spi1.0: supply vcc not found, using dummy regulator
+> [   12.220614] spi-nor spi1.0: unrecognized JEDEC id bytes: c8 67 1a ff c8 67
 
-You're right - this change would introduce an ABI break just for naming
-consistency, there’s no strong functional benefit.
+The flash seems to have a valid SFDP but for some reason
+spi_nor_check_sfdp_signature() is not able to validate it to allow the
+generic driver. Can you please take a look at why? Ideally the generic
+driver should be enough and you shouldn't need to add an entry unless
+something is wrong with SFDP data.
 
->> Signed-off-by: Ze Huang <huangze@whut.edu.cn>
->> ---
->>   .../devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml          | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
->> index 0b462eb6dfe169a292bf716503c03d029f1ac7ee..f4e0da0bf7fa30af5132644109dbd371ddfc0228 100644
->> --- a/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
->> +++ b/Documentation/devicetree/bindings/pinctrl/canaan,k230-pinctrl.yaml
->> @@ -22,7 +22,7 @@ properties:
->>       maxItems: 1
->>   
->>   patternProperties:
->> -  '-pins$':
->> +  '-cfg$':
->>       type: object
->>       additionalProperties: false
->>       description:
->> @@ -30,7 +30,7 @@ patternProperties:
->>         pinctrl groups available on the machine.
->>   
->>       patternProperties:
->> -      '-cfg$':
->> +      '-pins$':
->>           type: object
->>           allOf:
->>             - $ref: /schemas/pinctrl/pincfg-node.yaml
->> @@ -112,8 +112,8 @@ examples:
->>           compatible = "canaan,k230-pinctrl";
->>           reg = <0x91105000 0x100>;
->>   
->> -        uart2-pins {
->> -            uart2-pins-cfg {
->> +        uart2-cfg {
->> +            uart2-pins {
->>                   pinmux = <0x503>, /* uart2 txd */
->>                            <0x603>; /* uart2 rxd */
->>                   slew-rate = <0>;
->>
->> ---
->> base-commit: 0a4b866d08c6adaea2f4592d31edac6deeb4dcbd
->> change-id: 20250526-k230-binding-fix-3125ff43f930
->>
->> Best regards,
->> -- 
->> Ze Huang <huangze@whut.edu.cn>
->>
-
+-- 
+Regards,
+Pratyush Yadav
