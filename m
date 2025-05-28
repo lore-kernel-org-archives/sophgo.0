@@ -1,106 +1,133 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18434276057;
-	Tue, 27 May 2025 16:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D94171C9
+	for <sophgo@lists.linux.dev>; Wed, 28 May 2025 10:11:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748364718; cv=none; b=cOHHukf66qgSu3XhEiUmxdeUViMRRw0lIWhDBQ5YQgwOyx44QLx8sLTpDDL48XelmSql7dByBafrmtC/Hjdf/CjCMDGLJrHx0VRDd6zQnpj1YTuWs/+akH0hAU/RKenSvseOFYac+LIqqF2nPqyIqA48tZbybzqhmigiRXcMoVY=
+	t=1748427113; cv=none; b=ax7A7kyisU1MoXVqjyhXPtv6y4jIiinIvFDx9mwKYz5IE5/JXG51/i3FjljmvvqeKsxTR2vpWhPcOwVyZSTmpoHK+/h2NBWWoDm8yLvNtO67D/kjJeOvBaRoCTa1It+HB1oc6Wg40MDinLjCnH266qovLHRLWGoUQMGR/a72dLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748364718; c=relaxed/simple;
-	bh=1QHtJ70y+rvjR6EHIWwb1H2O+LY90CK8zar6Avm1ejE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CDrB2QOoP7f6l8wh9XlgHHOfMWhhMAvBFhmspd2yt5LZQ5rHTcTdMM08jfHqcUXYw5k1nOqWAbeFIUzzvUvouutNM+F0MicfC8ycjfVUXqLXvdNNiT5Nda1Hbrvc3XktbnprvbfLE/j+vw4U/QDYCVjRUDmiZqN5uBGtuliS8sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7trjF/X; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1748427113; c=relaxed/simple;
+	bh=jQm/Idqdz/CKRY7nuelIqDNot1qzY4oj6ANAyNVprKQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=W1tyYbbEoktQIuPoisPUzkSd7vAmkPQ1gCVozOlznotlG15X1EPlQOpLBrC5G06822iHlm9oRP7oJyH3u5Vk3bKfluC2ngVoIrucYdBM/KqfR3fbXGFY1gl0HRLQEbf+rQanvRZ2Hecheiu0euVGM7WwfT5MUHa7HfxIfmV+wIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dzDxcWr6; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7trjF/X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21BCC4CEEB;
-	Tue, 27 May 2025 16:51:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1748364718;
-	bh=1QHtJ70y+rvjR6EHIWwb1H2O+LY90CK8zar6Avm1ejE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=q7trjF/Xiu4/dOXeYm3XARMbuTenNw4xm/v/XKKhQ3Qpz2BR/MmP9HbtTAWT9WNY2
-	 9Ue0cdZe2532DMrkxHXjLPtpiQBle4NzeiOBgrcgpWd6Ppx42XazvV31CdT8BbCy74
-	 9KQX1OYFF0SFkEiAAhHpgAtJ9/PnPEyhv0/MJTjyKbm++CfIKWkGfC9cRP2KpMvq6T
-	 ZGrFw2XqrcTHFs4x3c0tnOmGTbcE2umdCs2wXDsQ7CTP0SNXYrT97dRzF97KDK4DZa
-	 qTvN/hAkBUo3bs+vwWqNantVMjKirXvuqg+P6KDHImv4jJ4X0Hi5fj24rhi/sf9biw
-	 /tS8x5vXTdGbA==
-From: Pratyush Yadav <pratyush@kernel.org>
-To: Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Tudor Ambarus <tudor.ambarus@linaro.org>,  Pratyush Yadav
- <pratyush@kernel.org>,  Michael Walle <mwalle@kernel.org>,  Miquel Raynal
- <miquel.raynal@bootlin.com>,  Richard Weinberger <richard@nod.at>,
-  Vignesh Raghavendra <vigneshr@ti.com>,  Chen Wang
- <unicorn_wang@outlook.com>,  Inochi Amaoto <inochiama@gmail.com>,  Mark
- Brown <broonie@kernel.org>,  Rob Herring <robh@kernel.org>,  Krzysztof
- Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,  Paul
- Walmsley <paul.walmsley@sifive.com>,  Palmer Dabbelt <palmer@dabbelt.com>,
-  Albert Ou <aou@eecs.berkeley.edu>,  Alexandre Ghiti <alex@ghiti.fr>,
-  Longbin Li <looong.bin@gmail.com>,  linux-mtd@lists.infradead.org,
-  linux-kernel@vger.kernel.org,  sophgo@lists.linux.dev,
-  linux-spi@vger.kernel.org,  devicetree@vger.kernel.org,
-  linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 3/3] riscv: dts: sophgo: Add SPI NOR node for SG2042
-In-Reply-To: <20250525-sfg-spifmc-v2-3-a3732b6f5ab4@gmail.com>
-References: <20250525-sfg-spifmc-v2-0-a3732b6f5ab4@gmail.com>
-	<20250525-sfg-spifmc-v2-3-a3732b6f5ab4@gmail.com>
-Date: Tue, 27 May 2025 18:51:53 +0200
-Message-ID: <mafs05xhmro7q.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dzDxcWr6"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22e16234307so6666475ad.0
+        for <sophgo@lists.linux.dev>; Wed, 28 May 2025 03:11:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748427111; x=1749031911; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=u1/Vt2mp73cleoni8AtXiYI0r+BUVH7GhRhyE5d0M3E=;
+        b=dzDxcWr684/UW7FS4wy5Pz4qjdpS3Cr/hD9UR95cZ/EA3LbdyXAvib6OQ5LIk12PKM
+         psZa9d+YehxJiERKbnA4AQJ2awputbyXRGq+lDYM31RouZcZvJWEyPRGOsZPK/sfWmx1
+         K324TMkYNzpGKuhYYO4JLHHdBbfzSFCyV63qyi+dRnqQaprh5tXhohMkYJRJU/qVAB/r
+         V+ckPrJCI1kCGFo0VOz39sIRihKgQXIk1QtrQpBEa7iNF+N1z5qHmeDFoUkPvWVMNOvM
+         HBBCw8UChD2TLJGMZBWLVCgD9fszsPeq/7eIoQiU2ItZIQbfTfZmVHwFX+UaEUMcxg2N
+         nh1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748427111; x=1749031911;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=u1/Vt2mp73cleoni8AtXiYI0r+BUVH7GhRhyE5d0M3E=;
+        b=jiBgs3TnzTdfZvKQT10+LBl63BSQASVZB1A2F0X4Wc0LdlN2bJvMg55IAA49Q+bdXo
+         cU1ReLr5UxaWzV8mYK4VzqpPtcxtcSsuKNLqzR3RTPtPF1e9rhR2VqWDMFg0iSjP53Jg
+         LyCrKGQIY3d/GAz8hEoi/pLknlMPJxEDXcExoMbRWxK8ozT3y7SPEUZXTlUxgEqMGVRo
+         ytEa4tBEhwhtPCL6IH9JOFxniHOa8gJ90Sd15cdPBOnfkafbhFm1tnfH/heX7gieDheU
+         quUnOtlE7hzJpYZfcMaw8BS2VwOns1K0XeQ370/li+FsXQ2x8sUQNMwFQKEy3jminjQK
+         XwVg==
+X-Forwarded-Encrypted: i=1; AJvYcCWSyMek0RamGYLbeVHBCdz9BxT5sfALGv2pZgyjDesygPK3m4hPmQOhxbXAAD7Q2u85KhoxP/k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxUMYgHr2vL9Swy5nV01Qxdkgw4SgSRD4VwsiPlE0tpSRi+gEwi
+	121F01bIaYU8zw8BewOreHNRdqzIw8P2tHCfcKcbaIL16c7y+XYUwuNH
+X-Gm-Gg: ASbGncsm5EmdbGWJTIKmVlnsUa0CxRNpmfI78ouwz272faE4LHHPNNjGPKu02Pzl2pR
+	LTbz22IBnN6d+c+/QwoDTjfw8AX6Ert6hpVikl7gowafFNrOZlezwVBDq09ahAGCgbXBJU1Ai0s
+	TA47Z0ZZ9hkQ3drA4CPZygjXFh8KN042feCaw1e4ZATriaK5B3RGu804B7gT1U9y828taXVYmuX
+	lygdOYc22bwreEpdp4DCAyreSdrxgxBxaiUM5AFxcMdUOE60Yr5pQBGfpNINsR4UVS1Q3PrgHCn
+	fFpGnconG4jlWZXjWlJFHv47Mpqe0aNtcZSqxT3HmMuKnGQ36iEX1yH8
+X-Google-Smtp-Source: AGHT+IFZgXlqFr/nZJIbvYhr8VBnFB2u+fgWRkPoYOa2czSx/AkDylcuc63qHSavCUSvhb5c85NwtQ==
+X-Received: by 2002:a17:902:f693:b0:234:325:500b with SMTP id d9443c01a7336-234b74f4119mr68932215ad.22.1748427111266;
+        Wed, 28 May 2025 03:11:51 -0700 (PDT)
+Received: from cu.. ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-234d358f118sm8453595ad.138.2025.05.28.03.11.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 03:11:50 -0700 (PDT)
+From: Longbin Li <looong.bin@gmail.com>
+To: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Longbin Li <looong.bin@gmail.com>
+Cc: linux-pwm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH v5 0/3] riscv: pwm: sophgo: add pwm support for SG2044
+Date: Wed, 28 May 2025 18:11:35 +0800
+Message-ID: <20250528101139.28702-1-looong.bin@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-On Sun, May 25 2025, Zixian Zeng wrote:
+This patch adds PWM controller support for four independent
+PWM channel outputs.
 
-> Add SPI-NOR controller and flash nodes to device tree for SG2042.
->
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> ---
->  .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 18 ++++++++++++++++
->  arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 24 ++++++++++++++++++++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> index 34645a5f6038389cd00d4940947c6bb71d39ec6f..c59a819e35d3201c484bf98392aec14392a7eb04 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> @@ -68,6 +68,24 @@ &sd {
->  	status = "okay";
->  };
->  
-> +&spifmc0 {
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "jedec,spi-nor";
-> +		reg = <0>;
+---
 
-Shouldn't you also add other properties like spi-max-frequency or
-spi-{rx,tx}-bus-width? Same for the other flash.
+Changes in v5:
 
-> +	};
-> +};
-> +
-> +&spifmc1 {
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "jedec,spi-nor";
-> +		reg = <0>;
-> +	};
-> +};
-> +
->  &uart0 {
->  	status = "okay";
->  };
-[...]
+  - Rename function and variables for clarity.
+  - Modify code style.
 
--- 
-Regards,
-Pratyush Yadav
+Changes in v4:
+  You can simply review or test the patches at the link [4].
+
+  - add tags for mail.
+
+Changes in v3:
+  You can simply review or test the patches at the link [3].
+
+  - Rename macro definitions to unify naming.
+  - Modify code style.
+
+Changes in v2:
+  You can simply review or test the patches at the link [2].
+
+  - Modify variable naming and code logic.
+  - update "MODULE_AUTHOR".
+
+Changes in v1:
+  You can simply review or test the patches at the link [1].
+
+Link: https://lore.kernel.org/linux-riscv/20250407072056.8629-1-looong.bin@gmail.com/ [1]
+Link: https://lore.kernel.org/linux-riscv/20250418022948.22853-1-looong.bin@gmail.com/ [2]
+Link: https://lore.kernel.org/linux-riscv/20250424012335.6246-1-looong.bin@gmail.com/ [3]
+Link: https://lore.kernel.org/linux-riscv/20250428013501.6354-1-looong.bin@gmail.com/ [4]
+---
+
+Longbin Li (3):
+  pwm: sophgo: reorganize the code structure
+  pwm: sophgo: add driver for SG2044
+  dt-bindings: pwm: sophgo: add pwm controller for SG2044
+
+ .../bindings/pwm/sophgo,sg2042-pwm.yaml       |   4 +-
+ drivers/pwm/pwm-sophgo-sg2042.c               | 141 +++++++++++++++---
+ 2 files changed, 127 insertions(+), 18 deletions(-)
+
+--
+2.49.0
