@@ -1,62 +1,62 @@
 Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351732676D1
-	for <sophgo@lists.linux.dev>; Sun,  8 Jun 2025 23:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C801267AF1
+	for <sophgo@lists.linux.dev>; Sun,  8 Jun 2025 23:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749425388; cv=none; b=CaZBisuz7lTYk4H+5NwrQ/1L8hEqhd5a0Bq533ow9l6KljVS/Fj6v7ysOQQ1Lf2v1bBh9RbdS4yCbOwrr/o0MM35v9NOtXBnCuRwLYbywopNmZc0OMPTPM3qEM9e71VcP5UeMJLz6MCH97aJ4EtcfeqjY7MRpTXmI44pVTMFMVE=
+	t=1749425391; cv=none; b=bqul5oN87QWlrwCVnL1zrrc5eMbWaMB1KstxyMzAtkQwzHD8PyZzZQre+iglmvh5yfCs9hNZumcZoJr05D/9ExzNGsQqGTOKC9tRD81MXi/F0LDUlwSapX7hEUjiHwHEahpjWLcOuZ4T/5oKS61/ohlgFKDnqkxqvLVtuFYZRVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749425388; c=relaxed/simple;
-	bh=4thjQyWKFqJ0Z4KGRxINiQcOw5O22+CVxgUdzvhpDFk=;
+	s=arc-20240116; t=1749425391; c=relaxed/simple;
+	bh=P6GnW41nXG1w+GDEwxNGovllpbTbaAJ2B/IEZM6cIDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IpogxlvU8otSsdOFBYI56fwEW//9BKNyi2bM2JY1fVHzmtljYZQB8stJu4XoiwRsQRlmknhjbNC0e6Ha0XMU2nzxzMonLlgLkmPdBksW6nzPA70+P2gfgjT3pbumo1ezwyFW7coYX4KEuEr0+WMQISg1X/BfVt/pV319hXqf4qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g4yEAqlZ; arc=none smtp.client-ip=209.85.222.170
+	 MIME-Version; b=nEyoJEoJjKQd/iX+hLJbBv6Q30Pin60Ti9ExGnUyRkP65HWg1lR7irEgVXR04ZcvS4uOyB/2GZXnQOiD1DasWkrwVUtiTJGEVvfTn/qnN27LVqlmcI5mayvp8xb2oB736YZbYZnujvca5phybzD9TjqsDMhHcLvcES2ZtevhAKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QWauN4AH; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g4yEAqlZ"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7d21cecc11fso645632885a.3
-        for <sophgo@lists.linux.dev>; Sun, 08 Jun 2025 16:29:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QWauN4AH"
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-7d09f11657cso365080585a.0
+        for <sophgo@lists.linux.dev>; Sun, 08 Jun 2025 16:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749425386; x=1750030186; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749425389; x=1750030189; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bCb6v/f0HspzS243Pz/dNvSdYY/W6vQ50DJnwXfCQFM=;
-        b=g4yEAqlZY92FSGcZclFHcc+r1TcZRdkhNJP6uoMDmFxqXFztMS4zBVhucDAgoQ/1jv
-         uXlVSB2ymAGXx6aIc3sB18bfC67LnUMaMALXxwyQvZzLg8Arn1trmGlFqLFhD7Xqm0nM
-         gsz3aeEEQAHQzkLAnqCpJc0WfdfCRVfnnG+OrZ4WnZRJJTcFNgomJNnq/biiXHFY2Dem
-         R3Hl3//LUMRFyaCBfP5BzSNHpL6qEPSnmGGte/9tQkEoiZj3L2ICLTbvJ7Igc6Bx8gFl
-         JJAYd1oYq1Xj9jNA5Btk/s2AOc23jyIHMOjzpYgvAgCBNAe7vH0limOBOizh4f698nn6
-         CzmA==
+        bh=PRmOcfIym+jztFj2oNw/dbYG2NDcS8k8iQRMon2PBA8=;
+        b=QWauN4AHxeaARWI9HJCQAcYFGhkqd7fhsYRdGoe547821Uz/pDi1LgmlnoRiT8IEqk
+         ihkySoMIyzXnmxnFXGFGvk3V4btmrIc3uPYF0hsGRWItQ9MPLCOBacl95iQ6a7d/DRAL
+         pkgD+8WICXURtk/O2/aBLCZ+raMLwRIiKYG3k31W0pEXjgpBfjSdmC6gDAMGRmy+tebn
+         90BiqC8zo3nbPf+aurOaEduZavFBX04VVSQV60gmpLQM+PdypNA+/bpmABJrDz8TL52G
+         iDIesg4T1zIyTV7ANCm6WrRkCcOKkIwJFicwErg3VnRBDhMMkDDxAuSQBpI6bm9/xbPx
+         HTVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749425386; x=1750030186;
+        d=1e100.net; s=20230601; t=1749425389; x=1750030189;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bCb6v/f0HspzS243Pz/dNvSdYY/W6vQ50DJnwXfCQFM=;
-        b=TT6i8a2VTIZq0z8oB+I3oRYU2WoP9vwrVK8vpwUhFxTADLsOs+niDsWvQ2dLbkTyHp
-         lw6mrR4hj0S76GcET4j0GEonpPRVa28n98lpYS2MZnq2eDpBfCqs7Uh03q/Puj1WRRXC
-         9ralIzOn9CcpfUMKHSxM9Nj6fyI8z0ReV12klgpzJB+MnzMcGCFCTDycqxxY4lPu1M0x
-         BvwnYedNbgcMZHKZLFzsjhplsgJ2ez2bia+4OKav5LuLpDWr/mJoF2eqHAHjHgOaR1Ut
-         ERZL4plgFnA+M6NXGZfp9AIsU4de5yjihXY/8n95CjSpt/tbf2xkJWWruWxb76+sHoAy
-         ZQ9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWhh/08oFgqM2/eKndxWWXmwul6ZYau/gXfkNxFwO0R+cbNDkPC8G3bWIlfnSpkCmrjTQfieDM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwYzZ88TC11FHzSQVcF3OGOll4Fm3MGdgLm2QJ677jPholpRRXq
-	GKfo0tXpBNTIxJP0ckQKlwYaor0bTra4CW6Qr3AOUEkCBQM3R3zadvMa
-X-Gm-Gg: ASbGncvx/bzgzHwMIgKAQ+6R3Ev5jogAndoQsAQEEvDB2k9N6mCbkGNwXpn4A1IrlYi
-	70P1BsaP/mFa4y51IraLhc/UA2ur69To577kDVHP+07GNMNvCDcyC8hx8uCJq7MOjbf+oQRoKdK
-	jKJHVdsxOTvpYC4Ji6OmKW4LOWbM+oz+HfZ5AARIcHw8iJ8CemELKDSslTv6URHj6Wl3cnoMle4
-	kRm9dRXRxp4VcyFLyMsvaoPFIT0/+n5/5s3XSa6cOxhXeJwhf/jJLLR5Dnu875nv8Jmx8MpK8EG
-	iiqjA9Ej2mqMDEWyOtCHY+rqBG926946C9lK+g==
-X-Google-Smtp-Source: AGHT+IF1BKK0uFTInialGKijH/6k16MniaxLSvYp4PMRIjXYhZYA5hYo3Y7cvlg6UD8+EGsy2nqTeg==
-X-Received: by 2002:a05:620a:1a8b:b0:7c9:1523:3f17 with SMTP id af79cd13be357-7d2298ed2edmr1567583185a.57.1749425386115;
-        Sun, 08 Jun 2025 16:29:46 -0700 (PDT)
+        bh=PRmOcfIym+jztFj2oNw/dbYG2NDcS8k8iQRMon2PBA8=;
+        b=dBynyuccGnAyntyqF0KSNFB8b6d6EW3N+Joc4h20P2BFXNqYFcixLcCNfxXyef5xZt
+         pH3I+o1wUh1vKpByjH9OCFGrktFBJ36v7rdhm12YSEj0R/YNRVDFNeOGv/Ee3tIU8w8K
+         B8+XBclwBduXmA+04OcQ/YalGVC7sIS6d/QJjs2D/q2Vr8Rg6kTCL0mlSaZePcJlrTQO
+         NihBcI+A7n4pmK3IoeeC/giDOLBJfZuF/lKNYavspl0KX1feNbY7E1wzL9rj7XUuX9Fr
+         Q4b/bvfnglNqVDgfLgDjwsemN2XZI3GdA6untv14sEBBinYQMPuIBGcY3S4tfghlYnw1
+         5A6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVooeVZRmGxUA76MnIfgizuYX1GwJjum1b1sGzQueWtawBt6h7AC7xlAQ3YaeUdoXEN2FrK1vY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxBVpjnMZnaI7J00EVQKEBCuNTma4x/e+rGJ4vUAkKpu9rGQZCn
+	+UKsu5vjT4pBStfrkeZqWoWn7D0KT64Axj2qm2ZOuotl+bK2A3rZDfZ5
+X-Gm-Gg: ASbGncvhdM/tQkHlvPG38KWxqsMtgwHCXj/OdH934TReQlZQRUi1RwTb45D57GhAicI
+	qZdQuxc2aXtOPpIIGnfRQwO4D/CEWmIzqfPNlvb7zkdDwdB8DZIc3gp5bjRY870PF4QB91UxQ7j
+	sy5xUjatvBl9wfBlcIIRTxWrJ/ZH4YrDJ4a/UZYs6gaVLmAA+O+8tSrjvpvyOSa+QKFJIqTM2MW
+	e6H8wG9EFE8U7Wv3gpxl6NA6KGIWKh3E62X6/8UXd+xH8R5W9AX7SPNzypxW7Z2bWQOI0UA6fIM
+	WscDIUjwnFUTu1NimptywSkowTNg72cktBjCRw==
+X-Google-Smtp-Source: AGHT+IE5/Gz8qqya3fci5rtlQe9R/OPJWsD97+s3Z1RsEKIEirjoWmQf9uF/h0NVyozgqLtYvjZHjg==
+X-Received: by 2002:a05:620a:4154:b0:7cd:c6:40f3 with SMTP id af79cd13be357-7d22985c859mr1849137885a.2.1749425389266;
+        Sun, 08 Jun 2025 16:29:49 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7d25a535794sm465946885a.26.2025.06.08.16.29.44
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6fb09b2abfcsm43841216d6.104.2025.06.08.16.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jun 2025 16:29:45 -0700 (PDT)
+        Sun, 08 Jun 2025 16:29:48 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -76,9 +76,9 @@ Cc: Han Gao <rabenda.cn@gmail.com>,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>
-Subject: [PATCH 01/11] riscv: dts: sophgo: sg2044: Add system controller device
-Date: Mon,  9 Jun 2025 07:28:25 +0800
-Message-ID: <20250608232836.784737-2-inochiama@gmail.com>
+Subject: [PATCH 02/11] riscv: dts: sophgo: sg2044: Add clock controller device
+Date: Mon,  9 Jun 2025 07:28:26 +0800
+Message-ID: <20250608232836.784737-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250608232836.784737-1-inochiama@gmail.com>
 References: <20250608232836.784737-1-inochiama@gmail.com>
@@ -90,27 +90,88 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The TOP system controller device is necessary for the SG2044 clock
-controller. Add it to the SoC device tree.
+Add clock controller and pll clock node for sg2044.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- arch/riscv/boot/dts/sophgo/sg2044.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/riscv/boot/dts/sophgo/sg2044.dtsi | 34 ++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
 diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
-index d67e45f77d6e..a0c13d8d26af 100644
+index a0c13d8d26af..d21a59948186 100644
 --- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
 +++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
-@@ -76,6 +76,13 @@ uart3: serial@7030003000 {
- 			status = "disabled";
+@@ -3,6 +3,8 @@
+  * Copyright (C) 2025 Inochi Amaoto <inochiama@gmail.com>
+  */
+ 
++#include <dt-bindings/clock/sophgo,sg2044-pll.h>
++#include <dt-bindings/clock/sophgo,sg2044-clk.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
+ 
+ #include "sg2044-cpus.dtsi"
+@@ -32,6 +34,9 @@ uart0: serial@7030000000 {
+ 			compatible = "sophgo,sg2044-uart", "snps,dw-apb-uart";
+ 			reg = <0x70 0x30000000 0x0 0x1000>;
+ 			clock-frequency = <500000000>;
++			clocks = <&clk CLK_GATE_UART_500M>,
++				 <&clk CLK_GATE_APB_UART>;
++			clock-names = "baudclk", "apb_pclk";
+ 			interrupt-parent = <&intc>;
+ 			interrupts = <41 IRQ_TYPE_LEVEL_HIGH>;
+ 			reg-shift = <2>;
+@@ -44,6 +49,9 @@ uart1: serial@7030001000 {
+ 			compatible = "sophgo,sg2044-uart", "snps,dw-apb-uart";
+ 			reg = <0x70 0x30001000 0x0 0x1000>;
+ 			clock-frequency = <500000000>;
++			clocks = <&clk CLK_GATE_UART_500M>,
++				 <&clk CLK_GATE_APB_UART>;
++			clock-names = "baudclk", "apb_pclk";
+ 			interrupt-parent = <&intc>;
+ 			interrupts = <42 IRQ_TYPE_LEVEL_HIGH>;
+ 			reg-shift = <2>;
+@@ -56,6 +64,9 @@ uart2: serial@7030002000 {
+ 			compatible = "sophgo,sg2044-uart", "snps,dw-apb-uart";
+ 			reg = <0x70 0x30002000 0x0 0x1000>;
+ 			clock-frequency = <500000000>;
++			clocks = <&clk CLK_GATE_UART_500M>,
++				 <&clk CLK_GATE_APB_UART>;
++			clock-names = "baudclk", "apb_pclk";
+ 			interrupt-parent = <&intc>;
+ 			interrupts = <43 IRQ_TYPE_LEVEL_HIGH>;
+ 			reg-shift = <2>;
+@@ -68,6 +79,9 @@ uart3: serial@7030003000 {
+ 			compatible = "sophgo,sg2044-uart", "snps,dw-apb-uart";
+ 			reg = <0x70 0x30003000 0x0 0x1000>;
+ 			clock-frequency = <500000000>;
++			clocks = <&clk CLK_GATE_UART_500M>,
++				 <&clk CLK_GATE_APB_UART>;
++			clock-names = "baudclk", "apb_pclk";
+ 			interrupt-parent = <&intc>;
+ 			interrupts = <44 IRQ_TYPE_LEVEL_HIGH>;
+ 			reg-shift = <2>;
+@@ -83,6 +97,26 @@ syscon: syscon@7050000000 {
+ 			clocks = <&osc>;
  		};
  
-+		syscon: syscon@7050000000 {
-+			compatible = "sophgo,sg2044-top-syscon", "syscon";
-+			reg = <0x70 0x50000000 0x0 0x1000>;
++		clk: clock-controller@7050002000 {
++			compatible = "sophgo,sg2044-clk";
++			reg = <0x70 0x50002000 0x0 0x1000>;
 +			#clock-cells = <1>;
-+			clocks = <&osc>;
++			clocks = <&syscon CLK_FPLL0>, <&syscon CLK_FPLL1>,
++				 <&syscon CLK_FPLL2>, <&syscon CLK_DPLL0>,
++				 <&syscon CLK_DPLL1>, <&syscon CLK_DPLL2>,
++				 <&syscon CLK_DPLL3>, <&syscon CLK_DPLL4>,
++				 <&syscon CLK_DPLL5>, <&syscon CLK_DPLL6>,
++				 <&syscon CLK_DPLL7>, <&syscon CLK_MPLL0>,
++				 <&syscon CLK_MPLL1>, <&syscon CLK_MPLL2>,
++				 <&syscon CLK_MPLL3>, <&syscon CLK_MPLL4>,
++				 <&syscon CLK_MPLL5>;
++			clock-names = "fpll0", "fpll1", "fpll2", "dpll0",
++				      "dpll1", "dpll2", "dpll3", "dpll4",
++				      "dpll5", "dpll6", "dpll7", "mpll0",
++				      "mpll1", "mpll2", "mpll3", "mpll4",
++				      "mpll5";
 +		};
 +
  		rst: reset-controller@7050003000 {
