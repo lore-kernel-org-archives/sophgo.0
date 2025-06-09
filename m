@@ -1,65 +1,65 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096D821C18A
-	for <sophgo@lists.linux.dev>; Mon,  9 Jun 2025 16:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A2D1F4717
+	for <sophgo@lists.linux.dev>; Mon,  9 Jun 2025 16:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749487186; cv=none; b=Be+vkACWgH+/vC43IFKo1v4pTBr8UKBoCUGUfZY9XuujdifxUFZzcDwzABZ2oAKzG58RaPMDdOOEF+VYkGckxTKWw2fpkWc8vn7EcxlpvoerdlYInIUmoqRG5VcAfxm0k4MH0vgRZHVB40wRtZiurZ5kUqeB09KveLnU1HTw5sw=
+	t=1749487279; cv=none; b=MbI/MX/kgxmgtoBhXHPFbA0ChtcVuLzIVA9TUe6xrzzDTz2d1dc7rKDh0teJ4YUcwyIfDKNYf34eEPI8J2Rwxrz2fuLSH4WsAbhKEmQspe4Bvb/+AHiYhArMZzI65EwvhhAxKEoLea2MD4LEkTp71dGWnBYOKxeNprI0kQ5HJ00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749487186; c=relaxed/simple;
-	bh=b5IAyMi8bog282MCnpmIozPAGbv4atmEqp0JP+JLJVQ=;
+	s=arc-20240116; t=1749487279; c=relaxed/simple;
+	bh=SS1ghkgByas5aSVYoAcXnpxd4fVUVMPVtRUUyrprOiI=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=oRHdndwfc0YSqIO8zpAtO47cIX+oxlmHgRaW0N4vs5Ypzlhx678hTWvBbxoSfsbUfodrhgGPpuI/cruuS+Sqa+P0+1GhaBHNy31xSBjHdrMFtMRkMSLA994uifq6C74eFGOhRhSXIU3WrjUCKd9EYhFP5vpgnYjn0M9Q1v0BXak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CrXIRfMH; arc=none smtp.client-ip=209.85.221.42
+	 Content-Type:MIME-Version; b=P1luQJGtUtNgQIanbZQg6ByTkBqeT/HAvnZPSQR5eGG97XgKFHHW+yj7Rocz2J8c5nR/E6ERhhcVppcb+WogpBG03S0WmXOJfg3LqDLzKey/bBvdnTumZ84mMkfw2aDELCfgujDJ4yZDwSUqLjZZj38iztx9g4Hz8mMYW8FxSx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Is/CgsrZ; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CrXIRfMH"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a361b8a664so3783094f8f.3
-        for <sophgo@lists.linux.dev>; Mon, 09 Jun 2025 09:39:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Is/CgsrZ"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a5123c1533so2507227f8f.2
+        for <sophgo@lists.linux.dev>; Mon, 09 Jun 2025 09:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749487183; x=1750091983; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749487276; x=1750092076; darn=lists.linux.dev;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=b5IAyMi8bog282MCnpmIozPAGbv4atmEqp0JP+JLJVQ=;
-        b=CrXIRfMHtDBUs8G8FDwCv2w9RRpu+lHGOe4Fo96x20nOo2wPKZP9qAsJ3rircdelNQ
-         qQavFtou37aGx9+GQqxjNRw2BuwDYH/jwhLqjRRAk5nauHrHVuB0La3g02BGngIqc831
-         ZO5HIMsi1Jb2CAh2Ush9Wu0t+np26vG6ZvpRO1q70+KvtLH4+ZA/U8tTurceu3BbP+I4
-         M/3rqjI7yjC5dO4RBwea8l6KQ7gwQMn6bWgfM7R8sThx3WV6sA6nAwdUP83EpXrEGjgQ
-         mX1ACRfHIR21AlO3NFKgmnSYkzyv1GMx/wQ91OkizSoDZ/q4pYCi1sBqn3fAw3AksGNH
-         opGQ==
+        bh=SS1ghkgByas5aSVYoAcXnpxd4fVUVMPVtRUUyrprOiI=;
+        b=Is/CgsrZsPkSgGM4BBnTOrQbMbLuRNqq+ot86YNwFNmJU5SB40dwJuERdWf7iVOiaH
+         Vk+WdUQUpCS41qsCHaOAqwGMXi9on1kngCCOIx9pKPewx+sHSQjU/08D9WUs0H8p9kO8
+         csns1kpLBc2QzL+rMmB+DZPDM9Bp+IMguRdnh/nqUGW75rhzjiW3VVbN/QT85PaBzqMM
+         5bAwkTGDXVOfIM+Ju3TceA+H6gBVzci32/dlvjLuRl04+HVoNx9CMT/BnLR4MAARs6ps
+         Uah3nZK8kyKhGS4jnCZmWnLfCLSRnXMh83y537I2UfPhx/CmS0kI+S00y0q+fwyUTlFR
+         XcOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749487183; x=1750091983;
+        d=1e100.net; s=20230601; t=1749487276; x=1750092076;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=b5IAyMi8bog282MCnpmIozPAGbv4atmEqp0JP+JLJVQ=;
-        b=prBEVLjUG0Jf4eTgRTMGIdu3clGBvOJKdYDspZgAzM6HUt1W14Q1BUJie+WXRBhqnX
-         W0gWH2XDEjYWApaKeJ6gKSPNz+NbDm2jMpl6M8LsOV1aB8Hq/1iJOW8uJI/hGNS2SUHP
-         9SR0V6Iq1GFyTafcX4LEGWe8uez28PXbCNsudHq7P7651nD97Zrvu10Z/zARfEYl1aNZ
-         Oao2COgGPbL38V5CmJkMP0rXxDCVvJP2JwXQaX7IBOzu4CaGDN0jEgVGEoSQmIsar+2N
-         UO3YSvXou/VA4P1Y7O7Frrn5mqDwPoMJEiuKmKg1NJUDNPZiM8FGbk2srO6y3buEhapa
-         GIpg==
-X-Forwarded-Encrypted: i=1; AJvYcCUfPo2Fds89PFuqMwPiTwBlu04AKm7Mun6xXVm0URbujGZZKaEJQVIkcEzMr6abl3Fd3MkEVWo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxeFmKt5UG43j6PcGd2OFdC0MOICWu+WVXELWB3eSUXkUa1Med9
-	drpOvS4OjUJ/vQZIZbU+vJCidXX6Cp9V1FCyhRMzK6tuWFT6/UWk4R6g
-X-Gm-Gg: ASbGnctoDVAI/zpZKZlZXJjF4/ohnMW8BlFGXnHDYX18y++4x9XRVS6tLy/FCJyZCka
-	Y1Uqcg5oqRmuKEJylrmkmWt//dp9N3v3+NjMgwO8cHC/5+P7QL+1XqSwlKopvH358nrNHtrSjix
-	wZlve0OAogw6o137RtK6BHshtKBR64hs/uaQPheddF+xiXEAsbn1ugE6ips+QhuUv21DUGTLcEc
-	I2rWRRGtajRvo88S+sz/foFXTcttigzb5AwiKGTqjRNjwU8+RY73jmVlMSA2aQyLhN6pBp/a2NV
-	54x8Bc8pnUA2izLJTSy/FGW/PmsINmRfDJKy4fSo+vwtZsmXZUyVZB/Vo7q43b7i0n2atzkn+KY
-	M9QaJJw==
-X-Google-Smtp-Source: AGHT+IE9fQxxC4zIGJ9d6F5tS1v5nb9uy1nE232lYSx4KIqFwSxQrRWo/+NPZxfe3hvsc8rcGcPv0g==
-X-Received: by 2002:a05:6000:1446:b0:3a4:ebc2:d6ec with SMTP id ffacd0b85a97d-3a53189ea15mr11001381f8f.14.1749487183160;
-        Mon, 09 Jun 2025 09:39:43 -0700 (PDT)
+        bh=SS1ghkgByas5aSVYoAcXnpxd4fVUVMPVtRUUyrprOiI=;
+        b=tfGb3BMYru4rMsLIBzazDzNUEybiRyr2ULdKORRpmtCO03A7LeklnnqawJWv3NLLPZ
+         MPeeIAoNPhWRmkRq1w+J8yVX0lGcMC0etuGkqR9Mj05omSZJinv+WGsuspLewfQHPDCq
+         qiautCKleUM9JsASPzToc40e9Ogp9SQ7iNaXw3JUxTOg/8yPNE+c9AMws2rMbo7BY5bm
+         sK+j8imK97Jh7CazW4xGA6tjdul0rzmSyEr+U7K+6s/P33KG1ZsxX5WgKakrSgiYDEO2
+         8JZv7D2lwME0ozVSTHVj6wn0QvRsap7OSphmkRzoTHcgUmMjs5eZCLpxag6xVAvm4N7Q
+         U/XA==
+X-Forwarded-Encrypted: i=1; AJvYcCUZuIRLXN9SNMTWoz+HNQvfBZ54iF+OMOl7ZGUt910qfsrP4hja6jjBfh7T3zB2ko8rZItLXW8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Ywg3DZpSXUW4bsj5cezGFZEVxPVsr5a96BbWNBKrCETcknuQo/q
+	ScMMWQxBgLZ+l4iEuNVcQ7LTMejhHSZE8hSa34b+ilR2NAoiRXcQCF1S
+X-Gm-Gg: ASbGncvarEyh6z9+p5yaV/PbttQ3vSo4wimXFQk7SN87zgaDXLEjnYSzYtyMgaghv/Q
+	ELsXEQt/VnT3SsTTc2oqJdEut9ZfF8TdpkJG5M4DMtdY+EEQ/KI4RGshvqhSGeAc+rshDsYjNgq
+	R+xxow6gKvFl0HFxrTvnykukPjOfkJ1jNvp+QRP2+1qvdZUbSr8cEX+M+LM4ikjEkkWRNZ/745N
+	stCRDF03jhe8jdUA954BjtvSUcvZbii9yWyWZp3hjXpgEzH1Ocz37kmDB74bKOCVxPbqQ8wAkMd
+	qf82GHe4npUsb51RogdOmfzQ+1o98aschY46bVVgJkSXftQAoS++PuZt1WXaUig36EpfuCScBMn
+	+peSPkX16R/kYEVMv
+X-Google-Smtp-Source: AGHT+IE2ObE00bmXtNKeLj6UQ2w2+eAieeGAdLJ0M/xXCi/xaTy8JC6h8IF0f4vMWbYgt2AIXHQI2Q==
+X-Received: by 2002:a05:6000:220d:b0:3a4:f744:e013 with SMTP id ffacd0b85a97d-3a531cb8521mr9854409f8f.30.1749487276093;
+        Mon, 09 Jun 2025 09:41:16 -0700 (PDT)
 Received: from giga-mm-5.home ([2a02:1210:8608:9200:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45209ce1afasm116930245e9.10.2025.06.09.09.39.42
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45209bc6d50sm115775715e9.5.2025.06.09.09.41.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 09:39:42 -0700 (PDT)
-Message-ID: <902db298b21cf78a2c27ed0cdc002e7f2861c428.camel@gmail.com>
-Subject: Re: [PATCH v2 3/4] riscv: dts: sophgo: add reset generator for
+        Mon, 09 Jun 2025 09:41:15 -0700 (PDT)
+Message-ID: <5a738b35e388f7c339b94e792a79d0d1b93d0345.camel@gmail.com>
+Subject: Re: [PATCH v2 4/4] riscv: dts: sophgo: add reset configuration for
  Sophgo CV1800 series SoC
 From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 To: Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel
@@ -72,10 +72,10 @@ To: Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel
 Cc: Junhui Liu <junhui.liu@pigmoral.tech>, devicetree@vger.kernel.org, 
 	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	linux-riscv@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
-Date: Mon, 09 Jun 2025 18:39:43 +0200
-In-Reply-To: <20250608232214.771855-4-inochiama@gmail.com>
+Date: Mon, 09 Jun 2025 18:41:16 +0200
+In-Reply-To: <20250608232214.771855-5-inochiama@gmail.com>
 References: <20250608232214.771855-1-inochiama@gmail.com>
-	 <20250608232214.771855-4-inochiama@gmail.com>
+	 <20250608232214.771855-5-inochiama@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.1 
@@ -87,19 +87,15 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 
 On Mon, 2025-06-09 at 07:22 +0800, Inochi Amaoto wrote:
-> Add reset generator node for all CV18XX series SoC.
+> Add known reset configuration for existed device.
 >=20
 > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 
 Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 
 > ---
-> =C2=A0arch/riscv/boot/dts/sophgo/cv180x.dtsi=C2=A0=C2=A0=C2=A0 |=C2=A0 7 =
-++
-> =C2=A0arch/riscv/boot/dts/sophgo/cv18xx-reset.h | 98 ++++++++++++++++++++=
-+++
-> =C2=A02 files changed, 105 insertions(+)
-> =C2=A0create mode 100644 arch/riscv/boot/dts/sophgo/cv18xx-reset.h
+> =C2=A0arch/riscv/boot/dts/sophgo/cv180x.dtsi | 18 ++++++++++++++++++
+> =C2=A01 file changed, 18 insertions(+)
 
 --=20
 Alexander Sverdlin.
