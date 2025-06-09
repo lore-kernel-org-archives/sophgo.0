@@ -1,63 +1,63 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7FC22F147;
-	Mon,  9 Jun 2025 23:41:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A33C22F747;
+	Mon,  9 Jun 2025 23:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749512514; cv=none; b=JDbntN8Qp/h+F+se+Lt5djHgd00QMxB2BNyIuW/orFpqrPT9gYhEJaWZUimYvK92PaQUE7YJuWADNJ+s4SPLvJrz42a9unBEWSek702QbSgaZVc6VTGofnkgfM9J2b8nr0qE1WDWiXk70q9Lb4XO6yl3mFyfvamBaIdudAsBceQ=
+	t=1749512516; cv=none; b=uo8TJ8BoVjBAtFWdmGacwP0rrKTPBxWBqnqDrOsL+OoiNyWZMKs0c3FPUa0gWeBFXVSvjWzL0ySGvfmRXy2zA51xnQ/HNNumR10YGKGs6paazONV5jdrKkOhd/8P/xi7jPrVb639yqHraBcrdbDDd0VREuYKxp7GKo2XITW2BUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749512514; c=relaxed/simple;
-	bh=pwi6o6ww6dSkF8fNqOT9t3Uh8gUsHMUCgpjs0IyKqIw=;
+	s=arc-20240116; t=1749512516; c=relaxed/simple;
+	bh=hmPduejP80SEZYrzL0CO06DrhaexK+gwyvfe6CwhzqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RT7bNjx1n1U+VBqhJaI5/qKAYOk7tqBRCdZykcvxy4Axsxpc1f4eiDNp7M9ASw5S+/Z5ezQTkhtipEVjhh9BW/u9R9/u3KkwxDwSOhgEO269WPaEgTnPaM7JxlcgeIovS0zSMrsAkNw5BPQF0A5j/7rlXF1y24LlwtZ44w+yL7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQ5Ia/nw; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=eUn3cPCG8BMUpkHPwKAY4T4EX9yOxNGBQF8whr0A4wtkb9eJ4p2dlj5FcJk4iM58GtR5hdKNwrU9QKRQHWMY19O95B5SjSBoGSK1+RlVblqd83MI+qDlwY19R1CBApQXnjNlfq/94a3c+dm92raC8RR2KlyK6CB+JuVeAsS3SJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jDUarsQV; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQ5Ia/nw"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so39899395e9.0;
-        Mon, 09 Jun 2025 16:41:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jDUarsQV"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a54836cb7fso1082405f8f.2;
+        Mon, 09 Jun 2025 16:41:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749512511; x=1750117311; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1749512513; x=1750117313; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jo1dYTSb5N84GQeVh5+0QHCVJJnsbzuqHcvvt9y6zKY=;
-        b=AQ5Ia/nwq/qv8MHEDyLzENWcOWr5o1siuhPJKsfdbIsIaSwoS5Z0H6ByVXvBzZ0Gl/
-         WFQfUsVEXoziNs64KMt4A8HFEDi1je7uOXs74wAOuD9YGS+KvfOu/BXZcr2FdgIDtmoT
-         rx6SwEjoZwCslcWjXl6L9nM+txg7gRSmgUlBTI8AwB4P9fLxzwEiQt51Ca5pJQexKLmH
-         b7NSOVQ2qSLQJrrCPpEpsulvPUi1AQE8di7YThuZv0a0yc+dO4GBuGXyP8E3BkyF5vY9
-         nimKZsLu/8e7BJmAEidZeSuJuYfYgTXDf1TMkskFybt0mDpg68Wxp8ZfX/5E/4/1KhlO
-         2OVg==
+        bh=HqgDsCG6KOcBqitJq9JMX849ZPDRQzOs3fqgijVu2+M=;
+        b=jDUarsQVS2MLJBkyKEHoNv9LX0g8ey6tO2EvkLoQsxBpDRiamGXgepBroDn+uxFWXV
+         m9GgsQY4QF8ta3Xaj3E/734EVXGtjLByR10s1+nM6njBo5YdFnoTDzwWORcKmJDcSSWj
+         AqmjHVI8wPyy4FcKjU7bUIBAbWZSs9z5wXmQuQbKB6LwmNidYgfQEfN8JJHqZw9+STBc
+         k6GESBKRFdZaiAHDBteYFpKnjBXG6brDZlCvokMJT3E/2g4m2/z8xWTVlqAnh3p/qqmG
+         oxI47ubDMYVPQUIREeEQLsWKeIlK1C4MFsLcKWWBSq8W1XMSWV59ogxwusj2o1qVQ1Yb
+         9Emg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749512511; x=1750117311;
+        d=1e100.net; s=20230601; t=1749512513; x=1750117313;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Jo1dYTSb5N84GQeVh5+0QHCVJJnsbzuqHcvvt9y6zKY=;
-        b=oz6IrYt5eF9xNbG6LdMARNkWhnxqaFgjBLZUhFVQF6mStOUnmdqEnZPZHTB7q4CdrO
-         EG9HjkhDO3KwQ5YNOPfOJliYOJojTZ5Nv+moWSEct5jAKCYFmto2+diRZi0AREyaoKTP
-         bBPlwj7ajnkULHJXl2hm8m8P45JaxS4RA6EE5tbk++miFcX+5+uT6Sql74rGZB3s5b3a
-         hs+ismTPBnD8HZXEJhW4fCI5tTDQvZgXR8XZ8oJowAgDGxb9ZlpMV3m6y0gU24yUsqU5
-         hz0DDKyxQVbGxZK8N8Uj9yRhiY0Rd5LwvCowPTVEqY/ytiyWnFw2BwmYflR2LBS73F7T
-         r4jg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9G9FeX5JHJZ5wmScFjRonDesQ3QRy3/80sNa2Ww9QDhLtpvqpoVZKOKzAgxew0tI88aM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy3bqeyLJI4SubyfT1/bdW1KlCC+f4zXVyquzYHxvRATo7NZ3TT
-	3IatRyroxBuMfTD+VywJH2T7aicN6W5fAPy1AopvQ9sW6VoYci4E4WfNEx0U/KWdmak=
-X-Gm-Gg: ASbGnctiaRX4ArUnHMIrUyyhwToTshaXL1JGFPhh7DAOXkx6Txu95jnl/JmedIuz61U
-	zVTPmnZnyX18PTvDh3CknnCj9IqWeheaUX2wZ0biEEtGfkkMGg5TEBOepCOGZViOFjVShVNgLDN
-	uM/AiGwIyVrBaBJVjmrwDFbSJRO8Eh6fnCG5mCbyvVOrilQUptvbCr0lVaYpQyxfsjVVkOnNVxx
-	5E0mhTW63nfWoaMk/U7ccSjTOiS/bahKSLcAjigJpeU77Xs2pImBQ85Z1UF61R2KYydNr57fM78
-	Git0jCwgih8dnvXqvOHvdQ9BrDy2evYgYDq8F03QfPELGM8k+dY64TkkzQkLKq1UhIjImPo05GE
+        bh=HqgDsCG6KOcBqitJq9JMX849ZPDRQzOs3fqgijVu2+M=;
+        b=vLEPPHb0dMA2YmMgR6SIrfd0+CluJl8jYyRx6W1oOAlKs/KzuzLQVT8tVVB2Mum3Oa
+         2/u9v+L1lnyMm3z74ec9zI95lFeioiO72MGEMTCU6RME/CJ28W+JuRFhwW0VPM30i5zm
+         x0ytPZ9rASqw49cqVziB9kquVFcVLMPkJEXWO61OKwW5lC2PrPm1+BhJcSmu1y5WlYiM
+         zhfQ+Q3StpzmGJdeRGlhm2FxgHwK6BCm1RvIQtXnX12nhAPWz50n+QIhnFdB57aCMIcI
+         8AukYSLco7YpScwBFATAA16Y21u8rRAIsdpYDqRePRR8YMDerCsc7dyoCtt55rckSdhw
+         9KxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWWg0D5S4sD4r8UD+yeOUNMbe0gpuWn+Z2c+KrGYS6SFncAF8n8eV/zvAbVIkxzVB6Tm5A=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwmIb9N9y8VrmTMM9osE29ZS4s/MN4maFa8pRXWw18ctTQIIVpE
+	o2FdtdfwY1Sv7iIXTKSL+e+yz4PeW8XU46a7E3xSUJ5aFMWmc2/ajCoWTRmuNNb0NFA=
+X-Gm-Gg: ASbGnctIeiTHxP+eMHTXnKVP7p797VMlAR/SlQ+WJFpFhD6ADK6nTQXd0Splu6Oih+F
+	EHUMU56yKI9NYhywTyhQLr6SICzj8dAwMF9v8NfkW8PnheKk0Y2OHAkQB6TS08VgQEf+3QobNMp
+	WTeqLLuYIwYAlwBq1oUFOuIg/4AsCFauKFDgPWGJkng+UEt89PkjyB/zrZhAMA56X3cK4qhA4Se
+	OzWZdxATJnyJYfhpgI8QcHON2RNS00AjvXSL21SWblylf6ryc2EKMLzGxOt0WpOYaFPKstOcLf9
+	yQMi4COPjl2m8pPc0uA5ehyyS2ej9vZg8xQKX8oH4V9SeTgWpW6bDCghxITPJvAaOhzJSnHLW2c
 	=
-X-Google-Smtp-Source: AGHT+IFApIvy4cDz1KO3QF2Y2DufyzGd0D/WiNt6nw0laf5Xpx85PGR9pawpRsdmsQ43gv8vaIkl8g==
-X-Received: by 2002:a05:600c:6205:b0:43d:563:6fef with SMTP id 5b1f17b1804b1-4520140c06dmr126096785e9.21.1749512511504;
-        Mon, 09 Jun 2025 16:41:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5E01PKSBDa2CpXIcLDEcgVeBGbKs91/xwnRq5LzqDPbtpo47hhaQbCqu4sMTtO6Hc0+CScQ==
+X-Received: by 2002:a05:6000:250f:b0:3a4:dd00:9af3 with SMTP id ffacd0b85a97d-3a531cc1d47mr13174436f8f.56.1749512512569;
+        Mon, 09 Jun 2025 16:41:52 -0700 (PDT)
 Received: from giga-mm.. ([2a02:1210:8608:9200:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a53244df34sm10849846f8f.71.2025.06.09.16.41.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a53244df34sm10849846f8f.71.2025.06.09.16.41.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 16:41:51 -0700 (PDT)
+        Mon, 09 Jun 2025 16:41:52 -0700 (PDT)
 From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 To: sophgo@lists.linux.dev,
 	soc@lists.linux.dev
@@ -81,9 +81,9 @@ Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v6 3/6] arm64: dts: sophgo: Add Duo Module 01
-Date: Tue, 10 Jun 2025 01:41:14 +0200
-Message-ID: <20250609234125.722923-4-alexander.sverdlin@gmail.com>
+Subject: [PATCH v6 4/6] arm64: dts: sophgo: Add Duo Module 01 Evaluation Board
+Date: Tue, 10 Jun 2025 01:41:15 +0200
+Message-ID: <20250609234125.722923-5-alexander.sverdlin@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250609234125.722923-1-alexander.sverdlin@gmail.com>
 References: <20250609234125.722923-1-alexander.sverdlin@gmail.com>
@@ -95,106 +95,75 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Duo Module 01 is a compact module with integrated SG2000,
-WI-FI6/BTDM5.4, and eMMC.
-Add only support for UART and SDHCI.
+Duo Module 01 Evaluation Board contains Sophgo Duo Module 01
+SMD SoM, Ethernet+USB switch, microSD slot, etc...
+Add only support for UART0 (console) and microSD slot.
 
 Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 ---
- .../sophgo/sg2000-milkv-duo-module-01.dtsi    | 85 +++++++++++++++++++
- 1 file changed, 85 insertions(+)
- create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01.dtsi
+ arch/arm64/boot/dts/Makefile                  |  1 +
+ arch/arm64/boot/dts/sophgo/Makefile           |  2 ++
+ .../sophgo/sg2000-milkv-duo-module-01-evb.dts | 31 +++++++++++++++++++
+ 3 files changed, 34 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/sophgo/Makefile
+ create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01-evb.dts
 
-diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01.dtsi b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01.dtsi
+diff --git a/arch/arm64/boot/dts/Makefile b/arch/arm64/boot/dts/Makefile
+index 79b73a21ddc2..3a32b157ac8c 100644
+--- a/arch/arm64/boot/dts/Makefile
++++ b/arch/arm64/boot/dts/Makefile
+@@ -28,6 +28,7 @@ subdir-y += realtek
+ subdir-y += renesas
+ subdir-y += rockchip
+ subdir-y += socionext
++subdir-y += sophgo
+ subdir-y += sprd
+ subdir-y += st
+ subdir-y += synaptics
+diff --git a/arch/arm64/boot/dts/sophgo/Makefile b/arch/arm64/boot/dts/sophgo/Makefile
 new file mode 100644
-index 000000000000..bb52cdad990a
+index 000000000000..94f52cd7d994
 --- /dev/null
-+++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01.dtsi
-@@ -0,0 +1,85 @@
++++ b/arch/arm64/boot/dts/sophgo/Makefile
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0
++dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-module-01-evb.dtb
+diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01-evb.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01-evb.dts
+new file mode 100644
+index 000000000000..b1f8a5787861
+--- /dev/null
++++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-module-01-evb.dts
+@@ -0,0 +1,31 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +
-+#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
-+#include "sg2000.dtsi"
++/dts-v1/;
++
++#include "sg2000-milkv-duo-module-01.dtsi"
 +
 +/ {
-+	model = "Milk-V Duo Module 01";
-+	compatible = "milkv,duo-module-01", "sophgo,sg2000";
++	model = "Milk-V Duo Module 01 Evaluation Board";
++	compatible = "milkv,duo-module-01-evb", "milkv,duo-module-01", "sophgo,sg2000";
 +
-+	aliases {
-+		serial0 = &uart0;
-+		serial1 = &uart1;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+		serial4 = &uart4;
++	chosen {
++		stdout-path = "serial0:115200n8";
 +	};
 +};
 +
-+&osc {
-+	clock-frequency = <25000000>;
-+};
-+
-+&pinctrl {
-+	sdhci0_cfg: sdhci0-cfg {
-+		sdhci0-cd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-clk-pins {
-+			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <16100>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-cmd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-data-pins {
-+			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
-+				 <PINMUX(PIN_SD0_D1, 0)>,
-+				 <PINMUX(PIN_SD0_D2, 0)>,
-+				 <PINMUX(PIN_SD0_D3, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+
-+	uart0_cfg: uart0-cfg {
-+		uart0-pins {
-+			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
-+				 <PINMUX(PIN_UART0_RX, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+};
-+
-+&emmc {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	cap-mmc-hw-reset;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
++&uart0 {
++	pinctrl-0 = <&uart0_cfg>;
++	pinctrl-names = "default";
 +	status = "okay";
 +};
 +
-+/* Wi-Fi */
-+&sdhci1 {
++&sdhci0 {
 +	bus-width = <4>;
-+	cap-sdio-irq;
++	no-1-8-v;
 +	no-mmc;
-+	no-sd;
-+	non-removable;
++	no-sdio;
++	disable-wp;
++	pinctrl-0 = <&sdhci0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
 +};
 -- 
 2.49.0
