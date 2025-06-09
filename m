@@ -1,217 +1,115 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4E07E9;
-	Mon,  9 Jun 2025 16:01:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C1C21A43B
+	for <sophgo@lists.linux.dev>; Mon,  9 Jun 2025 16:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749484869; cv=none; b=pcfZb0/9ovh0QJnCJtksolv9+jwcDoU+Y77ryrrNRNjPIlm7mMRgFfo95u0hV853aNWbrY06XMD/Vg9PR+C1gf2VHIN8a7xQ5fhLrlx7AzbZp8u/a1K/qVprQRoRvcAM64M4eWbIwKX6sycALf6PlMM7H2gJPwnNnYyEGGkkpjs=
+	t=1749487163; cv=none; b=QH9LY9bf0eJnEEhEt9NzWSfwKr0kZK6/EMwDaO/0OAp6FA0eReOulTlSeyVUog2OOrLDj4kFChlfWdfomcS1kvuyHU0qTuvBI/bH/FGe0oYKsJMO1SXlPaWBQUMWOrXZHyANczFhLFJMvM7zLxWrmHDixWUmE98jG5IKnB0jnxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749484869; c=relaxed/simple;
-	bh=4UANBXEFzzWNDjzkZyhCusk/3Ln3IBad0owyMaZA9s8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i0nOtuqdoOHuw7u26W5ztbzVtnVKach459pWwZYprHhWNLQWI0tU3n2usjQbKJrvQA0rnFNIJ/RoDYQkmk+W8/ER9wzIAgOIhyiU9OqVru/3uxnOxZOVhawvvLvH/CFopEiQjiOYiP/HPlXOgCJV+NpWl363wIlqPQ+vrLJg9E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BwLoh8ju; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1749487163; c=relaxed/simple;
+	bh=tzexrrjny5IMXPQ9VvFMvoukaPiMY2y2N9iypoi2Qh4=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=QctonU6c6UbFtAUoNI2iwAWJpcpF7Y81044uxYFWl8a0dOmzciEpCFukfihYrfSNMADUksWiNYttH8UVLxL/t3E1LciKLLp8TRSGB/EQjRivo11aB9rMflWG+jxKiOEXbfXwM+Wy7CcLQneQeDj4lMlTRVHExSQi0/EpfvRqYtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VQvMDc5z; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BwLoh8ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215E7C4CEEF;
-	Mon,  9 Jun 2025 16:01:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749484868;
-	bh=4UANBXEFzzWNDjzkZyhCusk/3Ln3IBad0owyMaZA9s8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=BwLoh8juJpB1j2JIPMu6yve9smAo41URpJXx8TMaktX+DpqaR3bMltvW/NELsNxaq
-	 /mOBn3syLkiglEqEFPXGQMRzsZ/M06DsQHc8b9Ui2VopZpmtcZ17jIccv0bkmr3khZ
-	 0Uye/8ScstG1DK4cE4r6vXnzrRRdBsxpcSJB9JFtk8LdTjBHfNw+qjEkkkTP9gk4ww
-	 23hgllO3bCkLvr5N5rIDf3HC3kKju/R9jmEydgiKNdGuhd0jSDCSSZ4k1Ucb751j2t
-	 XXBHgain3C8Z+mHZHr5kZcQomNJ8940/QnTIpHW+jUx4wapbkMTnNQVpQy3Wugsr4d
-	 bk2BHaMbaKVww==
-Date: Mon, 9 Jun 2025 17:01:02 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Anup Patel <anup@brainfault.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Ryo Takakura <takakura@valinux.co.jp>, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev
-Subject: Re: [PATCH v1 3/7] dt-bindings: interrupt-controller: add generic
- Risc-v aclint-sswi
-Message-ID: <20250609-rejoice-disclose-b677f617f2de@spud>
-References: <20250609134749.1453835-1-vladimir.kondratiev@mobileye.com>
- <20250609134749.1453835-4-vladimir.kondratiev@mobileye.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VQvMDc5z"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a361b8a664so3782796f8f.3
+        for <sophgo@lists.linux.dev>; Mon, 09 Jun 2025 09:39:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749487160; x=1750091960; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MdlA7FTprXZiicVKK7E8JIBJj3nSquxMjsmIoLs6jMg=;
+        b=VQvMDc5zFTyzmkUtb0wCGnvAldhja3oMBZfrTwkPu0iv06X/6nKU/osqgWihtkwqip
+         BFVKVZCj9ffCaYO+WewHGCaL+o0iQZL24TWKcGp1F5JRZ30vsaecH8G6D7BnjJfHD19o
+         yG34waAV0QyzV7FOxoXL7QSDMVm1Xt/JTOOAMelyGQivuBfJlZ7Xzxx3RK1zJBQPqD2C
+         R0gOK8y5hCRsfXiFKMi+dIEsGUP5jTN/AjMS/o+/X/+Pd3Bi69p7XAgN791YW1XOpMg9
+         HNetie9+1EprwnU6BPZGgwsw5U0Weifo7Pn55sX+inhdILTZT9MWY3T89xlsDbn1lnY8
+         hgXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749487160; x=1750091960;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MdlA7FTprXZiicVKK7E8JIBJj3nSquxMjsmIoLs6jMg=;
+        b=dGRjpTPojr6K7xsVZz8bP8WkUSBytYTr+DUvu1tsH1QZ+Cbo8lAXT6hEFpKn24rh75
+         crTNxvHATov1uxMKbu/YArsbs9ImtnmbgoERTnkyNAaQBbn8GRsx+BteGsT4SQK1cRJp
+         8UvhUB/MEP+KDuhv0EL2Z2ZgINXY0tqizeXIKAGwbMv6e7pwfP0zgIJEwg62hjupJP+S
+         EEOzQUBdvSJ4T1bes0aCeG3FaxxLU/iaX7UZIFUkvl/XpdebNOf7ADghvV+6zMSJzM8a
+         vlbIPM1vb9/Pa7THsRdtFXRQkzIHyN8eyWcSRK/Ja9dniWQD3UAk9RPertB5bAhoBek2
+         7PnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXlTbXH1Ml6KUBSyz37rK/YlSLg1xBgCk1QAV+cDpuJV4YgZFBynbo7Zby6881aDOvySpIi8fI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwBJ5WkusW5U9r4/TZldxCxjYXhZpxdbw6VMU9qg6ZJa0wzxbx+
+	OhGwAt4EfPqlc79f0+67lSPOcfgjEPn0Hm7BlEHauipCf0NPyeFwjlX3
+X-Gm-Gg: ASbGncvIfA+bhLY+I7bZyNZCC1/5BvXL5Dv0DH3ZAv8VFG7QKVXfZBPXwXFokHT06/e
+	kjyY8W6zq379CCuQ9u+C63d9SimDFAAOe8G0TFdQjpSj5ygRcdoS7VClKD+CPOfEVTc1Oqokhel
+	dWnktWmHk37ammYViJOqGI5o3VeoE6V/mP1+mxCIzfrVlKHd3XFxRJmOr9ZvrgHfdsogMff/8pF
+	uHhng3KNE0Jcj1T2FedJ+3VrpxSh+b2I72QjjXFEapReyluwvU+xa8dy6C1muNIlPC2mOIcxTo9
+	ekBeZ+iPyR72YgDupcjOj+if07UTzve8QB/NINeXRPCGjVSILK+OfmYAa11nqkRcXzSXnQVvr5J
+	mGFirmA==
+X-Google-Smtp-Source: AGHT+IE641WVTYCKGJ9CW2nJENZhWmhnjIJAkzfQD2E1jYnnkEDfEBr76CpBPCzz77Yns7HmTZCRfA==
+X-Received: by 2002:a05:6000:188f:b0:3a4:fe9d:1b10 with SMTP id ffacd0b85a97d-3a531caff2dmr10438461f8f.45.1749487160286;
+        Mon, 09 Jun 2025 09:39:20 -0700 (PDT)
+Received: from giga-mm-5.home ([2a02:1210:8608:9200:82ee:73ff:feb8:99e3])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a532464f20sm9972251f8f.98.2025.06.09.09.39.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jun 2025 09:39:19 -0700 (PDT)
+Message-ID: <13f0f876de57d2a96f4786bcd3622772bd478d69.camel@gmail.com>
+Subject: Re: [PATCH v2 2/4] reset: simple: add support for Sophgo CV1800B
+From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+To: Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel
+ <p.zabel@pengutronix.de>,  Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,  Chen
+ Wang <unicorn_wang@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Palmer Dabbelt	 <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti	 <alex@ghiti.fr>, Yixun Lan <dlan@gentoo.org>, Thomas
+ Bonnefille	 <thomas.bonnefille@bootlin.com>, Ze Huang <huangze@whut.edu.cn>
+Cc: Junhui Liu <junhui.liu@pigmoral.tech>, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, Longbin Li <looong.bin@gmail.com>
+Date: Mon, 09 Jun 2025 18:39:20 +0200
+In-Reply-To: <20250608232214.771855-3-inochiama@gmail.com>
+References: <20250608232214.771855-1-inochiama@gmail.com>
+	 <20250608232214.771855-3-inochiama@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1 
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="0bO5XdsS6ddgc29+"
-Content-Disposition: inline
-In-Reply-To: <20250609134749.1453835-4-vladimir.kondratiev@mobileye.com>
 
-
---0bO5XdsS6ddgc29+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jun 09, 2025 at 04:47:45PM +0300, Vladimir Kondratiev wrote:
-> Add generic, Risc-V spec compliant (see [1]) aclint-sswi binding
+On Mon, 2025-06-09 at 07:22 +0800, Inochi Amaoto wrote:
+> Reuse reset-simple driver for the Sophgo CV1800B reset generator.
 >=20
-> Thead specific binding preserved, and converted to variant of the
-> generic aclint-sswi
->=20
-> Link: https://github.com/riscvarchive/riscv-aclint [1]
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 
-What is the ratification status of this spec?
+Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
 
->=20
-> Signed-off-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
 > ---
->  .../riscv,aclint-sswi.yaml                    | 89 +++++++++++++++++++
->  .../thead,c900-aclint-sswi.yaml               | 58 ------------
->  2 files changed, 89 insertions(+), 58 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/interrupt-controlle=
-r/riscv,aclint-sswi.yaml
->  delete mode 100644 Documentation/devicetree/bindings/interrupt-controlle=
-r/thead,c900-aclint-sswi.yaml
+> =C2=A0drivers/reset/reset-simple.c | 2 ++
+> =C2=A01 file changed, 2 insertions(+)
 >=20
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/riscv=
-,aclint-sswi.yaml b/Documentation/devicetree/bindings/interrupt-controller/=
-riscv,aclint-sswi.yaml
-> new file mode 100644
-> index 000000000000..cffddfcfcfea
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/riscv,aclint=
--sswi.yaml
-> @@ -0,0 +1,89 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interrupt-controller/riscv,aclint-ssw=
-i.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Risc-V ACLINT Supervisor-level Software Interrupt Device
+> diff --git a/drivers/reset/reset-simple.c b/drivers/reset/reset-simple.c
+> index 276067839830..79e94ecfe4f5 100644
+> --- a/drivers/reset/reset-simple.c
+> +++ b/drivers/reset/reset-simple.c
+> @@ -151,6 +151,8 @@ static const struct of_device_id reset_simple_dt_ids[=
+] =3D {
+> =C2=A0	{ .compatible =3D "snps,dw-high-reset" },
+> =C2=A0	{ .compatible =3D "snps,dw-low-reset",
+> =C2=A0		.data =3D &reset_simple_active_low },
+> +	{ .compatible =3D "sophgo,cv1800b-reset",
+> +		.data =3D &reset_simple_active_low },
+> =C2=A0	{ .compatible =3D "sophgo,sg2042-reset",
+> =C2=A0		.data =3D &reset_simple_active_low },
+> =C2=A0	{ /* sentinel */ },
 
-s/Risc-V/RISC-V/g
-
-> +
-> +maintainers:
-> +  - Inochi Amaoto <inochiama@outlook.com>
-> +
-> +description:
-> +  The SSWI device is a part of the Risc-V ACLINT device. It provides
-> +  supervisor-level IPI functionality for a set of HARTs on a THEAD
-> +  platform. It provides a register to set an IPI (SETSSIP) for each
-> +  HART connected to the SSWI device. See specification
-> +  https://github.com/riscvarchive/riscv-aclint
-> +
-> +  T-HEAD C900 ACLINT is a variant of the ACLINT, using dedicated
-> +  compatible string
-> +
-> +properties:
-> +  compatible:
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - sophgo,sg2044-aclint-sswi
-> +          - const: thead,c900-aclint-sswi
-> +      - items:
-> +          - const: riscv,aclint-sswi
-
-You need a specific compatible for your implementation.
-Whether or not this compatible is viable depends on the answer to the
-ratification status and/or plan for the spec.
-
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  "#interrupt-cells":
-> +    const: 0
-> +
-> +  interrupt-controller: true
-> +
-> +  interrupts-extended:
-> +    minItems: 1
-> +    maxItems: 4095
-> +
-> +  riscv,hart-indexes:
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    minItems: 1
-> +    maxItems: 16384
-
-maxItems is 4x what is allowed for interrupts-extended. Why?
-
-> +    description:
-> +      A list of hart indexes that APLIC should use to address each hart
-> +      that is mentioned in the "interrupts-extended"
-
-Please constrain this property to only be permitted on !thead.
-
-> +
-> +additionalProperties: false
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - "#interrupt-cells"
-> +  - interrupt-controller
-> +  - interrupts-extended
-> +
-> +examples:
-> +  - |
-> +    //Example 1
-> +    interrupt-controller@94000000 {
-> +      compatible =3D "sophgo,sg2044-aclint-sswi", "thead,c900-aclint-ssw=
-i";
-> +      reg =3D <0x94000000 0x00004000>;
-> +      #interrupt-cells =3D <0>;
-> +      interrupt-controller;
-> +      interrupts-extended =3D <&cpu1intc 1>,
-> +                            <&cpu2intc 1>,
-> +                            <&cpu3intc 1>,
-> +                            <&cpu4intc 1>;
-> +    };
-> +
-> +  - |
-> +    //Example 2
-> +    interrupt-controller@94000000 {
-> +      compatible =3D "riscv,aclint-sswi";
-> +      reg =3D <0x94000000 0x00004000>;
-> +      #interrupt-cells =3D <0>;
-> +      interrupt-controller;
-> +      interrupts-extended =3D <&cpu1intc 1>,
-> +                            <&cpu2intc 1>,
-> +                            <&cpu3intc 1>,
-> +                            <&cpu4intc 1>;
-> +      riscv,hart-indexes =3D <0 1 0x10 0x11>;
-
-Please be consistent. Hex or decimal, but not both.
-
-Cheers,
-Conor.
-
---0bO5XdsS6ddgc29+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaEcFPgAKCRB4tDGHoIJi
-0syLAQCKcAg5MoUg65x8c8wmRQ4jrRHsbMrQwMf6m1ZzX/hBTQEA1/TVJcYfSH3+
-tw9Ntl2G7mMGqeR1bjZWhBGDnH0mxgE=
-=zT3n
------END PGP SIGNATURE-----
-
---0bO5XdsS6ddgc29+--
+--=20
+Alexander Sverdlin.
