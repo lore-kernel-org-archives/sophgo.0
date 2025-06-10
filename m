@@ -1,147 +1,103 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A89230264;
-	Mon,  9 Jun 2025 23:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892C9188596
+	for <sophgo@lists.linux.dev>; Tue, 10 Jun 2025 01:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749512518; cv=none; b=R5+ThhUo+AeS7l9Nt+SdrNs1ZV4i/IcaRzRK7k3eMjsfqZbdgx3cFg6Yqfc1ouymJp1BiqED1Fe+GGl1BUILLgL6i9gAjo3OWz3prk0o7pQKAwjOGEhqBaCOzVmQRPefl7nSoWsZPMeL/6JsaaFFs4/vg/Q+aNUjebOUkHBcKIg=
+	t=1749520227; cv=none; b=U//lC4QNW6vjB4MEEIwdftMKSdlleKNT1ZSp4wZVwxg8lEzbX2o9K0FZD7+gc68NEBg4QpH7cQGJ7fACFe4M2LRZ4MrVBPUpRzWAQHcPvJYzxjEBMY7rQgiZ3FVaViXUEmnsuC7EpgZDZk1HJFhNHNeLdefJ/6ApuDhTgOL26hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749512518; c=relaxed/simple;
-	bh=lcxMmmgMJHInwGzpCFkRWzyLBb5iGz+frAxW/UIgQ4o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RytW8BQq+3fhFwYVdAKsBwPz4HCLYBNT31jzHxWKfrM0K8fgqnzwplVqtwuNybVt9eEh/nkY9SI2Ef5D1RokoM6Y/hHVniZ6Nc82CSN+TMdJwWFIMNYjtNz5620Ai528bMHjHtWguP/nxYBzyVOSrW4tISc/5pQOjhE+W7N9UGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WXTf6DX6; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1749520227; c=relaxed/simple;
+	bh=LsztCVXZZPbLzW5t60Ca3HvRdV7GOesUL5uH8ho9IOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F++HL3/4RbhzFTW50jMFCjSNplqRJnyjEnRisnaEMLnVnbntPqffKBfMc1XyvQI8RT+9wzv1sBBvVCsPXH22mUzixTT0owJKWslie7Uu8f3f9RhtYRuq8gsTQcrkY2T62peFvKm9U/RPbmBk/lt52AsrQiuS6GHlGCogVURKDSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SExV39kV; arc=none smtp.client-ip=209.85.222.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WXTf6DX6"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a35c894313so4354838f8f.2;
-        Mon, 09 Jun 2025 16:41:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SExV39kV"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7d38cfa9773so238792485a.2
+        for <sophgo@lists.linux.dev>; Mon, 09 Jun 2025 18:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749512515; x=1750117315; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qrPhTIZpQpTInVFelKb2k4Az/r9q2Weg3w4rxnkgyCU=;
-        b=WXTf6DX6wWo4/iincLwhrbo3h68UgIA02G0bZvy+IIwpdt5svhS8QM6D13k50tMUKm
-         4F9C6HZpKLBZCZU+w/wmeIWAafklXdeH0KVFLs4DDMc9lfLoHjJruMn+/6rgayx5YThx
-         vmm77/3nsz+9YcFRW8ulsSCykZiRyOwGthbSt9gSfRM0AftXVSlXY+kP2jgJMlUEI7nI
-         2mdjwMeji1a0SDMnIM+fxcLIgybnUjwu8O5zePKaAGFbtGw8g5wZhYjCSGPuSeBU35Xv
-         1HKXDzgBs199zUEHk2hzLXB1Vgm6Zq6L1QI/DJPm8cSyQO9PcYaSg5LlfYNxq5wLP6WF
-         2RMA==
+        d=gmail.com; s=20230601; t=1749520223; x=1750125023; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PJ+k4mMk424f8gSBCF0DcdgBmLjrlumxnw+t8TKS1zw=;
+        b=SExV39kVuQ4uRR2Ljjhnu1dZ88B5JMnBU0sWpJ18+f/cOQ8xzpedWGpvSL2R2DbO/U
+         m3h0EhgUYLU82aZJI8nCWVvCK/I0Gq6xeQP0QXoVtGGtiSMiBZeoK1onnyNzQhxfdOeU
+         6f8plI0xkKGAQpDPDx0e/okm4iv5RQCpwc4oO06eUW7CneyMQFLBnwaz2bqSjNWRFG3C
+         mZCOkKwxaSxxcOiqeHM+akafjHJWqApiw4kasZbuL1K4Xx9eQ29pq8jTiyGjauo4RDE9
+         k4cqWJ9wIluzLELFIfSg1sxl0E5AQ8DAz7mnTgBBY0Kz5s7zt3WkHrXNz3VK3wHImSAr
+         35Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749512515; x=1750117315;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qrPhTIZpQpTInVFelKb2k4Az/r9q2Weg3w4rxnkgyCU=;
-        b=orLDpWnRtz6+B92sYkuyLUipozGcYHQwzpBqL/N02tmVQVTNOgi90ajTixQY1q3Iwr
-         9wJLLft4a3j7GOb1RhAehVfONTLLhkOxhnLVp747tOayKFUI1rtmbJAUg/Y22QP+/f4I
-         t/MhFxPmjSOx+hf3oubhekCqHqZEJRu/VW4qYzNoQ6gCMknSIX7h+ol/yLtwjrmdxSzN
-         in2582ZavASWCs8oRW7QgmxN14j+cJHQ0UjDmDCgfI0Kw652xHEcr4wZAvWciF1fd2QJ
-         5o5SjU6hRrR/7VF+Q5zQhSjQfavOrX8z3m7gRnKWge+Ex0iwzyf0LtWlQtAR0JstrCvs
-         5aKg==
-X-Forwarded-Encrypted: i=1; AJvYcCW5L6Ee/zAObTyWzdW8vEKJtHMsMNGhE9bhidyywQhB1k0vmDE7NiOAlkZcV1jARfXac6o=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxz/KzS0KqioLBSTE5nODP3p16TCPj8f+SFUohJvUcstqbbB+q5
-	xfAvlyzWAr5FesNjk5rihGIS5BYhCDyIjKdD5bbxtvig6oyLII4Sc7OYyAEmSiPsJmI=
-X-Gm-Gg: ASbGncuwGye6wNxE71hEOiX7fr/9jjSDW8CiuAEeLtrzD2e7QW48BC3ZyklPFGl+KCs
-	pH+KQEtnDqm0MfzolbZSjHZcHZ9OMAKjr7g8QTn+JHKhCyjYjTCpbs2+B4aKIKD1UvE+nOQZKL1
-	mOuj5F97KU0T2mZeY9HHkWT3qvcVTxtGLlkyGsNkky7/H1WChg9TGUQoWA3lrGw4vt4NGykMjeB
-	TR/ByOkRtBWwi+aCNnJF3L48m0ARTxBit8w75U5KePc9HP3pzBen2Fgl+n2CNN2efzgpBspjsU0
-	0OV57XcgKZ57Q2DrkDe7aPfOeUtXwFbecuxsuWmbR3bwlQZf4rklgrzmKaqe3L8vraRLt68Z3sE
-	=
-X-Google-Smtp-Source: AGHT+IH8d+d87qasytIhytWan/WEKNQkCJ5MRSNoOqGEJq+vqhXarvhfJpA5UduVPDcP1PlcvnPGqQ==
-X-Received: by 2002:a5d:5f4b:0:b0:3a3:727d:10e8 with SMTP id ffacd0b85a97d-3a531ce7122mr10392078f8f.50.1749512514738;
-        Mon, 09 Jun 2025 16:41:54 -0700 (PDT)
-Received: from giga-mm.. ([2a02:1210:8608:9200:82ee:73ff:feb8:99e3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a53244df34sm10849846f8f.71.2025.06.09.16.41.53
+        d=1e100.net; s=20230601; t=1749520223; x=1750125023;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PJ+k4mMk424f8gSBCF0DcdgBmLjrlumxnw+t8TKS1zw=;
+        b=tAflVXAqMFuPLrCtIoVWaOoKluxS2fqakdSGxt+E/qfB8+LZSTD3y5A8mCrOu1U1FU
+         TVxRhbd+Zmt7r3tUz413/4HwW9kvniypGx+/I5PHxXyShMUw00I8dOuhC9L5Ay/5zfF+
+         IYFriOmYqzwFUry2UD4UIkEjuFL/M/kWN9/XlifuCCT5JjFJVkAxk/KypRNr8CNm2Ksw
+         qaLtxMgY5hr/WVXzNj0w3QTY4GoCLGuR5D4GB3CXIGpDCohBuYJIMfmZvUNDIaCgl56o
+         TG2/FIX926HDraOT9WeDpfkIC4Xv89jGlZYfKd8fuhOrx0Gw6PwgCwncGavtbvNse7QH
+         jk1g==
+X-Forwarded-Encrypted: i=1; AJvYcCV9XTBC6s9mDoJ758gA+LKgEpewIxAoahxkW2m2j09QYuttS3n93Vg2k2TJvcjtC0SzPBbO9s8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwCMUq/FUiowk/deHcIVxHceU4GYX2R/HMXFaomhWK0OAp8aAsu
+	ZTYTOpeGjft4qfg/2L+gJTVyYwSCTqZCmX9KpU4+wqELQq2zpbd+oWaV
+X-Gm-Gg: ASbGncsl8WWmyAq8IrxDawMqiAWpUGhj4uV8tZiG+OhhcKrTZE5IgJ4okr/QZJAP3tS
+	bbrQQ99CchErN9iKo/+sv/FBwf5adlI3TKJW9c72BM5L7MH1ypS5qGwfOYDBGaDYiT1yhjJTU7b
+	u0/ZNp8grKVk0BV2oTmvVrbbTFLBWkDSdsuvOBmxNjc+BkoT4GAZT6kYvg1U4D1dG9FDmMK3iqR
+	Sht7dMMCokoIMpJnkX0lnCTqLtw+04WoeTFplBprQziWbli451ZEWLvHIHfWcj8EiRHdDPp4j/D
+	Qimp0/OBlsAVx/b5lamWTeBDycO+YHwDsobJfA==
+X-Google-Smtp-Source: AGHT+IGMgWEajIStyhq4ZxgjEnDpGh/DhsVjHF6fVJlErUi/6EmExzbw4J5ZZ8yxGUZo19XRc5vv/g==
+X-Received: by 2002:a05:620a:400c:b0:7c5:962b:e87c with SMTP id af79cd13be357-7d39f62dad1mr139939085a.44.1749520223312;
+        Mon, 09 Jun 2025 18:50:23 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7d25a61d730sm618530785a.82.2025.06.09.18.50.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 16:41:54 -0700 (PDT)
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: sophgo@lists.linux.dev,
-	soc@lists.linux.dev
-Cc: Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Haylen Chu <heylenay@outlook.com>,
-	Chao Wei <chao.wei@sophgo.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v6 6/6] arm64: defconfig: Enable rudimentary Sophgo SG2000 support
-Date: Tue, 10 Jun 2025 01:41:17 +0200
-Message-ID: <20250609234125.722923-7-alexander.sverdlin@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250609234125.722923-1-alexander.sverdlin@gmail.com>
-References: <20250609234125.722923-1-alexander.sverdlin@gmail.com>
+        Mon, 09 Jun 2025 18:50:22 -0700 (PDT)
+Date: Tue, 10 Jun 2025 09:49:16 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
+	linux-kernel@vger.kernel.org
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev
+Subject: Re: [PATCH 0/2] Add reset controller support for Sophgo SG2000 SoC
+Message-ID: <nztbl7ki2pmgb4nrahdyam6yeu7xtlv7lgfuqcl6qzibbjqceo@osltqayu4meg>
+References: <20250609230417.620089-1-alexander.sverdlin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250609230417.620089-1-alexander.sverdlin@gmail.com>
 
-Enable ARCH_SOPHGO, pinctrl (built-in, required to boot), ADC as module.
-This defconfig is able to boot from SD card on Milk-V Duo Module 01
-evalboard.
+On Tue, Jun 10, 2025 at 01:04:13AM +0200, Alexander Sverdlin wrote:
+> Add DT bindings and the corresponding compatible to reset-simple driver;
+> provide the include file with reset lines enumerated.
+> 
+> Alexander Sverdlin (2):
+>   dt-bindings: reset: sophgo: support SG2000
+>   reset: simple: add support for Sophgo SG2000
+> 
+>  .../bindings/reset/sophgo,sg2000-reset.yaml   | 35 +++++++
+>  drivers/reset/reset-simple.c                  |  2 +
+>  .../dt-bindings/reset/sophgo,sg2000-reset.h   | 92 +++++++++++++++++++
+>  3 files changed, 129 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/reset/sophgo,sg2000-reset.yaml
+>  create mode 100644 include/dt-bindings/reset/sophgo,sg2000-reset.h
+> 
+> -- 
+> 2.49.0
+> 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
----
- arch/arm64/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
+I think use sophgo,cv1800b-reset is enough, there should be no difference
+between them.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 5bb8f09422a2..84c85a222b3b 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -66,6 +66,7 @@ CONFIG_ARCH_RENESAS=y
- CONFIG_ARCH_ROCKCHIP=y
- CONFIG_ARCH_SEATTLE=y
- CONFIG_ARCH_INTEL_SOCFPGA=y
-+CONFIG_ARCH_SOPHGO=y
- CONFIG_ARCH_STM32=y
- CONFIG_ARCH_SYNQUACER=y
- CONFIG_ARCH_TEGRA=y
-@@ -652,6 +653,7 @@ CONFIG_PINCTRL_SM8450_LPASS_LPI=m
- CONFIG_PINCTRL_SC8280XP_LPASS_LPI=m
- CONFIG_PINCTRL_SM8550_LPASS_LPI=m
- CONFIG_PINCTRL_SM8650_LPASS_LPI=m
-+CONFIG_PINCTRL_SOPHGO_SG2000=y
- CONFIG_GPIO_ALTERA=m
- CONFIG_GPIO_DAVINCI=y
- CONFIG_GPIO_DWAPB=y
-@@ -1411,6 +1413,7 @@ CONFIG_QCOM_HFPLL=y
- CONFIG_CLK_GFM_LPASS_SM8250=m
- CONFIG_CLK_RCAR_USB2_CLOCK_SEL=y
- CONFIG_CLK_RENESAS_VBATTB=m
-+CONFIG_CLK_SOPHGO_CV1800=y
- CONFIG_HWSPINLOCK=y
- CONFIG_HWSPINLOCK_QCOM=y
- CONFIG_TEGRA186_TIMER=y
-@@ -1530,6 +1533,7 @@ CONFIG_QCOM_SPMI_VADC=m
- CONFIG_QCOM_SPMI_ADC5=m
- CONFIG_ROCKCHIP_SARADC=m
- CONFIG_RZG2L_ADC=m
-+CONFIG_SOPHGO_CV1800B_ADC=m
- CONFIG_TI_ADS1015=m
- CONFIG_TI_AM335X_ADC=m
- CONFIG_IIO_CROS_EC_SENSORS_CORE=m
--- 
-2.49.0
-
+Regard,
+Inochi
