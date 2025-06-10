@@ -1,45 +1,45 @@
-Received: from esa4.hc555-34.eu.iphmx.com (esa4.hc555-34.eu.iphmx.com [207.54.77.171])
+Received: from esa3.hc555-34.eu.iphmx.com (esa3.hc555-34.eu.iphmx.com [207.54.77.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1F128AB11
-	for <sophgo@lists.linux.dev>; Tue, 10 Jun 2025 10:06:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.54.77.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFF325A2D8
+	for <sophgo@lists.linux.dev>; Tue, 10 Jun 2025 10:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.54.77.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749550003; cv=none; b=o3gyklLV9uwfeXsiFN/7kYwSt6jaxLwfaRJsSXlEEURO/QWPG/EGENo8UpPHcBobMwzugXkgeWoWJ6K4zwISIFcGPkO1S/by4LiC7Z23S0w6KgJvn0IUIeJgj5KynSKmUYhsSCl3tW3lDSqm2bOq0/UwUhUZk5U9+HdMKaScGPo=
+	t=1749550004; cv=none; b=opXFYQSqVSY5PTSKIn3PWYs4I58AX8Z6FwX0w8EKnrluJbbZZ47GiIrtQ1v4GVftZrhydHa/7zjIGjzfVzjoYsHz0SMEEHZALj8XyqeM5ZVYJZDRy5ZjISPK2t+pHFhGG+jGGC1zg5f47dp22gyUzIB+5vzbx5bDjdugxhQjnbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749550003; c=relaxed/simple;
-	bh=ZkonT5XOETViMq2W8Vg4OLZt5WEYIKYmN1JdAPfoIck=;
+	s=arc-20240116; t=1749550004; c=relaxed/simple;
+	bh=R0DjUyymyH51702nfIhvD4gSoTHc5AdW1g9ClY+/bUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOl1CTbHPA1IVJP53kI2tx+3Evwbxid6N1Qz6LNeH7E/vgKT9rNzm3tkSkyeGwyC9pKhnRvVBc2sVazuh182GOgBT/n9Fl3rrFP23EfQaDJw2lbDbqyA9oM3v+4IcQ7L6xI7Vy0j66pL7J+miSAsEeUkwR8IAO0D/XjGK3fDLME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com; spf=pass smtp.mailfrom=mobileye.com; dkim=fail (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b=Ut+1hofa reason="key not found in DNS"; arc=none smtp.client-ip=207.54.77.171
+	 MIME-Version; b=NM7oWAV2uioLyqvaEHKE0w6eROggr0FYwuZgDjLoYFmx4yHnmO3k5AB+GW3pZlo73QrMAZiNx53EBjpc0hwFmoBor9KE1ft0iuhpP86czuaSXLpuRd/1Y7phDXcp4S5B2F20b1hpZ/Jt9oRJP/zasYwB+k60TDzAOQLQ91LAW0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com; spf=pass smtp.mailfrom=mobileye.com; dkim=fail (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b=pJJz48c2 reason="key not found in DNS"; arc=none smtp.client-ip=207.54.77.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mobileye.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b="Ut+1hofa"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b="pJJz48c2"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=mobileye.com; i=@mobileye.com; q=dns/txt; s=MoEyIP;
   t=1749550001; x=1781086001;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ZkonT5XOETViMq2W8Vg4OLZt5WEYIKYmN1JdAPfoIck=;
-  b=Ut+1hofa80Fi/z5NmzcY6T8/ulyJdhr4XhOAORo9bgM2tw40SnyKaDRk
-   jpob9v1XMkWi+jWyceDarWIMsliQGpUTmA8iVuN55vEDVwouEvKnOkEzr
-   Jw8h7QEJ0uThaVqbJk6GkwaVAg5glYIeiaulSqv7jjkzP7m6rubLSamVk
-   Q/vTZZOYng4CYAJweQOpmdBA4malfgf5d0bPBrR8gyet7niMcqjM8KYJA
-   pGT9hltoCZjLesKsRX0RP52JV3ZQYNklJAp0NelKfHud3W2U4DYqjUg34
-   AY6zrhPaIUpVr0X2inY67uPehHV0lgOT20IYOm/L/CZbZDGwNyJySAiZT
-   w==;
-X-CSE-ConnectionGUID: wHhg+qNQSfe7UejyanWtOw==
-X-CSE-MsgGUID: wPNXAE5FS+aqUmeUroojKg==
+  bh=R0DjUyymyH51702nfIhvD4gSoTHc5AdW1g9ClY+/bUU=;
+  b=pJJz48c20MljV4uXyBSHKoxLtJTkiyh9Ri2cnpiBmODyV64yGP48/0C8
+   mhQtx5NmpeQSBzEzsfG2HUWURfL70xYqHdkaBMUtVWLyoMwur8YqpX+mX
+   HnDZAzJKbse3AYg3V7NGZiFm8kEKUN5Pb7UVgUnb49qkrU+eHzrTIFJos
+   XyXpHkHrNuAsmgEIlZ6sa9qfhzL7M6wJijbWSL1qrlKkfdw4TT3gf2cs4
+   6QkWlMmXXi+CL0pY+CJPf4KC/OYtk55lUEItHAf8it4sC2iYK+maPEXNZ
+   qQ0V7O/aduL8DaBeOfnxrK4SlguKZzPKxCd29fcXaTgyYypt/QWfbaqUd
+   Q==;
+X-CSE-ConnectionGUID: Fk2DmyXbRmSRm2MCDPkNHA==
+X-CSE-MsgGUID: e6eYeU1HTXi+30tK6nV4gw==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from unknown (HELO ces03_data.me-corp.lan) ([146.255.191.134])
-  by esa4.hc555-34.eu.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 13:06:39 +0300
-X-CSE-ConnectionGUID: 2clGyAAhREiAocQAIdOL4Q==
-X-CSE-MsgGUID: QC3bqOW8Sh66YowUez2SSQ==
+Received: from unknown (HELO ces04_data.me-crop.lan) ([146.255.191.134])
+  by esa3.hc555-34.eu.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 13:06:39 +0300
+X-CSE-ConnectionGUID: 6Lr+r0t+Qau3aGluaf0P8A==
+X-CSE-MsgGUID: VUNhgET1QMGRryuleMYhgw==
 Received: from unknown (HELO epgd071.me-corp.lan) ([10.154.54.1])
-  by ces03_data.me-corp.lan with SMTP; 10 Jun 2025 13:06:38 +0300
-Received: by epgd071.me-corp.lan (sSMTP sendmail emulation); Tue, 10 Jun 2025 13:06:38 +0300
+  by ces04_data.me-crop.lan with SMTP; 10 Jun 2025 13:06:37 +0300
+Received: by epgd071.me-corp.lan (sSMTP sendmail emulation); Tue, 10 Jun 2025 13:06:37 +0300
 From: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Rob Herring <robh@kernel.org>,
@@ -60,9 +60,9 @@ Cc: linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev,
 	Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
-Subject: [PATCH v2 4/7] irqchip: MIPS P800 variant of aclint-sswi
-Date: Tue, 10 Jun 2025 13:05:37 +0300
-Message-ID: <20250610100540.2834044-5-vladimir.kondratiev@mobileye.com>
+Subject: [PATCH v2 3/7] dt-bindings: interrupt-controller: add MIPS P8700 aclint-sswi
+Date: Tue, 10 Jun 2025 13:05:36 +0300
+Message-ID: <20250610100540.2834044-4-vladimir.kondratiev@mobileye.com>
 In-Reply-To: <20250610100540.2834044-1-vladimir.kondratiev@mobileye.com>
 References: <20250609134749.1453835-1-vladimir.kondratiev@mobileye.com>
  <20250610100540.2834044-1-vladimir.kondratiev@mobileye.com>
@@ -74,264 +74,123 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Refactor Thead specific implementation of the ACLINT-SSWI irqchip.
-Factor out generic code that serves both Thead and MIPS variants.
-This generic part is according to the RISC-V draft spec [1].
+Add ACLINT-SSWI variant for the MIPS P8700. This CPU has
+SSWI device compliant with the RISC-V draft spec (see [1])
+CPU indexes on this platform are not contiguous, instead
+it uses bit-fields to encode hart,core,cluster numbers, thus
+property "riscv,hart-indexes" is mandatory
 
 Link: https://github.com/riscvarchive/riscv-aclint [1]
 
 Signed-off-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
 ---
- drivers/irqchip/Kconfig                       | 16 ++++
- drivers/irqchip/Makefile                      |  2 +-
- ...d-c900-aclint-sswi.c => irq-aclint-sswi.c} | 93 +++++++++++++------
- 3 files changed, 82 insertions(+), 29 deletions(-)
- rename drivers/irqchip/{irq-thead-c900-aclint-sswi.c => irq-aclint-sswi.c} (67%)
+ .../thead,c900-aclint-sswi.yaml               | 64 ++++++++++++++++---
+ 1 file changed, 55 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/irqchip/Kconfig b/drivers/irqchip/Kconfig
-index 0d196e447142..be9b54900482 100644
---- a/drivers/irqchip/Kconfig
-+++ b/drivers/irqchip/Kconfig
-@@ -634,12 +634,28 @@ config STARFIVE_JH8100_INTC
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
+index 8d330906bbbd..c1ab865fcd64 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
+@@ -4,23 +4,32 @@
+ $id: http://devicetree.org/schemas/interrupt-controller/thead,c900-aclint-sswi.yaml#
+ $schema: http://devicetree.org/meta-schemas/core.yaml#
  
- 	  If you don't know what to do here, say Y.
+-title: T-HEAD C900 ACLINT Supervisor-level Software Interrupt Device
++title: ACLINT Supervisor-level Software Interrupt Device
  
-+config ACLINT_SSWI
-+	bool
+ maintainers:
+   - Inochi Amaoto <inochiama@outlook.com>
+ 
+ description:
+-  The SSWI device is a part of the THEAD ACLINT device. It provides
+-  supervisor-level IPI functionality for a set of HARTs on a THEAD
+-  platform. It provides a register to set an IPI (SETSSIP) for each
+-  HART connected to the SSWI device.
++  The SSWI device is a part of the ACLINT device. It provides
++  supervisor-level IPI functionality for a set of HARTs on a supported
++  platforms. It provides a register to set an IPI (SETSSIP) for each
++  HART connected to the SSWI device. See draft specification
++  https://github.com/riscvarchive/riscv-aclint
 +
-+config MIPS_P8700_ACLINT_SSWI
-+	bool "MIPS P8700 ACLINT S-mode IPI Interrupt Controller"
-+	depends on RISCV
-+	depends on SMP
-+	select IRQ_DOMAIN_HIERARCHY
-+	select GENERIC_IRQ_IPI_MUX
-+	select ACLINT_SSWI
-+	help
-+	  This enables support for MIPS P8700 specific ACLINT SSWI device
++  Following variants of the SSWI ACLINT supported, using dedicated
++  compatible string
++  - THEAD C900
++  - MIPS P8700
+ 
+ properties:
+   compatible:
+-    items:
+-      - enum:
+-          - sophgo,sg2044-aclint-sswi
+-      - const: thead,c900-aclint-sswi
++    oneOf:
++      - items:
++          - enum:
++              - sophgo,sg2044-aclint-sswi
++          - const: thead,c900-aclint-sswi
++      - items:
++          - const: mips,p8700-aclint-sswi
+ 
+   reg:
+     maxItems: 1
+@@ -34,6 +43,14 @@ properties:
+     minItems: 1
+     maxItems: 4095
+ 
++  riscv,hart-indexes:
++    $ref: /schemas/types.yaml#/definitions/uint32-array
++    minItems: 1
++    maxItems: 4095
++    description:
++      A list of hart indexes that APLIC should use to address each hart
++      that is mentioned in the "interrupts-extended"
 +
-+	  If you don't know what to do here, say Y.
+ additionalProperties: false
+ 
+ required:
+@@ -43,8 +60,22 @@ required:
+   - interrupt-controller
+   - interrupts-extended
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            const: mips,p8700-aclint-sswi
++    then:
++      required:
++        - riscv,hart-indexes
++    else:
++      properties:
++        riscv,hart-indexes: false
 +
- config THEAD_C900_ACLINT_SSWI
- 	bool "THEAD C9XX ACLINT S-mode IPI Interrupt Controller"
- 	depends on RISCV
- 	depends on SMP
- 	select IRQ_DOMAIN_HIERARCHY
- 	select GENERIC_IRQ_IPI_MUX
-+	select ACLINT_SSWI
- 	help
- 	  This enables support for T-HEAD specific ACLINT SSWI device
- 	  support.
-diff --git a/drivers/irqchip/Makefile b/drivers/irqchip/Makefile
-index 23ca4959e6ce..0458d6c5d161 100644
---- a/drivers/irqchip/Makefile
-+++ b/drivers/irqchip/Makefile
-@@ -105,7 +105,7 @@ obj-$(CONFIG_RISCV_APLIC_MSI)		+= irq-riscv-aplic-msi.o
- obj-$(CONFIG_RISCV_IMSIC)		+= irq-riscv-imsic-state.o irq-riscv-imsic-early.o irq-riscv-imsic-platform.o
- obj-$(CONFIG_SIFIVE_PLIC)		+= irq-sifive-plic.o
- obj-$(CONFIG_STARFIVE_JH8100_INTC)	+= irq-starfive-jh8100-intc.o
--obj-$(CONFIG_THEAD_C900_ACLINT_SSWI)	+= irq-thead-c900-aclint-sswi.o
-+obj-$(CONFIG_ACLINT_SSWI)		+= irq-aclint-sswi.o
- obj-$(CONFIG_IMX_IRQSTEER)		+= irq-imx-irqsteer.o
- obj-$(CONFIG_IMX_INTMUX)		+= irq-imx-intmux.o
- obj-$(CONFIG_IMX_MU_MSI)		+= irq-imx-mu-msi.o
-diff --git a/drivers/irqchip/irq-thead-c900-aclint-sswi.c b/drivers/irqchip/irq-aclint-sswi.c
-similarity index 67%
-rename from drivers/irqchip/irq-thead-c900-aclint-sswi.c
-rename to drivers/irqchip/irq-aclint-sswi.c
-index 8ff6e7a1363b..ec21785df518 100644
---- a/drivers/irqchip/irq-thead-c900-aclint-sswi.c
-+++ b/drivers/irqchip/irq-aclint-sswi.c
-@@ -3,7 +3,7 @@
-  * Copyright (C) 2024 Inochi Amaoto <inochiama@gmail.com>
-  */
- 
--#define pr_fmt(fmt) "thead-c900-aclint-sswi: " fmt
-+#define pr_fmt(fmt) "aclint-sswi: " fmt
- #include <linux/cpu.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
-@@ -21,56 +21,51 @@
- #include <asm/sbi.h>
- #include <asm/vendorid_list.h>
- 
--#define THEAD_ACLINT_xSWI_REGISTER_SIZE		4
--
--#define THEAD_C9XX_CSR_SXSTATUS			0x5c0
--#define THEAD_C9XX_SXSTATUS_CLINTEE		BIT(17)
--
- static int sswi_ipi_virq __ro_after_init;
- static DEFINE_PER_CPU(void __iomem *, sswi_cpu_regs);
- 
--static void thead_aclint_sswi_ipi_send(unsigned int cpu)
-+static void aclint_sswi_ipi_send(unsigned int cpu)
- {
- 	writel(0x1, per_cpu(sswi_cpu_regs, cpu));
- }
- 
--static void thead_aclint_sswi_ipi_clear(void)
-+static void aclint_sswi_ipi_clear(void)
- {
- 	writel_relaxed(0x0, this_cpu_read(sswi_cpu_regs));
- }
- 
--static void thead_aclint_sswi_ipi_handle(struct irq_desc *desc)
-+static void aclint_sswi_ipi_handle(struct irq_desc *desc)
- {
- 	struct irq_chip *chip = irq_desc_get_chip(desc);
- 
- 	chained_irq_enter(chip, desc);
- 
- 	csr_clear(CSR_IP, IE_SIE);
--	thead_aclint_sswi_ipi_clear();
-+	aclint_sswi_ipi_clear();
- 
- 	ipi_mux_process();
- 
- 	chained_irq_exit(chip, desc);
- }
- 
--static int thead_aclint_sswi_starting_cpu(unsigned int cpu)
-+static int aclint_sswi_starting_cpu(unsigned int cpu)
- {
- 	enable_percpu_irq(sswi_ipi_virq, irq_get_trigger_type(sswi_ipi_virq));
- 
- 	return 0;
- }
- 
--static int thead_aclint_sswi_dying_cpu(unsigned int cpu)
-+static int aclint_sswi_dying_cpu(unsigned int cpu)
- {
--	thead_aclint_sswi_ipi_clear();
-+	aclint_sswi_ipi_clear();
- 
- 	disable_percpu_irq(sswi_ipi_virq);
- 
- 	return 0;
- }
- 
--static int __init thead_aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
--					      void __iomem *reg)
-+static int __init aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
-+					void __iomem *reg)
- {
- 	struct of_phandle_args parent;
- 	unsigned long hartid;
-@@ -97,7 +92,7 @@ static int __init thead_aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
- 
- 		cpu = riscv_hartid_to_cpuid(hartid);
- 
--		per_cpu(sswi_cpu_regs, cpu) = reg + i * THEAD_ACLINT_xSWI_REGISTER_SIZE;
-+		per_cpu(sswi_cpu_regs, cpu) = reg + hart_index * 4;
- 	}
- 
- 	pr_info("%pfwP: register %u CPU%s\n", fwnode, contexts, str_plural(contexts));
-@@ -105,17 +100,12 @@ static int __init thead_aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
- 	return 0;
- }
- 
--static int __init thead_aclint_sswi_probe(struct fwnode_handle *fwnode)
-+static int __init aclint_sswi_probe(struct fwnode_handle *fwnode)
- {
- 	struct irq_domain *domain;
- 	void __iomem *reg;
- 	int virq, rc;
- 
--	/* If it is T-HEAD CPU, check whether SSWI is enabled */
--	if (riscv_cached_mvendorid(0) == THEAD_VENDOR_ID &&
--	    !(csr_read(THEAD_C9XX_CSR_SXSTATUS) & THEAD_C9XX_SXSTATUS_CLINTEE))
--		return -ENOTSUPP;
--
- 	if (!is_of_node(fwnode))
- 		return -EINVAL;
- 
-@@ -124,7 +114,7 @@ static int __init thead_aclint_sswi_probe(struct fwnode_handle *fwnode)
- 		return -ENOMEM;
- 
- 	/* Parse SSWI setting */
--	rc = thead_aclint_sswi_parse_irq(fwnode, reg);
-+	rc = aclint_sswi_parse_irq(fwnode, reg);
- 	if (rc < 0)
- 		return rc;
- 
-@@ -146,22 +136,68 @@ static int __init thead_aclint_sswi_probe(struct fwnode_handle *fwnode)
- 	}
- 
- 	/* Register SSWI irq and handler */
--	virq = ipi_mux_create(BITS_PER_BYTE, thead_aclint_sswi_ipi_send);
-+	virq = ipi_mux_create(BITS_PER_BYTE, aclint_sswi_ipi_send);
- 	if (virq <= 0) {
- 		pr_err("unable to create muxed IPIs\n");
- 		irq_dispose_mapping(sswi_ipi_virq);
- 		return virq < 0 ? virq : -ENOMEM;
- 	}
- 
--	irq_set_chained_handler(sswi_ipi_virq, thead_aclint_sswi_ipi_handle);
-+	irq_set_chained_handler(sswi_ipi_virq, aclint_sswi_ipi_handle);
- 
- 	cpuhp_setup_state(CPUHP_AP_IRQ_THEAD_ACLINT_SSWI_STARTING,
--			  "irqchip/thead-aclint-sswi:starting",
--			  thead_aclint_sswi_starting_cpu,
--			  thead_aclint_sswi_dying_cpu);
-+			  "irqchip/aclint-sswi:starting",
-+			  aclint_sswi_starting_cpu,
-+			  aclint_sswi_dying_cpu);
- 
- 	riscv_ipi_set_virq_range(virq, BITS_PER_BYTE);
- 
-+	return 0;
-+}
+ examples:
+   - |
++    //Example 1
+     interrupt-controller@94000000 {
+       compatible = "sophgo,sg2044-aclint-sswi", "thead,c900-aclint-sswi";
+       reg = <0x94000000 0x00004000>;
+@@ -55,4 +86,19 @@ examples:
+                             <&cpu3intc 1>,
+                             <&cpu4intc 1>;
+     };
 +
-+#if defined(CONFIG_MIPS_P8700_ACLINT_SSWI)
-+/* generic/MIPS variant */
-+static int __init generic_aclint_sswi_probe(struct fwnode_handle *fwnode)
-+{
-+	int rc;
++  - |
++    //Example 2
++    interrupt-controller@94000000 {
++      compatible = "mips,p8700-aclint-sswi";
++      reg = <0x94000000 0x00004000>;
++      #interrupt-cells = <0>;
++      interrupt-controller;
++      interrupts-extended = <&cpu1intc 1>,
++                            <&cpu2intc 1>,
++                            <&cpu3intc 1>,
++                            <&cpu4intc 1>;
++      riscv,hart-indexes = <0x0 0x1 0x10 0x11>;
++    };
 +
-+	rc = aclint_sswi_probe(fwnode);
-+	if (rc)
-+		return rc;
-+
-+	/* Announce that SSWI is providing IPIs */
-+	pr_info("providing IPIs using ACLINT SSWI\n");
-+
-+	return 0;
-+}
-+
-+static int __init generic_aclint_sswi_early_probe(struct device_node *node,
-+						  struct device_node *parent)
-+{
-+	return generic_aclint_sswi_probe(&node->fwnode);
-+}
-+IRQCHIP_DECLARE(generic_aclint_sswi, "mips,p8700-aclint-sswi", generic_aclint_sswi_early_probe);
-+#endif /* CONFIG_MIPS_P8700_ACLINT_SSWI */
-+
-+#if defined(CONFIG_THEAD_C900_ACLINT_SSWI)
-+
-+#define THEAD_C9XX_CSR_SXSTATUS			0x5c0
-+#define THEAD_C9XX_SXSTATUS_CLINTEE		BIT(17)
-+
-+/* THEAD variant */
-+static int __init thead_aclint_sswi_probe(struct fwnode_handle *fwnode)
-+{
-+	int rc;
-+
-+	/* If it is T-HEAD CPU, check whether SSWI is enabled */
-+	if (riscv_cached_mvendorid(0) == THEAD_VENDOR_ID &&
-+	    !(csr_read(THEAD_C9XX_CSR_SXSTATUS) & THEAD_C9XX_SXSTATUS_CLINTEE))
-+		return -ENOTSUPP;
-+
-+	rc = aclint_sswi_probe(fwnode);
-+	if (rc)
-+		return rc;
-+
- 	/* Announce that SSWI is providing IPIs */
- 	pr_info("providing IPIs using THEAD ACLINT SSWI\n");
- 
-@@ -174,3 +210,4 @@ static int __init thead_aclint_sswi_early_probe(struct device_node *node,
- 	return thead_aclint_sswi_probe(&node->fwnode);
- }
- IRQCHIP_DECLARE(thead_aclint_sswi, "thead,c900-aclint-sswi", thead_aclint_sswi_early_probe);
-+#endif /* CONFIG_THEAD_C900_ACLINT_SSWI */
+ ...
 -- 
 2.43.0
 
