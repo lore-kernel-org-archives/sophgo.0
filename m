@@ -1,185 +1,125 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465C522DFA2
-	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 09:23:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749633840; cv=pass; b=VzcosKCDjsrd4WK/IJ4u7zCZXD+yWH+PVwazOrPNOCZiwKQoOUZlkCrpnp7ce9yBYXdKmNa/FRbQWipwRAf1GKLCyEtSXMo0SgutICKpsOfYTzyqbTwtjzJv6eGBwV/bWDjvwMMp15ZMa2+9SMn9tNrTtBXRgy7RxqWkHnpA2jw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749633840; c=relaxed/simple;
-	bh=VnSbD1P4ZjAZCmO2ADIJNQ7jUY0E3k9VW+EXMPbQOn4=;
-	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
-	 Content-Type; b=Q2slwN6bawl/PuG4bDLddaIarI7JuVsPmMycJPzPHMAY7tby8jYKFV5GotWxyn11I3XU9OnT8/KdFcF2vgijRPaHeh5fxq50isQKFRl2639EC3g08EkgeIWGsIDjtDrgJ77l7qqJ3Y5OuRTLbLXKEHzBXZsxSRMEUA3cFkS/H2w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=a+pYiCO4; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB572239E72
+	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 09:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749635231; cv=none; b=fWtCJVhUNQZsDoVg7hdUpYwugpMrLArujAnsWsmHDtzn0Ph1HqvrS87jS+6wuR/xmvsOzVhH4ab6lU58fpO8d3iofHzjrtnIYWdGQ+tCwoqy87ahwuZ+oSAUhnjM5/I9ehwZxnwH1VQokfWQeXcg+fr2RvE22dJ1a/xhlYftYrc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749635231; c=relaxed/simple;
+	bh=QY+5Tek/02AwNhLeuvLKVoyIRN55q5XqE2CxxS2Khq4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sQQcXvkJiRv+dLO3lptMmEKPjQQYRulGz0JXGxiIH+Ano9qxuvV6Y2Pl+D36iUtB3jq5CkatDLJcPZAzypwrP74G5/KGBFrVxDsr+apDGbJj3btlD8dKOzMPBn4cJIparWGHwG0TYCGty9bWP7MaA9XAoPRm1hy7YJ7tF1VnUAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M0BjD33h; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="a+pYiCO4"
-ARC-Seal: i=1; a=rsa-sha256; t=1749633823; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=kO7V+IP0kjxzIQrvpS/6WXoN0TFYQnAdYvQGYN+M9EESRHDfLx2LCr1edGpmh9cjbvAT5xwjplUUPKz+umH5NtVuLrTULPRkrGqrV7In1UfBxOqixKddCXdCIgW3NaauDabDKpWYmoZTfURa2Di7RLaEpcuxpdYs5lRG0cOfqOc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1749633823; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=KzDcoJuyvrXRTjMEF0wU3nDIzXU2u1U4shVlfR4W+g0=; 
-	b=FE+KHIohmMpt4W6j3U8MwU1rB1n8R4l99wCSWzLGlsbxKUeyw9ZZze9ZOxdsUY/AYSoxbmBM7WfFx5sW3ZHAVzRNhe2uBX5hwN2IGwpBTrCrz4jpHiEpI7HWK3tUjBe7g3W4cki8S2aYUr0K8RRG3etZQ/chDm9qNKG7Q/N3VTY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1749633823;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=MIME-Version:From:From:To:To:In-Reply-To:Cc:Cc:Subject:Subject:Message-ID:Date:Date:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
-	bh=KzDcoJuyvrXRTjMEF0wU3nDIzXU2u1U4shVlfR4W+g0=;
-	b=a+pYiCO4nqHRRMmAzxo1pgcIPNgGvRa5/G8eM0OyG/USjABXBKDmOp62M8xqS8bB
-	stmSILeijgOv1bjOGGKKYq7grIZS1kSuVn+yn/qK76nKny0gHR6FCgxnZF8X7UD9eH2
-	brtIG723Rdy5/3HT1CcNH7Ypk9dPzmd59RdcC/Kc=
-Received: by mx.zohomail.com with SMTPS id 1749633819809581.0689137008978;
-	Wed, 11 Jun 2025 02:23:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M0BjD33h"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-4a6f6d07bb5so38529051cf.2
+        for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 02:47:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749635228; x=1750240028; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=n9rPiGNTaPA7/GngQM8aAU/prJJW46EXooVz3Uq/Q3M=;
+        b=M0BjD33hRwlpdr8T5lt1yLqTtP2KG90wsYQsY5c4qcMygtxoQnCFcLA2S1Z4zRNo3P
+         2dqWFseTu/Xj4S3fsug+pf5e+NtsHRle9CTuclNk9QSFCLjwUgPDHwpbOPRm1CCvOu/9
+         OvBfxZKnQl/1R4Um5nPdSmyGvR+0h9VeQeMlMnZgd+mnpj+THC3MDRcyA57GWP9F+GHB
+         WChw6ASqlHinuekljI/22SJVVdoZbM73Q98ZxCLU1BFHDkNEiJh2a/PhBb2gXm1zodMH
+         S8GE+S0KDIRI0dnH81Fe2SuhRRMI52mtBHlKSIeXwpWV3PC7f/X2VxzMVMIyT4JuNgBa
+         PxcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749635228; x=1750240028;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n9rPiGNTaPA7/GngQM8aAU/prJJW46EXooVz3Uq/Q3M=;
+        b=JTq5eQ+Vt5fCX96xcv7Ed0veRcC64WoBm0yMLeUDnA0OzdYBKowjcqacnBQAiinRj3
+         HNIog2R4bI9VsGX+xoBrhRCZFlMw/qetnxTHa/D3BOYvlh/Jqh6TTHevx5YM4AexMQ4V
+         le8x7Lng3ke2zo3IWE4YpZPe1QF4YDTgAFL4yiSbyj2IB9A0Tr4wzEh9XDk1Y2D/O+S+
+         XFQF+6lvTyOYG4iRFft4ZI/MiyZg72b8roj7E1fsO/tkO2CLAPaCehxzsgvzx/rOQ2v6
+         q5ayrcgYrh97Zg+3X45ohY+75mgKqJsKSewUWqlPE4LDsW/sELRCYO0KyA4TVy8J3Uu+
+         PG0w==
+X-Forwarded-Encrypted: i=1; AJvYcCWIIQQlIEt8s/qXzT8OE45nIF3fmFMoFvffV6VbOytX0HwhTeJRl5+p+w0/peSJ+hua1bfXTO8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwChPbUuXIPRSsRXDPiFtFFd34ujSn9GIDF0tL1d6JA35erq1px
+	jsX847/1KkR8OFhIbJizR8Ddl5I1iZlx0DqtoRS5sQdH6dj4SxDxDZMB
+X-Gm-Gg: ASbGncvY/Vuxo2yqwiu41xoJajA7ZLHCoKNDKhDplPwbOwv6ElG5ICZoa4bJZvEfmg1
+	cl71JueLAhy58hcQY53I2TIXkDxvfiHVZ0mqBZ5xPlJi/t0726dxo/GA7U6GF/Zpqnei77N+9l0
+	9ixJfuHEkWNwBnpPbXw6lZQuU+ov4HWHfRQC4ej/opgjdRwCbQQr1SXUO8RbUuQqt6pY/jrGWVv
+	IEg0adnU1JW+LAeDrxGfJHur0he9We6pCOrqEHVJ6RkSnFRw5rebXQx+f5BamHuAx0cCiFXlxpW
+	wZk2iti7Wvo1Pi9SZnLCsJ6C12p4hfuLPRUo6Q==
+X-Google-Smtp-Source: AGHT+IHoucd0pTsqUEMuvaSjWbfTQOjCUx6k4huksi1dJ/QwFsl1H1FuuHsdR5T8wu60/r37DLUb9A==
+X-Received: by 2002:a05:622a:5595:b0:4a5:911d:52f6 with SMTP id d75a77b69052e-4a713c5ecc3mr52302751cf.39.1749635228486;
+        Wed, 11 Jun 2025 02:47:08 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4a61116bc4esm86576941cf.28.2025.06.11.02.47.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 02:47:08 -0700 (PDT)
+Date: Wed, 11 Jun 2025 17:45:59 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Vinod Koul <vkoul@kernel.org>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Yu Yuan <yu.yuan@sjtu.edu.cn>, Ze Huang <huangze@whut.edu.cn>, 
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>, Junhui Liu <junhui.liu@pigmoral.tech>, 
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, dmaengine@vger.kernel.org, Yixun Lan <dlan@gentoo.org>, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v3 1/4] dt-bindings: reset: sophgo: Add CV1800B support
+Message-ID: <mbvzlggbisa4zvvbjvlg5lrmhb455av37mrtwmphqiqi53iuyu@ybql2m773x4c>
+References: <20250611075321.1160973-1-inochiama@gmail.com>
+ <20250611075321.1160973-2-inochiama@gmail.com>
+ <20250611-brown-turtle-of-election-87c324@kuoka>
+ <2v4hfzqgz22k6s776onexnhd5cnhfr7s7ggvcmh4mfiviigq66@a2ehkwbv7oll>
+ <ec60631a-7e55-4dc0-83f7-6e6cb156dbf2@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Junhui Liu" <junhui.liu@pigmoral.tech>
-To: "Chen Wang" <unicorn_wang@outlook.com>, 
-	"Bjorn Andersson" <andersson@kernel.org>, 
-	"Mathieu Poirier" <mathieu.poirier@linaro.org>, 
-	"Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, 
-	"Inochi Amaoto" <inochiama@gmail.com>, 
-	"Philipp Zabel" <p.zabel@pengutronix.de>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, 
-	"Alexandre Ghiti" <alex@ghiti.fr>
-In-Reply-To: <PN0P287MB22589781F2D49353E7C66C46FE75A@PN0P287MB2258.INDP287.PROD.OUTLOOK.COM>
-Cc: <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>, 
-	<sophgo@lists.linux.dev>, <linux-kernel@vger.kernel.org>, 
-	<linux-riscv@lists.infradead.org>
-Subject: Re: [PATCH 1/2] dt-bindings: remoteproc: Add C906L rproc for Sophgo
-	 CV1800B SoC
-Message-ID: <1847f2ae7cdd9de8.639eddc348629bd0.78776f2b552d9090@Jude-Air.local>
-Date: Wed, 11 Jun 2025 09:23:31 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ZohoMailClient: External
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ec60631a-7e55-4dc0-83f7-6e6cb156dbf2@kernel.org>
 
+On Wed, Jun 11, 2025 at 11:09:50AM +0200, Krzysztof Kozlowski wrote:
+> On 11/06/2025 10:29, Inochi Amaoto wrote:
+> > On Wed, Jun 11, 2025 at 10:19:49AM +0200, Krzysztof Kozlowski wrote:
+> >> On Wed, Jun 11, 2025 at 03:53:15PM GMT, Inochi Amaoto wrote:
+> >>> Add bindings for the reset generator on the SOPHGO CV1800B
+> >>> RISC-V SoC.
+> >>>
+> >>> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> >>> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> >>> ---
+> >>>  Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml | 1 +
+> >>>  1 file changed, 1 insertion(+)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
+> >>> index 1d1b84575960..bd8dfa998939 100644
+> >>> --- a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
+> >>> +++ b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
+> >>> @@ -17,6 +17,7 @@ properties:
+> >>>                - sophgo,sg2044-reset
+> >>>            - const: sophgo,sg2042-reset
+> >>>        - const: sophgo,sg2042-reset
+> >>> +      - const: sophgo,cv1800b-reset
+> >>
+> >> Keep alphabetical order. That's enum with previous entry, btw.
+> >>
+> > 
+> > There is a small question for this: should I move this before the entry
+> > "const: sophgo,sg2042-reset", or before the first item entry?
+> It does not matter where you place the enum. There is no convention for
+> that.
+> 
 
+Thanks. I will fix it
 
-On 11/06/2025 17:01, Chen Wang wrote:
-> On 2025/6/8 10:37, Junhui Liu wrote:
->> Add C906L remote processor for CV1800B SoC, which is an asymmetric
->> processor typically running RTOS.
->=20
-> In the cover email, I saw that remoteproc also uses mailbox as the=20
-> underlying communication. So I guess some mailbox-related properties=20
-> will need to be added to the bindings? I suggest that these should be=20
-> determined before officially merging this bindings.
-
-Yes, thanks for your suggestion. I will try to add mailbox-related
-properties and functions in the bindings and driver in v2, since the
-mailbox driver has been merged. At the very least, I will ensure the
-mailbox-related properties are included in the bindings.
-
->=20
-> Thanks=EF=BC=8C
->=20
-> Chen
->=20
->>
->> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
->> ---
->>   .../bindings/remoteproc/sophgo,cv1800b-c906l.yaml  | 68 +++++++++++++++=
-+++++++
->>   1 file changed, 68 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-=
-c906l.yaml b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c90=
-6l.yaml
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..455e957dec01c16424c49ebe5=
-ef451883b0c3d4a
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.y=
-aml
->> @@ -0,0 +1,68 @@
->> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/remoteproc/sophgo,cv1800b-c906l.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Sophgo C906L remote processor controller for CV1800B SoC
->> +
->> +maintainers:
->> +  - Junhui Liu <junhui.liu@pigmoral.tech>
->> +
->> +description:
->> +  Document the bindings for the C906L remoteproc component that loads an=
-d boots
->> +  firmwares on the CV1800B SoC.
->> +
->> +properties:
->> +  compatible:
->> +    const: sophgo,cv1800b-c906l
->> +
->> +  firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string
->> +    description:
->> +      The name of the firmware file to load for this remote processor, r=
-elative
->> +      to the firmware search path (typically /lib/firmware/).
->> +
->> +  memory-region:
->> +    description:
->> +      Phandle to a reserved memory region that is used to load the firmw=
-are for
->> +      this remote processor. The remote processor will use this memory r=
-egion
->> +      as its execution memory.
->> +
->> +  resets:
->> +    maxItems: 1
->> +
->> +  sophgo,syscon:
->> +    $ref: /schemas/types.yaml#/definitions/phandle
->> +    description:
->> +      A phandle to the SEC_SYS region, used for configuration of the rem=
-ote processor.
->> +
->> +required:
->> +  - compatible
->> +  - firmware-name
->> +  - memory-region
->> +  - resets
->> +  - sophgo,syscon
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    reserved-memory {
->> +        #address-cells =3D <1>;
->> +        #size-cells =3D <1>;
->> +        ranges;
->> +
->> +        c906l_mem: region@83f40000 {
->> +            reg =3D <0x83f40000 0xc0000>;
->> +            no-map;
->> +        };
->> +    };
->> +
->> +    c906l-rproc {
->> +        compatible =3D "sophgo,cv1800b-c906l";
->> +        firmware-name =3D "c906l-firmware.elf";
->> +        memory-region =3D <&c906l_mem>;
->> +        resets =3D <&rst 294>;
->> +        sophgo,syscon =3D <&sec_sys>;
->> +    };
->>
-
---=20
-Best regards,
-Junhui Liu
+Regards,
+Inochi
