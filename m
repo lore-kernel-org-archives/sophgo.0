@@ -1,92 +1,88 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D07F248F58
-	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 07:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246C620C463
+	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 08:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749628489; cv=none; b=n535wZw6cw4xYsIVq32oC4dYANRZ8IrZCUd6L9QhKrsQ0z+By2mXZzfInGSWJQg2FiSHH6KYXk1Z/cuAYXyYhQlOYxDfiU5o99fpYWOC9bs1GMl3De6CR65kYRcN0BK0aVhc+5BmBqYyFOjmzTYFkpXDHgC5kFudgjdBkJkGbXs=
+	t=1749629030; cv=none; b=OrRKz66JEISgwT4nYMPTQpkjY2aqnTfN6Dt2UxgqAUTFBE8vTkN8IljxVq1yXe16j5UgqiPtMfzx9eei5IcpyguWAnVj480kOe7foIe3pFGTIDZov67kHKtojnEtxSowOYzrr4ho6lycftLSNjfb/SLRLv72+GpcOD8fhLeWF40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749628489; c=relaxed/simple;
-	bh=6W7L6mLae0Gwk7i/q8VTDrfQXggHDNqoAV/kISEHYUc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSamdQjgqlsDKy3s44Ii2jx1aIniSAhEdv1Tv6DxfOfUpPmIsS7LVVltULMgBO016JFCYQOB+YAfa9wYd/FQomlX6kvApk5QyypBnb6/NCjRrK+UxG4aA/CK5KoaIJPVlEZPr53Y7odzoHdD078sma30SFQeMiBMOD1BnWvkq7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UFyInc1X; arc=none smtp.client-ip=209.85.161.42
+	s=arc-20240116; t=1749629030; c=relaxed/simple;
+	bh=6ajor1B5tTDHU56MZ9Ugg0LYtwl5SvHnXqqwV6bNozc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i94nOMIY0kPB6UTmP50FNDK19nDbHaLsZ5u/0VhEQcqLG+b+fQTypPL42hg0R5eSAeV+nF7FWp9dAJNcqxt/X9C9e9Yml2gyCefAlGD7RB2Vsq7TyxxrgPBO3I8ifTeZGKHp09fUkCY9ltUEGSm1xQ44J3nlc4dKlvjFqiScHdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mqYc6SC3; arc=none smtp.client-ip=209.85.160.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UFyInc1X"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-605f7d3215cso3032978eaf.0
-        for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 00:54:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mqYc6SC3"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4a42cb03673so79818261cf.3
+        for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 01:03:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749628487; x=1750233287; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hnz/0tuwhYz4DMu7YFaY4+MBrOn4ASwg3VdpZXlOjs0=;
-        b=UFyInc1XOv98qwpt00jMgwCCA+vOsUPESP8TW8nsYqQ8gdSAqEtaZmtLzm/20YyqWK
-         KK9zsTxVFsuom2BQaOVYWVZ5uJiunFPzv6qc9m/iBWKJkNXs7q6h5zHg8+4Pd0esv7Qg
-         lOBsOek9nIRukqOOCdHmSboS4zjXLAC4NuRs7OnCt4uDZ2ccYAld4WfP4jW2qGRXdvOY
-         H/XrA645vow8uClpfGSzJja+JOioMBI/OT/GjlGtGgSnUDNhBevzDNfD2X9bU3gmwkOB
-         Yfqnu2pNpSQma/d7W6biLGG1PTgRgPP3ljTBWtMzgvWYGbhK5oSwoJbIh6TXYLEyYZia
-         jaAQ==
+        d=gmail.com; s=20230601; t=1749629028; x=1750233828; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lO0oOIhU9gTDAHfzv4bngGzr8nk9uJvKVCCgCMFOJ7s=;
+        b=mqYc6SC3OhGUrb+dV/CjcpztQwHvvAp/zYKm88WUH20uwZIZYJ7C461+IuBWL52WMp
+         U+hgJgk4dOE0BliEa6Uc7BeOBiWjl6EAWha1+pJznecGAbEZsweGUsZYpB+hPAX2XAgT
+         RSXunRXMJg1+S8vwRZd9M/j1LH7o0h3J998ON8RiRRNYVV2QwP8V/vLtmn7LYNTleNMP
+         qQjH0VK8ZN/athXKSe43KLLNlyuKxFWz6qzGFmPMqupxi9pT6sr8KDiebHG+Fb0wWQS0
+         +joETdCTOQnaBHfEHrl6EBGBmewm7MVCuNIiUbDgXkpigDPqvrC0+hb0M9J4kd4rmGRi
+         DE5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749628487; x=1750233287;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hnz/0tuwhYz4DMu7YFaY4+MBrOn4ASwg3VdpZXlOjs0=;
-        b=MFRM782vVHiuxzhmvW54EP3FsnJcti65g4JCLgPyk2er/ZqyTy0LoKv9dgyq2hsa63
-         gvJu/pcEBmCKd1wcXCaXHIs1NeQeoyzl+k6I4T/CBI4YeGZX4FWzV5sCMbZQzq0Yp206
-         zyiS6kRj9Q2dRdSxplK8gUFKn9fli2m38W7p7acxi4/wDFhZ+Y3QXqooDEdFmIiR9Xld
-         otOIC9zen1jfrxnmXu0hh5mcrYivTXuuJBvC5MEVQ3YMKlrqCfX9GsOOCcA+QvJK8bF+
-         AjBY/eQyFK3OwHpPb65G0YLhXq14h81IwVpse2Rvwa34dDdQAlRrq/TKSD6rLAWfKMg8
-         TpQg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4NsRlur2LEBzjkldqzpBh22J2dmO+Q4CsXcRLXd9ZggnUmJ+U2DTtdinTsUvbS2ojaXJ2B40=@lists.linux.dev
-X-Gm-Message-State: AOJu0YysPEcbAHgrEOkVHu8IHQwx5ABqJpol1D3SdmucNa0T/wREhlwW
-	2SGgS5vctEjkDsHcYCuAzhsME7VGpRuP5fs74lQ2w/bT9Sjg7pH5z1k5DANwpahO
-X-Gm-Gg: ASbGncsd6mYzbDe2UEsFDCRjmcMkB65MzbUnh9H777w7rhcz65fJ8LGyKUrH1iIoyZc
-	t2gmcVf8U0nfksDGvpL1HiW9EUKPXJXlpRi4LpYuG21Ws0vrkjs0KTqCVHkzMHKid0MqxOhvMDL
-	83NkI9mhYh4pi10GMq4RLmsKTDV2x5NmaVMe4pG9sN7g8QCF7B4rNKtQ/7KBLNOLgSeomaGdxEM
-	SBHGUesrbeBA3naOSnuS7fOz+r8DsXSSJFrWnIgseZMN33lM0vf+Ezcd4xfxyvDcWHxrnRhA1/h
-	ap5KlyDB5loPYniGJ3zm5hzndl5CkVQiYtHSUw==
-X-Google-Smtp-Source: AGHT+IHeItzokrKWw9l9oyv6bnHcsz0dOO4Q14MZQ9wo4Ra1X7rEUiC3C9xPLLzARwfKUZ6RpDZSIw==
-X-Received: by 2002:a05:620a:288d:b0:7c5:af73:4f72 with SMTP id af79cd13be357-7d3a89330ebmr320142685a.42.1749628475059;
-        Wed, 11 Jun 2025 00:54:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749629028; x=1750233828;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lO0oOIhU9gTDAHfzv4bngGzr8nk9uJvKVCCgCMFOJ7s=;
+        b=KfrsjY0OhlbEDXH0advtNe4lXPhFzmRo+TxQeWpvPcw/96lfZELTP5H+e7LBis1XCo
+         EV8vgw7XzelYCImfT5vExQLl99xabE3elClsPOMIW6ynbHgFnVHW1JXNmoozwGbBo9T7
+         E3G/D8ZM7eXvbGt68lZclqLLUyUQaZ7o+yJ6RarKIMOcjIIMPMpbFzK6rOqJCt7TqlJL
+         hT2ax3D6gHzmAQiGXG3ofje7hxLy1/m4dibG9psc5ltmH5yfv6pLeW1DC1tESDzW161Y
+         EUBvygsP/50IJzBq2z1jfDDHYuljldK/WhyzJSFNJDlvnhCeT9JKExgxMij9xSyyODX4
+         7DMA==
+X-Forwarded-Encrypted: i=1; AJvYcCWVPqluWV3KH5Ruhwf5tKgCPF78yQwECKWxO6ZuNfOCGGK80XU/5MBuNLKU8PnFxfUZ8+Z2zcw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzjsTQtBm5ZFzoh9pty0BmRokp137v7ZgW8jlzcJYkH6o17me93
+	9uRfMwSAsIcqRbYioaGhrdytUkWg1sDw/d+AheNu0JwUBK5Sq+m4o34O
+X-Gm-Gg: ASbGncu4OKIY9hZr82XZQhMwEbCspeNTADJthzMo/PiG/p0+QUE80TVU1/SijBhD6C4
+	x7fHzLG0bdmPH+zOYDDt1y8QdPsn1agmrhUwRpKoprlV3d2uD1WxSPPtvRTKVAH3ZZLlrJMvM34
+	PaboC0hb0JzOAu/bHYDyjfjsMNuCd+YAHhChvs5VfVUk4t9KbnfXnmGRexgLrwAnHQNXYdD1LMW
+	97Faw7sKeexpRTjED3vFH/80l1nNEmP39fdH3fu/OZVV+i2Y3QIQ/qu7gWeU+hxghMgWcGluNuu
+	tTVvhYxM5RoYUA9WgquJDCKnYvFuMwLYNhZCag==
+X-Google-Smtp-Source: AGHT+IG+DVPIIzWnmuIfybYPUVY9Wm0WTbrG5rT0kebswDgegdaXVZwVdvA8Qy8soVcQDTBv9EOxqA==
+X-Received: by 2002:a05:622a:4249:b0:4a5:a96d:6068 with SMTP id d75a77b69052e-4a713c5871dmr47918471cf.37.1749629027868;
+        Wed, 11 Jun 2025 01:03:47 -0700 (PDT)
 Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6fb09b1d1d0sm79736646d6.77.2025.06.11.00.54.33
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4a61116ae58sm85983721cf.17.2025.06.11.01.03.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 00:54:34 -0700 (PDT)
+        Wed, 11 Jun 2025 01:03:47 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Philipp Zabel <p.zabel@pengutronix.de>,
+To: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
 	Inochi Amaoto <inochiama@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Vinod Koul <vkoul@kernel.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Yu Yuan <yu.yuan@sjtu.edu.cn>,
-	Ze Huang <huangze@whut.edu.cn>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>
-Cc: Junhui Liu <junhui.liu@pigmoral.tech>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: netdev@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	dmaengine@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v3 1/4] dt-bindings: reset: sophgo: Add CV1800B support
-Date: Wed, 11 Jun 2025 15:53:15 +0800
-Message-ID: <20250611075321.1160973-2-inochiama@gmail.com>
+Subject: [PATCH net-next 0/2] riscv: dts: sophgo: Add mdio multiplexer for cv18xx
+Date: Wed, 11 Jun 2025 16:01:58 +0800
+Message-ID: <20250611080228.1166090-1-inochiama@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250611075321.1160973-1-inochiama@gmail.com>
-References: <20250611075321.1160973-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -95,27 +91,20 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add bindings for the reset generator on the SOPHGO CV1800B
-RISC-V SoC.
+Add mdio multiplexer support for CV18XX series SoC.
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
----
- Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Inochi Amaoto (2):
+  dt-bindings: net: Add Sophgo CV1800 MDIO multiplexer
+  net: mdio-mux: Add MDIO mux driver for Sophgo CV1800 SoCs
 
-diff --git a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
-index 1d1b84575960..bd8dfa998939 100644
---- a/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
-+++ b/Documentation/devicetree/bindings/reset/sophgo,sg2042-reset.yaml
-@@ -17,6 +17,7 @@ properties:
-               - sophgo,sg2044-reset
-           - const: sophgo,sg2042-reset
-       - const: sophgo,sg2042-reset
-+      - const: sophgo,cv1800b-reset
- 
-   reg:
-     maxItems: 1
--- 
+ .../bindings/net/sophgo,cv1800b-mdio-mux.yaml |  47 +++++++
+ drivers/net/mdio/Kconfig                      |  10 ++
+ drivers/net/mdio/Makefile                     |   1 +
+ drivers/net/mdio/mdio-mux-cv1800b.c           | 119 ++++++++++++++++++
+ 4 files changed, 177 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/sophgo,cv1800b-mdio-mux.yaml
+ create mode 100644 drivers/net/mdio/mdio-mux-cv1800b.c
+
+--
 2.49.0
 
