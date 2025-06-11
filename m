@@ -1,209 +1,222 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010007.outbound.protection.outlook.com [52.103.68.7])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1498E262815
-	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 09:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FE219FC
+	for <sophgo@lists.linux.dev>; Wed, 11 Jun 2025 10:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749635650; cv=fail; b=jwz8GW1cIxVWe4H+vA9LRtk/FAnALap4fFLkUKZQwWCph3IVgaNo0rXwL1gVjdRyTxPK8+nBcH2yQtXdBU1wqfOMEsqSCzQsp2jdFhkqcTYy88UaNUXCNz+Zc+8OvZma6xjxBzbkLCScqmEkUpuUQBj5S32PL1+ntDXRG3Y1T9A=
+	t=1749636500; cv=pass; b=WEvTXcy1rxJfSA1yrOZpCefX6+MOvHqPiMazGazyyU7fYA9i7iAxpDaOIg1Y2uzlvObJ4bTETbdQ/8yY7DNd70UtspIBxqyw9Fy9Qy/O0Tm0xSacxdCGdGNu1/ugzfvOfhhwoZFhoyC1DnuL4VG3F+p49q8qrexhmQJnyhOstzk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749635650; c=relaxed/simple;
-	bh=KiBUrs1/VCxq8ZNGp5OIt53fyKePPpWJWdwuRvvu8EU=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=QKbt4tECygydBzxkf0n2QQjkXAEUjWq93zEhvh5RJ9Xgy4XsmqMXnISkg0tWZSX55nmuMutLG/ZSGDQ/M//hfSxoOFgUvJjyJIbFvEuw3kYqT2Aom8Jnx6OlFeW27zWWf0Mw1to3aqW9VJyiSdT2ecld5brDGlCkXPEcmfovEVQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=F43anofT; arc=fail smtp.client-ip=52.103.68.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	s=arc-20240116; t=1749636500; c=relaxed/simple;
+	bh=krfXaGWPWeAKxyBQJ3Hwwim48lN8w7H+7UHIhj3U+0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LyHGWI+Isq8xJaY2fkIYtl5+gEwx94y6saybalD/ZaB0LmMdMwBvCCzmyFGQheoFQgOYB5LP9aafsYvHxCaXX9hccQctnv/gWcRDpTjBPijHtDPZTg3MvdAaYMnl8BmMGjn9Mj473Mo2zZ7XcpOZ5m76g5kfYtZGfbpexIa4o5A=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=KAUWvv+C; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="F43anofT"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lTGxgZYzwH1neMM2YB+0BAMcmleZX8OTZyrmHHeJJUMQw1kIqx/absS/8w4MNnVjnQ7Q8b+VR7eejXY9/1zoLIEb64kkrPAtcrXgzNbEMg7vttcj1i64NuUJ1AaW4rVmu8APbqvc0ee8HALRUESWHwEhUn/QiLGRJdrplMLd2aMb2VGzL9dvHUaM/9I10qf/C92ujmUAGADQc9kzBTuFS2YerwgyAt9E6iq7FgOYvg5PqL0+IjMfqq49OKLGzYtBOqH7RZx8ce+0OVnuFHPfqgnp3lx21guyaGrAIU7EYFwQaBUxcSy9vrr7OqP8abfrfokNMpSmUSK6mpQ6ifYj/Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ySZYBIjpGAQdtRc2xZ4ebPQMnX2efCp8IBjwigWG5mY=;
- b=NxWZeCek/CwCjHIkLUZtqOxRF6xbswsFkxbl3mjis7nd3O0+wsY7K46yEU1wuB2MXcfSBpAHpzHotg6gTW458MJd9ZgTus5DECcfG4PH3ErNHTY/jTc8PomQ+L4+LGFlcuj9424roxzLCm6tY27cOR85fxS3liVgaB+sNCX9U0omccp60clXLegEuTPelvVz7nzNdyss4rA4LdyaWMhP6sVCPaj2ef9pVWhaKfkwaErc69i4jUipydnW69aWR0QoFQfSjWnm8Evb7rF+zSha5ArCEA8JlMvUBZaxo4fMK89SvaIH6LYDsObxPCjFcfZbcgI99raKpfS3C6EQbWLGtw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ySZYBIjpGAQdtRc2xZ4ebPQMnX2efCp8IBjwigWG5mY=;
- b=F43anofThBmwjIuSXM4z+HC2Ycbs4YOmgblnuglaV/jXGiA25WA3OY3aZsRGkp8YySYf6P1dNiIkGhWh02dV8zI13bPe0pb5vYhAa532XwUXTlMRUy/NDCfsqntyOMnLfPckY8Bs6d0H25OXxn0mPdu3tjitkTp+UiTO5AtVrgxa20PDFuopnEXGfl/k/Rque/LN8nsIr+GSl+qFiSfWpDDj8oBEARJV1VAaX7FT4+cyu0YKslCdKhjdsWiadhKgpLETj0ZnZRPcCIvVOeMgrhrQ1V088VAKvqmSVmEH5ve6Eda0yXPZsZ3DXK5qKlPK2D5X+pB7Kee9SItvcamAcQ==
-Received: from PN0P287MB2258.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1c0::8)
- by PNYP287MB4069.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:287::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.19; Wed, 11 Jun
- 2025 09:54:01 +0000
-Received: from PN0P287MB2258.INDP287.PROD.OUTLOOK.COM
- ([fe80::b63f:e256:4db1:2e9f]) by PN0P287MB2258.INDP287.PROD.OUTLOOK.COM
- ([fe80::b63f:e256:4db1:2e9f%6]) with mapi id 15.20.8813.024; Wed, 11 Jun 2025
- 09:54:00 +0000
-Message-ID:
- <PN0P287MB2258F2BB409F70955D6EE248FE75A@PN0P287MB2258.INDP287.PROD.OUTLOOK.COM>
-Date: Wed, 11 Jun 2025 17:53:54 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] riscv: dts: sophgo: add pwm controller for SG2044
-To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>,
- Longbin Li <looong.bin@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- Yixun Lan <dlan@gentoo.org>
-References: <20250608232836.784737-1-inochiama@gmail.com>
- <20250608232836.784737-12-inochiama@gmail.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250608232836.784737-12-inochiama@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR04CA0184.apcprd04.prod.outlook.com
- (2603:1096:4:14::22) To PN0P287MB2258.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:1c0::8)
-X-Microsoft-Original-Message-ID:
- <39096efa-a3e2-4d31-a7e4-43a13484a137@outlook.com>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="KAUWvv+C"
+ARC-Seal: i=1; a=rsa-sha256; t=1749636463; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=lQfMgKfOmLVOpcLUR/+VhI5pBBYy2/8J2KOx1d6voAV6TOzeR+6bcfYgHTxdeouzw0C7sqKgHyBJU8luD2eQTfNZBVuocJvCodJ+lva4jeyTPCVkVwwFA8y9hqgHoTFHw53PYa2PgwFdBOXowOXJA+8Z7D4b7lYpARqexIozu8M=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1749636463; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=wA+1W3QDgotum1F06+IYBuatyuO2UnnGGcdD3JcEpmY=; 
+	b=LCyvGF7zjpp7j+gJg/fe4Q0AraW1IGlC/Dyon5oONqBCVlfOsEBi24z9vv90detXzW1Qrn4mCRvXf3RC9mCMcbSOnQddRTvN+CQVGu75CD8HEzAvB+mzqVjK02fcpDsfx0SXNLn2+EAEfuI7cNkB23aBHCsw76am/vdPT5vtH4E=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1749636463;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:To:To:Cc:Cc:References:From:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=wA+1W3QDgotum1F06+IYBuatyuO2UnnGGcdD3JcEpmY=;
+	b=KAUWvv+CTibdRGx8zsnTanoPkINanbET+iB/y6jswbIToOCWONTi6R2tbI2L0gFV
+	tHkbdSUlYCIvUhw5VYFgueXW5slaN4NFbZJIfT+D5BG6cpZpwLphv5vl1pgtUL8Xrkf
+	QeofLTigqI29/mspdElMSPNht+7lCys2p6tjVGL8=
+Received: by mx.zohomail.com with SMTPS id 1749636461743401.7062159364368;
+	Wed, 11 Jun 2025 03:07:41 -0700 (PDT)
+Message-ID: <bf41966c-cda2-4767-b9a5-5bf4db7f21b6@pigmoral.tech>
+Date: Wed, 11 Jun 2025 18:07:30 +0800
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN0P287MB2258:EE_|PNYP287MB4069:EE_
-X-MS-Office365-Filtering-Correlation-Id: c013136d-04c7-4a3d-c819-08dda8cde40d
-X-MS-Exchange-SLBlob-MailProps:
-	Cq7lScuPrnqTDjd4Fy0PN0HVJKAgc5hFtHC/ptq2/B1XzN9fSXJqzO+4xixLBbK9OujE8EFb88Bb4VOczjSF+kYkcsSLkGe36HzeiV3AWkpPj4nMOHLtze9lG8BndpEkKRWGc9pASS++baLHOpG+Q0mN3w0d6XC+cN8c2beruMelrnngkEMdsui77lzpYBNUT2WGeBqyEIKke6rrLQTM9BatnAKg0AFhDhP17Wpzwpn1gZBlym7KSEd0t+xx+2mj56sZBrZWfBAMj9FlkYkym5rBSOcIyk7fobt+5FNyZBYympPnbzl3KDxhoRrJswpiHcdoitOqwALFl9Aa/xvhcJNlsAoEisJbnmzFBHEzEWGHbhYaQYRvkcBDwHXeAdTHCsbdA1YKsjUmBhN7iMKm0aZS4mPI+6vK8/tKZJ4Z1D75GgPRTIAVm+zwE2dQu3RatxQO8YLS0Qf2bWdvIF9mDCT1RF6brzAJCD4eQdmt7HWjfG6/RrnJI2HE39bIYEsL5teFo5r+WF4ef37kOA+FzfB4vypDueiCY1hfUMZMQu+dd5Lox8xsarvSzCDp0w54X3EumUmse25Lrsd+XIFIshIjlgZ8fbzkUiYeCwfmTxa+oDvNqLoip87dkKcy4SRfXAjE8IwlHEeEjJjn51Ym1aT0qhMF9IYNo0Mh59CNLaRy6EqF3GIWykdR829645uX5n8x4QABGymZRNEidvgsu2gLaUfJYCro1+iamw+fuglQhpZNhJZEn3Srnu9DJvHTlz/7P2i7/j0=
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|6090799003|461199028|19110799006|7092599006|8060799009|5072599009|15080799009|3412199025|440099028;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NE0vVE5KMzVHZTQyZWMvV0tkemp0alE1SW9jRFNjcnlVSlUzWGFBZkQ3RDJr?=
- =?utf-8?B?NjhkNEkvMHZudE5IaHZERjVzMUZjQ0JhZCtHajF4QlBTclRvRG9FSnZHWEpU?=
- =?utf-8?B?S01SQ2hmRHRUQUpycmd2b0JwWFFsdU1aQ2ViNndnS0pOMm91ZGd1MnU1dzhP?=
- =?utf-8?B?MW43S1pnMXdKS2IvTE5ldTlYdTc5VGR4aWluVzhuWmxCSGJreTJBZzBrTTBP?=
- =?utf-8?B?VVYyMzdBc1lDbk9EQ0EvdllxaGFpakI2bjJ0ZlNscndxZFhraXZSVnNVK0pj?=
- =?utf-8?B?TW80VlRWeEJUYjlmY3FSb1JoOU1XWUlpZFE4a05SZjBzcXR4bFRaZ3VPRG1E?=
- =?utf-8?B?TS9JOC92VFlkOXdQQ2ZXSkhseXZFZk8ybUhoeEJlM0svRDAvYko2bDg1aHlx?=
- =?utf-8?B?SHd0eHlKSmUrUEFmTmgyeEFoMUJIMzJ4L2U4MFRCZ3N5VTFNbnBQdHBsSnhr?=
- =?utf-8?B?azczWnlXVFd0VkhBMEZqeTdPV3IwemxIa1AyMGlwbWdnSHlaWnJYLzlKRmFz?=
- =?utf-8?B?WGhFakNWdms0VE45cDJ2eDJyOTM1bDNtbzNWMU5nRFNZSVorVlJZdkxTNTRm?=
- =?utf-8?B?V3crWXdNeWM2Z01kM1lrYXI5Q2Q4MDJST3ZaV0o4UHVhd3A5Qkk4K2c4WDE2?=
- =?utf-8?B?TmVSN0gyZ3NoNUdad0YvdFI1R0d5VkhNdGV4VTZyd1ZPMkc1RW9NZW9vM1or?=
- =?utf-8?B?NWE5Qmd3bWZEbERkVzBLcWRXeTdQaW5zNWNEZHdqa1VjTUZWV041emVoTGZT?=
- =?utf-8?B?dXpsNFR6Zk5Rcjl6TkxsZzFQdWZLajU0WncxK0JkdDA3SzdzaW5TbFdyZ3pT?=
- =?utf-8?B?Z3d2VnVEOXMxSGZhemIyQ3N1SGtJdmxlLy9paEM5dWJ2WFBpbVgxYjEwMTZU?=
- =?utf-8?B?QVhReUtKd2pZRTZKK1VYOXMrblNsWmsyR3psRGRmNWlQbHBCU05mRTBpc1lx?=
- =?utf-8?B?NmZWRE9tSW9rOURNUVpYMGhnUHFyd0YwblFCMDZUbzR4WjRxNmVlVGpOa21B?=
- =?utf-8?B?bWhwS292NGhiNTdaUW41L2RrVzZ1QjVzQlltUVk1bDFjK2NPajduS0hCQUQr?=
- =?utf-8?B?a0N3S1VnejNadFFjaklPOU5idldpL1BSR0dncWQzeGYxcGVaZGFrR1dUNkZx?=
- =?utf-8?B?a0RYTlZ3dHNUZnNHWWx2bXZnbFVpVTJDK3FuZS91akpzWUo0WlNKeFpLaDB2?=
- =?utf-8?B?enlrUDRYYVV3ckZOdG8rVWJ2cjMvM2tZMS9ZZVBuV0MwTkU4d2tBdi85NTNM?=
- =?utf-8?B?MnV3K0JYMXl1YlRXeEpYWnJWbGlGM3B2a3E4RUlyTElYbFVGQWJFTU1IRkJQ?=
- =?utf-8?B?SW1TbkhWaUhyYUtwN0RWWnJnKzRTcnY2eWo4NnhZVmc1V016Wms0T2wrU0Fp?=
- =?utf-8?B?b0pGTHRkRGZrNDlaMXpGNkxPL3JVRnVJY1lBcTRMZmZOZlRleHJTaVlzanVT?=
- =?utf-8?B?bDU0VmhLbVlib1REaXdtcGlQalNaeXF0UFZmRWRvdzZIMFZob3RjOHRXMFBv?=
- =?utf-8?B?eUxDeStuV2hrTEtXYU5nbEFWbjBadjl2WnFFYUVpUytITXNEbnR6RUM3YWZq?=
- =?utf-8?B?ODlhZz09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?L1MzdjBSQTh2SStFRzVQRmxrNmlQZ29lRi91bUdpNFRjb1FmbFpienhsUUV5?=
- =?utf-8?B?WS9iSHJsYlQ4ajllRXkrc1YwOCs4dXpYMmxmNlBxN1ZzM0Q5bVRoeVU2OC9L?=
- =?utf-8?B?RW5QcGpFUFI5N21xem9ieUgrbnVZUXgrWmtJazVNM05wVHFydFVPSTVjM215?=
- =?utf-8?B?UmhHVFFnYlMyNVlLMGxLNDdmc1pYTUcrQ0t1V3YveHhwbk5sWFJOTXEzTFU2?=
- =?utf-8?B?eGErMllVZG54WWc3cmw3WlVna1Z0MTRFUlh6dVNoQWx1YTBzK0d1cmRTT0xY?=
- =?utf-8?B?TW9pUDh3RC9wbDJFMmdkYmxRdm5sbHZ1WStUNURwSUpoNG9aS2VMRHd4NWJC?=
- =?utf-8?B?cnkzaUs4QTlxc2JRcEhPcmxHUFB2WFp5djMxdHBYTk92ci9TZ2RwRmRmZjkr?=
- =?utf-8?B?SWdlZ0piWWNKZ1BqZ2tXMm0zUUVnWllkRmR3anFIclhSNkl1SHVpVE45NjlX?=
- =?utf-8?B?a1hwM3pFK2pUUVY1MkZxQy8zYTJjV1dyS05lZVpETXMvTnFLVUpIcHZpVG1I?=
- =?utf-8?B?cWZDdWZjbHRDWHBYNVoxUUxBMWFGU2FrTE1mSnNFTjFMM1ByYjFDeFlxVVpu?=
- =?utf-8?B?OUJ5Z1d1VG1oWm1TaEdnVk9wa1h6cTVhemNQbjBSRnM2TmREQ3pJZzZLY0pn?=
- =?utf-8?B?bWI2RmFnOGNQZkowMCtFQjJaNXhaQmtIaXgxQWxYWFk5a3o1MllVYUNCd09P?=
- =?utf-8?B?VWtjMGZ0QVkwd3JGbWdpcVpBYndhZXNqZmpKMTMybEtZVkh4SStCM0RueS9n?=
- =?utf-8?B?Z1ZDWGExSlQxb3FIZi9QSlRlSTBOTDE0bDZrb2hxWGR6RzcvUEd2RFNhZXln?=
- =?utf-8?B?SE9BRXA0MHNIWjBmV1l3MTNVVTRnSWhSVnY1L21iMHZtTi93TDNNQzI1ZEJx?=
- =?utf-8?B?ZDBJdk0rOG0reEJPS3VKQjJSTDBmYUlqcm5zcmo5eFFmQjREQTBzZVR1WlBU?=
- =?utf-8?B?MWFhZzJsc1NJYy9PdjJPdGtsY0V6T3B4VStnbVZjQXdoR3JRb1lLQ2pYWC9y?=
- =?utf-8?B?SWk3eXU1M1RZeFVnQVR0WTJjek1iZFJkSXA1dzRqelc1bEczcE5qQTZmM1Nj?=
- =?utf-8?B?V2pHa0YxL0NDbG9SbDFEZkdjZVVIMis2eEVka0ZSL21TSFhoVjdHZ1MvQjRn?=
- =?utf-8?B?QmtuSXBHbEFHc0lPS2krVU9zdHE1TEg2a25qNFIxdWFnN2JZa3prOFZodFF5?=
- =?utf-8?B?cGJnZ2c5OUhiVVQ0L1FJdGlYTUNTQ1FISXFPVkJlUm5OMjVoQ0s0RDNwRHZk?=
- =?utf-8?B?Ly9mQndsQkNJZVlaWmtlM201ZVRJY29kaXlITElGYS9OZVd4MU5JQ1lyOWJE?=
- =?utf-8?B?aHpjWjkxK1VOV2dnMG1QaHkyai9DcWN0VmhTbjdEMW45RkR2TGNQQmhnL2l1?=
- =?utf-8?B?VmxERGx3MGc5VFVRenY2WGc3TmJTQnBMdzZRVi92OFg1ejVNcDZ5TWlkQXp3?=
- =?utf-8?B?NWVNYzNHbFZCN3JGZDRJeTYvdmhWRU9DcVNaRnBrQ2lPOFRDWnVzd2FwTVlj?=
- =?utf-8?B?VUNZM2FTN0lNdFVVL1ZUK2g2YjVyVmpNYXlCQnBrU0NHaWovUWEzWFRiOWRu?=
- =?utf-8?B?RGVSZmFiaDhBS3N3a0tjbnRvVE82K2pMV1p1NGZJNit3VjhtZFZ5OTFGa2pZ?=
- =?utf-8?B?WTdleEVZYlUrQUdtRlV4bFRHM0VMejh1b3l2ZDg5R2JRQzV4YjFZaHhxQkRI?=
- =?utf-8?B?Z21TeVB0U0w4TkhMekNqdjliZ0JHWVdDOEEzZGJoYnR2K0NFK2RsSjE3VHpR?=
- =?utf-8?Q?RSE8uBFSHhOzCmIzPF4Etpk7L6njiZqwLXvU13S?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c013136d-04c7-4a3d-c819-08dda8cde40d
-X-MS-Exchange-CrossTenant-AuthSource: PN0P287MB2258.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2025 09:54:00.7195
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNYP287MB4069
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/4] riscv: dts: sophgo: add reset generator for Sophgo
+ CV1800 series SoC
+To: Inochi Amaoto <inochiama@gmail.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Vinod Koul <vkoul@kernel.org>,
+ Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+ Yu Yuan <yu.yuan@sjtu.edu.cn>, Ze Huang <huangze@whut.edu.cn>,
+ Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ dmaengine@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
+ Longbin Li <looong.bin@gmail.com>
+References: <20250611075321.1160973-1-inochiama@gmail.com>
+ <20250611075321.1160973-4-inochiama@gmail.com>
+From: Junhui Liu <junhui.liu@pigmoral.tech>
+In-Reply-To: <20250611075321.1160973-4-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-"sophgo,sg2044-pwm" should have not been in 6.16, submit this after that?
 
-Others. LGTM.
-
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-
-Thanks
-
-On 2025/6/9 7:28, Inochi Amaoto wrote:
-> From: Longbin Li <looong.bin@gmail.com>
+On 2025/6/11 15:53, Inochi Amaoto wrote:
+> Add reset generator node for all CV18XX series SoC.
 >
-> Add pwm device node for SG2044.
->
-> Signed-off-by: Longbin Li <looong.bin@gmail.com>
 > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Reviewed-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+
+Test RST_CPUSYS2 ok with the C906L remoteproc driver. Thanks!
+
+Tested-by: Junhui Liu <junhui.liu@pigmoral.tech>
+
 > ---
->   arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts |  4 ++++
->   arch/riscv/boot/dts/sophgo/sg2044.dtsi               | 10 ++++++++++
->   2 files changed, 14 insertions(+)
+>   arch/riscv/boot/dts/sophgo/cv180x.dtsi    |  7 ++
+>   arch/riscv/boot/dts/sophgo/cv18xx-reset.h | 98 +++++++++++++++++++++++
+>   2 files changed, 105 insertions(+)
+>   create mode 100644 arch/riscv/boot/dts/sophgo/cv18xx-reset.h
 >
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
-> index 01340f21848f..b50c3a872d8b 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
-> +++ b/arch/riscv/boot/dts/sophgo/sg2044-sophgo-srd3-10.dts
-> @@ -63,6 +63,10 @@ mcu: syscon@17 {
->   	};
->   };
+> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> index ed06c3609fb2..4c3d16764131 100644
+> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> @@ -7,6 +7,7 @@
+>   #include <dt-bindings/clock/sophgo,cv1800.h>
+>   #include <dt-bindings/gpio/gpio.h>
+>   #include <dt-bindings/interrupt-controller/irq.h>
+> +#include "cv18xx-reset.h"
 >   
-> +&pwm {
-> +	status = "okay";
-> +};
-> +
->   &sd {
->   	bus-width = <4>;
->   	no-sdio;
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2044.dtsi b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
-> index b65e491deb8f..f88cabe75790 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2044.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/sg2044.dtsi
-> @@ -347,6 +347,16 @@ portc: gpio-controller@0 {
->   			};
->   		};
+>   / {
+>   	#address-cells = <1>;
+> @@ -24,6 +25,12 @@ soc {
+>   		#size-cells = <1>;
+>   		ranges;
 >   
-> +		pwm: pwm@704000c000 {
-> +			compatible = "sophgo,sg2044-pwm";
-> +			reg = <0x70 0x4000c000 0x0 0x1000>;
-> +			#pwm-cells = <3>;
-> +			clocks = <&clk CLK_GATE_APB_PWM>;
-> +			clock-names = "apb";
-> +			resets = <&rst RST_PWM>;
-> +			status = "disabled";
+> +		rst: reset-controller@3003000 {
+> +			compatible = "sophgo,cv1800b-reset";
+> +			reg = <0x3003000 0x1000>;
+> +			#reset-cells = <1>;
 > +		};
 > +
->   		syscon: syscon@7050000000 {
->   			compatible = "sophgo,sg2044-top-syscon", "syscon";
->   			reg = <0x70 0x50000000 0x0 0x1000>;
+>   		gpio0: gpio@3020000 {
+>   			compatible = "snps,dw-apb-gpio";
+>   			reg = <0x3020000 0x1000>;
+> diff --git a/arch/riscv/boot/dts/sophgo/cv18xx-reset.h b/arch/riscv/boot/dts/sophgo/cv18xx-reset.h
+> new file mode 100644
+> index 000000000000..7e7c5ca2dbbd
+> --- /dev/null
+> +++ b/arch/riscv/boot/dts/sophgo/cv18xx-reset.h
+> @@ -0,0 +1,98 @@
+> +/* SPDX-License-Identifier: (GPL-2.0 OR MIT) */
+> +/*
+> + * Copyright (C) 2025 Inochi Amaoto <inochiama@outlook.com>
+> + */
+> +
+> +#ifndef _SOPHGO_CV18XX_RESET
+> +#define _SOPHGO_CV18XX_RESET
+> +
+> +#define RST_DDR				2
+> +#define RST_H264C			3
+> +#define RST_JPEG			4
+> +#define RST_H265C			5
+> +#define RST_VIPSYS			6
+> +#define RST_TDMA			7
+> +#define RST_TPU				8
+> +#define RST_TPUSYS			9
+> +#define RST_USB				11
+> +#define RST_ETH0			12
+> +#define RST_ETH1			13
+> +#define RST_NAND			14
+> +#define RST_EMMC			15
+> +#define RST_SD0				16
+> +#define RST_SDMA			18
+> +#define RST_I2S0			19
+> +#define RST_I2S1			20
+> +#define RST_I2S2			21
+> +#define RST_I2S3			22
+> +#define RST_UART0			23
+> +#define RST_UART1			24
+> +#define RST_UART2			25
+> +#define RST_UART3			26
+> +#define RST_I2C0			27
+> +#define RST_I2C1			28
+> +#define RST_I2C2			29
+> +#define RST_I2C3			30
+> +#define RST_I2C4			31
+> +#define RST_PWM0			32
+> +#define RST_PWM1			33
+> +#define RST_PWM2			34
+> +#define RST_PWM3			35
+> +#define RST_SPI0			40
+> +#define RST_SPI1			41
+> +#define RST_SPI2			42
+> +#define RST_SPI3			43
+> +#define RST_GPIO0			44
+> +#define RST_GPIO1			45
+> +#define RST_GPIO2			46
+> +#define RST_EFUSE			47
+> +#define RST_WDT				48
+> +#define RST_AHB_ROM			49
+> +#define RST_SPIC			50
+> +#define RST_TEMPSEN			51
+> +#define RST_SARADC			52
+> +#define RST_COMBO_PHY0			58
+> +#define RST_SPI_NAND			61
+> +#define RST_SE				62
+> +#define RST_UART4			74
+> +#define RST_GPIO3			75
+> +#define RST_SYSTEM			76
+> +#define RST_TIMER			77
+> +#define RST_TIMER0			78
+> +#define RST_TIMER1			79
+> +#define RST_TIMER2			80
+> +#define RST_TIMER3			81
+> +#define RST_TIMER4			82
+> +#define RST_TIMER5			83
+> +#define RST_TIMER6			84
+> +#define RST_TIMER7			85
+> +#define RST_WGN0			86
+> +#define RST_WGN1			87
+> +#define RST_WGN2			88
+> +#define RST_KEYSCAN			89
+> +#define RST_AUDDAC			91
+> +#define RST_AUDDAC_APB			92
+> +#define RST_AUDADC			93
+> +#define RST_VCSYS			95
+> +#define RST_ETHPHY			96
+> +#define RST_ETHPHY_APB			97
+> +#define RST_AUDSRC			98
+> +#define RST_VIP_CAM0			99
+> +#define RST_WDT1			100
+> +#define RST_WDT2			101
+> +#define RST_AUTOCLEAR_CPUCORE0		256
+> +#define RST_AUTOCLEAR_CPUCORE1		257
+> +#define RST_AUTOCLEAR_CPUCORE2		258
+> +#define RST_AUTOCLEAR_CPUCORE3		259
+> +#define RST_AUTOCLEAR_CPUSYS0		260
+> +#define RST_AUTOCLEAR_CPUSYS1		261
+> +#define RST_AUTOCLEAR_CPUSYS2		262
+> +#define RST_CPUCORE0			288
+> +#define RST_CPUCORE1			289
+> +#define RST_CPUCORE2			290
+> +#define RST_CPUCORE3			291
+> +#define RST_CPUSYS0			292
+> +#define RST_CPUSYS1			293
+> +#define RST_CPUSYS2			294
+> +
+> +#endif /* _SOPHGO_CV18XX_RESET */
+
+-- 
+Best regards,
+Junhui Liu
+
