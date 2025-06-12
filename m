@@ -1,45 +1,45 @@
-Received: from esa4.hc555-34.eu.iphmx.com (esa4.hc555-34.eu.iphmx.com [207.54.77.171])
+Received: from esa3.hc555-34.eu.iphmx.com (esa3.hc555-34.eu.iphmx.com [207.54.77.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF37E25B2E4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7A825B2F2
 	for <sophgo@lists.linux.dev>; Thu, 12 Jun 2025 14:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.54.77.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=207.54.77.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749739171; cv=none; b=lgAIpls/P3bqExyo4RZC+H8JR0txTTn5bH27vkTzgLzmOg8JFrNT4cXXy3XnkWrFj0KMrpeZ7d2rqjbBd03vuHeBsMIrHMpt8CoytS46wOWRoH0iR0cIFuoz91bVhCjW78197j00CTiyFcqMw9UtY/Lj1fs+icWdUbnm7EqFHOE=
+	t=1749739171; cv=none; b=aaUjZRvWvBxRrVjVre4/zT7iFfAyxpjoC5tBfDaZFHUzQmqMsQXBzB57NedBasFnsOz2ITDbWTWbgOvXRCqO/vKJvKDdI6zbjv240xGSQK+z5EcI2fCMDMLoKuFpgjS+jh86ngJYDoEjLEB5DNFzvmkKDDMaUfqeNp9mbf1p+bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749739171; c=relaxed/simple;
-	bh=R0DjUyymyH51702nfIhvD4gSoTHc5AdW1g9ClY+/bUU=;
+	bh=6/mZP00EM9rJ5UOmw5xRb/tAHJW+hgPGA9vOCXCI5fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIgTmEWwz0uMTB7hBtX1XtOqSOY4sNLkAJf+VFzSR8avzPPexEZ89kMVi5o4NHLhd/TI/ifQBlLFRcjS1z7FRImPCwKmM2ecXu49tk6tfEfpP4bm/CxOHBhu3P6B7sYMK5WVfXyy8KC9pS+ik5PMFwdFWN4w+GDCY3mJi2Q49+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com; spf=pass smtp.mailfrom=mobileye.com; dkim=fail (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b=bV8ZGutc reason="key not found in DNS"; arc=none smtp.client-ip=207.54.77.171
+	 MIME-Version; b=a1z2NeJ4bcH9qWDW8vhC9lcDMUbrLBtmNQFlYr80WfEroTYZS/2/j6jVLXgj52Z26kqpoSS6HmYzGvfogOc3kR+i+a/mcFtKCwvRoomhCoymF/nyY5lQ9iKmOM/GkQVdB0KnaBdqg4PaQIEzgei+A9qe6hrsBblq/fb/fnXoBDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com; spf=pass smtp.mailfrom=mobileye.com; dkim=fail (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b=VH4DPmyT reason="key not found in DNS"; arc=none smtp.client-ip=207.54.77.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mobileye.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mobileye.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b="bV8ZGutc"
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=mobileye.com header.i=@mobileye.com header.b="VH4DPmyT"
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=mobileye.com; i=@mobileye.com; q=dns/txt; s=MoEyIP;
   t=1749739169; x=1781275169;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=R0DjUyymyH51702nfIhvD4gSoTHc5AdW1g9ClY+/bUU=;
-  b=bV8ZGutcaeGnSKrV+zhuKyfgipO9QQVlwosntyCZMUWzfmFXjOngBe5z
-   5INRRgWVoy82bYHgD/l6tTCS48RAWLMgpyOf1OTgu3gO3CnNGMgDsfl3H
-   ByV0OBFIvA9yZQtOzQ9SKAtGBU9xxib31FGbjZw/Gs+kXkHCktc2tqamb
-   6JMIyR4KcqEB1NWMBlAU+8FG18jyxrj4gi/uM0/9rrm+BrXI9uQcF6a6j
-   BHTGnOXf5WSF+63ydLTZMLqdY+NN4rlOzHDgvLhY9g7pXcSXt+pfMOV1p
-   UkRWT/Rfe/mw1wQY+N8Ua2HS5QJdrOPZeKZSt5MhxjGQ7JXgvCJ81LLzD
+  bh=6/mZP00EM9rJ5UOmw5xRb/tAHJW+hgPGA9vOCXCI5fo=;
+  b=VH4DPmyTHFos//MKp2YWs9r4hvoBIw3NtX6P40Gt3227ue6OMOFCLFKY
+   BI+CGwjpp0S2yo7d+fxMMX1vDTcLA3zP+MPp3h8df54KfDIhK+8Qcu1nN
+   HVSHj8dq7/KIW7J4D7dBXPqGk+MeDMW5qfvzec+kKkI7F8InoWxfeG+Rf
+   8C57CsPQGjwle9DTUL4+UbCZk1b34INCcKbdVIjuQvCeN5HxlOlUC3+4L
+   Oy2aqLNNyUdBbiTPGrArt95gMKSCKUyN4dmbC7MeMjKfcwWfkaf/DW4OV
+   QBp6GbI/B2Wqk6VY1vND4F08zXYd6y/ZY0/q43STDTgOoxYI9qOkRP8oD
    A==;
-X-CSE-ConnectionGUID: kaw0obreTG6pIMrqQh4+Dw==
-X-CSE-MsgGUID: jWxoEZ9iTL6eo0ksVnP1bQ==
+X-CSE-ConnectionGUID: gDstFgbcRT+Hhl7YHpN7pw==
+X-CSE-MsgGUID: Y0nlvxibSly7nclvIYtWYQ==
 X-Amp-Result: SKIPPED(no attachment in message)
 X-Amp-File-Uploaded: False
-Received: from unknown (HELO ces04_data.me-crop.lan) ([146.255.191.134])
-  by esa4.hc555-34.eu.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2025 17:39:18 +0300
-X-CSE-ConnectionGUID: +8ZAKTERTIydl0ak4WMZ5w==
-X-CSE-MsgGUID: i1rORHJeROiet+NjGoACVw==
-Received: from unknown (HELO epgd071.me-corp.lan) ([10.154.54.1])
-  by ces04_data.me-crop.lan with SMTP; 12 Jun 2025 17:39:16 +0300
-Received: by epgd071.me-corp.lan (sSMTP sendmail emulation); Thu, 12 Jun 2025 17:39:17 +0300
+Received: from unknown (HELO ces02_data.me-corp.lan) ([146.255.191.134])
+  by esa3.hc555-34.eu.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Jun 2025 17:39:21 +0300
+X-CSE-ConnectionGUID: coDxqz9uTa2+dzqVxqKfCA==
+X-CSE-MsgGUID: JoxQzBbCSY2r56AZOvU54A==
+Received: from unknown (HELO epgd071.me-corp.lan) ([10.154.54.6])
+  by ces02_data.me-corp.lan with SMTP; 12 Jun 2025 17:39:19 +0300
+Received: by epgd071.me-corp.lan (sSMTP sendmail emulation); Thu, 12 Jun 2025 17:39:20 +0300
 From: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
 To: Thomas Gleixner <tglx@linutronix.de>,
 	Rob Herring <robh@kernel.org>,
@@ -60,9 +60,9 @@ Cc: linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev,
 	Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
-Subject: [PATCH v3 3/7] dt-bindings: interrupt-controller: add MIPS P8700 aclint-sswi
-Date: Thu, 12 Jun 2025 17:39:07 +0300
-Message-ID: <20250612143911.3224046-4-vladimir.kondratiev@mobileye.com>
+Subject: [PATCH v3 6/7] irqchip/aclint-sswi: reduce data scope
+Date: Thu, 12 Jun 2025 17:39:10 +0300
+Message-ID: <20250612143911.3224046-7-vladimir.kondratiev@mobileye.com>
 In-Reply-To: <20250612143911.3224046-1-vladimir.kondratiev@mobileye.com>
 References: <20250609134749.1453835-1-vladimir.kondratiev@mobileye.com>
  <20250612143911.3224046-1-vladimir.kondratiev@mobileye.com>
@@ -74,123 +74,44 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add ACLINT-SSWI variant for the MIPS P8700. This CPU has
-SSWI device compliant with the RISC-V draft spec (see [1])
-CPU indexes on this platform are not contiguous, instead
-it uses bit-fields to encode hart,core,cluster numbers, thus
-property "riscv,hart-indexes" is mandatory
-
-Link: https://github.com/riscvarchive/riscv-aclint [1]
+Move variables to the innermost scope where it is used
 
 Signed-off-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
 ---
- .../thead,c900-aclint-sswi.yaml               | 64 ++++++++++++++++---
- 1 file changed, 55 insertions(+), 9 deletions(-)
+ drivers/irqchip/irq-aclint-sswi.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
-index 8d330906bbbd..c1ab865fcd64 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/thead,c900-aclint-sswi.yaml
-@@ -4,23 +4,32 @@
- $id: http://devicetree.org/schemas/interrupt-controller/thead,c900-aclint-sswi.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/irqchip/irq-aclint-sswi.c b/drivers/irqchip/irq-aclint-sswi.c
+index 81d28a53635e..a604c7e1e416 100644
+--- a/drivers/irqchip/irq-aclint-sswi.c
++++ b/drivers/irqchip/irq-aclint-sswi.c
+@@ -68,11 +68,7 @@ static int aclint_sswi_dying_cpu(unsigned int cpu)
+ static int __init aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
+ 					void __iomem *reg)
+ {
+-	struct of_phandle_args parent;
+-	unsigned long hartid;
+-	u32 contexts, i;
+-	int rc, cpu;
+-	u32 hart_index;
++	u32 contexts;
  
--title: T-HEAD C900 ACLINT Supervisor-level Software Interrupt Device
-+title: ACLINT Supervisor-level Software Interrupt Device
+ 	contexts = of_irq_count(to_of_node(fwnode));
+ 	if (!(contexts)) {
+@@ -80,7 +76,12 @@ static int __init aclint_sswi_parse_irq(struct fwnode_handle *fwnode,
+ 		return -EINVAL;
+ 	}
  
- maintainers:
-   - Inochi Amaoto <inochiama@outlook.com>
- 
- description:
--  The SSWI device is a part of the THEAD ACLINT device. It provides
--  supervisor-level IPI functionality for a set of HARTs on a THEAD
--  platform. It provides a register to set an IPI (SETSSIP) for each
--  HART connected to the SSWI device.
-+  The SSWI device is a part of the ACLINT device. It provides
-+  supervisor-level IPI functionality for a set of HARTs on a supported
-+  platforms. It provides a register to set an IPI (SETSSIP) for each
-+  HART connected to the SSWI device. See draft specification
-+  https://github.com/riscvarchive/riscv-aclint
+-	for (i = 0; i < contexts; i++) {
++	for (u32 i = 0; i < contexts; i++) {
++		struct of_phandle_args parent;
++		unsigned long hartid;
++		int rc, cpu;
++		u32 hart_index;
 +
-+  Following variants of the SSWI ACLINT supported, using dedicated
-+  compatible string
-+  - THEAD C900
-+  - MIPS P8700
- 
- properties:
-   compatible:
--    items:
--      - enum:
--          - sophgo,sg2044-aclint-sswi
--      - const: thead,c900-aclint-sswi
-+    oneOf:
-+      - items:
-+          - enum:
-+              - sophgo,sg2044-aclint-sswi
-+          - const: thead,c900-aclint-sswi
-+      - items:
-+          - const: mips,p8700-aclint-sswi
- 
-   reg:
-     maxItems: 1
-@@ -34,6 +43,14 @@ properties:
-     minItems: 1
-     maxItems: 4095
- 
-+  riscv,hart-indexes:
-+    $ref: /schemas/types.yaml#/definitions/uint32-array
-+    minItems: 1
-+    maxItems: 4095
-+    description:
-+      A list of hart indexes that APLIC should use to address each hart
-+      that is mentioned in the "interrupts-extended"
-+
- additionalProperties: false
- 
- required:
-@@ -43,8 +60,22 @@ required:
-   - interrupt-controller
-   - interrupts-extended
- 
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: mips,p8700-aclint-sswi
-+    then:
-+      required:
-+        - riscv,hart-indexes
-+    else:
-+      properties:
-+        riscv,hart-indexes: false
-+
- examples:
-   - |
-+    //Example 1
-     interrupt-controller@94000000 {
-       compatible = "sophgo,sg2044-aclint-sswi", "thead,c900-aclint-sswi";
-       reg = <0x94000000 0x00004000>;
-@@ -55,4 +86,19 @@ examples:
-                             <&cpu3intc 1>,
-                             <&cpu4intc 1>;
-     };
-+
-+  - |
-+    //Example 2
-+    interrupt-controller@94000000 {
-+      compatible = "mips,p8700-aclint-sswi";
-+      reg = <0x94000000 0x00004000>;
-+      #interrupt-cells = <0>;
-+      interrupt-controller;
-+      interrupts-extended = <&cpu1intc 1>,
-+                            <&cpu2intc 1>,
-+                            <&cpu3intc 1>,
-+                            <&cpu4intc 1>;
-+      riscv,hart-indexes = <0x0 0x1 0x10 0x11>;
-+    };
-+
- ...
+ 		rc = of_irq_parse_one(to_of_node(fwnode), i, &parent);
+ 		if (rc)
+ 			return rc;
 -- 
 2.43.0
 
