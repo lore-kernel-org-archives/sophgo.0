@@ -1,54 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D67221DA8;
-	Thu, 12 Jun 2025 15:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636AD298CB3;
+	Thu, 12 Jun 2025 15:58:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749742548; cv=none; b=AevXEY8JI6tILE/DyaGmoG2m0N9dFYLjMZ2a3wKW/zMe54E4ICytpoiTWUk6UvI6RLdpRaIQC1ZYKATqBjtqhDvHHbWLM8YDeF7lg1XrORZyQGUlebyw4MktAxONSHjjlOlxcC9wb79qX1McpXaRJafYODGg/8SfvGrA6B5ZGYY=
+	t=1749743925; cv=none; b=h9WNuAFATzNMFfJjMFmUmHcv3wGiL4B1ekgAaXO83HbpOeq2Cht0KGlKqKNDGqeFqbqH6wEARdfG7eLQC/kfG+Hn9HL8tKD18GC8QmKz25dZlpVIeQrZOZVE4WIw0xvIBq8gNM3mdFhU8XVrFlMzTX88uxPRzloXl5+s/a08az4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749742548; c=relaxed/simple;
-	bh=Ss4ahYRx/y3pjwhd7QqlDK8uOFCu1jOBr4RPH/Ks9bo=;
+	s=arc-20240116; t=1749743925; c=relaxed/simple;
+	bh=Y7GeWw59ZemDS0hMwBwc5tqTiUWXS+EZSuykH0gjoBQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GVQbd8KR6zjzaOqcXrVgfGMHe+Q9I3FD3sDLyDYuUuTeZxeh55NKK4Tjj8Va2a0ndmBjw//Oj0jcSDdyd9n9EOy2r1C+KHn1R8uJffEGz+SdBQObRxTR0ApCcwVGuUF+HqY8DHJRIEeQFj2lySn9442NcZtQqDmQKsrHYGJ9nXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=auLrsJ/6; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qv/MHK2SsougUqBUpnQm7RWfeWL0O0u+qlslx3+tBkN50ZBaEoO4JgUdrmP3ggraO/r+ii40uP5x9nAfAtDnMpxiQ5Aq5YtjS7vNqyOAI7tczMA0kX2NDP/SQyECAXVO86glboOHeWkI5S99g1EZK6pagOLKxVMkx6+KyP+lRjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/szzcdj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="auLrsJ/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2588EC4CEEA;
-	Thu, 12 Jun 2025 15:35:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/szzcdj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F4CC4CEEA;
+	Thu, 12 Jun 2025 15:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1749742547;
-	bh=Ss4ahYRx/y3pjwhd7QqlDK8uOFCu1jOBr4RPH/Ks9bo=;
+	s=k20201202; t=1749743924;
+	bh=Y7GeWw59ZemDS0hMwBwc5tqTiUWXS+EZSuykH0gjoBQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=auLrsJ/6G8/Nk8NFr4MskwcvM4uw4NObh3me2bKXsGlCE/GgINLIKEF00tdXKPUVB
-	 pRQiVQFnzPl1vUEnTcGP2+vnUDPGIs8+YdOduzrw6hjkiy+R9/p5Ne8jDIXxbggupA
-	 a7Rh6ZfP9wsYptqrYGlAzeYshwm4qkEM+NgAbI+Hybe6HrG/jmYqQalFfJaTI6urnZ
-	 jqkff3rGnxDBUmgcYqvl7JyPZscCfAIPrQZ9B71mwDY7S0/bdNdSn94FmRkXrivB4e
-	 S5F4eDy2/qSR/o0GPYpkq7JU4c0MwhUTVhiPh8Db9fb310HtxM24ewwB7CQCCISp+A
-	 V2uBjTwq0HlKg==
-Date: Thu, 12 Jun 2025 16:35:42 +0100
+	b=f/szzcdj2ikGb9JZYEidUMorZoo+YqXPebhsKAzhYjNKTpdFLhEFc7GhN6XhZzmtE
+	 PZQuwdtU0UOdAVlOnBb8JhEUcebhhEtxT9/I3Xo0Qh9hvXKSfSvupfHg5Vs02N9O8K
+	 3PUoy4Rsivldeu1N9upVgUQnliFkVxEhyhKUYPc/JiHG2LAdTuBxZIdHQOTIDGDt2k
+	 6b0EHu32mbkDTZ9sqMWs2bzZbyiq+V3r7SkvPmjvSczPzfDXjSVhD07sEjoWcMvGTk
+	 PUtyLLfL+5qHpKNgbiu8egMl0gAr4ozXsmGlrI0z4bj2M0OxrxLOW6WSX2sgDzboA/
+	 IfPlZZfMHxz4Q==
+Date: Thu, 12 Jun 2025 16:58:39 +0100
 From: Conor Dooley <conor@kernel.org>
-To: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Anup Patel <anup@brainfault.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Sunil V L <sunilvl@ventanamicro.com>,
-	"Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-	Ryo Takakura <takakura@valinux.co.jp>, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev
-Subject: Re: [PATCH v3 3/7] dt-bindings: interrupt-controller: add MIPS P8700
- aclint-sswi
-Message-ID: <20250612-wildfire-ambiance-b4acbe3fff31@spud>
-References: <20250609134749.1453835-1-vladimir.kondratiev@mobileye.com>
- <20250612143911.3224046-1-vladimir.kondratiev@mobileye.com>
- <20250612143911.3224046-4-vladimir.kondratiev@mobileye.com>
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Yu Yuan <yu.yuan@sjtu.edu.cn>, Yixun Lan <dlan@gentoo.org>,
+	Ze Huang <huangze@whut.edu.cn>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH RFC 0/3] riscv: sophgo: add top syscon device for cv18xx
+Message-ID: <20250612-specks-banter-adac9a126ec4@spud>
+References: <20250611082452.1218817-1-inochiama@gmail.com>
+ <20250611-doodle-storage-f1f23230adee@spud>
+ <t26cj5xhmkqro5wgf3vqycvgwqhtwv3x6mo25hde3zretbl5uu@xy5igj6vqejx>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -56,40 +54,47 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="68if0ZfXqCRI0GCb"
+	protocol="application/pgp-signature"; boundary="L5iTnG89HErv1R46"
 Content-Disposition: inline
-In-Reply-To: <20250612143911.3224046-4-vladimir.kondratiev@mobileye.com>
+In-Reply-To: <t26cj5xhmkqro5wgf3vqycvgwqhtwv3x6mo25hde3zretbl5uu@xy5igj6vqejx>
 
 
---68if0ZfXqCRI0GCb
+--L5iTnG89HErv1R46
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 12, 2025 at 05:39:07PM +0300, Vladimir Kondratiev wrote:
-> Add ACLINT-SSWI variant for the MIPS P8700. This CPU has
-> SSWI device compliant with the RISC-V draft spec (see [1])
-> CPU indexes on this platform are not contiguous, instead
-> it uses bit-fields to encode hart,core,cluster numbers, thus
-> property "riscv,hart-indexes" is mandatory
+On Thu, Jun 12, 2025 at 08:30:17AM +0800, Inochi Amaoto wrote:
+> On Wed, Jun 11, 2025 at 05:14:59PM +0100, Conor Dooley wrote:
+> > On Wed, Jun 11, 2025 at 04:24:48PM +0800, Inochi Amaoto wrote:
+> > > Add top syscon device bindings related DTS change for CV1800.
+> > >=20
+> > > The patch required the following 3 patch series.
+> > > 1. https://lore.kernel.org/all/20250611075321.1160973-1-inochiama@gma=
+il.com
+> > > 2. https://lore.kernel.org/all/20250611081804.1196397-1-inochiama@gma=
+il.com
+> > > 3. https://lore.kernel.org/all/20250611081000.1187374-1-inochiama@gma=
+il.com
+> >=20
+> > What is RFC about this?
 >=20
-> Link: https://github.com/riscvarchive/riscv-aclint [1]
->=20
-^ this blank line shouldn't be here fwiw.
+> I use RFC to ignore the patch check, as the dependency are not merged.
+> This series itself require the binding from link 2 3, which provdes
+> binding of the USB2 phy and DMA multiplexer.
 
-> Signed-off-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
+In the future, please provide a reason for things being RFC in the cover
+letter or patches themselves.=20
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-
---68if0ZfXqCRI0GCb
+--L5iTnG89HErv1R46
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaErzzgAKCRB4tDGHoIJi
-0qQtAP96mQXSweUBXZh9o3rMkqZLrg/kAmO+xkB2lY/aAdpU9QD9E5LQRDJdi1Jq
-Grs4zFK0xB6PMdtGGbxpWhfpr/KbfA4=
-=We6+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaEr5LwAKCRB4tDGHoIJi
+0mGpAQDnw09DkwnV3+Zok+5PspuZAWYTNAerifzajZnqmaoz7AD/b884Kd2PmZjN
+NnGFIdPRk6I8/JOMNJOqYsUCSqSRTwY=
+=8+LR
 -----END PGP SIGNATURE-----
 
---68if0ZfXqCRI0GCb--
+--L5iTnG89HErv1R46--
