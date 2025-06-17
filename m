@@ -1,87 +1,84 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0004423B63D
-	for <sophgo@lists.linux.dev>; Tue, 17 Jun 2025 05:08:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04D4238141
+	for <sophgo@lists.linux.dev>; Tue, 17 Jun 2025 05:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750136926; cv=none; b=N9PPbvrfNSEQLTIETUHGyxzcwKgW2yWxDpIZ+0LhZcYVD5uV8D158J0RiOKfOQIdl7yOgOgGOI72H34zw91BSEbQQUNjdD6blwG9AE670lWMtxCF6QscJlXZXMqU2JxyI9gS6SqnHjznsv20TTGbv6Sm4yKsQwJidJn5Ixb0Sek=
+	t=1750136932; cv=none; b=BDueNtGQrOSoKVAk2pCy0Jt2MvrG4f6cNVQbI04gbGdTczaSaAVZUcrTIKUtuD99RX/BZwFfJJkthrZGskSxlQ8y01vZcyKTqXHEajM3IWPf+zwBGUX9F6Ng59e74GJcuzkuyCa0Vrt/aeeqnQO75CXF4a541OGPXvvyMkYmtr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750136926; c=relaxed/simple;
-	bh=8cWRihSV8hdi/ZTF/kts/Yi3Lmi7Mkj2nrwo2OnssFg=;
+	s=arc-20240116; t=1750136932; c=relaxed/simple;
+	bh=jn+AZcoS+gknzUx30CvE3/KJcpJXhjiNQQiH43qHxgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V1TJjTlCqkcYNGRhfCR89B7i+I/w5m/ddHtQPIp5M2/7VtNA+Hd13KyjeB0GEt9ZnxwnxuoDP2D1vmACSW/FayDr6FZoHX4AiEubJ3NpetukaHDoKyhtfNDvJoZtxgRUk/ELQUH6IVCNK97xdT5sBtigDzyGKRQwD8lkKcFM57s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IP0eCnc9; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version:Content-Type; b=h7ZpdGgk1hxIMYGAmpSzv0gKnDuswlp8MS7gjaxslxxsBrzu3m3LAkcIuf8DCExOd6qRjLaiMKOc5Vw+LNESlAoLmGbKfxJ6wP0q9ip6YNe64vGL1zvIo1byzeylwH0nai2iopVKiiD7Ne2+//cUUL9junKOf8PtikBkkeBEZeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evW2PHD8; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IP0eCnc9"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2350fc2591dso48363675ad.1
-        for <sophgo@lists.linux.dev>; Mon, 16 Jun 2025 22:08:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evW2PHD8"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so4963914a91.1
+        for <sophgo@lists.linux.dev>; Mon, 16 Jun 2025 22:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750136924; x=1750741724; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1750136930; x=1750741730; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+8a5FK3kQzpqiKJGUPwyQmhurnkoWDXPmVMG0kYx2X4=;
-        b=IP0eCnc9v8nTSGWLyzzJgQAZRF40GV8+uwVUFNgKmNAu5ExUVGWNtM/XBXykztksy/
-         kpyps31uOlpufw2cFfz0sjkm8KDf1NzpegWBfwcNx6HGPg6iet39q4EmvT+iACu/UOIA
-         7GomcXYduDNIy5lVbefNisyIjEW/sVDXiWhyJk03o17gXJt14RlX8yxwRh5UsRvprE8d
-         +ERbqygC0mlmW7/MnmIL876Tj9xGZmAUsR7CmHhbbbJQdz3YlX/9L0bAa8++LL7Q+dbI
-         IPgcxVGSYPluSX0+qZNnSG2RqIeDPBh3L4wSqdxFEsftl2lIIpxVXFjVemDRpie0eN4J
-         1bNw==
+        bh=ORQSZScH5iwOR20pfQirho3FdyqdaURMxGfN/YBE6uA=;
+        b=evW2PHD8q7nUIdlb9PnUlaklcvCQGu4P7K4CAdPbl6T7BiCzXLdAqk4uS1z/YDFt7q
+         Ka621Y85O8Ts3kqsrIhLcVBUIz6a6crjWU7c7OZAkuDQ02TizUITtC/T8tb4qzBuZHdl
+         zqd8tfiV8Ldrt7KahcAaZtEdWVvYMNWvMpJ6FRVcAebTUxj9Gi5dAMeVMSqn1QC4ENGa
+         OVJooybGXgoyNFzyXRxGIUmQoSinjbhxgNLA2bwaaO+kqaHuRCZBRt2YUq7XAnaBaQVK
+         XVLxd+zbFC0oKhJ9JnqWwStO/ZcU8GT9RJG/9vWy52Gqw0h2Y+fbAObJ1dxpEbXdop7W
+         Sorw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750136924; x=1750741724;
+        d=1e100.net; s=20230601; t=1750136930; x=1750741730;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+8a5FK3kQzpqiKJGUPwyQmhurnkoWDXPmVMG0kYx2X4=;
-        b=I7J1V+LmsBtcnlNiDAy/+DTmFi5rMjS3nY7UGfik3LZhfhxsxyFEINUepzfecEYlqg
-         4xfbOvUC+CDl3irrNX6wfXw+gmmdK3GTsZ/eQKOW0SboP+w/jocoIEiNOJE63F+jGi1n
-         uNlIkHOqrHQknr5Z5RPN6pZ407+m2K7X2XPSqXvpEqV80nTRc5ghZSHIPbhy5TFMMuP3
-         ngSuoepJK0VtgqqZuuS0p5q3Mpo3mxHPWX13UoQRx2NPCFM7or46BVCay2xhuSnyriAT
-         YvHATEDHSDvWv6pbUXFS4a5sYzN72O38O4AE2vyvwowhp2NPH+AXPticQR+Vy65DiMsQ
-         Qn1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCU91yBaaHKSsf7H8kjvAyw4ER/VpG3HmFLoaKNoJCtaCf0iKxpB9X7k+xn/IlFc9onumyBf32o=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxAO7aw/Av116s6Pb6RD2Jvz2xHNcuSc9TwGK1sF3ZDBu9D3nWy
-	XreF0rzZgQpzClIiHiOJ8quOFAV+zqVegiPEoE4/EtSjGRi62gi9X5bi
-X-Gm-Gg: ASbGnctQMAwHTeHm+K6y3k/acGC3q1we1x3EtO5SDlnUQ80cSLvnZxQPJUZxfjvJhs9
-	1XJpbTMBJWVV6RB6fqHG2U9qG94j4ESVSpwBaOF0vH2XzLSw33TvZjiaSvAyrrHvYcMFWfpulWU
-	HZO842q0TyX3X7UIl1J/NHjPPseeJkJtcGOVBdAqb4M9GD01XxRBwdGJbe1p/upHoKI4wknLlaQ
-	QZI4Gc3+0IqLMGjtTpK8M7n9iE+xcHPjw+Q0InmMAOs/ZkGDScq8TCS5zF4BCqXzYMDsMBwRrGI
-	MhTGgGcUuK1lc6VvB4/tX6N4dM/5dQ62Zkm/MH3atdZiGZZP0DBEUCFfLZiR1g==
-X-Google-Smtp-Source: AGHT+IEssrqaSfoOP/FGQlXeEDhOtAtWAeKGb5++EjqTQbQnP1cJDjcvN7caFzDjVdHbkmrf/+DupA==
-X-Received: by 2002:a17:902:cec4:b0:231:9817:6ec1 with SMTP id d9443c01a7336-2366ae551a4mr176657755ad.17.1750136924089;
-        Mon, 16 Jun 2025 22:08:44 -0700 (PDT)
+        bh=ORQSZScH5iwOR20pfQirho3FdyqdaURMxGfN/YBE6uA=;
+        b=VozV/w95hypn4LyLloyBAnbTaCaICBm0TEa1zhior9+NZN0zx3E0wb6AU9CzFaaVuu
+         g28uZEqJmlU8cJq9CoyPbRVmLhayzKMW60Ktfv2L4KWFiBYqIerRAXyL9UL2OGFdA2G4
+         p1S2dPXs2Q7c6UKWlDgNtKZbsCP0Ad674s7ggXN1X5sj5mU3TqfGm+/0bDeEUkxS4t/O
+         cWPk7ZlE/ydSQQDdFt0UH1xqrkjoyTPXOoZxytlmaLnohWuH9kqwNXQmXvx35+Nk5lSg
+         93F2FKW9+DRDHCJQ4wa3wpjXVR9B8aTIJ+Nxki5P03P6y8ce1vW71oeDT+Su41IllXXe
+         fOgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVLGbfP2FZuzJRTNab7gUoKjonmTeKca5FZ6LdF+PAiO/+VbHHZL+eX65Pa9XGh+IP7NERvOq4=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzW19pgrBTfLTEeMzS0HqBoRVGrcPnj1Qk1bzIpWAjrIDKtVSLz
+	m+pwwYFR1ww5o0HDHrpwnbGKHRYm09xInDQW5SjfVhrO2syoslL+i2CD
+X-Gm-Gg: ASbGncut9YLjLLWPHfBp952ndOiFkhVQKrr3nqmFRQVw8rKFWsBbFvsdShfH/n7PzVD
+	9m0QCPJk4pwaXzPFxGbVIIxZZUixLLVO99IzgTf6I6oOJfabu87ebZE5d09v9eVZNzVAbCFXh+i
+	Xv7bE3M2BbzDr1LElx+r8E92HwljVw+/8HJZGlonmEVlO7CfcrmKUoX4Sf0qrAQJ53UKJdk+qSd
+	AzUZWIH2wbT0flF8RdPLDhEqbWPahdYvm6e2L0nABraTv9mN7s5zNxTcf0+h8nmLGyA+nH7pSwJ
+	Jz4R5SEQV9et2bMUtwxgv5rVM7D6Twb2n8z/KaVn67oJ+7fb5C4JklKu5RXdpQ==
+X-Google-Smtp-Source: AGHT+IEqDf/C089XDze8DuijQXHRfftyr4C1u9LoRguwB27oUwZ29eFwHxr18ltua7GFqGz7HGzG5Q==
+X-Received: by 2002:a17:90a:e7c2:b0:312:639:a062 with SMTP id 98e67ed59e1d1-313f1daa971mr21369290a91.16.1750136930150;
+        Mon, 16 Jun 2025 22:08:50 -0700 (PDT)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2365d8a4d6csm70981135ad.88.2025.06.16.22.08.43
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-313c19d1eafsm9712177a91.18.2025.06.16.22.08.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jun 2025 22:08:43 -0700 (PDT)
+        Mon, 16 Jun 2025 22:08:49 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>,
 	Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
+Cc: devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>
-Subject: Re: [PATCH 00/11] riscv: sophgo: sg2044: add DTS support for all available devices
-Date: Tue, 17 Jun 2025 13:07:21 +0800
-Message-ID: <175013680588.1018298.5174289579188996071.b4-ty@gmail.com>
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH] riscv: dts: sophgo: sg2044: Add missing riscv,cbop-block-size property
+Date: Tue, 17 Jun 2025 13:07:22 +0800
+Message-ID: <175013680588.1018298.10559632401541865399.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250608232836.784737-1-inochiama@gmail.com>
-References: <20250608232836.784737-1-inochiama@gmail.com>
+In-Reply-To: <20250613074513.1683624-1-inochiama@gmail.com>
+References: <20250613074513.1683624-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -91,47 +88,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 09 Jun 2025 07:28:24 +0800, Inochi Amaoto wrote:
-> As the clock driver for SG2044 got merged, it is possible to add
-> dts node for all support devices of SG2044.
+On Fri, 13 Jun 2025 15:45:12 +0800, Inochi Amaoto wrote:
+> The kernel complains no "riscv,cbop-block-size" and disables the Zicbop
+> extension. Add the missing property to keep it functional.
 > 
-> Inochi Amaoto (9):
->   riscv: dts: sophgo: sg2044: Add system controller device
->   riscv: dts: sophgo: sg2044: Add clock controller device
->   riscv: dts: sophgo: sg2044: Add GPIO device
->   riscv: dts: sophgo: sg2044: Add I2C device
->   riscv: dts: sophgo: sg2044: add DMA controller device
->   riscv: dts: sophgo: sg2044: Add MMC controller device
->   riscv: dts: sophgo: sophgo-srd3-10: add HWMON MCU device
->   riscv: dts: sophgo: sg2044: Add ethernet control device
->   riscv: dts: sophgo: sg2044: Add pinctrl device
 > 
-> [...]
 
 Applied to for-next, thanks!
 
-[01/11] riscv: dts: sophgo: sg2044: Add system controller device
-        https://github.com/sophgo/linux/commit/50fa2633c143d857a68128da387e0bb09c6cd362
-[02/11] riscv: dts: sophgo: sg2044: Add clock controller device
-        https://github.com/sophgo/linux/commit/acd836a65b8cdebb007df0c3e08ac5710f0994e7
-[03/11] riscv: dts: sophgo: sg2044: Add GPIO device
-        https://github.com/sophgo/linux/commit/8fc13510b3540481d291e28172b41b571ea078c2
-[04/11] riscv: dts: sophgo: sg2044: Add I2C device
-        https://github.com/sophgo/linux/commit/b0d0b60bc906160aa3a1654de82c24bd55a801b3
-[05/11] riscv: dts: sophgo: sg2044: add DMA controller device
-        https://github.com/sophgo/linux/commit/e40105024f078269a9729f7488945c11f4f3422e
-[06/11] riscv: dts: sophgo: sg2044: Add MMC controller device
-        https://github.com/sophgo/linux/commit/4a678cc75d580a6478bcfae60907fa732d485368
-[07/11] riscv: dts: sophgo: sophgo-srd3-10: add HWMON MCU device
-        https://github.com/sophgo/linux/commit/62d6db9792ff7ddec27a61df8223395b22860c0d
-[08/11] riscv: dts: sophgo: sg2044: Add ethernet control device
-        https://github.com/sophgo/linux/commit/67970c99f040c3e26677178f323993ddf11cab1c
-[09/11] riscv: dts: sophgo: sg2044: Add pinctrl device
-        https://github.com/sophgo/linux/commit/d32d3c657f4f8b45ace6dbdb48ad602fc9a44be8
-[10/11] riscv: dts: sophgo: add SG2044 SPI NOR controller driver
-        https://github.com/sophgo/linux/commit/502ade8b6fd981ba3694000e684686954d73c3bb
-[11/11] riscv: dts: sophgo: add pwm controller for SG2044
-        https://github.com/sophgo/linux/commit/ea389214c01b2767ed2bbd4e9a03573394b33fd3
+[1/1] riscv: dts: sophgo: sg2044: Add missing riscv,cbop-block-size property
+      https://github.com/sophgo/linux/commit/b8518378ffd3469b5ba871ee0210b3c16de45d66
 
 Thanks,
 Inochi
