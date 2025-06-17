@@ -1,81 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE952046B3;
-	Tue, 17 Jun 2025 15:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC51235067;
+	Tue, 17 Jun 2025 17:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750173276; cv=none; b=dXzSGsd9N0ozI/mml06k1jzQReH9UB8BqTROBXYcbcbNGmkTPYeXyMofPnzAsxp8leSwQllq4by/8RM3MxTnXGbUvS+bm4eehmDpl+svpcc8E4Gesbp5UGgj+GehVFTv5uHP/+hUpeVoCwN21Py9E2NMkhhMFVGzPV4K5cl04Ps=
+	t=1750181395; cv=none; b=pzAofXeMJs7sIjPfbYio+FleaV9g1WLozJqwlZhuCKzKmTKU6LZWvDo5NsTq6hRFujnCuasggzFKZGUe1I9mjcTJVI7k6+lvkXIUudExwPrtCLKzv7Fa5XbfJwDoyQ+m7N54I3GKsuwuc9lD/b5FSdMH0onkCf8pDbu9ps5/cHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750173276; c=relaxed/simple;
-	bh=BoHYyynRbOdi/J7e6GV88AV7YC8tPjdtVyMkr1OvIms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cb6FjHoS39GjNQlTlA07kTGHc5DGpFDo4y3npc/sC8fDDM0uJ5kETRAiIPksn+Zczf45HIoKloagEjESTJa5qSR8lq+umqiuu7cKVVttYYl1l9NkYLPB2o1ePmk6Ujf4FdcoJe7J3kh4NzUqK5JVU9QThUATsktLU4+M0YCSyaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fognmAZR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750181395; c=relaxed/simple;
+	bh=kP7DtPobetpD8bDkvcYCTMcEVbz+KzFg7wDQrlKUqKQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=gG3JOqUKsRqZPgIce0sE4jatazc2eCteq4IvnEL+oIajikzZvjASLTyTcYq8OFy0Zuvh3SeaP56+71P5GDWBoj82b72Ycbwlqq5RO/8wH5sZVQdzgH+XsR1Rx/1UO7TFsfHE6u/CLHkEeADFdDCW0aMzh3kIVwXYuqfJ8BbBNHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFyj07kM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fognmAZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14DCC4CEE7;
-	Tue, 17 Jun 2025 15:14:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFyj07kM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE75AC4CEE3;
+	Tue, 17 Jun 2025 17:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750173275;
-	bh=BoHYyynRbOdi/J7e6GV88AV7YC8tPjdtVyMkr1OvIms=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fognmAZRhR8bgC8SdDmtiYNfalUFiVtKYJ8vNzE+N+0rAsrM2BQbj3XvL5zhOkxVt
-	 OLpv+RwHfj3xLJw6c6ZC46iQluFhjTzOZK1At5ZCLudvGGtigH9L+ZxYAZSGFLySjp
-	 WpJiA15SkQKquRVk1MTw/zVgjotvcMwOD0Pk+hFYqUeYEAVHVT5XWRFDDtGGUrVu5h
-	 acNIR5NJl88mWXoFpYDTp5tg5EFEi6WvFqIA1J+7uVOJm0fuRU7YR566hhft8HTG/q
-	 uBjAAQta+WfBO28I90Qgc2wO1V0JiTn3lrXsV1BFjaNBPSJCPC4Xk+dt6oJnqYGmFL
-	 vKqWvtFeAA3oA==
-Date: Tue, 17 Jun 2025 10:14:30 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>, Ze Huang <huangze@whut.edu.cn>,
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Yixun Lan <dlan@gentoo.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
-	Chen Wang <unicorn_wang@outlook.com>, sophgo@lists.linux.dev,
-	Alexandre Ghiti <alex@ghiti.fr>, Longbin Li <looong.bin@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>
-Subject: Re: [PATCH v4 1/4] dt-bindings: reset: sophgo: Add CV1800B support
-Message-ID: <175017325268.2418026.3599473248491336605.robh@kernel.org>
-References: <20250617070144.1149926-1-inochiama@gmail.com>
- <20250617070144.1149926-2-inochiama@gmail.com>
+	s=k20201202; t=1750181394;
+	bh=kP7DtPobetpD8bDkvcYCTMcEVbz+KzFg7wDQrlKUqKQ=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=nFyj07kMSeHI22kL0ri0CoBmyqpg+75j55Xz+grZh1JBQ0M8Nw93ijsbWsLg201cm
+	 CTDpDR3MGpekcIM0ol1iK9alHd28sFBTJmLsdmNAssAbMYx2083F2kWC3EY6A65ie0
+	 QtGJHodFUApA6ak8u/529aLXDPefdcLRKpPlG28GNoBXOkDx/AJY2Fh5/ZXpdl8qcp
+	 TblkEjEulg5TKI9aC9N86NuIvYEHSjkI/pO4rxNy7EgV+v+O4cHkBrpV0HMm9YAQhg
+	 0U30SvS6CIcL1pjjdEj1rva/4ErLB5psnbCL5tfH1JqhkrHWayRQVVeZrk9azFM9ZO
+	 YS3kPy4ZB4tog==
+From: Vinod Koul <vkoul@kernel.org>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Inochi Amaoto <inochiama@gmail.com>
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, 
+ Longbin Li <looong.bin@gmail.com>
+In-Reply-To: <20250611081000.1187374-1-inochiama@gmail.com>
+References: <20250611081000.1187374-1-inochiama@gmail.com>
+Subject: Re: [PATCH v14 0/2] riscv: sophgo: add dmamux support for Sophgo
+ CV1800/SG2000 SoCs
+Message-Id: <175018139039.182101.4835726385229916529.b4-ty@kernel.org>
+Date: Tue, 17 Jun 2025 22:59:50 +0530
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250617070144.1149926-2-inochiama@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
 
-On Tue, 17 Jun 2025 15:01:39 +0800, Inochi Amaoto wrote:
-> Add bindings for the reset generator on the SOPHGO CV1800B
-> RISC-V SoC.
+On Wed, 11 Jun 2025 16:09:57 +0800, Inochi Amaoto wrote:
+> As the syscon device of CV1800 have a usb phy subdevices. The
+> binding of the syscon can not be complete without the usb phy
+> is finished. As a result, the binding of syscon is removed
+> and will be evolved in its original series after the usb phy
+> binding is fully explored.
 > 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  .../devicetree/bindings/reset/sophgo,sg2042-reset.yaml        | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> Changed from v13:
+> 1. rebase to v6.16-rc1
 > 
+> [...]
 
+Applied, thanks!
 
-Please add Acked-by/Reviewed-by tags when posting new versions. However,
-there's no need to repost patches *only* to add the tags. The upstream
-maintainer will do that for acks received on the version they apply.
+[1/2] dt-bindings: dmaengine: Add dma multiplexer for CV18XX/SG200X series SoC
+      commit: 994b5709f9f83c48f607e9a52912c912b8149421
+[2/2] dmaengine: add driver for Sophgo CV18XX/SG200X dmamux
+      commit: db7d07b5add4d839df74adab9940cf9da488313f
 
-If a tag was not added on purpose, please state why and what changed.
-
-Missing tags:
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
-
+Best regards,
+-- 
+~Vinod
 
 
