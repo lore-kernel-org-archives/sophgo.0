@@ -1,79 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC51235067;
-	Tue, 17 Jun 2025 17:29:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE28329114A
+	for <sophgo@lists.linux.dev>; Tue, 17 Jun 2025 23:14:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750181395; cv=none; b=pzAofXeMJs7sIjPfbYio+FleaV9g1WLozJqwlZhuCKzKmTKU6LZWvDo5NsTq6hRFujnCuasggzFKZGUe1I9mjcTJVI7k6+lvkXIUudExwPrtCLKzv7Fa5XbfJwDoyQ+m7N54I3GKsuwuc9lD/b5FSdMH0onkCf8pDbu9ps5/cHU=
+	t=1750202064; cv=none; b=aMEaUxN5qdAeOmriSsAMWfMVNS94aB1MKZ7WB/nEBfyne/lWwb/KpT+MKwJzrV+o5fwQRoxpIMRSF0akTSa5khAn4elk1wPHKa2GiHinef5UX5vLbJ4+vNQvje6BgbEd9RPXOIYZnL2A2MnX0Qs3t33YEZfD/POK/ghixeA+ZJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750181395; c=relaxed/simple;
-	bh=kP7DtPobetpD8bDkvcYCTMcEVbz+KzFg7wDQrlKUqKQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=gG3JOqUKsRqZPgIce0sE4jatazc2eCteq4IvnEL+oIajikzZvjASLTyTcYq8OFy0Zuvh3SeaP56+71P5GDWBoj82b72Ycbwlqq5RO/8wH5sZVQdzgH+XsR1Rx/1UO7TFsfHE6u/CLHkEeADFdDCW0aMzh3kIVwXYuqfJ8BbBNHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFyj07kM; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750202064; c=relaxed/simple;
+	bh=Cunbq/fRkIIK20gW7uYxC8XS+0I3YTwbTImpnDIBVeQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EVZF0JXngt2Fd06tOygqWe9g+jNvXCsVmYe4Ja7phCBgCz2zsXHqLeVr3xSbjEt1CUrimRHSWcE5t7Bo5r8cUt6agJrIzPUZjgXD77sqmMqWdG6qq78Ju6+hXnk5NNo6VplMI/Mnp3bRJki6JHgQygzLwLLC1JCmahB+Y4oRLzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k03zTeFY; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFyj07kM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE75AC4CEE3;
-	Tue, 17 Jun 2025 17:29:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750181394;
-	bh=kP7DtPobetpD8bDkvcYCTMcEVbz+KzFg7wDQrlKUqKQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=nFyj07kMSeHI22kL0ri0CoBmyqpg+75j55Xz+grZh1JBQ0M8Nw93ijsbWsLg201cm
-	 CTDpDR3MGpekcIM0ol1iK9alHd28sFBTJmLsdmNAssAbMYx2083F2kWC3EY6A65ie0
-	 QtGJHodFUApA6ak8u/529aLXDPefdcLRKpPlG28GNoBXOkDx/AJY2Fh5/ZXpdl8qcp
-	 TblkEjEulg5TKI9aC9N86NuIvYEHSjkI/pO4rxNy7EgV+v+O4cHkBrpV0HMm9YAQhg
-	 0U30SvS6CIcL1pjjdEj1rva/4ErLB5psnbCL5tfH1JqhkrHWayRQVVeZrk9azFM9ZO
-	 YS3kPy4ZB4tog==
-From: Vinod Koul <vkoul@kernel.org>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Inochi Amaoto <inochiama@gmail.com>
-Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
- sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
- linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, 
- Longbin Li <looong.bin@gmail.com>
-In-Reply-To: <20250611081000.1187374-1-inochiama@gmail.com>
-References: <20250611081000.1187374-1-inochiama@gmail.com>
-Subject: Re: [PATCH v14 0/2] riscv: sophgo: add dmamux support for Sophgo
- CV1800/SG2000 SoCs
-Message-Id: <175018139039.182101.4835726385229916529.b4-ty@kernel.org>
-Date: Tue, 17 Jun 2025 22:59:50 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k03zTeFY"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2350fc2591dso1487335ad.1
+        for <sophgo@lists.linux.dev>; Tue, 17 Jun 2025 16:14:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750202062; x=1750806862; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EGBYSwd2ZHfMGSOUy0pV5HM6pjaKicXfvLPu6XGQKPg=;
+        b=k03zTeFY+IOXZ3uErJcTisLoCSx7c+ospl/xRTBPVueT7yssaMSJ2WYRttHZbsL1Z5
+         PDlYJBEwUqUyu9juafU2M8eQ47MR+AB52bNu7RFIcgUg1yWAo06KBBtXuKDOyA6L96dR
+         cG32tU4nhRF/4VSmdZUfoEyFIIsAx71QGxmEk5qx0nkZauD9BFatvURnCtNbUlJ9zMxj
+         ipOExFLzKEsgowKI+bTHWFNIcI70moGeIpQzO/qFnvZMovo9jgIDREM/BHjCGIvI6Ltt
+         WNpQGIgSPqZY6WUn8RG2vOvwuTqECfsTrwIRLH4W63FAL7b6IA/70zg2gjqqeBoaZ24E
+         Jm9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750202062; x=1750806862;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EGBYSwd2ZHfMGSOUy0pV5HM6pjaKicXfvLPu6XGQKPg=;
+        b=mjeiNKu6J9+D3N6HLuCbWpRib1yaeDdmDfN8A6et1Bz9D4YXDrhdR9Th8RhkhV5/aB
+         usgcV/BU1zh3b67LzL7gZCUmW26N78ik/LihhMFTisMRkXJm48xVhZ+knUtXtC2Vd7hO
+         s99kLMKkftE+Q9+AZQ8usvJCVoDchgit76u0o0CGmIugPH42Kh617g7SPzwVI2G538tu
+         wMFRxKHSaOJjeYslzPqw7pwEszHZrOatV47BvkBhYn4UJdlEVFwxC7nhxsRnzPC9BUgM
+         UCBXp4Pc7oCmCzcjZNWojpTurwlwFnTAeS/xbVd7Wz8T88uhHtU0/fk7y6Ilj3Mm1zXk
+         +klQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUP62d1za4HU6h22Bn+TOgG4ZlQA8puQOhsas9qycoCh9m7cgEEedLCf+5XYUreCfROqL3LUCU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyjV/4aNTGYwWh5GrBttHbG7xq5MAKcZtqmkNjrGF3gCkqYzs3r
+	VmksUq/LjnYVeCVG/DBq0ytqEDycbFriFwB0jqXEmdrOvUQCInKRh/xc
+X-Gm-Gg: ASbGncv9QsLr+G5wVrBpr50v8kyagdEejGen3mkdFOs7Tz/GIoAu9MCJl3OgfPqDuK/
+	oF4s3lGuoJk9ae7LFtKafyj+d0/1TUOptMwVSErqgl34P42Qxok9OO4+JoUu+qH9c5l4E0cGaI3
+	vNe/nxXdinMhNAEuTCIBU1xN7YW9CxbI9NgFiayDMVycg9DV2SPAvI09Mwiw+BvqQo7mP+R18to
+	OwIplS5aCmfgWaZpoCMGyy6fsQztGjUIcpYdX6unTsnx9fA+VgrVoXVcZDRRqliXrp+M4OveQdf
+	s17uo7ASOZEL5In1pmeSJGQBJ+kADC+EWXMBX4P8ThxKzs5gKNviToWWyiGSUA==
+X-Google-Smtp-Source: AGHT+IHV7psFrMmfaxJ1IV6J338iQx2HCKSnK63uEQGDNoDbLglPoYovMqJVxLQHE0+ZHMqLW7PAuQ==
+X-Received: by 2002:a17:903:15c7:b0:235:1b50:7245 with SMTP id d9443c01a7336-237c2047aafmr5335835ad.7.1750202062010;
+        Tue, 17 Jun 2025 16:14:22 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2365de78169sm86179965ad.123.2025.06.17.16.14.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Jun 2025 16:14:21 -0700 (PDT)
+Date: Wed, 18 Jun 2025 07:13:05 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: "Rob Herring (Arm)" <robh@kernel.org>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>, Ze Huang <huangze@whut.edu.cn>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Yixun Lan <dlan@gentoo.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Conor Dooley <conor+dt@kernel.org>, 
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>, Chen Wang <unicorn_wang@outlook.com>, sophgo@lists.linux.dev, 
+	Alexandre Ghiti <alex@ghiti.fr>, Longbin Li <looong.bin@gmail.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>
+Subject: Re: [PATCH v4 1/4] dt-bindings: reset: sophgo: Add CV1800B support
+Message-ID: <jwehvuaywhkmrnmjxz4s6vv45seof5aihvb33upwbjv73bt5ak@e6yt2wdo2mzd>
+References: <20250617070144.1149926-1-inochiama@gmail.com>
+ <20250617070144.1149926-2-inochiama@gmail.com>
+ <175017325268.2418026.3599473248491336605.robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <175017325268.2418026.3599473248491336605.robh@kernel.org>
 
-
-On Wed, 11 Jun 2025 16:09:57 +0800, Inochi Amaoto wrote:
-> As the syscon device of CV1800 have a usb phy subdevices. The
-> binding of the syscon can not be complete without the usb phy
-> is finished. As a result, the binding of syscon is removed
-> and will be evolved in its original series after the usb phy
-> binding is fully explored.
+On Tue, Jun 17, 2025 at 10:14:30AM -0500, Rob Herring (Arm) wrote:
 > 
-> Changed from v13:
-> 1. rebase to v6.16-rc1
+> On Tue, 17 Jun 2025 15:01:39 +0800, Inochi Amaoto wrote:
+> > Add bindings for the reset generator on the SOPHGO CV1800B
+> > RISC-V SoC.
+> > 
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > ---
+> >  .../devicetree/bindings/reset/sophgo,sg2042-reset.yaml        | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > 
 > 
-> [...]
+> 
+> Please add Acked-by/Reviewed-by tags when posting new versions. However,
+> there's no need to repost patches *only* to add the tags. The upstream
+> maintainer will do that for acks received on the version they apply.
+> 
+> If a tag was not added on purpose, please state why and what changed.
+> 
+> Missing tags:
+> 
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> 
 
-Applied, thanks!
+I removed this tag due to the the small change to use enum.
+It seems like that it is not necessary for such a small 
+change. I will keep the tag for the next time. Thanks for
+your explanation.
 
-[1/2] dt-bindings: dmaengine: Add dma multiplexer for CV18XX/SG200X series SoC
-      commit: 994b5709f9f83c48f607e9a52912c912b8149421
-[2/2] dmaengine: add driver for Sophgo CV18XX/SG200X dmamux
-      commit: db7d07b5add4d839df74adab9940cf9da488313f
-
-Best regards,
--- 
-~Vinod
-
+Regards,
+Inochi
 
