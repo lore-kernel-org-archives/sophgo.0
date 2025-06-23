@@ -1,131 +1,110 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail2.ecloud.global (mail2.ecloud.global [135.181.6.248])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA9716F841
-	for <sophgo@lists.linux.dev>; Mon, 23 Jun 2025 00:31:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750638673; cv=none; b=NNxmm6mGnO8+PE+6CW5Sn+SzK67PhDrfM2zMyqWI4/9rmIRcbuNDOVUWIFs+2lptRPGJZlbti4Rpq5IzSY+gwD467/pArvEkQ2BXMtbw1PWLmWIh9Tzsvjl/u1bxsxWnivvFXzhwjQBjY6AG49zpuy3dlGpJdm84zjewK0gTIao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750638673; c=relaxed/simple;
-	bh=5ZNqzbA26kOPxapIA2PSAAMFwzrTK2BShlFnMI2cNR0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ch4mgW0nf+Z3hZrZVNJtkP8ETPDs+2G0D/zyRE7ZH6V+EqyX0vCe7d/IWjE7eIDqERENS57pH9TMAfYSd+H6jshfY6DxDl7vYi6ezUdSr8vOuaAvIx4ocSYqDCtdThC5jkibbp9RLkjZBwXZqrf0o3m85/VzhbOlnQxxSig+cSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BNAq1RoQ; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2C21C5F2C
+	for <sophgo@lists.linux.dev>; Mon, 23 Jun 2025 06:48:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=135.181.6.248
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750661284; cv=pass; b=A8KeBfuCxWxBsQl/I/srW7LKkIKzHI53dSxPrwjV27Yu26KttPYGvsdhiCygylLqAtnyVgsJtKyMP2DrmdFzqz0WPo67IDIScQiRxfWDe7wFMCGb5iBHlP3hZideHh8DtVAI/JOmO+D2i6NfzTz72D+P9x78c0j6pSEZDFT25dQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750661284; c=relaxed/simple;
+	bh=0j/Z5yh5tbFiw8rk0QBBfNVRu8U4mrVCE94WwPQ4NYw=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=te/wElwKpboR7v6KYX/hZ1V1+sK3yTVJSSg6puyeq5J6QiEBjWjr/u4516UrbXBaHhlo3A6ISTZyqzWa/u1rdVOw5Y4QzVZv4aG6atT6oZDvCxZCDmhJRECG6ozkKurCJ8xpn/kz0gbVmOq+ygWmPeBsqFjc8UWUmnSdm5kXtfQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=murena.io; spf=pass smtp.mailfrom=murena.io; dkim=pass (1024-bit key) header.d=murena.io header.i=@murena.io header.b=ip5sLEiB; arc=pass smtp.client-ip=135.181.6.248
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=murena.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=murena.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BNAq1RoQ"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7490acf57b9so1761767b3a.2
-        for <sophgo@lists.linux.dev>; Sun, 22 Jun 2025 17:31:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750638671; x=1751243471; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6Q1kf9zD36m1QpyUUwIQ0WQq+s6bZAcLbbdo0D4u+Fw=;
-        b=BNAq1RoQxeOLt11O2XPg9whlzaySC5/Be3b+nmYHuEOggAo3PLn1wGgT2ImvTHWWvf
-         PfAjHyQMZhPcHaVDDUgfsuSvbNGTD7e8l0tRewUvUgUUqv0IGTfmYUhFE3u6fKSezg/q
-         AqlWEke1RT4JPhCv/tmiRXUBVOaVeAUESeZTJvNeQiKq3rjV4DPLaTgPDNaUiqjALlve
-         +nSh72Tf1sNIjP3BylqNAeQ6CrZuSl4c1NIDhttG0UL9z6Vq8UL2f6di/y3TprvccJhe
-         kqsdEXqoHyBbvB0mFldQDoWf6US6yXOgCMKCn3y794nFxceYHv1VP+j60aVGr1UeU902
-         JyCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750638671; x=1751243471;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6Q1kf9zD36m1QpyUUwIQ0WQq+s6bZAcLbbdo0D4u+Fw=;
-        b=T9duq4OdGcqF9YiDCQI9Vq31eR4xXg4WEEbgvVDfisc7PS+punzyz3XtgZ2yTJdz7z
-         4T4Xrh/xHJon5eSnKAOQNdIOywuNSuepb6y0r6os2lxw/5YkSOmoYXrRb+xSjBHYPc7E
-         4P6m+b5owpBdsAfxWzQ0rUIA08j/WN1w8GitYor29OBCUHAyhha7rSMIgFjGZ4dTbs8K
-         3WLnHmR34HWrA8rTgPjuWGsZ294vIzNj/s4bS2C4Ax41I5GALacP1apdP2WANaKbMdev
-         5S1xcb0fRBAJ8eNDR8RA66RAgQFjtW0nDbO7ZLZUuenKePhv/94U/M4udjTsBsKYxfBo
-         apwg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCHc+T7T7dlhetg5cRbU12bnK1cV/tPqTgeykK+L+Pr56NfCdib26PfpGgahgx9TsZC69RGPo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzUG8V314ncRLGRD5YlxkumKs2nfbJI2BtdpNXlL10qNfNwqPML
-	u1Sji0nqgMszEglkSLQZWLMTY/0nYhNgFm4wa5/zZ38aN7cIXE2nFim9
-X-Gm-Gg: ASbGncvrJzHfKXCy8PnR/cnxyG0gXd7BH2mx5TD8kYTYXeDNOvw4LqDFEKudtU7hLNc
-	Rkos1vIEgGubztDfBCFf3vtiID7x1RmmqC+MCeOmJgZmTex8pWX/DFQqQv8S1LT8NTRWMYXCkhL
-	7/WfoBXge5drE7Uucuqf6TGdYmGe7yUL0b1W2SikVBmsirsnlOjhhkrU1u5XfK11pXxrdMfC0CM
-	IncD5PQOlGw89ZfZsE0VZ07qpk4tVvuw8zlzkoWfaBVUgrhKT93Ch/hrobCb7HXUPCcbK3VcgZF
-	bFeophTdPxXoUtjj4Nib545TPPIZtgEiWathPENRmWpZAP74Pf+C0N3l+dKUNg==
-X-Google-Smtp-Source: AGHT+IE7SWkZKqmzCTcflynbcCf+Hta3Lb9CcCnLa9th5SlsVN06IHYW3V9tm1bawfDuAzKPJuJUoQ==
-X-Received: by 2002:a05:6a20:258a:b0:21a:bfb6:1c74 with SMTP id adf61e73a8af0-22026fa6a92mr17872987637.34.1750638670941;
-        Sun, 22 Jun 2025 17:31:10 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7490a66a763sm7193835b3a.141.2025.06.22.17.31.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jun 2025 17:31:10 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
-	Yu Yuan <yu.yuan@sjtu.edu.cn>,
-	Ze Huang <huangze@whut.edu.cn>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH net-next RFC v2 4/4] riscv: dts: sophgo: Add ethernet configuration for Huashan Pi
-Date: Mon, 23 Jun 2025 08:30:46 +0800
-Message-ID: <20250623003049.574821-5-inochiama@gmail.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250623003049.574821-1-inochiama@gmail.com>
-References: <20250623003049.574821-1-inochiama@gmail.com>
+	dkim=pass (1024-bit key) header.d=murena.io header.i=@murena.io header.b="ip5sLEiB"
+Received: from authenticated-user (mail2.ecloud.global [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail2.ecloud.global (Postfix) with ESMTPSA id 297857209A4;
+	Mon, 23 Jun 2025 06:40:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=murena.io; s=mail2;
+	t=1750660838;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oLgpNtx/boIApBv5pSWc//bswQhEsFbXQypbXTIeykY=;
+	b=ip5sLEiBUhLNEb7dQe1Iz9dBtnXg4R38RsViRxUSbeXJzoioSdD6Ex6VQv3l53AKvBcBCU
+	iMetLjvnRLSXxbczpkWTZwWfYOyL5JO/pn0M+AVhtOZg20Ac8ba/9F6BfFK3HA7Xl+AOTm
+	1E5k+po1T1Qm5/VSUdFSXQiZz8nJhoc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=murena.io;
+	s=mail2; t=1750660838;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oLgpNtx/boIApBv5pSWc//bswQhEsFbXQypbXTIeykY=;
+	b=c+kjGhqvGy47p2nqRb2Oa1q399S8ukOiSgu404gkJiJ7WFTR0x8CSs0fryDoQau4WJXwUN
+	2iN4ZIGS7GOs+OZ+4AFADlWJGlC5DpAsPVjiJbQhVJ/VSn5h0Rh2rslNkcVTHFavdV+1rB
+	TfJ6y4Bb+mbirIcm1c80LbSVeIRCgxU=
+ARC-Authentication-Results: i=1;
+	mail2.ecloud.global;
+	auth=pass smtp.mailfrom=maud_spierings@murena.io
+ARC-Seal: i=1; s=mail2; d=murena.io; t=1750660838; a=rsa-sha256; cv=none;
+	b=FAuKfniINvB77wTngpcUPVsI6Eq1dqhr/efasdsLnGMRsweZEfFWLJz4ihNJrR8nJAP11F
+	S/5Bgx/b4h2VcGTBtywDSPcOe90me7Ir0KrcC5tLMGPcqTnipQmzFAcYbA2x5Nn9JLHZk6
+	9R88Q3nWaOQwKdhiBihu5KjMB8KVp7Q=
+Message-ID: <4cb09d05-d1f2-4d34-b3f7-be523b900a9e@murena.io>
+Date: Mon, 23 Jun 2025 08:40:35 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: inochiama@gmail.com
+Cc: alex@ghiti.fr, alexander.sverdlin@gmail.com, andrew+netdev@lunn.ch,
+ aou@eecs.berkeley.edu, conor+dt@kernel.org, conor.dooley@microchip.com,
+ davem@davemloft.net, devicetree@vger.kernel.org, dlan@gentoo.org,
+ edumazet@google.com, huangze@whut.edu.cn, krzk+dt@kernel.org,
+ kuba@kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, looong.bin@gmail.com,
+ netdev@vger.kernel.org, pabeni@redhat.com, palmer@dabbelt.com,
+ paul.walmsley@sifive.com, richardcochran@gmail.com, robh@kernel.org,
+ sophgo@lists.linux.dev, thomas.bonnefille@bootlin.com,
+ unicorn_wang@outlook.com, yu.yuan@sjtu.edu.cn
+References: <20250623003049.574821-2-inochiama@gmail.com>
+Subject: Re: [PATCH net-next RFC v2 1/4] dt-bindings: net: Add support for
+ Sophgo CV1800 dwmac
+Content-Language: en-US
+From: Maud Spierings <maud_spierings@murena.io>
+In-Reply-To: <20250623003049.574821-2-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add configuration for ethernet controller on Huashan Pi.
+Inochi sent:> The GMAC IP on CV1800 series SoC is a standard Synopsys
+> DesignWare MAC (version 3.70a).
+> 
+> Add necessary compatible string for this device.
+> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> ---
+>  .../bindings/net/sophgo,cv1800b-dwmac.yaml    | 113 ++++++++++++++++++
+>  1 file changed, 113 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+> new file mode 100644
+> index 000000000000..2821cca26487
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+> @@ -0,0 +1,113 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/net/sophgo,cv1800b-dwmac.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Sophgo SG2044 DWMAC glue layer
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+This looks like a copy paste error
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-index 26b57e15adc1..86f76159c304 100644
---- a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-+++ b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-@@ -55,6 +55,16 @@ &emmc {
- 	non-removable;
- };
- 
-+&gmac0 {
-+	status = "okay";
-+	phy-handle = <&internal_ephy>;
-+	phy-mode = "internal";
-+};
-+
-+&mdio {
-+	status = "okay";
-+};
-+
- &sdhci0 {
- 	status = "okay";
- 	bus-width = <4>;
--- 
-2.50.0
+kind regards,
+Maud
 
