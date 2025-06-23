@@ -1,175 +1,120 @@
-Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [217.70.183.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABF11239E65
-	for <sophgo@lists.linux.dev>; Mon, 23 Jun 2025 12:53:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD081F8722
+	for <sophgo@lists.linux.dev>; Mon, 23 Jun 2025 21:59:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750683197; cv=none; b=luEwPvDd8bjKM5/U36H+xqJqEUsic7K7M/FvXIJ3+5fpDGIQDxSHqX3VzEsOLYj49R3FV+YeOHgLpwin1vgYFl10OTgjft8DnzA1ErYDI63YzWMbgb3QWARFS4IqiZEDr1N1S9nmTmIBnoQmGh5OkB6gdPyLH7CUzghIFu9IvxM=
+	t=1750715951; cv=none; b=Fjn5gRkGQFgwVvItW48Y4N1ELkeFWbc9ufKyUgV9GadMEesOuBE65O9hDv1nW7DFin13X6aGwzx1RQc+p5ligI/gdmCSMkKDNQRso0P2KaogUdgbhl1no7Ovg/QJmNrCfcgssDqB3oykv8OaIc2LFDKDEvdZTGCk/DfYBbqdvE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750683197; c=relaxed/simple;
-	bh=8se5YPln/DXgqu+xjzAPHvxG2uWSb27S0x9TuNNRnhA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VoqjTjAh7U5uCTMeTYPoZQs70VhJqnO5MzBODQJFkdE8cYLMo979evBd7HziUY9Iow1gxfs6d7jLIyac2qccOk0Bae6qBYajgF8kLAPjUdn0uq6BtfK4cjCmww9mRAe5irbn9NbLI9mKl66b2cgfcoJFbQJgkfkdqiLTYml1TF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr; spf=pass smtp.mailfrom=ghiti.fr; arc=none smtp.client-ip=217.70.183.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ghiti.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ghiti.fr
-Received: by mail.gandi.net (Postfix) with ESMTPSA id E3B8E44418;
-	Mon, 23 Jun 2025 12:53:06 +0000 (UTC)
-Message-ID: <eb8f5a3b-edee-4525-be69-7a4ad55168a2@ghiti.fr>
-Date: Mon, 23 Jun 2025 14:53:06 +0200
+	s=arc-20240116; t=1750715951; c=relaxed/simple;
+	bh=CV+QG6+CRgw24neLMjPi3GkjM45lC+PSOpguhXjN91Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XMwywrJHBRBrFye6uvaF6zv+dDycBmAAxo0p8HxBUH9iC1iEDusyfP4ApgvG5HfI7WY81aB/lO8it+QogJ7udO3loFyskK0yEb8dlLxXsAq7TiTZbFq4c2ryIYp5/ffi4JELJpITPr6O8mtakMOmIR3ClH24KcmE4OUTySqkMy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UmiCHpX5; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UmiCHpX5"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b31e0ead80eso3289588a12.0
+        for <sophgo@lists.linux.dev>; Mon, 23 Jun 2025 14:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750715949; x=1751320749; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=l3yB+qOk7ujVR/LBAYKGt7qD8w55PbhtiiJGomEX+B0=;
+        b=UmiCHpX5VPWRXMvqgh71VJs/r692AD1mX9MYrxjiy4vXy6CDLnTQKcVech9WrCjuPx
+         08oRYQ3xGhBZRU3NpweE7P3WQXRCate8Yn6LLt4p/YJDmgjzOQE03/ctODTMkB03i2mE
+         n8pxVe/hmRabb1zTLHuycp1JxbkGjbS5qDX7VhPiTrVND+V4yo359JMZOYJ0YUkpOhUW
+         vDIGrfz3U4KsHCtTrnHxA7787SGxsTedeiJ8bYkmxLAWog4bK08ROQwP7Jh/WGl4xy6W
+         RWNt1+PZRomjOsraGI1fpyPGRZL/jPgsy+VHFRbVlGscbaN51kzDL2HvJG4bA5zhAhaO
+         BydQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750715949; x=1751320749;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l3yB+qOk7ujVR/LBAYKGt7qD8w55PbhtiiJGomEX+B0=;
+        b=R1TTYZc+du4cuS//mVdKgLO/AMpj4Zq982KHFpHb5IH/K22tDwTng2HUiXlG5s+bUV
+         kqDt+Ip8RGY33Or9dpePge8G9GDZh3TIf2D7iP6xUAD1HkgJ0L9MC+VG5tGBKxcYiPaf
+         oT0CtXZAvH05ALsTsYvI4JEIuwlIg6ad11RIbW+dlvOmT7Wq/+9BiIYN+IJuCAd1gZbg
+         FnJyzP03Bzl4anQN9e9AGYSzrqN3CViQBLMdfn/PBfrwHK3wfEZI2gPn7DSPMu9ngXkD
+         oDDUpJqHEFNqfH4ga1Qwl7P0w1nNvfcw8api/avsoN0fRXGtqe64ZEnWApNXgJI+HzMc
+         Iq0w==
+X-Forwarded-Encrypted: i=1; AJvYcCV7yd3heXQTsGuqanJeVdSxOm0VXrsW8Zs2TkhKMq2fJ4CgbBpqMG+yZIs8RW2JTTfuMtWU+IU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yycf8IN8G4RDL1S4VdIwUep1+i7gvLWgnX2OLuhBS+iXqtQi2D3
+	/mCqMHv4ZdLlGBNI5ctyz7kot9oOn6HPa528R8VNhupSqe7gb15NzU7B
+X-Gm-Gg: ASbGnctrEAMWAlB1ytL6KFY3X8Xr0HarsmukP/EokZac1oijcCTBL/lAlbqGuwSkydc
+	x4P6T1lKa5aq3VE2KSnvijP4GekHfPBuGMSijV2ovPKIkTakMZNjCJWjBX5UI+qKVtKCsZ/pjT3
+	AY61891RAOeTYqccg0xNp48vGRyjTK4dLeigkivXASd31J4SRTGfEegd+suHlt/wjoifj2MJ0dN
+	qEY0Bf6V6t2HUUn8bE0d/g/+vkUqOuGp9YNfmkvR/7LP41+GFgaIGUlID1frNZGUWlSb0a3Xkup
+	Qsp1q27Sv2uQKTLFbarZLNuMEyW6c15KOiIu5DOIFaFE3/rm2MdP/bMxkZONWg==
+X-Google-Smtp-Source: AGHT+IGFzE62qF3LBZw9k/a/Lzh2nlx6tpEsN8z9xHpzhHhKrHLcsX6GHI2IN06+kXkIIoSfeiuGQA==
+X-Received: by 2002:a17:90b:4a01:b0:311:a54d:8492 with SMTP id 98e67ed59e1d1-3159d62bf03mr19438715a91.6.1750715949257;
+        Mon, 23 Jun 2025 14:59:09 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3158a331288sm12485010a91.43.2025.06.23.14.59.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jun 2025 14:59:08 -0700 (PDT)
+Date: Tue, 24 Jun 2025 05:59:01 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>, Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
+	Yu Yuan <yu.yuan@sjtu.edu.cn>, Ze Huang <huangze@whut.edu.cn>, netdev@vger.kernel.org, 
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next RFC v2 4/4] riscv: dts: sophgo: Add ethernet
+ configuration for Huashan Pi
+Message-ID: <vlolusjs436s3tsp23g2bsr33fngp6vrc2g7vbaeypf3l3gi5k@i44w7sjacahp>
+References: <20250623003049.574821-1-inochiama@gmail.com>
+ <20250623003049.574821-5-inochiama@gmail.com>
+ <bd1485c7-e6c3-4360-8e3c-e584ea0b8040@lunn.ch>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/7] riscv: helper to parse hart index
-To: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>,
- Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Anup Patel <anup@brainfault.org>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Sunil V L <sunilvl@ventanamicro.com>,
- "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
- Ryo Takakura <takakura@valinux.co.jp>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev
-References: <20250609134749.1453835-1-vladimir.kondratiev@mobileye.com>
- <20250609134749.1453835-2-vladimir.kondratiev@mobileye.com>
-Content-Language: en-US
-From: Alexandre Ghiti <alex@ghiti.fr>
-In-Reply-To: <20250609134749.1453835-2-vladimir.kondratiev@mobileye.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-GND-State: clean
-X-GND-Score: -100
-X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujedtjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtvdejnecuhfhrohhmpeetlhgvgigrnhgurhgvucfihhhithhiuceorghlvgigsehghhhithhirdhfrheqnecuggftrfgrthhtvghrnhepieffvdeiveeuhfegvddvuefhveejhfffudffhfdufeeuudegtdfguddthfetledvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfkphepvddttddumeekiedumeeffeekvdemvghfledtmedvieeijeemvgejvgdtmeehudeltdemfhgvtdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvddttddumeekiedumeeffeekvdemvghfledtmedvieeijeemvgejvgdtmeehudeltdemfhgvtdehpdhhvghloheplgfkrfggieemvddttddumeekiedumeeffeekvdemvghfledtmedvieeijeemvgejvgdtmeehudeltdemfhgvtdehngdpmhgrihhlfhhrohhmpegrlhgvgiesghhhihhtihdrfhhrpdhnsggprhgtphhtthhopedukedprhgtphhtthhopehvlhgrughimhhirhdrkhhonhgurhgrthhivghvsehmohgsihhlvgihvgdrtghomhdprhgtphhtthhopehtghhlgieslhhinhhuthhrohhnihigrdguvgdpr
- hgtphhtthhopehrohgshheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhriihkodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghonhhorhdoughtsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghulhdrfigrlhhmshhlvgihsehsihhfihhvvgdrtghomhdprhgtphhtthhopehprghlmhgvrhesuggrsggsvghlthdrtghomhdprhgtphhtthhopegrohhusegvvggtshdrsggvrhhkvghlvgihrdgvughu
-X-GND-Sasl: alex@ghiti.fr
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <bd1485c7-e6c3-4360-8e3c-e584ea0b8040@lunn.ch>
 
-Hi Vladimir,
+On Mon, Jun 23, 2025 at 09:26:43AM +0200, Andrew Lunn wrote:
+> On Mon, Jun 23, 2025 at 08:30:46AM +0800, Inochi Amaoto wrote:
+> > Add configuration for ethernet controller on Huashan Pi.
+> > 
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> > 
+> > diff --git a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
+> > index 26b57e15adc1..86f76159c304 100644
+> > --- a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
+> > +++ b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
+> > @@ -55,6 +55,16 @@ &emmc {
+> >  	non-removable;
+> >  };
+> >  
+> > +&gmac0 {
+> > +	status = "okay";
+> > +	phy-handle = <&internal_ephy>;
+> > +	phy-mode = "internal";
+> > +};
+> 
+> Since the PHY is internal, it should be part of the SoC .dtsi file,
+> same as any other peripheral. The board .dts file can then enable it.
+> 
 
-On 6/9/25 15:47, Vladimir Kondratiev wrote:
-> RISC-V APLIC specification defines "hart index" in [1]
-> And similar definitions found for ACLINT in [2]
->
-> Quote from [1]:
->
-> Within a given interrupt domain, each of the domain’s harts has a unique
-> index number in the range 0 to 2^14 − 1 (= 16,383). The index number a
-> domain associates with a hart may or may not have any relationship to the
-> unique hart identifier (“hart ID”) that the RISC-V Privileged
-> Architecture assigns to the hart. Two different interrupt domains may
-> employ entirely different index numbers for the same set of harts.
->
-> Further, [1] says in "4.5 Memory-mapped control region for an
-> interrupt domain":
->
-> The array of IDC structures may include some for potential hart index
-> numbers that are not actual hart index numbers in the domain.
-> For example, the first IDC structure is always for hart index 0, but 0 is
-> not necessarily a valid index number for any hart in the domain.
->
-> Support arbitrary hart indices specified in an optional property
-> "riscv,hart-indexes" which is specified as an array of u32 elements, one
-> per interrupt target, listing hart indexes in the same order as in
-> "interrupts-extended". If this property is not specified, fallback to use
-> logical hart indices within the domain.
->
-> If property not exist, fall back to logical hart indexes
+Does this mean only boards using external phy need to override the
+"phy-handle" and "phy-mode"?
 
-
-does not
-
-
->
-> Link: https://github.com/riscv/riscv-aia [1]
-> Link: https://github.com/riscvarchive/riscv-aclint [2]
-> Signed-off-by: Vladimir Kondratiev <vladimir.kondratiev@mobileye.com>
-> ---
->   arch/riscv/include/asm/irq.h |  2 ++
->   arch/riscv/kernel/irq.c      | 34 ++++++++++++++++++++++++++++++++++
->   2 files changed, 36 insertions(+)
->
-> diff --git a/arch/riscv/include/asm/irq.h b/arch/riscv/include/asm/irq.h
-> index 7b038f3b7cb0..59c975f750c9 100644
-> --- a/arch/riscv/include/asm/irq.h
-> +++ b/arch/riscv/include/asm/irq.h
-> @@ -22,6 +22,8 @@ void arch_trigger_cpumask_backtrace(const cpumask_t *mask, int exclude_cpu);
->   void riscv_set_intc_hwnode_fn(struct fwnode_handle *(*fn)(void));
->   
->   struct fwnode_handle *riscv_get_intc_hwnode(void);
-> +int riscv_get_hart_index(struct fwnode_handle *fwnode, u32 logical_index,
-> +			 u32 *hart_index);
->   
->   #ifdef CONFIG_ACPI
->   
-> diff --git a/arch/riscv/kernel/irq.c b/arch/riscv/kernel/irq.c
-> index 9ceda02507ca..efdf505bb776 100644
-> --- a/arch/riscv/kernel/irq.c
-> +++ b/arch/riscv/kernel/irq.c
-> @@ -32,6 +32,40 @@ struct fwnode_handle *riscv_get_intc_hwnode(void)
->   }
->   EXPORT_SYMBOL_GPL(riscv_get_intc_hwnode);
->   
-> +/**
-> + * riscv_get_hart_index() - get hart index for interrupt delivery
-> + * @fwnode: interrupt controller node
-> + * @logical_index: index within the "interrupts-extended" property
-> + * @hart_index: filled with the hart index to use
-> + *
-> + * Risc-V uses term "hart index" for its interrupt controllers, for the
-
-
-s/Risc-V/RISC-V
-
-
-> + * purpose of the interrupt routing to destination harts.
-> + * It may be arbitrary numbers assigned to each destination hart in context
-> + * of the particular interrupt domain.
-> + *
-> + * These numbers encoded in the optional property "riscv,hart-indexes"
-> + * that should contain hart index for each interrupt destination in the same
-> + * order as in the "interrupts-extended" property. If this property
-> + * not exist, it assumed equal to the logical index, i.e. index within the
-> + * "interrupts-extended" property.
-> + *
-> + * Return: error code
-
-
-This does not add a lot of value, maybe something like that "Return: 0 
-on success, a negative error code otherwise"?
-
-
-> + */
-> +int riscv_get_hart_index(struct fwnode_handle *fwnode, u32 logical_index,
-> +			 u32 *hart_index)
-> +{
-> +	static const char *prop_hart_index = "riscv,hart-indexes";
-> +	struct device_node *np = to_of_node(fwnode);
-> +
-> +	if (!np || !of_property_present(np, prop_hart_index)) {
-> +		*hart_index = logical_index;
-> +		return 0;
-> +	}
-> +
-> +	return of_property_read_u32_index(np, prop_hart_index,
-> +					  logical_index, hart_index);
-> +}
-> +
->   #ifdef CONFIG_IRQ_STACKS
->   #include <asm/irq_stack.h>
->   
-
-
-With those nits above fixed, you can add:
-
-Acked-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-
-Thanks,
-
-Alex
-
+Regards,
+Inochi
