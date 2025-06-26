@@ -1,60 +1,62 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF89B126C05
-	for <sophgo@lists.linux.dev>; Thu, 26 Jun 2025 08:01:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95EF725C712
+	for <sophgo@lists.linux.dev>; Thu, 26 Jun 2025 08:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750924871; cv=none; b=n+t0fNCNaCsKPnXRDvTTTTXecwA7y/Z5+KmTlqJkYQehqYN0gQJJfC2RHbW9m9csxdWZKCJmdbnh2iIYwGcx7xv2kOgaDRbxxqHLzINFtHvY2T+enrVGFXNRhUq3DKY9f3Xn6EaMc8c2QAsG1gnB8hbcicJ9ULRjuJ1E1oDXuEc=
+	t=1750924875; cv=none; b=YMHrAVesj+EHiiVl80uoH3x8Mr19gP2yxqFMEI1uoWVKb76Y6U+hN0wAE26Cmzl4jYGvHpmBzj1CqFJeao2otVtENy3NDJUhYsRhK0UVoDr03qYWNAD+PuTq17Spknsx01/SVIXmz+DvyDuDlc9Agz/Wek2MvT/4HX3ohhQu4Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750924871; c=relaxed/simple;
-	bh=ZSFdLmJABSxbFmRELSJUwLft1Dgap42cZsZ6vAmJvr0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jxDh/iObzhHx3sBNd7tAwVWuJZuX+d3nRI3LZwCyuqZ6k7Uwypb4UA4HP2s3MDuRrysEd8jRyulyZ7vgsaYBH1xzeHkCnxtyWQqAxpqWQfprSbeju/ZU1ypCtl6ea3xkfPKFf7522YJDpWKrul+uBlV9GhpoebeHGrN30A4uKn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9mc/z5P; arc=none smtp.client-ip=209.85.216.44
+	s=arc-20240116; t=1750924875; c=relaxed/simple;
+	bh=Zf9YtBRoyG1fXgqH+qYiZixnKJmXnCz2BxV3aQe2Ago=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XbXpDBGPksUwxnBuWIvOdhuA0lS6+HSsIoDKECpvWwc6UrtyLNu4D+2+Un/P6vLE8vu8NHQRiHrVmQUBTNIfJ/pPGjY97YaBuO0S9HGmP0nvXSVjUB8bSLArOUVj9FD+dxn3Vx1QVHi7dfXnlm+dIwIUYPrtczf9O1hsrWnSjYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TLi28A+n; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9mc/z5P"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-3121aed2435so721614a91.2
-        for <sophgo@lists.linux.dev>; Thu, 26 Jun 2025 01:01:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TLi28A+n"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-739b3fe7ce8so908673b3a.0
+        for <sophgo@lists.linux.dev>; Thu, 26 Jun 2025 01:01:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750924869; x=1751529669; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MutTzljpNoSQQ8KY/Naa1K0a5hKmtznD/W4HGzANsVs=;
-        b=P9mc/z5PPuJvsUwkZ3i8EEZTtZxIxkgvDQP7srio7m/ZeGiiNGPea6AkG/dQbJtXcw
-         afAa3de/t1SH/iKx+iaZBKTiAGWPQI162zbGXeF9YBZm8a93pWjmr84KynAaRs3cenUR
-         oRzP83tSL1iLMbWXJF9i5wvsMRz9A9aHsAv44h+zqTFARg8qPnVfnAOkr5Yz9A/EtuFU
-         h9rUBEx5aOVWL7qdJAytHrFTgCMxuWo+FksbWm/jU5Vx6dqSjaPJWb3t2Y2UWzDwPVY6
-         XqA02N9eWKVLQRtQBN1SEbKi0p6sKdjMQ7JO0IedDyXjInCXICjdIYIVceo3pfGT/umD
-         AqBA==
+        d=gmail.com; s=20230601; t=1750924873; x=1751529673; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w6V/oR/DnwI2Qi+5VQkNfiNRfkRvGXnx3kp/m9SpAb0=;
+        b=TLi28A+n37u+OHKXKjDB3/jg1eHsEw8ILKZj39umt/pgOxy8OzszyLuDtKxR0vAg17
+         UgUonGOORLHXiSEszxdOlk+eqDT/w34+2NiQ3TVeLSKDE59FjuAD8jG62dGdiYxthWUq
+         5putBuXcK4WpwVKPj3U270gq7mpTnH9ul6liUiDQAMtPidfCM37BXyGJeDLwzjJIX90C
+         EkSc4vWtRVo8lEbDYkrZ+Kol4bB4qhK/rZ4TMsGNhefhm0/Qr4XcN5ZjJ/6nPDSp1xnl
+         CNlwEH6G97LMEa/YYuKBr1fOH8FZpFNBeJ1c12zYwTSYHXC4JMaq8HnR/+/RtNWmY/Nc
+         Ardg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750924869; x=1751529669;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MutTzljpNoSQQ8KY/Naa1K0a5hKmtznD/W4HGzANsVs=;
-        b=FlBeZhEzRhFX307FRjV3gyHc/q6TnYbC5urmw1EgAQ5xcYOBzf8SNZ8wL4vr7fTYaE
-         Z4KcJtvBvtQGvlcCeIsI8FNA/af6tfE909dHi65vJFFhp5phJkojKYgwYlT3m/YEghnx
-         wSY3ObAiXjZcPskelv4dGnFTB4SgfT5tddfaPXFx+ObnADvBkDE+0uZGGV7Py8c2ffaH
-         WMrFXznjY0ey5gNqJfYxOFX1ytV265YkOlIxkkOBut1AFiTiea+QXRy7zsEtkOve7lX9
-         3hO4THlMMRc7KAvRi5OYBUUHxOtdZ8wmDX28X9PcKmduEEWEgdklrtS6X2ynbph2IJy4
-         9UhA==
-X-Forwarded-Encrypted: i=1; AJvYcCUjYovtgB4fbo7IClDBf7PdA6Bkn4xET3hu/ndyBl2frJbhtANFX+4ljB5zRT5C/aYhnTPz9pQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw8g+LlSN6iYsbVCrrjkUb5cKd4Giu57SV1ipnkLbjhrkYXqXzY
-	jIDO6fFiH3njmlsikAJgUnwajnGPEAlzAX5Rsesckv3W7JFkGuLj++1m
-X-Gm-Gg: ASbGnctg/SWWgktw76vAvozhrFkAeKJ6teaaYYQfhH5uQqZAtTOXFcGqKYYdmZJFJse
-	llfLuk3P0swvB+gwGi7BXVxZWRKd2eb25VnYwK0QyeIEjnpLzo/jsfAI/o/xK+Cx4fjY5ZvxR3p
-	3ajOL41bLSmsankQCZDtZU/r9nFV59X6Ex37366H24QghCjbHHm6s+v8e36C5bCLJGYoXxpBugm
-	vDpU+wXP5i9jXFDXMTQ4W5n/uI1b2cz44aEeZ90xMZn1hcJMhJkeQNcbqqOvC04p84NxH9sBklC
-	K3fxQ8VNcPeT8U68K5cX3e/F/NNJhsjNPR+nQSICLpQBjVuRuO/dvdIC8Mo1vg==
-X-Google-Smtp-Source: AGHT+IEvFHP6OohPGoe/i9ODcPd4CzHYZYohuqPcN6oUCsWyV/2LcB0WXZlgW3DjTlwzc5TunaJepw==
-X-Received: by 2002:a17:90b:350e:b0:312:f54e:ba28 with SMTP id 98e67ed59e1d1-315f2689fa0mr8936538a91.24.1750924869022;
-        Thu, 26 Jun 2025 01:01:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750924873; x=1751529673;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w6V/oR/DnwI2Qi+5VQkNfiNRfkRvGXnx3kp/m9SpAb0=;
+        b=wlfflu7YPPCc6vgzuQ/w+2kmm6/PUrTsFdBRqz+XMzc5Z/xUKTd2WNgbySNmd4Day0
+         nUYMHL5MtmPO15YV78wukjg3XFXN6uZuKL/nDvAzTWYvuVNdW4dycpRWvyD13DzLep0O
+         gSKWIuIVnh9QIwfvLMyU8j9v3mMfbH6x3UJDOM1cDH1rV7qq6xy51Frpj4Jpa2Vv1RlR
+         s4LpdYfeo8Rih0rZZNHJH1muG5t6XFxCAR8mz4P8GOmwGf2kMLztA+xtjZmtahjfUlKT
+         i3ACCfKbZy4E641r/15UDh+cIWSt+TZbtSs8h7wp8UzOf2u/sV/WsaCr/PYV4zf+imMo
+         WwZg==
+X-Forwarded-Encrypted: i=1; AJvYcCVwEOXzSAvn+VBe5NvO2VIcVj6roLyc3CW3A1fBJdEVNGCyQpZGpJLQOVs8SIFePS6K9UfMQGo=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz97WuXGpycK/6XSQ/KiSAlZs3FojpNmYJjCp3NAf4tiBw2dusu
+	Nr7uPsSHkP5p35VvM2KvthO9rg3ZjMWerfy+7e8A2UAPc5h/K75S3ol+
+X-Gm-Gg: ASbGnct0JYukMCPIoQQYBlIbHMsC7TBLjBsd60f3hk+ZqXdxCvCeL7ze6biwmqyM8Pc
+	MOObekxStrY+ryYQtz8YUwQynH/SmzH04EtxJPZptOdd6I7LXcJD/EmiKkCD37cP28D9ex5lqVR
+	aVSTYQNWSov0RenAT/ap9DOXc8znVkZU2gagTMu1fDKOsIvSJuL3MT/9oF//DgrwR8gFxZui/VU
+	OxRtkglUIKsaSqtV7Yh+xex1jG4KjMkfBQJ0K3CJU071z/ENpA/zy04yU+wvD9vZVH0tPTu4XAc
+	NTg7WOofdkCE4IEvQb/SXEmhnFb57OxVUz3r+MIW/0ZYtzQlNAkjna7xIoCVXQ==
+X-Google-Smtp-Source: AGHT+IHj+Op94mzlo16js4gRYFsEOUzqX/RPIICMR4H1DzKdZ+5MaSCW3aQOPebkZZvTUcK0EQmzrw==
+X-Received: by 2002:a05:6a21:103:b0:21a:e751:e048 with SMTP id adf61e73a8af0-2207f289a0emr10750457637.35.1750924872745;
+        Thu, 26 Jun 2025 01:01:12 -0700 (PDT)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-315f53f3a64sm3785918a91.48.2025.06.26.01.01.08
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ad63d3facsm3799107b3a.102.2025.06.26.01.01.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 01:01:08 -0700 (PDT)
+        Thu, 26 Jun 2025 01:01:12 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -80,11 +82,14 @@ Cc: netdev@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH net-next RFC v3 0/4] riscv: dts: sophgo: Add ethernet support for cv18xx
-Date: Thu, 26 Jun 2025 16:00:50 +0800
-Message-ID: <20250626080056.325496-1-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: [PATCH net-next RFC v3 1/4] dt-bindings: net: Add support for Sophgo CV1800 dwmac
+Date: Thu, 26 Jun 2025 16:00:51 +0800
+Message-ID: <20250626080056.325496-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.50.0
+In-Reply-To: <20250626080056.325496-1-inochiama@gmail.com>
+References: <20250626080056.325496-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -93,35 +98,137 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add device binding and dts for CV18XX series SoC, this dts change series
-required the reset patch [1] for the dts.
+The GMAC IP on CV1800 series SoC is a standard Synopsys
+DesignWare MAC (version 3.70a).
 
-[1] https://lore.kernel.org/all/20250617070144.1149926-1-inochiama@gmail.com
+Add necessary compatible string for this device.
 
-Change from RFC v2:
-- https://lore.kernel.org/all/20250623003049.574821-1-inochiama@gmail.com
-1. patch 1: fix wrong binding title
-2. patch 3: fix unmatched mdio bus number
-3. patch 4: remove setting phy-mode and phy-handle in board dts and move
-	    them into patch 3.
-
-Change from RFC v1:
-- https://lore.kernel.org/all/20250611080709.1182183-1-inochiama@gmail.com
-1. patch 3: switch to mdio-mux-mmioreg
-2. patch 4: add configuration for Huashan Pi
-
-Inochi Amaoto (4):
-  dt-bindings: net: Add support for Sophgo CV1800 dwmac
-  riscv: dts: sophgo: Add ethernet device for cv18xx
-  riscv: dts: sophgo: Add mdio multiplexer device for cv18xx
-  riscv: dts: sophgo: Enable ethernet device for Huashan Pi
-
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+---
  .../bindings/net/sophgo,cv1800b-dwmac.yaml    | 113 ++++++++++++++++++
- arch/riscv/boot/dts/sophgo/cv180x.dtsi        |  73 +++++++++++
- .../boot/dts/sophgo/cv1812h-huashan-pi.dts    |   8 ++
- 3 files changed, 194 insertions(+)
+ 1 file changed, 113 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
 
---
+diff --git a/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+new file mode 100644
+index 000000000000..8abd2cf06e2c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+@@ -0,0 +1,113 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/sophgo,cv1800b-dwmac.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Sophgo CV1800B DWMAC glue layer
++
++maintainers:
++  - Inochi Amaoto <inochiama@gmail.com>
++
++select:
++  properties:
++    compatible:
++      contains:
++        enum:
++          - sophgo,cv1800b-dwmac
++  required:
++    - compatible
++
++properties:
++  compatible:
++    items:
++      - const: sophgo,cv1800b-dwmac
++      - const: snps,dwmac-3.70a
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    items:
++      - description: GMAC main clock
++      - description: PTP clock
++
++  clock-names:
++    items:
++      - const: stmmaceth
++      - const: ptp_ref
++
++  interrupts:
++    maxItems: 1
++
++  interrupt-names:
++    maxItems: 1
++
++  resets:
++    maxItems: 1
++
++  reset-names:
++    const: stmmaceth
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - interrupts
++  - interrupt-names
++  - resets
++  - reset-names
++
++allOf:
++  - $ref: snps,dwmac.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    ethernet@4070000 {
++      compatible = "sophgo,cv1800b-dwmac", "snps,dwmac-3.70a";
++      reg = <0x04070000 0x10000>;
++      clocks = <&clk 35>, <&clk 36>;
++      clock-names = "stmmaceth", "ptp_ref";
++      interrupts = <31 IRQ_TYPE_LEVEL_HIGH>;
++      interrupt-names = "macirq";
++      resets = <&rst 12>;
++      reset-names = "stmmaceth";
++      rx-fifo-depth = <8192>;
++      tx-fifo-depth = <8192>;
++      snps,multicast-filter-bins = <0>;
++      snps,perfect-filter-entries = <1>;
++      snps,aal;
++      snps,txpbl = <8>;
++      snps,rxpbl = <8>;
++      snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
++      snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
++      snps,axi-config = <&gmac0_stmmac_axi_setup>;
++      status = "disabled";
++
++      mdio {
++        compatible = "snps,dwmac-mdio";
++        #address-cells = <1>;
++        #size-cells = <0>;
++      };
++
++      gmac0_mtl_rx_setup: rx-queues-config {
++        snps,rx-queues-to-use = <1>;
++        queue0 {};
++      };
++
++      gmac0_mtl_tx_setup: tx-queues-config {
++        snps,tx-queues-to-use = <1>;
++        queue0 {};
++      };
++
++      gmac0_stmmac_axi_setup: stmmac-axi-config {
++        snps,blen = <16 8 4 0 0 0 0>;
++        snps,rd_osr_lmt = <2>;
++        snps,wr_osr_lmt = <1>;
++      };
++    };
+-- 
 2.50.0
 
