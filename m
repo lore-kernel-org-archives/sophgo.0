@@ -1,76 +1,115 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E272E9EBA
-	for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 16:22:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD9A291C2D
+	for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 23:32:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751041332; cv=none; b=Yt0t6zwC6tkbB4hkN8HWIT1ltzfFsxIaBCn2mz1bmgcJriy92ijtTDD/0GEkYmCHugr68bxfnMXNO+GFWhq+J7y20PPUD/3MjOJKdzUUjcopNl7lhAmRppRTgN0VfxGcuU0HkzSyh+vlO6Mg6m3cuMyVA9BkpiYSQKNV9LQtDRc=
+	t=1751067128; cv=none; b=uZY28h+IMJZyRFh/hzvYqib812eifh5oA/QP/YtGdF7QTpCvojiajgA7SUjb5y2E5Z5YOroqgL1M/6e0Wxa18MjNPyFHQvye3j/dIKCFuaaEOFvGfbm9Ncn5Ct8xXVFUWvTtiRvSbKBDwpU+3qvYOwypORwI9aSgqBSeZQkR128=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751041332; c=relaxed/simple;
-	bh=4DXISltS8p4I+htA6tcQ+fIt3VjfR7ml/pbNKCURfQs=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=R7hNDs8EtETi1kLiZ1eoGnOZX/gK0oPSAui5ajYTRQOrW/uRuDmrcgaI0wRnP5I/1yu7euN74/spA1+eYgi28i6Vmu0yBwKPecuEpyQYQqzdDAKiwT2LTYaP4Lprwz4zNFid0e2RtBRiNdQyq0lgaRfIoErZmDU7TBV4UDPb5P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uVBpq-0007BZ-Jn; Fri, 27 Jun 2025 18:21:54 +0200
-Received: from lupine.office.stw.pengutronix.de ([2a0a:edc0:0:900:1d::4e] helo=lupine)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uVBpm-005e59-0I;
-	Fri, 27 Jun 2025 18:21:50 +0200
-Received: from pza by lupine with local (Exim 4.96)
-	(envelope-from <p.zabel@pengutronix.de>)
-	id 1uVBpl-000QYv-3A;
-	Fri, 27 Jun 2025 18:21:49 +0200
-Message-ID: <e569866ba4a2290b89b5bbd427d5cee71364612d.camel@pengutronix.de>
-Subject: Re: [PATCH v4 0/4] riscv: sophgo: cv18xx: Add reset generator
- support
-From: Philipp Zabel <p.zabel@pengutronix.de>
-To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley
- <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou
- <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,  Alexander
- Sverdlin <alexander.sverdlin@gmail.com>, Yixun Lan <dlan@gentoo.org>, Ze
- Huang <huangze@whut.edu.cn>, Thomas Bonnefille
- <thomas.bonnefille@bootlin.com>
-Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, Longbin Li
-	 <looong.bin@gmail.com>
-Date: Fri, 27 Jun 2025 18:21:49 +0200
+	s=arc-20240116; t=1751067128; c=relaxed/simple;
+	bh=YPnTiOfKeorNB8r7cpyKWvCUxr6j45iw769OI9lLoV8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ss7XG3PK8ywZfxq0kgUL1vXJSjLq6nFpYwiEH7qqLXruaQAbgGpfeRxYB6erUmsUzwZRfbWhSJhq0DeotU4bqqOe/Qsc7JdFyLU19EBF/AG6TgFPpIr58Gh4Td4mcjxUZH8rZ0NkGZ00rh5j2TS2tn2IwqSZWJTDls3UR8Orbro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwXVFmH5; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwXVFmH5"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-235ef62066eso29561705ad.3
+        for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 16:32:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751067126; x=1751671926; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I+DGQNS5yV0iBqaU1x/InlhD/xcyDEGMcKU4WcCfmD4=;
+        b=AwXVFmH5eK2RRVomJnyMFgkj7tvKgATDuIFVBKMm7FokcBQ0SsIMWY12b4YgYrQ6qM
+         6EuF65byLum+f/pzpAgT9Xax7sqm47HMK0ormakxvqCbp/s1jt+GBaWRWmB1rhNU5ByV
+         ds2i17RhVFiC23TKuVxd7YnHlYlh9xw1DCraO3BHlrgdadYwjttf/BMzMHAd/p3ejoVF
+         /3lD8GdljfTGcYkcIaYll/4XYZQPX4EWB9YhlfbAzdzrEFF+RItFjW0T003pVHmv0dRi
+         y/AE7iJ0QRoyp6U+RbjtVNM/q+ms9GQ42zPWsI9Xw3oGikVZHp3IbLm+Iz12vtqlOJ6q
+         4wyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751067126; x=1751671926;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I+DGQNS5yV0iBqaU1x/InlhD/xcyDEGMcKU4WcCfmD4=;
+        b=k7tB7VMk2Hn+hsz+hUOqMfB1Y1n27IovMzWTAiWuqShW/USg9gOYc7nNDfWFVcsdJ1
+         ZqcxGiDNu9fIvydDeJvYWlP1CqizF3tXvUbpDZo1jMLNMirp6WEkdH68QIjZCxwTos4T
+         iWONLsTT6LSFVmw5zMtTWeEjqJkY1kqXXeuCFjMihAfjZ2lwBWUcBBxoIiezHPWD7wWt
+         T+HL3pBLLmkE2JcSkhXQm9vE1L0Ihy2p0lO1kQ2tmeCanjCJWDyrMtHDsUPzc4ZqLcKZ
+         hKs+mkaTd5C9FLeviXOAIF/Hr0W5m/E9aWnxV9nm+/V3t0jqLc10jy3xWiJ4iYuvRacg
+         El0w==
+X-Forwarded-Encrypted: i=1; AJvYcCX31VKiCjZgvqqXocDg47nm6UvJquNnhGDPZ4o0h3LgmcEaMSFZqy2gUOHVo6yNB4BFO0TgKnM=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxj2SuHSp8/IDkdOK1wZ+ZZ/1nRpuquvUTy78vO5E9OdImt+zKG
+	OdknFPPXR7CeBYQNqUJRlxWAjCMGw9WyiQiDdWHGTtxAKaOUQ0xOkgc1
+X-Gm-Gg: ASbGncu5kOJBdOxeRPF23PyWHfUlFa6BWG5z7/AraDtzvBDXM9gkOoZKPgzpVyRwd7Q
+	3SleLCvhDn+HUkO3Fn26mN8CT0Rb5NGBNQU9Uwl6QL+JGE6/O4jmCv9444kocmoOiyir2eBK6Zk
+	elei0k7ssgt/SFil2Nc+H9xSeXJ0JH347VZlcHdRSulbqTooB8EL8oSXGW9uN5LeJUUaa6bzk82
+	b2T9CjzxRnmA8H0X4vIQbRcPbJ1eRbqYYKsyC3Iy2VPUfzLUmUdnUmRf3HmhnLIT7rMs3MOB056
+	BO8eNE6G+edBt3m27iAqzP0WREobGA0v8zoSx9hbcWgVAt1Mg58c2iBn3SIXTA==
+X-Google-Smtp-Source: AGHT+IHg7vP7/d9S3v6EOl8gQObtoAsfGkXEWElQTHDuv46nJXJg9sI7JyZdzQjwWXqvHw/s8C35xg==
+X-Received: by 2002:a17:903:b8f:b0:235:88b:2d06 with SMTP id d9443c01a7336-23ac3bffd96mr67891485ad.6.1751067125934;
+        Fri, 27 Jun 2025 16:32:05 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-315f539e6ccsm7564660a91.17.2025.06.27.16.32.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 16:32:05 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Philipp Zabel <p.zabel@pengutronix.de>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Ze Huang <huangze@whut.edu.cn>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: (subset) [PATCH v4 0/4] riscv: sophgo: cv18xx: Add reset generator support
+Date: Sat, 28 Jun 2025 07:31:50 +0800
+Message-ID: <175106708298.79260.10445943203117657356.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250617070144.1149926-1-inochiama@gmail.com>
 References: <20250617070144.1149926-1-inochiama@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: p.zabel@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: sophgo@lists.linux.dev
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Di, 2025-06-17 at 15:01 +0800, Inochi Amaoto wrote:
+On Tue, 17 Jun 2025 15:01:38 +0800, Inochi Amaoto wrote:
 > Like SG2042, CV1800 Series SoCs also have simple bit reset generator.
 > Add necessary code and bindings for it.
+> 
+> Changes from v4:
+> 1. patch 1: convert the compatible as entry of enum.
+> 1. patch 2, 3: apply Alexander's tag.
+> 1. patch 3: apply Junhui's tag.
+> 
+> [...]
 
-Applied patches 1-2 to reset/next, thanks!
+Applied to for-next, thanks!
 
-[1/4] dt-bindings: reset: sophgo: Add CV1800B support
-      https://git.pengutronix.de/cgit/pza/linux/commit/?id=3D5a5c61f7ef96
-[2/4] reset: simple: add support for Sophgo CV1800B
-      https://git.pengutronix.de/cgit/pza/linux/commit/?id=3D811fe8ad1db9
+[3/4] riscv: dts: sophgo: add reset generator for Sophgo CV1800 series SoC
+      https://github.com/sophgo/linux/commit/fcb3f47c81afe43b336bf8033234417445789807
+[4/4] riscv: dts: sophgo: add reset configuration for Sophgo CV1800 series SoC
+      https://github.com/sophgo/linux/commit/880f18ee6772d4add69519cb7de2fcf9f4769cd6
 
-regards
-Philipp
+Thanks,
+Inochi
+
