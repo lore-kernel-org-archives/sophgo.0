@@ -1,77 +1,76 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D2819DF48
-	for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 06:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BEE21CFFA
+	for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 07:45:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751005842; cv=none; b=tLE8R2GfzuTMRAfQp4QacTL7G/3CpUyLv+F3kNmh/63vkf1olgorMGu1+s0+p36R7KXHQc3In105388d5ZdI2inY36UB4xsHyO63kEoYyhiDXAcrXVVnZ8Orb60qROCIxjJXVxoM34lnXYALmHrg4unlTVYdH/5je0DiRNtxJ0E=
+	t=1751010314; cv=none; b=Wcu8paTUP8EPlx5NaYzYA/BDI9XSoqN61Pv+tAmQtMXZHYpsskEXj4PCxmVXPvcItg3TlVg92LGBIvVJXAr4w/BJF/0hibkTLzLXDSlV3QPx7mCgM1F85FFVZ9PpQkpj631om0Qh34xb4YhZVq2SX69VM/gRtvif8wVzL94asus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751005842; c=relaxed/simple;
-	bh=A8g893xtk1dK4cJaLgB0wst2X+UBVHooFVW6CTqVfTo=;
+	s=arc-20240116; t=1751010314; c=relaxed/simple;
+	bh=vqujOY/R4b/ay6EtDaM0zoqhCTHH7KClxFgKqjr1jAY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c5WpGvAybYkY2vSdbz2Ljy6CFZcdgpmSGsqqMJtwv4ZeXsfQ/i2f2HGoorloffZ+IHLriTacz/L0ZyokqV5f4o3l/pIRz0kU8xX7p6sv8emLM9DSUM1V8q/eohs689eUJq/UGHAGfgpJafu4aYzWLmivUYV8mOFZdVq5u+NG6m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljk/dDHX; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8WW4yCgA9NrMfDDS8HINZVlFxCrlMyKzM/5JHNTF6edOYrlCQCDlfwfWb4uA8aHyFTg+tkyzr9dI/rUT0Ckhd7M63F8Yr9+VqzXigJBftoBMwVrPl8pvZxZu3phm/EBJNrbAfGgVrwK8Hhi2CglPLPGCqErygr8E8MSojbftxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dP5c5k5y; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljk/dDHX"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-235e1d710d8so23447845ad.1
-        for <sophgo@lists.linux.dev>; Thu, 26 Jun 2025 23:30:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dP5c5k5y"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-23636167b30so18764275ad.1
+        for <sophgo@lists.linux.dev>; Fri, 27 Jun 2025 00:45:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751005839; x=1751610639; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1751010312; x=1751615112; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iS5tVSNWUllBELvROnskbRuvuRv6gr3FeSaDzg0SVcg=;
-        b=ljk/dDHXd6RzkTEtejJobTtnKwgY57QLv2dMk1TQaByh8zZUKGfG80yQOVNkBmDKzq
-         nqKsdlDHLIe4/DGxCdvtcQ054ZIa4BZUSy8PaZmv3FVbfZVObsE5s3mRUrjAmk4U6L0c
-         aEqUp9EdMowmAioaksZiN0WFLhHocPASi1zI8CnHRRsmjW9xiOgNEDStpNCmEhSbcjD+
-         lcxH1eTaaPquxGwNZx7SuAZ63OJkNZQaWwyFax8zJ4dqQvc/GuCf15/FqzIvKmDg3pMR
-         gbT+ZxM3GYYuriQPu2vFl/m14FIJVMJZoy0IICQOaD/1XLyvrno/rbjnSws/J+/2Myv4
-         wsPA==
+        bh=6kwXMa0RVLz7EpJ4koQvotLZKLm6G+hz8I9ALzuYytU=;
+        b=dP5c5k5yQ6SDktoH4QFfcj6aK2a9ITV1cCHvgsg/Tqlwc2qfzhoGcXH8M+4vTmTb7Y
+         P1E4kEVGqjRqDoatSBhUx4ebi39ohv7B6S82bkfXY4cE8aKo/J24mBta+ZO3Pl95E3BW
+         NaDjjVZaoqtx0iOor+oK1ozKqx9og3PvKJdXReA9N+sCftXmoYJtQTan9X9rLYjMqa2O
+         Gg8ednB2pZqQG6c933n4SPG63HmwjWcgmw6ADfIZHG8XBVju9nV+N/LViWDCubzxuG+N
+         QZfLEsldWjxYYn7uFYyXHG5faf7l4jXF/tMtTb1PE7fxTr3OBtkdheNUCmPug4x9TlFz
+         4LcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751005839; x=1751610639;
+        d=1e100.net; s=20230601; t=1751010312; x=1751615112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iS5tVSNWUllBELvROnskbRuvuRv6gr3FeSaDzg0SVcg=;
-        b=ns+9Xtm15LC6DZEnToO7GWjnD6b02AEmwR5qipXJt92IE6Lh1s68EKLibtM8EhTwve
-         GR1uqh6RqUYKFi8bZ6H/yilXB6dERRFEcedOFxeG3hoFYeQOLZLJI06ZmFiuSzbqyelJ
-         vK31toKgLJmcPIzgAzZG56o/rSdMhf+XIdjRqf0dgWSvWSnyjjm4SqGzj9XFPRdqz9m7
-         aIjz0BlN67EUQ/i2wlyoZEg28kV0UZJlvVFtpiSydjNt+YYqORIYUppCecny4ZPMd3tk
-         +O27FKmBhPkRZO/eYx0fA9356fMphygfsz43+cnIvLOvZuydiStvCZMt9r+fopL0Q2t0
-         B4Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCUmhwtLXvWNFiv156c6P4ayoBf8J877vwqOMAfyosC6v1wwxXSOu173J76SnuJny0qUfIc2TUc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzoBx8SbeivCKXETuOrj5V8dlYez0nnGTbVXChmHPcTOCmAVbmE
-	RR+X2jI38H4W0jyWO2RGHOo7sOfVbctPmRAnQMzmOfmubCHxPJOcRkBE
-X-Gm-Gg: ASbGncueFRCt2RxRfsRqxCtmIIoIUwJBy4yd2k+qaqS8u2kF4PCXcaQDtO9E5K/ATn0
-	dMXQRrrR0bMWKSItl2gEyNdhVOQyhiCccSb+xElhB2FOcs+8FFH9HlgYViVC9mTK0u4v5VqFB61
-	Yv8qEumz2zDyeoaNxQEOXgDNYHXAcj/r5PqKzKg5fPRAsc1lyfqI8j3N6DyAFJKQoxz1X3cKJWz
-	dkOm3WRSl1TPLnTV7/+6Rr012cp9wHyI7zUnKE26q/oYXHmf+73ITVQalpqmUf8k6AfwU+H4Qts
-	G4cBZvKq8uwtQaIQ+ZRRAwoxWYI0b3NysjQwZf5fGMkou0asSvp41wKEb8akhg==
-X-Google-Smtp-Source: AGHT+IE+7b9v9Zj2LkXyd2nC+NZQDpDyK3bypoGbpAIzajLvSyCeyoIKvei7PJggtI88oZ0VmbeCOg==
-X-Received: by 2002:a17:902:ea0e:b0:238:f2a:8893 with SMTP id d9443c01a7336-23ac4654004mr32944735ad.42.1751005838719;
-        Thu, 26 Jun 2025 23:30:38 -0700 (PDT)
+        bh=6kwXMa0RVLz7EpJ4koQvotLZKLm6G+hz8I9ALzuYytU=;
+        b=OKzgNL6ZMs7S9Ps+3gUnj5imLKhWqHVgCSwRe20W9ZfkZFacY0pXMy6e9Gx2pbWwNN
+         NMt0A26qdsiuTfGbOiI7yX9VdKNK78o4XugJU5IJ7P5SDWZITdlLKWqfyGseoEehQXTQ
+         c8rP5AXKlO9sTegz4Au4shGvmQC/JCvz637KpVUzwC3hKaTWK+cXl36YpdxRto79XNjl
+         DfS5ffRcRtIVH2EJvfCN5tFIiKfqrE4BxkyA924unnLPC0K8mKdgXLM0bkwm3Jo0jQYD
+         SQztCQcxKrjhoTcMJsW40KNs5OHfA1isqqvQCIMOWMnwDBwY4+w9peJ6GmdSQ7YkGeVG
+         ypUg==
+X-Forwarded-Encrypted: i=1; AJvYcCUZRG/+R2dJMwDWezf+Up+1xJuZ6wArbCPgdGG+HhT/b2lW91o8EFSkeLpZvBCorXDV07B79Tg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxPG54yqGbv7L6Qqoq8QOsBSH25PqmwAxSxh0ldTQ/Xp2Ni8AYF
+	lZNcW3XK5XFAzXtDVt1zQqfeUuqjIi5W2C4th+mJM427W9y4kqxRtJCA
+X-Gm-Gg: ASbGncsgUZMYEJ5aNblSP/M2Ud1L4A78wh1Q+ZpCZw+zHEwMeU8vcdHGgkX3IpcrFVx
+	8duUalQ5x8tvTUCNZCexwzAs7A+d1Sql9AFg79FT/vGVZ/b+WMAsC8D/H4wP2kwjjIuhYhulBEE
+	bKP8j3181nVsgnjpXuZzicikqaxyY0pgmQ/t0s5pWJam/hVi3MzJmmoGPglNMs9YHPxVQThvdFZ
+	wN6OBBMuUZPrHKiII4IfBgytdmIZbYCFWYEBzamGkjHbIsgzN31U3EPZ21GYWOLUxrsvGTYlYgj
+	DP+VX7FrMyiqcwBboHwXTgeAYjH4Oc2tT0Io5/L4e/OzcKVwgnKDHDCbmLDUPuyIaR8zrZ4/
+X-Google-Smtp-Source: AGHT+IEosVdRq8jswGr8fyP/uRwtM7xveOdc4+/YhWRKXXFAv1fBojRPrGKTceYMplzzNMFyzx4jZA==
+X-Received: by 2002:a17:902:f601:b0:235:c9a7:d5fb with SMTP id d9443c01a7336-23ac3deaf2cmr35094145ad.16.1751010312004;
+        Fri, 27 Jun 2025 00:45:12 -0700 (PDT)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2e219asm9090255ad.40.2025.06.26.23.30.37
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb39b99esm10595105ad.102.2025.06.27.00.45.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 23:30:38 -0700 (PDT)
-Date: Fri, 27 Jun 2025 14:30:25 +0800
+        Fri, 27 Jun 2025 00:45:11 -0700 (PDT)
+Date: Fri, 27 Jun 2025 15:44:58 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Vinod Koul <vkoul@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+To: Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
 	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 2/2] phy: sophgo: Add USB 2.0 PHY driver for Sophgo
- CV18XX/SG200X
-Message-ID: <kt3envdgn7kxjjvu6mm5hozb3ml64d4s54ssozljmr7qttvxij@hnuzfawjspoy>
-References: <20250611081804.1196397-1-inochiama@gmail.com>
- <20250611081804.1196397-3-inochiama@gmail.com>
- <aF3i3L4BF6YgUMcO@vaman>
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Yixun Lan <dlan@gentoo.org>, Ze Huang <huangze@whut.edu.cn>, 
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v4 0/4] riscv: sophgo: cv18xx: Add reset generator support
+Message-ID: <ep7gbthprqyzfdcqvs3wadqflyusdsut3uxt5wv5j7mvazyl5s@muk77uizwcrg>
+References: <20250617070144.1149926-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -80,329 +79,47 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aF3i3L4BF6YgUMcO@vaman>
+In-Reply-To: <20250617070144.1149926-1-inochiama@gmail.com>
 
-On Thu, Jun 26, 2025 at 05:16:28PM -0700, Vinod Koul wrote:
-> On 11-06-25, 16:18, Inochi Amaoto wrote:
-> > Add USB 2.0 PHY driver for Sophgo CV18XX/SG200X. Currently
-> > this driver does not support OTG mode as lack of document.
-> > 
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > ---
-> >  drivers/phy/Kconfig                  |   1 +
-> >  drivers/phy/Makefile                 |   1 +
-> >  drivers/phy/sophgo/Kconfig           |  19 +++
-> >  drivers/phy/sophgo/Makefile          |   2 +
-> >  drivers/phy/sophgo/phy-cv1800-usb2.c | 222 +++++++++++++++++++++++++++
-> >  5 files changed, 245 insertions(+)
-> >  create mode 100644 drivers/phy/sophgo/Kconfig
-> >  create mode 100644 drivers/phy/sophgo/Makefile
-> >  create mode 100644 drivers/phy/sophgo/phy-cv1800-usb2.c
-> > 
-> > diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
-> > index 58c911e1b2d2..678dd0452f0a 100644
-> > --- a/drivers/phy/Kconfig
-> > +++ b/drivers/phy/Kconfig
-> > @@ -122,6 +122,7 @@ source "drivers/phy/renesas/Kconfig"
-> >  source "drivers/phy/rockchip/Kconfig"
-> >  source "drivers/phy/samsung/Kconfig"
-> >  source "drivers/phy/socionext/Kconfig"
-> > +source "drivers/phy/sophgo/Kconfig"
-> >  source "drivers/phy/st/Kconfig"
-> >  source "drivers/phy/starfive/Kconfig"
-> >  source "drivers/phy/sunplus/Kconfig"
-> > diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
-> > index c670a8dac468..bfb27fb5a494 100644
-> > --- a/drivers/phy/Makefile
-> > +++ b/drivers/phy/Makefile
-> > @@ -35,6 +35,7 @@ obj-y					+= allwinner/	\
-> >  					   rockchip/	\
-> >  					   samsung/	\
-> >  					   socionext/	\
-> > +					   sophgo/	\
-> >  					   st/		\
-> >  					   starfive/	\
-> >  					   sunplus/	\
-> > diff --git a/drivers/phy/sophgo/Kconfig b/drivers/phy/sophgo/Kconfig
-> > new file mode 100644
-> > index 000000000000..2c943bbe1f81
-> > --- /dev/null
-> > +++ b/drivers/phy/sophgo/Kconfig
-> > @@ -0,0 +1,19 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only
-> > +#
-> > +# Phy drivers for Sophgo platforms
-> > +#
-> > +
-> > +if ARCH_SOPHGO || COMPILE_TEST
-> > +
-> > +config PHY_SOPHGO_CV1800_USB2
-> > +	tristate "Sophgo CV18XX/SG200X USB 2.0 PHY support"
-> > +	depends on MFD_SYSCON
-> > +	depends on USB_SUPPORT
-> > +	select GENERIC_PHY
-> > +	help
-> > +	  Enable this to support the USB 2.0 PHY used with
-> > +	  the DWC2 USB controller in Sophgo CV18XX/SG200X
-> > +	  series SoC.
-> > +	  If unsure, say N.
-> > +
-> > +endif # ARCH_SOPHGO || COMPILE_TEST
-> > diff --git a/drivers/phy/sophgo/Makefile b/drivers/phy/sophgo/Makefile
-> > new file mode 100644
-> > index 000000000000..318060661759
-> > --- /dev/null
-> > +++ b/drivers/phy/sophgo/Makefile
-> > @@ -0,0 +1,2 @@
-> > +# SPDX-License-Identifier: GPL-2.0
-> > +obj-$(CONFIG_PHY_SOPHGO_CV1800_USB2)	+= phy-cv1800-usb2.o
-> > diff --git a/drivers/phy/sophgo/phy-cv1800-usb2.c b/drivers/phy/sophgo/phy-cv1800-usb2.c
-> > new file mode 100644
-> > index 000000000000..1d21db7f875b
-> > --- /dev/null
-> > +++ b/drivers/phy/sophgo/phy-cv1800-usb2.c
-> > @@ -0,0 +1,222 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Copyright (C) 2025 Inochi Amaoto <inochiama@outlook.com>
-> > + */
-> > +
-> > +#include <linux/clk.h>
-> > +#include <linux/bitfield.h>
-> > +#include <linux/debugfs.h>
-> > +#include <linux/kernel.h>
-> > +#include <linux/mfd/syscon.h>
-> > +#include <linux/module.h>
-> > +#include <linux/of.h>
-> > +#include <linux/of_address.h>
-> > +#include <linux/of_gpio.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/phy/phy.h>
-> > +#include <linux/regmap.h>
-> > +#include <linux/spinlock.h>
-> > +
-> > +#define REG_USB_PHY_CTRL		0x048
-> > +
-> > +#define PHY_ID_OVERWRITE_EN		BIT(6)
-> > +#define PHY_ID_OVERWRITE_MODE		BIT(7)
-> > +#define PHY_ID_OVERWRITE_MODE_HOST	FIELD_PREP(BIT(7), 0)
-> > +#define PHY_ID_OVERWRITE_MODE_DEVICE	FIELD_PREP(BIT(7), 1)
-> > +
-> > +#define PHY_APP_CLK_RATE		125000000
-> > +#define PHY_LPM_CLK_RATE		12000000
-> > +#define PHY_STB_CLK_RATE		333334
-> > +
-> > +struct cv1800_usb_phy {
-> > +	struct phy	*phy;
-> > +	struct regmap	*syscon;
-> > +	spinlock_t	lock;
-> > +	struct clk	*usb_app_clk;
-> > +	struct clk	*usb_lpm_clk;
-> > +	struct clk	*usb_stb_clk;
-> > +	bool		support_otg;
-> > +};
-> > +
-> > +static int cv1800_usb_phy_set_mode(struct phy *_phy,
-> > +				   enum phy_mode mode, int submode)
-> > +{
-> > +	struct cv1800_usb_phy *phy = phy_get_drvdata(_phy);
-> > +	unsigned int regval = 0;
-> > +	int ret;
-> > +
-> > +	switch (mode) {
-> > +	case PHY_MODE_USB_DEVICE:
-> > +		regval = PHY_ID_OVERWRITE_EN | PHY_ID_OVERWRITE_MODE_DEVICE;
-> > +		break;
-> > +	case PHY_MODE_USB_HOST:
-> > +		regval = PHY_ID_OVERWRITE_EN | PHY_ID_OVERWRITE_MODE_HOST;
-> > +		break;
-> > +	case PHY_MODE_USB_OTG:
-> > +		if (!phy->support_otg)
-> > +			return 0;
-> > +
-> > +		ret = regmap_read(phy->syscon, REG_USB_PHY_CTRL, &regval);
-> > +		if (ret)
-> > +			return ret;
-> > +
-> > +		regval = FIELD_GET(PHY_ID_OVERWRITE_MODE, regval);
-> > +		break;
-> > +	default:
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	return regmap_update_bits(phy->syscon, REG_USB_PHY_CTRL,
-> > +				  PHY_ID_OVERWRITE_EN | PHY_ID_OVERWRITE_MODE,
-> > +				  regval);
-> > +}
-> > +
-> > +static ssize_t dr_mode_write(struct file *file, const char __user *_buf,
-> > +			     size_t count, loff_t *ppos)
-> > +{
-> > +	struct seq_file *seq = file->private_data;
-> > +	struct cv1800_usb_phy *phy = seq->private;
-> > +	enum phy_mode mode;
-> > +	char buf[16];
-> > +
-> > +	if (copy_from_user(&buf, _buf, min_t(size_t, sizeof(buf) - 1, count)))
-> > +		return -EFAULT;
-> > +
-> > +	if (sysfs_streq(buf, "host"))
-> > +		mode = PHY_MODE_USB_DEVICE;
-> > +	else if (sysfs_streq(buf, "peripheral"))
-> > +		mode = PHY_MODE_USB_DEVICE;
-> > +	else if (sysfs_streq(buf, "otg"))
-> > +		mode = PHY_MODE_USB_OTG;
-> > +	else
-> > +		return -EINVAL;
-> > +
-> > +	return cv1800_usb_phy_set_mode(phy->phy, mode, 0);
-> > +}
-> > +
-> > +static int dr_mode_show(struct seq_file *seq, void *v)
-> > +{
-> > +	struct cv1800_usb_phy *phy = seq->private;
-> > +	unsigned long flags;
-> > +	unsigned int regval;
-> > +	bool is_host = true;
-> > +	int ret;
-> > +
-> > +	spin_lock_irqsave(&phy->lock, flags);
-> > +	ret = regmap_read(phy->syscon, REG_USB_PHY_CTRL, &regval);
-> > +	spin_unlock_irqrestore(&phy->lock, flags);
-> > +
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	if (regval & PHY_ID_OVERWRITE_MODE)
-> > +		is_host = false;
-> > +
-> > +	if (!(regval & PHY_ID_OVERWRITE_EN))
-> > +		seq_puts(seq, "otg: ");
-> > +
-> > +	seq_puts(seq, is_host ? "host\n" : "peripheral\n");
-> > +
-> > +	return 0;
-> > +}
+On Tue, Jun 17, 2025 at 03:01:38PM +0800, Inochi Amaoto wrote:
+> Like SG2042, CV1800 Series SoCs also have simple bit reset generator.
+> Add necessary code and bindings for it.
 > 
-> This should be done by host controller and not phy and then use apis to
-> set the mode for phy from controller, pls see other driver on how they
-> do this
+> Changes from v4:
+> 1. patch 1: convert the compatible as entry of enum.
+> 1. patch 2, 3: apply Alexander's tag.
+> 1. patch 3: apply Junhui's tag.
+> 
+> Changes from v2:
+> 1. patch 3: fix wrong reset ID.
+> 
+> Changes from v1:
+> 1. rebase to v6.16-rc1
+> 2. patch 1: apply Rob's tag
+> 3. patch 3: fix wrong reset ID
+> 
+> Inochi Amaoto (4):
+>   dt-bindings: reset: sophgo: Add CV1800B support
+>   reset: simple: add support for Sophgo CV1800B
+>   riscv: dts: sophgo: add reset generator for Sophgo CV1800 series SoC
+>   riscv: dts: sophgo: add reset configuration for Sophgo CV1800 series
+>     SoC
+> 
+>  .../bindings/reset/sophgo,sg2042-reset.yaml   |  4 +-
+>  arch/riscv/boot/dts/sophgo/cv180x.dtsi        | 25 +++++
+>  arch/riscv/boot/dts/sophgo/cv18xx-reset.h     | 98 +++++++++++++++++++
+>  drivers/reset/reset-simple.c                  |  2 +
+>  4 files changed, 128 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/riscv/boot/dts/sophgo/cv18xx-reset.h
+> 
+> --
+> 2.49.0
 > 
 
-Cool, I will remove this thing and let the controller do this.
+I wonder if the binding and driver can be merged, as many devices
+require reset to functional normally. If these two are taken, I
+can take the dts change.
 
-> > +
-> > +DEFINE_SHOW_STORE_ATTRIBUTE(dr_mode);
-> > +
-> > +static int cv1800_usb_phy_set_clock(struct cv1800_usb_phy *phy)
-> > +{
-> > +	int ret;
-> > +
-> > +	ret = clk_set_rate(phy->usb_app_clk, PHY_APP_CLK_RATE);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = clk_set_rate(phy->usb_lpm_clk, PHY_LPM_CLK_RATE);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = clk_set_rate(phy->usb_stb_clk, PHY_STB_CLK_RATE);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	return 0;
-> 
-> Should this not be return ret here? or just do return clk_set_rate()
-> here
-> 
+Regards,
+Inochi
 
-I think return ret is the same as return 0. And it is a good
-idea to just do return clk_set_rate.
-
-> 
-> > +}
-> > +
-> > +static const struct phy_ops cv1800_usb_phy_ops = {
-> > +	.set_mode	= cv1800_usb_phy_set_mode,
-> > +	.owner		= THIS_MODULE,
-> > +};
-> > +
-> > +static int cv1800_usb_phy_probe(struct platform_device *pdev)
-> > +{
-> > +	struct device *dev = &pdev->dev;
-> > +	struct device *parent = dev->parent;
-> > +	struct cv1800_usb_phy *phy;
-> > +	struct phy_provider *phy_provider;
-> > +	int ret;
-> > +
-> > +	if (!parent)
-> > +		return -ENODEV;
-> > +
-> > +	phy = devm_kmalloc(dev, sizeof(*phy), GFP_KERNEL);
-> > +	if (!phy)
-> > +		return -ENOMEM;
-> > +
-> > +	phy->syscon = syscon_node_to_regmap(parent->of_node);
-> > +	if (IS_ERR_OR_NULL(phy->syscon))
-> > +		return -ENODEV;
-> > +
-> > +	phy->support_otg = false;
-> > +
-> > +	spin_lock_init(&phy->lock);
-> > +
-> > +	phy->usb_app_clk = devm_clk_get_enabled(dev, "app");
-> > +	if (IS_ERR(phy->usb_app_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->usb_app_clk),
-> > +			"Failed to get app clock\n");
-> > +
-> > +	phy->usb_lpm_clk = devm_clk_get_enabled(dev, "lpm");
-> > +	if (IS_ERR(phy->usb_lpm_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->usb_lpm_clk),
-> > +			"Failed to get lpm clock\n");
-> > +
-> > +	phy->usb_stb_clk = devm_clk_get_enabled(dev, "stb");
-> > +	if (IS_ERR(phy->usb_stb_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->usb_stb_clk),
-> > +			"Failed to get stb clock\n");
-> > +
-> > +	phy->phy = devm_phy_create(dev, NULL, &cv1800_usb_phy_ops);
-> > +	if (IS_ERR(phy->phy))
-> > +		return dev_err_probe(dev, PTR_ERR(phy->phy),
-> > +			"Failed to create phy\n");
-> > +
-> > +	ret = cv1800_usb_phy_set_clock(phy);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	debugfs_create_file("dr_mode", 0644, phy->phy->debugfs,
-> > +			    phy, &dr_mode_fops);
-> > +
-> > +	phy_set_drvdata(phy->phy, phy);
-> > +	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-> > +
-> > +	return PTR_ERR_OR_ZERO(phy_provider);
-> > +}
-> > +
-> > +static const struct of_device_id cv1800_usb_phy_ids[] = {
-> > +	{ .compatible = "sophgo,cv1800b-usb2-phy" },
-> > +	{ },
-> > +};
-> > +MODULE_DEVICE_TABLE(of, cv1800_usb_phy_ids);
-> > +
-> > +static struct platform_driver cv1800_usb_phy_driver = {
-> > +	.probe = cv1800_usb_phy_probe,
-> > +	.driver = {
-> > +		.name = "cv1800-usb2-phy",
-> > +		.of_match_table = cv1800_usb_phy_ids,
-> > +	 },
-> > +};
-> > +module_platform_driver(cv1800_usb_phy_driver);
-> > +
-> > +MODULE_AUTHOR("Inochi Amaoto <inochiama@outlook.com>");
-> > +MODULE_DESCRIPTION("CV1800/SG2000 SoC USB 2.0 PHY driver");
-> > +MODULE_LICENSE("GPL");
-> > -- 
-> > 2.49.0
-> 
-> -- 
-> ~Vinod
