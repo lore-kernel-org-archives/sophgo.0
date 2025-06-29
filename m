@@ -1,66 +1,65 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93915A93D
-	for <sophgo@lists.linux.dev>; Sun, 29 Jun 2025 08:23:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA2620102C
+	for <sophgo@lists.linux.dev>; Sun, 29 Jun 2025 08:23:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751185427; cv=none; b=sV1TLjCXKzjEkd/xQQ3v4BS4dP81KcLmFfIzBcp7I+TdrPp9ElfACC7t/yGgDeNwG73oM8wsWY4fWspr/oGWEwL+YaXjCpRXrzJixj69mEFDvYq19zAkxXnSUZzNqEUkBu5HKVAeztxgv9uzDHctnX65XMjK38GJgWmivSwnV6k=
+	t=1751185432; cv=none; b=kUmdrqe9hoWrt5QXO7GA0/8gWJ12eKPGqiUWhoVJmLP+2zjhCJEAjIAYTRXxNe+eAKeGiibR6a8GHvK/BXS5CQknO7MPQvaTrFiRhkJeewuEkXbp5Eo4/+dDSQFBTey/CvK434R/NjQ4LNB9JzH/Flv1LyMl2GhSeBOv7SbDHHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751185427; c=relaxed/simple;
-	bh=ETMNqPLnrAXwhjSmox3seEy1rdOzecBNyCB7CgBbOLg=;
+	s=arc-20240116; t=1751185432; c=relaxed/simple;
+	bh=vKeGv92LbibVttyHcTTbUTC0hNnYenpRL/AwLj3xchI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=S9WLmt/G+cG6q1V3sH7PNUUtphEA9WvNgQD+EYbigFVy5rWwz+dB/QVWKgfZUncyTBttsmP4UOjDPljYcQG9nr5r6USyvTjugqzkK7rHqN4322A25M5BfLbjRLTd+7tVTcBN6jTqfnp0iSA4Ti3RA/5N3AIhmf0KsosJw5CTP34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QYR/yMZZ; arc=none smtp.client-ip=209.85.214.182
+	 In-Reply-To:To:Cc; b=SX0MQVLbQ9SYmcmuwJPFW4P24EXRd0XwTmmkMAVLVvdFDSTWJxH8NzWQiINBF2yVdcBJfqAWe1I2/DWWnDXWiu4rLFlmv1b8baxotJs1hWzz5lANppnCzbVDwPLYE58rHLESoieseyNt2LCFJoh5ufscDksn4aSpv2UAIREzWY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=igFl+KDS; arc=none smtp.client-ip=209.85.216.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QYR/yMZZ"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2349f096605so10193555ad.3
-        for <sophgo@lists.linux.dev>; Sun, 29 Jun 2025 01:23:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="igFl+KDS"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-315b0050bb5so1767139a91.0
+        for <sophgo@lists.linux.dev>; Sun, 29 Jun 2025 01:23:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751185425; x=1751790225; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1751185430; x=1751790230; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+5t0qkAHCUwUVEonnqGFQqn/6cdBXFEA5e8qoGS3Oz8=;
-        b=QYR/yMZZOJh+8OPOQBTHmgZIEqJ7ErkUng2fs5Hx2QK1yZMg+NpM1oCDlv2KQlEt/p
-         xkVP+okUbEByI0V/dWG+VL6tLer45m4/jPAseLe2G4wj0tkE9AStnl9GLlfdnK+SgQpS
-         cq1iDSFx5+sU+lsvTMm0srJxX6DbM6A1IYRNGenbz8BnolROqL+c+c+RVuROA0/d+P0x
-         g0J2Mgm7bs0AVZc1GPmBccsZzQ8QheQLBPE9tn/SYoNDxgpRgWhhSVVIQ7TevqZG+edG
-         THgSvZ4qt57e6UuuzIb5p6vri3ZPTIo4XVsmX76qhjWoSBAtR3IiCPs6Qsa46MNiWnWn
-         JCbw==
+        bh=IbDY7+jLzrL1PT5ycGxldl2xKFdQgH0cPkLNWX9XASE=;
+        b=igFl+KDSbN8eo6zCDh0W8P6x11fPwwB2Y6/o7+BsHv7pBsBQdyKEShU1wPsZEH8tXF
+         7eq3iooFb0u71ZD626DgsWTyYPghF1lhyv/2JaXg/jdxnXmD7TD7GI3zpuZPMDGYGf98
+         BpHo+IQ5Hsiz+WoZOAKVUiamjqz5cMInWHy9RkDyvkG+1KPWhAUjyM77gYqi8N3TaRus
+         AGwZQE49aHtJlgP0apVLmyo2ZZFyf/p3DKU+bFwemOM8wufW/HcEIN4DxF4nMlceWXzt
+         lHA/ZZl+7qY73dEaSeVIYF1TBOSixbWEYN8VXuLEBu6FyFVT0YNSz4BlAiiUlQpCJOaA
+         vqCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751185425; x=1751790225;
+        d=1e100.net; s=20230601; t=1751185430; x=1751790230;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+5t0qkAHCUwUVEonnqGFQqn/6cdBXFEA5e8qoGS3Oz8=;
-        b=loos3RG0IWLTLMgf6ZBTFg4I7xv5ER04WXPAb6FTYzffKl8OSoYJR7N0nySOKi1TaJ
-         8HXxmqoOyWaXxBSf8dnjeWyblWJAXczKg82ZDePYkRExOYGzGQQw2YVWzaiokm4XJCMA
-         p51VCgU8wbGyM+vAQHTvtRqJGdePvWcaQrss4o+vjHRwNiqGPdPv9kCctl5OjmtqOgWj
-         61+neNoC1YG7jYlGWElRK87rU5+c7HHzphfSUyP8CmNitrLPJTSNBIRWcA3O6kriAh/G
-         GSMKeFs/dD+2/7v6g2WGEBp1KBYNIRtfrKoUhThNNsHrYbJXmFfTMXDUzQRvjAgPBsqw
-         lENw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDqumkk75NZpcsNH0caeTgmEq8ONMKdMSIMZs0I28wsT3OVLpDe3o0FOJF7R7+B2f6AwOwWGQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyfrEZ2cuRC1WcSSvgrkyZoYg0dWp/872V5t4yKXWb8kGL2bLeM
-	LILubSJ9iIDug13ggl9Otn2yl9OAjPWeWstUeaNVeedRKG9eZ+C4Ep2b
-X-Gm-Gg: ASbGncsOf0LsyeftSk1WWBpkcqr+a9LBQE52vtQh7zdMpKAY6I5qKlz//fxURaNVNGb
-	BUCidFonnEXRsvO3xzUy1NTi5Fn6ZOmFZU/iqkyPaG8QkJwICMDpdXF6N3T4FQhySN9XzBT+vie
-	r7HgwuuE5vx5DidCMxaKJunmnuyynrkRtd+Nw+KZuch+ash1oinIPz4m6E1KG2LZh2Q0aHga5XW
-	rXr9Y5eT5o0gDdCur+HtYmjYcYzjcAvvOSChW9cdKFPHwx+EdfIohEztxM1jGW6Vd39xBZQ3c/F
-	GP8kfhOCoAPxLiF0m65nO5v1wQ29xtNr6liIkSh4l4g5QWYunh58Bw==
-X-Google-Smtp-Source: AGHT+IGbMuEWFzEQmcPfSGUyuO/vpiR0F/dpgN6q2wxjWT/5kSKuK3KVHvhvvINAfAKvfiDaNX3KCg==
-X-Received: by 2002:a17:902:d607:b0:235:129a:175f with SMTP id d9443c01a7336-23ac46527famr141581505ad.34.1751185424260;
-        Sun, 29 Jun 2025 01:23:44 -0700 (PDT)
+        bh=IbDY7+jLzrL1PT5ycGxldl2xKFdQgH0cPkLNWX9XASE=;
+        b=pVS0CHYzCb9x4O3mpRSYnvNwWJdLITOzPBumLlKKLEEGcyt/4bazxFiBd0CIls7FqZ
+         kEErQaQUdieso9a8fwU/J+amJB/H/KCfmh7yxPhzESiZBz5NUgYc5LxNhyjhwwLp62uk
+         +SGw+j2yr/pn24bBfs/jNQwbmLkqkOlGJiP5kCN+Ln3kmkv9f3eePwl8zV4419/Mouab
+         aBMJd2QKY//Yjcgql4SAncsMfS1rIe/fTt6pbOpWXTSAHUgNamGGZB5X1+QlEQPj2+rp
+         1ANe1I7ojnfJIQOI0fbnK/qbu6UyUNrNSLNBddLUa1JHenyxRhd8ddnh6phrPU5os/Me
+         WHUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVzTP/Lang5s7KWRIRg76iJKitcLng2oFNlOeTQRLTHSZKxX6RSNhU2Lpk+T586wPOeUQXtcXw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwRmgjFnCGTnaSzey/qt72ZxVjRDXcbLlxon3diBeRRDOIuGI5J
+	jwuVqQeCYHw/javSwn3r6yJSMh47gPg0LpddMK/SDR1KVPfs+5tf4uJv
+X-Gm-Gg: ASbGncslcTDAG/jqVnorXB98ecdJ9IiM9KxM0EXXVEkmphpZaFgRh/AmTTq0Le9yjnC
+	5Q4D2YaZj6pFKQlbYJ7ZPlSwWi0dtf5Q2hk76cchv/iEKFePenTLGfYGjkIeYPoE162XTGjjUCA
+	BTPiFbjw1lZ+0moJc95KIK0uDBQJs8vmQadqPY0KQC+GtfJK3UVLw4VjH/ENvvyrH7QLmNqnPiX
+	QhWYPdzdrDcjYthTeiHJVi6lTb9/I//A841p6MbdFQQS4GYV1VKLBd71Yfc2KSdlWUIllORQ7o5
+	ztukWnTDf7XLbMd0lp+bOBeJYacvw4zn9XEtY7zIlba51mM06Dv6tQ==
+X-Google-Smtp-Source: AGHT+IELHhhDxgnpw3MWnX1SUdpFfj8qVHJzMWazZcVe7MfSiD187uIdapbtW0jVyzAPN3EEEu1YGA==
+X-Received: by 2002:a17:90b:528a:b0:311:d3a5:572a with SMTP id 98e67ed59e1d1-318c9225e52mr13102958a91.8.1751185429842;
+        Sun, 29 Jun 2025 01:23:49 -0700 (PDT)
 Received: from [127.0.0.1] ([2001:250:5800:1000::168a])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f542661asm10495839a91.26.2025.06.29.01.23.38
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f542661asm10495839a91.26.2025.06.29.01.23.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jun 2025 01:23:43 -0700 (PDT)
+        Sun, 29 Jun 2025 01:23:49 -0700 (PDT)
 From: Zixian Zeng <sycamoremoon376@gmail.com>
-Date: Sun, 29 Jun 2025 16:23:10 +0800
-Subject: [PATCH v3 1/4] spi: dt-bindings: spi-sg2044-nor: Change SOPHGO
- SG2042
+Date: Sun, 29 Jun 2025 16:23:11 +0800
+Subject: [PATCH v3 2/4] spi: spi-sg2044-nor: Add configurable chip info
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -69,7 +68,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250629-sfg-spifmc-v3-1-28db1f27e999@gmail.com>
+Message-Id: <20250629-sfg-spifmc-v3-2-28db1f27e999@gmail.com>
 References: <20250629-sfg-spifmc-v3-0-28db1f27e999@gmail.com>
 In-Reply-To: <20250629-sfg-spifmc-v3-0-28db1f27e999@gmail.com>
 To: Tudor Ambarus <tudor.ambarus@linaro.org>, 
@@ -88,38 +87,91 @@ Cc: linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
  Zixian Zeng <sycamoremoon376@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1751185413; l=953;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1751185413; l=2775;
  i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
- bh=ETMNqPLnrAXwhjSmox3seEy1rdOzecBNyCB7CgBbOLg=;
- b=Ua4qsIQdrMlRlRlRmLVxWOFnI0KLWyYbMeNhHAXkmgvG83CASwH+MS37sIVU/oD/jeC60bVwg
- AhYJmFtW6lHA+b5WGe/HJJWjLetKnjitOuWS/eOms3fYxuQnZejtDr+
+ bh=vKeGv92LbibVttyHcTTbUTC0hNnYenpRL/AwLj3xchI=;
+ b=1JEJ0sKTI6zYuq89x/DJJ95DWZmlHfX0cHx0z4Qe0aGYXpNYwXGQGNhVegUI0kLoyOVZ7AlyG
+ v3WNK93YDK1B22T1yDK8uuuYFZIup4kI9OB8+ZxQ29TmQLBJHJ0lHxf
 X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
  pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
 
-SG2042 is not fully compatiable with SG2044,
-So it is necessary to become independent const
+Due to the differences in the SG2042 controller, a new configurable
+chip_info structure is added to implement that.
 
 Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
 ---
- Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/spi/spi-sg2044-nor.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml b/Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
-index 66e54dedab140a167ad84c43f312f93af2bfa06a..1299097a210d5074cb23b644d4f102a2fb1a0e3a 100644
---- a/Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
-+++ b/Documentation/devicetree/bindings/spi/spi-sg2044-nor.yaml
-@@ -16,10 +16,7 @@ properties:
-   compatible:
-     oneOf:
-       - const: sophgo,sg2044-spifmc-nor
--      - items:
--          - enum:
--              - sophgo,sg2042-spifmc-nor
--          - const: sophgo,sg2044-spifmc-nor
-+      - const: sophgo,sg2042-spifmc-nor
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index a59aa3fc55d277653d01df9c83b3f0aa08edab46..09a5712822e32c9da818684e7010b70aa94ae347 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -84,12 +84,18 @@
  
-   reg:
-     maxItems: 1
+ #define SPIFMC_MAX_READ_SIZE			0x10000
+ 
++struct sg2044_spifmc_chip_info {
++	const u8 has_opt_reg;
++	const u32 rd_fifo_int_trigger_level;
++};
++
+ struct sg2044_spifmc {
+ 	struct spi_controller *ctrl;
+ 	void __iomem *io_base;
+ 	struct device *dev;
+ 	struct mutex lock;
+ 	struct clk *clk;
++	const struct sg2044_spifmc_chip_info *chip_info;
+ };
+ 
+ static int sg2044_spifmc_wait_int(struct sg2044_spifmc *spifmc, u8 int_type)
+@@ -139,7 +145,7 @@ static ssize_t sg2044_spifmc_read_64k(struct sg2044_spifmc *spifmc,
+ 
+ 	reg = sg2044_spifmc_init_reg(spifmc);
+ 	reg |= (op->addr.nbytes + op->dummy.nbytes) << SPIFMC_TRAN_CSR_ADDR_BYTES_SHIFT;
+-	reg |= SPIFMC_TRAN_CSR_FIFO_TRG_LVL_8_BYTE;
++	reg |= spifmc->chip_info->rd_fifo_int_trigger_level;
+ 	reg |= SPIFMC_TRAN_CSR_WITH_CMD;
+ 	reg |= SPIFMC_TRAN_CSR_TRAN_MODE_RX;
+ 
+@@ -335,7 +341,8 @@ static ssize_t sg2044_spifmc_trans_reg(struct sg2044_spifmc *spifmc,
+ 		reg |= SPIFMC_TRAN_CSR_TRAN_MODE_RX;
+ 		reg |= SPIFMC_TRAN_CSR_TRAN_MODE_TX;
+ 
+-		writel(SPIFMC_OPT_DISABLE_FIFO_FLUSH, spifmc->io_base + SPIFMC_OPT);
++		if (spifmc->chip_info->has_opt_reg)
++			writel(SPIFMC_OPT_DISABLE_FIFO_FLUSH, spifmc->io_base + SPIFMC_OPT);
+ 	} else {
+ 		/*
+ 		 * If write values to the Status Register,
+@@ -457,6 +464,11 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	ret = devm_mutex_init(dev, &spifmc->lock);
+ 	if (ret)
+ 		return ret;
++	spifmc->chip_info = device_get_match_data(&pdev->dev);
++	if (!spifmc->chip_info) {
++		dev_err(&pdev->dev, "Failed to get specific chip info\n");
++		return -EINVAL;
++	}
+ 
+ 	sg2044_spifmc_init(spifmc);
+ 	sg2044_spifmc_init_reg(spifmc);
+@@ -468,8 +480,13 @@ static int sg2044_spifmc_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static const struct sg2044_spifmc_chip_info sg2044_chip_info = {
++	.has_opt_reg = true,
++	.rd_fifo_int_trigger_level = SPIFMC_TRAN_CSR_FIFO_TRG_LVL_8_BYTE,
++};
++
+ static const struct of_device_id sg2044_spifmc_match[] = {
+-	{ .compatible = "sophgo,sg2044-spifmc-nor" },
++	{ .compatible = "sophgo,sg2044-spifmc-nor", .data = &sg2044_chip_info },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, sg2044_spifmc_match);
 
 -- 
 2.49.0
