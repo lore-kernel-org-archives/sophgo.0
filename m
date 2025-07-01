@@ -1,137 +1,151 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1B319AD89
-	for <sophgo@lists.linux.dev>; Tue,  1 Jul 2025 06:36:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FBA270EC8
+	for <sophgo@lists.linux.dev>; Tue,  1 Jul 2025 10:04:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751351793; cv=none; b=iQk6Ernl/nKi7tqhntNgjgARaIg44Uu2u7/g2ReZYION1Boly0BiUcOD3mpJocChLGVo2mLd/rxtM/T/xaHwn3PO/ABSdxg6EVXhzEMe/QfZXbpXwDen+HjEtxCrFtjNGdxbYDgXa1c3lXKh94YC29M85HpOfiMzHRLGMsJapSU=
+	t=1751364285; cv=none; b=LAx1H/i8v3j6bK3adCUQW+Zvpvh+URVwytk6ADVAi/xyTE1QH4QnoDB8+owQWS1m1Pp7ATTuwNqH6lKdDSq5JSd6OjOG9HYQYG+r6dOrbPchrCbr/k62P7X73UiEituZ0fiR4YNV/1CliW5FqS5m3Y1kd4KtMVng+e6yZOonmkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751351793; c=relaxed/simple;
-	bh=S6cjipfxAita73V6JkLosCs6f9j35AYf4JtRigU5I9E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eWy6Wr5ZUr1UrDlfd8lG59yT8HwcOiwI36zL7pAsVQpEhn8psXJ1lPdowbebyNHJGcBWUIrYYXo1qH4MYnmKXGIzyNIkFr+8QDuIGupg0v/3xB5bEgRvb622E0Uml8NpqXDELtiGR3RNuJ8AinDxrNC1QMwEQmVUP6+f9OaSIjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H333zq+K; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1751364285; c=relaxed/simple;
+	bh=gdgJ0pLM0UcV8oL609CbKelSnZQmL/t6Ju0O6BeBF1g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ME3vptqxTq+RWUmVWE6QuBK1DP2xGUmbGj6nqlEsYFsiSzGGZB4t7e+Syh0HUP8cpuDU/y2kMIYujsWAd573XGxFXeL/dAebrl1zm9l3nmrWU3QxCuN/rUIGniXueSGnOnuFkqGnWUTbtjWQrBR7EJu3lr3RA6flvpWmA3DcMfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DhuUpLp8; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H333zq+K"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a577ab8c34so734713f8f.3
-        for <sophgo@lists.linux.dev>; Mon, 30 Jun 2025 23:36:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DhuUpLp8"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-747c2cc3419so5157354b3a.2
+        for <sophgo@lists.linux.dev>; Tue, 01 Jul 2025 03:04:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1751351790; x=1751956590; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EZS2dGfFhz4DV5h9FGWwFN5DAtPdX96LRkBj81DNpcM=;
-        b=H333zq+K7fGWdzwB8yPzauQ6/n/gdsNbIBl2mf6T2YYYJ/AVHCL7q5wSmlKUgEVbkl
-         BEAFT7T86qqTlQXXY8Ch7EBM5DFohlqf+huYDtqWrsYFxCOJIX+3Kdr0GbTllEYPGkam
-         0+2ddozElUYLoHjZlN7FNNzGLZpQF8fexfQ5GZ19IfpU+f3gNgHrl19pmRU26S64nfTk
-         eIc9jwInR96mjXpU8GAcBfzsOET4Ju8HuHz4gptFCtRJZth2Ftq1i5s8Jdvh9oGCk5ds
-         vZKedxnFV1yJzR3StKw+Ql9Pu2pF3dLEqicyg3Alfp3mmEABiyvKV0YaoP4tw/tL371l
-         /MRw==
+        d=gmail.com; s=20230601; t=1751364284; x=1751969084; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=71QusJ5AouGsm2mgHkr3YzuD0h0jCWeTyt1AC4+RDvs=;
+        b=DhuUpLp8PJ9fPUx6Jb/hV8D+WxEv+C//ZbYkBRvq19Jp0HidTFg9b2PxeF3bFef8y5
+         DygkkFNfi31De6+KhOBnb00Z88HuW4A1gGtxbcl4Ny0HJQrxIOiAtv5pLAWQPUqfrfQL
+         zNlTyZ4KyPms9fSXBQly6T6GF2GocfdADgLF0rSTSapS+FL+Oss+axwxbKd23EesAGRo
+         9imRIDnsMKomD/dZL1NOkSKDraHqMG5QHSbUmtVZ2nC3OMUnGl28Lkk+VAueCCdGdNPT
+         UDlUxaavsxVZ1gAlOR9k+WStaBzKSI3241XLODfv+llF6+fjRBnOHiy2j17fhnl9+p6l
+         6okA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751351790; x=1751956590;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EZS2dGfFhz4DV5h9FGWwFN5DAtPdX96LRkBj81DNpcM=;
-        b=juJutc0VEO4KlptXTeNjfHqc/qSvsxuQpIkkuZXWL3Ufdf21XloeTmy7LTZTDz9Z61
-         LWc9aVPQKNhA4ao7cfEG/u6yUgtpFSgfu3zOfRSeg1/Y9owoozKPribR6w225q0ZbqCh
-         4H0+ywVr7kEPeosu0yI9IvzKosKwZNJDTx40kiOeeEyiEYIZ6dzghIRIEXDxoSQnq9E8
-         TjKQ5vCWaYfZ3SvKZ9yoLVnzBiWoLA2WSI5N6tKdVuZi5gzKuDVeIy8nzp18VTHnURJs
-         nRi6Th0CiDKUCBg0Qu9wu+/6JGbGf54PFQlSv75SnZlfjm/aT7R83AZBPo3723IxJaXi
-         LtSg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0Ay89tDHk+/TZIrnX3RN9Y1Qe4G1iRgvCjE9diUhg0p5QEW6zH3RzUQ6iBRrFozKFoS1TpFU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyWgSrzGbPTZRJT3utSDvR0BhHLu7Ae8gCnHB3aNBMiYVsPRXwh
-	X0769mldVjTxtqXwUW/4knfvReM8ksQXsB4xUsz6eWmJ1UTSiOWr9rki7tDqpbqoYEE=
-X-Gm-Gg: ASbGncvA7EiMrDuGXU2HpCOToODH4FXZRV6ossUCuGZ+TvSqCBH/GgYQf2yLe4Ey0z3
-	j3oEndLAdrbA7yr6k8Y6jTyWTZimN01QBIFcJWcyRdKKdFP7iELynw5Wv/83BTZuUlygAY+8I9f
-	c0SbqWT2evyaq63Valsr9fvH/nXWylwMBIt78A2UErdux4oWXP0XYyZxxUvkDQHUKaDD8gVImHM
-	B1mdqcKi9H3znLNLZnLUErfqlwhFrO3O4Q6h8m5ursl6dJ7+IJ5lOWnBdm+eu811moNR++m+H8P
-	vpBS2xBAWuaH+agZvV5WYGN4k2ez0MrjnhOHNGGTZvo3rMt8g4apDJ5TTM6S8MzhMKqIhsMR+b8
-	=
-X-Google-Smtp-Source: AGHT+IFtrU4YoQ/j7QsTLU6w1l0Gl0/puRBtn5UoLC4Rc4bLHeuG9LgcLkzyP525KKRGuBzuEKPP5w==
-X-Received: by 2002:a05:6000:178e:b0:3a5:8b43:2c19 with SMTP id ffacd0b85a97d-3af48a83a9dmr416781f8f.4.1751351790022;
-        Mon, 30 Jun 2025 23:36:30 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.89])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a892e5963csm12294776f8f.79.2025.06.30.23.36.28
+        d=1e100.net; s=20230601; t=1751364284; x=1751969084;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=71QusJ5AouGsm2mgHkr3YzuD0h0jCWeTyt1AC4+RDvs=;
+        b=G5TFfA29WYeaQn7faGIyvhmbdLhai8sF6eIU73D2GkvGzzFmyMqChLt1FhpDPYN88S
+         8Pxg2fGCAV13juCmeYQkk0waSsjDZeuzuGZ9iMhdKwHl5rKylXgD7IbxtIgO3FCd61Qn
+         C6+aT9SNRIhHhs65OxHhPj8iJaonEbO7Oo+QKIx2m3GSWWBMD45KmHee2PAa3Cml9XFk
+         49adkvzwoyXLFZdww4gOSwFUAWEV8czOWqf5jV6ty8PIs0WCEBo71BWrrINHmp+9Zz21
+         2S8mc9JOoEmO0T0SrC7EJgB9XrKDQ0T0JEdSFXMmMoHzEw/I/e9e60Oso2DD8DROOi+B
+         6ftQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUbteOM/zM1w8IUwRdl3cS/SkETkdfzfbCNwEOYfRCeRPACqiWKRy+wxOknvOS7qq8zkcILX54=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzkFbmKArPHFRx4v/gBTx9KD/66aVCNgEv+sKNuMbUYk8GXTqUo
+	CvSS1TwTHN87WIVpPvQr0G/WHWjP23Dhx18ynw/GhxjLG9oPSDz2fqZF
+X-Gm-Gg: ASbGncuQEL7T28K3jcUoYU5nE3ACdMwLes2zU4wvekjozfJFCEjBISxjsG32fc2VliS
+	uc8vsYTxu97cD0ngm+7JOLyYk0uk4STg/evon7h6s/3lgsIzO3SodbRhc8X0i/ONrNGUTk4Wk5R
+	yP9WEOECLD+NywWj27yVg92K1eC8xaLIwTPDwcCrhhsmiMpbqYhTJssIr033Cv9/DOY44L/Slck
+	dHyP6nQFe5vLZt5h/6aEj/q+cercq9KtYY3yhhys0hUcgkSfEc1xxjmwIDB6SNIbI8IxiSQ9Pm0
+	1NI3MDtzHYSIkah/Gyge2vLiddqsbYaaUDzGpMCDxTS/nJkXh8EqAHzW6iD31Q==
+X-Google-Smtp-Source: AGHT+IHie6mqvlaJorzA6xUxii2gAFC0YaJ/JvpPEZQX9X8fCXiwrRfXuXkWDPVsvQUlpXtMG94W6A==
+X-Received: by 2002:a05:6a00:2195:b0:748:f80c:b398 with SMTP id d2e1a72fcca58-74af6f08c99mr21158524b3a.15.1751364283601;
+        Tue, 01 Jul 2025 03:04:43 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af57f467bsm11309945b3a.170.2025.07.01.03.04.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 23:36:29 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	stable@vger.kernel.org
-Subject: [PATCH net] dt-bindings: net: sophgo,sg2044-dwmac: Drop status from the example
-Date: Tue,  1 Jul 2025 08:36:22 +0200
-Message-ID: <20250701063621.23808-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+        Tue, 01 Jul 2025 03:04:43 -0700 (PDT)
+Date: Tue, 1 Jul 2025 18:04:24 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Inochi Amaoto <inochiama@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Richard Cochran <richardcochran@gmail.com>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Yixun Lan <dlan@gentoo.org>, 
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>, Ze Huang <huangze@whut.edu.cn>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH net-next RFC v4 0/4] riscv: dts: sophgo: Add ethernet
+ support for cv18xx
+Message-ID: <gkyq4gakaji6ddx5btmd6fzehfu5mzfhdy5pch32idoio3jf7g@7zlwkf2bvhac>
+References: <20250701011730.136002-1-inochiama@gmail.com>
+ <vxnvovuetfd6rzgaenwplpkhxm62fhw6t3vi4wkyigul7p4bkx@pwlprna4pyul>
+ <a5107266-853e-4658-ba90-d6a08882d2a8@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1527; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=S6cjipfxAita73V6JkLosCs6f9j35AYf4JtRigU5I9E=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoY4Hl6oFY6MC1mYY3tYMqGk+Xq4qtbynXG0VKf
- o4z8NuGJQ6JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaGOB5QAKCRDBN2bmhouD
- 17vkD/4lwb76qcvbDpG1bX92LByyYKigIiXJxiNcw7iJhyOz/uTjY3I9NhZuyiOIqxv40YBYzuJ
- ZvAx5nw8qpRLROL2Lhc+UAZSKriUlMxsZMRuIxDSAG0nUrspxP4Apb2LCGFCDuymBn9X1M6NNx5
- UR3Q7hIMidIXmsBG0EOH28pOoW43+XPX5dEcPYkyYCG0hi5QWCdY+fWzzf9pbbFWBffc6sm/gMG
- 6gHkizBuTkNgvf9OQ+6ESUAglErh4kwOyIhcujG18uNr72N1nBHBz74USDZKbEPKznsXaQDbuij
- K0g+2gF503iGxuI8vtSaiA6tpUshj9B8WBDxrUngLZROQs8aJLfrfAUx01OmVzsmGZRIIg57N+g
- Fx+08WIJnvdLlB2Uvv8eoO028JJxeDMsQq/LLs8S1AACMdjEcx5H4mZT+Wplh0QGURXG1t6XFv0
- +w3T6moXyOLD/t3SgDHBwr7lWEnjO5QpbNh0zC+i7WVAxJHc42cbj2q+Lwh6yRKLSKmBcih/yHW
- /TmuvZeauEYDJ35dM5omlLWntZKOpjEt5VDIQkCqrmzb6g5UcWCNBJycKM4ifQxhFLko+XjdaqT
- lXew70S8oxXEXXJm3f/QHfk3pnRDaKIjwDUU030X+Z8KTFueHnKOSEmkf3oAw2Pp6PsRjOTYlhu NSGDdhRSScXbykw==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a5107266-853e-4658-ba90-d6a08882d2a8@kernel.org>
 
-Examples should be complete and should not have a 'status' property,
-especially a disabled one because this disables the dt_binding_check of
-the example against the schema.  Dropping 'status' property shows
-missing other properties - phy-mode and phy-handle.
+On Tue, Jul 01, 2025 at 08:26:31AM +0200, Krzysztof Kozlowski wrote:
+> On 01/07/2025 03:23, Inochi Amaoto wrote:
+> > On Tue, Jul 01, 2025 at 09:17:25AM +0800, Inochi Amaoto wrote:
+> >> Add device binding and dts for CV18XX series SoC, this dts change series
+> >> required the reset patch [1] for the dts, which is already taken.
+> >>
+> >> [1] https://lore.kernel.org/all/20250617070144.1149926-1-inochiama@gmail.com
+> >>
+> >> The patch is marked as RFC as it require reset dts.
+> >>
+> >> Change from RFC v3:
+> >> - https://lore.kernel.org/all/20250626080056.325496-1-inochiama@gmail.com
+> >> 1. patch 3: change internal phy id from 0 to 1
+> >>
+> >> Change from RFC v2:
+> >> - https://lore.kernel.org/all/20250623003049.574821-1-inochiama@gmail.com
+> >> 1. patch 1: fix wrong binding title
+> >> 2. patch 3: fix unmatched mdio bus number
+> >> 3. patch 4: remove setting phy-mode and phy-handle in board dts and move
+> >> 	    them into patch 3.
+> >>
+> >> Change from RFC v1:
+> >> - https://lore.kernel.org/all/20250611080709.1182183-1-inochiama@gmail.com
+> >> 1. patch 3: switch to mdio-mux-mmioreg
+> >> 2. patch 4: add configuration for Huashan Pi
+> >>
+> >> Inochi Amaoto (4):
+> >>   dt-bindings: net: Add support for Sophgo CV1800 dwmac
+> >>   riscv: dts: sophgo: Add ethernet device for cv18xx
+> >>   riscv: dts: sophgo: Add mdio multiplexer device for cv18xx
+> >>   riscv: dts: sophgo: Enable ethernet device for Huashan Pi
+> >>
+> >>  .../bindings/net/sophgo,cv1800b-dwmac.yaml    | 113 ++++++++++++++++++
+> >>  arch/riscv/boot/dts/sophgo/cv180x.dtsi        |  73 +++++++++++
+> >>  .../boot/dts/sophgo/cv1812h-huashan-pi.dts    |   8 ++
+> >>  3 files changed, 194 insertions(+)
+> >>  create mode 100644 Documentation/devicetree/bindings/net/sophgo,cv1800b-dwmac.yaml
+> >>
+> >> --
+> >> 2.50.0
+> >>
+> > 
+> > As this is mark as RFC due to the reset dependency, now it is OK
+> > to merge it as the reset patch is taken and this patch is a minor
+> > change . I hopeif anyone can take the binding patch so I can take
+> > the devicetree patches.
+> 
+> I don't understand why you target net-next with your DTS patches.
 
-Fixes: 114508a89ddc ("dt-bindings: net: Add support for Sophgo SG2044 dwmac")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-index 4dd2dc9c678b..8afbd9ebd73f 100644
---- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-+++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-@@ -80,6 +80,8 @@ examples:
-       interrupt-parent = <&intc>;
-       interrupts = <296 IRQ_TYPE_LEVEL_HIGH>;
-       interrupt-names = "macirq";
-+      phy-handle = <&phy0>;
-+      phy-mode = "rgmii-id";
-       resets = <&rst 30>;
-       reset-names = "stmmaceth";
-       snps,multicast-filter-bins = <0>;
-@@ -91,7 +93,6 @@ examples:
-       snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
-       snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
-       snps,axi-config = <&gmac0_stmmac_axi_setup>;
--      status = "disabled";
+I just want to make them all get reviewed, as the dts patch is
+related to the binding.
  
-       gmac0_mtl_rx_setup: rx-queues-config {
-         snps,rx-queues-to-use = <8>;
--- 
-2.43.0
+> The subject prefix is here not correct and probably this should be
+> split. Anyway, bindings have issues, so no, it cannot be merged.
+> 
+
+Thanks, I will separate the binding patch and fix the issue.
+
+Regards,
+Inochi
+
 
