@@ -1,189 +1,198 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011025.outbound.protection.outlook.com [52.103.67.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A076B246BC5
-	for <sophgo@lists.linux.dev>; Tue,  1 Jul 2025 23:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751413961; cv=fail; b=Dws9hPcGne42MoRrMPKIcLgZsdy7PMsSRWa/OVstooFm25hAOw0pR+YWoz2nIrhTr8SRZdf/iCvIX4/exs8UbrcOkvWjrE0hax2mR3f0MnJ5pSkfaNOPynVXB3LKiq5+RnzKJcTC7dfhCly8mxnx9P49XQ0MQTGwxfKMkf/unsI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751413961; c=relaxed/simple;
-	bh=zaZ4cuXFWzYbpFYmJr2zyPf0uDksiLzokTQXakwEX2E=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=FD8ukNmn/j1JMgSGrQQs1/CZbp3orUE4zk9hew/PAVzYQgSst+O7Fh9RjJSGsZA08LWxNArPQzNe2KhBR33jcEcSvqv3zBHHJZJPlG5xK9vLmwiXBfih9XVSR1zL5xY5AsQ6nxNKTk5qhLsKyesfmyJe/AZOhZCL75BOLG9GsF8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Z/28YBsv; arc=fail smtp.client-ip=52.103.67.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 415B82F29
+	for <sophgo@lists.linux.dev>; Thu,  3 Jul 2025 00:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751503151; cv=none; b=dE5WeNK9oMnTrXVt2mf4oe8CyfGSvD+ffLOm/+Agh3vCye3lePEMX6c6DFDNPiLB2tTc171JwWLqB9yDMrhrgdK5OPl2Cwfz5rJOnNb0uNvNxiO2E6Mef80XHvG7xo+NC0lx2biW4rX96q9bn7GZTc4LPViq1yj6ly5DXZ/b3Pk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751503151; c=relaxed/simple;
+	bh=1mGmSZ6Q4EQzklWyd+gvDml6HLnkHJsU6FL1hGLgGuI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kTOpA0i9iUC3+548xzW7zZRg3S97sEkwffKJ4Z7h+U0Bo+e9O2lmj3P8mjfAhykO330XKaBwjSPKexwB3N3jx1GUDMGXi0kJ/ers+Nl+So2DLMihb8h56nZ5Fu1saoNNm0uk+GqvkHV70EAdWgs7EqZ8HIijPF/yaxmIPTp1w70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=REZncpmG; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Z/28YBsv"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QuzHjZ186zepETRMFnt1G3V6cFzLhcoG6dhi5/zR2yZ4zm/DO/ZPBujaZxR6FRoDsOPYmd9RprtTeZkTnQeaYiISfBNZiOH9M8T0alcmY0yiLd3ITgWCfvJYywcprwNghGSztK3lkOdUtuz6a9KlXGwqnmdG3SJWUorPB/LvthIx+kWUrnijawDxaG6O4QMbfsD2gabqfmNbeKvrXkSUbP8Fw57zjDUBdbcLzgR2iRg44kxaV9ydawPYyXbmZSoEY7vru1MZmTXt+JXdfu9fmh3rZ8GE4u/PK0yw2A8XrWnZjLBGIbQhVZmTDt67VvSE2yVCZlr+lu8vyGvpZnQ/dA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DLquz5kfLmRz5jL8K0delPQcirn5GTSlbsOgPMNGK44=;
- b=JTedAsigKKfvkttQNtNwTagqc+eG+mhuVwWVwTzek5wVCx7aO8/SWyffomJrIz5Stwd6dGJqoklH+wblV9iinDUPweWznTFPBCiH4lNZS/d/v/BsQdmF0LvQeiJfIP9ZCukd49AV5aOId0flTOhZSosqBIOX9XT5PYL9h4K5zShTGewPOoMO8Knhp56mZoTlYKPT6UfP11qh/+sJwvkt8LvnmLZA+yiGwaHd5BWNvF6EDYnMwZAzHlcbNDelqSCfgbxKL2fbNYewW9RpdjGobkxmqCpiBVSC49jIIoc1uOtbEfn2E/WrdAWsZ3f3JebAXSkip0bnGt+qKgAsG/KN9Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DLquz5kfLmRz5jL8K0delPQcirn5GTSlbsOgPMNGK44=;
- b=Z/28YBsvKu2bF25Q55QbA/fPuZl4mTAls+XLoi2TApHHqdw3F9Q+lgNBfTRG47+qkexXbV+3seDyAilKs3mZinOfLmIRLO3ucdezTraIH7gPdjwq8PnBOM24KuruNn15NCYgUxzvHn14txV82k/raGVocH53zpJYj1my0VHGG+Qt7TIHV4KnpzAD3hy34EtuUEEptG+0H6DplHOeeZdnM2uA1dfK0fNV50bqD5LLVm210bhWFzXndx8/1M8C2mkQIc5K58MkC6q6pfjP4l0Bovi1HTw1kjQNPnnyTwIIaATPwe0Ga5G+jF4iWQMOuhwA3hI81SLckWk3i3hKxK/vYg==
-Received: from PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:2aa::8)
- by MA0PR01MB6693.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:79::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.20; Tue, 1 Jul
- 2025 23:52:29 +0000
-Received: from PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::7f30:f566:cb62:9b0c]) by PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::7f30:f566:cb62:9b0c%7]) with mapi id 15.20.8835.018; Tue, 1 Jul 2025
- 23:52:29 +0000
-Message-ID:
- <PNYPR01MB11171E0C90DE8A30FEF50A9F5FE41A@PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 2 Jul 2025 07:52:23 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net] dt-bindings: net: sophgo,sg2044-dwmac: Drop status
- from the example
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
- netdev@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-References: <20250701063621.23808-2-krzysztof.kozlowski@linaro.org>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250701063621.23808-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR04CA0172.apcprd04.prod.outlook.com (2603:1096:4::34)
- To PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:2aa::8)
-X-Microsoft-Original-Message-ID:
- <a2b4e3dd-fdf1-4bd3-b308-aca7ab1d6e71@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="REZncpmG"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-748d982e92cso5596564b3a.1
+        for <sophgo@lists.linux.dev>; Wed, 02 Jul 2025 17:39:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751503149; x=1752107949; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zp6SVLQWv+yq/FCUnVZXe5xSnWGW/xX2hl0tN5GjdNg=;
+        b=REZncpmGuttYAFsKEbDhDxFKGD7p1MXcusYLYJqqf25+fS82rCkZkVdEbvupP4/XC5
+         tpKaZS91yyyw4iwqnquc0MGE4/V64jIAqEPhAhTaVNkOoAhNnpoXxM+X4x4ywXTyZMz7
+         RNKuxKYlCokYEtahoozUfZq+6V+NjdsYZIFex41Cf01YUd3SXO9ybnGfK4jJ9TcS9uie
+         MJ6/8GaQPjF3C5F8QnpHUmD16o9sRPSauFJmB1H1GaThdMm7tRlGUSEpzJd+GDv0/lsN
+         eelooIWXSH+nV5SAA9s/HcaUH2HWO60ErVfOahJjoli2YiTvZhLXyIZCQ8k4w+RMWMzy
+         V/IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751503149; x=1752107949;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zp6SVLQWv+yq/FCUnVZXe5xSnWGW/xX2hl0tN5GjdNg=;
+        b=gGEowb9BhGtCqo9RIBAcD/UJAhrY119Gm/23IGkZWPdZutMgVXNAilYsPW0Q/4I7cC
+         Hh9aRiYJ1atOM/NuHwg0reaMjtjX1lCtwFwPmezYN00ZkSSo0ut4afV57RhlOFmUAVem
+         ohDtabnO3nyEHpygGoxagG4SCnmQoFtWScLq91qiw3oHYDzGu6psEXWw5BT3wnkaQDyc
+         ba+qWqK79Dm5KOCsiX49iCqB5hrX2f9z/IMW4Hb/ZXNlBWDn3a2QYT64+73lm8AI4z9t
+         4+BhWZ4WJiO86SNya9nu6dnWBPvM9v1tpaIGSnBI/Mu8RUr0GJzxUidUPWElOiaB0QeC
+         WnQg==
+X-Forwarded-Encrypted: i=1; AJvYcCWWluEmxANHnlT8dn+jYfSZ9+r6L77pEVAYAu7tgCQK8UQlJGanEmAGkXrcblbtqME7Bj6PSFg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwXxAwJGyk64cQNXCmJH+mUfVUTPi4UnzwyQTA+/5uUxB9rmLmX
+	4ByTqsjCkq1LoxR+aYe7aeKJ1Wwgprs6E3u/QLFyXMJYv5zAIksx4swT
+X-Gm-Gg: ASbGnct82SwCzksiqQEvLcsuMHr1MQr6kjvGHhXmr+BIJa9KEubsQe1rbqSKVeqME7I
+	5/cJMjrg0TjhxlbKLlQKAcJ4lqfrLG02+nMRDkM6uzeJVdS4v+rhIOS57A3LbrYlVYlxZs21r/k
+	0KAyo9JMR3LCdGy2m2NSVrFyPLApaWDC62eS9B575YYnilBXdO6W4U1amyJSp7XERwZi1ZFrTc1
+	EltvtVSmTIvKcoqFL896nap5ZhuTO1Omk7xTZERwUAn7ZPzopsJsFypueHfwomKdWo3HDQ+7JQs
+	DL4RR/Kh46mTQV9fwO1KVHcqrljydZcEwhKMLfttrjpsAtCytRNMI8HsJiSd8frtfukiPgCn
+X-Google-Smtp-Source: AGHT+IE6EjPWTP12xSibuAaTHAAp7XhOTvQoc548Zur0R4Hz0WB245X9+rq3l6A2vL6aDv6YxuH4PQ==
+X-Received: by 2002:a05:6a21:9988:b0:21a:de8e:5cc3 with SMTP id adf61e73a8af0-222d7dcf2e0mr8369054637.4.1751503149400;
+        Wed, 02 Jul 2025 17:39:09 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af541e8fasm15585369b3a.67.2025.07.02.17.39.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 17:39:09 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH] riscv: dts: sophgo: sg2044: add pmu configuration
+Date: Thu,  3 Jul 2025 08:38:43 +0800
+Message-ID: <20250703003844.84617-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PNYPR01MB11171:EE_|MA0PR01MB6693:EE_
-X-MS-Office365-Filtering-Correlation-Id: 311e2fe1-9374-4498-1830-08ddb8fa5655
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|8060799009|15080799009|7092599006|19110799006|6090799003|5072599009|440099028|13041999003|40105399003|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?TkV5NmRIU1kxeC9JcVcxWUZ1QjNueFlsNC9Ic1kwYWthK0NDVUFyK28wU1JF?=
- =?utf-8?B?VFd6dUk3bHBQdnUvL051bGNoYmtEV0FYVlp3UzU5ck8vYXJZcjlyM05aR3dz?=
- =?utf-8?B?QitCYWlFTkI1cHdOUm01bXVTNWZHN2ZEWFFuQ1I1a1FnN2NEV0RoM0JxME93?=
- =?utf-8?B?VzZNSVBDQVVYN3E0MjdZenROWlluMzFibW5XQi90QXJPNmRYZDNVb0wyT1Jt?=
- =?utf-8?B?bXJFaVZTUDM2eEZHcXdSem5PYk82enZVVVp1YnVhRHA1TThWVDFuY09iQnBJ?=
- =?utf-8?B?clJOcDlwMXdJQlQ4ZW1hQTR5TXRuRGF6aUJIK2lISm80ZVlRanp1VTZVTVpI?=
- =?utf-8?B?czBoT1ljVEVmZFJXVzMzSVJoOFRlUU5TcFFhQjgwQ2sxalFNQnR3K2F4d0Ri?=
- =?utf-8?B?VEtUdGhEdlBNdlUxVXlLUncwcFVKa0MvNDZCVS8rWVprMjZTcHNMOGxoeEtl?=
- =?utf-8?B?S1c4NWdwT3BGUnJiRnpTRkxJM2tVc2ZEalJ0VmJPV3UyQzk0YnkzcXI3R01M?=
- =?utf-8?B?RkpHL0RaRHVSaG5qbWI5VGdaaUtqY3AzTzd6bDBqWDNuYUJQdUMwbFU0bWZn?=
- =?utf-8?B?dDkrZGU0RnZBV0dMSWJyVWE1STZiclN0YUdXZ3hGTk1qREg2NUlBS0ZPcWZP?=
- =?utf-8?B?MEtQOGxyUGVZNUw3SXdCTjVuSm1pRVZWOTAxMWUwZUxZU3laV2RvL1hqNzJm?=
- =?utf-8?B?R2JqeFd2dWMybFY3dmt3UHpKb2Y5Yk43RnRheW9kMDJhaDJCemNFQUpJaW5l?=
- =?utf-8?B?VFVqNFBUU2lFdTNabzJDZ3FPR2d2MExLcXgrUVVGL1ZmME9DSGlhWGkwcVdn?=
- =?utf-8?B?VVE5SzUwUE1qbzFJR2xrZFN3Q3FOVzZiOUQra1dLdVA1YnlONXo3QU9lMTg4?=
- =?utf-8?B?ZDZmY1EwVDVQSzFnQlpMMllPdzhrYlNsTkg3YnROWW9nM0RlV29BLzZkVSt2?=
- =?utf-8?B?ZlZhcWI0WGJEZ1hFVVdFb1owc1NQdHp1c3N2NDJoa096WXVsS1A0MFdkZHVz?=
- =?utf-8?B?NHhPTHliK0ZIc3ZBdTdsazdvQVVPUXVXNVdVYkhLblgxWFhia09vdmtIeDU2?=
- =?utf-8?B?NExWTHJnODIwSVFpckkxT3Buc2J3b0NFVlhSNE1YazZtMmFUVzZaRTYvZXY3?=
- =?utf-8?B?R2hEd2ZMTjhrYTdsaytCZmF1UmpmbGVxbVNUL1htT2RUTER0SW53WWh3L3VB?=
- =?utf-8?B?cmJZN0prQ3dFNWVwdFVFVlcvamtPKy9zWnV2OWNLWThCRS9hRDEyckU2TDBB?=
- =?utf-8?B?SWY5VGZ2R0hiR2dnNlU4SElzOGo5bGt0NkVuQ3B3SFZKNVhiL1FLcGhReFI4?=
- =?utf-8?B?QW04cnk0SUVXT0UzYWxZQkFrMTFJRTFMRHBiSTVJVm5pSjFCOXBGZUoycDVK?=
- =?utf-8?B?V0dpR1VaTzR2UVF5Q040c2owc3JIYituTlpDU0NqSnhEUmw5YVFDNkJaRy9s?=
- =?utf-8?B?MHVVZ2Z1U1hUdnFHNzBqUXY3TFYzdTh5SGR3anFKcE1CT2JjeXZTeEFqUDMr?=
- =?utf-8?B?YTcxUEZjK2lwMG9wVHduZnNWdzNObzdRbWplMU5MZ1VyL1ptTXZUYWZJM1da?=
- =?utf-8?B?Rk4rMXdoSlhkTUdRSFFRbHlCWkN0MDV2WjQ5TGtBSWplUHlqTU1uSHNsQlVC?=
- =?utf-8?B?T0NJLzVLYmxkNDNHZ215dktjMlFhekE9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UFdNVk9zNElhR3RLRlNhcFZpNk4zWWdvUG92ZC81V2kzS2JmbjVKMjVPeVlB?=
- =?utf-8?B?YWFHTi9nOGVkdlRBS2QzR2VLZTc4MlJleHU1RHozZWxpWlE2MFBONENya2xn?=
- =?utf-8?B?N1RCWmY0NG9yRitINVJXZzNoNVBUZm1Mc1Nkd29nM0J3MUoyRyt1Q0ZSV01V?=
- =?utf-8?B?cFNMMUpQbkxXcTd2czVJcXZxSmFxdHdPVHRqRkdEV2NteVI0Sk9GNm5SRlpD?=
- =?utf-8?B?WTFFNzJDZDRJV2JwcjFzUzVUM1Zqc3JLMUVqY3YrSGZhb0diNy9uZ0JhSUlv?=
- =?utf-8?B?NjVUL3NBejR2eGZyNzNvWUxqVUZBTHpERWtjWW1HcG9UcVNVRUNGQ2g4amIw?=
- =?utf-8?B?NGNYY0pldUcwQXlHM2lrcWVVcWVEWjZJNWszQTNLL3N3bEwxd25tZjdmeWdV?=
- =?utf-8?B?WnNBUGNkemV0bEtway9GZXZpdlJiTlpUMzJYRkN4UnVoZmdtd0xIajBwclFF?=
- =?utf-8?B?MVAxaWNVRWJvWHhHTS9LSG9MNkswTVVoaXU5WnZwRDEyQklTODhGRVhuRWpK?=
- =?utf-8?B?TDc5QVlYa2FLRWk5TkJYQU5GQmtrU2ovRlNzdFJCOW9BclBacENpSFordXV1?=
- =?utf-8?B?Wnk3VnNUaVIrVDJGaHNlV2FoREp5Z1Qzd25rUU14SjVDQTNZNGV3b1NPN3ha?=
- =?utf-8?B?OWZLRWxFRVpsTDJWdHdEUU02RytYV0pyYjhvV0ZzMmJCK05KbmZjbjRSank1?=
- =?utf-8?B?VjMraEMzSmZxbTJ3YmdSL3Z1N1JNNEh0dHB6N1hIb251b3BWV3BxdlBYbTRw?=
- =?utf-8?B?S3hoQUk5bkQwQUFud005cHhiSGxVRU1lT2duZWR4WDhjM2hiOW1MZnhpRVNy?=
- =?utf-8?B?ZGZocHlzRVF0Ujc4eG9DZUt6RWRnM1VsYXdqbGp3d2d2U21kbDBWR2FGZzl4?=
- =?utf-8?B?RFV0eGRmb0VPdUt6eXRWL1p2UlBHNWNHcGdRUWZ2ejdRZHU5bXIyUk50d3Zx?=
- =?utf-8?B?bXMvZERPU2RpL1dPdDJmNjRFdkJPSE5mYU43SDZOQzJNMTNXb09uKzFoZjBQ?=
- =?utf-8?B?NXR4bDNHaENOYnlCWjZwcFdZZHNCUWRUQjNTcU5xRWl5YWhHQWRYaE5VbVVx?=
- =?utf-8?B?cnN6bDVsWmd0UU5oQitqeW9reXVaRDBFa0grdnYxWDNQVjZlWUJZWWFNYldT?=
- =?utf-8?B?WDBWTCs4aTMvYjBDU2x3VmM1Q0dFRWlXdlkydERERlBZelc1NWs0N2lnSjFq?=
- =?utf-8?B?NlMwZy9QcENKWEZDVGdWbk9SNzRMQjZwWko5d0svMFNSVVZUajFaWmZ3SnA3?=
- =?utf-8?B?dVBZZHZiUVAzNUx2ZmhNZ1hmemNFcTNHM3Y1cjFzaFZ1enlRWEhzV3hVSUZ0?=
- =?utf-8?B?NUcwaDZaT0xMaUtORTd6anBNTFQ4Q3ZxZ3dQMGVVSnBWUkozME44QUZaYlhC?=
- =?utf-8?B?dHM3d0JRdGQxaEttc0IvWU1DUVJueS8zQlFyd25kTUFhOEp5dEIwR2d1RVA2?=
- =?utf-8?B?OWpXSXhnRWZBd1B4THFFRi81QzlXeS9MZFdYY1pwNVhicWp5ZUhCKyt2ay9S?=
- =?utf-8?B?Nm1IaWg3dzFydk1rRkM2L1dOZGVxVjdFeFNScXpwRzY1TTlIdUdQdVNMRGcy?=
- =?utf-8?B?a0lNWi9EeXJGcHV2MGttY2YzaHdMblpUanhXbEhNMGJqblIxWTBDSHVodTdr?=
- =?utf-8?B?am1KYkZSSE90MXNZNTdYejc5dnNiZno5aW9jSFNiRU9TdEhSYVdHMGlldFRa?=
- =?utf-8?B?bGo0ZlRRMFBPSldMTStNcVFrOVdFamY4UmE2dFg0VE4zSWU5ODMzcUZSc09v?=
- =?utf-8?Q?Bw1xyk79DRDUDh+M0+CpCwKNh0Wxi/0zzcUoH6b?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 311e2fe1-9374-4498-1830-08ddb8fa5655
-X-MS-Exchange-CrossTenant-AuthSource: PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2025 23:52:28.9265
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB6693
+Content-Transfer-Encoding: 8bit
 
+Add PMU configuration for the cpu of sg2044, which is the V2
+version of C920.
 
-On 2025/7/1 14:36, Krzysztof Kozlowski wrote:
-> Examples should be complete and should not have a 'status' property,
-> especially a disabled one because this disables the dt_binding_check of
-> the example against the schema.  Dropping 'status' property shows
-> missing other properties - phy-mode and phy-handle.
->
-> Fixes: 114508a89ddc ("dt-bindings: net: Add support for Sophgo SG2044 dwmac")
-> Cc: <stable@vger.kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 91 +++++++++++++++++++++
+ 1 file changed, 91 insertions(+)
 
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+diff --git a/arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi b/arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi
+index 6a35ed8f253c..2d21b2881ab8 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi
+@@ -2778,6 +2778,97 @@ l3_cache: cache-controller-16 {
+ 		};
+ 	};
+ 
++	pmu {
++		compatible = "riscv,pmu";
++		riscv,event-to-mhpmevent =
++			<0x00003 0x00000000 0x00000010>,
++			<0x00004 0x00000000 0x00000011>,
++			<0x00005 0x00000000 0x00000007>,
++			<0x00006 0x00000000 0x00000006>,
++			<0x00008 0x00000000 0x00000027>,
++			<0x00009 0x00000000 0x00000028>,
++			<0x10000 0x00000000 0x0000000c>,
++			<0x10001 0x00000000 0x0000000d>,
++			<0x10002 0x00000000 0x0000000e>,
++			<0x10003 0x00000000 0x0000000f>,
++			<0x10008 0x00000000 0x00000001>,
++			<0x10009 0x00000000 0x00000002>,
++			<0x10010 0x00000000 0x00000010>,
++			<0x10011 0x00000000 0x00000011>,
++			<0x10012 0x00000000 0x00000012>,
++			<0x10013 0x00000000 0x00000013>,
++			<0x10019 0x00000000 0x00000004>,
++			<0x10021 0x00000000 0x00000003>,
++			<0x10030 0x00000000 0x0000001c>,
++			<0x10031 0x00000000 0x0000001b>;
++		riscv,event-to-mhpmcounters =
++			<0x00003 0x00003 0xfffffff8>,
++			<0x00004 0x00004 0xfffffff8>,
++			<0x00005 0x00005 0xfffffff8>,
++			<0x00006 0x00006 0xfffffff8>,
++			<0x00007 0x00007 0xfffffff8>,
++			<0x00008 0x00008 0xfffffff8>,
++			<0x00009 0x00009 0xfffffff8>,
++			<0x0000a 0x0000a 0xfffffff8>,
++			<0x10000 0x10000 0xfffffff8>,
++			<0x10001 0x10001 0xfffffff8>,
++			<0x10002 0x10002 0xfffffff8>,
++			<0x10003 0x10003 0xfffffff8>,
++			<0x10008 0x10008 0xfffffff8>,
++			<0x10009 0x10009 0xfffffff8>,
++			<0x10010 0x10010 0xfffffff8>,
++			<0x10011 0x10011 0xfffffff8>,
++			<0x10012 0x10012 0xfffffff8>,
++			<0x10013 0x10013 0xfffffff8>,
++			<0x10019 0x10019 0xfffffff8>,
++			<0x10021 0x10021 0xfffffff8>,
++			<0x10030 0x10030 0xfffffff8>,
++			<0x10031 0x10031 0xfffffff8>;
++		riscv,raw-event-to-mhpmcounters =
++			<0x00000000 0x00000001 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000002 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000003 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000004 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000005 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000006 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000007 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000008 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000009 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000a 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000b 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000c 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000d 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000e 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000000f 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000010 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000011 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000012 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000013 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000014 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000015 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000016 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000017 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000018 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000019 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001a 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001b 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001c 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001d 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001e 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000001f 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000020 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000021 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000022 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000023 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000024 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000025 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000026 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000027 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000028 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x00000029 0xffffffff 0xffffffff 0xfffffff8>,
++			<0x00000000 0x0000002a 0xffffffff 0xffffffff 0xfffffff8>;
++	};
++
+ 	soc {
+ 		intc: interrupt-controller@6d40000000 {
+ 			compatible = "sophgo,sg2044-plic", "thead,c900-plic";
+-- 
+2.50.0
 
-
-> ---
->   Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> index 4dd2dc9c678b..8afbd9ebd73f 100644
-> --- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> +++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> @@ -80,6 +80,8 @@ examples:
->         interrupt-parent = <&intc>;
->         interrupts = <296 IRQ_TYPE_LEVEL_HIGH>;
->         interrupt-names = "macirq";
-> +      phy-handle = <&phy0>;
-> +      phy-mode = "rgmii-id";
->         resets = <&rst 30>;
->         reset-names = "stmmaceth";
->         snps,multicast-filter-bins = <0>;
-> @@ -91,7 +93,6 @@ examples:
->         snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
->         snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
->         snps,axi-config = <&gmac0_stmmac_axi_setup>;
-> -      status = "disabled";
->   
->         gmac0_mtl_rx_setup: rx-queues-config {
->           snps,rx-queues-to-use = <8>;
