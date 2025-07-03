@@ -1,94 +1,82 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407DB2E3AE7
-	for <sophgo@lists.linux.dev>; Thu,  3 Jul 2025 10:25:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DCF2E49AF;
+	Thu,  3 Jul 2025 10:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751538332; cv=none; b=u/Kx3fswgKltinalxYotguJVb/iSYhSM0LdELeZBkjFbMnCq5r1mks7D+fcz+A1XWGTjsavGUoYIY0iLUDv5NbpSzHm10kXqROiyJLBfNSgPVY/afS6Zcp8Fwi3CrGRIctkTN61QIBOzGivjgyRWbN+JsCJ5L1H8tvvJiBu+hT0=
+	t=1751540385; cv=none; b=Pil0TLAPmL+z9J0Vri85TYagKVYPUDF5riMMbJ+xex3yUwqAyUgGkf+RY6sXIVqTvLCigf7/y52ZnGr930eY/TPzOWSHRvfXiyozbzYNo9fJMfxq1740jDZvHUPsuaOLqBv7GUN0KHpyHyDcAkXWr+GxvEXeoaYWcEnoH1mgt5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751538332; c=relaxed/simple;
-	bh=QHuNI1J0mocagzipGR5aQ4IGSr0R96zNPV5QRZknJuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZlJelYwS1uQSTvXtJxfbBbhTya4kkGsGVW0TeORhRtwsJIIO/VFOWcF1gTiUlKG3mtDtY6XScsxI9blOQuSu8PmU3TPnnMo9JJbXZnTyfdWOkByp0oe3697Y8JGrwcrKQiujckaEBS6crRxQt8zW2Tz9C6KJYfs/E0Ap4ZAnJv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R5kn57bT; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751540385; c=relaxed/simple;
+	bh=5Wfu3BOvo6JOU2//k5Zq3JqFIi9e1V4gRH8NmL7fsD0=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=ehZtSO3yEgHccbAxi3E1vFHYGuEIJo5PgNYiHfWlSYAv1vySF3MHoY1vp0uPBUqsNLpp+58xKXiXzTkTSL4p4858X7lhYohFbn5Bjr9vGUaW80MuKYBXFmm5Wf3g0YUtHZMJUGPrZtLYexSPJyDsVOPjyYpf4CUPbAmc4fWstOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRjHPSCk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R5kn57bT"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-74924255af4so4609455b3a.1
-        for <sophgo@lists.linux.dev>; Thu, 03 Jul 2025 03:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751538330; x=1752143130; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dXUjD7MfImAQZU8+JU7QOVIdG7kZgmgU1R+Tfu+SNUU=;
-        b=R5kn57bT3YEqh3pLCbkYEWKXFgWxFJmQAAG8H+WN43sn+2EWlbNc1G+bV072vB94N5
-         LmoIxl9RRcEYHebkyoZEZ5JCdDJHLkwuvevohoiog5PuUPOUAxsb6SlUf0CdZyffhajQ
-         uBArz5ccFAw2RLP0S0HiMVckUtKT/S0odV9KqcglPUmzvFtzDA/CNcFIo1uReiWPwTrY
-         KPbYyysN3MouVG/k0JgBP7vkbhj0f0TROkek0ikV6hBM/MbrW8/WvCSwENPQjNCAWqHk
-         DFbdiR5gOvzMxPz2h5Hhqci8OhnjMSUuJF/XKf/sPu4rgzMMBrgDJaCta1HfJAqTcvNU
-         Vqog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751538330; x=1752143130;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dXUjD7MfImAQZU8+JU7QOVIdG7kZgmgU1R+Tfu+SNUU=;
-        b=f2Q9bjMIgta74LiQNQNwi4Mt/fOo45uIp99z6YSW4Gf/GoR2hGw6CrFTxTE9CsdEzK
-         fWLEUdUma0EA+iMtxeDVWPCgb2D+vnS760fvhcFE3ERGNRPaft4V73L/zPeRQumR4aUQ
-         lE5+A5IDvHVK9b4AarX2Ye+tMU/QRgPxohzFOL6dmueuJM+5s0EJIIVWx8/q6iJXbd3N
-         fWyATaRn83meDLW8J0/B74PtTGuoc5RTbx2eWlUqP7DejTJjuYU/hGTb9vwd8dLEndSa
-         yxoyJnPmaTWq0mmsPxq8DKWjhRdC3Ej6byCU+NjMIEB5F5bmSk4GhGpPYib7fnhiadZC
-         /Fvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXAUTCubBilDgdpP8xrAWBNW8khnvSK/tHOw/YPS2tZizfYTnqYwwqDquWAj4Q314PtVg8y7qM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1Dv6OVy/+Wp+ddDpz+0Oyh3Ri7ftzJS58iR1vlrofzo6g0Ncz
-	iFbWeKH4VRsJhevF8iASP5G4o1pz+aZYLIFMFFYpDuArTO8WF2bXlYbT
-X-Gm-Gg: ASbGncsSiCvPqV49a45wM1nCIJWgD1e5mQoEZp93x5jKu8RvxZx59HlitguFWaIpElo
-	GQ+3CiDXCkHY9sJvUsBI7p8G3AXgxrHnpLlvdtsumVJOUfllmYpRkh6kXixJ8OmSHv2di5ISMUL
-	8D2K5gdyuDuTJrbTzOOqY6YA7rNDkDHBTi/ZvxMV8nG1B6ZEAKattP5H8hx1HI/vhQrWjxU8eSR
-	/6MfUe446t2iF22aIu4aWHU6ecfwu1ktIzUcf8kBXOm/p0G9s6lPqZdcd2S3RH3MB+Gab1bovqF
-	zr2EvFQcddn9CWuv9OeMAawXT4SU64LOV5rbTJOvXB6T94P4Xp2CBCVKp/lV9UV4XYS0f91N
-X-Google-Smtp-Source: AGHT+IHzz3RRYRWu26js5qfVZF7wwD2MorMUcc2Nqsg/oVzDHjgNVbsweN57uB23YZEzDzkG8THccA==
-X-Received: by 2002:a05:6a00:3c89:b0:740:aa33:c6f8 with SMTP id d2e1a72fcca58-74b5131899cmr8373208b3a.7.1751538330427;
-        Thu, 03 Jul 2025 03:25:30 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af558914dsm17503280b3a.78.2025.07.03.03.25.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jul 2025 03:25:30 -0700 (PDT)
-Date: Thu, 3 Jul 2025 18:25:27 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Junhui Liu <junhui.liu@pigmoral.tech>, 
-	Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Yuntao Dai <d1581209858@live.com>, Paul Walmsley <paul.walmsley@sifive.com>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-Subject: Re: Question for CV1800 mailbox users series SoC
-Message-ID: <pfe2tzvujcfogxnj6uvnjaicktl5ifcj3rhw6d5nyq77cyhzlc@uonejrloi66h>
-References: <iq36z2mqetrdhxe24w455quvqixcy25ovuxjz3rgelpgln4j3f@kjxn5z7yb6bz>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRjHPSCk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E22C4CEE3;
+	Thu,  3 Jul 2025 10:59:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1751540385;
+	bh=5Wfu3BOvo6JOU2//k5Zq3JqFIi9e1V4gRH8NmL7fsD0=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=oRjHPSCk2Ehs7XgfW8EUvFjU1aHTAOW0sFsEX1FpOe8ck4oDoyJ1v2kYG2IfMSqpZ
+	 lTTlaCa66BWx7SvJzO8UmMWEztsfmgz9rDDAgebXt3a74c5GqpczqmgrCmvK+ngK80
+	 ryiqHtAvh2yqR+enjVPW0a/dFz3ZJP32rZEo1Sz8emihr8Mo3MbWBbc9Vl7i4/iHXk
+	 2KCgQNYCu8SxlSzU8SVdPxNiE8MQlfTRWlpKWrIYTHR2/1b08eLyN5ruvqVRAcDAuN
+	 rETvLuvaazPFvXDieGc/COmJJh12qx45jYgYL1EL5QSrwVaZc4xkhmmuqH9zSXbRw8
+	 8WNlk4yW2L3RQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id AE0B8383B273;
+	Thu,  3 Jul 2025 11:00:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <iq36z2mqetrdhxe24w455quvqixcy25ovuxjz3rgelpgln4j3f@kjxn5z7yb6bz>
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] dt-bindings: net: sophgo,sg2044-dwmac: Drop status
+ from
+ the example
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <175154040925.1407041.4796273578925200591.git-patchwork-notify@kernel.org>
+Date: Thu, 03 Jul 2025 11:00:09 +0000
+References: <20250701063621.23808-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250701063621.23808-2-krzysztof.kozlowski@linaro.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, unicorn_wang@outlook.com, inochiama@gmail.com,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
 
-On Thu, Jul 03, 2025 at 06:21:38PM +0800, Inochi Amaoto wrote:
-> As I have seen you take the mailbox driver for CV1800, I wonder
-> if you have developed the driver for the 8051 core on the CV1800
-> system? 
+Hello:
+
+This patch was applied to netdev/net.git (main)
+by Paolo Abeni <pabeni@redhat.com>:
+
+On Tue,  1 Jul 2025 08:36:22 +0200 you wrote:
+> Examples should be complete and should not have a 'status' property,
+> especially a disabled one because this disables the dt_binding_check of
+> the example against the schema.  Dropping 'status' property shows
+> missing other properties - phy-mode and phy-handle.
 > 
-> Regards,
-> Inochi
+> Fixes: 114508a89ddc ("dt-bindings: net: Add support for Sophgo SG2044 dwmac")
+> Cc: <stable@vger.kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> [...]
 
-Please ignore this, I have forgot to remove peoples when replying.
+Here is the summary with links:
+  - [net] dt-bindings: net: sophgo,sg2044-dwmac: Drop status from the example
+    https://git.kernel.org/netdev/net/c/f030713e5abf
 
-Regards,
-Inochi
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
