@@ -1,102 +1,86 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428B2221F31
-	for <sophgo@lists.linux.dev>; Tue,  8 Jul 2025 06:41:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87731E9B31
+	for <sophgo@lists.linux.dev>; Tue,  8 Jul 2025 06:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751956875; cv=none; b=YC2o1KqCVDDFFOJkBHW4HuV78n3PJBMzUAwK6oSJvZyPI0jwsKIKL1Q6tUZRHQosNjPeaOTV6Z63xZac6Ag9W+e00q05458q1oz6rlQRrdBtMSveiSS54GrpZYUimQreakEWtBV/XWAKEq5/IIq/0ZrWaKUlZxNhVgWIxwok6po=
+	t=1751957210; cv=none; b=G92lnjqedWHLXWb08mre+FoJhBEgF7g6+tn/vmoUPxOsP4F5c0OQY2FQqYSCIEre6uhuF7xuVWDdkJXYWz5ifRLEv+5X7iF7LjZi49E8B9zbKaZLY2BD7itgxW+3RihDgvtBCuwly6D9ixUi6oBKoXQvAkipHtzy3aB8XMYmtZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751956875; c=relaxed/simple;
-	bh=/sRu8XgOB223jLFD3unbjdJLgthr0CulTEGpn5wRRFM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GBYrO7G9gynhap8xnjoKp1sbXwvKkPUrv5Ic8SpReCQQGU3BvEeNa0mP6E7mGNXR1Ay/aLKwmRyyM08k7U5boGftuRP3WP2YeX0FUjLtArPwFVHmDb7/6JUUN/aVlF1RWuqqSL0uaiRlC5v5fEUm7eVV+f7q55TDlyBNxAp5oIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MH1ozB2e; arc=none smtp.client-ip=209.85.215.179
+	s=arc-20240116; t=1751957210; c=relaxed/simple;
+	bh=/cApN7+nPLX4ympFWe9LXoIFG9iaQZgbTZy3sGnfWz8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g73Yp2anRWAUiq6p46hFzNigW8H7RQyZ1WGp7eMVTJveCKTdwnICxuP1VB2AdmirJ7cqBwbC3sUaB28P6r/yj53g9dsWAKxygfgwThy9Cfjxq5h1i+OPUIeXWNJu+md+qzsB7Mtw05ilWpO61t4L9rg2m4ImOv2X6iUhgpUb+Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gnJfza4n; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MH1ozB2e"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-af6a315b491so3536803a12.1
-        for <sophgo@lists.linux.dev>; Mon, 07 Jul 2025 23:41:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnJfza4n"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b31d489a76dso3270070a12.1
+        for <sophgo@lists.linux.dev>; Mon, 07 Jul 2025 23:46:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751956873; x=1752561673; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g8NWQCR/vjjoocQDKQ3G4Y+84Q55VY5nfXeYI6Rtw6A=;
-        b=MH1ozB2eQhlnL4K4/Yj7xWH6Bb+Dy2cgJQW40diUo4qsZD1OwovH+6qy+WWFdEqMm7
-         CCzUqsTBfV7wxmB2JsBxV9DrKXRSujzHuKNagb7omH2DUjPN/FjXqwiPjiV1K6M/uujV
-         iFtLvigba7yEOPExyphXm+GmcvfJVKSCPgoDu944nenLjhjjlLc2tC5FRstYsKK9pqP9
-         MhxQ+JXgPvUxC3PSnZplI1UiZJxmdkZhVQ8QOeStZB5te+DewY91Qc8UnxKm1FAAv6Wo
-         aYhpiahu9SA1AvRCtFa2XVWGDGRgx0uu2I/2ybyxC2Li4eWnPr5C2JMoUM7+vbQIp7wm
-         0S3Q==
+        d=gmail.com; s=20230601; t=1751957208; x=1752562008; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=awAK1sQvEZGu9RSuFaWauBkV5Ie3EeA43euQnu2ZDvY=;
+        b=gnJfza4nbWpeP9CSXn/LTXvWhF5Y6c3rVuiyeceljOXNePMIKe8mWg/oyr8LzSf6Fz
+         yHvTL7+wMQZ+Hf4FhI359Nk5lecGa2mlDiPm+5esHo9lXHQv76vut+/9s+wPNTc84yRA
+         DMrhhnFKYDljOlug8PflGdxPDV3n4BUIxFn1lTHK8rVsU32zF+pJKP08jiGDFJ263XB1
+         LFI/bb9JH/Jp5C5MQNc8S1zlsiNxpi6XrfVlEY5z7nwUc7baP3UKlLgY+6lej7KL2jDP
+         dieQgA+9dtbFOYtnqJ1+A0fDoI2N1y3yhCYjPzYpLHP16+RQJdrJPd6QJr0u9lvaxq8k
+         ASIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751956873; x=1752561673;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=g8NWQCR/vjjoocQDKQ3G4Y+84Q55VY5nfXeYI6Rtw6A=;
-        b=UU4ZJJZ3FuOEdQIDH66JjeRadUtja1UwvPJ1f9FPxrtR2bDfeVnWd0WFPT/A3FHuBJ
-         SJ54SVx7PJBOrNEfxSGkp0K5QLEWRyJ2nZEOTt8ycKEIe+55NcqkRA8agIaZH8h4+eEB
-         ojUyQePkt6IFjxvIhcT4f8HSdwjoVWfHnTjTS13vIoyYSSy1qlwfSnWAA41tu5PTKXG6
-         lUClRlCI7gf5qGnlLPBMXa0PBLsFfrUlpt/aYkqVHNwZp6jD+U3uewjgmia+i54Qq97f
-         S83xy4SWphFLXY5DU5BCqrHdAVMBC+o4AOITCw/Gt7bWNbeo+AtLdOIMdloA/pU4Jzyo
-         VJ/g==
-X-Forwarded-Encrypted: i=1; AJvYcCVYXOJz4ihp/553zm0RrOzmffWOa+porQd3bTE/P3BtaClsJP0K75MSj7dxvwQ/9KUJ8/vEX3w=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyudImUhWpZuiFMFAKTgBiV3RVuR/ID/on4jIQRBV3TLMIAEKLd
-	sPVzytCFQJAV/0EAXaNTW8Kx0454/QjJzRh3AIJwxl7AioGenVsZRSZW
-X-Gm-Gg: ASbGnctwyTTLl2LiwrAgGV8aA1VM0efGdhSTyfwXhm+YlVv2f7gdYaKHld2luyb/96y
-	0JJAFkmJrMu5UXOMsv+OAtDuTPmozbJhGo408huJUxiZlF8YxS2iOti6BfCnuemVNaGYj3YglDf
-	6LyTHxSvb4ES68o9+HejMVA6C4lUOC5cer5p1/YCadjFczmbHGLrv1uSi72Q48V1gVOTE4+wQKr
-	OTojHKzJ6mDf7cey5Y9ZoOS6fKTvwuL05I9e1KQ+rtXA+GUTBbF1HUrNvFnLtG/7mW47aMYNVVp
-	kH9RR8Vg8ttIT8Y+h3Hcu6MLz/O3/pp4KrJ/BF1kztPM/+4eLHNQwMuViIkZXg==
-X-Google-Smtp-Source: AGHT+IGi3okrZezMQqZWaDno0rnyTSGvjOHwFQZN6i9UVU/ZSCdmvAAsyqq8FHCig1FFJj0ZJIxfOg==
-X-Received: by 2002:a17:90b:1c0a:b0:30e:3718:e9d with SMTP id 98e67ed59e1d1-31aac552db1mr23882560a91.35.1751956873397;
-        Mon, 07 Jul 2025 23:41:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751957208; x=1752562008;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=awAK1sQvEZGu9RSuFaWauBkV5Ie3EeA43euQnu2ZDvY=;
+        b=WUJQGp0jSeaxSGrMxA0wJgxoUExSgWkxY7EeXYutzyO1NrkZYSIbaXUcmtLgkNueQ3
+         Wye/Ada5sMY1ufH24JGCvupo5wpRl9iIg1Gs+fwNhAfR1yCQcZvBHy3OHxIhWydbUM0o
+         Fi8JFW4wGhVGAqzcVeLneT0j2DJ/9LmQ6G9Hdr2lnTLUE3ufo2OKeIz11MQNvucM1nbV
+         FU030GKthGVoHVi8fjMJP2rFve2a59mFJHDhFFgJjoa00Mf56Y7cWgxakWez6akVlKEW
+         ZEgSabglWxhnMB7ViwgUbNmD5khXXIzMvD/5knG0YF9z3yQj0l/P2kp5XgVAvA8mr7Um
+         0M0A==
+X-Forwarded-Encrypted: i=1; AJvYcCUrCGMUg5X9RmYDfJZEvwVSuSkCqtmqnZqm0/5cdxe7y+VqgJZ6a4eQOrIjX62Ur0da741nPWk=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzMwZeKEtIQycobkufhXdfh+NhQGPoHxlPIgbGR1J9fKiGxqkj4
+	dCrJdsPsTsTSjybMY5A1Cjy+6QOkPOt0R3IlmKvlv+X+GNyzGXkqVBw6
+X-Gm-Gg: ASbGncuo4ERDU2+GJLwL8T4LVhWUREwmn0TrC4bO7qcYHPihzlEN19LZnTrP8rMN+Hi
+	4UflicU0iHgVAVd73VLGMMrT/HbgBIZRuVvGohCjfhM+vJb6YUv5+Zlut4azySoGB9GSkqrV5Cm
+	hUvwHJHYYDav6Oq2qj/n3YH4E5mvQKjgiaPoC0ASBEbe5V5E1cDeoXOpmfV1pQ2+w41r0y1HetV
+	R3nYc8jmWsFYN+s9n0VmtFGuIxgDR6/ebENryD/KbXGlvI5fHXB+nejF5OYGCp6FFZdtUuMed9X
+	km/qGavvtqXnn5VKZZ9S+4TOpBs0z4iFFtvdjcPy1EOYHWSbo6otaeDF4YLsHQ==
+X-Google-Smtp-Source: AGHT+IHNx4OiWoCq7M9t3p40CvKjBGEYTQs9/RQVmrqVzX0hKDNozKjkB+NwYNXyY7dlbQecei9Awg==
+X-Received: by 2002:a17:90b:2ed0:b0:311:f30b:c21 with SMTP id 98e67ed59e1d1-31aadd9fd46mr18022165a91.26.1751957208011;
+        Mon, 07 Jul 2025 23:46:48 -0700 (PDT)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31c22055c99sm1328425a91.9.2025.07.07.23.41.12
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23c8457e15fsm103684335ad.154.2025.07.07.23.46.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 23:41:13 -0700 (PDT)
+        Mon, 07 Jul 2025 23:46:47 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
 	Inochi Amaoto <inochiama@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Paul Walmsley <paul.walmsley@sifive.com>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Lothar Rubusch <l.rubusch@gmail.com>,
-	Quentin Schulz <quentin.schulz@cherry.de>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
+	Richard Cochran <richardcochran@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Zixian Zeng <sycamoremoon376@gmail.com>,
+	Guo Ren <guoren@kernel.org>
+Cc: devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
 	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>,
 	Han Gao <rabenda.cn@gmail.com>
-Subject: [PATCH net-next v2 3/3] net: stmmac: platform: Add snps,dwmac-5.00a IP compatible string
-Date: Tue,  8 Jul 2025 14:40:51 +0800
-Message-ID: <20250708064052.507094-4-inochiama@gmail.com>
+Subject: [PATCH v2] riscv: dts: sophgo: add ethernet GMAC device for sg2042
+Date: Tue,  8 Jul 2025 14:46:25 +0800
+Message-ID: <20250708064627.509363-1-inochiama@gmail.com>
 X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250708064052.507094-1-inochiama@gmail.com>
-References: <20250708064052.507094-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -105,27 +89,101 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add "snps,dwmac-5.30a" compatible string for 5.00a version that
-can avoid to define some platform data in the glue layer.
+Add ethernet GMAC device node for the sg2042.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 Tested-by: Han Gao <rabenda.cn@gmail.com>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 1 +
- 1 file changed, 1 insertion(+)
+Require the ethernet patch series for functional device:
+https://lore.kernel.org/all/20250708064052.507094-1-inochiama@gmail.com/
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index b80c1efdb323..399d328b3b11 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -410,6 +410,7 @@ static const char * const stmmac_gmac4_compats[] = {
- 	"snps,dwmac-4.00",
- 	"snps,dwmac-4.10a",
- 	"snps,dwmac-4.20a",
-+	"snps,dwmac-5.00a",
- 	"snps,dwmac-5.10a",
- 	"snps,dwmac-5.20",
- 	"snps,dwmac-5.30a",
--- 
+Real board dts patch:
+https://lore.kernel.org/linux-riscv/cover.1751700954.git.rabenda.cn@gmail.com/
+
+Change from v1:
+- https://lore.kernel.org/all/20250506093256.1107770-1-inochiama@gmail.com
+1. separate from the original series and add dependency id
+---
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi | 61 ++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index 85636d1798f1..b3e4d3c18fdc 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -569,6 +569,67 @@ spi1: spi@7040005000 {
+ 			status = "disabled";
+ 		};
+
++		gmac0: ethernet@7040026000 {
++			compatible = "sophgo,sg2042-dwmac", "snps,dwmac-5.00a";
++			reg = <0x70 0x40026000 0x0 0x4000>;
++			clocks = <&clkgen GATE_CLK_AXI_ETH0>,
++				 <&clkgen GATE_CLK_PTP_REF_I_ETH0>,
++				 <&clkgen GATE_CLK_TX_ETH0>;
++			clock-names = "stmmaceth", "ptp_ref", "tx";
++			dma-noncoherent;
++			interrupt-parent = <&intc>;
++			interrupts = <132 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++			resets = <&rstgen RST_ETH0>;
++			reset-names = "stmmaceth";
++			snps,multicast-filter-bins = <0>;
++			snps,perfect-filter-entries = <1>;
++			snps,aal;
++			snps,tso;
++			snps,txpbl = <32>;
++			snps,rxpbl = <32>;
++			snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
++			snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
++			snps,axi-config = <&gmac0_stmmac_axi_setup>;
++			status = "disabled";
++
++			mdio {
++				compatible = "snps,dwmac-mdio";
++				#address-cells = <1>;
++				#size-cells = <0>;
++			};
++
++			gmac0_mtl_rx_setup: rx-queues-config {
++				snps,rx-queues-to-use = <8>;
++				queue0 {};
++				queue1 {};
++				queue2 {};
++				queue3 {};
++				queue4 {};
++				queue5 {};
++				queue6 {};
++				queue7 {};
++			};
++
++			gmac0_mtl_tx_setup: tx-queues-config {
++				snps,tx-queues-to-use = <8>;
++				queue0 {};
++				queue1 {};
++				queue2 {};
++				queue3 {};
++				queue4 {};
++				queue5 {};
++				queue6 {};
++				queue7 {};
++			};
++
++			gmac0_stmmac_axi_setup: stmmac-axi-config {
++				snps,blen = <16 8 4 0 0 0 0>;
++				snps,wr_osr_lmt = <1>;
++				snps,rd_osr_lmt = <2>;
++			};
++		};
++
+ 		emmc: mmc@704002a000 {
+ 			compatible = "sophgo,sg2042-dwcmshc";
+ 			reg = <0x70 0x4002a000 0x0 0x1000>;
+
+base-commit: cc6a9fb055e446e76a23867e42f12c4eff44eb00
+prerequisite-patch-id: 7a82e319b011e5d0486a6ef4216d931d671c9f53
+prerequisite-patch-id: 5a30fb99ec483c1f5a8dca97df862c3a042c9027
+prerequisite-patch-id: e0da79790a934916d9fc39c18e8e98c9596d27ab
+--
 2.50.0
 
