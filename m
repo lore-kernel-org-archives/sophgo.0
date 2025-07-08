@@ -1,330 +1,128 @@
-Received: from sg-1-31.ptr.blmpb.com (sg-1-31.ptr.blmpb.com [118.26.132.31])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B3F145B27
-	for <sophgo@lists.linux.dev>; Tue,  8 Jul 2025 03:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=118.26.132.31
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071E2189F3F
+	for <sophgo@lists.linux.dev>; Tue,  8 Jul 2025 06:30:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751944890; cv=none; b=J3Vhowfqpve+DYc+LvvikngJKJ/UPkmmc+ZJhMuR/dZ1XJGba9F2lrDONASP6DFX3/OmNH50iu5B8ePz9asUhqgtwYN08i1T2qh+H/4TpZN27ThSuTUoH4kcbhibjYv1YxRiY9pdGMLBCWasSCoYg9cGviTEfvWu84MPct442h4=
+	t=1751956251; cv=none; b=pxL0DFakKRAeVY8MBUu0KDDGolPeTUx2gyFu1sJ3f5u5kyxc4xOCx0AWCfKrTvdOJY3nvFbZBOAB+MXKEDEzkjDPDlQvnUxLNpEvxFjQHC6z+cPMbYtcsff1L2M79lP6MgFtkuZdz9jmkVnlwIG2yx4dgActmwOp0OcaZb0ng1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751944890; c=relaxed/simple;
-	bh=bzHv4eU31X/RdPTqcUe73N6UHOSb98BHHaw0WjDXxpg=;
-	h=In-Reply-To:Date:Mime-Version:Subject:Message-Id:Content-Type:To:
-	 Cc:References:From; b=IOK7vndoHtSgGowgbXO72+D1JTMKC3urGGiHBN5rpluPZe19M6yZAig01BtrSSE+Gp0Cp4ca0QHAKskFmz6P5RhKDZxBd3bP93kXoa/m1FDS0y088sEkqilkYegCpxg1nTXXqgo8OoA9YqfGG4aznpQz9Gatk7uMNJ/t1Qa+Jls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lanxincomputing.com; spf=pass smtp.mailfrom=lanxincomputing.com; dkim=pass (2048-bit key) header.d=lanxincomputing-com.20200927.dkim.feishu.cn header.i=@lanxincomputing-com.20200927.dkim.feishu.cn header.b=0XFtq1rI; arc=none smtp.client-ip=118.26.132.31
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lanxincomputing.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lanxincomputing.com
+	s=arc-20240116; t=1751956251; c=relaxed/simple;
+	bh=1Zka75bNEvXEduKJP6vEIX1BbDz+ii0kbMA+uIdNB/A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZhZU0/wsgioJKN7PF0pFK7KdJixPEVoWaRAGu/ZsRFtevWP9+ESqlLOT6J1z1XQW1yzn3N8aaFuh0oAgtu3dTmIEGB8E5wWozz5tOGdtrXE7wsG6yU7SKcKZBRLNCKwog2+8uENI65McC+hN0FP610aHUYIA2k4u3ZEZG2r6RJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EzKrgbRY; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lanxincomputing-com.20200927.dkim.feishu.cn header.i=@lanxincomputing-com.20200927.dkim.feishu.cn header.b="0XFtq1rI"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1751944882;
-  h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=zg/YomFgWluXbABhhcO8ioOh4E5v2C7pZz7d5544dM4=;
- b=0XFtq1rI2Q6dFJwemZvO8QeXnbU32xXFv6jDcy/HA7WN8LrPqfRr/5VgvayB9MVCwBTMXU
- VJj6fRqLFra308eGJDZ4M09d20AFxzEtarTuQ7rE51jfY9g5egF8QXeNVtd9U+rxIGL8Fy
- hVVzkmv+4ZArOPqEobdrPgRiLVEF+dyFvzM6+QHDTaXGQG7Cq3sqwQ0VzFu1PUzpEQxUyB
- kk5iFmg/t46oZzorFzJnhG67UFUi3c/W09p6CSvQHbCGEuFQJAW1okA7UfDGUcPPWQNC3Q
- zll79zrgR83ICAtQ6IxXvLBFF2i6PzAgrIkYTGjPQ1hEx7SkNUhwD+d3QX+jOg==
-Content-Transfer-Encoding: 7bit
-In-Reply-To: <c1b6ccdc69af0c1457fc1486a6bc8a1e83671537.1751700954.git.rabenda.cn@gmail.com>
-User-Agent: Mozilla Thunderbird
-Date: Tue, 8 Jul 2025 11:21:16 +0800
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EzKrgbRY"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-748feca4a61so2151893b3a.3
+        for <sophgo@lists.linux.dev>; Mon, 07 Jul 2025 23:30:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751956249; x=1752561049; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NTSaPd2KsxbQLmtDO+kQIyiudpoUlJNATnX1VXPLxSg=;
+        b=EzKrgbRYTXeNlATavfLejbGMetb4JVmJVDaWc7pG4TCIyre5KozeHhrx1WNTdVR8Dv
+         TSQD8Ms7LOILfYj0Zc9ZCubWsFrGS8VFwf1Fznz7xpayCUG2C0HfzarEd4eu9BGpbIfH
+         KB2IxQAMQ74YKRztmSxP4WbNJfDqPaVK9jtUc/kXmCzqG/m6KGv1qphyAz8vYEidrkTQ
+         rtN54p3Q2+DgZ8vDT16uYpGahZ9UnOa7jCuYDXoWQm9Ssded2l/nhrkN51rUz6TA3Zbs
+         /ljDX0ZT69YTUPkwe4lhtI4WJ2bChkp62IXsjJuczkhDdAFbbFwkTP7jwBebBFH+OCwx
+         qqHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751956249; x=1752561049;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NTSaPd2KsxbQLmtDO+kQIyiudpoUlJNATnX1VXPLxSg=;
+        b=uerAdfWNbR2Fb0HIr70m1xsmVLiT61OJF8oeU4IAsH/YLiyKqQrUorWwQxNaNaOANt
+         SQOsB4opQ2Jcnfj8GSJ4DslaiLei9yaJFWxr6X47QhkLzzCgObXIy46e9NRmJu+uQ0dg
+         Lt0QvggRZ8mDVp3Z2lSlPqnXeyk4BP3iZz9+qpzZ1yvUHFpydPS9ZH5+yEyRVK51M8j6
+         LiETsl1bt46yGkl9oT7OiqeM6pdhKu2cn9ne+Ske1tAJzgfVzAgNmozW1RdIeRQnPt+X
+         5Qh7jTg9LOf4tE4rhF8HziKFL85tkq3grs1si7IoiYW8OPnZ/BRbb50n2U6fKtkqKM0B
+         uC0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUCTD2JelEDW8tB0pUNLzEs941dyGhbRFdMPHGeKIDXZSBTY88l97c4nQn+NVV2ZlOY3tU8Amc=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxn7B8KQg9B7UOpGksw9YG26NHlq36XNkJnpvjOTqiWaA/sGRKz
+	IAXyDg6l2sxlXtYE8ssO6KBelGXopra3vClOUYxr5LcMWFv9Qz6XvZgN
+X-Gm-Gg: ASbGncu6eCk0FC2Xp1YSwSvXWodsDnhid6+s3qnOeFEth21ZSBumOQoe1brng787mvc
+	exmKL+ux/rV2YJwOXvLrvKfoJE+fg7UNJ6+ziT176vzo2nfWna+jAU3CUnQnCg5Kh3/bwik1kH/
+	M/WHnH6OrQY9jzMWnQtt/JG3JdmpBnRCtdTpqcr01AgSdV7k6y3Gc2V+PWIJo0P8EoSD1hTSoUZ
+	OvO6QJvLNEZwkmSvDyQSyCY7IXsKj+Nr1ybwNuPmIAopRDZS3WwKlSGElnFInGylD/IVmJMyAAG
+	x5pIvTJ3pQlebQaZKYyA4PZS1HpIjaHtQ7HuklM8jzpI3ATwQaBoQPu+Mmr9AFVr0YUqJbpn
+X-Google-Smtp-Source: AGHT+IF2gopwxM64FAD0FZDnw1lPgQORZkvtpUYpoRgRuNfklUmt4fK4rmjd5HBaL3Snj8yAGWBBoA==
+X-Received: by 2002:a05:6a00:3cd6:b0:748:3a1a:ba72 with SMTP id d2e1a72fcca58-74ce8acd777mr21400752b3a.20.1751956249103;
+        Mon, 07 Jul 2025 23:30:49 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce42cc925sm9765276b3a.152.2025.07.07.23.30.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jul 2025 23:30:48 -0700 (PDT)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: [PATCH v5 0/2] riscv: sophgo: add USB phy support for CV18XX series
+Date: Tue,  8 Jul 2025 14:30:35 +0800
+Message-ID: <20250708063038.497473-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Subject: Re: [PATCH v3 3/3] riscv: dts: sophgo: add Sophgo SG2042_EVB_V2.0 board device tree
-Message-Id: <e48c2706-86cf-4e1d-bfad-17f662f5fb75@lanxincomputing.com>
-Content-Type: text/plain; charset=UTF-8
-X-Lms-Return-Path: <lba+2686c8eb0+ed8fa3+lists.linux.dev+liujingqi@lanxincomputing.com>
-Received: from [127.0.0.1] ([116.237.111.137]) by smtp.feishu.cn with ESMTPS; Tue, 08 Jul 2025 11:21:19 +0800
-To: "Han Gao" <rabenda.cn@gmail.com>, <devicetree@vger.kernel.org>
-Cc: "Rob Herring" <robh@kernel.org>, 
-	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
-	"Conor Dooley" <conor+dt@kernel.org>, 
-	"Paul Walmsley" <paul.walmsley@sifive.com>, 
-	"Palmer Dabbelt" <palmer@dabbelt.com>, 
-	"Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>, 
-	"Chen Wang" <unicorn_wang@outlook.com>, 
-	"Inochi Amaoto" <inochiama@gmail.com>, 
-	"Thomas Bonnefille" <thomas.bonnefille@bootlin.com>, 
-	"Guo Ren" <guoren@kernel.org>, "Chao Wei" <chao.wei@sophgo.com>, 
-	<linux-riscv@lists.infradead.org>, <sophgo@lists.linux.dev>, 
-	<linux-kernel@vger.kernel.org>
-Content-Language: en-US
-References: <cover.1751700954.git.rabenda.cn@gmail.com> <c1b6ccdc69af0c1457fc1486a6bc8a1e83671537.1751700954.git.rabenda.cn@gmail.com>
-From: "Nutty Liu" <liujingqi@lanxincomputing.com>
-X-Original-From: Nutty Liu <liujingqi@lanxincomputing.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On 7/5/2025 3:39 PM, Han Gao wrote:
-> Sophgo SG2042_EVB_V2.0 [1] is a prototype development board based on SG2042
->
-> Currently supports serial port, sdcard/emmc, pwm, fan speed control.
->
-> Link: https://github.com/sophgo/sophgo-hardware/tree/master/SG2042/SG2042-x4-EVB [1]
->
-> Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+Add USB PHY support for CV18XX/SG200X series
 
-Reviewed-by: Nutty Liu<liujingqi@lanxincomputing.com>
+Changed from v4:
+- https://lore.kernel.org/all/20250611081804.1196397-1-inochiama@gmail.com
+1. patch 1: apply Conor's tag
+2. patch 2: remove dr_mode debugfs entry.
+3. patch 2: simplify the cv1800_usb_phy_set_clock function
 
-Thanks,
-Nutty
+Changed from v3:
+- https://lore.kernel.org/all/IA1PR20MB4953C1876484E149AA390DD5BB1D2@IA1PR20MB4953.namprd20.prod.outlook.com/
+1. patch 1: remove vbus-gpio, switch-gpio and dr_mode properties.
+2. patch 2: remove all logic related to the bindings change.
+3. remove the syscon header file.
 
-> ---
->   arch/riscv/boot/dts/sophgo/Makefile          |   1 +
->   arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts | 233 +++++++++++++++++++
->   2 files changed, 234 insertions(+)
->   create mode 100644 arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
->
-> diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-> index 6c9b29681cad..6f65526d4193 100644
-> --- a/arch/riscv/boot/dts/sophgo/Makefile
-> +++ b/arch/riscv/boot/dts/sophgo/Makefile
-> @@ -4,4 +4,5 @@ dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
->   dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
->   dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
->   dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
-> +dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v2.dtb
->   dtb-$(CONFIG_ARCH_SOPHGO) += sg2044-sophgo-srd3-10.dtb
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-> new file mode 100644
-> index 000000000000..46980e41b886
-> --- /dev/null
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-> @@ -0,0 +1,233 @@
-> +// SPDX-License-Identifier: GPL-2.0 OR MIT
-> +/*
-> + * Copyright (C) 2025 Sophgo Technology Inc. All rights reserved.
-> + */
-> +
-> +#include "sg2042.dtsi"
-> +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +
-> +/ {
-> +	model = "Sophgo SG2042 EVB V2.0";
-> +	compatible = "sophgo,sg2042-evb-v2", "sophgo,sg2042";
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	pwmfan: pwm-fan {
-> +		compatible = "pwm-fan";
-> +		cooling-levels = <103 128 179 230 255>;
-> +		pwms = <&pwm 0 40000 0>;
-> +		#cooling-cells = <2>;
-> +	};
-> +
-> +	thermal-zones {
-> +		soc-thermal {
-> +			polling-delay-passive = <1000>;
-> +			polling-delay = <1000>;
-> +			thermal-sensors = <&mcu 0>;
-> +
-> +			trips {
-> +				soc_active1: soc-active1 {
-> +					temperature = <30000>;
-> +					hysteresis = <8000>;
-> +					type = "active";
-> +				};
-> +
-> +				soc_active2: soc-active2 {
-> +					temperature = <58000>;
-> +					hysteresis = <12000>;
-> +					type = "active";
-> +				};
-> +
-> +				soc_active3: soc-active3 {
-> +					temperature = <70000>;
-> +					hysteresis = <10000>;
-> +					type = "active";
-> +				};
-> +
-> +				soc_hot: soc-hot {
-> +					temperature = <80000>;
-> +					hysteresis = <5000>;
-> +					type = "hot";
-> +				};
-> +			};
-> +
-> +			cooling-maps {
-> +				map0 {
-> +					trip = <&soc_active1>;
-> +					cooling-device = <&pwmfan 0 1>;
-> +				};
-> +
-> +				map1 {
-> +					trip = <&soc_active2>;
-> +					cooling-device = <&pwmfan 1 2>;
-> +				};
-> +
-> +				map2 {
-> +					trip = <&soc_active3>;
-> +					cooling-device = <&pwmfan 2 3>;
-> +				};
-> +
-> +				map3 {
-> +					trip = <&soc_hot>;
-> +					cooling-device = <&pwmfan 3 4>;
-> +				};
-> +			};
-> +		};
-> +
-> +		board-thermal {
-> +			polling-delay-passive = <1000>;
-> +			polling-delay = <1000>;
-> +			thermal-sensors = <&mcu 1>;
-> +
-> +			trips {
-> +				board_active: board-active {
-> +					temperature = <75000>;
-> +					hysteresis = <8000>;
-> +					type = "active";
-> +				};
-> +			};
-> +
-> +			cooling-maps {
-> +				map4 {
-> +					trip = <&board_active>;
-> +					cooling-device = <&pwmfan 3 4>;
-> +				};
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&cgi_main {
-> +	clock-frequency = <25000000>;
-> +};
-> +
-> +&cgi_dpll0 {
-> +	clock-frequency = <25000000>;
-> +};
-> +
-> +&cgi_dpll1 {
-> +	clock-frequency = <25000000>;
-> +};
-> +
-> +&emmc {
-> +	pinctrl-0 = <&emmc_cfg>;
-> +	pinctrl-names = "default";
-> +	bus-width = <4>;
-> +	no-sdio;
-> +	no-sd;
-> +	non-removable;
-> +	wp-inverted;
-> +	status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +	pinctrl-0 = <&i2c1_cfg>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +
-> +	mcu: syscon@17 {
-> +		compatible = "sophgo,sg2042-hwmon-mcu";
-> +		reg = <0x17>;
-> +		#thermal-sensor-cells = <1>;
-> +	};
-> +};
-> +
-> +&gmac0 {
-> +	phy-handle = <&phy0>;
-> +	phy-mode = "rgmii-id";
-> +	status = "okay";
-> +
-> +	mdio {
-> +		phy0: phy@0 {
-> +			compatible = "ethernet-phy-ieee802.3-c22";
-> +			reg = <0>;
-> +			reset-gpios = <&port0a 27 GPIO_ACTIVE_LOW>;
-> +			reset-assert-us = <100000>;
-> +			reset-deassert-us = <100000>;
-> +		};
-> +	};
-> +};
-> +
-> +&pinctrl {
-> +	emmc_cfg: sdhci-emmc-cfg {
-> +		sdhci-emmc-wp-pins {
-> +			pinmux = <PINMUX(PIN_EMMC_WP, 0)>;
-> +			bias-disable;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-disable;
-> +		};
-> +
-> +		sdhci-emmc-cd-pins {
-> +			pinmux = <PINMUX(PIN_EMMC_CD, 0)>;
-> +			bias-pull-up;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-enable;
-> +		};
-> +
-> +		sdhci-emmc-rst-pwr-pins {
-> +			pinmux = <PINMUX(PIN_EMMC_RST, 0)>,
-> +				 <PINMUX(PIN_EMMC_PWR_EN, 0)>;
-> +			bias-disable;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-disable;
-> +		};
-> +	};
-> +
-> +	i2c1_cfg: i2c1-cfg {
-> +		i2c1-pins {
-> +			pinmux = <PINMUX(PIN_IIC1_SDA, 0)>,
-> +				 <PINMUX(PIN_IIC1_SCL, 0)>;
-> +			bias-pull-up;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-enable;
-> +		};
-> +	};
-> +
-> +	sd_cfg: sdhci-sd-cfg {
-> +		sdhci-sd-cd-wp-pins {
-> +			pinmux = <PINMUX(PIN_SDIO_CD, 0)>,
-> +				 <PINMUX(PIN_SDIO_WP, 0)>;
-> +			bias-pull-up;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-enable;
-> +		};
-> +
-> +		sdhci-sd-rst-pwr-pins {
-> +			pinmux = <PINMUX(PIN_SDIO_RST, 0)>,
-> +				 <PINMUX(PIN_SDIO_PWR_EN, 0)>;
-> +			bias-disable;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-disable;
-> +		};
-> +	};
-> +
-> +	uart0_cfg: uart0-cfg {
-> +		uart0-rx-pins {
-> +			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
-> +				 <PINMUX(PIN_UART0_RX, 0)>;
-> +			bias-pull-up;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-enable;
-> +		};
-> +	};
-> +};
-> +
-> +&sd {
-> +	pinctrl-0 = <&sd_cfg>;
-> +	pinctrl-names = "default";
-> +	bus-width = <4>;
-> +	no-sdio;
-> +	no-mmc;
-> +	wp-inverted;
-> +	status = "okay";
-> +};
-> +
-> +&uart0 {
-> +	pinctrl-0 = <&uart0_cfg>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
+Changed from v2:
+1. add item description for switch gpios.
+
+Changed from v1:
+1. remove dr_mode property and use default mode instead.
+2. improve the description of `vbus_det-gpios` and `sophgo,switch-gpios`
+
+Inochi Amaoto (2):
+  dt-bindings: phy: Add Sophgo CV1800 USB phy
+  phy: sophgo: Add USB 2.0 PHY driver for Sophgo CV18XX/SG200X
+
+ .../bindings/phy/sophgo,cv1800b-usb2-phy.yaml |  54 ++++++
+ drivers/phy/Kconfig                           |   1 +
+ drivers/phy/Makefile                          |   1 +
+ drivers/phy/sophgo/Kconfig                    |  19 ++
+ drivers/phy/sophgo/Makefile                   |   2 +
+ drivers/phy/sophgo/phy-cv1800-usb2.c          | 170 ++++++++++++++++++
+ 6 files changed, 247 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/phy/sophgo,cv1800b-usb2-phy.yaml
+ create mode 100644 drivers/phy/sophgo/Kconfig
+ create mode 100644 drivers/phy/sophgo/Makefile
+ create mode 100644 drivers/phy/sophgo/phy-cv1800-usb2.c
+
+--
+2.50.0
+
