@@ -1,189 +1,163 @@
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010001.outbound.protection.outlook.com [52.103.67.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87731E9B31
-	for <sophgo@lists.linux.dev>; Tue,  8 Jul 2025 06:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751957210; cv=none; b=G92lnjqedWHLXWb08mre+FoJhBEgF7g6+tn/vmoUPxOsP4F5c0OQY2FQqYSCIEre6uhuF7xuVWDdkJXYWz5ifRLEv+5X7iF7LjZi49E8B9zbKaZLY2BD7itgxW+3RihDgvtBCuwly6D9ixUi6oBKoXQvAkipHtzy3aB8XMYmtZE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751957210; c=relaxed/simple;
-	bh=/cApN7+nPLX4ympFWe9LXoIFG9iaQZgbTZy3sGnfWz8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g73Yp2anRWAUiq6p46hFzNigW8H7RQyZ1WGp7eMVTJveCKTdwnICxuP1VB2AdmirJ7cqBwbC3sUaB28P6r/yj53g9dsWAKxygfgwThy9Cfjxq5h1i+OPUIeXWNJu+md+qzsB7Mtw05ilWpO61t4L9rg2m4ImOv2X6iUhgpUb+Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gnJfza4n; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEFAA95C
+	for <sophgo@lists.linux.dev>; Thu, 10 Jul 2025 01:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.1
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752110128; cv=fail; b=Dz1Y8UihyeqqbuKwLSS6fYL0QGbvvLVK2uuJbIJuxxK5/7C0IW62TaK7cHXgkguCLxuE6grvwTRxXErQVCY26UguRjhiulqVbBV5i0eDODKF3WDDNTG5/G8T1s/55PwrddYDZsRaykDyg5OiM78x7HGqpVvn1k+0+yxkLOE5euc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752110128; c=relaxed/simple;
+	bh=cEpjMwU51uO5E/UGEh0KxD3+lBGSe7A07buQgam6nvQ=;
+	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=KQPCPNGK50Opa6QasmiJFwnR6mrtXhImROtJGzMtF34y/0K2Ob6qVZAufmaLNr7hZtfJBXM2M5olP+tr3GOneZzkKO0v2R+uJJvAq4lMGoDkKhVTTLiVLdpGEjXxHD4BKqEawGr5Fq3TBn4h+4oOJzqlw3ZtrNZkBE6Qs+YQOJw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=iuqHvo1Z; arc=fail smtp.client-ip=52.103.67.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gnJfza4n"
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b31d489a76dso3270070a12.1
-        for <sophgo@lists.linux.dev>; Mon, 07 Jul 2025 23:46:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751957208; x=1752562008; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=awAK1sQvEZGu9RSuFaWauBkV5Ie3EeA43euQnu2ZDvY=;
-        b=gnJfza4nbWpeP9CSXn/LTXvWhF5Y6c3rVuiyeceljOXNePMIKe8mWg/oyr8LzSf6Fz
-         yHvTL7+wMQZ+Hf4FhI359Nk5lecGa2mlDiPm+5esHo9lXHQv76vut+/9s+wPNTc84yRA
-         DMrhhnFKYDljOlug8PflGdxPDV3n4BUIxFn1lTHK8rVsU32zF+pJKP08jiGDFJ263XB1
-         LFI/bb9JH/Jp5C5MQNc8S1zlsiNxpi6XrfVlEY5z7nwUc7baP3UKlLgY+6lej7KL2jDP
-         dieQgA+9dtbFOYtnqJ1+A0fDoI2N1y3yhCYjPzYpLHP16+RQJdrJPd6QJr0u9lvaxq8k
-         ASIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751957208; x=1752562008;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=awAK1sQvEZGu9RSuFaWauBkV5Ie3EeA43euQnu2ZDvY=;
-        b=WUJQGp0jSeaxSGrMxA0wJgxoUExSgWkxY7EeXYutzyO1NrkZYSIbaXUcmtLgkNueQ3
-         Wye/Ada5sMY1ufH24JGCvupo5wpRl9iIg1Gs+fwNhAfR1yCQcZvBHy3OHxIhWydbUM0o
-         Fi8JFW4wGhVGAqzcVeLneT0j2DJ/9LmQ6G9Hdr2lnTLUE3ufo2OKeIz11MQNvucM1nbV
-         FU030GKthGVoHVi8fjMJP2rFve2a59mFJHDhFFgJjoa00Mf56Y7cWgxakWez6akVlKEW
-         ZEgSabglWxhnMB7ViwgUbNmD5khXXIzMvD/5knG0YF9z3yQj0l/P2kp5XgVAvA8mr7Um
-         0M0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUrCGMUg5X9RmYDfJZEvwVSuSkCqtmqnZqm0/5cdxe7y+VqgJZ6a4eQOrIjX62Ur0da741nPWk=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzMwZeKEtIQycobkufhXdfh+NhQGPoHxlPIgbGR1J9fKiGxqkj4
-	dCrJdsPsTsTSjybMY5A1Cjy+6QOkPOt0R3IlmKvlv+X+GNyzGXkqVBw6
-X-Gm-Gg: ASbGncuo4ERDU2+GJLwL8T4LVhWUREwmn0TrC4bO7qcYHPihzlEN19LZnTrP8rMN+Hi
-	4UflicU0iHgVAVd73VLGMMrT/HbgBIZRuVvGohCjfhM+vJb6YUv5+Zlut4azySoGB9GSkqrV5Cm
-	hUvwHJHYYDav6Oq2qj/n3YH4E5mvQKjgiaPoC0ASBEbe5V5E1cDeoXOpmfV1pQ2+w41r0y1HetV
-	R3nYc8jmWsFYN+s9n0VmtFGuIxgDR6/ebENryD/KbXGlvI5fHXB+nejF5OYGCp6FFZdtUuMed9X
-	km/qGavvtqXnn5VKZZ9S+4TOpBs0z4iFFtvdjcPy1EOYHWSbo6otaeDF4YLsHQ==
-X-Google-Smtp-Source: AGHT+IHNx4OiWoCq7M9t3p40CvKjBGEYTQs9/RQVmrqVzX0hKDNozKjkB+NwYNXyY7dlbQecei9Awg==
-X-Received: by 2002:a17:90b:2ed0:b0:311:f30b:c21 with SMTP id 98e67ed59e1d1-31aadd9fd46mr18022165a91.26.1751957208011;
-        Mon, 07 Jul 2025 23:46:48 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23c8457e15fsm103684335ad.154.2025.07.07.23.46.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 23:46:47 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Richard Cochran <richardcochran@gmail.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Zixian Zeng <sycamoremoon376@gmail.com>,
-	Guo Ren <guoren@kernel.org>
-Cc: devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Han Gao <rabenda.cn@gmail.com>
-Subject: [PATCH v2] riscv: dts: sophgo: add ethernet GMAC device for sg2042
-Date: Tue,  8 Jul 2025 14:46:25 +0800
-Message-ID: <20250708064627.509363-1-inochiama@gmail.com>
-X-Mailer: git-send-email 2.50.0
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="iuqHvo1Z"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=g6483HpH/ulSpjrsRO+ywmey1g/vAkvAFHpdyoPqNIO192xw7T3Az5SlA3uYHZPdZjKsEhTcdPyocsaQYUHcRCg70xSnC66QJYGzF/+ENBTES3C0iTPBKM/XRkPlBAMqWbvgI+N0xH+o7zQP7RWnyKFOtt36x0M2IlaqE0HCH4TmJi1xpd8MUbQ3pvCsUszUex6hLUd5FCSH/+jRV/D20ws8TAW/dJW0oYXR5HjNI3/bsrXCeTx+j8oV+Ya5YYA6KpyE7SXam/xPhgE9RZNtfzlPl05v1OwuHN5uLK18/jFkGgZegEpcmLSb7NX3fC0uUBN6NowtKapCCB4UAzYQlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=EzMPO3gDwF82XkjJuGpn5BhQsCtyDYbBCjzsK7FknZ8=;
+ b=PitdbPmJ25YCXwBVGtSVrdDO4DcOi5cJmDkfnvgzgRX71826CG9gWAaJKYqJ0QlxMrzjz9w06ADZkvH3e5Bfz4hG1DH9WK4HMRBQWIV4s3um5S8dJtrZDc8ZlE2jnXijnmmlDhYMiAzj+PbD/VG8Yju0FzyMu99RKom03ulg2wz7dUcCvhkogt3l5Yjn53zKXSzqjObEcsKUWE8z0YpjW8RP+vyWgMZ2Bcy99F4m01T170A2B0urCopAFLodSrysg98+jVWLK7JEy6GerEDt+BdfqIdHt6RdErXVby15Ijd4M1TdqCwcNPAtyFKKf1fom51mlSCRXwEjtfQ6pDmxeA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=EzMPO3gDwF82XkjJuGpn5BhQsCtyDYbBCjzsK7FknZ8=;
+ b=iuqHvo1Z01P2oCXveOcj9yHGHXYjBpVzLk+qqHKB2DQUkqOg+D74SV0tmC8q432d3elIkwnNFR9s4phqb8dWEeQrDuCxqQHk77OHAvA0+gNL37HmOL1NociRDQA1nrY2kXcFNMN2BGL2upe8Hl+acmR3XdT6J8pftz4nOWNAb49QqQMOaYbdapOXbgJKpV86qNC3uoLws/b2XBelz11+5YJVQ5Lqbz5Fx7RSfcn+xPBkRiexFQWtpOl5qi7vWZXn7CO8M9YAMty1Z1mbtSShxUaJKM1nCJu6ApbdQTkGQiK7Xw4IsEvZYSEFrjvOWDzwGogvG1kSYCCmoWKqJ7D7tg==
+Received: from PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:2aa::8)
+ by MAZPR01MB5836.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:67::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8901.29; Thu, 10 Jul
+ 2025 01:15:21 +0000
+Received: from PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::7f30:f566:cb62:9b0c]) by PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::7f30:f566:cb62:9b0c%7]) with mapi id 15.20.8835.018; Thu, 10 Jul 2025
+ 01:15:21 +0000
+Message-ID:
+ <PNYPR01MB11171DF7D2099A95BBAA912DFFE48A@PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 10 Jul 2025 09:15:18 +0800
+User-Agent: Mozilla Thunderbird
+To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+From: Chen Wang <unicorn_wang@outlook.com>
+Subject: Linux Upstream Status updated: Jul/10/2025
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0102.apcprd02.prod.outlook.com
+ (2603:1096:4:92::18) To PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2aa::8)
+X-Microsoft-Original-Message-ID:
+ <a5a5746d-2b34-443d-9bdd-df2874cdbab2@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PNYPR01MB11171:EE_|MAZPR01MB5836:EE_
+X-MS-Office365-Filtering-Correlation-Id: ffdde744-4bb3-49f5-330d-08ddbf4f3d45
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|461199028|22402599018|15080799012|5072599009|3412199025|440099028|40105399003|4302099013|13041999003|10035399007|1602099012;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?d0hlcW4wcWJHYm00dlZLcERRS2h6Qk4wdnJRZUhZNVZQRWtLOGhpaEUwWUFl?=
+ =?utf-8?B?dWYzcWRNU1B5S01GMlB2WWdqRnpyRlpaZW9jY0R1QTZuclQvMDZVZ2tkN0li?=
+ =?utf-8?B?TkNQOVVraUs5cVZXWWhjMFJVUjJyemNPUmd5NmFVZUFtQkFyYUZBWC9PNHVt?=
+ =?utf-8?B?ZVdBN0pVY244V0QzU010OUJBZzhMSUdKQVNrbm5ETVBFbHEvTGVzV0hDdjdr?=
+ =?utf-8?B?dGJTL1g3YmdLbkdGZDFrNC96OHQ5SVRVQU5WNFV3dDJubG9pdkdDTWhxM3RS?=
+ =?utf-8?B?eTJRSFhWVHJYNnp1dENZK0pnQU5FZFVqaWNXRGtWWENuSkNWeTRlbFQ0SkpP?=
+ =?utf-8?B?WWUvMHAwdFlaaWVvWkpCZ3JVTkdOODJudmFSK3VFMjNkd01JeEluSEJCVEkv?=
+ =?utf-8?B?UUg1OEs5L3h5MXdKY3lwSGRvV29TcFlhelZ0M2ErM3RGbk5ORjljSUtzdnl4?=
+ =?utf-8?B?V3kvMDVNTWNoSWt4SzFLOHh6WFNYNVU0N3pRdUlSLzJXWmJlZ2ZBeFpQRWl2?=
+ =?utf-8?B?QVhxNU9tQ0RwOFJ5SnlnYWQrOEswWVBiaXpTZDl5OXNPY0gvL1FWUFpUV2tD?=
+ =?utf-8?B?L1RkYjVzOG4zQ3YvWUc1V3hPQjNwWFR1c3N1ZzZlbk40dUhLcXJjOTdjREZq?=
+ =?utf-8?B?SkFsanNnbXdnaTgwWTlOWGF2L2NqMkVCcGZtU2NUK3FJcmNSSmp3WkNiYzY5?=
+ =?utf-8?B?a2EwQUpIREZWNG5NL3lVZmtmS3hqMFFLck0xckZjYnVscm91OXVUbDJ6eno5?=
+ =?utf-8?B?Qjk4ZlV3MzVhRnJySVRtYWNiNXVBdnJtS0lCdlY5S3FOV0ptNzh0SW5SN1l5?=
+ =?utf-8?B?OVd3cEx1OEt4RjJFcGNSSzFvZW5vdHByTC9tb0lCU2dka3ZSanBoc0x6MjVo?=
+ =?utf-8?B?KzRNcDZhM0FtZW1ocjJyUlUwZ0xsbVFYRHBHV1liQkpzNXV1SVhkMWJPeEZm?=
+ =?utf-8?B?SEtIelhUaGVJUmI3RFZHWjBUdmRtbUJSclR4WUJ0TDBGcWVNVDVSSlVQSmhY?=
+ =?utf-8?B?NjNNQ3BpMzdURFU2QTFKajhicHFqbWhLcCtuVzltM1BWNi9veVBnRHpVZ0dL?=
+ =?utf-8?B?aFltOG5yNU1tQkJYSFJWazZoL1FVTlh3bU5QOENPTnlhaWpNdW9XL1oxZ3Rs?=
+ =?utf-8?B?UEkvYlUzcU11VkFOVXVWWUlWSWJlTnJhVlo1Y0d0dmhIMUUvcnlQV0IvbnFk?=
+ =?utf-8?B?dG5QdlVMTkpyMnNkK04xZVNlbTFxaTFLTjU1RXdwTDNpYW83QzZuVlpQRTky?=
+ =?utf-8?B?eC9NMEY3WXF6NG5yQmJHcDk5b2dvdDNMWWxqT0oydTIvNEF0OU1iU3B0OXhx?=
+ =?utf-8?B?YkJXT0FXWlpUSlNNUFVqT0dlei9ObStMd3dqek00Z0U2YjVOMVMybVhNYzVy?=
+ =?utf-8?B?QTNxeDRpeDRuOXQveFJ6Q1BmRmRieHp0UmIwMlE0ZGFDdFNETmVnTzBLSU9Z?=
+ =?utf-8?B?dDlpUnJlM2thdWplSDlNNDgwaXk1QlRpVlN3b1BTQXFvbWUrR2FrNVFiV21B?=
+ =?utf-8?B?cDhyRkFFTlI2Q0NTUzRPenhZcXh0Nmg2RFVrVko1SzRMQURYQlR1VXdYM21s?=
+ =?utf-8?Q?/UMrj2B5MSzdOWzkf+L5eBHaPJUV5qle9YM3Hrw9+oEvul?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dmRJVHRtc2V5YUk0QytLT1g0K08rMTVjRXYrSTc0VUExN3RLcmVDYzlFVHE2?=
+ =?utf-8?B?QmFUNERkR2VWRndxSWZJQ21PRmpXZlpxb0piOFBWMTBlbWFaVC9TNDlGRDFI?=
+ =?utf-8?B?dktPNGJIZ090a3pCRVl4UWV3UjdJa2RSRElOcHN5OUhiSWRMNEttaHZzRHJ6?=
+ =?utf-8?B?YkxqQnN1eG5UWjJzcWY0YU5wNFVWT3luNWZjbStlQ2NFS2Y3d0MvYmJIVWFh?=
+ =?utf-8?B?UVFteUMya3UrbzNrcjV2U2lYUVJLYmk5ZEszZFhQWHIyT00wcWF3Mkp2akxB?=
+ =?utf-8?B?c1NxcXQ0OEo1aGZkRHF1TGpxNUhhaDViMFd5WU9jVHdVbmNRNEVua3BDN0di?=
+ =?utf-8?B?Wk5EbnlEZXhFVVNZYURLZVRacEtMR2hkMk1OazdyMm9UWitwc0JlVHUvRjUr?=
+ =?utf-8?B?ODF2eTkwYTZON3dzWWtua1JXeEVVVVZ1QmVWQWdvc05Jd2czV1VmTVV2dXJs?=
+ =?utf-8?B?R2RxWUhsMGdUbEtlZmRMYUdBUlN2TTBuSDlTY25UVVZGT3FGOVp1VDhoNmpF?=
+ =?utf-8?B?ZU92aTkvWWthVCtTS3BOTjZMTW1OazRiays3Tzh0L09adEhMaWZ6WjJ0RFA1?=
+ =?utf-8?B?dXZFUkR1M1VqNFF3Z0RyVkc4RDdBcnVVSkxFaXk5Z1kwd04yaHFXcmM0elNN?=
+ =?utf-8?B?U3ltcWpuZW1NRys0YWZVc0ljVnN0dWdidXJKRU1HWlNBT2kvcHhkUjR4WTZu?=
+ =?utf-8?B?N2V5VERpMnlYUUpqQ0srWGNPeFNuakQ0NjNLVjZuY2lFSUFEaDNzVi9hSDhx?=
+ =?utf-8?B?eVB0bW11TmxVZU02a1Z3YkNnWXJXV3htQjZwVkNKU0pKLzdla2xXelFKeFg5?=
+ =?utf-8?B?RUZwN2FyZnQ1MDBGMkdSTWkwVUdWZEJRaUt0ZzhiREliK253cnR2LzZYY1Ru?=
+ =?utf-8?B?Tm51RkQ0WEJzaVlJdHNydUY2OEVINHI3ayt3SGppZUl1MENndW5BalQ0ZnRN?=
+ =?utf-8?B?VHdibXZLVFpGc25pS0xLM1ZzZUJyeGhuN0FocWNsQ1dOZktKL3lJNWNrR1kr?=
+ =?utf-8?B?SVpxT1lyM3pISytZckd1a2MwRUNGT2VyNXBjelBuMzNrekVyQ0dpNUFyOTM0?=
+ =?utf-8?B?QUt5dTZCY2ExanNpaGp1ck80VWhaVkpBeDR5SDhud20zYzVIYmR6SHpFWEdj?=
+ =?utf-8?B?VERkVXovY0tUR25vdHpRVFR1SjE2UXUwMUxUMkIyRlY5RUNQcFV6cDBvQnR0?=
+ =?utf-8?B?eWpkdGxsR2MzdTBaU0IvTU5vVTFPWDRLaWttYjZTMzhKdGxjVHM3dWJ5NkJ2?=
+ =?utf-8?B?SVBvUStHbjJibktDN1ZDN1ZNUUMyaHZMTVFrR0o5OUY3R1E0bllRaDkxY3gx?=
+ =?utf-8?B?QVFBVW5UczVFZjZjK0RrcGVWcGx3M002Q24zQmthRUhPT3llcXdMUU8yWUEw?=
+ =?utf-8?B?M3V4VzVSVUNINjRRTkROc0JvTzdrNTZza2ZvQWNHdU00S0IwVEhrbnVJeklY?=
+ =?utf-8?B?TjM5eGJ4c3JQZDA3bmpvMlJhTU9Pckt0Q1BhWlZtQ05COTVrdCtRMzdQbXBw?=
+ =?utf-8?B?Wm1kV2RCM0FPM0h1MUp6Qi84aWIzcC9ocnNrUXVkalJwSzZwekpLZmlGTlJr?=
+ =?utf-8?B?NzZieCtELy9odHJLMDBYakFwVy9WeG5EZHQ1TkF3OXphQUJYRzRwUGlUZFlh?=
+ =?utf-8?B?RWUrMElzTTE5bDZBQ2tDNW5ZdFN6aHV1VmdMWGgrRmZ6OEtLTDYzZ25vZzFq?=
+ =?utf-8?B?NVR6ODhTWTl2NzNjRVJrV0dKUzJobGNqMlZPYW1yRHhUVkNycXA1TlU0c2Fn?=
+ =?utf-8?Q?s1owgIGq+Lka36Sekk=3D?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ffdde744-4bb3-49f5-330d-08ddbf4f3d45
+X-MS-Exchange-CrossTenant-AuthSource: PNYPR01MB11171.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jul 2025 01:15:21.1702
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB5836
 
-Add ethernet GMAC device node for the sg2042.
+Last updated: Jul/10/2025 @https://github.com/sophgo/linux/wiki
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: Han Gao <rabenda.cn@gmail.com>
----
-Require the ethernet patch series for functional device:
-https://lore.kernel.org/all/20250708064052.507094-1-inochiama@gmail.com/
+# CV18xx:
 
-Real board dts patch:
-https://lore.kernel.org/linux-riscv/cover.1751700954.git.rabenda.cn@gmail.com/
+- USB phy patchset updated to v5.
+- Ehternet drops RFC patch serials and resubmit as two patchsets, one 
+for bindings, another for dts.
 
-Change from v1:
-- https://lore.kernel.org/all/20250506093256.1107770-1-inochiama@gmail.com
-1. separate from the original series and add dependency id
----
- arch/riscv/boot/dts/sophgo/sg2042.dtsi | 61 ++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+# SG2042
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index 85636d1798f1..b3e4d3c18fdc 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-@@ -569,6 +569,67 @@ spi1: spi@7040005000 {
- 			status = "disabled";
- 		};
+- Ethernet support is separated into two patchset and updated to v2.
+- EVB support is updated to v3.
+- Add more sg2042 isa extension support is updated to v3.
 
-+		gmac0: ethernet@7040026000 {
-+			compatible = "sophgo,sg2042-dwmac", "snps,dwmac-5.00a";
-+			reg = <0x70 0x40026000 0x0 0x4000>;
-+			clocks = <&clkgen GATE_CLK_AXI_ETH0>,
-+				 <&clkgen GATE_CLK_PTP_REF_I_ETH0>,
-+				 <&clkgen GATE_CLK_TX_ETH0>;
-+			clock-names = "stmmaceth", "ptp_ref", "tx";
-+			dma-noncoherent;
-+			interrupt-parent = <&intc>;
-+			interrupts = <132 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq";
-+			resets = <&rstgen RST_ETH0>;
-+			reset-names = "stmmaceth";
-+			snps,multicast-filter-bins = <0>;
-+			snps,perfect-filter-entries = <1>;
-+			snps,aal;
-+			snps,tso;
-+			snps,txpbl = <32>;
-+			snps,rxpbl = <32>;
-+			snps,mtl-rx-config = <&gmac0_mtl_rx_setup>;
-+			snps,mtl-tx-config = <&gmac0_mtl_tx_setup>;
-+			snps,axi-config = <&gmac0_stmmac_axi_setup>;
-+			status = "disabled";
-+
-+			mdio {
-+				compatible = "snps,dwmac-mdio";
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			gmac0_mtl_rx_setup: rx-queues-config {
-+				snps,rx-queues-to-use = <8>;
-+				queue0 {};
-+				queue1 {};
-+				queue2 {};
-+				queue3 {};
-+				queue4 {};
-+				queue5 {};
-+				queue6 {};
-+				queue7 {};
-+			};
-+
-+			gmac0_mtl_tx_setup: tx-queues-config {
-+				snps,tx-queues-to-use = <8>;
-+				queue0 {};
-+				queue1 {};
-+				queue2 {};
-+				queue3 {};
-+				queue4 {};
-+				queue5 {};
-+				queue6 {};
-+				queue7 {};
-+			};
-+
-+			gmac0_stmmac_axi_setup: stmmac-axi-config {
-+				snps,blen = <16 8 4 0 0 0 0>;
-+				snps,wr_osr_lmt = <1>;
-+				snps,rd_osr_lmt = <2>;
-+			};
-+		};
-+
- 		emmc: mmc@704002a000 {
- 			compatible = "sophgo,sg2042-dwcmshc";
- 			reg = <0x70 0x4002a000 0x0 0x1000>;
+# SG2044
 
-base-commit: cc6a9fb055e446e76a23867e42f12c4eff44eb00
-prerequisite-patch-id: 7a82e319b011e5d0486a6ef4216d931d671c9f53
-prerequisite-patch-id: 5a30fb99ec483c1f5a8dca97df862c3a042c9027
-prerequisite-patch-id: e0da79790a934916d9fc39c18e8e98c9596d27ab
---
-2.50.0
+- Add PMU support, v1.
+- Add ziccrse extension, v1
+- srd3-10 board reserves uart0 device, v1
+
+Thanks,
+
+Chen
+
 
