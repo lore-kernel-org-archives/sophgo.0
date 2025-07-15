@@ -1,138 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35E424A06A
-	for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 17:43:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D935D2C158C
+	for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 22:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752601429; cv=none; b=PX+zKvscgzip+zWpHJhjh0UlAMMC/czbxkc0K3lrmlQoSjpwCUCkHNO94GHDcZgkyEBTr9MR37oYYebBY2w5S6N6ujiB3cgwNb3atx5ARD3+BmQj/NpczcNMVFVy6SnrH3fvLZsUUmi2ManeLwR5qQllcH9Tl0xoDFLwThFA8dQ=
+	t=1752617221; cv=none; b=XunBqRMzyZMetod0SzXWaFIeqlhNHawCGjxK++IM0IbRnHjszjxU88Oy3JeLQcpstfLsezIMPryuVzwPOqeIM4+C7rW+rWo94tLsaYSZ2CsZy+10gZZjtsfXz/WExe1sPWmT1IWPVnuN9fbaJ9Pkr8c14cJ+uD2maU3BO5Fgwl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752601429; c=relaxed/simple;
-	bh=54VsIhKZIv/mNC4NrTI9DMJ7xO/jEt3cjbBcWJjARgg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=boDqHqZsC8uwcLuUviwiLBae8dng3kcS19ZOAfcy+BR6Ey6cCtvXOo5nfByJdWnbdWJ2kgbyXVxr2HTS/uQROijQDAZoc92yLS/P7y1cmDD42Lj0xlgxwCe+853Z11lgQmZHk4FexQEf2wUhsbMqnAEmhWDCnjFyQ9ynP3qp0RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJ/tFzTR; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1752617221; c=relaxed/simple;
+	bh=Zufzfaszt8lMoqhAnmQDPusrRHLz87gmZprCGkIVLWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aB5n5zWs4lKAL6rakh61F3kEePHpq9J4NtcRuzbFwtnDkfn5K+VdHgGVvr/XSTHhtq+q6dX5BRooVmlMSIL+XRZrP70DcHvOi82+G3qEZEHkm3shuxe8Idvphs5m9jxBWABTQWqpHpsT49C0Z5+ztusJrEW8LY2A5c2qfyKa9ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J09LL6NH; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJ/tFzTR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE73C4CEF4
-	for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 17:43:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1752601428;
-	bh=54VsIhKZIv/mNC4NrTI9DMJ7xO/jEt3cjbBcWJjARgg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=cJ/tFzTRQvVmZe4bXDNiYPtuqt/7L/tJESoX0k/L6gt+FYeldUsQj+/4OgvhhudJ2
-	 a3Gz8r8S//vHl2Rawg9VD8KL8fop2h6lLT4IkLRJaTWynA3bf14gmE46MSUNREkv/Z
-	 kySwX/bMmaD2nntB3vVVp7T7NXIFxYzX8QDI7+UkV3zHSCMx4vsffdRWwhH10dwQkQ
-	 RC2u5GYUUG593bC6qBFvUpVlKnjLoxKVDZkjau1bWsDeFDybD96JFHHFCD/G9MJibh
-	 HxSkK7BltDpfwwtZOmXvhpxm/Ay6oywwTMZw+61Pe3Yxr4rV9y+kQlMcwr2JYiD32R
-	 XOPAPeaXMLe3w==
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so9494656a12.2
-        for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 10:43:48 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV0sy8r0zr8kOGFnO/1w7FTCXs2vlp+AR1eTt+HY5/87qA0Htmnwg8qUKTwjXI14O0CAtjfDEE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YweZassAl49H1KGilElXqqdaZkY+507OF37/IF61TNpm6/sz51w
-	pThzOq788sUyleQE/pdfFIh4VPZUuS8IaUk+/ZjJ/coTzNToP8wLXpXOxwEpWsgjqLiiLJBjH4Q
-	cq5hdkCXZHgx99gudUW4TI+sn3xUxXg==
-X-Google-Smtp-Source: AGHT+IFSfJ329hc32n6pv+14gS0mt5gTgoFqsqGbemfhsisnZDnXEaldUJ2gRxLUkvPg+1tT8vixRzdxTK8k0xV9biU=
-X-Received: by 2002:a17:906:730f:b0:ad8:9466:3348 with SMTP id
- a640c23a62f3a-ae9c9b0ce31mr42139766b.36.1752601427144; Tue, 15 Jul 2025
- 10:43:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J09LL6NH"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b321bd36a41so5407148a12.2
+        for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 15:06:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752617219; x=1753222019; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=5+1bnGTrSGimGK3Zq/YxQ9BHvkckKvMOjIcjntRlGw4=;
+        b=J09LL6NHgXRqM8BbyGy0Glk/ILX7OYN648IfFUQwO8Ho0Q8N1f/sWdFftsv/LhLPvh
+         f4GHtH6s5BsFpIDUSHflb96jzJ0+WPbuZRXTLQfTb52OKiUgvTmgseLwjIgdls9nLOkR
+         cw16cLlOYl15aJLquTDl4T6tiZJ5BQUpuzyCCB7kY3D6aADjQvLdyDbWf0+GgPOZZwJ+
+         f/ykeOzeuEqBn2mIpgipVYA6ILbPapqH76GFKlnWwq9FcN8dK8GOgnVXoEo1wz/IqzbD
+         LwECLx86yHXrx84+xCfAV/ZJI9xPw638Wp9yqNSgKJ73D5ahYz/PzesfVJWQAHrhqpu6
+         vAsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752617219; x=1753222019;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5+1bnGTrSGimGK3Zq/YxQ9BHvkckKvMOjIcjntRlGw4=;
+        b=Gl7rI6Wa5XF82rtFv0X6nS0OOLs6tGzFWLIpKHTXQ2yNrBi5Py71lXqQ4pW4R+P2BV
+         qxxguXrnY70CYuau4qbZAHASt6G1hIZIRVfrL+EV4HKQXL9QU1zZz+7EswXeEH6xBiNS
+         sFaOLIg5qBWO/NbdHLdeE3G21ELXEkYLwqG6LzVFNbcplDm93LtHpyOdqkOLVQ0OyX3N
+         tQLpPBfHlMJ8SCP6V7YFPCLIWDLmEQ0Ilu2hy9KVgjy3fqupYVwiNpgDkcvM0PRUeeNK
+         Y9SsJYi02WZEV9AN+zkLdjtRq1DgjNtMxrWSz66ttaEX9ufnRsmfa9ZuOFIk3g1HMU1n
+         XrFA==
+X-Forwarded-Encrypted: i=1; AJvYcCU4YeRiP21i+5NIhX0OL49BAUeQabgqNLGSTmxJ3XPU/Oedcxtsm5ufaBwEM1siHctqEC0zvOQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YycshwCVZpSQORSo7D6aexK/kR2LX0R9rU6NAOLTehOva5imW37
+	G8Ds7DZ0d2AuWy3j4DEMMIM2oqIpPTsoNZEjGztWTrDcbaphW82uANqb
+X-Gm-Gg: ASbGncvol6oqD+Z+jp2+y3yUox01C1TSQWCkJJMhwlv+pgX0D+OfdF0nLfrd9lOCXqj
+	dlQCBRdkAekrWJU/wARAsikiuJenhVM+sEdGD0EXodTziMpYj5EF8rOqlh0OfDgMVF4lA7LnBks
+	nIWk0sf3Jntl+WRj1IGjA35YBIRyYbVGUDeB6vid0dpnF99XFkjo9GUyfpcOYn6MWdVAd7/TZ5H
+	gTHXPUm6ih5iqO6HN9XG2mUcKhFCPdvjSiunLpCZwZpeZ4ZqsUGrbJkT6aIr2nSgPLusaEo32Tg
+	IPyKQivbzJ8RJI2eTjdO+xW6sE7Qp+aPIwQ2lA0NeTLDADhJ9Aj6B33I5L13hVOTpfVXcLCM5gw
+	vEeUmNtxlsr87By5oE9oeaA==
+X-Google-Smtp-Source: AGHT+IGA5Go/W11svBOlx+oojZuGSHeTcf6nPxWvkyTAK/25JmtPG/Wzl0xDDQgSb4VJ+3l1d//G6Q==
+X-Received: by 2002:a17:90b:2ec7:b0:311:ef19:824d with SMTP id 98e67ed59e1d1-31c9f435537mr372501a91.2.1752617219023;
+        Tue, 15 Jul 2025 15:06:59 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31c9f1e61d2sm96213a91.11.2025.07.15.15.06.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 15:06:58 -0700 (PDT)
+Date: Wed, 16 Jul 2025 06:06:40 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <paul.walmsley@sifive.com>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Chen Wang <unicorn_wang@outlook.com>, 
+	Richard Cochran <richardcochran@gmail.com>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
+	Yixun Lan <dlan@gentoo.org>, Ze Huang <huangze@whut.edu.cn>, 
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH 2/3] riscv: dts: sophgo: Add mdio multiplexer device for
+ cv18xx
+Message-ID: <bww3dwd37ujcnztbzw7o7r2qajwcvn54kcd6pcd42y4axfp2d4@zx5jrtcmkh4k>
+References: <20250703021600.125550-1-inochiama@gmail.com>
+ <20250703021600.125550-3-inochiama@gmail.com>
+ <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20250703021600.125550-1-inochiama@gmail.com> <20250703021600.125550-3-inochiama@gmail.com>
-In-Reply-To: <20250703021600.125550-3-inochiama@gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 15 Jul 2025 12:43:35 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
-X-Gm-Features: Ac12FXz_neDQRbYET5mV11I82g2lSNlhGKsWNEzC8k-2DtgP7jZ-KwLmxIiQkME
-Message-ID: <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
-Subject: Re: [PATCH 2/3] riscv: dts: sophgo: Add mdio multiplexer device for cv18xx
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Chen Wang <unicorn_wang@outlook.com>, Richard Cochran <richardcochran@gmail.com>, 
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Yixun Lan <dlan@gentoo.org>, 
-	Ze Huang <huangze@whut.edu.cn>, Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
-	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	Longbin Li <looong.bin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
 
-On Wed, Jul 2, 2025 at 9:16=E2=80=AFPM Inochi Amaoto <inochiama@gmail.com> =
-wrote:
->
-> Add DT device node of mdio multiplexer device for cv18xx SoC.
+On Tue, Jul 15, 2025 at 12:43:35PM -0500, Rob Herring wrote:
+> On Wed, Jul 2, 2025 at 9:16 PM Inochi Amaoto <inochiama@gmail.com> wrote:
+> >
+> > Add DT device node of mdio multiplexer device for cv18xx SoC.
+> 
+> This adds a dtbs_check warning:
+> 
+> mdio@3009800 (mdio-mux-mmioreg): mdio@80:reg:0:0: 128 is greater than
+> the maximum of 31
+> 
+> >
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 29 ++++++++++++++++++++++++++
+> >  1 file changed, 29 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> > index 7eecc67f896e..3a82cc40ea1a 100644
+> > --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> > +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> > @@ -31,6 +31,33 @@ rst: reset-controller@3003000 {
+> >                         #reset-cells = <1>;
+> >                 };
+> >
+> > +               mdio: mdio@3009800 {
+> 
+> The nodename is wrong here because this is not an MDIO bus. It is a
+> mux. So "mdio-mux@..." for the node name.
+> 
 
-This adds a dtbs_check warning:
+Thanks, I will send a fix for this.
 
-mdio@3009800 (mdio-mux-mmioreg): mdio@80:reg:0:0: 128 is greater than
-the maximum of 31
+Regards,
+Inochi
 
->
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 29 ++++++++++++++++++++++++++
->  1 file changed, 29 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts=
-/sophgo/cv180x.dtsi
-> index 7eecc67f896e..3a82cc40ea1a 100644
-> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> @@ -31,6 +31,33 @@ rst: reset-controller@3003000 {
->                         #reset-cells =3D <1>;
->                 };
->
-> +               mdio: mdio@3009800 {
-
-The nodename is wrong here because this is not an MDIO bus. It is a
-mux. So "mdio-mux@..." for the node name.
-
-> +                       compatible =3D "mdio-mux-mmioreg", "mdio-mux";
-> +                       reg =3D <0x3009800 0x4>;
-> +                       #address-cells =3D <1>;
-> +                       #size-cells =3D <0>;
-> +                       mdio-parent-bus =3D <&gmac0_mdio>;
-> +                       mux-mask =3D <0x80>;
-> +                       status =3D "disabled";
-> +
-> +                       internal_mdio: mdio@0 {
-> +                               #address-cells =3D <1>;
-> +                               #size-cells =3D <0>;
-> +                               reg =3D <0>;
-> +
-> +                               internal_ephy: phy@0 {
-> +                                       compatible =3D "ethernet-phy-ieee=
-802.3-c22";
-> +                                       reg =3D <1>;
-> +                               };
-> +                       };
-> +
-> +                       external_mdio: mdio@80 {
-> +                               #address-cells =3D <1>;
-> +                               #size-cells =3D <0>;
-> +                               reg =3D <0x80>;
-> +                       };
-> +               };
-> +
->                 gpio0: gpio@3020000 {
->                         compatible =3D "snps,dw-apb-gpio";
->                         reg =3D <0x3020000 0x1000>;
-> @@ -196,6 +223,8 @@ gmac0: ethernet@4070000 {
->                         clock-names =3D "stmmaceth", "ptp_ref";
->                         interrupts =3D <SOC_PERIPHERAL_IRQ(15) IRQ_TYPE_L=
-EVEL_HIGH>;
->                         interrupt-names =3D "macirq";
-> +                       phy-handle =3D <&internal_ephy>;
-> +                       phy-mode =3D "internal";
->                         resets =3D <&rst RST_ETH0>;
->                         reset-names =3D "stmmaceth";
->                         rx-fifo-depth =3D <8192>;
-> --
-> 2.50.0
->
