@@ -1,174 +1,138 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011039.outbound.protection.outlook.com [52.103.67.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E647221B9F0
-	for <sophgo@lists.linux.dev>; Mon, 14 Jul 2025 06:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752473629; cv=fail; b=oHwHzxvZMOMUJakfBikual6WB5uTaM9DgqxsqCRMCvMA781SyZHAJ5NO6kZNwukgFu9E87Uu8EUS/3Ps7x0BN8u26vQuzDQ4BHClaZ5t4j9zqhrAIp3IRtSywKnLFjoHe2UfpXrOycb9RkTRftBJmkxJ6Dtf1gFObq+bcfGAqdk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752473629; c=relaxed/simple;
-	bh=mKNkf0n3OLLOCPMlDbrKLWNubJEeoYA+vu5TM9L+b28=;
-	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=aVLbXZWz7hjgGaCJmQJBtRBI1RDZDlOrl8SO8G6w+qtO2IGGgqBep27BYZ7Wl7G0pbI1Y+lzxIahEq4KlSkUYqqqlgTrFi8ak5zXxXzyjWc1xmbT23Kpo6cJAKxiLHb5nO2Zo+lJrGbZIaDBsOTAL0gJNSnZ8xS0zIqnEPjPu/o=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=kVIL8LNp; arc=fail smtp.client-ip=52.103.67.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35E424A06A
+	for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 17:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752601429; cv=none; b=PX+zKvscgzip+zWpHJhjh0UlAMMC/czbxkc0K3lrmlQoSjpwCUCkHNO94GHDcZgkyEBTr9MR37oYYebBY2w5S6N6ujiB3cgwNb3atx5ARD3+BmQj/NpczcNMVFVy6SnrH3fvLZsUUmi2ManeLwR5qQllcH9Tl0xoDFLwThFA8dQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752601429; c=relaxed/simple;
+	bh=54VsIhKZIv/mNC4NrTI9DMJ7xO/jEt3cjbBcWJjARgg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=boDqHqZsC8uwcLuUviwiLBae8dng3kcS19ZOAfcy+BR6Ey6cCtvXOo5nfByJdWnbdWJ2kgbyXVxr2HTS/uQROijQDAZoc92yLS/P7y1cmDD42Lj0xlgxwCe+853Z11lgQmZHk4FexQEf2wUhsbMqnAEmhWDCnjFyQ9ynP3qp0RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cJ/tFzTR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="kVIL8LNp"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bHjm0kKFIQzUsFW119aisEjuXKi4HDYYK46vJlyzu2a4L6ujw7S6DJj4dw/hFZxLe358bIZMwWUkblGrRgL+1nYYCNABbmrojl8HciwsGsXB+6AhdBzO32pQjGraDqM8P/CAZpvbF0MTebk0tlvl4g3qn2+Z/RD5Y+yfFOHAt6CmC5kPeb08x7drpMnKZA8Z9pM/i+oIlW926JuBjfV6iybxVK+V/Tu3vcBYzTNQltKrKkz6n8AkCTVd8uw2FBQtHyAXaIrLJz5inRlj6buDwPUBgoJ6DOpgZ7TjMV+3ngy77qXOhf1sJnVKIDk7JN1lWr5x5hiwvNfNzsQl1zGnEA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3xe4Xp46AWrq+rDBT/6kTo1Mt/54aJ1Y6YUdQmdHIlY=;
- b=RHAAV6MpoN3tpFXaA39JKiJLm1g6EpMqnWR+7OQk+QleUdUyHlS7nFQv7+FQHqKhYViSlNdHfpPD+wED0+jyTP3IRSYb5wDbf6ITo/qd1PUnhJOcOog/EuktdU+xbQDnjbAQFdWUgYqRZiK1O32rEZTdV8Mp9XGlS2kLeh22WY/OJ+GX71BC8wwxh4kZ0lwcA3ADi1JeoPHvIyIRdmfLhEIhlFFe+h6ylhZ/3s+sgEscKyjo3mav8pjPUzEg/CxO6PjnAyZ+beSq0c5Kl1ey1ORaRZEMKKxNCfVQXKId6you0nMYFV6jrVWaGHkYdgj20EDdf/9uYdlrMtkw1H17UA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3xe4Xp46AWrq+rDBT/6kTo1Mt/54aJ1Y6YUdQmdHIlY=;
- b=kVIL8LNpRT6UpNIZ/qoEJ5eAKkFyC26e6AxZ+EHxFFVuAWnullPei520IihWMFNis74oyKhkc8i7ANZltbI6NtxHeprK/GOZrByUNWm4zgDNO5AZeWtNHfMrZmGGQDpREhsppWqMUx0m+wfv2mN0C9PzTQn+F6QBAu9goEq0vldQGE1szxF9TE/9XDFhTrIRGGMv3dTR9DFGiM5iYSgBqEmpk8246F7eFXhnNMv799XF6ZjwhXhiOjBOuUVX8MkNbZBXEMp4buM7s0H22lrWBsnsSB6z3mFUj1As0aLUvYu+LYJmdGltQcMhN8CGQ129bcyX2iMI86f0J/aMhgzjGw==
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16) by MAZPR01MB9063.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:10f::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.32; Mon, 14 Jul
- 2025 06:13:44 +0000
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.8922.028; Mon, 14 Jul 2025
- 06:13:44 +0000
-Message-ID:
- <MAUPR01MB11072DB4EFA1DACBE6E94A2D9FE54A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 14 Jul 2025 14:13:41 +0800
-User-Agent: Mozilla Thunderbird
-To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
-From: Chen Wang <unicorn_wang@outlook.com>
-Subject: Linux Upstream Status updated: Jul/14/2025
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR02CA0084.apcprd02.prod.outlook.com
- (2603:1096:4:90::24) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16)
-X-Microsoft-Original-Message-ID:
- <626ab21f-d299-4760-aed1-d4ed65b4b609@outlook.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cJ/tFzTR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CE73C4CEF4
+	for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 17:43:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1752601428;
+	bh=54VsIhKZIv/mNC4NrTI9DMJ7xO/jEt3cjbBcWJjARgg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=cJ/tFzTRQvVmZe4bXDNiYPtuqt/7L/tJESoX0k/L6gt+FYeldUsQj+/4OgvhhudJ2
+	 a3Gz8r8S//vHl2Rawg9VD8KL8fop2h6lLT4IkLRJaTWynA3bf14gmE46MSUNREkv/Z
+	 kySwX/bMmaD2nntB3vVVp7T7NXIFxYzX8QDI7+UkV3zHSCMx4vsffdRWwhH10dwQkQ
+	 RC2u5GYUUG593bC6qBFvUpVlKnjLoxKVDZkjau1bWsDeFDybD96JFHHFCD/G9MJibh
+	 HxSkK7BltDpfwwtZOmXvhpxm/Ay6oywwTMZw+61Pe3Yxr4rV9y+kQlMcwr2JYiD32R
+	 XOPAPeaXMLe3w==
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so9494656a12.2
+        for <sophgo@lists.linux.dev>; Tue, 15 Jul 2025 10:43:48 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCV0sy8r0zr8kOGFnO/1w7FTCXs2vlp+AR1eTt+HY5/87qA0Htmnwg8qUKTwjXI14O0CAtjfDEE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YweZassAl49H1KGilElXqqdaZkY+507OF37/IF61TNpm6/sz51w
+	pThzOq788sUyleQE/pdfFIh4VPZUuS8IaUk+/ZjJ/coTzNToP8wLXpXOxwEpWsgjqLiiLJBjH4Q
+	cq5hdkCXZHgx99gudUW4TI+sn3xUxXg==
+X-Google-Smtp-Source: AGHT+IFSfJ329hc32n6pv+14gS0mt5gTgoFqsqGbemfhsisnZDnXEaldUJ2gRxLUkvPg+1tT8vixRzdxTK8k0xV9biU=
+X-Received: by 2002:a17:906:730f:b0:ad8:9466:3348 with SMTP id
+ a640c23a62f3a-ae9c9b0ce31mr42139766b.36.1752601427144; Tue, 15 Jul 2025
+ 10:43:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|MAZPR01MB9063:EE_
-X-MS-Office365-Filtering-Correlation-Id: 114ffe1f-4390-4040-112e-08ddc29d95c6
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5062599005|6090799003|461199028|22402599018|5072599009|15080799012|13041999003|440099028|40105399003|4302099013|3412199025|10035399007|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?OG9jcjk2UEwvWlFiZnZqcWRzYnZvZEVEOEk0dGNlcm5vOXN3UFhLK2NPaWhM?=
- =?utf-8?B?Q2VGdzUzSFphWFNBSG1NL0lKWW5PcUVoVlFiREdlMURJK2M5eDRtQ1UwU2RY?=
- =?utf-8?B?bUlvTk92Z05nYWFoay96VjJmZFh4aGxzTVVZeWNEcHMySERMTDZCbHVUSTA4?=
- =?utf-8?B?ME81VmdCWm9rRi8yZDArdDg1OHk1UDViOEh3bHgwN0tpbXEzNldpdFFpbnVO?=
- =?utf-8?B?UU9Tb05DbVl2Z3dPM3plMFlYMk1VMnV5TzJCRm1wckdlSXFIcXYrUVFjcXRk?=
- =?utf-8?B?MlNKc1pwb29Ub291Q0RMWHR1V2tGeHlmUXdTVk1CWkh6VFdSZS9JZjJsVzR6?=
- =?utf-8?B?YlRDajN0RWl1SGM2VXZDUmZxWWI5N0U1SisxZ1JPU3lBNitQSWJ4VW1QRkh1?=
- =?utf-8?B?NnRIdWhwai8rU28vNkNJS1JqMUZnT1ovQm0wNFAwMFlRY0IxNTJqSWl3TXp0?=
- =?utf-8?B?NnpHWElYbHNNUjJ0NUNqUXdKMVhTeUwxMlJjeFlSejkxdW80QjAvTnJvdGFF?=
- =?utf-8?B?NkNnbytmTG9ybTI1akFNMFIrVnFLMER3SG9USFM3TExOWnQ1ODQ1ZnZld0Z5?=
- =?utf-8?B?anlSRHBWckh4MTBQZ0dycU14b0Y1WTJ2MHRKYnNZSkxXajdJSHgwT1hnbGs4?=
- =?utf-8?B?UnpXMmZFNUxENXhPNmI0emlQRzN3TmNITi9sd09hOG9VcWx5TzdUTmhpZHBW?=
- =?utf-8?B?WG5ibDZ4VzA2d3BIUnV5bnRtMjRBY2ozeUVTeG5TNXZ3VU5jM1BsN05sZGlM?=
- =?utf-8?B?K3RHNEVYT294Z0JTMU5QT2t0enJ0MjN1NXdCZVByaEpaUStLUHV5L21Dd0tq?=
- =?utf-8?B?ZWxrejhSOTNsV09FR0IzbnFudjd1VWt2RlBFOURvU0I0aythTjA3MXN0bVgx?=
- =?utf-8?B?cndDRGtBNFRubGRhNDltTGJZV3duREJrV25vaGZFODMyQnlFVnBEWjcrM0Jp?=
- =?utf-8?B?VFNkOUxtNXdyLzdTWFVaSVBEWFVVUWQwMWt1cDFsT1dMWjZRZjFhb1ZISktx?=
- =?utf-8?B?TldWcmkxRlJNbVpueFRVajgzZzU2cGZmUzNLNm5MQ0dqL3FpdDF6NWJXWHhP?=
- =?utf-8?B?SHloczAwSkMyN2xCbXlwUEFsN0lZK1N4Vkp4SzdCT1lQZENRWHBFY0xjQXEw?=
- =?utf-8?B?c0FzdmptNnl6QjhWU0Y0VDl6eGJjNExFZmhUT25sb1Q4eFRaa0NDTmVvS3k0?=
- =?utf-8?B?eDQ4cUdFVHIvdE8xM0VKL2oxOHlmcUdDcmw5UjdGUGJGN01tTVhmMHJzdzJj?=
- =?utf-8?B?WHM0Y0t4MDU4WTVHdDhIVnRsdG1nMG1QS0FXeGFOYlJxaVdQNU11MDNETkx4?=
- =?utf-8?B?THZnV0ZUVWJnZk1EaWVBbVJ2TmlsdjdEeHBCc3F4Z0hOd2VycVphc3Vhakcr?=
- =?utf-8?B?eUdaT2tuR3BWZGJodkkzZXdkbTJUOVZJQkh5NUlsNXg3ZHBURUNKTzJ3Smsw?=
- =?utf-8?B?NVVQK1l0S2dSemtXcTh5TzU0djlZdlQzRDV1V2xZM3JiWWd2YndIMk0vZWwy?=
- =?utf-8?B?UGVreUNNYmYzV0VZV2J1SGY2V0NLTE4rZGxRRUkzZGhPMjVkUkh3OW9tKzBE?=
- =?utf-8?B?aCtWN3h4SG5mSXk5UjZGaDY0TU9EQmVzb011MkhWamd1Z1NYRVJ3a2VDdGQz?=
- =?utf-8?Q?0WhVH9ix0IYFdaMmw2T2qXZYQAptFfZYovnyOe5txxrk=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?N1JoWU1SK2srQ3NxQWp2TjluTWVJNThveWpCQXhyZ1FHcTlzTG1hTndhZTE3?=
- =?utf-8?B?cUxOd1BKalpEQ043WHE5djdFakFTWDd4NUQvTVB1MTZOUWU5ZjhSd0pqMU4y?=
- =?utf-8?B?R2hxM0FVR1lZQk5rZXc1dHAzZCs3aVB1QnN4SVNXQTBWMU0wS094STBIaEkw?=
- =?utf-8?B?aUFWd09SelR4ak4rMW9naG10SjVqSzRhNmFmVmtCUkZGWEVlUFU2dEIzNnhJ?=
- =?utf-8?B?NTFLRzhSZzBpMnBWOER1Vkw3VkNOWWo2akVPYW9tVUFDZHphY2I1VFJFRlc4?=
- =?utf-8?B?RlNZSWNsaGpyMVlwNmJERklYZE5HL04rTnZ1WkFwRENtaXY2VzNEZ2lIMmNt?=
- =?utf-8?B?WnBTM1VsZFJDS1F0aGRRQmttT0NxSFBveU1iVWI1aGUwRG45R3ZwL1BrMTU2?=
- =?utf-8?B?R1lCc2FXZndBQ004Y2d1WWg4ekVJSlRwMW1lc1ZiYjNxQk5mUHhvd3d1d3dO?=
- =?utf-8?B?dVNhR0JBVExLMjg0ZkxWR2R4QnFLcVFJbkV3NnhjTTBtMjZ3S253SHIweEdt?=
- =?utf-8?B?MGV0QzVmMVZzODZkV2VTeXRGNlBBZ0NBQTJyQUVTZ21MeWM1YzdRRDdXRGdB?=
- =?utf-8?B?eEVyKzI3dU9pSVUvcHBBNlljd3d3Z1NiR3AybFhXNU9jYXdnVWtNUFkvbGdi?=
- =?utf-8?B?WGVuMDYvblpHU1lzbkhMcGhMbER2MkZkQkpwQWk3bGJwaDVERTNhUmNEVnpZ?=
- =?utf-8?B?QzduclJEWVpWZE16M1pvZXVLZEVPc0NRN0gzdHVyQWFXdHZJTzJJMGUrQXNk?=
- =?utf-8?B?RWdNSHhvOVQ5Y1BldUx3Mk9pcmZXNDZXclN5OGZLNkhvWmdpUVJkTTZtNmox?=
- =?utf-8?B?VCtQcHplSlhTcHhLemllRDJ2aWJNZENNMmRiTWNMSURsdEwrRUxiMlE0Y3RE?=
- =?utf-8?B?VXdYL1VNRUQ1UHpHaTRadFBuWTZhZHVzRHVWMTFjemcwbkhnU0MxMU0vQkNS?=
- =?utf-8?B?RUlBeFNwTjhXUFRLZVZZU1JNYUV4MUJidmlFc1o3QnhDN2N3ZEtyWUxkUm0w?=
- =?utf-8?B?ajJ4QWJab0RHYkYrM3AvNS9YRTdqK3lqV3lsNVg3ZGN0SlM1elBWclVQbFdJ?=
- =?utf-8?B?b295cUJDUTcrQ3ovZFlraHJSUmFxdy83RkJYbmFXNHh2M2xyQ0dnM3l1OXhB?=
- =?utf-8?B?d3A4QXI2QlpVT1VXTnRyWE5PRE4ySnJ0bk1Rc1lJa2hoY3Zjb0F1OFkrUytT?=
- =?utf-8?B?MUNlZEVDd0oySFFiUXNHem9HcHFjd2NjY2c2cUtFSG80NGtIaVVsRDY1QUIx?=
- =?utf-8?B?ckdWclNua2g1Q3BBZ0hobVdXZHNFS0RnbkwwUlpDejNaRlZnTVI5MjJVdmR0?=
- =?utf-8?B?ZGZocVU2R3Fnc0JZV1I3Q0p0dFB3NUZLdjV6VnE3VHkrK3daMFN4Z00xeWJ0?=
- =?utf-8?B?R2hERkt1Q0RWMVkxd1pVODNXUVdydGZYTGpTSGZZVlRKTnAyK2xzTGhSWjVE?=
- =?utf-8?B?UU9Eamk0aXhrL29ENkp1dUE4eXNGckJmVEVMbjlKVzgrRTFlK29KcWdjY1ov?=
- =?utf-8?B?L29WRHNuNjhkSTZKcW5KRE9sSXFGMkRaR1dCditZblpyS3IvajJ4QktoWFVy?=
- =?utf-8?B?d1Fvdk5ybGtNWHRhaGNWRXhyaTlJbmE3d2thYUF0V2VIQnBlRzYwczhUbW55?=
- =?utf-8?B?U1NoNDMxNkZua1A1OS9JVWhUUGFRVEF2ZHlQMHVFZDdxNTRSTHhpQjlBdVcw?=
- =?utf-8?B?eDNUVE1yaG0zT2xxelBTMmhFdVV3QlI5MWlPSVFBa3M2bVVsZGR1YmZXUTV4?=
- =?utf-8?Q?+3HMFiTlmtmklT1VHxtU3XLpAAMJN+L2U2BgFMu?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 114ffe1f-4390-4040-112e-08ddc29d95c6
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Jul 2025 06:13:43.8885
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB9063
+References: <20250703021600.125550-1-inochiama@gmail.com> <20250703021600.125550-3-inochiama@gmail.com>
+In-Reply-To: <20250703021600.125550-3-inochiama@gmail.com>
+From: Rob Herring <robh@kernel.org>
+Date: Tue, 15 Jul 2025 12:43:35 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
+X-Gm-Features: Ac12FXz_neDQRbYET5mV11I82g2lSNlhGKsWNEzC8k-2DtgP7jZ-KwLmxIiQkME
+Message-ID: <CAL_JsqLKLKHj+vQJmZnaXRj3TmqR3ELjpBc27HRbTOOP9FD0hg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] riscv: dts: sophgo: Add mdio multiplexer device for cv18xx
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Chen Wang <unicorn_wang@outlook.com>, Richard Cochran <richardcochran@gmail.com>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Yixun Lan <dlan@gentoo.org>, 
+	Ze Huang <huangze@whut.edu.cn>, Thomas Bonnefille <thomas.bonnefille@bootlin.com>, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	Longbin Li <looong.bin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Last updated: Jul/14/2025 @https://github.com/sophgo/linux/wiki
+On Wed, Jul 2, 2025 at 9:16=E2=80=AFPM Inochi Amaoto <inochiama@gmail.com> =
+wrote:
+>
+> Add DT device node of mdio multiplexer device for cv18xx SoC.
 
-# CV18xx
+This adds a dtbs_check warning:
 
-- Ethernet DTS part is applied to sophgo/for-next, will be pulled in v6.17.
-- rename compatible string of the USB device, is applied on 
-usb/usb-next, will be pulled in v6.17.
+mdio@3009800 (mdio-mux-mmioreg): mdio@80:reg:0:0: 128 is greater than
+the maximum of 31
 
-# SG2042
+>
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 29 ++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+>
+> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts=
+/sophgo/cv180x.dtsi
+> index 7eecc67f896e..3a82cc40ea1a 100644
+> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> @@ -31,6 +31,33 @@ rst: reset-controller@3003000 {
+>                         #reset-cells =3D <1>;
+>                 };
+>
+> +               mdio: mdio@3009800 {
 
-- Network: Binding/Driver part: Applied to netdev/net-next, will be 
-pulled in 6.17.
-- Network: DTS part: Applied to sophgo/for-next, will be pulled in 6.17.
-- SG2042_EVB_V1 & SG2042_EVB_V2 Board support: Applied to 
-sophgo/for-next, will be pulled in v6.17.
-- Add more sg2042 isa extension support: Applied to sophgo/for-next, 
-will be pulled in v6.17.
+The nodename is wrong here because this is not an MDIO bus. It is a
+mux. So "mdio-mux@..." for the node name.
 
-# SG2044
-
-- PMU support: Applied to sophgo/for-next, will be pulled in v6.17.
-- Add ziccrse extension: Applied to sophgo/for-next, will be pulled in 
-v6.17.
-- Reserve uart0 device: Applied to sophgo/for-next, will be pulled in v6.17.
-
-Also, good news: in the next development cycle v6.17, we will submit 
-many improvements for the Sophgo product, see: 
-https://lore.kernel.org/sophgo/MAUPR01MB11072B86FA33FAFCDA1FD2D1CFE54A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM/T/. 
-
-
-
-Thanks,
-
-Chen
-
+> +                       compatible =3D "mdio-mux-mmioreg", "mdio-mux";
+> +                       reg =3D <0x3009800 0x4>;
+> +                       #address-cells =3D <1>;
+> +                       #size-cells =3D <0>;
+> +                       mdio-parent-bus =3D <&gmac0_mdio>;
+> +                       mux-mask =3D <0x80>;
+> +                       status =3D "disabled";
+> +
+> +                       internal_mdio: mdio@0 {
+> +                               #address-cells =3D <1>;
+> +                               #size-cells =3D <0>;
+> +                               reg =3D <0>;
+> +
+> +                               internal_ephy: phy@0 {
+> +                                       compatible =3D "ethernet-phy-ieee=
+802.3-c22";
+> +                                       reg =3D <1>;
+> +                               };
+> +                       };
+> +
+> +                       external_mdio: mdio@80 {
+> +                               #address-cells =3D <1>;
+> +                               #size-cells =3D <0>;
+> +                               reg =3D <0x80>;
+> +                       };
+> +               };
+> +
+>                 gpio0: gpio@3020000 {
+>                         compatible =3D "snps,dw-apb-gpio";
+>                         reg =3D <0x3020000 0x1000>;
+> @@ -196,6 +223,8 @@ gmac0: ethernet@4070000 {
+>                         clock-names =3D "stmmaceth", "ptp_ref";
+>                         interrupts =3D <SOC_PERIPHERAL_IRQ(15) IRQ_TYPE_L=
+EVEL_HIGH>;
+>                         interrupt-names =3D "macirq";
+> +                       phy-handle =3D <&internal_ephy>;
+> +                       phy-mode =3D "internal";
+>                         resets =3D <&rst RST_ETH0>;
+>                         reset-names =3D "stmmaceth";
+>                         rx-fifo-depth =3D <8192>;
+> --
+> 2.50.0
+>
