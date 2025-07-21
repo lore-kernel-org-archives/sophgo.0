@@ -1,181 +1,218 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010008.outbound.protection.outlook.com [52.103.67.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929051E1A05
-	for <sophgo@lists.linux.dev>; Sun, 20 Jul 2025 08:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753000406; cv=none; b=exXkkdEIjXYZtPB7wXPxTPfw1F/biC49tclPz/qnBB5WdscUM7i5hg6jMmhRo0vXpx9QieKHOjf3owH4/D2gxj8su0uzRT8WMrrnYsIfh2vKGDQU+w50Rc/hAI63tSl/+dO1dGiQK7+yS66UFd8bg5eooRjwPiYtH1uotO0XxIQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753000406; c=relaxed/simple;
-	bh=TvdO4gaLKUzOJEi1aNELCkM4P/gdBzPDf2IOJYLCNW8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K8NBIC0n2vlQiZAEZ/zjZGHwzDqRzAQu9lhM55mX2tV1kZ2KOkxSORTy0VA/Fb5UovQ1xUdDLPnasviA/J6dQB0NAiWqNCN/powtYKPWfKewfdkkzsC1IsxgWb95hm/VNWibA721JP3eP+62+9i4cRhttfw/HryAR5H/exx5LLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lLrW6wpa; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A09F2D660C
+	for <sophgo@lists.linux.dev>; Mon, 21 Jul 2025 12:58:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.8
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753102737; cv=fail; b=YB4RvjZucefEcUgG6ffflycqEFjIi3OYcTxv++WHJE1RjpIoR+F9+mubxN7/6PSwNT2SB0svYAD2VWz8BOEjL7vveJ+3D2UKOtwGwv5DrTI0hWyx7HjySNBPgvbyZFbbhpojVmnHdCpRIIFCvOmPmd28PcOMdVeoYD1eQdLogYk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753102737; c=relaxed/simple;
+	bh=5V/rWn2REQKYBy1ZQwgqRK4KNNflArJKJHkTLzWgWhM=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=ULNo0CYyBCwL7TT8aFGybjVNhNBlTYS1Vzr2Tfgx91jqAMXVBoSwwbrB2sYb4MKt3PmdCC7SPYJoiakxURH2kzBPkH8jsya/8dyiuo/ivyRoW+FjE5HWHpu/3IZcfjR9DvzqRq5XrbUbGXa+9HMAGle6aiSCTWPxfudHyWIy1ho=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=N/J9uFUA; arc=fail smtp.client-ip=52.103.67.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lLrW6wpa"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3122368d7cfso2508323a91.1
-        for <sophgo@lists.linux.dev>; Sun, 20 Jul 2025 01:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753000404; x=1753605204; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vk2QbpeYdfxireOkVMTO8TaReVM+NxnLECNCVQYv1vc=;
-        b=lLrW6wpa3bjmx1ljLmG5J+xqiNrLLD0hZLrxWIcjDD1jRAdcHr8GqYcW95odQGCbjP
-         9UB4proRChg4ueO19UtVmTf0Cf25R4+XtnUACDL5yHDvhaUOSQYtwa7AbcKdP+92PU+z
-         7cdDL+H+t+wbA+fr6u3QrTiCLtkSb1JW/75l1Wp/c7Xc/zXnzwjrtPK9AvlzK9r3Y7Mh
-         EEdaHOsioQ7ux/FNkhCwJpRw5i9R4U+kTEMvbRvvDAa5XtAV/gN9Qj5glPGGUmqs1HXq
-         fzH9P6QaVAlQ2mO/Pki5e/ucRlStlCHrPAlJTxjwcsPqUwjHVgmm9n+NIUsZUHsUePXt
-         EvsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753000404; x=1753605204;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vk2QbpeYdfxireOkVMTO8TaReVM+NxnLECNCVQYv1vc=;
-        b=jYqth5FH7hkHjPJZiQpw9EV9ulQ3pXbDaHfdVq6ZdJnLIo1LJza0lvDrQBfP3q0SuZ
-         J7zYUSoRjvFNHCBXZ0RdjhtsIk+KygFN+UrEMlPQFqWqoLiYhL638NtIcUdTmwx1itIZ
-         43DKndE3hJx7YXVLLXPllqcWZzZJFlqb0Zt72KJrICiZZBXHjeUnIU5vd0E/MWmmPW2D
-         SIP3Hr9KU4mZyM/xJiz1XTu/k/aVisthO8FfTjVc21ND7NuSJoDvHVaq07h4PcCUi38Y
-         73RHAAjMN6SutXy2eZXu/Bx6fbxk1bRvVXRxdEaRZjRN/dRRi61o72bAFpLJdd0CJ4NL
-         WbnQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUGllqV1TxWoSAqeqhJ/W2ZVByVsjkrKYSSmzcrHdK7pevXKkfmxKr8iOD5W7Lhkxl7YCnoZlo=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwnJbMwp1eVZ9CWK7vj/gnzd3TZLt09fPzZzYXgysAIEAIE392m
-	e5qwCUu3yuvja5JyUlNLJ++//iS2Rprmd5ZIsCQFuZzk94deIg9f5cvW
-X-Gm-Gg: ASbGncufAqha7Dd2m1afM1fwJ0825IV6FkVm43zIrPomYqJhN4vzrUYEtt3s8A2fMUh
-	h56msK/3dXWdmg5zxWll662ks4adJ4hFKf8+gdPraT1q6JOlOzkb7oD83Duq3xGlYP612NU4+HY
-	45aCeFULqCtRJLkKdqrOdARuIqhj95y29Q8SnLdDc9JksxCSxqRXGlG6EumOa4MdOCcE4FLJA+M
-	syMIMImsIW9yk+WJ8QhBq4h8cZ1HNl9sIhoht6ZH/qVUvJMziuHRI8mm1JegkPbwzwjTc0TOTlc
-	ccFL2DxK729e7AlimV3w/9/o/V5/xjSDma+tVTyYKyE4oV1IT3wdTlHzVXgR9KGN31+jDGjpcvY
-	3idhVIftFcJkP2h9UZyX+sz3n
-X-Google-Smtp-Source: AGHT+IHQ6aqsMzWnYc8OhtpmX48954oW5ZQ+i2KvLoOdJi5CschQ3b7WowKF1it0RnWS+9kS3TgT1Q==
-X-Received: by 2002:a17:90b:4a8d:b0:311:eb85:96f0 with SMTP id 98e67ed59e1d1-31cc25e80b9mr13870327a91.29.1753000403406;
-        Sun, 20 Jul 2025 01:33:23 -0700 (PDT)
-Received: from [127.0.0.1] ([2001:250:5800:1002::1d55])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31cc3f46b97sm4079721a91.41.2025.07.20.01.33.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Jul 2025 01:33:23 -0700 (PDT)
-From: Zixian Zeng <sycamoremoon376@gmail.com>
-Date: Sun, 20 Jul 2025 16:31:46 +0800
-Subject: [PATCH v4 4/4] riscv: dts: sophgo: Add SPI NOR node for SG2042
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="N/J9uFUA"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CFQQOINbz95hPVqFarU7CqFxpuqNUHzH6WkVBJT89yIY/n9IPpmrEQgKuv7fA1Wh0ASG8XIhDly5F9nDOb9YTVU9JVzW8X1IWjX+cwJuIJIPNMTGcWftFlYZu9Y4uK2qL/gnZFwP3MNVcb5bMTNDEsw/S6g1b7DUDyRJ2QfYirqdJIoLkGsit3a2+WEWuj9+8ue4YoPmy9vClw9q8SKBlKsoe+kVjPGD+49FzvU0oBJtwMJGeqLWv/EyWjTZgPGbyVwuTdsHDwnSwVe6NhMh7+Q04yCgzslXG00IG5cU/+vBmZ9I5lkuQ1LkrI8rW8WFU0OjB0aFE2nS8CwATPePvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VnxkC29iNHYiczy9NKA4MpJDwG3KH4qpNmXh4o9t6e4=;
+ b=sjYrtmp+2TywAK93jBJo1sTDA+XTF8k3RR80O9zzacs2PIq8o0YhM09U2EQLf2XcVk/MzEHzqvNWxa8d8afcDiEH9Ut7dcIqO/SMNHOyf17Xkd5n2dIwM9SRK1E91SDA+xmAzO2cJx6UAkpGBfvnHb550nLnrHr9ZYXYvUEAp7Ul40wEhJezONuJwgXy5qxQqED8WoJAFMVzEju1ahQSZkLNQwxr0aiGVbRe8cBzKQFlUDfnnPvk/3ZFyM9CXhe0x90R+8RPVbICtuPASD/no4QbzNdlrGf+k6llYHLenj1MJfa+vPfsafh90yE/Xu9RNHbJxgtvfKZNO1a8bUNm1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VnxkC29iNHYiczy9NKA4MpJDwG3KH4qpNmXh4o9t6e4=;
+ b=N/J9uFUA0tiPZqf7zPYMij3d4flIuiGGwtUvPmlYS2LPG50Rn9f72mFjizS6LAw8x8N8Ka+RKcLUKdGASl9JCkvo2t3yGerSQ8UYGcqqFZb1ni9Tg5f4uav/ZXNHJhP6WcshN9kx5zJbbX8za2sNsaXOP1K0qyNH4H0LpPNFkItfU9yQoWOHBsbHSN0uoEy/aeJv3xCeER30mUwxyICOmeNMrEusqrJU7gH1HhX/Vr5woDqQ2+SBgtdpSEw+87Nqmf+3FtY0lEPmhrVvwZmPL9tCCwKjAVhWl3Zk31bY3ZsXfyu1MR6r2yTpfUuPPKDoETRRUHsb+eSbXIr9H0i+gw==
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16) by PN3PR01MB5517.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:78::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Mon, 21 Jul
+ 2025 12:58:46 +0000
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.8943.029; Mon, 21 Jul 2025
+ 12:58:46 +0000
+Message-ID:
+ <MAUPR01MB110723FAC07AF511BF42E0102FE5DA@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 21 Jul 2025 20:58:37 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] spi: sophgo: Add SPI NOR controller for SG2042
+To: Zixian Zeng <sycamoremoon376@gmail.com>,
+ Tudor Ambarus <tudor.ambarus@linaro.org>,
+ Pratyush Yadav <pratyush@kernel.org>, Michael Walle <mwalle@kernel.org>,
+ Miquel Raynal <miquel.raynal@bootlin.com>,
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
+ Inochi Amaoto <inochiama@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley
+ <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Longbin Li <looong.bin@gmail.com>
+Cc: linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-spi@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ Conor Dooley <conor.dooley@microchip.com>
+References: <20250720-sfg-spifmc-v4-0-033188ad801e@gmail.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <20250720-sfg-spifmc-v4-0-033188ad801e@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR03CA0114.apcprd03.prod.outlook.com
+ (2603:1096:4:91::18) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16)
+X-Microsoft-Original-Message-ID:
+ <29df5685-e16c-44d5-a15a-714c6622a51f@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250720-sfg-spifmc-v4-4-033188ad801e@gmail.com>
-References: <20250720-sfg-spifmc-v4-0-033188ad801e@gmail.com>
-In-Reply-To: <20250720-sfg-spifmc-v4-0-033188ad801e@gmail.com>
-To: Tudor Ambarus <tudor.ambarus@linaro.org>, 
- Pratyush Yadav <pratyush@kernel.org>, Michael Walle <mwalle@kernel.org>, 
- Miquel Raynal <miquel.raynal@bootlin.com>, 
- Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Longbin Li <looong.bin@gmail.com>
-Cc: linux-mtd@lists.infradead.org, linux-kernel@vger.kernel.org, 
- sophgo@lists.linux.dev, linux-spi@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
- Conor Dooley <conor.dooley@microchip.com>, 
- Zixian Zeng <sycamoremoon376@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1753000358; l=2404;
- i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
- bh=TvdO4gaLKUzOJEi1aNELCkM4P/gdBzPDf2IOJYLCNW8=;
- b=lksiYwk8mrj89e55V3la17CqB//aoirRCF4dGn/kRQVvc4FfgGgqWzJjjN7U9PCxlzb/HE4sL
- Ep2vwiJTSS8CDJasYtL7IvN2wVCJy850Qx3X+F2AUBsS4K41YfhCVqW
-X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
- pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PN3PR01MB5517:EE_
+X-MS-Office365-Filtering-Correlation-Id: 75ebd784-87f2-4f66-5bee-08ddc856540c
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|5072599009|15080799012|6090799003|1602099012|40105399003|440099028|3412199025|4302099013|10035399007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?L0JKWTdrVG80ZFg3WkdsZnhWTjlOSkZIcmFMS2RueVhjSFA4YmV1Ri9kdFlr?=
+ =?utf-8?B?RkpQeEIwRWhQV1lIWFdGMUo4VHRCV1AvcnRWTURTWDhKSjRRbnBMUWIvVDdw?=
+ =?utf-8?B?YXZBQmVwTlViSGxJT0FIVVgzOXFHaTdMQ1ZjY3FnWWVvZEg0WmhxMWJVRW1Z?=
+ =?utf-8?B?UE9xTHFYMU1xVGl1Y3c5dWhtcWdaOHROSmRvZlBiUStWTHl4dy9LWWpaMUQy?=
+ =?utf-8?B?UTgySjFRM0VPL1J1b3RkdkdWY3BGdDRjRWdCVGlRWUJaZU5iSFVpZkNmKzJ1?=
+ =?utf-8?B?R1dqcUNaNjBTM05RM1FiWm1xeU43MVd2S3JGY09OQldQQW82ejlVc0R4Vk5j?=
+ =?utf-8?B?RWZiMVNhaDdLZkJ3T3N1U3Z2OEQvTm81VUk5WnJMZUlBOXQ0SThxb296Mnox?=
+ =?utf-8?B?UTZBRnpjZU1lQlVoejl3Z2g3SU9yUXFiOURLNXpoblhvVTgwZTY1enBjajVI?=
+ =?utf-8?B?OEZZT1pnOU50NmJVUkNTN3NIajJCN2RMeUZUTEJUTW9Kd3J2K1JzNFo3QUs2?=
+ =?utf-8?B?bGFzSnZJQU15b3ZSNVU1TTZvZkNuK29XWm9JMnJENjFKZDdOOVIxQUxZL1p2?=
+ =?utf-8?B?SHBXWHFENjkwTDB1cjhicGY2VitNbFN6dlplVnNERmIvMEpYQVJ3a0orVmVo?=
+ =?utf-8?B?ZU5lTHlNSEYzQVNGV29Nb2ZUTkdMNWtGNVlPR0lJbkcwVHhiZlZRMTI3RmFI?=
+ =?utf-8?B?Wlpzd3VTcCtoR2NtYVlQUnprRXVSM24zR2dwcUFEVkdYclRON3NEcHB3WjlY?=
+ =?utf-8?B?ZkFxVklIU0t0TXFBaldLVGEzWVhHT2UrUi9Jc3BQMzFxQy96b0VSbklSL09J?=
+ =?utf-8?B?K0phekcvYUtTZTlnbS93eWdDdnFFWWZCQWhRMnBwTTlrdU02K1U0b0Z6cDBr?=
+ =?utf-8?B?U3U2N0FVMU1pK1BWa0VlVXcvYnVBOUhuUnRyUElKK1I2YWxTVlI3SnNqa29j?=
+ =?utf-8?B?akRxSHpneVRGeFVqUlgyenpXNHUxZ1FlcVBSV0hWWHJFQmh2Z1c0ZUhrTHVT?=
+ =?utf-8?B?aHI5SEdNSzJJWm1TUWhhUXoyemhEZjkzbTRzTjZQVUhHL1pTdXVhWTdZUUZ0?=
+ =?utf-8?B?REJIWkxZZUNKeEtvSVo0aUlWRkZ0UjJFNDJNNUpxMExNWWRQbmpSeVUvU1pK?=
+ =?utf-8?B?Y0VWZ2thUFJDM3NRRnV2UDUwWDZrNGtrWDVXTHRsYVdLdGpqZVh5WFk0dEJZ?=
+ =?utf-8?B?N2tJc3ZXZVlaak82REdkdTZmaDNieXhpUm5RNWhUQVNLd0RVdFdFdXF5MWtB?=
+ =?utf-8?B?WDJSRUw4dktFYXNzT1dCTjZFS0MrUHFjaE4rWG02TDdEMlpCNkRmQ3JUcTZQ?=
+ =?utf-8?B?ekNtbTBZQ2FpNTdDMkhpd1NPVHp0S1RkN0ZIeThraE9ka25YTlJkRitRYTdS?=
+ =?utf-8?B?SnNQTEUwQWs0OFYrZ0pZRWorOWpLZ0sxdHc0VkJiazViNmdrM20xVmc4dFIv?=
+ =?utf-8?B?dkh1MDA3eDBZano5SDdkc0NJZ1pJOVdUVjJ5cGFXbU5Ra1FQMVVTbnNFcytv?=
+ =?utf-8?B?aVpRQnF5RDRZbDcvS1dKZ1RRZkdzSWFpd0Q5cGtRejgzakhUS24rN2xJUWtP?=
+ =?utf-8?B?aTRvTkFxK3ByZUQ4eVdLL0RaVkwvdERmM29jSE83WmhYTFRpNGRvSVZkblE4?=
+ =?utf-8?B?TTNFNk9FZmd5ZWlXbnpKeER6cyt4K0E9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dGI5QmxiMXVLZDYza214Wklwb21aUUxwY0pmb2tCMjJtS1ZLOWpEN2RMNEls?=
+ =?utf-8?B?bWRDWFQ3REFFNEt4OVlnajV5MW5pNVovQjBaWmEyMVJ1UkErUWxqSE5MTlU0?=
+ =?utf-8?B?TkwyT0M4MFozbkhicjZSZktqZWdrb1ViZU5kR0g0ZWt4c2hJMW02OWxVSFRF?=
+ =?utf-8?B?N2k2b3puZ2hFN0xjK1VIWWlENWRjdTMwU29STVZsbnM5VTFFYVk1N0QrZVpO?=
+ =?utf-8?B?Q01lRGZsQXlsTFFJL1dHWW5sZ2lWd1BpQnFoa1UrNTg3bTdMN2p0L1ZrRnJm?=
+ =?utf-8?B?eGg2ZUo1MDBZOGhmS0gwbWtzczdGL21oU2RpUmNFWFJDR3Y3cmZDVkRJaU8r?=
+ =?utf-8?B?TmhHKzhsUGdsM1Ftcys1WTlRZmd3V3dMK0Rld2psM0ljVURTdGVId1lra3ZT?=
+ =?utf-8?B?U0V4UUtUNFhxLzRlQ3I0TzlObnZSY3gxa0N0cU9jVXdyYytuQkNJT0RhS01x?=
+ =?utf-8?B?RWhOdlBCd1c5ZmRIUGpiNHlJTUt5NzhBemhkcU5LazM3MG41bzlFa2ZVRU1j?=
+ =?utf-8?B?SkpoS2x4dytmUVZQUGRXNEVGN3N3UTd0N0VLblU3MGIvL3Vla0lGc1JoTHhJ?=
+ =?utf-8?B?VU52eXhzclJvaEw3NzBYSS9jVjAvRzloeWJPZVdSU05INmR5TFZ2ak9acEVT?=
+ =?utf-8?B?VTI1VG9rblRTVUQ0WVY5M2pVc2JiVm1zUXQxbEw2LzBlS2M5QjVCNlBPOXdC?=
+ =?utf-8?B?M0xsS29mVFkzMXNXWmtybitSeUkrbE03WTlLYUpLcnZyNDNpZE1jTWhaMWRx?=
+ =?utf-8?B?UnBuVnFab3Zod3JIZ3pVY3Q2OFYrQmNXZHhsMlJwSm9NNzR1S0I0S0RUdnZE?=
+ =?utf-8?B?MzVOTFZWUDI3Q21jYWg5dkhPY0tBM2NPL2NPYXI3SUZhaTBIY1AzazRreXpL?=
+ =?utf-8?B?U3E5MXYrQUFoeEhBUDkxcXRRbWRxNjNPTFZkOHN5NUVFLzdzQ3d4L1RBbjdo?=
+ =?utf-8?B?SzAwT1JyaWEvMS9jUk1ldERpazJEc2JvaVAwUVpvcjdvS2FZWG53MnVWUDdR?=
+ =?utf-8?B?dTZld1F2SzZXWnNPU1lrZTVDa1VHeWFoSkZVbWpRa2FpSnJUVTB6aFNYMkY3?=
+ =?utf-8?B?SGdJbEh2QTVMQWhsaWxrNlNVYitkcUJ4ekJtUlQ1UmZUTXFVWHNrTFVrS2hv?=
+ =?utf-8?B?Q3FidnlldFZtOWNJL2gvVWxBN2ErVVRnNDJsdm9PWlpmQlo2Mk9TY0JEd0th?=
+ =?utf-8?B?clFVL2xONWo4OTZ3aitTbmFFUUpkZFloM0djZVppVVBIcnBNSGFDRWhZZVls?=
+ =?utf-8?B?WVJWOEQ2d1U1Z29PWGJTTWZWOSt6MG9FNWFoK2pQNnhDTUhsSUFxMzRPcDNQ?=
+ =?utf-8?B?bjV4L29vLzBTK1NjTlh6YUtRbHV2ZUQ0amhrbWUvbms4VE5ML0hqY3JzUjEz?=
+ =?utf-8?B?c2hwY1FoMGNDN1lXcnIrcm1aMEwyYnJrRWJHbXFMTEFYLzZoS2FDcG0vUklh?=
+ =?utf-8?B?bnBRZWQ5UURBaVcwUklrMmtITDlTSWZTcjhPRUk2TG5mWWJlUmc3M05TTE9s?=
+ =?utf-8?B?TjZTZ28zZkh0bTFVNFBBNXpTc011ZnFCeUExUU02ZS9ZN05pR3NRamJNZ2Rx?=
+ =?utf-8?B?YnNIbXdLdVFLVkg3czlQR3F6Y0R0UWVuMmd1VlpRWExENnNtNzNqdkNXU2RH?=
+ =?utf-8?B?UUlaR1dLRHBtNFZFY0ZMK1dFRHloR1JPWmFIUFVtQkNCZjBDb2RpeXdzb1gy?=
+ =?utf-8?B?ZEJDZDZpS0lIejBmZm9YRW02Rzl2NFI5L0lIY2o2WXlibEJwVHhHM1dxNGdU?=
+ =?utf-8?Q?b1wsPPxgeToS1rSowLevy8D7HyAKvlqCoLpVDRf?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 75ebd784-87f2-4f66-5bee-08ddc856540c
+X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2025 12:58:46.3297
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB5517
 
-Add SPI-NOR controller and flash nodes to device tree for SG2042.
 
-Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
----
- .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 24 ++++++++++++++++++++++
- arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 24 ++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+On 2025/7/20 16:31, Zixian Zeng wrote:
+> Add support SPI NOR flash memory controller for SG2042, using upstreamed
+> SG2044 SPI NOR driver.
+>
+> Tested on SG2042 Pioneer Box, read, write operations.
+> Thanks Chen Wang who provided machine and guidance.
+>
+> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-index ef3a602172b1e5bf3dcf54a8cacdad5172b7f50e..554ec14d58453a44a02a82da40a7aedb80d61dc9 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-@@ -138,6 +138,30 @@ &sd {
- 	status = "okay";
- };
- 
-+&spifmc0 {
-+	status = "okay";
-+
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <100000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&spifmc1 {
-+	status = "okay";
-+
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <100000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
- &uart0 {
- 	pinctrl-0 = <&uart0_cfg>;
- 	pinctrl-names = "default";
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index b3e4d3c18fdcf94c2294a56ed6ad866fc59a6adb..0f7d8a3743c35046ceec902902af2b8d3ec8e6bd 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-@@ -48,6 +48,30 @@ soc: soc {
- 		interrupt-parent = <&intc>;
- 		ranges;
- 
-+		spifmc0: spi@7000180000 {
-+			compatible = "sophgo,sg2042-spifmc-nor";
-+			reg = <0x70 0x00180000 0x0 0x1000000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&clkgen GATE_CLK_AHB_SF>;
-+			interrupt-parent = <&intc>;
-+			interrupts = <108 IRQ_TYPE_LEVEL_HIGH>;
-+			resets = <&rstgen RST_SF0>;
-+			status = "disabled";
-+		};
-+
-+		spifmc1: spi@7002180000 {
-+			compatible = "sophgo,sg2042-spifmc-nor";
-+			reg = <0x70 0x02180000 0x0 0x1000000>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			clocks = <&clkgen GATE_CLK_AHB_SF>;
-+			interrupt-parent = <&intc>;
-+			interrupts = <109 IRQ_TYPE_LEVEL_HIGH>;
-+			resets = <&rstgen RST_SF1>;
-+			status = "disabled";
-+		};
-+
- 		i2c0: i2c@7030005000 {
- 			compatible = "snps,designware-i2c";
- 			reg = <0x70 0x30005000 0x0 0x1000>;
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com> & Tested-by: Chen Wang 
+<unicorn_wang@outlook.com>
 
--- 
-2.49.0
+Note I just have pioneerbox/sg2042 so I can only run with my board in hand.
 
+Hi, Longbin,
+
+As you are auther of this SPI driver, can you please help review and 
+test it on sg2044?
+
+Thanks,
+
+Chen.
+
+> ---
+> Changes in v4:
+> - patch1: Explain why SG2042 is not compatible with SG2044 and add Fixes tag.
+> - patch2: Explain the hardware differences between SG2042 and SG2044.
+> - patch4: Remove the extra "sophgo,sg2044-spifmc-nor" compatible property.
+> - Link to v3: https://lore.kernel.org/r/20250629-sfg-spifmc-v3-0-28db1f27e999@gmail.com
+>
+> Changes in v3:
+> - Drop the patch which adds additional flash_info into gigadevice.c
+> - patch1: Because of the incompatibility, separate the SG2042 from the previous fallback mechanism to independent one.
+> - patch2: Newly add configurable options to spi-sg2044-nor driver.
+> - patch3: Fix reading bytes issue that causes the spi_nor_check_sfdp_signature() failure on SG2042.
+> - Link to v2: https://lore.kernel.org/r/20250525-sfg-spifmc-v2-0-a3732b6f5ab4@gmail.com
+>
+> Changes in v2:
+> - patch1: Accept devicetree nodes whose compatible contains only
+>    "sophgo,sg2044-spifmc-nor" to avoid breaking existing devicetrees.
+> - patch1: Improve the commit subject message.
+> - patch2: Dump the SFDP information to commit message.
+> - Link to v1: https://lore.kernel.org/r/20250523-sfg-spifmc-v1-0-4cf16cf3fd2a@gmail.com
+>
+> ---
+> Zixian Zeng (4):
+>        spi: dt-bindings: spi-sg2044-nor: Change SOPHGO SG2042
+>        spi: spi-sg2044-nor: Add configurable chip_info
+>        spi: spi-sg2044-nor: Add SPI-NOR controller for SG2042
+>        riscv: dts: sophgo: Add SPI NOR node for SG2042
+>
+>   .../devicetree/bindings/spi/spi-sg2044-nor.yaml    |  9 +++----
+>   .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 24 ++++++++++++++++++
+>   arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 24 ++++++++++++++++++
+>   drivers/spi/spi-sg2044-nor.c                       | 29 +++++++++++++++++++---
+>   4 files changed, 77 insertions(+), 9 deletions(-)
+> ---
+> base-commit: 8727665368cd4af112146b650ec0ebac038b5cf5
+> change-id: 20250523-sfg-spifmc-7a910290e964
+>
+> Best regards,
