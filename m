@@ -1,155 +1,156 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB63F262BE;
-	Tue, 29 Jul 2025 06:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E572165EC
+	for <sophgo@lists.linux.dev>; Tue, 29 Jul 2025 08:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753770480; cv=none; b=eVhYQVR6pmoV+tfj0lfNfwCUyZHazAAnPWNg5ZZMkl/O3kaZwcV5X30c4UU3WP2W7xPgwA76FSgjYPbzHXtIG1djhdnNlVdlf6bGwj9lCf4aKbyPhaVIfEu1XXSfhz0aItypdEKhrVJsMSz725+ZzDHpLUyXbyUEDSxlNWq5Ng0=
+	t=1753777897; cv=none; b=QT+1tRF6wQOiRLlmqYCk2hhf7XlNKpL+fTksxCByG1MAVeAmhx+ZFe0boIMg5r/0UUyuIMK5Cr2L2GaKIegnpNNTBgbE2/LgjrRJEpmWFJcZcIH8D01d6Sv7qZqwsJwODvZ0QGNyaA8kMRQedd8TImMp0CoQvTyJoDew6ZPs0RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753770480; c=relaxed/simple;
-	bh=h2wtlypehd5qSOqophm6kVznrIreQIBZea/Obo1g670=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=recloag0Nz3q1joAzLK2UdUh4NKWv92BFuxwR2U6+jff7J4KD/QGxlDNvYXrGWnMcYAEeeJjnH0Qoz1AsPmhPpbdKmMZxdl+tsa0pdMe7PwJ4Vil0237zEBjEAdab/2ypsfTA/c8VFlZdH6VVe2OLkxyR70iqEFIlBAPwaPYigo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D9wjyNFq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1753777897; c=relaxed/simple;
+	bh=3RI8jIoJyDmrLUwJoPWxZREhJPgeAMp3caffnQq7nBk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QoUN7pUgVrUwZOVdHgXQFtu64uDaLiGv4QBTBCKpMepbooR5V9lgRkH+hb9XPN0aAUd/OR0Mnt3f2bXDPmGOFZ8U+2UrzWCc8dmlLMj+ftENoiVS2Um/FUxQjQHK9wfpH1pHq8KLAMdZyVwvUKpxb+SiwT5CnxPuO9E0mjn/oBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bp9PJGwx; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D9wjyNFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABE0EC4CEEF;
-	Tue, 29 Jul 2025 06:27:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1753770480;
-	bh=h2wtlypehd5qSOqophm6kVznrIreQIBZea/Obo1g670=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=D9wjyNFqSSxtaBea0a2Ym1hDdepeD0XA/E3qQbfa0/w3RIQwK9NxysOsyxQ79Je/m
-	 7y24CrmMy/U/aB2E4bTLMpTTK79eowAvOARhZv+xjvSeTwLPPEngEFpRHqMeIz5TyH
-	 S6Ll4ZIqYMSqBJssQVt63eENT87W7rzjoIlPTahbjryyzq6usmz00sKxENtUK2UEMx
-	 8aaA7t5amb7/nyB3+HCXsHSzrMkMU1iJNmXgUKy6GuEd3FQ0NAox5NC2zebSUjUbUJ
-	 o7+DO4SEop7SfMrSCN+jd2rzjJNhzFSUH+PQVkpAFUDfiYT6InisUgGD9S0MvXHLtn
-	 gz6LWFlxlk7Ow==
-Message-ID: <f1b90b0f-f7a7-4117-9d36-046c4ca9c19a@kernel.org>
-Date: Tue, 29 Jul 2025 08:27:53 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bp9PJGwx"
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-313bb9b2f5bso5048328a91.3
+        for <sophgo@lists.linux.dev>; Tue, 29 Jul 2025 01:31:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753777895; x=1754382695; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V3tQDpY9kmcpxqJo02gP5nd31GjHYrw3D1aQf8x0gRc=;
+        b=Bp9PJGwxn6qvMK5ayhKTmMl1+VZblx9VjtgCaYmR5b+/qwXwzJ9aQx6a4yFkUCiWWX
+         HpoRzHZMDlGlu+h+/0E4OHc/E03HuLNjwA3RfHi9q9j4KtnqritJgHk8kZAzDLlovkyn
+         vcnoA7s5gizVO3ohcOIjDhtfjNPuRdedwNU7fmfFwP7F2dWKm69kIhXimgCeG08lSZ/o
+         8GqHwi/c4bkCCwiB/x5tevGec1G/y7OcI87wO3jtuK52EuiK8rToAfDnCeG6ZS7aR6SR
+         X+vLFbll4O/F7ylCcg9qvzRJvMMfTXyRKD/PCTaXBAqmnSqdlM3UIdo5sPDPA1kagyZg
+         43xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753777895; x=1754382695;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V3tQDpY9kmcpxqJo02gP5nd31GjHYrw3D1aQf8x0gRc=;
+        b=DfKP0bfc0+kYINpNGo26Q5KxPnjN/9QJSZRtgO7djp/OWPdFP5LylHHPsCXS0hcKb8
+         Wvgdi110nuMsQifwVlOnw6djoJinZvY+f7ZWC/vp84RjRFU/dS97W4PwME42Za1MbIQw
+         EOip+ecMuNKqOqhJVxRH5DeSw+lkuqNPRMbpmOPDMh6bDUwczc8U3POYv7GFWoG8C0Rl
+         vJaQ1wdSCBUtEkTCnjIC4rJDkVQhDTQsUlFRF75J4PU157v0YYeLjNmtvNUpDsCXqPaM
+         I3EOsndw8VDnEEO0pNw4KNosSiAcLgnH7j/wZV0pQ/lbXkcdPYnuwySMSDaWTyuiOYIe
+         uvaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV7zXG+f82OQvw7lJSucbrUVC8oJT1lTap2qdbvhnW0NPFDirEzFAE/0SvpP1hxomfihugHVto=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz+UYL54YRKgtwTYRBzmiHyGlMCEr6jU6iYTztfTzyJRVnLjyp1
+	DMCZJAWf3eEtHCUclMDiF57ZsBWTCRfcoA3MyLFLjFzq1HsibbTKcWQR
+X-Gm-Gg: ASbGncu4pIHRgiG+g0eO/O1+3rLRL5sdNRlvTjTvBbJLuAgCqvv0DVZLcMWZv4j34np
+	c8PmDRNR+tJ7Y6QlaC2CEB/TcsIDSw5mzAf1IO8zI6I8wwWdyIAHAVPjfeYxGD6lfgot1HVH7Xq
+	tPgUDnf0x0wO8TF8IgSm6RKMtCcqH3h2RDqepWC16Dr3UtzvM+7x3FoyVBl85rUi8Pz5tDBefo/
+	8dzPaMPjAp307qo5ja8F1YEuzz1f7BZgHau1DQKZXyVEBjqsUnHGqcif//qZkPLFBuxCcG5H6fq
+	b0GZ3tyrJMbblzB7fu8Kj7NhNGd3j/tt41Mh+3t3DKjDUXgVrmSDBTq1o86h/TKoF4QMIx1V09K
+	nD6EQS3jXoqWTGuMOUGOedsZEUpeq21L8
+X-Google-Smtp-Source: AGHT+IH3/A1CboxM+y3QmvNziehjws3MkOhzin8JJlZv9QPmsMuudb9IbcMH6qSkoi3W9mg9v6j4HQ==
+X-Received: by 2002:a17:90a:da8c:b0:312:1ae9:152b with SMTP id 98e67ed59e1d1-31e77a027b8mr18810110a91.23.1753777894979;
+        Tue, 29 Jul 2025 01:31:34 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31ec91fbf4csm5462503a91.12.2025.07.29.01.31.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Jul 2025 01:31:34 -0700 (PDT)
+Date: Tue, 29 Jul 2025 16:31:01 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Junhui Liu <junhui.liu@pigmoral.tech>, 
+	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: Add C906L rproc for
+ Sophgo CV1800B SoC
+Message-ID: <jcpr5tg7jyyyqmaujegeuq5j3dqz4rrgxfz73rl55l3jibtq63@3w7bzux2b2je>
+References: <20250728-cv1800-rproc-v2-0-5bbee4abe9dc@pigmoral.tech>
+ <20250728-cv1800-rproc-v2-1-5bbee4abe9dc@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: Add C906L rproc for
- Sophgo CV1800B SoC
-To: Junhui Liu <junhui.liu@pigmoral.tech>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org
-References: <185679960f220550.906528684e28f712.ba6c1f3fdd9df549@Mac>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <185679960f220550.906528684e28f712.ba6c1f3fdd9df549@Mac>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250728-cv1800-rproc-v2-1-5bbee4abe9dc@pigmoral.tech>
 
-On 28/07/2025 19:13, Junhui Liu wrote:
->>
->>> +    description:
->>> +      This property is required only if the rpmsg/virtio functionality is used.
->>> +      (see mailbox/sophgo,cv1800b-mailbox.yaml)
->>> +    items:
->>> +      - description: mailbox channel to send data to C906L
->>> +      - description: mailbox channel to receive data from C906L
->>> +
->>> +  memory-region:
->>> +    description:
->>> +      List of phandles to reserved memory regions used by the remote processor.
->>> +      The first region is required and provides the firmware region for the
->>> +      remote processor. The following regions (vdev buffer, vrings) are optional
->>> +      and are only required if rpmsg/virtio functionality is used.
->>> +    minItems: 1
->>
->> Why isn't this constrained?
+On Mon, Jul 28, 2025 at 07:03:23PM +0800, Junhui Liu wrote:
+> Add C906L remote processor for CV1800B SoC, which is an asymmetric
+> processor typically running RTOS.
 > 
-> Do you mean a maxItems should be added here?
-> >>
->>> +    items:
->>> +      - description: firmware region
->>> +      - description: vdev buffer
->>> +      - description: vring0
->>> +      - description: vring1
->>> +    additionalItems: true
->>
->> No, drop. This needs to be constrained.
+> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
+> ---
+>  .../bindings/remoteproc/sophgo,cv1800b-c906l.yaml  | 79 ++++++++++++++++++++++
+>  1 file changed, 79 insertions(+)
 > 
-> My intention is that RPMsg/OpenAMP is not the only use case for
+> diff --git a/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..2061c2fd6ba343c09b1a91700ea4a695d2b57f81
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
+> @@ -0,0 +1,79 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/sophgo,cv1800b-c906l.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Sophgo C906L remote processor controller for CV1800B SoC
+> +
+> +maintainers:
+> +  - Junhui Liu <junhui.liu@pigmoral.tech>
+> +
+> +description:
+> +  Document the bindings for the C906L remoteproc component that loads and boots
+> +  firmwares on the CV1800B SoC.
+> +
+> +properties:
+> +  compatible:
+> +    const: sophgo,cv1800b-c906l
+> +
+> +  firmware-name:
+> +    maxItems: 1
+> +
+> +  mbox-names:
+> +    items:
+> +      - const: tx
+> +      - const: rx
+> +
+> +  mboxes:
+> +    description:
+> +      This property is required only if the rpmsg/virtio functionality is used.
+> +      (see mailbox/sophgo,cv1800b-mailbox.yaml)
+> +    items:
+> +      - description: mailbox channel to send data to C906L
+> +      - description: mailbox channel to receive data from C906L
+> +
+> +  memory-region:
+> +    description:
+> +      List of phandles to reserved memory regions used by the remote processor.
+> +      The first region is required and provides the firmware region for the
+> +      remote processor. The following regions (vdev buffer, vrings) are optional
+> +      and are only required if rpmsg/virtio functionality is used.
+> +    minItems: 1
+> +    items:
+> +      - description: firmware region
+> +      - description: vdev buffer
+> +      - description: vring0
+> +      - description: vring1
+> +    additionalItems: true
+> +
 
-We don't allow such syntax, that's not negotiable. Why 322 redundant
-memory regions are fine now?
+Why not allocating these region dynamicly? I do not think firware is
+always avaible before staring. Allowing dynamic firmware give us max
+flexiblity.
 
-> remoteproc. There are scenarios where the remoteproc is just used for
-> booting the remote processor without any communication with Linux. In
-> such case, only the firmware region is needed, and the other regions may
-> not be necessary.
-> 
-> Additionally, the remote processor might reserve extra memory for custom
-> buffers or other firmware-specific purposes beyond virtio/rpmsg.
-> Therefore, I think only the firmware region should be required and
-> constrained, while allowing flexibility for additional/custom memory
-> regions as needed.
-
-So how does this work exactly without the rest? Remote processor boots
-and works fine? How do you communicate with it?
-
-Please describe exactly the usecase.
-
-
-Best regards,
-Krzysztof
+Regards,
+Inochi
