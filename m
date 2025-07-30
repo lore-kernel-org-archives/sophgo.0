@@ -1,124 +1,154 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7047F28C027;
-	Tue, 29 Jul 2025 11:12:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753787535; cv=none; b=r9cEI9bKlLn22uU/pEvwVRCbmbHuY+E8eOmegmX1kdI/k5aBLV7//RdqtX7cpn9d92JUBbVFpGNhb9CMllWygBgY/fbs/BU59Fb+/VgcB25qTysz4IFRVjrmeKYRoDY0xt2eiUS2d9rUBa9dy3O8vrqX6yi+VKm6yV50MbSnBEs=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753787535; c=relaxed/simple;
-	bh=9/J0BHd+fuqkNFinG3p1UvN7xRkDJF3VXrbJKKrrPA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gLExAX0EhN4noEJB96fNuSRQ9aB9UnfAt2erxiSGenu1EjnZb+t9KbNl3sl2TyO5fCP9vGPqUPZVqhys5Aj0nlCdm/cltZpuHe760tCYeIo05fVUEfWEFBN209EsSYDqrXF/FXALU75A8hpnQP9kLafnwyJsD5eMBEDbUPTIAwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NJLK6YAH; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B7411CA0
+	for <sophgo@lists.linux.dev>; Wed, 30 Jul 2025 03:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753846318; cv=pass; b=NBZsrPfcwPKkESek0wYuvKAxkrxjBMkptDRvgIgDpsXBjI8G19f78LWDKCaew/2Nq/r64BalRNneCcuhIKo1Uo3k2ySCURi3q0TMdI3Rm7+JmQV0pljJmyMr81seIPyW4Z4CwOIbKhjJHt0KgMWs3nESfC9/aF3QLMLts1MLRWk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753846318; c=relaxed/simple;
+	bh=v/mTQXR7nXI3YYXMNZ88NxH1RY7rcBGYIDdQy/5J6Zk=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=JMNpXMosDwBVfczfvgD1J3z2cbwhN/Wr9qC9Xk3/bVdW2lG/8oc7MBlUpibG6MQqKoAd8BrGXyY4RzdX4qRXO5yH3zs59brPiQYqtBdbRYtNgqpqpwkDf+QcE+w2eUrdDivr4cv7qnw7gmZG5GKQ8UTKasIdV4xfIwJgeHib7Nw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=anpXcqJ7; arc=pass smtp.client-ip=136.143.188.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NJLK6YAH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1753787534; x=1785323534;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9/J0BHd+fuqkNFinG3p1UvN7xRkDJF3VXrbJKKrrPA8=;
-  b=NJLK6YAHkmcvH39dItg28s9exiqzdO7C5b+1+73Soi/fszl5gORyOfBP
-   XybY4035aUxNfe4rbaBMpuUu/tqc2L6TEWh67gYYotcwIpoturAs7CY78
-   NjO58GEuXw2kwxz2nXezhRb5JjI/tIL9bFGd7/ipzm3Vbz/egdnRPC5M6
-   TSyZHKhL1yqlgBQG5mKF0WlE7PeK2jAjaqZ9ebmOTJccBWoKd146yOHjV
-   WoAgQ6EeSWUoW5phD6mYnrCi6kHDpUHeuDYB9KsMkxNCoq4m2sKpDWTyU
-   3qdXo4W6FGXUo39ubZeLVorO/vWWdD3JryjPQc82BDZQt9rJqcj0i62/A
-   A==;
-X-CSE-ConnectionGUID: 43i8Ev6ZQj2zqj3whDr8Zw==
-X-CSE-MsgGUID: Odm2f6QJQG2c1ZrBYtYxjw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11505"; a="58677113"
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; 
-   d="scan'208";a="58677113"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jul 2025 04:12:13 -0700
-X-CSE-ConnectionGUID: 9h1TUjEISHO75Q1oFt4DCg==
-X-CSE-MsgGUID: 7H97cNIyQnStcprWNIE7SA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,348,1744095600"; 
-   d="scan'208";a="163451637"
-Received: from lkp-server01.sh.intel.com (HELO 160750d4a34c) ([10.239.97.150])
-  by fmviesa010.fm.intel.com with ESMTP; 29 Jul 2025 04:12:08 -0700
-Received: from kbuild by 160750d4a34c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ugiFa-0001Dv-2z;
-	Tue, 29 Jul 2025 11:12:06 +0000
-Date: Tue, 29 Jul 2025 19:11:34 +0800
-From: kernel test robot <lkp@intel.com>
-To: Junhui Liu <junhui.liu@pigmoral.tech>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: oe-kbuild-all@lists.linux.dev, linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 2/2] drivers: remoteproc: Add C906L controller for
- Sophgo CV1800B SoC
-Message-ID: <202507291829.aB1UgzrA-lkp@intel.com>
-References: <20250728-cv1800-rproc-v2-2-5bbee4abe9dc@pigmoral.tech>
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="anpXcqJ7"
+ARC-Seal: i=1; a=rsa-sha256; t=1753846298; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ezBzqJB56c1miHFXcMTWwIQnARYDgvONAST09HSTlXIdTc5Oyuwbece6Q6hbRu19qzxpXQyP+Ri8d4HmC8T0TzjsSVuuFn3W5IoKFG5ZJjTlXM+xKpqoSUyDs5RsKpx6ZpjVuzUAnh60Uk8dT2x+V46NU0ESTv9mRB3w00VvNPQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1753846298; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=0iSJ3Kr1iquFsEaFYZYQunG3FhEI8rJM6UK4xjhKbMo=; 
+	b=laocn2/YpsMzSuK4/HJD3XQbkTjgCDnYQbkYgdDSEqiQg5bs3ggxrpue5V0qtTl49tiJx8WX4odNOEAoB09qAn6D/FUbN8VTDB9PGHNP0JAKZTVCTbw0xWd8jzHpCeMEdxcgjp2FNSCuYbPT32zZ5dHv1GZctaG0IH17VOlKlsw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=pigmoral.tech;
+	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
+	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1753846298;
+	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
+	h=MIME-Version:From:From:To:To:In-Reply-To:Cc:Cc:Subject:Subject:Message-ID:Date:Date:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=0iSJ3Kr1iquFsEaFYZYQunG3FhEI8rJM6UK4xjhKbMo=;
+	b=anpXcqJ7jz1fCyVmJQqEwO4uGzIAJAiI6kljdDFlpHkpMQxAdUXzHh1xk1MHCjz5
+	u9ZSDGcNFQGowrt9ieLYx9YPwiRnEBYMyQAPjmv39JtD/kWZyYj3RveK762QmuPhRwX
+	QSPODxowaRR76HgP8cBd648UVYPNL+d0Naz8k8H4=
+Received: by mx.zohomail.com with SMTPS id 1753846295024259.9063222071202;
+	Tue, 29 Jul 2025 20:31:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250728-cv1800-rproc-v2-2-5bbee4abe9dc@pigmoral.tech>
+From: "Junhui Liu" <junhui.liu@pigmoral.tech>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>, 
+	"Bjorn Andersson" <andersson@kernel.org>, 
+	"Mathieu Poirier" <mathieu.poirier@linaro.org>, 
+	"Rob Herring" <robh@kernel.org>, 
+	"Krzysztof Kozlowski" <krzk+dt@kernel.org>, 
+	"Conor Dooley" <conor+dt@kernel.org>, 
+	"Chen Wang" <unicorn_wang@outlook.com>, 
+	"Inochi Amaoto" <inochiama@gmail.com>, 
+	"Philipp Zabel" <p.zabel@pengutronix.de>, 
+	"Paul Walmsley" <paul.walmsley@sifive.com>, 
+	"Palmer Dabbelt" <palmer@dabbelt.com>, "Albert Ou" <aou@eecs.berkeley.edu>, 
+	"Alexandre Ghiti" <alex@ghiti.fr>
+In-Reply-To: <f1b90b0f-f7a7-4117-9d36-046c4ca9c19a@kernel.org>
+Cc: <linux-remoteproc@vger.kernel.org>, <devicetree@vger.kernel.org>, 
+	<sophgo@lists.linux.dev>, <linux-kernel@vger.kernel.org>, 
+	<linux-riscv@lists.infradead.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: Add C906L rproc for Sophgo
+	 CV1800B SoC
+Message-ID: <1856e9e7bfdcb6a8.1f73e6be0161d31f.3ad0845628cf3b62@Jude-Air.local>
+Date: Wed, 30 Jul 2025 03:31:26 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-ZohoMailClient: External
 
-Hi Junhui,
+On 29/07/2025 08:27, Krzysztof Kozlowski wrote:
+> On 28/07/2025 19:13, Junhui Liu wrote:
+>>>
+>>>> +    description:
+>>>> +      This property is required only if the rpmsg/virtio functionality=
+ is used.
+>>>> +      (see mailbox/sophgo,cv1800b-mailbox.yaml)
+>>>> +    items:
+>>>> +      - description: mailbox channel to send data to C906L
+>>>> +      - description: mailbox channel to receive data from C906L
+>>>> +
+>>>> +  memory-region:
+>>>> +    description:
+>>>> +      List of phandles to reserved memory regions used by the remote p=
+rocessor.
+>>>> +      The first region is required and provides the firmware region fo=
+r the
+>>>> +      remote processor. The following regions (vdev buffer, vrings) ar=
+e optional
+>>>> +      and are only required if rpmsg/virtio functionality is used.
+>>>> +    minItems: 1
+>>>
+>>> Why isn't this constrained?
+>>=20
+>> Do you mean a maxItems should be added here?
+>> >>
+>>>> +    items:
+>>>> +      - description: firmware region
+>>>> +      - description: vdev buffer
+>>>> +      - description: vring0
+>>>> +      - description: vring1
+>>>> +    additionalItems: true
+>>>
+>>> No, drop. This needs to be constrained.
+>>=20
+>> My intention is that RPMsg/OpenAMP is not the only use case for
+>=20
+> We don't allow such syntax, that's not negotiable. Why 322 redundant
+> memory regions are fine now?
+>=20
+>> remoteproc. There are scenarios where the remoteproc is just used for
+>> booting the remote processor without any communication with Linux. In
+>> such case, only the firmware region is needed, and the other regions may
+>> not be necessary.
+>>=20
+>> Additionally, the remote processor might reserve extra memory for custom
+>> buffers or other firmware-specific purposes beyond virtio/rpmsg.
+>> Therefore, I think only the firmware region should be required and
+>> constrained, while allowing flexibility for additional/custom memory
+>> regions as needed.
+>=20
+> So how does this work exactly without the rest? Remote processor boots
+> and works fine? How do you communicate with it?
+>=20
+> Please describe exactly the usecase.
 
-kernel test robot noticed the following build warnings:
+Thank you for your clarification.
 
-[auto build test WARNING on 038d61fd642278bab63ee8ef722c50d10ab01e8f]
+The C906L remoteproc can run at two use cases:
+1. Standalone mode: Only the firmware region is used. In this case, the
+   remoteproc driver loads the firmware into the firmware region and
+   boots the C906L. The C906L runs independently, without communication
+   with Linux, and the mailbox is not used.
+2. OpenAMP/RPMsg mode: The firmware region, vdev buffer, and vrings are
+   used. In this scenario, the C906L runs firmware with OpenAMP support
+   and communicates with Linux via the virtio memory regions and mailbox.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Junhui-Liu/dt-bindings-remoteproc-Add-C906L-rproc-for-Sophgo-CV1800B-SoC/20250728-190847
-base:   038d61fd642278bab63ee8ef722c50d10ab01e8f
-patch link:    https://lore.kernel.org/r/20250728-cv1800-rproc-v2-2-5bbee4abe9dc%40pigmoral.tech
-patch subject: [PATCH v2 2/2] drivers: remoteproc: Add C906L controller for Sophgo CV1800B SoC
-config: parisc-randconfig-r123-20250729 (https://download.01.org/0day-ci/archive/20250729/202507291829.aB1UgzrA-lkp@intel.com/config)
-compiler: hppa-linux-gcc (GCC) 8.5.0
-reproduce: (https://download.01.org/0day-ci/archive/20250729/202507291829.aB1UgzrA-lkp@intel.com/reproduce)
+To summarize:
+- Required: firmware region
+- Optional: vdev buffer, vrings, mailbox
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202507291829.aB1UgzrA-lkp@intel.com/
+Then I can add a "maxItems: 4" to the memory-region property and remove
+the "additionalItems: true" line.
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/remoteproc/sophgo_cv1800b_c906l.c:47:20: sparse: sparse: cast removes address space '__iomem' of expression
+Is this approach acceptable for you?
 
-vim +/__iomem +47 drivers/remoteproc/sophgo_cv1800b_c906l.c
+>=20
+>=20
+> Best regards,
+> Krzysztof
 
-    36	
-    37	static int cv1800b_c906l_mem_alloc(struct rproc *rproc,
-    38					   struct rproc_mem_entry *mem)
-    39	{
-    40		void __iomem *va;
-    41	
-    42		va = ioremap_wc(mem->dma, mem->len);
-    43		if (!va)
-    44			return -ENOMEM;
-    45	
-    46		/* Update memory entry va */
-  > 47		mem->va = (void *)va;
-    48	
-    49		return 0;
-    50	}
-    51	
+--=20
+Best regards,
+Junhui Liu
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
