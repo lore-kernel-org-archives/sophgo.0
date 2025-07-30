@@ -1,189 +1,156 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5213F1E8326
-	for <sophgo@lists.linux.dev>; Wed, 30 Jul 2025 06:06:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AD714F70;
+	Wed, 30 Jul 2025 06:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753855579; cv=none; b=HG2Eok2w5ugBD/e4RTxvs+5mmzLvqU/j+kw2gQX/mGgc9PLrq2H7u+GEdnlV0W810d+Fn7v7C93K1d5fDOcrU/h6SgyvPHS1nBeEsxHkyWpKEcQXchQ5oQiuqxb2EBwx9mWWi4h2yAAY20DInRPZEXCXgj28KZxeMg1OV42FSfc=
+	t=1753857996; cv=none; b=ljIpLpkvhZ+xLpwqmHQh7A/AklMabDYi5fJEzAheGsznVtbRJh84FbT1kFNDZnkSBm/MjABUOXKYiaeeFlhFljXXjTSqtvuuF4FwI5P0T1ZoDjjgXPsJA0Cqcmxqe4AalQrnvBIsg2HfOKqbd7agRSOxzkIIIzYlom2VEZB2rL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753855579; c=relaxed/simple;
-	bh=KvH45e+/9lyZCeYn358sK44xvyOu0g5nN+QuvhM0eik=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SXhbruTlc1pqVCt7ih0J9mOARm1jI6aBi2mD/R1sWbLkoFY+pVPiMHnvYlX0bweYLCS+6AvlVEH9p3sp/9ps3Yh8qnw9j9hUYobSSHVBAZu0Q8XcDZe/sG6vCqKxDibu7mkJZ8SxEAWRjTD9O7+m92f+Q6CHXb4ILS0HjPgtLmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJtDy7LF; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753857996; c=relaxed/simple;
+	bh=lbzvxqHxNLa58gDKpqG3fpAeB/UdJDmqE/7V7ykeYZE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nnC6TF9oeWHO76VG5Zu/tA8EjCXFLtFaaCl5vsSDq79UFZtrTtJI804MOMfwRruBZlB5Yidw50WmuvgfMoLfLzHY+FbT1sR58o+StZkuWpaGMrygsSeba6N9pF6i0CEWYuYcLQQioWkLxsMxCn24c2ROeCIPxTOYD+H8ELVIlzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=la5gwF1c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJtDy7LF"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b391ca6146eso5645430a12.3
-        for <sophgo@lists.linux.dev>; Tue, 29 Jul 2025 23:06:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753855576; x=1754460376; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2RaSd7z98uCro1WOAlKL+w8mLWZF6xQx0RvfWxxYIkg=;
-        b=LJtDy7LFcbAILiS/YM8fX1ago7ssGGOFWsE8c40HWNcM6OlSNpuyy9jazmr/jrgYPx
-         5rHf3KkI5Gv0eRtr3Sfmmxvo3lfId1ZduOUYxqMBNz4mLHS25j+NqgFDRdqpREGhOrQL
-         PWkfjBgjMJ7IVTD1QyuiLr+aMiEnEAaPrwXe7tjT6pDC3CkYLEhoWfHagfw8qWvbKryt
-         zfE0v8hnvyU7butG8Qg7/Rbn2yq4BSEqvaxJIAhK3ZxthT6nMwrcBjTfFzZK2KfL/W6q
-         01V/F+7AAuY09VI2RaazMArSfeEdM9f4J9TPfA5hL4Wl3BNU0euWtBC6t97pJacT7Utc
-         13wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753855576; x=1754460376;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2RaSd7z98uCro1WOAlKL+w8mLWZF6xQx0RvfWxxYIkg=;
-        b=Hh7YhkzUcRBb8ShWCIAyovDmm0tcxhOLt576KacXB42O0B3pe6PNtCKt1kqeZ6XYYv
-         0P3gAU271TUlwTotGvIoMPZ69bt++5E9WnyPo1WuIHRe9j78mxMR4vsS18cPqipCZlYL
-         nM9eC+or5iBzZTdLj35+yvERjKAFMkQWsZu1f835PsONJHw64kqRpu7YT4NNCQ+LExR6
-         FEbjcnweeiEj4VEXBLG6E+YVS+6qbvYwGDZqzHD/L3ECowHBatveqW1VFMV8340VSvuA
-         3gXBN+hXYGUp6jXX8PqN0uOwJAaeQRvctAHmDH0uPem/UsA0yGOg80mmtEfacIu6VpAq
-         NDYg==
-X-Forwarded-Encrypted: i=1; AJvYcCUyTXrttz92MzRluv20igPOMVidyhNg1YjBAX+GjRzxM4qOHnCXWw8uiV6s6D1i1YYygxlU4oE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwDikR94/TbV14b85+t2SPrlUeva1IAHSCZbHI8+nunFux3RFPy
-	dVMXUGbY0SdgecqIQTBOeA1/zVn4QI7WPD/YiA+9+gqtDDD8lw7w8263
-X-Gm-Gg: ASbGncukIK7KnMYax4iUfnRq20UwgD8bioYdPPBw6P2TbCel4BJUlMJfER4i7eUYFBu
-	rTN/wvtGWtrJYoqt1QxMNJZ/mc5AQHPOI1yJnjuUyvVUz0wkV6hX+uSzRYMdTK+prGO75s3g0KN
-	5hOd6W+/ZpN6vDoi7OS1EYz+1zrGWHn8fz5IUOVEO9KUSHzDkmWm9RLXh5rHJtZrvBYpZD6iCmU
-	NtBF96v7JL6zB3a+jZlu2a1DPPUyoC2U/75usSmEchZN0L7PU0HfXtye+YzFhWTXpOgbpvB56yX
-	R/spXbUCjg/fnPd+KGMnHx9/1N6HSVQJQwnNxzaPc3QtPHsiwbTDjkJDnTSAiRM+isb3IG3qPrU
-	Bgca6K8hqejuUlDV0+35Zn0NdKqf40KQj
-X-Google-Smtp-Source: AGHT+IGOb7R6cAkF2XQtdnUrwUvguwI6b0roCbfnnbe1O66LzmjhYar4PM87eH98FGS0Asl/DkAKzA==
-X-Received: by 2002:a17:902:e751:b0:220:c164:6ee1 with SMTP id d9443c01a7336-24096ae693cmr31488755ad.32.1753855576452;
-        Tue, 29 Jul 2025 23:06:16 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23fdf58abe0sm83899965ad.145.2025.07.29.23.06.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Jul 2025 23:06:16 -0700 (PDT)
-Date: Wed, 30 Jul 2025 14:05:40 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Junhui Liu <junhui.liu@pigmoral.tech>, 
-	Inochi Amaoto <inochiama@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: Add C906L rproc for
- Sophgo CV1800B SoC
-Message-ID: <bfvsmafcsxy4gr4dsprn4z4yl2lltgje2oilsny7vanb7rsolq@t2prbsfisioc>
-References: <jcpr5tg7jyyyqmaujegeuq5j3dqz4rrgxfz73rl55l3jibtq63@3w7bzux2b2je>
- <1856eb4ef9c9b448.51cf78412ad49c56.737f9c77b35de27d@Jude-Air.local>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="la5gwF1c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D98EEC4CEE7;
+	Wed, 30 Jul 2025 06:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1753857995;
+	bh=lbzvxqHxNLa58gDKpqG3fpAeB/UdJDmqE/7V7ykeYZE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=la5gwF1cN2+W8eLkiqnogus7oUJuYr98ApT0sMTNxRI7Rw01W3O2B1ZbfsabD8Vu7
+	 4XRI9mw02rx+CqTyjFJXmHPUE2w36O716a1A9+U4El34OiaQ26oYKb9ElYKGB2AzbM
+	 dnb//VZW7bRUUmOGtsh1kWnkZuHxuIKt/1axhC3KKsRe6cj09BWXmIQQYuOJ3QRFeX
+	 WhMZ7c+gzNoPux4PbMos8s9aWcMl7Bb+uMKddXLqPwO4vwoTvildI0a4dmIPrl3Kzv
+	 0b9DkakmOeeIkg5ITf5/ZTxmckNSnjlaFaAgjJKIMqSx2FC3Wcyn0wgExpYNHBSQfB
+	 2dR82payyQJWw==
+Message-ID: <8a4ba1b1-0960-4433-b183-59c99157b0e2@kernel.org>
+Date: Wed, 30 Jul 2025 08:46:30 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1856eb4ef9c9b448.51cf78412ad49c56.737f9c77b35de27d@Jude-Air.local>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] drivers: remoteproc: Add C906L controller for
+ Sophgo CV1800B SoC
+To: Junhui Liu <junhui.liu@pigmoral.tech>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
+ Inochi Amaoto <inochiama@gmail.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org
+References: <20250728-cv1800-rproc-v2-0-5bbee4abe9dc@pigmoral.tech>
+ <20250728-cv1800-rproc-v2-2-5bbee4abe9dc@pigmoral.tech>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250728-cv1800-rproc-v2-2-5bbee4abe9dc@pigmoral.tech>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 30, 2025 at 03:57:09AM +0000, Junhui Liu wrote:
-> On 29/07/2025 16:31, Inochi Amaoto wrote:
-> > On Mon, Jul 28, 2025 at 07:03:23PM +0800, Junhui Liu wrote:
-> >> Add C906L remote processor for CV1800B SoC, which is an asymmetric
-> >> processor typically running RTOS.
-> >> 
-> >> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> >> ---
-> >>  .../bindings/remoteproc/sophgo,cv1800b-c906l.yaml  | 79 ++++++++++++++++++++++
-> >>  1 file changed, 79 insertions(+)
-> >> 
-> >> diff --git a/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
-> >> new file mode 100644
-> >> index 0000000000000000000000000000000000000000..2061c2fd6ba343c09b1a91700ea4a695d2b57f81
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
-> >> @@ -0,0 +1,79 @@
-> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >> +%YAML 1.2
-> >> +---
-> >> +$id: http://devicetree.org/schemas/remoteproc/sophgo,cv1800b-c906l.yaml#
-> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> +
-> >> +title: Sophgo C906L remote processor controller for CV1800B SoC
-> >> +
-> >> +maintainers:
-> >> +  - Junhui Liu <junhui.liu@pigmoral.tech>
-> >> +
-> >> +description:
-> >> +  Document the bindings for the C906L remoteproc component that loads and boots
-> >> +  firmwares on the CV1800B SoC.
-> >> +
-> >> +properties:
-> >> +  compatible:
-> >> +    const: sophgo,cv1800b-c906l
-> >> +
-> >> +  firmware-name:
-> >> +    maxItems: 1
-> >> +
-> >> +  mbox-names:
-> >> +    items:
-> >> +      - const: tx
-> >> +      - const: rx
-> >> +
-> >> +  mboxes:
-> >> +    description:
-> >> +      This property is required only if the rpmsg/virtio functionality is used.
-> >> +      (see mailbox/sophgo,cv1800b-mailbox.yaml)
-> >> +    items:
-> >> +      - description: mailbox channel to send data to C906L
-> >> +      - description: mailbox channel to receive data from C906L
-> >> +
-> >> +  memory-region:
-> >> +    description:
-> >> +      List of phandles to reserved memory regions used by the remote processor.
-> >> +      The first region is required and provides the firmware region for the
-> >> +      remote processor. The following regions (vdev buffer, vrings) are optional
-> >> +      and are only required if rpmsg/virtio functionality is used.
-> >> +    minItems: 1
-> >> +    items:
-> >> +      - description: firmware region
-> >> +      - description: vdev buffer
-> >> +      - description: vring0
-> >> +      - description: vring1
-> >> +    additionalItems: true
-> >> +
-> > 
-> > Why not allocating these region dynamicly? I do not think firware is
-> > always avaible before staring. Allowing dynamic firmware give us max
-> > flexiblity.
-> 
-> I'm afraid it's not easy to do this.
-> 
-> For firmware region, the RTOS firmware usually needs a physical address
-> to link to, and I have researched and tested two RTOS (RT-Thread and
-> Zephyr) on the C906L, both of them do not support position-independent
-> execution or runtime relocation. Therefore, a reserved memory region is
-> needed to provide a fixed physical address for the RTOS firmware.
+On 28/07/2025 13:03, Junhui Liu wrote:
+> +
+> +static int cv1800b_c906l_mem_alloc(struct rproc *rproc,
+> +				   struct rproc_mem_entry *mem)
+> +{
+> +	void __iomem *va;
+> +
+> +	va = ioremap_wc(mem->dma, mem->len);
+> +	if (!va)
+> +		return -ENOMEM;
+> +
+> +	/* Update memory entry va */
+> +	mem->va = (void *)va;
+> +
+> +	return 0;
+> +}
+> +
+> +static int cv1800b_c906l_mem_release(struct rproc *rproc,
+> +				     struct rproc_mem_entry *mem)
+> +{
+> +	iounmap((void __iomem *)mem->va);
+> +	return 0;
+> +}
+> +
+> +static int cv1800b_c906l_add_carveout(struct rproc *rproc)
+> +{
+> +	struct device *dev = rproc->dev.parent;
+> +	struct device_node *np = dev->of_node;
+> +	struct of_phandle_iterator it;
+> +	struct rproc_mem_entry *mem;
+> +	struct reserved_mem *rmem;
+> +	int i = 0;
+> +
+> +	/* Register associated reserved memory regions */
+> +	of_phandle_iterator_init(&it, np, "memory-region", NULL, 0);
+> +	while (of_phandle_iterator_next(&it) == 0) {
+> +		rmem = of_reserved_mem_lookup(it.node);
+> +		if (!rmem) {
+> +			of_node_put(it.node);
+> +			return -EINVAL;
+> +		}
+> +
+> +		if (!strcmp(it.node->name, "vdev0buffer")) {
 
-I think it is simple and possible to add PIE support for these RTOS. As
-the memory of CV18XX is limited, I do not want to see some reserved
-regions. This may hurt users who do not need this.
+Why are you adding undocumented ABI? And so hidden, not even using
+standard OF API!
 
-> (In fact, there is already a reserved memory region for the C906L in
-> cv1800b-milkv-duo.dts)
+How does this behaves when I change your DTS to call it
+"whateverbuffer"? Does it work? Obviously not.
 
-This is just preserved for vendor zsbl and I have a plan to remove it.
-Always let linux take care of all memory. It is good to support all
-firmware implementation for CV18XX.
+No, stop doing that.
 
-I think it is always good to use remoteproc like this:
-https://www.kernel.org/doc/html/latest/staging/remoteproc.html
-
-> 
-> For virtio-related regions, the RTOS firmware also needs to know the
-> shared memory regions for communications at compile time.
-> 
-
-I think you should investigate this and check if there is something you
-missed. I haven't see any reserved region in remoteproc binding mentions
-virtio.
-
-Regards,
-Inochi
+Best regards,
+Krzysztof
