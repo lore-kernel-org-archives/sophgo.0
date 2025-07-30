@@ -1,242 +1,156 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010011.outbound.protection.outlook.com [52.103.68.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487994C62
-	for <sophgo@lists.linux.dev>; Wed, 30 Jul 2025 22:48:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753915711; cv=none; b=pxjQjKcjGN7EDv+5gUy7LzAhsgcqsZ8Lqi2mRhz+xOgkv48sa70coUfjZ7XG0HHhJgOx70xocpn/XCwqwlVGlmXhsZI2nhUKNyIBxqLwws2rRpQZBy4oaiOqWps46D3IWxnh7Ck8wXQB92AHT1KFWOr9PgT+GYIfq+QDL1wmUII=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753915711; c=relaxed/simple;
-	bh=gKDRUSLxO4KYQEFLKEGt3wEeOK2rxZPX+4a6QetgkKY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d1IY287Mh+iCTqEDKMkyynvHI/Qt/B61EF/U2vFldGUC4wlaQnpfz0NaqBIZxjjRvAmB0+UNtXQd+3ODT7ReqjyqLrFN6T88yrF2jrFVEzTTOaJEDilwKGv1MlFoxY2wBXj7rJA/Lbrw0fm787c1gjGG2QFWWYjUC1+sOQr2bNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dvx88HrK; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825F822D781
+	for <sophgo@lists.linux.dev>; Wed, 30 Jul 2025 23:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.11
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753916537; cv=fail; b=rpgB78KITGDzCLmj+mrCwMAq2tmC+Ps/ZTxnWTaXc4pkthmqGr9zD8QGMOh2bd7KnEt2auPeuuyZiMGIjQu8LZfUl5AfcHERbfQB+Ftt17n5QlvrvVj1MrSKYtFsojqaJswZdWjd53fyENP1Nm+m58Q6a6qGGSXjCBdpvDYri+o=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753916537; c=relaxed/simple;
+	bh=e+dQRWcwcGBBT878SichNbRNlQC/hTtxrbGz1tbCXGc=;
+	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=TxX0qRZQM06FUNvGASa06F/T+LBwYEM3QyG49qCfvupJGVkaLyFJQ1jABkc8FFDM5E30QTcYsAHPiDICZpHzGVm752poI52ZSyy04W807HXijsFxBiqzuQT6sxL1SM6/XKtdjmPPQs2OgzvtZ7wZQkNkA1u4Hci/WsvCvIB4sNM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Zkq8Oj/6; arc=fail smtp.client-ip=52.103.68.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dvx88HrK"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-24009eeb2a7so3175555ad.0
-        for <sophgo@lists.linux.dev>; Wed, 30 Jul 2025 15:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753915709; x=1754520509; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NP6vcGcK02YLX4Uh++vawCQkxiZgTHh/2PlbBRfDZHI=;
-        b=Dvx88HrKj3h3KYb8PYCycVCixQlszEQsVhgOyON2oUyLjrfeNoVhUuT4Vh4GjevkKC
-         EIHuFIbjij0TgFoJTT40wh2g7fpKLbnSQ8P8X+kst6I8NOK1ZCbhLsrRI3OkMln3A7OH
-         EwrUUC6N8krweR8p+XTQ9Id0QFfpxXFWPmySKjyFUuk6klWtoKZJcVWSQbMQJTtCZSDo
-         aeBgn2e9QDnHfXcu3/z0pEPblsmWUJwgmy93SRNtCmMjAGRRgmoUCgHclBQOSahd6ofB
-         SACXbCyAuO++drz/tD15OZ/pB2BRuAYQHbuL4KiVnZTD22BH7TFW1ZSsLmNN+1/qlyfE
-         QM2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753915709; x=1754520509;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NP6vcGcK02YLX4Uh++vawCQkxiZgTHh/2PlbBRfDZHI=;
-        b=NkatX3MqngdyeT4M5d61NpwbecmNx54J/tkKCY4+qyQuTB23yUih/VAJ2u7/VWobBQ
-         /QdQF3Z5PECX7kZbgmHeumzEDKLeUbSl/VN18NrNL5T4U4gudEX3C02tVEen1WclsWF5
-         35YSX7kpWhD/nd6Cr70z75ezOzu0w/wviXQmN32fcc4z0TXIO221JtG0IEk4oSQl/xOi
-         Y5g0PjZjEdgsHYf00bqjArwrfhz/H5KAJCvhA6sV7xjJ3Y9FlUroyjRbupAaQXpp5Ivf
-         iz/KikFqfjEyH+2rlx3kCMz62jwzgFOhzTNe6BDYSwWqLxf1sOLWKmkjw3dPIK+lxSrP
-         M6xg==
-X-Forwarded-Encrypted: i=1; AJvYcCUZxEg6t3Dw8f9pURHAA1nXV+d7Aa5P9kjbheBwQrQZeTCrp6rEx8ZKHx4OKdIr+euV0eWmDgY=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyC3JCY7q9DcKhpwe+ERArmJY3Z+SDkqvWHlu1NByclP0Ff7JfG
-	NWYjoBj3dvo4PZoCLrDkQaDxnypB8XPgKQRTV9raA85xr1gqpyyuwHF+
-X-Gm-Gg: ASbGncvuz+FSZCkLjr+lA7ra8fhGcJBCMHKlVEssMJ3ehGdxv1r7MWLum6H/+46fQpv
-	VOr3KRQORpuL4ZEHWUka+ilWx4ky//jnVMUK28+LDYHPle5uGJCHbweI7ajmTl9Sfg3XjMJag4y
-	PEk6TRkm6OxvlB2Vo1bRGO21b8nUgV7aqkB7WRs/JI8Cf9SqlzljMNAVIHIiMyA306kq/0UtkFk
-	AlmLE/Y89E5Q+TabrNYzXzq19dxllHs7Y59UU1WbgT2xSn/jdUk7GMhn3/D5IWFZvWK/2rmB59P
-	PEgE7+VlYWSidDVLhwtxU6ycYB4sm4U9t1gCBwGTYYlNqiuWUSC90UK0rQejg4InNsjCR/BKjK4
-	wypPR4T96y4ZsEaZmzImv7g==
-X-Google-Smtp-Source: AGHT+IHdHRz5ygZhpTYyipXzL2+kQpjXt95ma7h5f7Ng2oXDH8vIiDfPKBBpkWpLagLHgSt57lXBqQ==
-X-Received: by 2002:a17:902:e80e:b0:234:8ec1:4af6 with SMTP id d9443c01a7336-24096b4158dmr76980525ad.45.1753915709361;
-        Wed, 30 Jul 2025 15:48:29 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-241e8976a06sm1475055ad.81.2025.07.30.15.48.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Jul 2025 15:48:28 -0700 (PDT)
-Date: Thu, 31 Jul 2025 06:47:51 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Junhui Liu <junhui.liu@pigmoral.tech>, 
-	Inochi Amaoto <inochiama@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: remoteproc: Add C906L rproc for
- Sophgo CV1800B SoC
-Message-ID: <fm3ayx67ip4km5qhn77v7s76bo5iyppmbrxhbcqdbc4pz2zstb@fbrishsvcazn>
-References: <bfvsmafcsxy4gr4dsprn4z4yl2lltgje2oilsny7vanb7rsolq@t2prbsfisioc>
- <1856fbcb55769ae0.5ecf256b8267239e.f51806827c8576a5@Jude-Air.local>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Zkq8Oj/6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B1FM8u+GQS4bhz+T2bCMMU7GiililCP7rTiwnWCepFrlg9Ya+LT7pKc987iVPLewrodLmb3/0rKCol2eUCMGsxE1IoG23NaqxiHmbsH2mMkPN6ypxwWEPhXx2wBnUiA696wmLXWSE5SSDNwrVbEthjhKSJ0eQDx9L8isDZZOSEmKLItu6jUvmlhd8jctOQrMcsrfDgugxYj/XAm9AU373F0tKodWjvD/ddqQ74pZu3y4RCA9qSaW4zmTMg5vVWEjpwbqTvIw9kNtDfnNM2HBiOtmLin84SqIRZluMzYYzD1Olv2zQpC5i2uhWmPyODwd9k4DU3NbV3ntI1HuBpgBTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FJuJhfygN5zxScXS+jWMXqBXACdkoRqHqCaFcl8lhJg=;
+ b=Gyncfkl4wzi2pwDfJvGNJTvTh8HMrvYaZ2iGY5E33vNOXQDNezPpU5vwtYc/ILHe1xcBM/lAs9OA/LsPHCZAv7ho5ud3o6M40O65FdI9UzWxssYHpDUspJHV5tKayPdKa5rPZrzKQDwMj+JWw8HBVx3bfoVCefHPjji/l9Er0EthPimzgs7OD9a+dRzKeJ69ULGn3C5ifUBD097GgS9x4LKM+P0CLp2DU495ybUMd0iyDdJOWd3puqP0PPDTAHs6U4WBz1QG8uK5MZvUxbO5i48kW7xUwpX2N9Bux0w3P2UeWO83ijMXv7GLnO2DQbydodkbRVIymM+J8ljF9RGmig==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FJuJhfygN5zxScXS+jWMXqBXACdkoRqHqCaFcl8lhJg=;
+ b=Zkq8Oj/64DLulHK4/2dWbIvdTbOresoHqdwnj+oNMl2c+GhOhucV9dvMUnidYFVkNcGxpfKlv7FDkTaKaVMAL5lLuUN34dnnrV0VxENR0cpEYtALHNP71TOLHaLMVOBR0UbKflhrBvoPEbosizCPho31vxsXDQsWyTbGCD42PbZoVlhR4TzEERpIVsCJ5rb1KJyyJDwFhp2a1G0x/PSTv7lpqGzkKWAm0+5xH82KIJ5esCcVUWb2AQb60OoVsmM3B3DjzhcLbASQSVKLu1c1iXTWMuTe9eY4+bGMat4cybmotiYEdFVWQsgxki+HTkWqBTXA6OFNWIbeu67epqRbfg==
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16) by PN3PPFA20F8D381.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c04:1::49f) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8989.12; Wed, 30 Jul
+ 2025 23:02:09 +0000
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.8989.010; Wed, 30 Jul 2025
+ 23:02:09 +0000
+Message-ID:
+ <MAUPR01MB110722348CC38E479EE16BA18FE24A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 31 Jul 2025 07:02:06 +0800
+User-Agent: Mozilla Thunderbird
+To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+From: Chen Wang <unicorn_wang@outlook.com>
+Subject: Linux Upstream Status updated: Jul/31/2025
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0047.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:193::10) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16)
+X-Microsoft-Original-Message-ID:
+ <d0c438b2-05f9-48ed-a12d-5e29fd4d9692@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1856fbcb55769ae0.5ecf256b8267239e.f51806827c8576a5@Jude-Air.local>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PN3PPFA20F8D381:EE_
+X-MS-Office365-Filtering-Correlation-Id: d535f9c9-795b-429a-4a82-08ddcfbd1c4c
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|15080799012|19110799012|8060799015|461199028|22402599018|6090799003|5072599009|1602099012|4302099013|40105399003|440099028|3412199025|13041999003|10035399007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Y2tybmxxWEpXa2JxQWZUZHRMRGtmNno4b2J6VEJqRzZQY0JQNytjaG5UUGZv?=
+ =?utf-8?B?M2xWdlRMbWJpU0FrQ1crMGV1ZXAzeUo1NEUzUEh6R1Jvd2tobTF3MlVjTGVk?=
+ =?utf-8?B?UzZpZ1kwcTUxV0dDdkhuVm43UU42dU82WmdnS3lBNlNZU25ZYmRaMHBhY29j?=
+ =?utf-8?B?ZkZVOU83d0U3L2NxREcvaHdVY3dEYVBxZUpWNi9zRVdyMXRlQm41bzRBTEg0?=
+ =?utf-8?B?UklobWRsQ0RzclNUNWQxb1VIYmFkY3lQR2p2REtDZFJIK212TWE1THcrR21Y?=
+ =?utf-8?B?NTR1WU5vMnp6MkJNd0JCemNiTFEzWjBXUWZKTko3eHFlTU1ndmZQYTVNSkhI?=
+ =?utf-8?B?ZWdUMkswQ1A2NUlZeWNURmxlUDNuamxqWCtOMGZvLzQ1WWJNZE80Snd1dnIz?=
+ =?utf-8?B?UzlERWJld0xBTlY2RzluWGNCTUR2OFBRR1UzQzV5c1pPU0ZMYUk4aE9TeUJl?=
+ =?utf-8?B?WElWeVdVb2lCVFhZTHBGdTFxVUNCK2dMTkJ3NysvazV6cTFQalp3QlpUWVpU?=
+ =?utf-8?B?aUxXMFhOWjFrd3F5c0hCWHRkQTF4bDBheWRKOERMcDRJS3VheFYvQzVJZTI0?=
+ =?utf-8?B?Z2RyK1ozVjR6eE5pMVBwTnVnbjJ0MkkwM1QzNzdTTWRtRFpOemFRMlVFRVNZ?=
+ =?utf-8?B?alhqcXI3NHEzUlFwemNxcUgxMTNNRE42NWx3MnhYK01OdUFoUnB5YmNYd1pY?=
+ =?utf-8?B?VVZ4bDduU2dtMjhHdlF4NEt3dU5KcFUwK3BmbHYxRDNFdHZKVEV5NUJDdFI5?=
+ =?utf-8?B?MllwVjVUaDZqdHl3WVQxbHVkdGRuK0Y0ZWQ2NW8vU1plR0Jmc2JmNjlEcGxw?=
+ =?utf-8?B?NTFJTDR1RjlBWnVIRGRlQlBPbThDYnE4eVhaanppNUxTZjVZVWJMbCtSVHpr?=
+ =?utf-8?B?aWY3aS9jM2h5RmsvRkRFMENjSENnc0pDdFltU2U0RnBsR1dSUUdYV21xOVVD?=
+ =?utf-8?B?MkVIMURKbWRVem5ZSjBJVFFvbE9BRHVBY1c0SjNRU05zTG9hOGN6d245Nm93?=
+ =?utf-8?B?M1R6WmxSTkZDQm9tSytBT1YyTG1QWlpYN1hPdjgxVUpjU1dtMnhTWDlvNThE?=
+ =?utf-8?B?QXc0alNEQkZyWitCc1J5QTdEeU9JbnJPVEhVN3YrMytnNFN6Z3FIN1o2NXVz?=
+ =?utf-8?B?Vi9HTnlYN1VRMHhpb1BxV0wveG93S1gvbkl6cEZBdVNnQnpuZlludU5VV2tj?=
+ =?utf-8?B?ZWZvOStPUGJyRVJDdTgxVy9ZdUt5bEZFZ3pvVktwakZaeWZZRTdLenp6R0s2?=
+ =?utf-8?B?T2Nuc1dUZU81WXVhcTZ3c2hFVE5YRlFPaGVvYUxBRStpY3dPNHVFV0FPb0lF?=
+ =?utf-8?B?b1hvdnNOcEh2RmVuVEdHWUI4SWd1SHVIZHBWa3djZkRhck5xdlkrRGtodVl0?=
+ =?utf-8?B?dUMxS3JmQ0VBWEQ1eGhpRmt6anN0NUc1a3hUdzZ5N0E1QlNaa2wwY2JvN2pY?=
+ =?utf-8?B?VmJ5Y0xFZU1QVjhYNEFnYUZUeWtBa1VBVkVCT2NYT0ZqK3JOQTNENnAxQmdu?=
+ =?utf-8?B?R0VvbVdES2NGR01GSXZ6Zzd5K285VWRPcEVoNzRKbUJsS05HdGdFRkdpNi8x?=
+ =?utf-8?B?ZHVrWVNOZi95N1VudG1xYnFvN2ZMWG04MmVpMVBDMWNndDBJTnN0clM1VjRi?=
+ =?utf-8?B?R1FCTGJ0UnRSZlJIdUxvNXVHckN5a3Y0UE1FWTVtbGtZeFVESUZkYnpyNnlK?=
+ =?utf-8?Q?4579DOn+z8l82UVEoxKX?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?MTdHWkxRemFlT1dlYXpiZFRzQ0h4b2Zqc3FsOVd2clNRaTMyRmpHdnRhVlpi?=
+ =?utf-8?B?TU45ZDhuaEVNMGN3bVAwTjVnN0xnMW1sckF5K1BaRGFVSWlnc3JQTWgwSkVi?=
+ =?utf-8?B?SU85dEFFUGFDSGlMaTU4aHB1YXpzS3VJOHZlMTNMZ1Uybit5aDBxaGpDMHNj?=
+ =?utf-8?B?Z1JPazlqUkJqZWlua3RNVWJic2o1b3lvU0JTNDVlck5lQTZ0cThOaUUzamRU?=
+ =?utf-8?B?RjVQZTJTRUNNQ3BOWk5yM1pYY3dUSExmeC8yNzhxVXA5OVdYUGdzRDEwaDAv?=
+ =?utf-8?B?WHdoc3lvTEsySlFvMnZrRmwvby9uU2ZCQmJYL0VZUk5uc0xDbVZiZXNnY0Iw?=
+ =?utf-8?B?aFF2cjRIVHkvQkxNMFduWVRSeGZKb21RNmk2NmNZRDNrY3lLTWo5QkxTWUpz?=
+ =?utf-8?B?ejJqbjdIY0hSMDIwOTJUK3R6c0dqUXN3VXlDaysxSElkU3R2WldFcHpmbWw1?=
+ =?utf-8?B?NW9HeTloWmFxbURVL3dlZmlPemFmRHRIek5rZnJQK0ZRdXAzTkh4bml6bnl3?=
+ =?utf-8?B?Z3p4emtGM0pxTXVuVjd5ekxPejFaMFhFclNhcWptNi95U1NRWlBKUjJKa3RX?=
+ =?utf-8?B?dG1XQ01DSVM0ZXduQkhVazlyKzRNYTNJQUVmdmFIYjNYZWNmNWNqRDB0U2Yy?=
+ =?utf-8?B?ckhPMkZ5TCs3MWwxMGpNZ2xtc1dWbUMwSFpUOWtvb2syYzRkTjdlV3ZaOUgx?=
+ =?utf-8?B?c0JIQVB4RWFvdVI0SUwzS1czMTZNSnpMaEtmblcwTnJFNEVLZWwyWUR6WmZa?=
+ =?utf-8?B?bjNFeHR3ZGQ1RUdzRDNrWEpVYVpUN3RneTNyc2dyN3k2Nm80a1JDQWIzR3FE?=
+ =?utf-8?B?azV1bVc4QlNLQVR1c1pTeW5KdXNLeS9WL2ErbHpTdkdBMUtVRVpTK29vU0FP?=
+ =?utf-8?B?dHhJQVpRZS9XMFFwUnJibTFQZkFWQUxoZktoTTJxRXYzdW5DcEQycHIwVnhx?=
+ =?utf-8?B?LzFHemVpdVFFWi9TN1E1TzZGWmFyNE1SVXI4Y2ZEUEt0Nm9yTnp1MXZOamxS?=
+ =?utf-8?B?R3B4NUttSkF6cTNoUXgvMWFBdVAvSEhYTmhudUhTc3Q0aFNQeFhveWdEU096?=
+ =?utf-8?B?Sm1DQWdiZ0ZCa0hHOGVudHlFeHhWTmpwRlR4V0hZM3Vqc08yM3lOMWtlY2xP?=
+ =?utf-8?B?VGx2a3dTUlZEeU93eVlJdnpPWUJxMmNQcWNmYXJaQ0pxaTBhYWM0VFhpTVpx?=
+ =?utf-8?B?SDNOeXFWNFo2d1BqNkJIVHBmMitocUFKcDQ2ekVRWDlrVjFjRDllcVEvOHBy?=
+ =?utf-8?B?UUZENnRtakhzc3l3L0RSTzd6WjFtbXFETkYyUlU4OTZaeFVYMkpodllKazNU?=
+ =?utf-8?B?RFF0SzQwYnRLRVJVTDRJVVdmTDgyU3Z3dHJpYk85ZlZQYkk0NG5ob05ib1Zk?=
+ =?utf-8?B?M2F5a085NEcwR2gydGhxRmgxWndYWjVyTWhHRWRpdC9XSGtTbGo0V2RiaWhr?=
+ =?utf-8?B?QUVkdVorT2VrZ1V5azVGNW51eTBVakNNYzRDUm9JaWkyRm95OEIwMnZyUlNx?=
+ =?utf-8?B?bUtOKzE1TjMrLzg2c0hBQzEwVW5UdUtXOUZIOElQcFZJakRTbjFuUlB1UTBY?=
+ =?utf-8?B?Tys5LzFRRVVTSFlCUnlISlNRK0NLMmFFT1F6bGlnY1N0eFBuRnNHTWt2RHJ1?=
+ =?utf-8?B?emV3SkluZDZpMFFxL3l3NThqQWtPamErbmlGb0JKVWh0b2E3dkduQ3dFbHVB?=
+ =?utf-8?B?NlVTSWFrRkptVFZVdlNLNWNzOEw2MG15Z2JGQ3VqOG1CaGZTRUl5Y25UVWY4?=
+ =?utf-8?Q?7YdQGuQa7Zh0xJeYJweCycaLzLNDxtOhlyG+oPc?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d535f9c9-795b-429a-4a82-08ddcfbd1c4c
+X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2025 23:02:09.2350
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PPFA20F8D381
 
-On Wed, Jul 30, 2025 at 08:59:15AM +0000, Junhui Liu wrote:
-> On 30/07/2025 14:05, Inochi Amaoto wrote:
-> > On Wed, Jul 30, 2025 at 03:57:09AM +0000, Junhui Liu wrote:
-> >> On 29/07/2025 16:31, Inochi Amaoto wrote:
-> >> > On Mon, Jul 28, 2025 at 07:03:23PM +0800, Junhui Liu wrote:
-> >> >> Add C906L remote processor for CV1800B SoC, which is an asymmetric
-> >> >> processor typically running RTOS.
-> >> >> 
-> >> >> Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
-> >> >> ---
-> >> >>  .../bindings/remoteproc/sophgo,cv1800b-c906l.yaml  | 79 ++++++++++++++++++++++
-> >> >>  1 file changed, 79 insertions(+)
-> >> >> 
-> >> >> diff --git a/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
-> >> >> new file mode 100644
-> >> >> index 0000000000000000000000000000000000000000..2061c2fd6ba343c09b1a91700ea4a695d2b57f81
-> >> >> --- /dev/null
-> >> >> +++ b/Documentation/devicetree/bindings/remoteproc/sophgo,cv1800b-c906l.yaml
-> >> >> @@ -0,0 +1,79 @@
-> >> >> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> >> >> +%YAML 1.2
-> >> >> +---
-> >> >> +$id: http://devicetree.org/schemas/remoteproc/sophgo,cv1800b-c906l.yaml#
-> >> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> >> >> +
-> >> >> +title: Sophgo C906L remote processor controller for CV1800B SoC
-> >> >> +
-> >> >> +maintainers:
-> >> >> +  - Junhui Liu <junhui.liu@pigmoral.tech>
-> >> >> +
-> >> >> +description:
-> >> >> +  Document the bindings for the C906L remoteproc component that loads and boots
-> >> >> +  firmwares on the CV1800B SoC.
-> >> >> +
-> >> >> +properties:
-> >> >> +  compatible:
-> >> >> +    const: sophgo,cv1800b-c906l
-> >> >> +
-> >> >> +  firmware-name:
-> >> >> +    maxItems: 1
-> >> >> +
-> >> >> +  mbox-names:
-> >> >> +    items:
-> >> >> +      - const: tx
-> >> >> +      - const: rx
-> >> >> +
-> >> >> +  mboxes:
-> >> >> +    description:
-> >> >> +      This property is required only if the rpmsg/virtio functionality is used.
-> >> >> +      (see mailbox/sophgo,cv1800b-mailbox.yaml)
-> >> >> +    items:
-> >> >> +      - description: mailbox channel to send data to C906L
-> >> >> +      - description: mailbox channel to receive data from C906L
-> >> >> +
-> >> >> +  memory-region:
-> >> >> +    description:
-> >> >> +      List of phandles to reserved memory regions used by the remote processor.
-> >> >> +      The first region is required and provides the firmware region for the
-> >> >> +      remote processor. The following regions (vdev buffer, vrings) are optional
-> >> >> +      and are only required if rpmsg/virtio functionality is used.
-> >> >> +    minItems: 1
-> >> >> +    items:
-> >> >> +      - description: firmware region
-> >> >> +      - description: vdev buffer
-> >> >> +      - description: vring0
-> >> >> +      - description: vring1
-> >> >> +    additionalItems: true
-> >> >> +
-> >> > 
-> >> > Why not allocating these region dynamicly? I do not think firware is
-> >> > always avaible before staring. Allowing dynamic firmware give us max
-> >> > flexiblity.
-> >> 
-> >> I'm afraid it's not easy to do this.
-> >> 
-> >> For firmware region, the RTOS firmware usually needs a physical address
-> >> to link to, and I have researched and tested two RTOS (RT-Thread and
-> >> Zephyr) on the C906L, both of them do not support position-independent
-> >> execution or runtime relocation. Therefore, a reserved memory region is
-> >> needed to provide a fixed physical address for the RTOS firmware.
-> > 
-> > I think it is simple and possible to add PIE support for these RTOS. As
-> > the memory of CV18XX is limited, I do not want to see some reserved
-> > regions. This may hurt users who do not need this.
-> 
-> Thank you for sharing your concern about the limited memory.
-> 
-> However, I think I have to wait until some RTOS supports PIE before I
-> can continue to advance this patch series. At least I haven't found any
-> guide on compiling RTOS firmware with PIE support for the two RTOSs
-> (RT-Thread and Zephyr) I'm currently testing on the C906L.
-> 
-> Besides, I have searched the existing remoteproc drivers in the kernel,
-> and haven't found any driver using dynamic memory allocation for the
-> firmware region. It may take some time to implement this feature if we
-> really need it on CV18XX SoCs.
-> 
-> > 
-> >> (In fact, there is already a reserved memory region for the C906L in
-> >> cv1800b-milkv-duo.dts)
-> > 
-> > This is just preserved for vendor zsbl and I have a plan to remove it.
-> > Always let linux take care of all memory. It is good to support all
-> > firmware implementation for CV18XX.
-> 
-> Got it.
-> 
-> > 
-> > I think it is always good to use remoteproc like this:
-> > https://www.kernel.org/doc/html/latest/staging/remoteproc.html
-> > 
-> >> 
-> >> For virtio-related regions, the RTOS firmware also needs to know the
-> >> shared memory regions for communications at compile time.
-> >> 
-> > 
-> > I think you should investigate this and check if there is something you
-> > missed. I haven't see any reserved region in remoteproc binding mentions
-> > virtio.
-> 
+Last updated: Jul/31/2025 @https://github.com/sophgo/linux/wiki
 
-> Currently, in Zephyr, the only boards with OpenAMP sample support are
-> the i.MX and STM32MP series [1]. Both of them define reserved memory
-> regions for virtio and vrings in their respective Linux kernel device
-> trees [2][3]. These are the only available reference targets I have at
-> the moment.
-> 
-> Furthermore, searching for the keyword "vring" in the remoteproc
-> bindings yields many results, which I believe mostly pertain to reserved
-> memory regions for rpmsg/virtio.
-> 
-> $grep "vring" -r Documentation/devicetree/bindings/remoteproc | wc -l
-> 24
-> 
+# CV18xx:
 
-#grep -rl vring | wc -l
-9
+- Remoteproc, updated to v2.
 
-In fact, it seems not many boards add vring as memory region,
-But for simplifity, it is OK for me to leave the vring as an
-fixed region. Or just not support virtio at all... I see the
-document of OpenAMP says it support no-virtio mode.
+#SG2042:
 
-> So, at present, all my references use reserved memory for firmware
-> regions (unless there is specific memory for the processor in hardware)
-> and for virtio-related regions. Do you think there is anything I might
-> have missed, or should some new feature be implemented?
-> 
-> [1] https://github.com/zephyrproject-rtos/zephyr/tree/main/samples/subsys/ipc/openamp_rsc_table/boards
-> [2] https://github.com/torvalds/linux/blob/v6.16/arch/arm/boot/dts/st/stm32mp15xx-dkx.dtsi#L33-L49
-> [3] https://github.com/torvalds/linux/blob/v6.16/arch/arm64/boot/dts/freescale/imx8dxl-evk.dts#L68-L97
-> 
+- SPI-norflash, binding/drivers changes are applied on spi/for-next, 
+excepted to be picked by 6.17. DTS will be picked in next cycle.
 
-Great, I think it is convincing. Thanks.
+Thanks,
 
-Regards,
-Inochi
+Chen
+
+
