@@ -1,128 +1,126 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49A262BE039
-	for <sophgo@lists.linux.dev>; Wed, 13 Aug 2025 08:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908DD20EB;
+	Wed, 13 Aug 2025 09:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755074048; cv=none; b=KKXJhzEaP2eVrDgfNZH9ByRLMIcTb63HXlZvdKL99RIuZ77Fn2CDThq3H3vDm79H4O1tNusiMOtDSqRpn2WxWefZ1ZuWEztrlFN3FegWdv2C219Sj/wrguqW5qzJZCZu2bPurc53GoojS1ycZdImkpE+0oP2Buvygh4+w2k5H8A=
+	t=1755076090; cv=none; b=gj7b4UfEZvmuM2SS6OWvxQHeofUbW+A4LWWQQEqmx3QlOkKj8JvIDmAFibmggyFCD1zBkKlCjjl/taqpge7HtfuReZsbm6kLV0Fm2fiGL7OcVafrejRoKmvgPLCIOCdU04u5XOoJhuT93yyW69AFUwtUx+e8X30cD3Mu1CAUtNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755074048; c=relaxed/simple;
-	bh=QR9rt1dx8wRY8ZK0TwZiHfOAeokIcX0oUcFGhOLvmKU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aMgeODANe7XO7gNseuBboEs4lMAxAHgcCFfteRN+kw3JUb7bGc4Hy+/uqJEYsEvwDe8itrvlGl00LQoeNtkGO5RdXWjA8RlhiiBDK4EAdSijOdZn74rN6qMgY/PfyoyOOyDqrWfedj3W+8G7GKxTzkDoNVf8eN0nWgTRTFIU/iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gZ/LEEBA; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1755076090; c=relaxed/simple;
+	bh=/SPdHAwhvXyCqoH/t4/l4FNys/9/FT+CFV8bKu69lmc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=M0thsKe1DPjb3uZu28jwYtAvAkHZbsrx5dbEgNbMIupuJL1rv6iF95DSfBKFZgf8xZ7R6SRyf+t10pxLyZfov7hwgyl883EtN/Ded38rsAErr2VZ0xg5Ei8g10y3KvT7b3jVZVUX75SJFsxvSMUhYzs41lT3IOibM0Y6+WSZElU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=RBcxly02; arc=none smtp.client-ip=217.70.183.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gZ/LEEBA"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-76bd2b11f80so5842195b3a.3
-        for <sophgo@lists.linux.dev>; Wed, 13 Aug 2025 01:34:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755074046; x=1755678846; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fLh7Kk4OYjALVNhIIaD4wUDlSppRWWz8p4xTrDTK0VU=;
-        b=gZ/LEEBAj5y/B56nawnYEMaN42Di+t2GfCfRjQ4utTfzg2yoCWb12QzDjaLXT+UXVA
-         3XFea9cpeXLAZ6ojo0GW9u9eW/xGaKU8EtXi1J9w18Qt6Xs+pRz1IhFZS8RaW0ARsboB
-         c5dy+tfq6VF/Qpva3rxXrr3hKmemLBZ5mMllFVLMamtr5oVF4s5tlR3s9bhZWnWQp2Q7
-         KShiIQQJiNxYNQI7NxsFs2tCdmoCeI5zKFzwzri4V2rs/62bu+beKEMKPsRqF62/73tx
-         AuQh07mvv8w27YD9m+m30K+w23ARS40BFmV/jbbutRXiXB4rq0sj+yTgrUwSDyjcEYtw
-         nTmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755074047; x=1755678847;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fLh7Kk4OYjALVNhIIaD4wUDlSppRWWz8p4xTrDTK0VU=;
-        b=ND1bSMAfIgZTPJv7h1C7riwVDMZNhHKBt0C4ktLX2eJvs6Xj/ocFBJR0agzg1R3B8F
-         +vm9YoppHUGUCtS5XN2A8f86L6dnrZihEeOOH8FmuacsN89GQ/oQKRtT1JWXQHLG4Jik
-         mLXpRvhhL4WVAKSK3gwhrT8JBgKSpPunAdS6Zv7WrOBa3VbvJCBqtF5gHfxotQ/x+pxI
-         HKcZSkYMRYXpsbXJ5wqsxFkkkBz+UU0FStk71mE0o0rLJB5lhInz2Rjg/ivAzw0I4p1m
-         wI0Zk4fqNPXZIZ8BFUK/IyeWHM2dZbJI+9x6vCwYBbAai6AA7iNSOGmRS6wwl4SAi1VU
-         zmcA==
-X-Forwarded-Encrypted: i=1; AJvYcCXytctE+B79HclZL0Uc7gQiotdpeVkFUtvs5H60XVLaQ2SRpbd1rA0cla+dAgu2JStwT1uUKkM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz0HNWXn62DEAYvewBavMegeO1wZk6/wzkiKXy24lqE+cW8PFJb
-	O+euJJ5clQEcGfMdnqnK96UyQLLf2NP1dlp571fCC8KSH4IJKKTR6b+Q
-X-Gm-Gg: ASbGncv0Odx8rG12eZ3y+mlA7SugQTow86AcPrzCNJG5Yc9UQYKCW4yo03aQNT+4wHx
-	PnvpotZr5zIWQuS2jrXhMg5g8UDt05fJH77Mkq7ShcprPJ7skT3XtaIxurxezIlX2ekhE3q1v3Y
-	SmZTbwtkbTcCztGc2phMyiFuzy7WaHTsQGvyTElB6FS2BtD+AgTIjUYtu1qrYaF14fvob8NN2WS
-	2TRXjN33ag9V5cGca5AotGjLhz07JXQOdxBGqh/nN+rr/wez3VaGryREuaB/zZQC+MSvTgePica
-	eH59nL8ZplwFDtB8eGy9uWaXW0oKn189kP4xH8lhjyCFxp3jca6lV00Asx66nb0B8O2HiZ1FA7j
-	NNS0pSjyDOzlpz9+YRpoGDXrnACrXNzu6
-X-Google-Smtp-Source: AGHT+IEEUcjPWyW3+EqWvnD5E8+0bREKP1ea0Z5KKh4lSYDKYOfsw0ft79JZxtY8fSAzLb94o+PTcg==
-X-Received: by 2002:a17:902:ce8e:b0:23d:dd04:28e2 with SMTP id d9443c01a7336-2430d1ab47dmr33684355ad.35.1755074046271;
-        Wed, 13 Aug 2025 01:34:06 -0700 (PDT)
-Received: from [127.0.0.1] ([36.255.193.30])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76bccfe50c8sm31307814b3a.120.2025.08.13.01.33.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Aug 2025 01:34:05 -0700 (PDT)
-From: Zixian Zeng <sycamoremoon376@gmail.com>
-Date: Wed, 13 Aug 2025 16:33:20 +0800
-Subject: [PATCH 4/4] riscv: dts: sophgo: Enable SPI NOR node for
- SG2042_EVB_V2
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="RBcxly02"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 9806843283;
+	Wed, 13 Aug 2025 09:07:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1755076079;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zeW3w+muABU56lk8AynPRRMO7XtEP4qDrJkq+5Lwhw0=;
+	b=RBcxly02YqHg6yIG6IVGb6L0wWxwyXgbzexV7fz5MW/s00R1yXLzqz8R0Q4Hp6XCzFEgKy
+	aJQuxXVY2VuM3LcR+HuKLiDTJxPk7hPeIic299sk4PSxG2ekcA+2ZeJQZ9DJMqGpdiEK55
+	dlmn2pZocXR5RTpeMH7mXYpDsa1p5LBc6yeLbl5BB9RJI44aKGy2UdQyipWgEiGweTT6Zs
+	yKZjMHYwq/2e6TLrhQ1n/5tSh0xMWWU8ZMi+8EvpkTaKYRbcurnOinRJ6WojpOPIpt9hGK
+	EGL3JqryRCMP/IrQCvVCa6eDAFIGmMSS2+OxScw07Z8iZPtIZg8PP1xYwoncfg==
+Date: Wed, 13 Aug 2025 11:07:45 +0200
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+To: Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org>
+Cc: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
+ Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, Cristian
+ Marussi <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>,
+ Inochi Amaoto <inochiama@gmail.com>, Nicolas Ferre
+ <nicolas.ferre@microchip.com>, Alexandre Belloni
+ <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
+ <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
+ Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team
+ <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, Jacky Huang
+ <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, Vladimir
+ Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk
+ <piotr.wojtaszczyk@timesys.com>, Paul Walmsley <paul.walmsley@sifive.com>,
+ Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>, Daniel Machon
+ <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, Orson Zhai
+ <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan
+ Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek
+ <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, Andreas
+ =?UTF-8?B?RsOkcmJlcg==?= <afaerber@suse.de>, Manivannan Sadhasivam
+ <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau
+ <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa
+ <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui
+ <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, Broadcom
+ internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max
+ Filippov <jcmvbkbc@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
+ Andrew Lunn <andrew@lunn.ch>, Gregory Clement
+ <gregory.clement@bootlin.com>, Sebastian Hesselbarth
+ <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner
+ <heiko@sntech.de>, Andrea della Porta <andrea.porta@suse.com>, Krzysztof
+ Kozlowski <krzk@kernel.org>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar
+ <alim.akhtar@samsung.com>, Qin Jian <qinjian@cqplus1.com>, Viresh Kumar
+ <vireshk@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, Alex Helms
+ <alexander.helms.jy@renesas.com>, Linus Walleij <linus.walleij@linaro.org>,
+ Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi
+ <lpieralisi@kernel.org>, Nobuhiro Iwamatsu
+ <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev,
+ linux-mips@vger.kernel.org, imx@lists.linux.dev,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
+ linux-actions@lists.infradead.org, asahi@lists.linux.dev,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 106/114] clk: versaclock5: convert from round_rate() to
+ determine_rate()
+Message-ID: <20250813110745.63523645@booty>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+	<20250811-clk-for-stephen-round-rate-v1-106-b3bf97b038dc@redhat.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250813-sfg-spidts-v1-4-99b7e2be89d9@gmail.com>
-References: <20250813-sfg-spidts-v1-0-99b7e2be89d9@gmail.com>
-In-Reply-To: <20250813-sfg-spidts-v1-0-99b7e2be89d9@gmail.com>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@gmail.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- Han Gao <rabenda.cn@gmail.com>, Zixian Zeng <sycamoremoon376@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755074006; l=916;
- i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
- bh=QR9rt1dx8wRY8ZK0TwZiHfOAeokIcX0oUcFGhOLvmKU=;
- b=Uus7GJwPp8hyacJ983Bo8pDUNcIFyjii86Yas9FPuyQSkIFFV67tvExpI9nc3thUzuBPLdj6T
- 1EGrsJin13jDKhinFEmR0uA+IEAu/ygtsCjvUbhfQ/hJiUnN+AuWnom
-X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
- pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeejkedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuifetpfffkfdpucggtfgfnhhsuhgsshgtrhhisggvnecuuegrihhlohhuthemuceftddunecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfgjfhhoofggtgfgsehtjeeftdertddvnecuhfhrohhmpefnuhgtrgcuvegvrhgvshholhhiuceolhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepgeehffejffekudfhkeeklefgjeeuheekffelheejgfeijeehieelkedttdfhjedtnecuffhomhgrihhnpegsohhothhlihhnrdgtohhmnecukfhppedvrgdtvdemieejtdemvddtvddtmegvrgdtudemsggvgedumeelhegvjeemfeegfeemledufegvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepvdgrtddvmeeijedtmedvtddvtdemvggrtddumegsvgegudemleehvgejmeefgeefmeeludefvgdphhgvlhhopegsohhothihpdhmrghilhhfrhhomheplhhutggrrdgtvghrvghsohhlihessghoohhtlhhinhdrtghomhdpnhgspghrtghpthhtohepkeelpdhrtghpthhtohepuggvvhhnuhhllhdosghmrghsnhgvhidrrhgvughhrghtrdgtohhmsehkvghrnhgvlhdrohhrghdprhgtphhtthhopegsmhgrshhnvgihsehrvgguhhgrthdrtghomhdprhgtphhtthhopehmthhurhhqu
+ hgvthhtvgessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepshgsohihugeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhuuggvvghprdhhohhllhgrsegrrhhmrdgtohhmpdhrtghpthhtoheptghrihhsthhirghnrdhmrghruhhsshhisegrrhhmrdgtohhmpdhrtghpthhtohepuhhnihgtohhrnhgpfigrnhhgsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepihhnohgthhhirghmrgesghhmrghilhdrtghomh
+X-GND-Sasl: luca.ceresoli@bootlin.com
 
-Enable SPI NOR node for SG2042_EVB_V2 device tree
+On Mon, 11 Aug 2025 11:19:38 -0400
+Brian Masney via B4 Relay <devnull+bmasney.redhat.com@kernel.org> wrote:
 
-Signed-off-by: Han Gao <rabenda.cn@gmail.com>
-Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
----
- arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> From: Brian Masney <bmasney@redhat.com>
+> 
+> The round_rate() clk ops is deprecated, so migrate this driver from
+> round_rate() to determine_rate() using the Coccinelle semantic patch
+> on the cover letter of this series.
+> 
+> Signed-off-by: Brian Masney <bmasney@redhat.com>
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-index 46980e41b886ce17dacce791fa5f2cef14cfa214..7001d8ffdc3e04c5a5cd5da85a4fb1c0351eb9a5 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-@@ -226,6 +226,18 @@ &sd {
- 	status = "okay";
- };
- 
-+&spifmc1 {
-+	status = "okay";
-+
-+	flash@0 {
-+		compatible = "jedec,spi-nor";
-+		reg = <0>;
-+		spi-max-frequency = <100000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
- &uart0 {
- 	pinctrl-0 = <&uart0_cfg>;
- 	pinctrl-names = "default";
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
 -- 
-2.50.1
-
+Luca Ceresoli, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
