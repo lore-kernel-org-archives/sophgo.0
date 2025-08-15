@@ -1,207 +1,136 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011037.outbound.protection.outlook.com [52.103.67.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11CAA1A9F8D
-	for <sophgo@lists.linux.dev>; Fri, 15 Aug 2025 03:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.37
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755230234; cv=fail; b=KBszz+7yz0xOOH0yLqQfZWNNRu+yu7kIroy3eMlEY+BJ533jQxBvD5JoPW5RnRLvZSTdipSMBO6ID5vTQ81zegV/FJu6a0jWtb9dMAr44AHwwVzaP9YuYa16ZHS0/UJkpbZBNApwHLmAY1m4iobshTuAHdzIuZEk0hihGq+/bNY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755230234; c=relaxed/simple;
-	bh=gnF6S9HhXdXFl0hlckJuxWAqi9IeOk/lBshrkd2EfKo=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=aU2LBQvN2p9va86hoDh0f1OgwOXghCN6oMOpqbddUbpuQamIXgWJK5O8csOZ8U2qZg8H0KEPRG1XuFj7Vj8w/x5HPWRgE3FsfYBtFshYrxG6IMkqUM92MeGs17CDFTV65S4Q4D9bxCjpdMrc98IYxv55Q+qnyamzWVwA56e2XRc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=KAiT8dw3; arc=fail smtp.client-ip=52.103.67.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC0731984A
+	for <sophgo@lists.linux.dev>; Fri, 15 Aug 2025 06:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755238636; cv=none; b=SQ7GCQN1YVDTUsCcshYfEs5yc1r9Rx/mMqe6M9ZnuObbDDg7+Tmkl/4VE4ojCCPluKl11tfdxzerJi3JBRndR3HenSiaDP/mv0THvwLqBj7wiXAZtNdHX2oQo6NKlxgygGrImPl7MW34xwx5RhjCUeW7bSkTkp5cCs5Pc/rQerY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755238636; c=relaxed/simple;
+	bh=/KDEoxlZvjb0Z6uihzeAzpeqr0RhkGZsDZFZiSKbGcM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s5wbuw6hIO67W6RFIIsf4aQzoXn1hwT1zZKlzz1FV4GORaBCebs+oHPABzZRI2iPhB0SCF+5W9qJ4CiEZLXqd4wuLv2z0ITlOvdCD+YsKLOQVgfm0Y/6zZyP94WUJsV72fUg5hkeqLGXwUnrTtFWhSRVouJTVU9Zxc1Nl3PZo+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D0KNE953; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="KAiT8dw3"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=FO8VYeCFXOle9XooYTHx6mhT654sbX7LtLaBkSwPOl0MBnYuF/YkBOYpkv5jHaA1Pn5Tl+u7C4meGQh6WxatDch2seH+Ysog2A1/eWwlbtIZqvr09uql0+yZAtp9mYpmetQUj7KZVTlQEMezOJ9ZCQiTT5O5fAG35REAY0VkoxCdNR3eEm94K4znkLZs0YU3TxZN92GONcCvVYsnaKSIsEw34IK9UgwlpKzi4s1z+rTEiqKdpRcBaK2EfMKHQxegDdZzuaGe5so6yBPXcFeZRJlTe872kaz0UCZ7w7E4RSjPOhaMlEtw+KEpXgR0+tx4HWQfMiBhw5oXcN2DR4x4KA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=k/vQ3f8sFBP4S8qD6IOJkKOtMDXg3ELpSXDtZW3+zbM=;
- b=tfkrbNr8HGNVOakQIGKEfvcRE6xlqh5IwI59xRNrFkpP/NgCO+JgbZsChZv/SZMeCmm7StjU+4piALer0zBpqn7NwJkFszzyXyr0AHUsqoyt//f3AZ1tUV9O4IMXmNU3OOsYDm8MR6rxyljyc+Y0fEB7R1pRWap3GsqRgKBni1TVzddEg7c9l9OhjaESy5ZRm+C3F2SVyrUjnqDSaXGYXEpneceQztZMpvnTID1c6Xuop63J+Xn/+jPryEROEAUGgVeoCc7aaeqif0cEFltHvRUxQx5xS46UGAahdsAgHki4RMylh8lCAHXJ9LYXSj4X7ZdmgtdX91W9qVX/1OkIlQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=k/vQ3f8sFBP4S8qD6IOJkKOtMDXg3ELpSXDtZW3+zbM=;
- b=KAiT8dw3sovo2QgxV1xPpiFx49dQ9SiIdVyq+tLuYkspyPoXjRkKUgjlq9AFTJcY0Y3UuTIUtIMZ+ZIl7CxVN9efHV94os25TGdcTryoeXpaQnCrKPnB5iunNfdAYjwy+urY2dF2RhSQFI4XANpKL0c7ONDtvclUa7Qcz0aw3onR8oQtjD7wnqPh6w8LXMuNh8fC3iHK0F5oK1WZKTKTb8fdF/Zx+VA71CqqRiXyZQ8PErU56DDnitJACRp1C+4XweIYxSahADbQpNQYeO2PoIOV1R3kmqGvHVCNJonz52Zv98bTbohiaYVqMZMW0ppu/M77El8izaLkO5bdHGj/Tw==
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16) by MAZPR01MB7182.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:50::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9031.18; Fri, 15 Aug
- 2025 03:57:06 +0000
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9031.014; Fri, 15 Aug 2025
- 03:57:06 +0000
-Message-ID:
- <MAUPR01MB110726155B08B3F8B481F1B86FE34A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 15 Aug 2025 11:57:01 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] riscv: dts: sophgo: Enable SPI NOR node for
- SG2042_EVB_V1
-To: Zixian Zeng <sycamoremoon376@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Palmer Dabbelt
- <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D0KNE953"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-32326de9cb4so1531853a91.2
+        for <sophgo@lists.linux.dev>; Thu, 14 Aug 2025 23:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755238634; x=1755843434; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kGmhR3eE/KutZ5tTndwU0D7V2yrLWDVr0mRfiGse/PY=;
+        b=D0KNE953PzVqUjl5moQyRh+JOiInjQO+X6xoKToTuTcs1mlLGBSsB5BgFwU7wpRmFk
+         UALvIpli/PQbnXtSg50xe9V6LyuKs5dHxHBOSwhtPUW0e/LUq/PfHQZjPsqBhQsz3a4K
+         6buMpD8GQZXxRuZ8mgepIdfHA6MtchMqbpqrS9gC+EtplKyywW6gTD1bUeOc7/yzGKUL
+         mwImHQtEuCNWhHnjT2r/P93L3eZhmbkkV4+wcsOKOnFWBRYZKmZhaaLQxpINrc1mQfDQ
+         EuAT7VcxEBYErdHmd+iBtjDKlHcSAgPkfpnPQfUKai5rGxxGdIgTbiCnQQ9dnTU0cqze
+         VDlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755238634; x=1755843434;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kGmhR3eE/KutZ5tTndwU0D7V2yrLWDVr0mRfiGse/PY=;
+        b=XV8/wH8dBbNa7Jf/1JLNsSSWGTFq0ESSYfgsj8xgr6wbD5sdUJsxvsov8J28C/tWuO
+         X6rCozkXmgutj0LqnCFL8awzhsxa/kT4/ppndLy4VGRKtZkM3aJ/Sg4FRs6Spk8WDIdO
+         rLOyV0mvK/nx51mayDmdfNdKRwPTZ1sqy5N8GTukcRJDwPbMyu+ABFc9YgROBd7HmVSg
+         mQ6hg09XyX46yBhjd8roEqem1JlhWjtWBCqnFApq1kQAoveaPnQOlnKzMoYEE5xQ00FU
+         HofWOThxvMNTHdRjydJ7fFzW1W1LpnH+eKOKVqjM+e9ic78zLfppDkPdhEIiHe4qctRt
+         J9AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWN9NroULXhU/h6V49bY1TL0zspDFoN5wI89GZItAb3fjngWNkq172d8O6cgJZW77ng2hX54VU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbxwP3OnssDIi20JUmyMIelfqJ2s9FSV6TRIapEQirzdYhsIJW
+	wMKXMmeV6lyafEL26AabDkxCXZoGD39B+1jQ5j9XfjXmd3WjUWealo9d
+X-Gm-Gg: ASbGncuFL4KQ7GCiYyss48BJaA+xDqK+RRjZugw/eDOkkR33xC3pTSgM/i1h4UTHWoR
+	Y1sseS7qmVf2AtkgwQ8N8gijAtHz09CUkrwOW9+Lmlo83GB5qPM2cuyNbBTJcqtUFrgCXiz9idY
+	Joiae+UTHs/DV3Kha5UmW7dNz1bXybeIUwWsCIReybuzfhY4PLbsu0uuHsv2Y6tCveEWgwMsPhQ
+	LoSipIKecjItR+ni2KNWQlD2WUeuWugB965yaBogC2TLxsx5GnvFr2xesy3QjqsMt1iFezKltTA
+	P1FTD85iJ0+r1yuxMg1Rku/x/TXAa+wNvE61o4MRHcJNStRHuuwdgDsVMaxbauuExi2NUF3RZEy
+	o2VUXDOS1UwXGqgdCmfV2MQ==
+X-Google-Smtp-Source: AGHT+IF70Lheb7c+uHnvLNkSjmCuMaFdEeN3otVkmRbjbDz4XiK8jFRLMEOf5LsZb4VaMWosSsczoA==
+X-Received: by 2002:a17:90b:134f:b0:311:ed2:b758 with SMTP id 98e67ed59e1d1-32341ea22a7mr1402947a91.3.1755238634028;
+        Thu, 14 Aug 2025 23:17:14 -0700 (PDT)
+Received: from localhost ([2001:250:5800:1000::968a])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b472d5a6df6sm433532a12.1.2025.08.14.23.17.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Aug 2025 23:17:13 -0700 (PDT)
+Date: Fri, 15 Aug 2025 14:17:10 +0800
+From: Zixian Zeng <sycamoremoon376@gmail.com>
+To: Chen Wang <unicorn_wang@outlook.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
 Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- Han Gao <rabenda.cn@gmail.com>
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: Re: [PATCH 4/4] riscv: dts: sophgo: Enable SPI NOR node for
+ SG2042_EVB_V2
+Message-ID: <aJ7Q5tQ3oa8DBpfO@calculate>
 References: <20250813-sfg-spidts-v1-0-99b7e2be89d9@gmail.com>
- <20250813-sfg-spidts-v1-3-99b7e2be89d9@gmail.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250813-sfg-spidts-v1-3-99b7e2be89d9@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR01CA0024.apcprd01.prod.exchangelabs.com
- (2603:1096:4:192::20) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16)
-X-Microsoft-Original-Message-ID:
- <28cb7144-7b3d-451b-b14d-286f1d7a354c@outlook.com>
+ <20250813-sfg-spidts-v1-4-99b7e2be89d9@gmail.com>
+ <MAUPR01MB11072CB6BD1EC94B752AA1F8BFE34A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|MAZPR01MB7182:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b46fd61-5816-4dd5-fbce-08dddbafccc1
-X-MS-Exchange-SLBlob-MailProps:
-	YfhX3sd/0TVWrg+fxRScxfg9v9HXnUFlR7U3F9NJo7eLfCYua/UdAlB9i2Q5sxfy4Druyckh2+Y2xaV4so6738n9IwqXd6ZuLWduHejnml/3XnNPIklOl1zTw8/bMvxly5urkIpvAfEVZvvppNj/Sr+VS+ro6x3XCZ4TbfmHI+OuKqFZX1bKc5ra1c5iC913JaI/chHOT2QE8lyxI6NPxJ3MPrtnaVWP5vyEf3HOBTNfrC/FtRYgcCYuNPv9eb+3/rql60bxzOk1gIBVBzt2XQj0o6UIjbgKAV/+zfTkFvZujtQomRRafylkNUGizmnp7eUxliV0NQ1K8akPjX0txjNcD5BkDRFg6Crm4GzvOJ11Wu42gN4ySEUxhDjci6qp4HXnZqx5r03P++xd8x6Fv7dFrcVC1PFN/8KBx6Sm0rvcJIZPIb4sE7GW5mDK+uGLKjC+0UOeGXSIl3RhfCJPsY+dK6BDVeha29l6sJ5kz9yjYWyFPWBpSv9qIjLpSreGkxBR4MlU0tAUxWMSmBmCWyC/BzkNSCQq4eeQPOKYc1LuYafLVzLjl+ALnTbpNoPKmthkQEPZ4L9OlVcBdKmZiMni5C7v2Ts1CIqhvEt6OXVQ8ceOoZ/c3W0p/Az8pSL/n9HXMb3OgjRy9O+xvDmRVG//l/scz7+AWYkOzihilf0uKJ+mbvvHgF+3cAl+hTGpJXGNBGF0EDQib0MmBQz1dhYs8KPFc6uTfhmktOhsdJsmA0kI2kv3AybUdydKwfo88MMftuB6laByanEf+Bfj1diRJLNQTYzPLpxgT9qAMTY=
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|15080799012|19110799012|6090799003|8060799015|5072599009|461199028|3412199025|39105399003|40105399003|41105399003|440099028;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?b1JrdFkvdHJ6TEhPMnNXVEQzYzJWNzlJdysvV3ViQmhKeE5VWTJxanVFd2Zn?=
- =?utf-8?B?K3RGRkM2cUsrbVAwYlpsN0dLSTQyeEltTXNFSzhTcWIxVjVuajR4Ym9jS2xF?=
- =?utf-8?B?dWc2cXUwR00xbi9RVDlqRzRKbjcrcmpFWG9KS2hkZE9MdnZ0bjl2aTE4ZnN3?=
- =?utf-8?B?RG5PVnJGZmU2RlArY3BpVXkzWnkrR0JoZVNkQXZNZkQ0TUxDTjRiclk3SUxq?=
- =?utf-8?B?UGxHRjNNUUVVditNY1hxZnhOOTdyWkxFZ2FpbEFDQkx5NjJTME42aDNoRmNx?=
- =?utf-8?B?dWNCVUYvZXM3Ry85VUFPTlE0d3REOFJndm1QM3BtNEFKaGc0OXR1eFFscXNh?=
- =?utf-8?B?ZUJZdjZhM1pHNTZSaFk1T05qY0Z3YzcwbzlBSGJRMnBxOTFwOURidFdyRlNL?=
- =?utf-8?B?MGtFNUVleTQwUVZXS3RTdFNoajB0VTUwQkZ3NXBGalZaS29sb3VlYUE2SSsx?=
- =?utf-8?B?b3RmL1hqejIrUWtSMjFyTjk0WE92S2htZ1NYT2M3VmFjUmZCNzFXWjNrclpm?=
- =?utf-8?B?YmVrdkRxTmZsKzVuNzNBWVpnODBPSHA4dHNDNWliNk9PK2hwalVCOVp4RFpx?=
- =?utf-8?B?OFNtcEtlelVZRk1MMHFSWGRUNVhGZEhnYitVNzh0bXlhNGNUWFF2YkVzMUxt?=
- =?utf-8?B?aWNaUVFmdGI5cjl5RGpoNWZuREQ4UzI5Z0FBOGhscDUvVHcwTFZMNzF4K2hn?=
- =?utf-8?B?cGdvdHduTW81Q2pFNmMvYW9aUTB5SU9HRm1aazNuQ25qdHFkSW9ES0tWSm50?=
- =?utf-8?B?YzRPMmFZY1VyL2NyOVZMWnEyOGduRmZ4NXhKTnFFcWxCZFNzY1gyV25JNkRP?=
- =?utf-8?B?Q3NlMjQ1UHR2WEQvOTl6VWd0Z1pWUGJKdVM0aFZNSUdnQVBtbnJPRS9qOHZu?=
- =?utf-8?B?V3ZZVjVTVU1nb2h5STRBeFNLZmtGSG9KSS9IM1Jrb1M4VytwZ2ZneSt0djgy?=
- =?utf-8?B?Qm1jTHN2UXJMcWdsNVkyNzd1UytiU0xVcTlscmdqc1FMYittSjk3MWdWZXly?=
- =?utf-8?B?eVF4RldtdTZ6T2ZTeXZnZTZ2blYxb0dhNmo2alUrc2N4aXRrenNQdi80eXZM?=
- =?utf-8?B?MDZDWjR4eDdKR3hwV09uc0ovNHdLbCtobE1HVWhpbk1NMzNPeVNEYkxlbDNp?=
- =?utf-8?B?M1U4MUllekJGaDlyenJOdU5VbzRYQVVUUnBpMWhaR2pZSWRmY1FFbHRxSnpE?=
- =?utf-8?B?WkhNQzRJc0hkUkhGVDJLTHpsa2lwdGcrSVlDTWdjL3NJcXRyRzVxa3FHS3Vq?=
- =?utf-8?B?dkRZVHdmUCtkQlpWT3VqMEtYREhsbloySFh2Y1VaY2NyQnRQT2tneXlXVUNB?=
- =?utf-8?B?cEhkS0VtTlNvZ2VrYkdyL2N1MnVXRXM4c1Fsd3JBNldaekE1azFpZlJXVFdn?=
- =?utf-8?B?TTlVaTJJbjFkUnNoQXVhNHZGa0dLeE5Ba0E2YmdvaXBCTXcvOWpMTk5UNVd2?=
- =?utf-8?B?TWZ1TlhHVVE5VzlOYXhMVDJTVE91Q05LR3EyN3F2YTV2dTJISzZjQk43Znlw?=
- =?utf-8?B?OGJsNkIyODlXSFZ6Z3NybDBPK3JpNFE3WGxoRnRSVlo4WS9ScUw5K1BBYWFv?=
- =?utf-8?B?MENHd1FoTmI1TWpoMVdqL3VVZlU1empRM3IwbXJrMXhhbk40d3BsejlDby9v?=
- =?utf-8?Q?duNFKoFG8Py16ZdC8lu0pEnD4aoXjvGU/HobJ/BACK40=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?emd3MUhBY2czLzZRcDdaQno5c2NGNzBuaWNxZFkxYWp3Z1NScmdJTEVWWDlZ?=
- =?utf-8?B?VGtGYUZPN1orNUgxTXVpMW1zQnVoM3NJSFcwdlVYZTIxc1YwbXJJUm9kSmFK?=
- =?utf-8?B?NmQwNk84alZoWVp6MzRtT011RnBpZURHMXhZc1NJNDNXK2pPMUV1SE1JSVpY?=
- =?utf-8?B?T09ZMERYSmkzZ09UMlJkUHdYbnVXYjhCTXN1Q0cvRTh4dFJIWGJRa1FPRUtG?=
- =?utf-8?B?L1N5eEhCTW04Q3Qyb1dCczd6UitKNmM3OG54MTlJSzBQb003RVFqdTBEVmNq?=
- =?utf-8?B?eTB4K1VhMWF1NVlaZk54L1pGa0JtL0lrYlBLYUwvdW9WeDJUdnBocURhRU5p?=
- =?utf-8?B?aVVNQXAwNGxYbmhaZ0l0QUhzckhTOHZrc3kzeW9STUYweVQvSUM4Q2pkTnZ5?=
- =?utf-8?B?ZWE4aitCZVFtVmFRRzFqNlc5QVdrOE14NDNBWUFKNERLaTlEd3hLaVM2QTJp?=
- =?utf-8?B?WTJVMXp2YTkxaG9McVpLSWM1QktrdnF0c3I1T0RadHNjcjJheVgwMlBNWFpZ?=
- =?utf-8?B?NjdCVnR2OTNOKzI4SWNyQkJKdG9wcDRlS0VvT0VZRHA3ZTVId2tZcS9pdk9C?=
- =?utf-8?B?TExzNXlSSVM1L1lYc2VNTkpzcVB3MUpiT1d4UGUzcjJpeVhNZVZybnVrVDJG?=
- =?utf-8?B?SEg3MGphdkt4OWJscEZGUVpPYWkvc2VrQ3Y2aGpCOGZ3WmJ5NmpMKzQ2ZzRa?=
- =?utf-8?B?UFJqem9YRDI2M3FkQ3l0MUE2eDc3bUY1NmtzUUZRbDU5KzdaY3pXVS9pNWV2?=
- =?utf-8?B?VThyWE51UkJwTTNSdXpJcDAxOVFOektGc2crMHg3cGQ3enJmNnd5bS9qVlBx?=
- =?utf-8?B?aVptODJXcEova0lTMURKZURiaVpCZHI3NWx2Q2hFREV3M3lVMEFHaTlZV2lK?=
- =?utf-8?B?VHZ3ZjNGcHlZQmtGRm9BajU2aTJjRlljWGptdElObHhTN2pmOHJ5MnF4Nmwr?=
- =?utf-8?B?MFArNVV6MGJPbXl6MzE4dEtFdEF4S1N0bC9FY1lNRUI1TmllMitHeUI1UlE5?=
- =?utf-8?B?bEdNYzVBUnd4c3FqbEloNS9naXoxSkVZd2owTjIrZzVVZTFJNExxYjZZVE5B?=
- =?utf-8?B?ckJsMVp1amhXSHhmVFNhT0N6d2pHbkNQWDY4azA0OHJ0cVhMNzV0SExVRk96?=
- =?utf-8?B?VFBIMUo5bGVUMkNyS2o0Ylg0SkdxTm5wcUtVZmMyQndOYTNDQ3FMU3huOTU1?=
- =?utf-8?B?bWo3VjBZQWlMQUZoc2xTQlhlTjJNVGt1UnZ2OW04MWtNVGlRSzh5ZkFKN0Ur?=
- =?utf-8?B?bzIwelJoNnU4L1JabGpocUxWTzU4My9iRFphbTBEdFhVYmZzOFNvM1dndjZT?=
- =?utf-8?B?NksyL0pIUWZLT0l4bWQ2MVRwdHBjelEzN3dLbFJ1ejFKRW9qQ0svZjkwRGRB?=
- =?utf-8?B?bDNCT2plOGxJUkRBWlpPV3BUV1RwUjEwa2ZFS01TRnB5aUIydi9OOHhYL2RV?=
- =?utf-8?B?aUVLY1VsR1JmTWtkTDhLV25DSGtHakFlOE45bXdkTGNyUU1laVFqbUVDdit0?=
- =?utf-8?B?dU9GTmZrTjNqajhLanFtajJWNHJUNDlQK0ozS0M2R3V2ZEVmYTFlcWZ3THQ3?=
- =?utf-8?B?aUp5TU00dSszZmVlTysyTGRjM1lrK1VONEdqTS9SUzlSY0NGbFk5RkY5OTNH?=
- =?utf-8?B?VVB2TjJuZlJJZWhVdzdwUVRjdWVMbzI1cGN1VDR2a3hrVUtCSVJZVTJuUXcy?=
- =?utf-8?B?SWY0S0ZUV2V2L3NGRjFic0lqcDF0TUdSSGR6SFM4RkwwbG9qY3NaaHpKL2ly?=
- =?utf-8?Q?PFbVGyTm0m96gVb3umiuS0FjBB/ZvZjVlqveIDb?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b46fd61-5816-4dd5-fbce-08dddbafccc1
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Aug 2025 03:57:05.9726
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7182
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <MAUPR01MB11072CB6BD1EC94B752AA1F8BFE34A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
 
+On Fri, Aug 15, 2025 at 11:56:22AM +0800, Chen Wang wrote:
+> 
+> On 8/13/2025 4:33 PM, Zixian Zeng wrote:
+> > Enable SPI NOR node for SG2042_EVB_V2 device tree
+> >
+> > Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+> > Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+> > ---
+> >   arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts | 12 ++++++++++++
+> >   1 file changed, 12 insertions(+)
+> >
+> > diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
+> > index 46980e41b886ce17dacce791fa5f2cef14cfa214..7001d8ffdc3e04c5a5cd5da85a4fb1c0351eb9a5 100644
+> > --- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
+> > +++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
+> > @@ -226,6 +226,18 @@ &sd {
+> >   	status = "okay";
+> >   };
+> >   
+> > +&spifmc1 {
+> > +	status = "okay";
+> > +
+> > +	flash@0 {
+> > +		compatible = "jedec,spi-nor";
+> > +		reg = <0>;
+> > +		spi-max-frequency = <100000000>;
+> > +		spi-tx-bus-width = <4>;
+> > +		spi-rx-bus-width = <4>;
+> > +	};
+> > +};
+> > +
+> 
+> Only spifmc1 on EVB_V2? What about spifmc0?
+> 
+Yes, EVB_V2 has only one spifmc1.
+I have checked schematics which can be opened by OrCAD:
+https://github.com/sophgo/sophgo-hardware/blob/master/SG2042/SG2042-x4-EVB/sch/SG2042_EVB_V2_20230302A_BOM.DSN
+https://github.com/sophgo/sophgo-hardware/blob/master/SG2042/SG2042-x8-EVB/SG2042_EVB_V11_20220902_BOM.DSN
 
-On 8/13/2025 4:33 PM, Zixian Zeng wrote:
-> Enable SPI NOR node for SG2042_EVB_V1 device tree
->
-> Signed-off-by: Han Gao <rabenda.cn@gmail.com>
-> Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
-> ---
->   arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts | 24 ++++++++++++++++++++++++
->   1 file changed, 24 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
-> index 3320bc1dd2c66ab1a77fce719f145070ad51f297..d447d66177ee5c66b12af2d8ca79a22cc920c666 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
-> @@ -238,6 +238,30 @@ &sd {
->   	status = "okay";
->   };
->   
-> +&spifmc0 {
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "jedec,spi-nor";
-> +		reg = <0>;
-> +		spi-max-frequency = <100000000>;
-> +		spi-tx-bus-width = <4>;
-> +		spi-rx-bus-width = <4>;
-> +	};
-> +};
-> +
-> +&spifmc1 {
-> +	status = "okay";
-> +
-> +	flash@0 {
-> +		compatible = "jedec,spi-nor";
-> +		reg = <0>;
-> +		spi-max-frequency = <100000000>;
-> +		spi-tx-bus-width = <4>;
-> +		spi-rx-bus-width = <4>;
-> +	};
-> +};
-> +
+For your convenience, I have exported them to PDF:
+https://github.com/sycamoremoon/linux-riscv/tree/schematic
+> Otherwise:
+> 
+> Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
 
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+Thanks for your reviewing.
 
-Thanks,
-
-Chen
-
->   &uart0 {
->   	pinctrl-0 = <&uart0_cfg>;
->   	pinctrl-names = "default";
->
+Best Regards,
+Zixian
