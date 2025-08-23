@@ -1,205 +1,194 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C342F90EF
-	for <sophgo@lists.linux.dev>; Fri, 22 Aug 2025 13:09:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455622E7BDC;
+	Sat, 23 Aug 2025 16:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755868157; cv=none; b=dtHCIhX1lPmqxFiEByPQqQdxXWX12reuj5KnI3XAFdxfj7+M1EeDTD4IGEd7sy08YN/KAmhCGku3gNbWtR9gH6751PZPZQfjEcoP+43P6p136VtKyDBLhuhC4+q8yEayZRRj/Lp/vvkgK+6tKYFhsgYMEeNrTbQAvEF/qTI2kX4=
+	t=1755967424; cv=none; b=FzbRjNVIcWa8uyus557iE4+5/h9QiMq1D9vDitIWxhTyZ99mvcIkEiGIId/1GcOd54uHdIwRl7T2NuWvAwayKRAmcHGuYyyWHX+hOeeGJ7rKKCwgWBvem3p+NzrlcqVpowKe+x3I6O+88npcijFOIAV87HssNL1LwGZ+7mkkjOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755868157; c=relaxed/simple;
-	bh=O0asdK8SeOVtorPLNtX9IHFVw5PwpWz+Y/IXMS4KmCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 In-Reply-To:Content-Type:Content-Disposition; b=KaKSBEOhnPDcDQIbxM1acvHoMoCDS6fhvrrl2Usp4cnmgG+ZtlDU7Dm8HFAnQObN176CUPM+EkInsrkZYmhdgg5YSM9vMdVv/tTQeDj+T7GjlimExZ8yOWifJ0TavVDMhK72AofT/EWB8hEmtSVVPuspwPHsROi1pjGom84gIp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dvX/B2sg; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1755967424; c=relaxed/simple;
+	bh=xFZkeJN2BuDgCkOi+KgCMmmiWf02TF4MkQxM0ILCb/c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fjBISyCS4bJlAyjJbpHKfpblIcDwbstrw4DMkMz7EA2zA7jh4UcW2dmUmdHo75RHC8cMr2kSKdz/SZOG7P5WUi7ey6DlxY1B/EBC00nvXtGjKFikwkCxV4X85X2QmvZn/+EQaUvwNxyzutsfSedNMk8S8dvTBZe96SzFUIkAyxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=itdiEScC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dvX/B2sg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1755868154;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-	b=dvX/B2sgVlZySMIlGcvJxowKE7/OILbkA9Q0VHTynR50RQmO+WXlaGRbVXBeskVfHkR20S
-	x7bxmbHCy9ZgeDB1FO+Yr1Zlz3J/8xQp1NM488bZm0m9mmbdBWMtzmp3GSCPfGQ4RMjVhD
-	UplyDEbchy9pcLZseG341WVGjzONYds=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-654-S8Fi3vCIOzuJfvm1DnoVLw-1; Fri, 22 Aug 2025 09:09:13 -0400
-X-MC-Unique: S8Fi3vCIOzuJfvm1DnoVLw-1
-X-Mimecast-MFC-AGG-ID: S8Fi3vCIOzuJfvm1DnoVLw_1755868153
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e870623cdaso488437385a.2
-        for <sophgo@lists.linux.dev>; Fri, 22 Aug 2025 06:09:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755868153; x=1756472953;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-        b=EfM6fZmbV2vYmu5vuZtz9alRx7LSZyXIt6gvb60xeEqs0u7zd/XbLWfPTaMvPz8ph5
-         Kbu5D2oaR8P3krP8J88Is5R2hlHIxVQNVIeez47CIK2kd+nM34WkXawz/q2YCCT3mHI6
-         SkFYXNWZ2oG5cFHNzSc0O1ROlqJOTg24YxxVc3H+IWKCw76Voij/w3YoT0MLlcZjpLGK
-         9sovYKgaJokhbgzJfKiFRgrV9BkhoP/tHnLYCm31Y2zEGYNLqqcSsMjj67NaEFA2eSxt
-         K+HsRUvNzYtgVkGN2MwohkgUCBJCT3Cvot+G0XCOrYRf6i4TTdad3zN2UsPFNyaDAYzW
-         OmcA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvdAK2+fU7NTcnEuTUgXE0Bj+dMeC/h/oi9CfISOEAwcmQAarUzMBkCwLafY7CeSg1JcCis/M=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yzr6cMFnY9AE16Ghgn68ZwHTxjDHJXA7anBofQmCk79yonkSIMu
-	es1lWCSVfbIBE7mMwr7CfWHoB0rLLYUAGCops1S8NF5XJSrEh53Ja9W/5BtE0affeY731Gelmuw
-	gS9y/IULz2uvoV/MS/Agdwj5DTEp5WEAc2v2aFO8nx5/JFKmQidZz1FZQ9A==
-X-Gm-Gg: ASbGncuwwBro313TV4SKN/fM5rn59TWqyLb+fulpUojEcUoO3PTsPQaYYAgD/YG1B0k
-	Ojv3Xck0tAQdK5KcD8IwbUKBij6RUFAGEjpAJjrF6oDLoBSMuYgeryAYxG/Jzmc7TEwC8j1nqAt
-	ZJL7ndfdZGwdJly3SBsZI23HqIjCjziG1LR7x6/U20kANZLDh5pPReaB5GNP6kxQAiVEaffCPXM
-	VH5C05McWxMtiZeuUmYhZICFfAEmGBoCmwNic95XAbG0IUn4VCIAKi6rTIx+Z5G8rJ7kIXh+WKl
-	Y7qvvM/QSYD7sJcp3DQrqzCoYy3VZ+XxZ7sRivBiTrnybURN6jw2+FtMUm5FwQTgJYy49aGLQ+B
-	/Nk//U+UNkTgsF6kndY8=
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299222985a.8.1755868152231;
-        Fri, 22 Aug 2025 06:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEW1uvjDvOlgb0eZoGZSzJHV+ZTat1aB9dEJTqNDB/h4VuJNJ3Q109+V4G1CkIe7Ilb4zQPqA==
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299210885a.8.1755868151398;
-        Fri, 22 Aug 2025 06:09:11 -0700 (PDT)
-Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1c9b9dsm1332247685a.70.2025.08.22.06.09.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 06:09:10 -0700 (PDT)
-Date: Fri, 22 Aug 2025 09:09:04 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Alex Helms <alexander.helms.jy@renesas.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
-	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
- round_rate() to determine_rate()
-Message-ID: <aKhr8NYhei59At0s@x1>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org>
- <aKhVVJPEPxCoKKjI@x1>
- <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="itdiEScC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D084DC113CF;
+	Sat, 23 Aug 2025 16:43:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755967423;
+	bh=xFZkeJN2BuDgCkOi+KgCMmmiWf02TF4MkQxM0ILCb/c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=itdiEScC2Beeu6c63pmd/CTzPnWhE183hRyVzasZY+gmKVI5vd3nuihdYSmXUtzqM
+	 n5pXlMOZ4f4CfdZ3y+9TL4OAfKF1rUicpUcWpAKV25yexOoQiIUVRBOvzvVlnT7m1x
+	 Ow/syOgbGs/7sFzlP8M9T9k2hQaa02Q05lgaQ79U07gOCwpaS6+/LYxvOeLuY9D4Yg
+	 tFdZWFXEVSKg+nsuehNXz2gcumXyv2a/Cv5In16FOD/gqLYo3Ce8RoRceAlgwmH+KZ
+	 F0iWduD+DHlVLd9Xvqi99qFs+b/bjDIb80nCd1xXSh9G2AR1wHFNtLXyjiCEgmjyyG
+	 kbRIEhswFKxGg==
+Message-ID: <7c6cc42c-fc76-4300-b0d2-8dabf54cf337@kernel.org>
+Date: Sat, 23 Aug 2025 18:43:23 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 2ZR35Q0OKyrcN0D9ZxXk4j_pqvS3lv-ai-CEPqtHSnA_1755868153
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated round_rate()
+ to determine_rate()
+To: Brian Masney <bmasney@redhat.com>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Cristian Marussi <cristian.marussi@arm.com>,
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
+ <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
+ Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Jacky Huang <ychuang3@nuvoton.com>,
+ Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>,
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>,
+ Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Michal Simek <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>,
+ =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+ Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>,
+ Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+ Neal Gompa <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
+ Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>,
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Andrea della Porta
+ <andrea.porta@suse.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Alex Helms <alexander.helms.jy@renesas.com>,
+ Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
+ linux-actions@lists.infradead.org, asahi@lists.linux.dev,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org> <aKhVVJPEPxCoKKjI@x1>
+ <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org> <aKhr8NYhei59At0s@x1>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aKhr8NYhei59At0s@x1>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Aug 22, 2025 at 02:23:50PM +0200, Krzysztof Kozlowski wrote:
-> On 22/08/2025 13:32, Brian Masney wrote:
-> > 7 of the 114 patches in this series needs a v2 with a minor fix. I see
-> > several paths forward to merging this. It's ultimately up to Stephen how
-> > he wants to proceed.
-> > 
-> > - I send Stephen a PULL request with all of these patches with the minor
-> >   cleanups to the 7 patches. Depending on the timing, Stephen can merge
-> >   the other work first, and I deal with cleaning up the merge conflicts.
-> >   Or he can if he prefers to instead.
-> > 
-> > - Stephen applies everyone else's work first to his tree, and then the
-> >   good 107 patches in this series. He skips anything that doesn't apply
-> >   due to other people's work and I follow up with a smaller series.
+On 22/08/2025 15:09, Brian Masney wrote:
+> On Fri, Aug 22, 2025 at 02:23:50PM +0200, Krzysztof Kozlowski wrote:
+>> On 22/08/2025 13:32, Brian Masney wrote:
+>>> 7 of the 114 patches in this series needs a v2 with a minor fix. I see
+>>> several paths forward to merging this. It's ultimately up to Stephen how
+>>> he wants to proceed.
+>>>
+>>> - I send Stephen a PULL request with all of these patches with the minor
+>>>   cleanups to the 7 patches. Depending on the timing, Stephen can merge
+>>>   the other work first, and I deal with cleaning up the merge conflicts.
+>>>   Or he can if he prefers to instead.
+>>>
+>>> - Stephen applies everyone else's work first to his tree, and then the
+>>>   good 107 patches in this series. He skips anything that doesn't apply
+>>>   due to other people's work and I follow up with a smaller series.
+>>
+>> Both cause cross tree merge conflicts. Anyway, please document clearly
+>> the dependencies between patches.
 > 
-> Both cause cross tree merge conflicts. Anyway, please document clearly
-> the dependencies between patches.
+> This series only touches drivers/clk, so it shouldn't cause any issues
+> with other subsystems, unless there's a topic branch somewhere, or I'm
+> missing something?
 
-This series only touches drivers/clk, so it shouldn't cause any issues
-with other subsystems, unless there's a topic branch somewhere, or I'm
-missing something?
+Individual maintainers handle subdirectories.
 
-There are some drivers under drivers/clk/ where there is an entry in the
-MAINTAINERS file that's not Stephen, although it wasn't clear to me if
-all of those people will send PULL requests to Stephen. I described on
-the cover how how the series was broken up.
+> 
+> There are some drivers under drivers/clk/ where there is an entry in the
+> MAINTAINERS file that's not Stephen, although it wasn't clear to me if
+> all of those people will send PULL requests to Stephen. I described on
+> the cover how how the series was broken up.
+> 
+>   - Patches 4-70 are for drivers where there is no clk submaintainer
+>   - Patches 71-110 are for drivers where this is an entry in MAINTAINERS
+>     (for drivers/clk)
 
-  - Patches 4-70 are for drivers where there is no clk submaintainer
-  - Patches 71-110 are for drivers where this is an entry in MAINTAINERS
-    (for drivers/clk)
+It's hidden between multiple other descriptions of patches, so I really
+would not think that this means that it is okay by individual maintainer
+to take the patch.
 
-For the clk subdirectories that had say more than 3 patches, I sent
-those off as separate patch series. The ones in this series have an
-entry in MAINTAINERS only have a few patches for each maintainer.
+This really should be the one most important part of the cover letter
+for something like this.
+..
 
-As for patch dependencies, patches 111 (clk/divider) and
-114 (clk/fixed-factor) should go in last. It doesn't matter the order
-everything else goes in.
-
-Brian
-
+Best regards,
+Krzysztof
