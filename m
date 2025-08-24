@@ -1,157 +1,210 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010010.outbound.protection.outlook.com [52.103.67.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ED12E7BDE
-	for <sophgo@lists.linux.dev>; Sat, 23 Aug 2025 16:50:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755967856; cv=none; b=Z0hEhUujClbwGAcZJsAAqVxVONmN4JKBvHxOG+i32XudAWm8Ar2gsgB3Qj/YVa4iVJBVGoPT/pwWop/JCIHSlr+twtUA9SfZzt2bJX5Qg879Gmz9iFMFfd9N92AOoemrn/Qm53IuxSS9i3NyOx0mP6nDFxJ+orAKirRKOztDNxk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755967856; c=relaxed/simple;
-	bh=ll4kgop1oU/2MiH1wKMG9HwPL4Ffv5IU0KbLcPeRX0w=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=P/IztCZgQXO5VyHnxv8K0jkAxGwlw6dGMrV36UP8ndNVhjHohFL+y7rxjlcNuKfs73Zdu28vxES5CWIunietC3Mhgw68bVPZ181rLy4QZcbcJLfM3kt5A/MXeWHiQdGSmPRwmltUV0DExD3Y/aRXQt4czl+bLPVUiZX0DpKmfp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c0XYz4Vj; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44F36B
+	for <sophgo@lists.linux.dev>; Sun, 24 Aug 2025 00:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755994552; cv=fail; b=BLNiIFXqhgd8aPBYH9ax/i/g4u6BUc+48UuI73dGEG7uXzU7/FHJUFxEiN2Sy/1fh8eUyPxT7CiLH+07VITv6ZXiKNvOHiviE/iZrqla2SYenDHJn0k3j68aB5Rl8/qGH1z+pXZjnZWDtYf/b5aaK5jPTqldIj/Zm2DJbOXd970=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755994552; c=relaxed/simple;
+	bh=8AkZQ04ZamlLu8pc+j54MLRqHOhRuYfGWJdpAl1kJIs=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=unBl42sJlaMQxnC2vhs9f1TEQJms8HsVVZZTdE22Qnps0vhvoG65+IEpbdBzlSi5BojcwwD1sSp5eAWMQewc1UnvfDZn9fEDK4G1MLDkTsjPrC4rhSW/qHi2iGIk9/17z9YXTiAAqWjxDhX1Zi6iYnv42abKgcHw+R+7XN/iY4E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=cWSJcdUy; arc=fail smtp.client-ip=52.103.67.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c0XYz4Vj"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-6188b7895e9so473155a12.3
-        for <sophgo@lists.linux.dev>; Sat, 23 Aug 2025 09:50:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755967850; x=1756572650; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rswAVyuJvRa6TX9BXHZuTzZwEBPSMziKik/9EoWIi4w=;
-        b=c0XYz4VjyziGJ0iPowNAuPsyr8znyFpcmaef/nVXyJFlJmS4+a4pkX0Ag/A9BBeV1o
-         Mt9Esiwjn2TbcaKSrq8AZ+P+rVu7m8HRjnugTUElku+3fwEC7PBeFqk9YftrWI3ePXef
-         gQ9FxXIVEOakCaUPV41tL7mWhtE7+hpbPfnXCTvx6sf9gtCfxoXf8LD5dQ/BAvY/VX/L
-         EyvVKIexNYYjq0ARs3yT3qvg20TGKMyBvVByYIGXND5l3bOiw+oux7MtibOKfeJ4DByv
-         CZiEhWNV0tC7X1lOnvxdrkb5oukYESFrulIOYTZaZ2Xahl0QFxzXC4dqjmlF1dXU2vvC
-         yftA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755967850; x=1756572650;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rswAVyuJvRa6TX9BXHZuTzZwEBPSMziKik/9EoWIi4w=;
-        b=R6yucJ2w5XdmTj3kJrzgAMpfsBKX2U4gTM4orHYabr/4lPnMTFYre9YlB9q1K0zThW
-         v+YdR8kihVugHAK2NtkbJwYLmS2irwFP376T73fHwVt7NezvsT2W2jd3cKUlKWQ+hk4h
-         ZYjeBB+5Pi/mAMcg9WJgJdXBDzhtr4eb0veMcJQbgPB+kUwFwMbLOpD2Fo0kgsh+XU99
-         DxdonHeD9jx0+vrQ+KABLZFfN8u25yQ7WYuLjb6ZGgYDVstg9Res7ZyQDU1zXPEs8zFq
-         qinc1PEznUCTJ3AD0w1ZEuA1EySsqKri44CNw1gcxV7usZKI7c7buwsxtV637OYQkd5G
-         FDlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVe3nTlUKzj8r4d9hlC+NlttI/9f4O+MWYCF92iagIBLK1QKiWAn7dk4eVoNLh+WDwrGxVl0Vs=@lists.linux.dev
-X-Gm-Message-State: AOJu0YySrP3FyORX13w14zc002NS1Lz72S1bEY245c7kqHoKKduRnENH
-	K0lTzA6V1t0tIHUq6GIv/kon8SCqmBgAB2TrqmJhkIfBSQb19XxPVkDBLWggmKEslX4=
-X-Gm-Gg: ASbGnctVgDyK9Te5d6pinIHQT0hmv2Ts8IU2mUCHlJRFak3Ml9/X252pXN6yn+PGMYi
-	pJi7xhO0Wd5y3Ez4DCvrTTYlXaoPWWJ+0BjCLdukrFOveO1QGyvMwmyLuOu07cXESZC2WjvL5EI
-	OtOzmOIujESJ7rdllZbZ8P4EK/oxJJPMc5DMOlq0REBqCobiLnpTLUcoT9xIcgZVHOrJxny6ika
-	xFtwgGH9e+e0hEIJtztNzj0QkdbgbRA3VLPbJhcO/8CQdOij2vYnLXx3yr8LVx3WwsaKe5ILN0m
-	1edkFNqFDfaaMtPLeVQAeBoV1tFzQ7qFcBegFBOVPf6HQzqnFvMzm0fBFVf4JHYJsVBjpcheZ/D
-	tMPrs+ekJ3ZrPGmkYa+5SP0Gj/uYwW04U5Odm18c=
-X-Google-Smtp-Source: AGHT+IHjBstjuzxQsJVLkeGYHgOE3wWdKaHmumAPQvcdN50PYZzwBsMeGzXzhJUjnQCkGBQZZA30xg==
-X-Received: by 2002:a05:6402:274e:b0:61a:927b:a79c with SMTP id 4fb4d7f45d1cf-61c1b703ddfmr2766014a12.8.1755967850448;
-        Sat, 23 Aug 2025 09:50:50 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61c312c4cdesm1797880a12.23.2025.08.23.09.50.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Aug 2025 09:50:49 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
- Cristian Marussi <cristian.marussi@arm.com>, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Paul Cercueil <paul@crapouillou.net>, 
- Keguang Zhang <keguang.zhang@gmail.com>, 
- Taichi Sugaya <sugaya.taichi@socionext.com>, 
- Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, Jacky Huang <ychuang3@nuvoton.com>, 
- Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>, 
- Steen Hegelund <Steen.Hegelund@microchip.com>, 
- Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Michal Simek <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>, 
- =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
- Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, 
- Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>, 
- Neal Gompa <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
- Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>, 
- Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>, 
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Heiko Stuebner <heiko@sntech.de>, 
- Andrea della Porta <andrea.porta@suse.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, 
- Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
- Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>, 
- Ulf Hansson <ulf.hansson@linaro.org>, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>, 
- Alex Helms <alexander.helms.jy@renesas.com>, 
- Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, 
- Brian Masney <bmasney@redhat.com>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
- linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
- linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-99-b3bf97b038dc@redhat.com>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <20250811-clk-for-stephen-round-rate-v1-99-b3bf97b038dc@redhat.com>
-Subject: Re: (subset) [PATCH 099/114] clk: samsung: pll: convert from
- round_rate() to determine_rate()
-Message-Id: <175596784601.52468.3851559862193091574.b4-ty@linaro.org>
-Date: Sat, 23 Aug 2025 18:50:46 +0200
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="cWSJcdUy"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YNo8zPG/4UVkSKd2j3JyxXypa/+f6MvaDZQlJnJEOkryzkOjqcW2AaM1l6DpAAxs5m9XnA76vfRC+1nW6preA2/IXj5RbydZ89lBPzC1OR/OwhBCAiy1PQqiDOhNVK2GYDXL0CbFiodgxsf7jyDFwU6kTP9vIVS8rEgMiT09bFPZMV6LtXzf48K1klKcxejsHsL3zIHB9qAVuahJUTNdhtew5Cg2uMQdvD9hXbE1ThJuhX3B+spp9ps0W444IUNcddOmSmLtvI7J0dcs2MOoe3PWEsHvGlQM6tgUivbyS2w8m3tgs+j2a9Kuf9kejwlZwryUak/ZmU8CGvyqdOlthQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6UM3dXORwc83GCg1YjigkmD+0NvWm2PvXAmk4SxRm5E=;
+ b=MC7l3JOZRPl8oTfO7z5Jpm3YcAk/muwsFQKSKY8tCZUSZ3k4WJxmw3znz/twjcUotRCMwRZ17HF4beG5nZCVhA52a543o5xzFn0noXD7t74PO6ETkx+gPXPHrHX+CmHUngHujVs1ngdO3jhFsfgOk3jqJq2vLi6pE+FKri2eBoaCuow1C26Ut0AHJ663QU8LFXrEr7HQfstPOVW+N4eL4Wt0RCWvCv0sxX4X1EfuHAWVzrXBqHOsK5TPt0d64Vf0Np09ZJpKK1ppTyjcN3ms+acpFEMBgi5ms5UKIoNL3tUlv38+n/JinTvcmKrQGJq5hqz6irw9GTImJJhroDe3GA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6UM3dXORwc83GCg1YjigkmD+0NvWm2PvXAmk4SxRm5E=;
+ b=cWSJcdUy1Cwoz2Jyr2rPziq4xc/JkDRo8TGZt7XMx+71JkoBzJMIOzEpWtjNKmu7RkElKUVLl8HiGq745DQXPY9korpqF0zafSrvqn/iKxl1lw3VQ9h9dogkwaelTZuIE8A0RqCg5T0CRuRVDaAcUuleYMm/Rm0SZCS8xUc/UA9wNfeDtDbRyF6n/BxIsDBAcGOwiWeKWYgYMKkZy+BiuZ3m9yhoiy3+IxhMO3c91cR5FNi9yLjhZdxwxU5N2CVdFsc7L69nahhQ9ReWm8SM9l3jfBvD5Vu+LQabAGQvmgu0EBih3lofLmxwvbjxFaGXShCCNr/vOFHiLcBlko5tcQ==
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16) by PN2PPF7433D3F05.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c04:1::1b3) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Sun, 24 Aug
+ 2025 00:15:43 +0000
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9052.019; Sun, 24 Aug 2025
+ 00:15:43 +0000
+Message-ID:
+ <MAUPR01MB110725231A38B713C7F3C3FE5FE3FA@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
+Date: Sun, 24 Aug 2025 08:15:40 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [sophgo/linux] SPI transfer timed out when there's more than two
+ cs pin (Issue #3)
+To: sophgo/linux
+ <reply+AAS4RBLPTSIZNJG5IFNAFKGGWYALLEVBNHHMPGPAFM@reply.github.com>,
+ sodo <notifications@github.com>, sophgo/linux <linux@noreply.github.com>,
+ "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+Cc: Subscribed <subscribed@noreply.github.com>
+References: <sophgo/linux/issues/3@github.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <sophgo/linux/issues/3@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SG2PR01CA0172.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:28::28) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16)
+X-Microsoft-Original-Message-ID:
+ <56fdf200-d004-44e7-9b61-71f0bbdeef08@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PN2PPF7433D3F05:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2fa41a3d-3bc6-4e7e-e2a7-08dde2a35d6f
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|11091999009|15080799012|461199028|5072599009|41001999006|23021999003|8060799015|19110799012|6090799003|56899033|1602099012|4302099013|3412199025|440099028|39105399003|40105399003|10035399007;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?dlpmZ0xjaTIrZ0l2RWI2YjdQTjN6ZFJwUkdSMGY5QkJPTCsxQ012bHdpZUFL?=
+ =?utf-8?B?cmNGbm5ESEk0dTVSYzlhVUQ3WUVFanMwL1pNaGN2NHUza0IzZXJIbGlYMS92?=
+ =?utf-8?B?cDlHYTcwZ090TFZ0cmgzOWxlZDVRQjBaVzZBYTI2M2hOSWVHQUhENlFDdkh3?=
+ =?utf-8?B?dGJoTzdnWGtQblIzVFhtWGxkQVJHRll6SDVDVXdrelE2Mi9JTXhNMzhpcmlM?=
+ =?utf-8?B?ZVU2NVRZelRnT0xlYmdvSFRoNDNGRXk5RTBoTmRzQ25laVQyZTdRUEpSU0hQ?=
+ =?utf-8?B?NnZaTkVYY29tbDVTQWR3VlNWYThWTldMNHdXeXhCZTRpRGszcU9pNmtzdlBM?=
+ =?utf-8?B?Y3NnRTd4b0dXWlNVcGF3MndqY1U2dEpNY0s1aDltV05VQTE5NTBsTTJLUi9P?=
+ =?utf-8?B?NXA4TDhocEd2RXg5dHVtS0FLMjgyQTFtSEdKMnlYLzF4OXNZZWhXd1JLMC9h?=
+ =?utf-8?B?cFdFQTFmcUt5VUo1UGpZU1crNm1qSCtYTWVPK3l5NEQ0T2VNbFBSL1VBUEdt?=
+ =?utf-8?B?bkE2SjFMcVI1RUZjRmI3VWRrN01URDBVbTVsYVFqV0QwRUdBbVEwMUpBeENL?=
+ =?utf-8?B?L0RuKzFxZlpCaU5xVVNmMWhWQ2lSVUVKVjdwRGZ6VnFXb3c1eWJ6MmpDekY3?=
+ =?utf-8?B?ck8wNC9GRkI2UWhuVnJtbWhFYjdSa3JhT05FMG50Mjl4OGhQbFF2a0ZyUmVG?=
+ =?utf-8?B?MUVaNDVBN243bzhmK2xKdGM2VUtJVGhaYnlkUmk4SkdISFRFOHZTejFaQWR5?=
+ =?utf-8?B?NGVNelVTVURjRTlUMGNmdFg5STlYNk5qRVVLbVNTV3lLcnhzYVFJdGlDKzJ2?=
+ =?utf-8?B?Z0ZYaWhldFBqRWwzSTBha0dtMkI3dkQrMXFYVzBLTDVRWE95eVE0VSs0M09R?=
+ =?utf-8?B?enlDY2xHNGsvRkVQdXp3RGZkaUxYM1lxNWN0ZURUVi9TRlRsc0prck0yejhk?=
+ =?utf-8?B?OWNicjZrbnpLN05NN0tGcS90RmVrcStLWGkwaFZjQkVSUlREb09SY1lOS2hY?=
+ =?utf-8?B?ODRTdDZPOHBNQmNjbUUzV3JTZWlldkROME1rSmVXUVdzWkxRdS9YZGoxc05R?=
+ =?utf-8?B?V3F6MHkrdWEyeTkzNHhJUHZmb0F3V2gvMHlxSjhXelV4ZjdUVnRIQkxqN1NZ?=
+ =?utf-8?B?VEtkelh0bW5PTVcyRnpkcUtGWDgxZjV1ZUZDeWpUalRmcUJpU094YkdqWEsy?=
+ =?utf-8?B?Rk1VN290a1F5M25MeHR5YW9waHNweDAvNUZUM05DZmxXWHRoZ1dnam9hc3Va?=
+ =?utf-8?B?QXNJVW91UU5IdzNlWW11MVUvRmF5dWpHUWVpYmJHZmpsN0lDZDVjWVF6clJ1?=
+ =?utf-8?B?NDVSOHBCOGl5MWE1L2hmT0krbUVDWnZPUVZ3cm1hZTh5ejBWM0llM1lOL0lQ?=
+ =?utf-8?B?SHpiL3Bvazk4UTFPRzBtczNocGcwblhEMk1hYktxV3F2eTg1NTVQYlpVM3R6?=
+ =?utf-8?B?QVBZZHJnb29CWGl4MFJaUXZTS04wcUd3bGZTanV0R0c4NHJ0OXV1ekRWN2NQ?=
+ =?utf-8?B?Z3JDb3pYSkdYMXFvRTg5eUh6Zk9wS0ZWcVdaaDVGY05sVklhdzljcmozaDNa?=
+ =?utf-8?B?SFBuYkR4U0ZwQlBlcFAvWUlOTVdGOHBNSk9WUFJ5NVRaRnJPWEdvQkhsSk50?=
+ =?utf-8?B?ZGg0QmlTbkpIMHNNT1E2K2N0MTREWG9CRE92b0pNdjQrQTloWUx0Vlp4SERt?=
+ =?utf-8?B?Ujc0cllFYTgzQmxzVDQraFhqSUFIcHZibDhpL2VUdUxiL2hHSlJBdnBoWUli?=
+ =?utf-8?B?VDdoWFpzbFBPSmU1dVlQZ28rQ2dnZTAvbGxFK3daK2kwY0QzM1FIQ3l6d3BU?=
+ =?utf-8?Q?AL+SQzAVNyhA4CJepC7QtNSGOkzoiWowzsAPI=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ekV1OEhKaWFoTE1BYnNkZTN1eWJkckM0U3FxblgvZW5EenI5cEZteXBnekxK?=
+ =?utf-8?B?dkFrQ3NmNU5yZHFoVE53eDVJWHQ3ZWRNTVdRNEpvM0ZoeWd6Z3NnSGZteloy?=
+ =?utf-8?B?eDJpUjIydGxhRm1pT25HUkZKa0dOVUJoVkJtaW0yUWo4c21MRk5PM2pDd01y?=
+ =?utf-8?B?WjV4QkQ0cE5SdkhmeXY3TEQ4QlFXL3BFSE45WkpERWJGTktKQlAxZ2t3Qjd6?=
+ =?utf-8?B?ZWl2WEo4RTd3RkZNY0tyUWVSb0tiajh3YnZkRWJiNEczSXp3c2t1MFBzaFNS?=
+ =?utf-8?B?WDJrYzVXVGNkcGR1VjdDZGlBdXRTK0NrMnYrWlJjalJ0TUJrcTZXSldnaFZs?=
+ =?utf-8?B?NDFrL2UvdVN6M0ZKQzVicGdhU1AwdmhjZU5KdGJ6Vkd6Q0FOaDdvNjhkOUI4?=
+ =?utf-8?B?VUJtcjkrV29hK3R3allYbnlsc0JKbHM3NnVYSVRURlZMdmU2emVVQVdqWFNs?=
+ =?utf-8?B?cG5BVEpBcFJoM3R0NWg3elQ0M2x3Zk5PVlRvc2VSZ2R5SVRKZUdIdXhZZHdD?=
+ =?utf-8?B?YjhycjFNajZ6NHZyZTczMXZtU09xemR0SFplN2NwckxTV0M5WmhRUytSWnpx?=
+ =?utf-8?B?S3JQcFF0WjIyMjlmV01vdCtEVEdTSmRldkNaMWRpaWpJTWcvQXRYWEVEdVpG?=
+ =?utf-8?B?M2hHUVp2QnB6Y0UxUU8xRmQ4anRERjhRSjdsZUlFbnVvTm80SWZXVXNsR0Fr?=
+ =?utf-8?B?dFVrY2l1T3ZCMjVudjNPMFoyVk8yamdMRG1LQnh5d2Mwc1JWcmQ2aCtlZkdB?=
+ =?utf-8?B?YnRzM0g0TTh1dXEvS3d1N2N3eHF4Y1ZWOTlTMko4eEgwMWwzcFFFSHBOV1Bz?=
+ =?utf-8?B?ank1bGM0TFdRSjFBTXY3bFdBU1lwQm1Td2xYdE1zbVptNE96Sko0MDJTZGlN?=
+ =?utf-8?B?aEM2T0NsOXJMTHlsMDR5bWtiMnFWc0Vzem9EU3hkNlNQSDYvZXlxaUExTlR4?=
+ =?utf-8?B?OFEzVk8rZGxWNVhRM29zbjFSc0RhMmJRYUZVNmdKbW9aQVJ5S0NmT1RTTXJY?=
+ =?utf-8?B?aTViNE9tckVtdnNaNS9kUmtsVU9qNEVjN0piQWxxakIxNFhNODJVY1doMjJI?=
+ =?utf-8?B?czJtLzlhVGo3Mk9Jd1BBVDZKZW1NOEtQYU5oYkZwUHhxbFlBanVBWDdDMnpj?=
+ =?utf-8?B?SGZObmF1Wmc2a3JkNHg5czdOOVUxUnNCcVVvSGZybzMrakdhUlY5bjZXN2lV?=
+ =?utf-8?B?WUNiV1UrK0V1blNwNEM1MlU5MVRYVW9rcDEzaFdScENnREMwUkdFdzFmb0FO?=
+ =?utf-8?B?QWhWZVZvN0pYTThRTkEzMTF1bC9yd0ltTjZyV1hTZWFrT1N5M2MzbmdpVUVw?=
+ =?utf-8?B?d2N3TU5OQytGd0NDQ3czbTZuaFI4WE50UTBaMHBnWjJtc0E4ZVVHVFV5YUNn?=
+ =?utf-8?B?QXJFN2w4UVRGSUJxd3hyMFBqcngrcmVOVkFGNFlYeUVlakZLeTcyM0pQbWZJ?=
+ =?utf-8?B?ZGZkTHFmQmljbHA1RDQrRFNuSGhBTnB3OC9GejNTYUEwQ3FIVkZLSVg3ckNH?=
+ =?utf-8?B?NEQxOVI3Q2RKZWxPZEtEYzN2RUhEUnE5UjJwYkQvbDNEL3VsMFRYSGg3cUQ5?=
+ =?utf-8?B?TFpkeko0VTdGMC9uS1JxcVBSZVc0WDFkeUx6T1k1NmFmMlVKL3VZU3l1WnJR?=
+ =?utf-8?B?NllRaHVjbEpoYlVhYnFtb0YwYTdMMGR1ekViZjFLZExFOXNYeWlCVVZ5YXNP?=
+ =?utf-8?B?bWpaWHZDYm9MZmloYjJwOW02MmV0amhsbS9jVHFDZmRnWGlKUmIwNE1QTXhI?=
+ =?utf-8?Q?WnDtfjJzZmpX/oKj9D2pdncWPzj7rYd9ksV57Mg?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2fa41a3d-3bc6-4e7e-e2a7-08dde2a35d6f
+X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Aug 2025 00:15:43.6838
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PPF7433D3F05
+
+Adding sophgo maillist.
+
+Who can do help and have a look?
 
 
-On Mon, 11 Aug 2025 11:19:31 -0400, Brian Masney wrote:
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
-> 
-> 
-
-Applied, thanks!
-
-[099/114] clk: samsung: pll: convert from round_rate() to determine_rate()
-          https://git.kernel.org/krzk/linux/c/e278e39b014d789fb670695d422ff33c3ef56040
-
-Best regards,
--- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
+On 8/24/2025 4:08 AM, sodo wrote:
+> *djdisodo* created an issue (sophgo/linux#3) 
+> <https://github.com/sophgo/linux/issues/3>
+> |[ 43.260734] spidev spi0.1: SPI transfer timed out [ 43.260768] 
+> spi_master spi0: failed to transfer one message from queue [ 
+> 43.260779] spi_master spi0: noqueue transfer failed |
+>
+> here's my dts
+>
+> pin configuration:
+>
+> |spi2_cfg: spi2-cfg { spi2-pins { pinmux = <PINMUX(PIN_SD1_CLK, 1)>, 
+> /* SPI2_SCK */ <PINMUX(PIN_SD1_CMD, 1)>, /* SPI2_MOSI (SDO) */ 
+> <PINMUX(PIN_SD1_D0, 1)>; /* SPI2_MISO (SDI) */ bias-pull-up; 
+> drive-strength-microamp = <10800>; power-source = <3300>; }; 
+> spi2-cs-pins { pinmux = <PINMUX(PIN_SD0_PWR_EN, 3)>, 
+> <PINMUX(PIN_SPK_EN, 3)>; bias-pull-up; drive-strength-microamp = 
+> <10800>; power-source = <3300>; }; }; |
+>
+> spidev configuration:
+>
+> |&spi2 { status = "okay"; pinctrl-0 = <&spi2_cfg>; pinctrl-names = 
+> "default"; num-cs = <2>; cs-gpios = <&porta 14 GPIO_ACTIVE_LOW>, 
+> <&porta 15 GPIO_ACTIVE_LOW>; //dmas = <&dmac 0>, <&dmac 1>; 
+> //dma-names = "tx", "rx"; spidev0: spidev@0 { status = "okay"; 
+> compatible = "rohm,dh2228fv"; reg = <0>; #address-cells = <1>; 
+> #size-cells = <0>; spi-max-frequency = <400000000>; }; spidev1: 
+> spidev@1 { status = "okay"; compatible = "rohm,dh2228fv"; reg = <1>; 
+> #address-cells = <1>; #size-cells = <0>; spi-max-frequency = 
+> <400000000>; }; }; |
+>
+> this has been reported by @timstableford 
+> <https://github.com/timstableford> before
+> https://community.milkv.io/t/spi2-multiple-cs-gpios/2042
+> (although i'm unsure he was using upstream kernel source at this point)
+>
+> he links similar issue on rpi linux kernel which happens to use same 
+> spi driver, suggesting to apply patch on the issue
+> raspberrypi/linux#6159 <https://github.com/raspberrypi/linux/issues/6159>
+>
+> |curl 
+> https://github.com/raspberrypi/linux/commit/12534b0b57ed1d78a1dd2ae47f4c111cfbf0a493.patch 
+> | git am|
+>
+> after patching and building, i had no issue using two device with spi
+>
+> hope this patch gets merged upstream
+>
+> —
+> Reply to this email directly, view it on GitHub 
+> <https://github.com/sophgo/linux/issues/3>, or unsubscribe 
+> <https://github.com/notifications/unsubscribe-auth/AAS4RBPGVJOD2OQ7Z3YJ2L33PDC3LAVCNFSM6AAAAACEUQXTT2VHI2DSMVQWIX3LMV43ASLTON2WKOZTGM2DQNZVGAZTOOI>.
+> You are receiving this because you are subscribed to this 
+> thread.Message ID: <sophgo/linux/issues/3@github.com>
+>
