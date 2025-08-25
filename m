@@ -1,138 +1,208 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010003.outbound.protection.outlook.com [52.103.67.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11221293C42
-	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 07:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756107305; cv=none; b=opv77bF48I8cSC2/5HU+agy2maqJjTsJYA0DRKmai/G6x+CukJIjatWV54l1WRhbLZTvskmzJ82W2xAhLdl3/8C3k+m3Tz063c+1jnF6zU/cqfJC6pgPdfm0xG3YV08c28GbAnF2zdodasKwGUFpOb5/E8i3hAUoCttf+iCH0mw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756107305; c=relaxed/simple;
-	bh=8n8s0vL0czwCbBZJyb4R3SyME9JrMHVOESs2i7aHrl4=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fWpEF1VGlS9+V83dMEG0jgWF07evKLRdzFi15QLQH3IsrszoYCLlkckqw+cl7/idUyUMlaoFkI1cLtnbAiH9WcZ+UdOXt4pCvUxvu3NtVv6WxBBDyZPillhBUh3FqdUiaY3eky7jGGYrgiFNKHUjGar1IvMROFjGu/7DijcCGXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IrCY1Iv0; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58612220F49
+	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 08:22:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.3
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756110157; cv=fail; b=NCGfYcquL7plxT35++Pwd30ty6T95keGtQ4HrM9qLKqFY3u4FC+IXAAVM7NIAdoEMBVwcRjGPnafgYldmDygBTEz/guehygjrsBu1EALDyMrjlO6QtrBlNxoDgyfktz463lAzfpRwK2MGA78b0bVouelFOGanqUXFaEVdT/Ao2Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756110157; c=relaxed/simple;
+	bh=i31L/Op1s2ICN0wggEGPTrqpG7TWnXse7EieZ+x9UMo=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=NFkMaRpoi4P2JuNClKWRH+MFvN+k30gmqB1amkSiVE85Ewj+TvAL6sHWwzQL/Up6SgwBbbATj2JoT+BQbQ5ojCaivSJ6WkWVoTP/QpQXazewnKUELYCGBslq90TNOKoGoyXVInzSrJ6oPooTYcDq7npU/Xz+uBGBJ8y1lWOfpZk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=rq74RoeB; arc=fail smtp.client-ip=52.103.67.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IrCY1Iv0"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b482fd89b0eso3270153a12.2
-        for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 00:35:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756107303; x=1756712103; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lvp5MBsT7YhMVkgGMIsz2MCxt+BzXm3dU8zTzzspkLs=;
-        b=IrCY1Iv0V8NaTQ30Frq/xPN/oB0t6Dp6OTe0ySp1AYKEPrXc6ReC+VYsVMajvwIhxv
-         uC3ylk8BJQ7vm3S2SzrE0Nd3zG2vAqDjFkA6Nz2IXDja+/5iL7OSDjwRG0hX+Q0UNKsJ
-         CKxGCVJF7tES/bYOW3MAWWPU84RgVtKa6XmmM79BaA6Q8p+DyrD66wwbHvaJAkBLPO0L
-         yf1uFxshQT24P6/nwdbolTvNGca5IgL2w53y+viV2/Jw+K7A3/LcUKY0JOVCvXgfPgLn
-         +842/pqeRhMQIPODiuyDKDoMQScNkUQJfz2BMImG1PpobZLsS9K7KVJqO48awnCwRO1I
-         YbZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756107303; x=1756712103;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lvp5MBsT7YhMVkgGMIsz2MCxt+BzXm3dU8zTzzspkLs=;
-        b=fFRNsp7BPx0andxAxXE2dx1ZV7pH4rSxPBO8Cla9x/dqjlX/2lHH/CBSJ6r+wFdky0
-         YTQLMB7Bq4+g+04Q/Ssak56aZEsu//DAM/x+GJYhw2WerhfenXSSNvLKqOaPMoTUEL/z
-         XDb5zxfF4IJJaPfPEiszde2GqXvGQWczQPRvcA78vG4rZm6dSYDXJv0XzBjm9mALSBaL
-         hxjXg/79T0ZZlmHnMSvM3MYYxCghU/3PUngirrLjeiBmqLUNwHN0P+1JWPl2biXzinks
-         7JplmfNe/nGDTELg8aAj4VYccU7E9goGyUNAyvbqzk50NQqya8l3GG0/MOczeA6wHM5b
-         ij2g==
-X-Forwarded-Encrypted: i=1; AJvYcCX+3JHsIf8tYMAm5QEFaOATTizaf7tVj5ct7FWCUdCe/r1tH0yOaPXvVY65WMmkcPd5VXE4rLQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5kdjky5l8UBDwTznW48bPEg20of/+Xy/42XbTo8wtpwDH0V8n
-	fFy5tPnMcjNeTSzMYBZW4JVn3zxpTzE+bgR0+B0AIA7CTAz578nYRc135SRTr1omp18=
-X-Gm-Gg: ASbGnctdM0aMI5K3L4+LnipTTP10EQrxrI/86NYfGRD4kWJNoWMlmiQf4l5f1GdA0gx
-	rXdCN2GVc0ktDHUQJehaGWHRfmfyAfLIwO+1ccWRDAurfHmKkv5b93QmldHKE7gKxsqJiHeVBtA
-	Jr/+7vaFkSv3wZVdp8LclYV2SjyLNae6vfvgG9itI9mExnVWhiJ+GFgOfPNTH19Fn+IYicJ+aM+
-	BUHOpTYhb5Of8A1Ul+aG8nw1zW+Gf+X5WYX9ZgGC3iOXDwV/ekyY+/omfgYg4beWKKOHGC61xQp
-	ERGOWhjzviN+2MsWRU3aSYMQchQyI11FCqkCsk/uQ9vJPzhXRfdkRrjHPSJTECIpmvyG5NrUYg7
-	H/lWscCWsFjjieK3wit5ORQ==
-X-Google-Smtp-Source: AGHT+IEsuMQF9X71mGIcNScDFx9goLQ7xmHtthjhYeAIT6/QFur1P7fK5isGOF+ZbDuvxs+fIRAQtw==
-X-Received: by 2002:a17:903:238e:b0:240:50ef:2f00 with SMTP id d9443c01a7336-2462eea80fbmr175765105ad.26.1756107303209;
-        Mon, 25 Aug 2025 00:35:03 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-24668880368sm59546745ad.109.2025.08.25.00.35.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Aug 2025 00:35:02 -0700 (PDT)
-Date: Mon, 25 Aug 2025 15:33:57 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen Wang <unicornxw@gmail.com>, u.kleine-koenig@baylibre.com, 
-	aou@eecs.berkeley.edu, unicorn_wang@outlook.com, conor+dt@kernel.org, 
-	inochiama@gmail.com, krzk+dt@kernel.org, looong.bin@gmail.com, palmer@dabbelt.com, 
-	paul.walmsley@sifive.com, robh@kernel.org, tglx@linutronix.de, sycamoremoon376@gmail.com, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	sophgo@lists.linux.dev
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="rq74RoeB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wGbgx4i2hpdo4HdMi3NiXHOD3kHx4G8ZtZn68dHAHQE6D2wTzQRrLhbFJKpNR/TjAkzgM8dm7vmaqG/eTZ3BGovKAc2Dl/weCEA3mu+nyQjK4DofXVqtWb21huFKuXzSp3P/2HQJVn9ZK3MRoiv/1hAEiekJc48Mp0XW/CMT/UfMLCWOLHEL5swJtzwuvG5F1RgzcxmnsQb5oFjXW1CG7V1AC0q4g0k+f6eGtFtAf+CqKBVzZeaYYZqYnwdyjj3/A4XZe5wNBtiiWO1jZEuRToXohE67b3jWYtmNd6WITfpYWvcxEGaTkJb1k9r7lHxwNYkLY7z4rp65zLML9nwk6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hBy4kYOIZnnmRmNPNILI+ToPKjA1maYubOftD4y54X0=;
+ b=REM0B7bGb5yYpFJd3idTQPhIxyliPXCDNaySFw19NPjYrVmpOgVeKWBvRAnEJIEANDYM2wN05NU6PrUTVSCY9C93piAeIgPwXxTPWKy+74k+PSBODfQ8M2htNUlMP9GyTxidKXnqKq0MIoAjpgRDlQbTpb2XVfTbEkXci/NaJY1QycK1mZ1CdW3rI1emBsFMDRBZOGRNbUfLww6IL3LT3YnoQZ/oJJLknAlPFyIeIHf3gAcEfvb4gWTpiBaFvoG2Y+2NF94lfhFed8rViX7BQIVZZchUIpFkqNmAJqTezLlUXzV8+7XPxmKfdZPT15BKz84zHGyownz6g8iZoJqqcg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hBy4kYOIZnnmRmNPNILI+ToPKjA1maYubOftD4y54X0=;
+ b=rq74RoeBiR6BtKRHQpv0FEsd2G11XjsRsGvIFFMiLdJRW98byesb67msyhjkHky78JVP0yugOvHKrwj5Hbxq/MZ+amfGIrhJr7NKFjIAUMEs1IOgn5GCxJc8PqphW5pMqCt8Sx0bMJ7d+CzhuMnK5K8Ea2U8jaPZUehR9ne4aaKNSK1+LierEvxSdqoOHlp1MYaUYmNmnv/Vg9ubZcxTPMyenUuG5M74jrI6w0r/h5uxbWcN3ivF+AZNGAZT/i1vlg/exxE0nNF8HVeibau7Y/IXTP22aU69pkPqggARGnZh/ItPY9uvoEtyPcmJRXY1RCeq6cpZKIiJSXM27TzueA==
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16) by MAZPR01MB7214.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:52::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.21; Mon, 25 Aug
+ 2025 08:22:27 +0000
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9052.019; Mon, 25 Aug 2025
+ 08:22:27 +0000
+Message-ID:
+ <MAUPR01MB110725A1D283DE4D69AEC137DFE3EA@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 25 Aug 2025 16:22:22 +0800
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 1/4] irqchip/sg2042-msi: Improve the logic of obtaining
  msi-ranges parameters
-Message-ID: <n7na4pl6xfhwdk3xq3ulwrxm5d32kdub44otuk7avwjgb32sjz@erqbkyzhohqv>
+To: Inochi Amaoto <inochiama@gmail.com>, Chen Wang <unicornxw@gmail.com>,
+ u.kleine-koenig@baylibre.com, aou@eecs.berkeley.edu, conor+dt@kernel.org,
+ krzk+dt@kernel.org, looong.bin@gmail.com, palmer@dabbelt.com,
+ paul.walmsley@sifive.com, robh@kernel.org, tglx@linutronix.de,
+ sycamoremoon376@gmail.com, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev
 References: <cover.1756103516.git.unicorn_wang@outlook.com>
  <adb383f0f4a3cb588448a5a708fb7a907d5e9403.1756103516.git.unicorn_wang@outlook.com>
+ <n7na4pl6xfhwdk3xq3ulwrxm5d32kdub44otuk7avwjgb32sjz@erqbkyzhohqv>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <n7na4pl6xfhwdk3xq3ulwrxm5d32kdub44otuk7avwjgb32sjz@erqbkyzhohqv>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR03CA0116.apcprd03.prod.outlook.com
+ (2603:1096:4:91::20) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16)
+X-Microsoft-Original-Message-ID:
+ <154d0cfe-20ef-4f14-9ce8-d51d8de79dcb@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <adb383f0f4a3cb588448a5a708fb7a907d5e9403.1756103516.git.unicorn_wang@outlook.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|MAZPR01MB7214:EE_
+X-MS-Office365-Filtering-Correlation-Id: 22f464cd-544a-407c-4529-08dde3b08687
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|15080799012|461199028|23021999003|5072599009|8060799015|41001999006|19110799012|440099028|41105399003|40105399003|39105399003|3412199025;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?dXF0ZGkrQlE5OWNoeXl6dkUvQkFEYktDSWp2d2hnc0JxbXhaMW0ra29jQUJS?=
+ =?utf-8?B?Q2FDb01ROVp3TldKeEF0TVg5VE94NE1nTnBKeGRUcFhvcWhmMGZvVWFMSlpr?=
+ =?utf-8?B?cG9oRDJNQTJhdHdsS3lvQTVMVGdtRVRETXhoUk8zb2c0S2pLaUpYYjJreEJV?=
+ =?utf-8?B?dVduL0xYakkrR0hidy9mM25rbFZLclpZcC8vOFBwL1VMK0JuTnB1RGQvVVV3?=
+ =?utf-8?B?b3dhRkRIZHVlYUo5QWtTL1AyQ1ZVeGRlaDlEVUtZTW5YT0dJaS9FMm9rMVlG?=
+ =?utf-8?B?WmlZWXN0UVhCRWRGWmhES21TVGU2TWF2RkVnVmlnTFVRZCtncmRNQXNZaUtR?=
+ =?utf-8?B?Y0QxNDRZYU1kREpTbHMzK3BJWE81c3QzT0xRSU92aXN3ZkNFaXZORlFFQk5M?=
+ =?utf-8?B?MWhHQXgrZVVvczhNeXRUSExwMC9iOTZGQVVJTHJqUlRqbGpuOFU5ZFJqV3Qy?=
+ =?utf-8?B?dTF5VFUrRUs3NVpIUWtKcHd2REk2Um8zSllCR1NISFZyN1JGaU1oSjUxK0RJ?=
+ =?utf-8?B?cjh4bnZZdEd0QVlBdDlXRWJ2d0s3aU1GQk9tMEdiRjVlOTl2OWNEK3VoQ3pV?=
+ =?utf-8?B?LzJ3VWgweDVTcUttVXM2cGRYRlBsSVE4Y28yc2s0S0o0MXZLS0c3WlhtUVNw?=
+ =?utf-8?B?c3d0dG5HRCtFODhNRkpZSlUrQnRLblJnRGpsVVdLUHNLMlBIMWY0aUsxUlMx?=
+ =?utf-8?B?Wm9Dc21sMTM3cGc1bXFkb0htam9NYnR1OS9qRlpRcytDRU5vbzN0Vk1lVi8y?=
+ =?utf-8?B?OFFtVUFuNjRuekN6YWNuaVFtK0lKMlRqdWVEN0drUzAyTUIxRWkxOUxQZG9s?=
+ =?utf-8?B?Vk0zNEZTNjB5OVVSZVl1MUpDTUpjanpFVkc5azRWTy9jSkVNdk1GRFBvejht?=
+ =?utf-8?B?aG5FTWdQbXI5WXg0NTIrNStLYVl4QWF1MTFnVElhakZoWVFzaWdtMlhZRTRl?=
+ =?utf-8?B?K0J1RFdOR0YwK1JVV3FnOUc1Y1E4cktQc0ZwMVpiRmEyanRFOFRhZSswcnp3?=
+ =?utf-8?B?dlZGaUE5Y1JhWGwyVFJGK2REcTA3RjZzSzFyVzE2TERWUHRXR2hXR1lpY0dD?=
+ =?utf-8?B?cUpUM0ZnVEhOOW9IeHhHclNKSFdPdXl1UGlkNE5yN0VOOEVCa0ZKckFjcTIv?=
+ =?utf-8?B?MEVSeDdFMHJPY3VKdWkvZTljSlJRYllmZjZDK2psem5GQ2tQdjZQbU9ZdnB5?=
+ =?utf-8?B?UnNPcnVZZ1NlcVlZK2lsMkUvUWdCQ1lKdUgwSzlta3RhRWlEQjdyWUhNQ0hJ?=
+ =?utf-8?B?ZEpiRThaKzBwYlNtSzJPSDRVTE5Db1NBd05vRzV3aW5hU05Cb3NhaVVaZCs3?=
+ =?utf-8?B?M1QydXM0OG9hWmJ2dG81dUNtZk96QThobElBZ3VnQ2FMV3J0dk53Mzg1djZz?=
+ =?utf-8?B?U2IrQWhvUE1tWHlGeTBzZTRLdWRreGRoZ0IrcDRLSW8zRVZCaExRSHVOd2t5?=
+ =?utf-8?B?K2FaUGNuVzlhcFlwRjROaGZKSm9hNmh1RFROWHNUU3FRRjI1UXdZN1VqQlU5?=
+ =?utf-8?B?Qm4vd1FuSlRqRUZvQXpWcHp0M0tvcWZUWElJY0hTSjZKR1VSVVhXMDkrb29q?=
+ =?utf-8?B?T2VmaHpvdmRGU0pyS1ZOZHZaZE1yRWttdURNRHJyL2dUZ0pPVy8yWGk1L3pk?=
+ =?utf-8?B?WFl3SDFKVFBzdFcyQzlJQ2VRU056NE5Hai9kMm96QnhTUmpUTkNER0c5Ykg3?=
+ =?utf-8?B?aXFTUWlhYjE5Z1lXMy9pZVpmZk9mVUY1TW8wVE9OdXlPVHp4OGZjOXRRPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cWxjMVFzV0pTbWpJZWxEekhuT3kzTFZ0NkJHb2VXc0oreGh1S3BSZzc5MEgx?=
+ =?utf-8?B?RXg2WTZUdkNCYXZPZ3dKaThTRUpnYWNUK0FLMU40V1JCS0hES29xZnp5SG5u?=
+ =?utf-8?B?SXZRYjhIaWpyK09IMndCUGVDVlNEMFZWTHVXUTk2alRiU3JuMDU2STBzZkM2?=
+ =?utf-8?B?NUZVZzYrQjdoeU91NlRibmJlL0NjM29DbVF6Z1U4ZFBuTkxaL1MxaE5PeDZ3?=
+ =?utf-8?B?ZWtqa3paaTlCQlFlelcrR1BzZ2Z5d2lEWlh3Wk1aTzJiTzNzL0FBN1NnOUpv?=
+ =?utf-8?B?b0xmSVp3QUo5NUZKUDVsUDJ5aGprcnJOd0grK0oxNDljd29vSlhENm9xck1l?=
+ =?utf-8?B?d0Q3b1VZT2RuNFpSWkU0M0FmaUpRczBpdU1rZTJ6WWFSakM5VWxkck1acGNF?=
+ =?utf-8?B?dS9BRkw1aVo3ejNjTkJXTGxlOFUxQlFRZldCTGYyd3FaQ1AzbGhraU1aZ3A2?=
+ =?utf-8?B?KytpRnJrZnNjM2wySVNTS0RBK0VHOS92ZUtEWVAycFNWeEhhZXRwZFFzNFlG?=
+ =?utf-8?B?R3pjNk9HcWV0OE9RS0ZEdkE0OVRXMnBwY0lsYk9aL3FXcU5yQjFoN3d4OTVG?=
+ =?utf-8?B?MkNwb3dGRW15VmE1cmJaWjdIZENzYXQ0SXFXTDRybGlvUjd3Wnp0bzMxNDFm?=
+ =?utf-8?B?MmlvbGIyeEZVM1piandGMitmTG54dFEvclBKajJpNEIrVDJsRE1KNVRvN2kw?=
+ =?utf-8?B?VnpHSm9CUGtpTFhxQjFEU3pRRlIySDdJOWlNM0xEcjhlTTBIbzh1THN1eW1s?=
+ =?utf-8?B?dC9JZWdxMEF5ZEUzNTVUQzRzc2N0RXVHL2NCVytwUnFFSXNMQnBxZ0tjeWoz?=
+ =?utf-8?B?RDNyQ2FSVWJXOUFuNmZrYjVEYjllRlRaanp5eUxoa3hpTzkza25GL2t6NGxj?=
+ =?utf-8?B?OXVCNDBjN1d6VENRc1cyY0lKbHRpMFg2b000VkVweVVTUlIzNXVPdFdieTBY?=
+ =?utf-8?B?VVF5UlE4QnV0b3U4VjhrR1luUjFSZ3BMQWd6ZjdJaEN5WUduUjViZFlra3lG?=
+ =?utf-8?B?U0E5ZjFxTld1eDJzQzBVQXNLVjdCZ0MxVVJDSmM4bjV0T1UxNWpSNHB5cms1?=
+ =?utf-8?B?RUVuSXNieTgzTzl2NzB3aStPOVErWS9nY2F1SjdENjlVMHNtMTF2MVRoTzdS?=
+ =?utf-8?B?alB5ZzBFZXBDRFNwRExZdTdCMWxaa25mVHNuU3BnZm1BZDZzUG5peStRRW1z?=
+ =?utf-8?B?SmJPOFFRWEdDdjdzOUEySmZOTFpKVkV6b1IrNjBhb3E2QUxrTnJEcElMZU1W?=
+ =?utf-8?B?cFRUS0RZWUZ5R0dKM2lLTXpNY0gva3VucHBBMi94SkZGMC9abk9zekloQlFK?=
+ =?utf-8?B?dmhFTE1TOGdTTU56N3Eyd0dXRzJObC9uL3F2QWU0c0tQRUlVNllGTnhMSmpX?=
+ =?utf-8?B?bmszaE1ScXhuR3RDR2VoTjFaQUxnR0N3STR3NVVlY29OZTZ2TWF1ZSt4N0JY?=
+ =?utf-8?B?dloxczZpTm0vaEh2YmRKV1RwMjY5M3V3RG5QQVBIYWxzcm9Ma0xUcjBsbEJ1?=
+ =?utf-8?B?V0tnMERMRFFLZzFnc21FSEVJZjlweDVvdUh4d2ZNa1d0VWUzRy9SVVordUh4?=
+ =?utf-8?B?djVPdW9zcitqd2tGS0F6SVFLdUQxb241bEtvZWJzQmFIRGJ3RXF5QjB1TGtL?=
+ =?utf-8?B?Y1F1V1FGQml0RUh0Z0w4MVdVVTBYSVJpTCtma0VFalBxTnlxdWpZZitUZU80?=
+ =?utf-8?B?YkpqcXpBRU01aHJmWTNLcmYwNjdwTVg4VE9Fc24zd1AvSmRwYkVPNWd1b1Fv?=
+ =?utf-8?Q?4eWPaxhshky5Ue43EPOa3R8mgQEong38Xnlxxjk?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 22f464cd-544a-407c-4529-08dde3b08687
+X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2025 08:22:27.1386
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7214
 
-On Mon, Aug 25, 2025 at 02:55:03PM +0800, Chen Wang wrote:
-> From: Chen Wang <unicorn_wang@outlook.com>
-> 
-> Get the arguments of msi-ranges by specifying nargs directly instead of
-> using nargs_prop. This only takes one step, unlike the previous two
-> steps to get the values of all the arguments.
-> 
-> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-> ---
->  drivers/irqchip/irq-sg2042-msi.c | 14 +++-----------
->  1 file changed, 3 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
-> index 3b13dbbfdb51..5249afd93b4a 100644
-> --- a/drivers/irqchip/irq-sg2042-msi.c
-> +++ b/drivers/irqchip/irq-sg2042-msi.c
-> @@ -276,17 +276,9 @@ static int sg2042_msi_probe(struct platform_device *pdev)
->  	data->doorbell_addr = res->start;
->  
 
->  	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges",
-> -						 "#interrupt-cells", 0, 0, &args);
-> +						 NULL, 3, 0, &args);
-
-Why using a fixed range here? I see no improvement. I think using #interrupt-cells
-is just OK.
-
-Regards,
-Inochi
-
->  	if (ret) {
-> -		dev_err(dev, "Unable to parse MSI vec base\n");
-> -		return ret;
-> -	}
-> -	fwnode_handle_put(args.fwnode);
-> -
-> -	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges", NULL,
-> -						 args.nargs + 1, 0, &args);
-> -	if (ret) {
-> -		dev_err(dev, "Unable to parse MSI vec number\n");
-> +		dev_err(dev, "Unable to parse MSI Ranges\n");
->  		return ret;
->  	}
->  
-> @@ -298,7 +290,7 @@ static int sg2042_msi_probe(struct platform_device *pdev)
->  	}
->  
->  	data->irq_first = (u32)args.args[0];
-> -	data->num_irqs = (u32)args.args[args.nargs - 1];
-> +	data->num_irqs = (u32)args.args[2];
->  
->  	mutex_init(&data->msi_map_lock);
->  
-> -- 
-> 2.34.1
-> 
+On 8/25/2025 3:33 PM, Inochi Amaoto wrote:
+> On Mon, Aug 25, 2025 at 02:55:03PM +0800, Chen Wang wrote:
+>> From: Chen Wang <unicorn_wang@outlook.com>
+>>
+>> Get the arguments of msi-ranges by specifying nargs directly instead of
+>> using nargs_prop. This only takes one step, unlike the previous two
+>> steps to get the values of all the arguments.
+>>
+>> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+>> ---
+>>   drivers/irqchip/irq-sg2042-msi.c | 14 +++-----------
+>>   1 file changed, 3 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
+>> index 3b13dbbfdb51..5249afd93b4a 100644
+>> --- a/drivers/irqchip/irq-sg2042-msi.c
+>> +++ b/drivers/irqchip/irq-sg2042-msi.c
+>> @@ -276,17 +276,9 @@ static int sg2042_msi_probe(struct platform_device *pdev)
+>>   	data->doorbell_addr = res->start;
+>>   
+>>   	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges",
+>> -						 "#interrupt-cells", 0, 0, &args);
+>> +						 NULL, 3, 0, &args);
+> Why using a fixed range here? I see no improvement. I think using #interrupt-cells
+> is just OK.
+Ok, I will revert this change.
+> Regards,
+> Inochi
+>
+>>   	if (ret) {
+>> -		dev_err(dev, "Unable to parse MSI vec base\n");
+>> -		return ret;
+>> -	}
+>> -	fwnode_handle_put(args.fwnode);
+>> -
+>> -	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges", NULL,
+>> -						 args.nargs + 1, 0, &args);
+>> -	if (ret) {
+>> -		dev_err(dev, "Unable to parse MSI vec number\n");
+>> +		dev_err(dev, "Unable to parse MSI Ranges\n");
+>>   		return ret;
+>>   	}
+>>   
+>> @@ -298,7 +290,7 @@ static int sg2042_msi_probe(struct platform_device *pdev)
+>>   	}
+>>   
+>>   	data->irq_first = (u32)args.args[0];
+>> -	data->num_irqs = (u32)args.args[args.nargs - 1];
+>> +	data->num_irqs = (u32)args.args[2];
+>>   
+>>   	mutex_init(&data->msi_map_lock);
+>>   
+>> -- 
+>> 2.34.1
+>>
