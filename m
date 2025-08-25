@@ -1,63 +1,63 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F892868AC
-	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 06:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175F3286D50
+	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 06:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756104916; cv=none; b=Ay5G33CyLEuIjB4VE0dXac5FscpE/2f0z6rao7ooWZqimu/RAdYKaSaUDd8QUoIW9X/ciSUC5edGiJ4QB7+WkLZsA9Mf+SEGlusVawFXNw6wXuSURQlR/Ysy783etGSJlkL6OtMyhz/6qVlQfHFxRUmgLSSz/hVoB21n3QsfpGA=
+	t=1756104962; cv=none; b=SrkDwfiPDHbdXwXy1MdfWwV5aBorEsDbWYY6pqrgRWYymn34I7kGQHZ5vIlZpRftQx46WWeXI1nhJh8b0bOIDDFQRIEpAGewFB+48yyB4Kd39ws4uK88je8h3xCvZLgoNCkfCK1xkBltx2SGFHV72nxOxH6JqElhBlRFULs3Saw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756104916; c=relaxed/simple;
-	bh=XfvoWpG7yn1MnMYlFZwdOxlDXsB/OekSjnZ2x/KtlPo=;
+	s=arc-20240116; t=1756104962; c=relaxed/simple;
+	bh=8NCFynKKUdVzjEnQnUgNKwonUbri0AXtCEZV3rB+fik=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=hTq7EkueCUnen5P65ArbCcL888OHFAVTzT6ffmlFxv4eQjMz8lCvvELq3QkBcopPGl+2LudjAUfQqPTHr8kP6eCearxqIm3VNfSJixgv55JmkjGCt9x68hVrWvgbNRT6UxdiU5X4M2dN588tOJZhSwzl/0sG2B7NMXpWn2sERXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SmsYWRF3; arc=none smtp.client-ip=209.85.161.42
+	 MIME-Version; b=TDru/DKF7clhks2DBQ63pZXCMrF6cjstOA8v0uIxOUtDMX/zQj+HOKeAbBpa2rKi7ZCpMboIjV0WRhGYbtd2FmoPFUlO1E8mznesrPGP2ezqzXTZDIw/MBKZsHWX4l1Q5DK61PK3OopuHT1VJKe8EvpuyHTH/4Fb8Nv6e+g3h4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FiZeh9R6; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SmsYWRF3"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-61ddbc4264cso189912eaf.0
-        for <sophgo@lists.linux.dev>; Sun, 24 Aug 2025 23:55:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FiZeh9R6"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-74381f06578so2025005a34.1
+        for <sophgo@lists.linux.dev>; Sun, 24 Aug 2025 23:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756104914; x=1756709714; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756104960; x=1756709760; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=v+yGjr2heO21gMCA2kFQQZ2y9Wya4HGwCF6Hx9Cjwbc=;
-        b=SmsYWRF33w/pp1lI0Ey764vuyzAc1Sk6X2CqaUzPVtSX7eBlFnGew1afzy5aSPitEh
-         pxa2A/F3fEiy7hAtXeIRkvEdDduLv+zMNxBKnRyEPEo1R3JpjNQV1rto1KD5LX1zuNSk
-         tDC6QErsIE6+VScFb7L9Dg/46u2pBZHOoLDZtoMxQ6JKZ1QdqQKYbAdBXyK2rJacorTf
-         iFJE+urmZk6SV0Yv4XZPmjnLwY7PDWr657NWSuzB4T0ftWTfcqYPI2O48v6S3HTZU9lo
-         clYKSyyqZagbJugn/LD2kTjsWfvWeQmVdrs/Br3JAH4UqZjVQ2+YdBsja46/KnSQi6mG
-         UJlA==
+        bh=3ulckDe3eWSmf553AzjVX023UG188U0t36zbr4OOP20=;
+        b=FiZeh9R6SpWqZ5N+CqpaAyYiMOEU7xoHhuJ2yAHzQJuqR6A50JL1Hqcrau4DGvZoLh
+         uGqK/t5vxV8LHFr53TLfdYuBwDRPQI2Jgld3ioN2aIXddCxT2I1L0KtJ2XXKnPx1+zVX
+         2fst8k5RQ5ATM/pwFjBMXFFl0jIg4clVefCNwTIilhjt8O6cE89G3tCJxX9gWe1Q974q
+         BQX7fvUorChEkMR3oLPomoZ5HGIsVbvTp88c4ohPaR7fViu5f0Tr/Zwium7yEpNhdQmA
+         Yh1C3bjcukCMpJ687UKcT+Jp0LXTK3etuVLd6/Slnbnm+2VjSMMHL4ZApPv50/M2SiHR
+         YAbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756104914; x=1756709714;
+        d=1e100.net; s=20230601; t=1756104960; x=1756709760;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v+yGjr2heO21gMCA2kFQQZ2y9Wya4HGwCF6Hx9Cjwbc=;
-        b=S+cRup5cWdrSM3+OYHbGup0niibJt7/P4K6fKhQl5IXNlJlxgWx//Eo1jZ4XbE6XUX
-         0n3rnE/FuxKtGIkirEyxsEVizKCHlfV7ba0EEcDgk0nGNRi/0X7jmJVxXlH4m2e8gedA
-         76cTpFw7t8NDkzFDSqTkqR71Le2wiSm256HoSiXigi6wESmmKJjylwiTvcNh5qVkQ+v9
-         wgBeLN5PJ7X+7UoasiGAi/SqP0oW9D69LFLOOU66ySlWPl1/BPrDO0biHOzXFTGMEd3J
-         RGtiPWKFNyAwAAypXPzlkUsnY+W+JNB+AA7eYtpREjkcmKioQDChYu8gop+kuzdpk3vs
-         5FZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXR69rIgxRZgI/fkP1k1vDlRBbYwxbY/jJkcvjo6xfxFhJ3MbJAc62OEmRKHNu8zfFeKlRd4Io=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxAHcfkJyCJZHsqy4iZlJHYwvUbcR5KC5sXTch1uviRTtRo0rqr
-	Dl2tWPh4fYnawUTv0yAfyW3XjREercptknk/dORRhYV6c7MRyGGatdew
-X-Gm-Gg: ASbGnctT8Hw1tWB47GRaViCuyJARBPPDz7b8mZD2Yj5kK8/YNiNFO31MKwCi59IpOHk
-	YuKEB2l2B49IP5GGsgPGJlIWZkzd+oJy0UxinIj0eexg2z8LfMGlpd9FFjZ2fi2YFLHfI6m/yQ+
-	00MdyINbbyY/0kYfDay+qiJTMNmufbQQowxvT7HedgC3MnkGZ0VlKtDcoP7ahLJFBAvR9kgGFYY
-	9C6qRqzOxlR38bQm9+ZgdQX/9l24zdO/9eHFkpz1c9JLGU7eKQZJPBPyZ/x09r82mghTkMI8Fib
-	yX62FEpyCumQKhDTXHDJ/K4tASWOdm+qdKx6dWvWGQv+qsZv/7Za5OIrEmLRKpVPGFRrZyj9ssW
-	4MCvVE+8rS0wcpvR3DXNbTdARPu9WixUT
-X-Google-Smtp-Source: AGHT+IHekG6OTGU3l6qQrokM25geuzr8Jsvhtci+xI2DkA29jrojoxfyJ2/APQwGqhsrHpj23jMdtQ==
-X-Received: by 2002:a05:6870:249c:b0:30b:bb5b:8d8b with SMTP id 586e51a60fabf-314dcabd8e4mr5680879fac.4.1756104914059;
-        Sun, 24 Aug 2025 23:55:14 -0700 (PDT)
+        bh=3ulckDe3eWSmf553AzjVX023UG188U0t36zbr4OOP20=;
+        b=lEQi2qZAw9OCmsktPHd+7qa5sLDf/P+eebyRgsAwDeEyfOV6dadaHSj3LGgNg1QDx4
+         piurcoXHxSVIjbRKLSFSDuPkVGUsvRPYTlsARUusBJZaNR+YUGR20A5WuwtIlywi+qsZ
+         DCF0inki7o6uKygF9x3twaFxKJLZOR+GYXSunyFw6FNXLepQ2grS9jMB344VGrjf0LMl
+         e8VypGFa25n8aeyqZTA19W9wWEdTqgjMsHXpELWUoYOaAlFllPJxoJxLncRlxBYhAXIZ
+         ptzWuON0pmGy7Y4Zq7gfhdw7TFIdGhpZ2/DgJAhmScqcK+kmbJk1BauPc+QlXkN6al+0
+         zjFA==
+X-Forwarded-Encrypted: i=1; AJvYcCVh3+hlg4bTiab8DQcUeYs8Ar4AwIppawOi5Ddn0OBthm06hffUPStVrEdxPnsPCOWYwo2kCh8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKOA4Vpvuywlwn3kiTEfp92CqPhkDrfJ9u3hxWa1b0QQ2s4ii6
+	iNKK4RmKN5yVhSgvx2UMa5fYJAhSghjXATnKPwLnCRO3pN8JtJ4pc85M
+X-Gm-Gg: ASbGncszGrv8pHRdmu7ePo/prsLFJbM14ejIHzfCwgWqtTvzgRNntbMRRWpPnbzoQdk
+	SCMENCDJW0OkmoWoy5SeCBcik0MEB1BezUSD9A0hIOM0mnHbUFEYQIiJrvKakaiENSeCee6Zir1
+	gMvyBJlIJtsorzBJsJNqlpqL9CXculrg6wjKLz1Bsi5RompiQ0L1vAxoC8SGmGnospETSWEhHfz
+	pyQBT1q1hCkEW9/DnupbBMKB9An2YANHyUBV6Hhjpl0bOp7HT4iElkxS9Ho2xfyH/o42skXJ9CT
+	8ZDD+h3PMhYD+AtOnUaAny5Q8OzylFd/N2dfkZ54bA2A54YS3xtyzCWxkl+YiYzUX5NhcVOwvXv
+	M6JGa2Qd3LuUAZDsI6bAWvGKTOdIvg1v4
+X-Google-Smtp-Source: AGHT+IGpwYqZSLvuloDemQpps6HazGQohvDaEOzeL74e9j9PrL6xU465ZXDCufj9C4D2mPl9+TYvfw==
+X-Received: by 2002:a05:6830:418f:b0:743:2cc:d530 with SMTP id 46e09a7af769-74500a45257mr5265337a34.19.1756104960115;
+        Sun, 24 Aug 2025 23:56:00 -0700 (PDT)
 Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-314f7d98e29sm1618117fac.31.2025.08.24.23.55.11
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-61dc790aa7bsm894731eaf.26.2025.08.24.23.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Aug 2025 23:55:12 -0700 (PDT)
+        Sun, 24 Aug 2025 23:55:58 -0700 (PDT)
 From: Chen Wang <unicornxw@gmail.com>
 To: u.kleine-koenig@baylibre.com,
 	aou@eecs.berkeley.edu,
@@ -75,9 +75,9 @@ To: u.kleine-koenig@baylibre.com,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev
-Subject: [PATCH 1/4] irqchip/sg2042-msi: Improve the logic of obtaining msi-ranges parameters
-Date: Mon, 25 Aug 2025 14:55:03 +0800
-Message-Id: <adb383f0f4a3cb588448a5a708fb7a907d5e9403.1756103516.git.unicorn_wang@outlook.com>
+Subject: [PATCH 2/4] irqchip/sg2042-msi: Set irq type according to DT configuration
+Date: Mon, 25 Aug 2025 14:55:50 +0800
+Message-Id: <cf73d95140b03b586f44d2495376d367e32857ed.1756103516.git.unicorn_wang@outlook.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1756103516.git.unicorn_wang@outlook.com>
 References: <cover.1756103516.git.unicorn_wang@outlook.com>
@@ -91,48 +91,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Wang <unicorn_wang@outlook.com>
 
-Get the arguments of msi-ranges by specifying nargs directly instead of
-using nargs_prop. This only takes one step, unlike the previous two
-steps to get the values of all the arguments.
+The original MSI interrupt type was hard-coded, which was not a good idea.
+Now it is changed to read the device tree configuration and then set the
+interrupt type.
 
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- drivers/irqchip/irq-sg2042-msi.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/irqchip/irq-sg2042-msi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
-index 3b13dbbfdb51..5249afd93b4a 100644
+index 5249afd93b4a..be47c038386c 100644
 --- a/drivers/irqchip/irq-sg2042-msi.c
 +++ b/drivers/irqchip/irq-sg2042-msi.c
-@@ -276,17 +276,9 @@ static int sg2042_msi_probe(struct platform_device *pdev)
- 	data->doorbell_addr = res->start;
+@@ -30,6 +30,7 @@ struct sg204x_msi_chip_info {
+  * @doorbell_addr:	see TRM, 10.1.32, GP_INTR0_SET
+  * @irq_first:		First vectors number that MSIs starts
+  * @num_irqs:		Number of vectors for MSIs
++ * @irq_type:		IRQ type for MSIs
+  * @msi_map:		mapping for allocated MSI vectors.
+  * @msi_map_lock:	Lock for msi_map
+  * @chip_info:		chip specific infomations
+@@ -41,6 +42,7 @@ struct sg204x_msi_chipdata {
  
- 	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges",
--						 "#interrupt-cells", 0, 0, &args);
-+						 NULL, 3, 0, &args);
- 	if (ret) {
--		dev_err(dev, "Unable to parse MSI vec base\n");
--		return ret;
--	}
--	fwnode_handle_put(args.fwnode);
--
--	ret = fwnode_property_get_reference_args(dev_fwnode(dev), "msi-ranges", NULL,
--						 args.nargs + 1, 0, &args);
--	if (ret) {
--		dev_err(dev, "Unable to parse MSI vec number\n");
-+		dev_err(dev, "Unable to parse MSI Ranges\n");
+ 	u32					irq_first;
+ 	u32					num_irqs;
++	unsigned int				irq_type;
+ 
+ 	unsigned long				*msi_map;
+ 	struct mutex				msi_map_lock;
+@@ -137,14 +139,14 @@ static int sg204x_msi_parent_domain_alloc(struct irq_domain *domain, unsigned in
+ 	fwspec.fwnode = domain->parent->fwnode;
+ 	fwspec.param_count = 2;
+ 	fwspec.param[0] = data->irq_first + hwirq;
+-	fwspec.param[1] = IRQ_TYPE_EDGE_RISING;
++	fwspec.param[1] = data->irq_type;
+ 
+ 	ret = irq_domain_alloc_irqs_parent(domain, virq, 1, &fwspec);
+ 	if (ret)
  		return ret;
- 	}
  
-@@ -298,7 +290,7 @@ static int sg2042_msi_probe(struct platform_device *pdev)
+ 	d = irq_domain_get_irq_data(domain->parent, virq);
+-	return d->chip->irq_set_type(d, IRQ_TYPE_EDGE_RISING);
++	return d->chip->irq_set_type(d, data->irq_type);
+ }
+ 
+ static int sg204x_msi_middle_domain_alloc(struct irq_domain *domain, unsigned int virq,
+@@ -290,6 +292,7 @@ static int sg2042_msi_probe(struct platform_device *pdev)
  	}
  
  	data->irq_first = (u32)args.args[0];
--	data->num_irqs = (u32)args.args[args.nargs - 1];
-+	data->num_irqs = (u32)args.args[2];
++	data->irq_type = (unsigned int)args.args[1];
+ 	data->num_irqs = (u32)args.args[2];
  
  	mutex_init(&data->msi_map_lock);
- 
 -- 
 2.34.1
 
