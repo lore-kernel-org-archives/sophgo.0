@@ -1,63 +1,63 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175F3286D50
-	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 06:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7763E287253
+	for <sophgo@lists.linux.dev>; Mon, 25 Aug 2025 06:56:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756104962; cv=none; b=SrkDwfiPDHbdXwXy1MdfWwV5aBorEsDbWYY6pqrgRWYymn34I7kGQHZ5vIlZpRftQx46WWeXI1nhJh8b0bOIDDFQRIEpAGewFB+48yyB4Kd39ws4uK88je8h3xCvZLgoNCkfCK1xkBltx2SGFHV72nxOxH6JqElhBlRFULs3Saw=
+	t=1756104994; cv=none; b=XFRRQMJ9nFhQlF2xXblHJrLf/ElcZHRNBLio1fKmSmfvAz5OGQDhrGwaeMDo+++Fj9trvFz0EzwyS8y9P2I4DRz4E877gjjsRKlcDKoD92hgCyMxA2G8HMfzZmo4fy6gypvc/PlH6di1SeiHpQ2Gz7daGrahM3cJZfxkjzmjgIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756104962; c=relaxed/simple;
-	bh=8NCFynKKUdVzjEnQnUgNKwonUbri0AXtCEZV3rB+fik=;
+	s=arc-20240116; t=1756104994; c=relaxed/simple;
+	bh=cnETHiuRSssaBEiTgdPtwlHAn/fBOMXmkTLrBzYJ84A=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=TDru/DKF7clhks2DBQ63pZXCMrF6cjstOA8v0uIxOUtDMX/zQj+HOKeAbBpa2rKi7ZCpMboIjV0WRhGYbtd2FmoPFUlO1E8mznesrPGP2ezqzXTZDIw/MBKZsHWX4l1Q5DK61PK3OopuHT1VJKe8EvpuyHTH/4Fb8Nv6e+g3h4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FiZeh9R6; arc=none smtp.client-ip=209.85.210.50
+	 MIME-Version; b=nBoTEPOdpmgYt2nYQSLvrld839B04kPW8EmhowrTtN5SUZWvBzHSQ6yo4P5K8jLJpfoASsWn2lMMwcXrUb5LB+RF7tAU5wK5f0iBIce62bRoy87taa1hAwme84WP44FlBRoIzfRUOESCHo+GJApdevJ5z+5YYQ4SYqmOblMTj8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkTsJHJJ; arc=none smtp.client-ip=209.85.160.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FiZeh9R6"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-74381f06578so2025005a34.1
-        for <sophgo@lists.linux.dev>; Sun, 24 Aug 2025 23:56:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkTsJHJJ"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-30cce8c3afaso2600887fac.1
+        for <sophgo@lists.linux.dev>; Sun, 24 Aug 2025 23:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756104960; x=1756709760; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756104990; x=1756709790; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3ulckDe3eWSmf553AzjVX023UG188U0t36zbr4OOP20=;
-        b=FiZeh9R6SpWqZ5N+CqpaAyYiMOEU7xoHhuJ2yAHzQJuqR6A50JL1Hqcrau4DGvZoLh
-         uGqK/t5vxV8LHFr53TLfdYuBwDRPQI2Jgld3ioN2aIXddCxT2I1L0KtJ2XXKnPx1+zVX
-         2fst8k5RQ5ATM/pwFjBMXFFl0jIg4clVefCNwTIilhjt8O6cE89G3tCJxX9gWe1Q974q
-         BQX7fvUorChEkMR3oLPomoZ5HGIsVbvTp88c4ohPaR7fViu5f0Tr/Zwium7yEpNhdQmA
-         Yh1C3bjcukCMpJ687UKcT+Jp0LXTK3etuVLd6/Slnbnm+2VjSMMHL4ZApPv50/M2SiHR
-         YAbg==
+        bh=Fr502dmQ4odPuahV9+jfQPzgPn5kXy7yEDTTv9ShcH0=;
+        b=hkTsJHJJnszzbaNVwh1BapxA7Z0GMOAwujhnxVg0hx0WPsQ6NEb1PvLtalCnLXX1JN
+         uDtTswComZgVo4CTigcq/ca3UsIoz3x00igG9aTXGPHCu6zzzmNLIXcNm9/7GMSuYDAZ
+         RDBgq3E7vAVRll/mzSQey/+zkHRYFe/o7RYv1bReW9nvvSzn5cTGcj+E7ogJSwbvIRo3
+         gTJ6A9jCU7JCqUL98tj7oJWj9pGkRT1xy3Wtezfl9jRWi1TEjx2HyRNyZDrmsMdNX4Gh
+         7C2oo+IOAElShauAdYyKPW94RtFGPnRubTaf6yOljSDWEqzW5zYvffp/miHk8vccC2N8
+         4PmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756104960; x=1756709760;
+        d=1e100.net; s=20230601; t=1756104990; x=1756709790;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3ulckDe3eWSmf553AzjVX023UG188U0t36zbr4OOP20=;
-        b=lEQi2qZAw9OCmsktPHd+7qa5sLDf/P+eebyRgsAwDeEyfOV6dadaHSj3LGgNg1QDx4
-         piurcoXHxSVIjbRKLSFSDuPkVGUsvRPYTlsARUusBJZaNR+YUGR20A5WuwtIlywi+qsZ
-         DCF0inki7o6uKygF9x3twaFxKJLZOR+GYXSunyFw6FNXLepQ2grS9jMB344VGrjf0LMl
-         e8VypGFa25n8aeyqZTA19W9wWEdTqgjMsHXpELWUoYOaAlFllPJxoJxLncRlxBYhAXIZ
-         ptzWuON0pmGy7Y4Zq7gfhdw7TFIdGhpZ2/DgJAhmScqcK+kmbJk1BauPc+QlXkN6al+0
-         zjFA==
-X-Forwarded-Encrypted: i=1; AJvYcCVh3+hlg4bTiab8DQcUeYs8Ar4AwIppawOi5Ddn0OBthm06hffUPStVrEdxPnsPCOWYwo2kCh8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxKOA4Vpvuywlwn3kiTEfp92CqPhkDrfJ9u3hxWa1b0QQ2s4ii6
-	iNKK4RmKN5yVhSgvx2UMa5fYJAhSghjXATnKPwLnCRO3pN8JtJ4pc85M
-X-Gm-Gg: ASbGncszGrv8pHRdmu7ePo/prsLFJbM14ejIHzfCwgWqtTvzgRNntbMRRWpPnbzoQdk
-	SCMENCDJW0OkmoWoy5SeCBcik0MEB1BezUSD9A0hIOM0mnHbUFEYQIiJrvKakaiENSeCee6Zir1
-	gMvyBJlIJtsorzBJsJNqlpqL9CXculrg6wjKLz1Bsi5RompiQ0L1vAxoC8SGmGnospETSWEhHfz
-	pyQBT1q1hCkEW9/DnupbBMKB9An2YANHyUBV6Hhjpl0bOp7HT4iElkxS9Ho2xfyH/o42skXJ9CT
-	8ZDD+h3PMhYD+AtOnUaAny5Q8OzylFd/N2dfkZ54bA2A54YS3xtyzCWxkl+YiYzUX5NhcVOwvXv
-	M6JGa2Qd3LuUAZDsI6bAWvGKTOdIvg1v4
-X-Google-Smtp-Source: AGHT+IGpwYqZSLvuloDemQpps6HazGQohvDaEOzeL74e9j9PrL6xU465ZXDCufj9C4D2mPl9+TYvfw==
-X-Received: by 2002:a05:6830:418f:b0:743:2cc:d530 with SMTP id 46e09a7af769-74500a45257mr5265337a34.19.1756104960115;
-        Sun, 24 Aug 2025 23:56:00 -0700 (PDT)
+        bh=Fr502dmQ4odPuahV9+jfQPzgPn5kXy7yEDTTv9ShcH0=;
+        b=b5wlvvDueSVo249nth+gRjYKEqtSXp+9bheC8WHLslON+Uy/mfk3DKy4BRkrVM5E24
+         qPMqQ16WkUpymtfD+Q0/CDfzKoZURKRfv4IceEQih6KfBEEnHgV0SvAVjUtPO6yPpmfo
+         Zo3r0MsfpqhpFYCKM+cKVG3aphrt62thMMgz5SvQj5Op1fwBN7KPhsHcKT4EiXJJDML+
+         RvFoCbYZtv3Rgs8sKNDwQ9Kh5XLnOK0nkjJAvOJeuylmFUVi2GtZBi2lgXlLWYpk6E/n
+         8h537hLfKcvt9CGxiCymBns4Oeyz7yOlWclIbxJNgXsvE/WRSXxUlC2p6O9rcJXlSb9F
+         NgaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW+53g5XGEBkwUPeoy7vejt3HdIkyEBZm7WMZsKXvQmXMZKaFVgBWm0bRkjaARdbdivgeABh/U=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxJsG3hlgdePAiI/NmAVukMqGCF1DqMyHKqQ3M5hl6vd+qL809a
+	aOFxCHgFlqGtMPGVu4ebBuptTaGvFy/c7hZahKIpqXJX1faz7sz8nu+J
+X-Gm-Gg: ASbGncvdx7ZlNyvKrNKjGhPcnasXrBn+fu9HCjoxaz9yFsiD8C+llRQLLKgmC9OC7Ph
+	9j0QlsoU5QRKTWoVP2B1btqIYYPoQukDmA4p8vDb+S4wp14U5Y+ZLwIT/qR2ZJwL9jdw4QtDS3Z
+	X6nfS5PQGPo7YZvdge0YWc/voTp/K5CZ3+NA+OKMdFsFH1VbfOoR+mVdvX8yA27ikxi7ekVuiHq
+	RzeyV/oISAC9KupqK9P4VB3IPrK3zLlavK9iZ0HqgdEPCw0JTHjcBgYB6XLcI/zFGNJ5dinGzyE
+	lvgIRWM/lcfM6e4pVn7qi+cKNUmbe0A/Thvr4UEjMfRlRvLoIuBTfuJUBXtLF2EoYJef3FPmYKV
+	+77XpAQ/tbnw2lzuC0Pp0OYlAt+0Ra5C4
+X-Google-Smtp-Source: AGHT+IFR7r2iERKhQBivRTMEUEiZRAfQkh3FKggj/0CGOOtJuAdCOPNqJjADbkLjgPMG1RSVyRhGKQ==
+X-Received: by 2002:a05:6871:3a1e:b0:30b:6e6e:3477 with SMTP id 586e51a60fabf-314dcd2dc5cmr4797064fac.32.1756104990380;
+        Sun, 24 Aug 2025 23:56:30 -0700 (PDT)
 Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-61dc790aa7bsm894731eaf.26.2025.08.24.23.55.57
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-314f7a21bdfsm1630277fac.8.2025.08.24.23.56.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 24 Aug 2025 23:55:58 -0700 (PDT)
+        Sun, 24 Aug 2025 23:56:29 -0700 (PDT)
 From: Chen Wang <unicornxw@gmail.com>
 To: u.kleine-koenig@baylibre.com,
 	aou@eecs.berkeley.edu,
@@ -75,9 +75,9 @@ To: u.kleine-koenig@baylibre.com,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev
-Subject: [PATCH 2/4] irqchip/sg2042-msi: Set irq type according to DT configuration
-Date: Mon, 25 Aug 2025 14:55:50 +0800
-Message-Id: <cf73d95140b03b586f44d2495376d367e32857ed.1756103516.git.unicorn_wang@outlook.com>
+Subject: [PATCH 3/4] riscv: sophgo: dts: sg2042: change msi irq type to IRQ_TYPE_EDGE_RISING
+Date: Mon, 25 Aug 2025 14:56:22 +0800
+Message-Id: <6cfe6dd32d875fc6811d74d15afe8719d2368308.1756103516.git.unicorn_wang@outlook.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1756103516.git.unicorn_wang@outlook.com>
 References: <cover.1756103516.git.unicorn_wang@outlook.com>
@@ -91,60 +91,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Wang <unicorn_wang@outlook.com>
 
-The original MSI interrupt type was hard-coded, which was not a good idea.
-Now it is changed to read the device tree configuration and then set the
-interrupt type.
+The latest MSI driver will read the DTS configuration to set the IRQ type,
+so correct the IRQ type in the DTS to the correct value.
+
+This field in the DTS was not used before.
 
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- drivers/irqchip/irq-sg2042-msi.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-sg2042-msi.c b/drivers/irqchip/irq-sg2042-msi.c
-index 5249afd93b4a..be47c038386c 100644
---- a/drivers/irqchip/irq-sg2042-msi.c
-+++ b/drivers/irqchip/irq-sg2042-msi.c
-@@ -30,6 +30,7 @@ struct sg204x_msi_chip_info {
-  * @doorbell_addr:	see TRM, 10.1.32, GP_INTR0_SET
-  * @irq_first:		First vectors number that MSIs starts
-  * @num_irqs:		Number of vectors for MSIs
-+ * @irq_type:		IRQ type for MSIs
-  * @msi_map:		mapping for allocated MSI vectors.
-  * @msi_map_lock:	Lock for msi_map
-  * @chip_info:		chip specific infomations
-@@ -41,6 +42,7 @@ struct sg204x_msi_chipdata {
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index b3e4d3c18fdc..6430c6e25c00 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -190,7 +190,7 @@ msi: msi-controller@7030010304 {
+ 			reg-names = "clr", "doorbell";
+ 			msi-controller;
+ 			#msi-cells = <0>;
+-			msi-ranges = <&intc 64 IRQ_TYPE_LEVEL_HIGH 32>;
++			msi-ranges = <&intc 64 IRQ_TYPE_EDGE_RISING 32>;
+ 		};
  
- 	u32					irq_first;
- 	u32					num_irqs;
-+	unsigned int				irq_type;
- 
- 	unsigned long				*msi_map;
- 	struct mutex				msi_map_lock;
-@@ -137,14 +139,14 @@ static int sg204x_msi_parent_domain_alloc(struct irq_domain *domain, unsigned in
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 2;
- 	fwspec.param[0] = data->irq_first + hwirq;
--	fwspec.param[1] = IRQ_TYPE_EDGE_RISING;
-+	fwspec.param[1] = data->irq_type;
- 
- 	ret = irq_domain_alloc_irqs_parent(domain, virq, 1, &fwspec);
- 	if (ret)
- 		return ret;
- 
- 	d = irq_domain_get_irq_data(domain->parent, virq);
--	return d->chip->irq_set_type(d, IRQ_TYPE_EDGE_RISING);
-+	return d->chip->irq_set_type(d, data->irq_type);
- }
- 
- static int sg204x_msi_middle_domain_alloc(struct irq_domain *domain, unsigned int virq,
-@@ -290,6 +292,7 @@ static int sg2042_msi_probe(struct platform_device *pdev)
- 	}
- 
- 	data->irq_first = (u32)args.args[0];
-+	data->irq_type = (unsigned int)args.args[1];
- 	data->num_irqs = (u32)args.args[2];
- 
- 	mutex_init(&data->msi_map_lock);
+ 		rpgate: clock-controller@7030010368 {
 -- 
 2.34.1
 
