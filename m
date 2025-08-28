@@ -1,189 +1,158 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 024CB3568F7;
-	Wed, 27 Aug 2025 13:50:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D4A7260A
+	for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 02:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756302631; cv=none; b=bc9h+gGGyZ/ohefJtj25jaExmeN0UpW35lBCbimGbcRsGY9EQSZr0b5n+WQOlj4wihDQzWTxt7aAZYmNnrWYQFLJBgETU/Jspn+hASSp+pugOR9tNjcwBpYIbKNlj17472tC1uN5qd2WSWI1dXptI9fLM5dVhAKq2yXj8ByGPBY=
+	t=1756347372; cv=none; b=rY6mb4W99ofLyCs3mTnixB5xDZ4KQu4HV1TJ4/m9y/sP2CfuaAPGsMMEND7f+9/ui4cazlqpOE8aJ+VpCvtU2XClT3l22SJ25sp2tQ+xqmZGwHrLswSD9ELUBy17mtRlpSZeMQeCULkgOjZZilH53KaALJwZ9bLkrG+WhfuGvtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756302631; c=relaxed/simple;
-	bh=sjDy2yPaMyRUWRHA7zNCNkrYIPM6l4g0nDQeVISxPDs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VvLjF50lMH9BSuMKY/T0ifYiu9BvZ9cOl5k7gZaEOMdlVu7hNVjMY+LLOvtvLKbsV9m/MjIAwQ7d9WPFuzzMuXPGB5Z73mcC/HTaQFguerZhp7GLSzOEsM5jbgU9U0O7aaj1x4c+U7gEezTN1/gqIlOd69QCOx2KAlSMkcOe0IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com; spf=none smtp.mailfrom=foss.arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=foss.arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D431D2720;
-	Wed, 27 Aug 2025 06:50:20 -0700 (PDT)
-Received: from bogus (unknown [10.57.57.52])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A11B23F694;
-	Wed, 27 Aug 2025 06:50:11 -0700 (PDT)
-Date: Wed, 27 Aug 2025 14:49:48 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Brian Masney <bmasney@redhat.com>
-Cc: Peng Fan <peng.fan@oss.nxp.com>, Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Alex Helms <alexander.helms.jy@renesas.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
-	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 112/114] clk: scmi: remove round_rate() in favor of
- determine_rate()
-Message-ID: <20250827-abstract-maize-tanuki-d1bdcb@sudeepholla>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <20250811-clk-for-stephen-round-rate-v1-112-b3bf97b038dc@redhat.com>
- <20250827070933.GB18994@nxa18884-linux.ap.freescale.net>
- <aK8EbcEHz3Yzpa1W@x1>
+	s=arc-20240116; t=1756347372; c=relaxed/simple;
+	bh=hQA5+HMhBQRr5xtsFYZe4R2Zx9gyn1TFM720u0MLzb8=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version; b=k+RZNN/RN8267XypVR+ZtnSv0OD9HBIT2c5dHTT90u7CiuG+zQMtAjIcGie3E5L7ui/wyAgW/us+uXkqzVUZ0yxmsQJPJl5eP99p1ug4WswC6a6d3vqzxNGzD5qWP+RQKY7CjHGdJsemmHFIlz65XdA+bGwps7Ayhs1BxSrHhUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bj7IlXt5; arc=none smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bj7IlXt5"
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-74542b1b2bcso499412a34.3
+        for <sophgo@lists.linux.dev>; Wed, 27 Aug 2025 19:16:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756347369; x=1756952169; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KyDnSuhDjQ8VOJ+mJFnTBacGVMg4yY+Nne4s1ctZDzo=;
+        b=bj7IlXt5G7siq4XoH5kT9dcE4vETsJIeC2rKyJfs3lx9eyPDDw+sOBkwAPyqfOxmXh
+         W+dATAEJTXDGN08msMhYQQ2dZyshHAmrspFsTzuSYZexZ7SY6hzIx9G2Aig+bVd8VbhR
+         fryD5OHuI1ldmNsZBaNOWvRTEWyR4uAPXoQ0WXBMm757EhdEk8no6oNUmhO5ZQ7Txhv7
+         gghmNZmtmt+wa2eMJIOEyi9GoVGtstjD25rG/8sikJ+iJpCwTVnUlI355rZLN2QL1Bso
+         HExktO+ygdXxx2KLjws565RGEq9P5RmLLWOQRezmI+ManiJMOHdV8LLscyy3d6jb3Ryb
+         DZdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756347369; x=1756952169;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KyDnSuhDjQ8VOJ+mJFnTBacGVMg4yY+Nne4s1ctZDzo=;
+        b=sJOl1MfYLHCK6dHg2zbmjFAJ3zp3MZkpmAgHo8w0EwHPNZrCoKNmZAivQPKQqA3ZyW
+         yooQulE1pXbJwyI95jVoq08nxsaWaAOtlsUKLX2+RdzT9ZthWNay+XILBbVZoiRzPn+D
+         ElvpvLCzVaRnZuK/JpGPmawj5Maxhhie784TXfGtEgG2jzhc7+BamS1d2VvnKNggsDLt
+         LDEVZceVNE3AAlmrQONcTDLsCpBKSUYjC9eQGYGUt6VZsD1VpznKIMe7ue6DGJGzLNiJ
+         Jw/scI4UCHuiO3D8afZwNMjiotAa6bKhhehF4HKuIVwnqF8+A9JXoRjBXleNTI05yLX8
+         2HQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV9aBGMZf6NKMdXxWM59+RhuZJutCp9w/uLwwwARsU12RH/Nq8sAOQsC85d41AkDyYdb5DNTaY=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwH+1uzxD9w0ZKf47/C7KCMylYTKLPvDjbPD2BcodbFeIYhfI7T
+	3ksEOEy017qnA5lcrbkVxyGpO7FrVx//+cvSPqtwLFTThVVyU3iMi8Aa
+X-Gm-Gg: ASbGncv1palINx/M4HY2tcW1O7aYHQauw1sYqlev8WxHcm4PqO0BGryDNOYUhsRrig0
+	Qyd0S7sBsLryhTGPRoVR8I0Zmgdavex36zX/hVKz8aBJ8e7Ad/pMWBfAYYckSDcyhi0yR48UIWx
+	T5h9UM2+HW5Gnv0d6ldbdssiALwjm6PR9CUFpdWepzg3pfG6MjEt0qAX6Of2U8TsogEiAIpARcJ
+	rvLMUcDxo4gUKCIkC2lsTxLwR857o4Lw7yAXA948LB9f6Wc1LTfXT3MdCphmsXoVO+4Zbg7SWYW
+	fXL3DZxVM4e6IwyAEQUA24W/IgRmBZc/Cn5wRynJMFSXIz5+KqUXv/eT87yB4IlQQXIjgvczb7Z
+	HnZgaTcrRdLjizWG3vETkjD6qyn/Tl7AxRWlL6CFXvR4=
+X-Google-Smtp-Source: AGHT+IGTwvNOSas/djEs+uapV36wAJNWQmeyipG2QXZwMOf63seTufF1qhsaw+7FW+qp86Wa2UCa6g==
+X-Received: by 2002:a05:6830:6b0f:b0:745:2adc:af4d with SMTP id 46e09a7af769-7452adcb1admr5051880a34.29.1756347369587;
+        Wed, 27 Aug 2025 19:16:09 -0700 (PDT)
+Received: from localhost.localdomain ([122.8.183.87])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7450e474c97sm3505230a34.23.2025.08.27.19.16.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 27 Aug 2025 19:16:08 -0700 (PDT)
+From: Chen Wang <unicornxw@gmail.com>
+To: kwilczynski@kernel.org,
+	u.kleine-koenig@baylibre.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	arnd@arndb.de,
+	bwawrzyn@cisco.com,
+	bhelgaas@google.com,
+	unicorn_wang@outlook.com,
+	conor+dt@kernel.org,
+	18255117159@163.com,
+	inochiama@gmail.com,
+	kishon@kernel.org,
+	krzk+dt@kernel.org,
+	lpieralisi@kernel.org,
+	mani@kernel.org,
+	palmer@dabbelt.com,
+	paul.walmsley@sifive.com,
+	robh@kernel.org,
+	s-vadapalli@ti.com,
+	tglx@linutronix.de,
+	thomas.richard@bootlin.com,
+	sycamoremoon376@gmail.com,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev,
+	rabenda.cn@gmail.com,
+	chao.wei@sophgo.com,
+	xiaoguang.xing@sophgo.com,
+	fengchun.li@sophgo.com
+Subject: [PATCH 0/5] Add PCIe support to Sophgo SG2042 SoC
+Date: Thu, 28 Aug 2025 10:15:58 +0800
+Message-Id: <cover.1756344464.git.unicorn_wang@outlook.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aK8EbcEHz3Yzpa1W@x1>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 27, 2025 at 09:13:17AM -0400, Brian Masney wrote:
-> On Wed, Aug 27, 2025 at 03:09:33PM +0800, Peng Fan wrote:
-> > Hi Brian, Sudeep, Cristian
-> > 
-> > On Mon, Aug 11, 2025 at 11:19:44AM -0400, Brian Masney via B4 Relay wrote:
-> > >From: Brian Masney <bmasney@redhat.com>
-> > >
-> > >This driver implements both the determine_rate() and round_rate() clk
-> > >ops, and the round_rate() clk ops is deprecated. When both are defined,
-> > >clk_core_determine_round_nolock() from the clk core will only use the
-> > >determine_rate() clk ops, so let's remove the round_rate() clk ops since
-> > >it's unused.
-> > >
-> > >Signed-off-by: Brian Masney <bmasney@redhat.com>
-> > >---
-> > > drivers/clk/clk-scmi.c | 30 ------------------------------
-> > > 1 file changed, 30 deletions(-)
-> > >
-> > >diff --git a/drivers/clk/clk-scmi.c b/drivers/clk/clk-scmi.c
-> > >index d2408403283fc72f0cf902e65f4c08bcbc7b4b0b..6c6ddb92e7cf6a0cfac2c7e19c0f15f777bb8c51 100644
-> > >--- a/drivers/clk/clk-scmi.c
-> > >+++ b/drivers/clk/clk-scmi.c
-> > >@@ -54,35 +54,6 @@ static unsigned long scmi_clk_recalc_rate(struct clk_hw *hw,
-> > > 	return rate;
-> > > }
-> > > 
-> > >-static long scmi_clk_round_rate(struct clk_hw *hw, unsigned long rate,
-> > >-				unsigned long *parent_rate)
-> > >-{
-> > 
-> > I see the point of round_rate is not used if determine_rate is there.
-> > But reading the code of round_rate, It might be better to rename
-> > scmi_clk_round_rate to scmi_clk_determine_rate.
-> > 
-> > Anyway, need Sudeep and Cristian to comment.
-> 
-> In this case, yes the round_rate implementation is filled out, whereas
-> the determine_rate lets the firmware handle it, and
-> scmi_clk_recalc_rate() will later populate the rate the clock is running
-> at.
-> 
-> I can convert round_rate over to determine_rate in this case, however it
-> would be a change to what's there now, and risks a regression. Here's
-> the relevant code from drivers/clk/clk.c where the determine_rate and
-> round_rate ops are called:
+From: Chen Wang <unicorn_wang@outlook.com>
 
-I am inclined towards this. Determine rate was added recently when the
-clock parent support was added IIUC, so I don't think it should regress
-anything.
+Sophgo's SG2042 SoC uses Cadence PCIe core to implement RC mode.
 
-> 
->     static int clk_core_determine_round_nolock(struct clk_core *core,
->                                                struct clk_rate_request *req)
->     {
->     	...
->             if (clk_core_rate_is_protected(core)) {
->                     req->rate = core->rate;
->             } else if (core->ops->determine_rate) {
->                     return core->ops->determine_rate(core->hw, req);
->             } else if (core->ops->round_rate) {
->                     rate = core->ops->round_rate(core->hw, req->rate,
->                                                  &req->best_parent_rate);
->     	...
-> 
-> If Sudeep / Cristian want the round rate converted to determine rate in
-> this driver, then I can do that in a v2.
-> 
+This is a completely rewritten PCIe driver for SG2042. It inherits
+some previously submitted patch codes (not merged into the upstream
+mainline), but the biggest difference is that the support for
+compatibility with old 32-bit PCIe devices has been removed in this
+new version. This is because after discussing with community users,
+we felt that there was not much demand for support for old devices,
+so we made a new design based on the simplified design and practical
+needs. If someone really needs to play with old devices, we can provide
+them with some necessary hack patches in the downstream repository.
 
-Yes please. Also please post it independent if it doesn't have to be in
-the series. To many in cc and lots of patches to respin all.
+Since the new design is quite different from the old code, I will
+release it as a new patch series. The old patch series can be found in
+here [old-series].
 
+Note, regarding [2/5] of this patchset, this fix is introduced because
+the pcie->ops pointer is not filled in SG2042 PCIe driver. This is not
+a must-have parameter, if we use it w/o checking will cause a null
+pointer access error during runtime.
+
+Link: https://lore.kernel.org/linux-riscv/cover.1736923025.git.unicorn_wang@outlook.com/ [old-series]
+
+This patchset is based on v6.17-rc1.
+
+Thanks,
+Chen
+
+---
+
+Chen Wang (5):
+  dt-bindings: pci: Add Sophgo SG2042 PCIe host
+  PCI: cadence: Fix NULL pointer error for ops
+  PCI: sg2042: Add Sophgo SG2042 PCIe driver
+  riscv: sophgo: dts: add pcie controllers for SG2042
+  riscv: sophgo: dts: enable pcie for PioneerBox
+
+ .../bindings/pci/sophgo,sg2042-pcie-host.yaml |  66 +++++++++
+ .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  |  12 ++
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi        |  66 +++++++++
+ drivers/pci/controller/cadence/Kconfig        |  12 ++
+ drivers/pci/controller/cadence/Makefile       |   1 +
+ .../controller/cadence/pcie-cadence-host.c    |   2 +-
+ drivers/pci/controller/cadence/pcie-cadence.c |   4 +-
+ drivers/pci/controller/cadence/pcie-cadence.h |   6 +-
+ drivers/pci/controller/cadence/pcie-sg2042.c  | 134 ++++++++++++++++++
+ 9 files changed, 297 insertions(+), 6 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
+ create mode 100644 drivers/pci/controller/cadence/pcie-sg2042.c
+
+
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
 -- 
-Regards,
-Sudeep
+2.34.1
+
