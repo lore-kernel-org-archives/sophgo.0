@@ -1,63 +1,63 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F723A1DB
-	for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 02:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304931DF268
+	for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 02:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756347426; cv=none; b=WbHwgborlQsCZSx6IcyiXeIihER5Hlv/xgIr3BEJMAYstTY3anvtGkPo5x4sU6s8X+oC5Qv2HHdj1b449IcgRN9olDBvgZW1DZJpGYAwKxVSvEO8jrbqgpXWB4zQf7ZEJtywFIrBoxsdrwup862j9fIdqp/4tHPtscJRU4s4WrY=
+	t=1756347447; cv=none; b=Qa8vf/2wZjpZ0rzuy7o0n0hSqKAiJBKUhsibeIES1jiutQmMpnHdVqyR6CCua0NkznehjC84FwIBsMVu9W8vGGGjaiMmS7OZOqBoBpArKg8Qaauac1vzXw5vYNXo5kPEYo4UoeE133D+eu4RJV+9R8Cm5bs8SyIOhh7fFhSf9AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756347426; c=relaxed/simple;
-	bh=Vb4oqaAF4AAxL3ENJorO5f5xQALMvDpa1QKstivrv7o=;
+	s=arc-20240116; t=1756347447; c=relaxed/simple;
+	bh=5f2mmt9u33RfwW27TpFBKhySW3NJY0la1B1vEYqwVz8=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=DmOt4GzfeVcrPVKr8nOJMVSrU9AYj9eFVUk/iMn3Io15grGULyJg0hPW2E6yFi0NJnpfQoukJPZWw4uel5QesRy6zo6fhBZiAu9jWcAhnNG2QEQava0QXDlJcER/2G39i+QNUFpHfkLd2fQCxHCU49T4yQS8GnrJ5Gde2/JvEM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XWvywE+P; arc=none smtp.client-ip=209.85.210.51
+	 MIME-Version; b=QNXZom3I8f3FIcGeack0GMJbkbf9/wf8oG/19VBisy2blz8Ad2/48aSHdsJEcu1vcSxetaRbf0Anxw5ShI4rHBAmXY2iyK78buuVsgVl6z9T67eX/YKU/YQcbzRZ1ccfu/dBim72xMZx7o0pGPkgme5/upHcGB+inh3v+c+6xec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IuXxwAUa; arc=none smtp.client-ip=209.85.210.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XWvywE+P"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7452b1964f3so365670a34.1
-        for <sophgo@lists.linux.dev>; Wed, 27 Aug 2025 19:17:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IuXxwAUa"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-74525666d65so356038a34.2
+        for <sophgo@lists.linux.dev>; Wed, 27 Aug 2025 19:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756347424; x=1756952224; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1756347445; x=1756952245; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wGcfuQl3yrFvMTXn2qxpt2B+zvl/KTrt/bi1+ryxB9w=;
-        b=XWvywE+P7tmXZB0gOEml3PSdXmnYHwoeIjrPoa7JOXBVBBfzbYTieny/epBiakEO9/
-         8iLrjTGA8RpU+Sf9uv7+TMUyCOX1HMaMPAjz1TlNCVJozlgJCwYFGEgHrEFAPdqfcXAL
-         jrH9V3XCn2OPWfmlH6qIOkx4q+kMnBFmqDYLn/iDRPcXQOryPT6wnPdZkcg7b+HNKQE0
-         5Fui8vYdpzno4tom6txbcmxO4cxjXy5bGWirC17wfg9PL4AZLHsa1KCoP7z+lKyeNdvo
-         tYEPz7/WYOFjf3jfsfGFg4/Jo4DxTBD5eTZlfPT6FeRThbeHnBt2wQUPz5Vgd5pSD/dw
-         FuJg==
+        bh=4cMD9oVw7wzB9jTZgK3seO4aPiDIfpeTKPhUfVzD+DA=;
+        b=IuXxwAUa2MohyXYQ0Hl6FXJrv95DT/rvl4dDl4jz6K3gQcRF+hOpLLgRWeMpZ3OIdS
+         7Zqpds4i7QZJPn5A9z16tOcSa3U8AQvj9E/mOja/uP0So009jKGYK1ZavhhVm14v6LwD
+         ka13xvbuJrijLvtq54vqJhz3kpvIahNCFpHTcTRwY+BR5RN0P9Hh9dI9wQSrMrD6uwbq
+         +cu66Y6ybUqTpG61yR5K1mbG/w/amnu84yIRoACU3K6FBQmO+GD97URjNb1VE5tieW4B
+         UueaITEeOzLmtyLovmlzajdhCTsTW77cY84weW9PmYyNr8qhha4yNE+xT8nawTuk+WU/
+         +/Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756347424; x=1756952224;
+        d=1e100.net; s=20230601; t=1756347445; x=1756952245;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wGcfuQl3yrFvMTXn2qxpt2B+zvl/KTrt/bi1+ryxB9w=;
-        b=QSETn5SXs3lZKxW+iJpKgqbpLLyh4orWDhW94jPlEfOe6PrPYSz+zgd4mxiSJ7tDh3
-         CgyZmpz1472wzp8W48b79fwPtHUPGD/ubxTWih7b9EJi8yUMlESb9kO8YI+IUTf97XXH
-         J3f/CE78mjX88EdcIdNAlpTACUWxJ/2Pfh1qfY3D+ZwefPJosya9juVnz0QRtTFC8s8k
-         YO0QaRYvKhFsJ8se3LOFvLO2t5JE8bPQtzNa+qITUdw+BXWmDbcI+ygE7/xlsPgSoyDz
-         iEWVvDuICLXCTafe6r/I7ZnzR/j393/UHtNjSqAgT3F57cegPySj0WeRYhzpCLBAwMIa
-         QqWA==
-X-Forwarded-Encrypted: i=1; AJvYcCUnsHN5dREuKg8YqxDBP7fvRZw2HFTIkrg+PMyg7CVT19MdNdJRlwjeSTFN9JhSa3sA61Emlcc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwD13aF/d1G4Ss0WrVfZa9XCqZgZheIPBxJG4+f3a3XsQRHPchB
-	N0YMXToGjGKjsrKa0VH+mQ9pirsMED5cO1UoChW84weSOn5HeIXgGU45
-X-Gm-Gg: ASbGnctYUU4J3xKhSda4Cwh51hwmsRRrjMCV1NkR3Dk/nGQep+XdyOOXvfyy4xBrhO9
-	pG0Jd7qAVsPvW9vRRl52beudzOhXXXngU/L0CFxsHgY7X3lf0RaJVUPCIrY+pt5SpqxTEKa8ZAB
-	udU4e/lYtACIjPsOiCSh1D+JlFoHU/wROawbdUvX1VxsfqIcp71mOFZzjMYskzpJfBukW6bKyVv
-	Ec5w0XB/akYZc5plc7Kkn74fC7bpL2KvADpmlBnxTM9GUj3kisO7euLcJiry2G8e8TjwSfBBOsQ
-	ejbr7Vnt5XzMDdoinLNhe+oi4+rzLgLkAaxu1jXJPFH3RItZGc6hHqpglZwJeMiIURZ7oCQTi59
-	Xy8ynSxgxEavDibXNkPWXXhhG7+Y0XUSGulb8R+xNXUg=
-X-Google-Smtp-Source: AGHT+IH2Q5rRfVSJUWNf+uE6eBwAzJ9xOs26TnCu8U9MzwRkPuvLFqxwmj/xUnRfEFrOQCUo3+by3A==
-X-Received: by 2002:a05:6808:4f50:b0:435:774c:c443 with SMTP id 5614622812f47-4378516a635mr10246498b6e.8.1756347423714;
-        Wed, 27 Aug 2025 19:17:03 -0700 (PDT)
+        bh=4cMD9oVw7wzB9jTZgK3seO4aPiDIfpeTKPhUfVzD+DA=;
+        b=B4S48HqMwW2jXCZKq/m3pSmugw2oycjHzymVubL31Nbk0WOMOKd0T+Du14E9EnGMMJ
+         yImPSZMphXNL5dzHhEFlAHZUc0o5uW28v9nykkAogngN93yRdlrGoXyg2P7z+9GGehZt
+         cTTgSYXYW0gZaBfMkvAQennLJ2w3GNxA4pHOHa8mY1UIFbhyEguzq3TFi1P7pmw+TG2Z
+         roB5Z565AHzjLpg1y3hjga1d1PjiLdzkds7zsXUVZgo/93iGq19k3+8NMNnZ79axUSwD
+         e3L+EwcNFUVaTUBqzF8jMbzC8NgysmDnnDSM9MyR3UotPMFYlQDg2A/2DNddmnOCvK53
+         k/Dg==
+X-Forwarded-Encrypted: i=1; AJvYcCVWSpSeAjO6T7uRXwVusBXyWIlRx4I+LppKN6eqipjSrZZlImw+IE8l1ekC31ICgwBo1DZmhX8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzu2UVcB/H+v5mUlYtC1UvQwrlWyxjZ+c6qTNrXF0XbQzAr4NdQ
+	5dgbMA7DbS34muipmdi/Rlje306O8IhtY/J6MivXuHFE2Ibd5GX+eyue
+X-Gm-Gg: ASbGncsSXli6BDmuA/FmBjglZU/8b2DZdS3/pXy590YKgnRQLwUXZrV2zEjXiAOdIQo
+	cjWgYeVQ2CQPL3WBAJQ+qownhjWvm0VMHpdgDfglkYgQSq2/ZAsCUJSkxsCS+Mx8bEYScR/+h/0
+	+XKFwqrObJB9z5BETkf3GmEhrq0gvMnUJd2irGmiF5nWGSDFKq2Ik2AZvW3Mdghlr74FO9WWSVP
+	0CNz6JWVbJ6H3/JJ/FhVxvdM58FbTLqVvU2uw0D2tyswor4AoVxLi9HdQxeAfdXXtdOBFjB9gVc
+	gEAlAq6so4rTWn8Da8/dO9Xa+DaO84iy330Ko0Sfz3AE5AQ+SAVISPye+XPDkPoDLMG9ykCEDp4
+	S8zm1XTwfe+z00YiNAvNr2oHPDd2BFh3vTkXADNnU8P8=
+X-Google-Smtp-Source: AGHT+IFUMTBN0ewK0J12WWwmbqPZ20vlkC0r+3NLs/KDPeS4FrNivKz6PhTVcy1KC85aKvA34B7Fow==
+X-Received: by 2002:a05:6830:6b06:b0:73e:9857:9839 with SMTP id 46e09a7af769-7450048644amr11399123a34.0.1756347445072;
+        Wed, 27 Aug 2025 19:17:25 -0700 (PDT)
 Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-437967dbedasm2276940b6e.13.2025.08.27.19.17.00
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7454eb2816csm63490a34.26.2025.08.27.19.17.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 19:17:02 -0700 (PDT)
+        Wed, 27 Aug 2025 19:17:24 -0700 (PDT)
 From: Chen Wang <unicornxw@gmail.com>
 To: kwilczynski@kernel.org,
 	u.kleine-koenig@baylibre.com,
@@ -90,9 +90,9 @@ To: kwilczynski@kernel.org,
 	chao.wei@sophgo.com,
 	xiaoguang.xing@sophgo.com,
 	fengchun.li@sophgo.com
-Subject: [PATCH 1/5] dt-bindings: pci: Add Sophgo SG2042 PCIe host
-Date: Thu, 28 Aug 2025 10:16:54 +0800
-Message-Id: <c9362bb49e4d48647db85d85c06040de8f38cb83.1756344464.git.unicorn_wang@outlook.com>
+Subject: [PATCH 2/5] PCI: cadence: Fix NULL pointer error for ops
+Date: Thu, 28 Aug 2025 10:17:17 +0800
+Message-Id: <fca633eb6d667a90f875cdf1263fcea2bcc2c969.1756344464.git.unicorn_wang@outlook.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1756344464.git.unicorn_wang@outlook.com>
 References: <cover.1756344464.git.unicorn_wang@outlook.com>
@@ -106,86 +106,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Wang <unicorn_wang@outlook.com>
 
-Add binding for Sophgo SG2042 PCIe host controller.
+ops of struct cdns_pcie may be NULL, direct use
+will result in a null pointer error.
 
+Add checking of pcie->ops before using it.
+
+Fixes: 40d957e6f9eb ("PCI: cadence: Add support to start link and verify link status")
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- .../bindings/pci/sophgo,sg2042-pcie-host.yaml | 66 +++++++++++++++++++
- 1 file changed, 66 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
+ drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
+ drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
+ drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml b/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
-new file mode 100644
-index 000000000000..2cca3d113d11
---- /dev/null
-+++ b/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
-@@ -0,0 +1,66 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/pci/sophgo,sg2042-pcie-host.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Sophgo SG2042 PCIe Host (Cadence PCIe Wrapper)
-+
-+description:
-+  Sophgo SG2042 PCIe host controller is based on the Cadence PCIe core.
-+
-+maintainers:
-+  - Chen Wang <unicorn_wang@outlook.com>
-+
-+properties:
-+  compatible:
-+    const: sophgo,sg2042-pcie-host
-+
-+  reg:
-+    maxItems: 2
-+
-+  reg-names:
-+    items:
-+      - const: reg
-+      - const: cfg
-+
-+  vendor-id:
-+    const: 0x1f1c
-+
-+  device-id:
-+    const: 0x2042
-+
-+  msi-parent: true
-+
-+allOf:
-+  - $ref: cdns-pcie-host.yaml#
-+
-+required:
-+  - compatible
-+  - reg
-+  - reg-names
-+  - vendor-id
-+  - device-id
-+
-+unevaluatedProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pcie@62000000 {
-+      compatible = "sophgo,sg2042-pcie-host";
-+      device_type = "pci";
-+      reg = <0x62000000  0x00800000>,
-+            <0x48000000  0x00001000>;
-+      reg-names = "reg", "cfg";
-+      #address-cells = <3>;
-+      #size-cells = <2>;
-+      ranges = <0x81000000 0 0x00000000 0xde000000 0 0x00010000>,
-+               <0x82000000 0 0xd0400000 0xd0400000 0 0x0d000000>;
-+      bus-range = <0x00 0xff>;
-+      vendor-id = <0x1f1c>;
-+      device-id = <0x2042>;
-+      cdns,no-bar-match-nbits = <48>;
-+      msi-parent = <&msi>;
-+    };
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index 59a4631de79f..fffd63d6665e 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -531,7 +531,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
+ 
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
+index 70a19573440e..61806bbd8aa3 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.c
++++ b/drivers/pci/controller/cadence/pcie-cadence.c
+@@ -92,7 +92,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
+@@ -123,7 +123,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
+ 	}
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 1d81c4bf6c6d..2f07ba661bda 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -468,7 +468,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
+ 
+ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->start_link)
++	if (pcie->ops && pcie->ops->start_link)
+ 		return pcie->ops->start_link(pcie);
+ 
+ 	return 0;
+@@ -476,13 +476,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ 
+ static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->stop_link)
++	if (pcie->ops && pcie->ops->stop_link)
+ 		pcie->ops->stop_link(pcie);
+ }
+ 
+ static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->link_up)
++	if (pcie->ops && pcie->ops->link_up)
+ 		return pcie->ops->link_up(pcie);
+ 
+ 	return true;
 -- 
 2.34.1
 
