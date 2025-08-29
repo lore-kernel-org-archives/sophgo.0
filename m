@@ -1,185 +1,278 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011033.outbound.protection.outlook.com [52.103.67.33])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E30450F2
-	for <sophgo@lists.linux.dev>; Fri, 29 Aug 2025 00:17:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.33
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756426640; cv=fail; b=R89K1N+G96pm2wfnzq6nfJAjNpVOddMYjs3B2hREO/15A4rGsIagW/rmpyrmq0eDGpCiy+k4LJ6+ucBTc+w/QYgWBVfu32yMa5TZ2MhR1eskGkW5yG3Cxmxrnrhd812nAyVf7K4Cuk0VgYOtqlv2kJ0ic5dTX1uOM7KGFQ9S7c0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756426640; c=relaxed/simple;
-	bh=7XmqyAnVrlq/ysT6e1BMmcbOhpKMkk/mHvHgoFS4p9o=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=tgU8ce02jEPXrsb+Nz8n+rA4vsPMh1by4nSmdt8X7MrH8kMWkpPV9/K8QVw6jBlN0OEvujblfeof9eGCYfoEfOXy23GtCOtpVbV5nkeU+2LMbCb6O0qRGGHTrNFCEsE+cY29+kDGHQ/KLmQL2tn+gU8C9qOb0IUUkHRaH7bH8cA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=s4+bfDyq; arc=fail smtp.client-ip=52.103.67.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EE0186284
+	for <sophgo@lists.linux.dev>; Fri, 29 Aug 2025 00:38:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756427925; cv=none; b=sCDDXv+Jv2kxwCeSVYI6EP8OJGXMxfA884NkCtS2LdLrO/noy0RUbPiGjU73nv9nFTG7qd8TaavGbl8xQU1RLEt5sihq8pjIGV2PU6GJs1+0IaHpJ07TP1nlGB0FTQcpR3hJDEB1AiOklwoXs6OWtj4mv8DZr7+dmUVZ7hjk9Gs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756427925; c=relaxed/simple;
+	bh=3ht1wGseKshyK0elknVvnPuwk+xst31YCIMTYyJbsnI=;
+	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
+	 To:Cc:Content-Type; b=Sah6uB/db47Inm8nH3KjbJ7cv1OWcGTJT/LJr7Wxf7uG3qwbpjeOV4o4325tFMMTzqd4WIzetEauCwgwW65afL6p85tsuQrlPqKAQcFoKK85s+FdNySKsAbtaitYOor98mIrt8jjIkB976q4HjhB/B/sJ66xdd6w4CqZ4n3BsBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=PqmkND7M; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="s4+bfDyq"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bAO1YcFPwkbNF8rAm+OiHSwDx1Rldvqk4XDdsS6B/SofbOaEbkrKkzZV+y39iiBaYBSsF1dkMZ9JqOEvwk+DfIsx8qNFmBCQsoonDRSKSaetqZswsCNEJKUg3W1V7FP5wt7iAn1/qaEoMAsKMsc/qfpryS1MWuUNj61eCEbqzIq5YCFJMKaYD9rpH6FxUXBx7E2mfV43vAPXgGkdzwEArauEktXNvJMvEPco3QSdKPWdQ1rjJlDs8zqUFjPi6O4+MQPqnHAV158y2noGu3o/78MQjEyOBNRY7HRSTNTA1S7IH5SWr2aKrFKCXxpleXvemQPBxHDsH5z5AHW6S60W6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UO9DBWuy2BxOtGpeSJBd6MctchCvSIF1YVEiraMpRYE=;
- b=m6tiwS5Hvo5tgnZbRmXWYFRwLZqPrLhB4mDysa5JC/bU3EPeM9QDkICnNz5GZZpYrA2KQ7txV8Y0zNTuDBkivY+hwlNTIGfDVVXrDh3fknp8K1aWZ97mcyRBBRL02I0mHeF1oAMP1mDWydgG78OR73nEmC0OW81vOd4HCe6fC4rArdnFNC6Bd2DjSdX1zk1GeKoSrba5IpVmAp+rFMd0hNg/vNlol9rS5R70e2qHeS9AUZTn2/e01U3TaMUAeyz6NmT/ws4sO0CWQ3PdrHoEruUziANLAhK/GI9/dueYwGmRSKYCwTDaoTX8IDaK+D95Mkln88jTuY4nShvuMYw04A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UO9DBWuy2BxOtGpeSJBd6MctchCvSIF1YVEiraMpRYE=;
- b=s4+bfDyq4/DOid+btG6zn/3tRSko5lE+DAPPXvpUDjQQKQBL53jv7nmuCdak5toO5joF39A3NkOX2AOAN9YqG0F/mT2VIm9jgFntlZt45AuATOwnwwuWxYw3sqQ1UwZr87Vrm7SlhC2LclTemHED1HCeubd0pWjC8fDt4FU/sC7uwX9rCddoxhY4yQDVaJgH71FpOVSr7WZMyl7WxG7+M7cruvwA4eTWHVBVadUftq7YM+HvMcO+4LTi28+uBFxLGsObG0Ofq1dgLhRvKxo1al4PMU2VG7Nj62IQ/EGSidOrGL5EWBuZxgmz4qIVXmvyOy2ESgjvoo+4JDYrLchcBg==
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16) by PNZPR01MB4270.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:1a::8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.15; Fri, 29 Aug
- 2025 00:17:06 +0000
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9052.019; Fri, 29 Aug 2025
- 00:17:06 +0000
-Message-ID:
- <MAUPR01MB11072761AFC08D7F9A1EAEC08FE3AA@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 29 Aug 2025 08:16:59 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] PCI: cadence: Fix NULL pointer error for ops
-To: Bjorn Helgaas <helgaas@kernel.org>, Chen Wang <unicornxw@gmail.com>
-Cc: kwilczynski@kernel.org, u.kleine-koenig@baylibre.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, arnd@arndb.de, bwawrzyn@cisco.com,
- bhelgaas@google.com, conor+dt@kernel.org, 18255117159@163.com,
- inochiama@gmail.com, kishon@kernel.org, krzk+dt@kernel.org,
- lpieralisi@kernel.org, mani@kernel.org, palmer@dabbelt.com,
- paul.walmsley@sifive.com, robh@kernel.org, s-vadapalli@ti.com,
- tglx@linutronix.de, thomas.richard@bootlin.com, sycamoremoon376@gmail.com,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org,
- sophgo@lists.linux.dev, rabenda.cn@gmail.com, chao.wei@sophgo.com,
- xiaoguang.xing@sophgo.com, fengchun.li@sophgo.com
-References: <20250828214302.GA968773@bhelgaas>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20250828214302.GA968773@bhelgaas>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0012.apcprd02.prod.outlook.com
- (2603:1096:4:194::7) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16)
-X-Microsoft-Original-Message-ID:
- <31a4294e-86e3-45e1-9745-1ab0ad0b0933@outlook.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="PqmkND7M"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1756427921;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=c3u7x/K6tl9OG9wiIGh8KHdwHeRRIahMnviBLAU+NwA=;
+	b=PqmkND7M44usJYlRY1zs1BxeQQGR9HXa2q+OcRYpd1O8e4HJM8sQthmiFLcB0koT2SJJkc
+	pLStHnjAHVgjJffvUs6hP44nczjdhZcDIezvuIc85CpmdRYHSFvhlIw0Y+pdsbEq7Etkl8
+	ZQnIIjt1zSAAnCk1dkzMLsPAdQ6MwYU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-330-In_kn4KaPLqEatW322fx4w-1; Thu, 28 Aug 2025 20:38:40 -0400
+X-MC-Unique: In_kn4KaPLqEatW322fx4w-1
+X-Mimecast-MFC-AGG-ID: In_kn4KaPLqEatW322fx4w_1756427919
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70f9ef271a4so830976d6.0
+        for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 17:38:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756427919; x=1757032719;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c3u7x/K6tl9OG9wiIGh8KHdwHeRRIahMnviBLAU+NwA=;
+        b=OPrzoitOV1kqbsDCTEbA/2nGpBJKTi69jgCE30Ak1rdX8pNMVGSmO1CiEtcOMaf422
+         NAL81hUJnzKRja/pI/mVJ+4OCbVVrybL3lNd2VeUsTbr55trzqNaYhTFn/D6ain/HZ5f
+         UdTvEm2WMOTP8TiKLLT56hujZC2w4oLadVY/Sqiccvw3R80a4bAe3+Fp00OJ4K3nNke/
+         nb0VVWFdh1N8zXgfIOm9wzIPeScavQrPyL1fEt9a7rmW194rUJmF2I4mAhFg+hcGjdKI
+         Zjdjf+IuLppqR3CHaIWo+ZlSUTBkiAoFTK5I/6z6Vn+562u7N7oCN+9vVcnUeKeAvE/E
+         goUg==
+X-Forwarded-Encrypted: i=1; AJvYcCUu09PPQiHBWlkNv25Z18V7NkwXHjE4VGHqkmGPAmJfCSpXfFdR/7zZJJ/2bxfdOp7jRzFYmC0=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx9N0U+PMCVAznRhm4F6GWEkQv/t32eD7FBdlM0oI+ycroCwafq
+	9//IaA3tPQh97z4Qpz5Ozvem4OZcQU2XS6iw1UtKgLDgunh5dNOqxJ76MQZ2PMn8N221vjujoRZ
+	XmWSkXwMWSY6lLBa7Gwuf3y9ltV3wQIdR3nF6IDdq/N31IjxRUYmWp5c+2A==
+X-Gm-Gg: ASbGncuMxjVkGboBcVeEweYUEtoBFgcTGfeqDI2pKi8JC6N0cVi726sL+bkJM/jmmzZ
+	dhxEwp+6cXAQW9WzYmw9/nsQxGrq+5yPRNG9MKz3OXicvqCE4zgYsG8HsgyOoyMQGmUzT9snayI
+	KKLkrUYrica68WfTgAcN5HKT5Zqoalkl04EMJVcKa3bEkLR6pAkl4KLCz8wLgrw6LQ3EEJl+tG5
+	zgUudJvKeNuL441zh/JFE0S9QxlYe5MX6gb9945QQxFzklExh0uJ9WVbXglirTJN2Dobk02j+Qr
+	y+MDyzlzWqzajsW7ooV0eh8YJ9ZL/XrrjIIQkXKkEVhMNY3reM+ICrjSMxGFm2e/+jdkl7U2YNx
+	U4xol/rgJi0G5ekHuwZWaOPlra3uh6u1koQ==
+X-Received: by 2002:a05:6214:238e:b0:70d:b960:22d9 with SMTP id 6a1803df08f44-70dd59c0dc5mr108738166d6.0.1756427919316;
+        Thu, 28 Aug 2025 17:38:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9Y+srjMYTUDi85Cn0pJcSe0dbGIf69GdJd8S7Yq6E+2fhSrZboCv3tbgRe/rYDM8Hmu9x3A==
+X-Received: by 2002:a05:6214:238e:b0:70d:b960:22d9 with SMTP id 6a1803df08f44-70dd59c0dc5mr108737916d6.0.1756427918880;
+        Thu, 28 Aug 2025 17:38:38 -0700 (PDT)
+Received: from [192.168.1.2] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70e6264141asm5588696d6.65.2025.08.28.17.38.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 17:38:37 -0700 (PDT)
+From: Brian Masney <bmasney@redhat.com>
+Date: Thu, 28 Aug 2025 20:38:20 -0400
+Subject: [PATCH 1/8] clk: nxp: lpc32xx: convert from round_rate() to
+ determine_rate()
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PNZPR01MB4270:EE_
-X-MS-Office365-Filtering-Correlation-Id: b12381bd-ee1a-4573-74ce-08dde69162c5
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|19110799012|461199028|6090799003|5072599009|15080799012|23021999003|8060799015|40105399003|41105399003|52005399003|3412199025|440099028;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?VGFDcUhmYlVIbXBBSHR4SklUQVIyejRXdXh6Q0M4RW5JRHA0ek00UGZMTW1L?=
- =?utf-8?B?MmNHbVBGbDMrUE83QmhHcVZvQWszcWExTkpoYzR5eDR0NmZ2QVQrN1JDT0Ux?=
- =?utf-8?B?NjdBUFJLMUQ3RytVa2dEaEEzdWhhMHlTaVpmWVJuZXdIN2kzc2ZFTjY2ZkpG?=
- =?utf-8?B?R2tpMTJlK1BPWjVLRkExNERMTUovcVBNcFd2MmhDdzFxd3liTUVQaDhNV1oz?=
- =?utf-8?B?c0FJY2VUZlZhRERxVWl0WDcyWWFqTUJtWmc1NXExOFB0MWFYK1pjV3h3Q2NN?=
- =?utf-8?B?dUJQZG43NDNxS0dYMEt6Q2pxRjNodUtxNDlXRVpycDJaK0p2S09vb296ZUhs?=
- =?utf-8?B?Z3N2K3R3OVFpU3czM3JDUlMrNHRBU2lFQWc4cFNsaW05bjlOeW10VTIwZ3Jn?=
- =?utf-8?B?ZnhsZys0NzNJb2lKMnMrTHRPUitRYzJEVll3TjE3T0xwckhxbWhZcWoxeldT?=
- =?utf-8?B?d1BGOFFLVEJxQ1pTUlVCYmlSUDBDeUFuMjVlc2xjNzNFWTNUU0hVTHl1KzF2?=
- =?utf-8?B?WVpCcjJjMGRVb1hScjZPNmk2anZwOE1RcVpiNHNUOEpaMDUzU3d2MC8yZlI4?=
- =?utf-8?B?MllIUTNHUklaZEZKTTBZMjZINkdsSW9yVExkdU5mdldZa0t5YWhMWDJTaUgy?=
- =?utf-8?B?RjhVSUdIQm5KQVRVUW5aejN6R2pyNktTQmkxV09LbU5WWU5DZFMwSUt0NjBa?=
- =?utf-8?B?T01NbXA3bkxDbFZ0V2JqRkZOSkI3MTFoaUpnMDdhZHNJbWhJTUFTSld2VldS?=
- =?utf-8?B?d2NqMTZXODdaZjFuY1ExaGt4b2w0ZXkzYmxmMmdQNHB2WkNqU25TQXF6eDkx?=
- =?utf-8?B?cEJjL09vREtHL29iLzNlNDFNckYvdUxCTDlodU1tQ2VQSDB4c0NmaWxBQzVt?=
- =?utf-8?B?SVdDbnFZbjNkMklnV1JpU3BuS2crVDhlRU43TG1LamlhRXFoalAzMXBzVzYw?=
- =?utf-8?B?Z1k0UlF1TlNTUStKL0ttOHc1SVFzK2pkKzNhTFZiMUFWZDdscUtYem5yWWxO?=
- =?utf-8?B?UFRMeWhxUWZMSFl3SHJ4NmI0OUZUZExtVDB0bjFHS1o5dlZRa1psOU41Q3lW?=
- =?utf-8?B?UDZXL1RLcDh2ZHhMTXZ2RkdkclRRU2FaUlNQd2RObGdIYm5tbVZhcTd2SmZi?=
- =?utf-8?B?NGFVNzJYVXJnMHBvM01SMURnRk5qU2wvb0NVZ3FYY2J6M2ZwTEFqSStnaUJq?=
- =?utf-8?B?MUNxaW5hZWVvK25tdVlGZ3BQREd3bHp4aUg1YXpDd2M0WjZWNmhRcldpQTBB?=
- =?utf-8?B?Wm1MU1FVL0krZmIrVUxmNzZQbU9UTVpqY2dXOWc1QVA0OVdtcFVxZzVnUVI2?=
- =?utf-8?B?TEtRR0lPVUJhNk02NWgvK0ZsbDdmWkRSNWxBakk0dU5kK2JNK3M3c2Y1ZmVV?=
- =?utf-8?B?eDdIOGZLOVJlZ3JJZktPU1NKSlVRekdlMGdhYmFLbUViN3ptZ0lUSjR0V1pR?=
- =?utf-8?B?SE9CSjlzTWVKcGpRZzFhWloxcTY1WHl2TElSY2VrV0kyVW5NQWo0Zy9URGpR?=
- =?utf-8?B?bGM2cS9TV2VhNU9SbTM5cTNWZEJ1NEQ0eDRlVXVWcG0zWVRmMXEwQ3FKbjhk?=
- =?utf-8?B?R0RzQ0FudkVCNDl3L0orOTVlMHZsNDEyTFFSTVJvVXNJRU9tTFQ3SkNYQm1U?=
- =?utf-8?Q?NqxeyyQFth4A4KGYerlfbWrsUTtQqHgnhzvEpThy8wvA=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SGhzcEhISUwzQ0lYdXRIN1BRU01SaGZvSmJSUTNvWGJMczUwRFhUYkhpQWRj?=
- =?utf-8?B?MjAyRFlvRXJCQ2NOR3Q4VVZiTkVtQkd4dXc5SFdUcU94aVdCYVlGUmFvRFp6?=
- =?utf-8?B?cGg4cml0M1hIUGlZakdncWlqeVBIc0NSSnBMaVdDZjluSHRPR2tBczhabnlW?=
- =?utf-8?B?Yk5aU1JWcDdNekJtU2prZUd3OWdIbmdzUVhXSXU5SGxFM1VtVWhKY20yVGRq?=
- =?utf-8?B?SEJJalpYeGZ2OWN3Z3hHZVl5Sk9jOHA1RXhTV1I4aXpHNk50eml6Z0E2UmhP?=
- =?utf-8?B?a1lTTWVyY2x3dXRwVmJLSHRlU0NWdUJ6NDVyN2gwZGkxdFExVW9OTmdzc0VJ?=
- =?utf-8?B?eDZuVTF5b0dxVHM3SW5YZ1dYcVpvTEZkd2lETjg5SE5IOU9iMEVJZzYxZTBV?=
- =?utf-8?B?czdqaW1hQUhvZzNqYXpTQTh5aVVROGlsUDBkUEJkM3RnaXF5Q2phSERqUzlR?=
- =?utf-8?B?ZUk2NC9Eb1ozWGMzMkFVZUNHaFYyaFdrS3puTi95dTUzNEhPc0psZVMwZll0?=
- =?utf-8?B?cnBnSlZmTHhITkJMc0dodkxWTmpSK3ErR1hKZmpEMld1a3N2NnBSS293SlBt?=
- =?utf-8?B?dis5dlMwcXpBZXY0SC9SV3daYzJ5d0krcGRYc3NyOVdXakxDUmdtVE5RdW44?=
- =?utf-8?B?REFyYWI4eUM0ZURpWjI5OFVTNWt0aE40WWVKcGlEdVorSTJPYThYbWhlUTY4?=
- =?utf-8?B?ZVMrdnlYalNvaXVwTDA1Z2d2ampLZEVEQVFMaHJ1RmFheVU5Y1FvaWVzOWFo?=
- =?utf-8?B?UlBvbEF1NkpHeGp5SEZIYjV4Uzg2YXZRUXl6UGVOL1U0b0tld2JEM3gxTDFk?=
- =?utf-8?B?TFRRejlVN3hnbWNsUGhwQ2thMGZnOUNmUG9JbnAwcDk0ZEJ2THVtbzJaeWQ2?=
- =?utf-8?B?azg4a3JJc2dNaGpYYjdHa2xKYWpiTmtlWDVJSFB1Y0ZLeWVGOEk1T0tOd292?=
- =?utf-8?B?OCtNUzIza0c1NSt6UDdLd3BzY3lJRml3Nm1Gb3czMEl1cVh2UzJ6QStXUVFq?=
- =?utf-8?B?Wk1obCs3VVBVc0JYS3hkZHZvaTQ4dzZzaE9MeVJaZXlsSEtTSFVVbTJ6d2Mr?=
- =?utf-8?B?RE83YS9SZEpadzFDN2ZyekN6TWhGL3N5bjh0dEhxUk10U3lUN1ltVGFXeTk4?=
- =?utf-8?B?NzIrcHdnWFVZSURBRm90SmxUNDA5aGg4OXFwQS9kRC9HSmJKaXJENXR6TzBW?=
- =?utf-8?B?MjY5OTdUOE02a3A4UGVNUlVya0t2SHJpeStvZ0w2Ni83cDZBVGExajNaM251?=
- =?utf-8?B?QTM1ZXdINlNjdnBSbWwrNW14ZXpyaXViejc1QjZ2dkIzVE9Wa2FYUmhXdnRi?=
- =?utf-8?B?eE1rSFd4OXJ6OExwOFNrY0s3NFBpNlpFMVNBZ2NrL0xMRGJqRUlWM2ROUTJI?=
- =?utf-8?B?Mk9tSW1DK09tM1JkMlBIb1JuYkVMWEVKSEhDQVRGNGdIRHdNaU83ZkEyZ0ds?=
- =?utf-8?B?RngwWXpIZVVkaWhFMDJRaDNOTUJRd1ZsOXBZbVdJUC9aRVlLSFcyaHpWOVVX?=
- =?utf-8?B?WTB4Q3FYUE9sSWJ2OTMySnEwK0hRaXhoVFE5cytHeWF0M2pLOGE4ckYxeGJK?=
- =?utf-8?B?WXNqMVZWRks0eVdGUlYzOXp2Uy80NE5MM1pmbXIzcFFCcVdMMndOc2w1NmFP?=
- =?utf-8?B?RURlL0pJK0VkS0IrSllETVBuaUNVbXJxTktXNWdBRHU4VThTK3VkRUVlcWw1?=
- =?utf-8?B?cTF2S2dhUVpIdEFOTkk3UFhWV3drNUhVUmRYeE0ybnJSbllka2puZWgzS0p1?=
- =?utf-8?Q?Zi1VLFeipXn1FFuJOc=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b12381bd-ee1a-4573-74ce-08dde69162c5
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Aug 2025 00:17:06.0241
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNZPR01MB4270
+Message-Id: <20250828-clk-round-rate-v2-v1-1-b97ec8ba6cc4@redhat.com>
+References: <20250828-clk-round-rate-v2-v1-0-b97ec8ba6cc4@redhat.com>
+In-Reply-To: <20250828-clk-round-rate-v2-v1-0-b97ec8ba6cc4@redhat.com>
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Vladimir Zapolskiy <vz@mleia.com>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+ Michal Simek <michal.simek@amd.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Heiko Stuebner <heiko@sntech.de>, 
+ Andrea della Porta <andrea.porta@suse.com>, 
+ Maxime Ripard <mripard@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+ Brian Masney <bmasney@redhat.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756427914; l=6057;
+ i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
+ bh=3ht1wGseKshyK0elknVvnPuwk+xst31YCIMTYyJbsnI=;
+ b=vBgDN2UolIYgWOoWXbkA84AYONG/GqJkkikThkMURYKOSkSyvbFpmEqJUiCoeaUkKgCqq7nEQ
+ DFy61Z9uuUoC1htEQWfzBbUhQKFicg1qdsl//DSZRp+vreyJtcnSot0
+X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
+ pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: p_edfybgbz90wnby7paj3O05PnFejH5ETVa7itaMMBI_1756427919
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
 
-On 8/29/2025 5:43 AM, Bjorn Helgaas wrote:
-> On Thu, Aug 28, 2025 at 10:17:17AM +0800, Chen Wang wrote:
->> From: Chen Wang <unicorn_wang@outlook.com>
->>
->> ops of struct cdns_pcie may be NULL, direct use
->> will result in a null pointer error.
->>
->> Add checking of pcie->ops before using it.
->>
->> Fixes: 40d957e6f9eb ("PCI: cadence: Add support to start link and verify link status")
-> Do you observe this NULL pointer dereference with an existing driver?
->
-> If this is only to make it possible to add a new driver that doesn't
-> supply a pcie->ops pointer, it doesn't need a Fixes: tag because
-> there's not a problem with existing drivers and this change would not
-> need to be backported.
->
-> If it *is* a problem with an existing driver, please point out which
-> one.
+Note that the changes involving LPC32XX_DEFINE_PLL_OPS were done
+by hand.
 
-No, the existing driver does not have this problem. Only my newly added 
-driver doesn't supply a pcie->ops pointer.
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+---
+ drivers/clk/nxp/clk-lpc32xx.c | 59 ++++++++++++++++++++++++-------------------
+ 1 file changed, 33 insertions(+), 26 deletions(-)
 
-I will remove this Fixes tag in next revision.
+diff --git a/drivers/clk/nxp/clk-lpc32xx.c b/drivers/clk/nxp/clk-lpc32xx.c
+index 96a1a527b3808573d3ce2c73af066a0bf37f1245..23f980cf6a2b59ee1c93a2519fe5188d251fa12f 100644
+--- a/drivers/clk/nxp/clk-lpc32xx.c
++++ b/drivers/clk/nxp/clk-lpc32xx.c
+@@ -578,17 +578,17 @@ static int clk_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	return regmap_update_bits(clk_regmap, clk->reg, 0x1FFFF, val);
+ }
+ 
+-static long clk_hclk_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long *parent_rate)
++static int clk_hclk_pll_determine_rate(struct clk_hw *hw,
++				       struct clk_rate_request *req)
+ {
+ 	struct lpc32xx_pll_clk *clk = to_lpc32xx_pll_clk(hw);
+-	u64 m_i, o = rate, i = *parent_rate, d = (u64)rate << 6;
++	u64 m_i, o = req->rate, i = req->best_parent_rate, d = (u64)req->rate << 6;
+ 	u64 m = 0, n = 0, p = 0;
+ 	int p_i, n_i;
+ 
+-	pr_debug("%s: %lu/%lu\n", clk_hw_get_name(hw), *parent_rate, rate);
++	pr_debug("%s: %lu/%lu\n", clk_hw_get_name(hw), req->best_parent_rate, req->rate);
+ 
+-	if (rate > 266500000)
++	if (req->rate > 266500000)
+ 		return -EINVAL;
+ 
+ 	/* Have to check all 20 possibilities to find the minimal M */
+@@ -613,9 +613,9 @@ static long clk_hclk_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		}
+ 	}
+ 
+-	if (d == (u64)rate << 6) {
++	if (d == (u64)req->rate << 6) {
+ 		pr_err("%s: %lu: no valid PLL parameters are found\n",
+-		       clk_hw_get_name(hw), rate);
++		       clk_hw_get_name(hw), req->rate);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -633,22 +633,25 @@ static long clk_hclk_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ 	if (!d)
+ 		pr_debug("%s: %lu: found exact match: %llu/%llu/%llu\n",
+-			 clk_hw_get_name(hw), rate, m, n, p);
++			 clk_hw_get_name(hw), req->rate, m, n, p);
+ 	else
+ 		pr_debug("%s: %lu: found closest: %llu/%llu/%llu - %llu\n",
+-			 clk_hw_get_name(hw), rate, m, n, p, o);
++			 clk_hw_get_name(hw), req->rate, m, n, p, o);
+ 
+-	return o;
++	req->rate = o;
++
++	return 0;
+ }
+ 
+-static long clk_usb_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+-				   unsigned long *parent_rate)
++static int clk_usb_pll_determine_rate(struct clk_hw *hw,
++				      struct clk_rate_request *req)
+ {
+ 	struct lpc32xx_pll_clk *clk = to_lpc32xx_pll_clk(hw);
+ 	struct clk_hw *usb_div_hw, *osc_hw;
+ 	u64 d_i, n_i, m, o;
+ 
+-	pr_debug("%s: %lu/%lu\n", clk_hw_get_name(hw), *parent_rate, rate);
++	pr_debug("%s: %lu/%lu\n", clk_hw_get_name(hw), req->best_parent_rate,
++		 req->rate);
+ 
+ 	/*
+ 	 * The only supported USB clock is 48MHz, with PLL internal constraints
+@@ -656,7 +659,7 @@ static long clk_usb_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+ 	 * and post-divider must be 4, this slightly simplifies calculation of
+ 	 * USB divider, USB PLL N and M parameters.
+ 	 */
+-	if (rate != 48000000)
++	if (req->rate != 48000000)
+ 		return -EINVAL;
+ 
+ 	/* USB divider clock */
+@@ -684,30 +687,30 @@ static long clk_usb_pll_round_rate(struct clk_hw *hw, unsigned long rate,
+ 			clk->m_div = m;
+ 			clk->p_div = 2;
+ 			clk->mode = PLL_NON_INTEGER;
+-			*parent_rate = div64_u64(o, d_i);
++			req->best_parent_rate = div64_u64(o, d_i);
+ 
+-			return rate;
++			return 0;
+ 		}
+ 	}
+ 
+ 	return -EINVAL;
+ }
+ 
+-#define LPC32XX_DEFINE_PLL_OPS(_name, _rc, _sr, _rr)			\
++#define LPC32XX_DEFINE_PLL_OPS(_name, _rc, _sr, _dr)			\
+ 	static const struct clk_ops clk_ ##_name ## _ops = {		\
+ 		.enable = clk_pll_enable,				\
+ 		.disable = clk_pll_disable,				\
+ 		.is_enabled = clk_pll_is_enabled,			\
+ 		.recalc_rate = _rc,					\
+ 		.set_rate = _sr,					\
+-		.round_rate = _rr,					\
++		.determine_rate = _dr,					\
+ 	}
+ 
+ LPC32XX_DEFINE_PLL_OPS(pll_397x, clk_pll_397x_recalc_rate, NULL, NULL);
+ LPC32XX_DEFINE_PLL_OPS(hclk_pll, clk_pll_recalc_rate,
+-		       clk_pll_set_rate, clk_hclk_pll_round_rate);
++		       clk_pll_set_rate, clk_hclk_pll_determine_rate);
+ LPC32XX_DEFINE_PLL_OPS(usb_pll,  clk_pll_recalc_rate,
+-		       clk_pll_set_rate, clk_usb_pll_round_rate);
++		       clk_pll_set_rate, clk_usb_pll_determine_rate);
+ 
+ static int clk_ddram_is_enabled(struct clk_hw *hw)
+ {
+@@ -954,8 +957,8 @@ static unsigned long clk_divider_recalc_rate(struct clk_hw *hw,
+ 				   divider->flags, divider->width);
+ }
+ 
+-static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+-				unsigned long *prate)
++static int clk_divider_determine_rate(struct clk_hw *hw,
++				      struct clk_rate_request *req)
+ {
+ 	struct lpc32xx_clk_div *divider = to_lpc32xx_div(hw);
+ 	unsigned int bestdiv;
+@@ -967,11 +970,15 @@ static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		bestdiv &= div_mask(divider->width);
+ 		bestdiv = _get_div(divider->table, bestdiv, divider->flags,
+ 			divider->width);
+-		return DIV_ROUND_UP(*prate, bestdiv);
++		req->rate = DIV_ROUND_UP(req->best_parent_rate, bestdiv);
++
++		return 0;
+ 	}
+ 
+-	return divider_round_rate(hw, rate, prate, divider->table,
+-				  divider->width, divider->flags);
++	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate,
++				       divider->table, divider->width, divider->flags);
++
++	return 0;
+ }
+ 
+ static int clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+@@ -990,7 +997,7 @@ static int clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 
+ static const struct clk_ops lpc32xx_clk_divider_ops = {
+ 	.recalc_rate = clk_divider_recalc_rate,
+-	.round_rate = clk_divider_round_rate,
++	.determine_rate = clk_divider_determine_rate,
+ 	.set_rate = clk_divider_set_rate,
+ };
+ 
 
-Thanks,
-
-Chen
-
-[......]
+-- 
+2.50.1
 
