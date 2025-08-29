@@ -1,81 +1,81 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3C1221271
-	for <sophgo@lists.linux.dev>; Fri, 29 Aug 2025 00:38:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4F119F43A
+	for <sophgo@lists.linux.dev>; Fri, 29 Aug 2025 00:38:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756427937; cv=none; b=n0DHGcoYO+i047Qt1/YN5W6zMi2YmBXHnDKuZ3lxrjK163/jYCXk40r6j+GHTydliA7PA9Ta7vRUeo8OdEyueH1Rn8GG1XSejeu+pvJADUBqu7TX22/0hhQWaRTsQbnD0IXP66cOZRi9/4SGH6lQIFE3ku3gn0qWnjOnHISNc54=
+	t=1756427940; cv=none; b=VA8nfhx/007UTonuAXD8zAB8EAcy70/Uv4Y0Gkc7nQGICqfkVLy9N5OJf4WeI9NT4HlOvgLdV4lnJpOGbj7QSRdLqW+amDIWa5/9k9maHohOUA/poZd7GQihLnSCTmVLd+wUyJclHF/pChJry8ZPZViyDXyddZPA+jPnezrVc6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756427937; c=relaxed/simple;
-	bh=yQjDlKucQbDfv9rLtsx5KS2YxuVB1vqwKzuSAh7+mnM=;
+	s=arc-20240116; t=1756427940; c=relaxed/simple;
+	bh=WJxAzEZ/y8gMiDjK9rGa4K/3JOojl4uHZ0X5uecFxfU=;
 	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
-	 To:Cc:Content-Type; b=pDNOidb31LWcHtGktqIj9xlLFnQi0qU3Xq6TP/1b8IRtV3C9PUMX4lW68mRHIFaZrUIR5ixEs4zARXbLV4I5WsfB00797H/MIRU/UCxM4qizaCa/AOxPoh7jRWyEV+TQgJUo6JM0h2cx1ao6g+emyaqTFTcwKNuIen6ORNeKQ5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=G4it6+L2; arc=none smtp.client-ip=170.10.133.124
+	 To:Cc:Content-Type; b=fIYU7aQkhMW4QFpxrY19iMZdTpZNVPOeGPzyOakonUTgBCsKGYZiq1WcKc2AjRzGUYt0AsQgmpmNypSrMM6wd7AtmnPd/XNDA9ZSm6BhvGGYFgk7ndfUghJy4gkdyMVzgWZfdS0b1ufSIqxXaIcAeDAl/Yf14Ifcao/h32Sa8Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=KAut4dIs; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="G4it6+L2"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="KAut4dIs"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1756427934;
+	s=mimecast20190719; t=1756427937;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=GfKsJTdQgTKprCHDD3jSWtPOt7a36P0+9S4imFiAXj0=;
-	b=G4it6+L2P9exKqWSeeKwnAiO2HWPPOiz8nXNRSD0zFVYLrVft26L4TfKkb8Mh+X0zXAjyM
-	BZYU9XN1MckNtLXahgGX/Mn/bRYddFZ+cjDyx7l2V1Hp66LGnABpVT47Ca/v8W3vjus4Xf
-	a0p9MiKu/+IE3WN1ZRMmtapS704o8pM=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=dhN2zcFUEER4o0mfl+Pf8YKEeY54fmHrDhnJHsDDNpg=;
+	b=KAut4dIsJZ+L8rjcjn91zhxYgeEUBOYlBhmkMyuF/NWwuppZ8Pq5L36CGO9YcZXX6NFZs7
+	Ty5oFmgfsJc36g+uh1Y05okrbegLgNKmMnP/tuApBRJ+3ouXeCaSeUliCgefudAzrpV/z1
+	wbMMnIYFtnywwpKvMVY0LJ9/rhkKIsw=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-554-5R5c00sXPL-BR6OVTOL1Fw-1; Thu, 28 Aug 2025 20:38:53 -0400
-X-MC-Unique: 5R5c00sXPL-BR6OVTOL1Fw-1
-X-Mimecast-MFC-AGG-ID: 5R5c00sXPL-BR6OVTOL1Fw_1756427932
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70dfd87a763so10979746d6.2
-        for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 17:38:52 -0700 (PDT)
+ us-mta-139-ktR3NhepPnScSK38k5vVcg-1; Thu, 28 Aug 2025 20:38:56 -0400
+X-MC-Unique: ktR3NhepPnScSK38k5vVcg-1
+X-Mimecast-MFC-AGG-ID: ktR3NhepPnScSK38k5vVcg_1756427936
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-70f9ef271a4so834056d6.0
+        for <sophgo@lists.linux.dev>; Thu, 28 Aug 2025 17:38:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756427932; x=1757032732;
+        d=1e100.net; s=20230601; t=1756427935; x=1757032735;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GfKsJTdQgTKprCHDD3jSWtPOt7a36P0+9S4imFiAXj0=;
-        b=I61st2f7xdMKKKnkBljeKbWS4YIu+ZbiYFkGjqxsT6cyFHxFM+Q2YUXdc5EBCE8ekY
-         pGFdPiu7oL0Jsuuud/vUzNwZ9PZ0eaOXggMcgrImap8wghGVNLDMcMZOqwlvjmV48jjZ
-         2+wN3M0UKwoqZMC7RJuRLqqOQ2/gxEZP+G2v/BnJRyW7LJLt+kcBxYkvjrG0eSZTmUPG
-         GIYM8S0yk9CAPOWOM+BAFsju7Zw1xH/pUN5AUlm1C2/YVDQhXiihDTqaKFfWK5R5eAVz
-         Nuqfns6ia22MHHatnwP4M+xiSnBeu1IPIZzcoVCosy4T6eULRPpy99T9G0WsTK0cpBzK
-         +w7g==
-X-Forwarded-Encrypted: i=1; AJvYcCXs9RsJhoYCSjPcGbhBliNqda5Vg01+s1YISs+Jvulvj7i9+q+vnY2iD/aowUJBkZ6c99x/ZFE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzX7+tqa4VSfVQOPIZ6yCb+K/LVQ55PLoYoplCG5JDvbq+an8Ss
-	DlmzcVO8qDMA9+q4dl+Zyfxo6W9Yy4JuFD3NyfxgQqL8tT34p4DU1GVt6JYQtzYnWuiKl2XgLW1
-	cvCtK9U/CxfyhTKZ4q8kchKhOlWn1KinwLMoX94I9RmY1lc0oeJnYUHezuA==
-X-Gm-Gg: ASbGncu1VYIPyNYzRqrbKBfAnkpGTVp2YhyjLlqT84Fi8Loi32Reega9vrHhkl5cagB
-	09tSvCTccGVNLcMtvj4MRl2ygREPalJpVfQZVSdhSUvBJYzZMuwUjN5DikmEljkIJlzQ202RSRQ
-	Z/VuI9YC0BCbdcBbkB0jZbCBcuVckoGnYGpb7OTac63p+/HLnw7oaYhhG4Cazbu3fyUKASryE+Z
-	OqMzs3p9AmUUkRHhbA3qAjuUfCb2yBq2IVGaV7Gpc4XuQCk1oYjsSB9/yPtaosDbLFnqYIBDbcd
-	8cWd+M5PpkkCci+y2av5b0/yZ5uL9qEC4ClNP06iPUWlWwyo0sc6ibBumR2vn229c80OnXtPJgI
-	GTb+Zdnz7Z0QiXXOHqMKI8Tr1RfCDJZT+1Q==
-X-Received: by 2002:ad4:5ae7:0:b0:70d:6df3:9a8a with SMTP id 6a1803df08f44-70d9740287emr335625106d6.58.1756427932229;
-        Thu, 28 Aug 2025 17:38:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwEc61ysJKMEZh0lWoU9IOEqRG7fUQ4re7qEY+oU+35ItiYKJvIfxusraAgiqWCmyxfYtUOw==
-X-Received: by 2002:ad4:5ae7:0:b0:70d:6df3:9a8a with SMTP id 6a1803df08f44-70d9740287emr335624916d6.58.1756427931903;
-        Thu, 28 Aug 2025 17:38:51 -0700 (PDT)
+        bh=dhN2zcFUEER4o0mfl+Pf8YKEeY54fmHrDhnJHsDDNpg=;
+        b=sS/90QN/A1xj8inWKQ9Yuu1Fhj/jzGsF7t71GguTzBbliZF80jw2KY+PBqgPqH45oC
+         z2i1hLNg1MLWTIrTxdjwnVWWUzPkkdbdRxNzECP1DnkTc7+QwGNZ6VZ9t1ZNRcgkR1JF
+         fc4gjVNdnvZ5cVz5nK4b3zCUZXG5zHvsDzXvUufZkp2RMpJwLrF9BSB1mQAg1a6sN8uV
+         IDfKQv2xvDpYipd3EY5d7hamMSnkxIe8b8wARr2Q6i/O5S6rxlYXwk20v4QZBnLwyuyz
+         0qpjaCIrg0DXNU/M9EUy6P56G1gja/YyJm0ZxH+CCFP9o0HSt+dRQ56Gw8wrg7IX1d0Q
+         bnLg==
+X-Forwarded-Encrypted: i=1; AJvYcCV6LAA3qKyw9t7d7QjYLgFAxDfmQPDDaUxwHz+8YqpzYYUkrNJrkGK/JnMYdXHRFykZ7DpZMi4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw9gbaz6+OosaRkAMdQ7spUrl8kAPMiRGqL7u4UD/XwQ7v70irl
+	Hd1JDwlFDDequBUL1FMyFD0tROwhj1LjNtdH2MPcsbQxFSTiMSrOd1QwlGFOVNit44pc1KhSKdA
+	VCue1vojpkKq+htOvLrH93FieWhLOk17sqAa3I3l87jvYcC6BRiG1hig1f8VzwkoJUw==
+X-Gm-Gg: ASbGncs8BnHuVDzHvsrp7Uo0ixmG/ZSF2jIeak5MLpXd1+Vatu1feNU+MvlttnKigP5
+	3zx/zGe32t3ZV3ClqAk8Q6s5vQPH4wg2tGeiwGBV3dE5/dFcshRuojBAa0FO1poGq/KFa6sAaGj
+	OgUEK3bU7os5I4oykwuLQ59b4crO2DyHpuO9X5GOylbouUOmoInAWKEdjwGk/6qJu5uFY3Lfa/K
+	Q0s4/qcJBafhD21Bod39LwIrgbMu7ytq9ir4AdVF7c/jRHlVTVWEeraOscetpEgUB3P4PQzJIyK
+	3MEBxQU6y5b9MmsUuPzyfjFXFs3/SOwwi75m1DFohvcBVbeR7veIHkQtrFLJtj7Dyvrx7KlqaXl
+	S8Wb87qNf872DvF22Dh0IPKHTjjHeSM4Ngg==
+X-Received: by 2002:a05:6214:48f:b0:70d:fd53:7256 with SMTP id 6a1803df08f44-70dfd53763bmr29827696d6.3.1756427934556;
+        Thu, 28 Aug 2025 17:38:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEijYzk7GkyvAnuURsnBocI4vkkc9uguNYcxLJSHaK49JimJzbCk2zB1vtZtqve+KQwqSmw3A==
+X-Received: by 2002:a05:6214:48f:b0:70d:fd53:7256 with SMTP id 6a1803df08f44-70dfd53763bmr29827556d6.3.1756427934193;
+        Thu, 28 Aug 2025 17:38:54 -0700 (PDT)
 Received: from [192.168.1.2] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70e6264141asm5588696d6.65.2025.08.28.17.38.49
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-70e6264141asm5588696d6.65.2025.08.28.17.38.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 28 Aug 2025 17:38:51 -0700 (PDT)
+        Thu, 28 Aug 2025 17:38:53 -0700 (PDT)
 From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 28 Aug 2025 20:38:25 -0400
-Subject: [PATCH 6/8] clk: sophgo: sg2042-pll: remove round_rate() in favor
- of determine_rate()
+Date: Thu, 28 Aug 2025 20:38:26 -0400
+Subject: [PATCH 7/8] clk: x86: cgu: convert from round_rate() to
+ determine_rate()
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <20250828-clk-round-rate-v2-v1-6-b97ec8ba6cc4@redhat.com>
+Message-Id: <20250828-clk-round-rate-v2-v1-7-b97ec8ba6cc4@redhat.com>
 References: <20250828-clk-round-rate-v2-v1-0-b97ec8ba6cc4@redhat.com>
 In-Reply-To: <20250828-clk-round-rate-v2-v1-0-b97ec8ba6cc4@redhat.com>
 To: Michael Turquette <mturquette@baylibre.com>, 
@@ -91,101 +91,122 @@ Cc: linux-clk@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
  Brian Masney <bmasney@redhat.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756427914; l=2918;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756427914; l=3470;
  i=bmasney@redhat.com; s=20250528; h=from:subject:message-id;
- bh=yQjDlKucQbDfv9rLtsx5KS2YxuVB1vqwKzuSAh7+mnM=;
- b=NIACu2uEJBGAECXwzUlTYQmeDeO89xJedpYWiz+3jVOZMhats8C5aEq2W9Xgn57Xm3aQE46TX
- bO0ZY19dAj/ACNhybTA+CdBVvm/B0H9sIJNyaJ+3B0kXEmy97yyk1w2
+ bh=WJxAzEZ/y8gMiDjK9rGa4K/3JOojl4uHZ0X5uecFxfU=;
+ b=FRh6Dtp6Qu3xMrqG77h69FKmubrcLmD1DaQdhlvkUw0E6UlxV5Rv3RQ4Eg7iODuTrLGqcr72p
+ gQO+ywq9rn/BM+b5lX8Ga2Eu2EAvxju51YKn1XwPasJWhPgQyJz0Qba
 X-Developer-Key: i=bmasney@redhat.com; a=ed25519;
  pk=x20f2BQYftANnik+wvlm4HqLqAlNs/npfVcbhHPOK2U=
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: A_fE0-KbgUYO_CQPVCoVX189siFYNlXPeBFURk6WXPU_1756427932
+X-Mimecast-MFC-PROC-ID: kTJBmPKEg4DeLVMi0Wd4z_iFofEarxdxBx6b1S0gla8_1756427936
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
-This driver implements both the determine_rate() and round_rate() clk
-ops, and the round_rate() clk ops is deprecated. When both are defined,
-clk_core_determine_round_nolock() from the clk core will only use the
-determine_rate() clk ops, so let's remove the round_rate() clk ops since
-it's unused.
+The round_rate() clk ops is deprecated, so migrate this driver from
+round_rate() to determine_rate() using the Coccinelle semantic patch
+on the cover letter of this series.
 
-The implementation of sg2042_clk_pll_determine_rate() calls
-sg2042_clk_pll_round_rate(), so this folds the two into a single
-function.
-
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
 Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
- drivers/clk/sophgo/clk-sg2042-pll.c | 26 +++++++++-----------------
- 1 file changed, 9 insertions(+), 17 deletions(-)
+ drivers/clk/x86/clk-cgu.c | 35 ++++++++++++++++++++---------------
+ 1 file changed, 20 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/clk/sophgo/clk-sg2042-pll.c b/drivers/clk/sophgo/clk-sg2042-pll.c
-index e5fb0bb7ac4f97616f3b472fcab45e5729eb653e..110b6ee06fe4b61e89f3cbf2ce00eb03c078afb6 100644
---- a/drivers/clk/sophgo/clk-sg2042-pll.c
-+++ b/drivers/clk/sophgo/clk-sg2042-pll.c
-@@ -346,37 +346,30 @@ static unsigned long sg2042_clk_pll_recalc_rate(struct clk_hw *hw,
- 	return rate;
+diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
+index 89b53f280aee03b7838e4656eae3571f00eaa263..d099667355f8d80785b0f43097ad10c274dd61ea 100644
+--- a/drivers/clk/x86/clk-cgu.c
++++ b/drivers/clk/x86/clk-cgu.c
+@@ -132,14 +132,15 @@ lgm_clk_divider_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 				   divider->flags, divider->width);
  }
  
--static long sg2042_clk_pll_round_rate(struct clk_hw *hw,
--				      unsigned long req_rate,
--				      unsigned long *prate)
-+static int sg2042_clk_pll_determine_rate(struct clk_hw *hw,
-+					 struct clk_rate_request *req)
+-static long
+-lgm_clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+-			   unsigned long *prate)
++static int lgm_clk_divider_determine_rate(struct clk_hw *hw,
++					  struct clk_rate_request *req)
  {
- 	struct sg2042_pll_ctrl pctrl_table;
- 	unsigned int value;
- 	long proper_rate;
- 	int ret;
+ 	struct lgm_clk_divider *divider = to_lgm_clk_divider(hw);
  
--	ret = sg2042_get_pll_ctl_setting(&pctrl_table, req_rate, *prate);
-+	ret = sg2042_get_pll_ctl_setting(&pctrl_table,
-+					 min(req->rate, req->max_rate),
-+					 req->best_parent_rate);
- 	if (ret) {
- 		proper_rate = 0;
- 		goto out;
- 	}
+-	return divider_round_rate(hw, rate, prate, divider->table,
+-				  divider->width, divider->flags);
++	req->rate = divider_round_rate(hw, req->rate, &req->best_parent_rate, divider->table,
++				       divider->width, divider->flags);
++
++	return 0;
+ }
  
- 	value = sg2042_pll_ctrl_encode(&pctrl_table);
--	proper_rate = (long)sg2042_pll_recalc_rate(value, *prate);
-+	proper_rate = (long)sg2042_pll_recalc_rate(value, req->best_parent_rate);
+ static int
+@@ -182,7 +183,7 @@ static void lgm_clk_divider_disable(struct clk_hw *hw)
  
- out:
--	pr_debug("--> %s: pll_round_rate: val = %ld\n",
-+	pr_debug("--> %s: pll_determine_rate: val = %ld\n",
- 		 clk_hw_get_name(hw), proper_rate);
--	return proper_rate;
--}
-+	req->rate = proper_rate;
- 
--static int sg2042_clk_pll_determine_rate(struct clk_hw *hw,
--					 struct clk_rate_request *req)
--{
--	req->rate = sg2042_clk_pll_round_rate(hw, min(req->rate, req->max_rate),
--					      &req->best_parent_rate);
--	pr_debug("--> %s: pll_determine_rate: val = %ld\n",
--		 clk_hw_get_name(hw), req->rate);
+ static const struct clk_ops lgm_clk_divider_ops = {
+ 	.recalc_rate = lgm_clk_divider_recalc_rate,
+-	.round_rate = lgm_clk_divider_round_rate,
++	.determine_rate = lgm_clk_divider_determine_rate,
+ 	.set_rate = lgm_clk_divider_set_rate,
+ 	.enable = lgm_clk_divider_enable,
+ 	.disable = lgm_clk_divider_disable,
+@@ -487,15 +488,14 @@ lgm_clk_ddiv_set_rate(struct clk_hw *hw, unsigned long rate,
  	return 0;
  }
  
-@@ -417,14 +410,13 @@ static int sg2042_clk_pll_set_rate(struct clk_hw *hw,
+-static long
+-lgm_clk_ddiv_round_rate(struct clk_hw *hw, unsigned long rate,
+-			unsigned long *prate)
++static int lgm_clk_ddiv_determine_rate(struct clk_hw *hw,
++				       struct clk_rate_request *req)
+ {
+ 	struct lgm_clk_ddiv *ddiv = to_lgm_clk_ddiv(hw);
+ 	u32 div, ddiv1, ddiv2;
+ 	u64 rate64;
  
- static const struct clk_ops sg2042_clk_pll_ops = {
- 	.recalc_rate = sg2042_clk_pll_recalc_rate,
--	.round_rate = sg2042_clk_pll_round_rate,
- 	.determine_rate = sg2042_clk_pll_determine_rate,
- 	.set_rate = sg2042_clk_pll_set_rate,
+-	div = DIV_ROUND_CLOSEST_ULL((u64)*prate, rate);
++	div = DIV_ROUND_CLOSEST_ULL((u64)req->best_parent_rate, req->rate);
+ 
+ 	/* if predivide bit is enabled, modify div by factor of 2.5 */
+ 	if (lgm_get_clk_val(ddiv->membase, ddiv->reg, ddiv->shift2, 1)) {
+@@ -503,14 +503,17 @@ lgm_clk_ddiv_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		div = DIV_ROUND_CLOSEST_ULL((u64)div, 5);
+ 	}
+ 
+-	if (div <= 0)
+-		return *prate;
++	if (div <= 0) {
++		req->rate = req->best_parent_rate;
++
++		return 0;
++	}
+ 
+ 	if (lgm_clk_get_ddiv_val(div, &ddiv1, &ddiv2) != 0)
+ 		if (lgm_clk_get_ddiv_val(div + 1, &ddiv1, &ddiv2) != 0)
+ 			return -EINVAL;
+ 
+-	rate64 = *prate;
++	rate64 = req->best_parent_rate;
+ 	do_div(rate64, ddiv1);
+ 	do_div(rate64, ddiv2);
+ 
+@@ -520,7 +523,9 @@ lgm_clk_ddiv_round_rate(struct clk_hw *hw, unsigned long rate,
+ 		rate64 = DIV_ROUND_CLOSEST_ULL(rate64, 5);
+ 	}
+ 
+-	return rate64;
++	req->rate = rate64;
++
++	return 0;
+ }
+ 
+ static const struct clk_ops lgm_clk_ddiv_ops = {
+@@ -528,7 +533,7 @@ static const struct clk_ops lgm_clk_ddiv_ops = {
+ 	.enable	= lgm_clk_ddiv_enable,
+ 	.disable = lgm_clk_ddiv_disable,
+ 	.set_rate = lgm_clk_ddiv_set_rate,
+-	.round_rate = lgm_clk_ddiv_round_rate,
++	.determine_rate = lgm_clk_ddiv_determine_rate,
  };
  
- static const struct clk_ops sg2042_clk_pll_ro_ops = {
- 	.recalc_rate = sg2042_clk_pll_recalc_rate,
--	.round_rate = sg2042_clk_pll_round_rate,
-+	.determine_rate = sg2042_clk_pll_determine_rate,
- };
- 
- /*
+ int lgm_clk_register_ddiv(struct lgm_clk_provider *ctx,
 
 -- 
 2.50.1
