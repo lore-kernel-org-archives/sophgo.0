@@ -1,67 +1,79 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE36D31DDA4;
-	Wed, 10 Sep 2025 14:34:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A0027602F;
+	Wed, 10 Sep 2025 16:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757514896; cv=none; b=GrAdUOgjBZuOmCWmcdduhSBRMBeRUQve65743Wiq0IZVT5/3QWf/N6lv4gXS/C5Kbiltqu5qTIq7qSC7EtEGR3iMCRNF/hhoOZ6ITTu2lMIipVcwjV4J+1PCI/H5WR9y5h3k/YRN0813bbNgkG8qEVj2jBn8XUJU2X6PBO8LKYA=
+	t=1757522846; cv=none; b=g6MgQAxMK0wxA6DoxVk5JDEoV2/sj6Cbdv+V/GBJR5AXXEn3N7uYo68sfaKw5rGGHO4gNG0BqyGhWkZkP+9VpjpBdeCNUFyqvKmkUQrdbVKhDyNwV/5FlVEE6GcTcnRCzDwrbMO2oDZfkg1UlWS5Nc0rQRkUWIHTk5bdpB2bJdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757514896; c=relaxed/simple;
-	bh=xjYSrTXZn2L7+z07HiLOzSt4wzGMOD/saMQb5WcdX3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=f2AKdo+/0Vz+c0pDwWrNX+0oiqA/QtRpi9ZEBYlh5xXvg0WVTWjtRbo+/cVewSy12eA+M8JVuHIFHQ2JAJFBslcWwFbmPkreiFgHslNaXicCFnIrLf5CZEN1jSt1nBTR6x1rZuecgxHk1fASAY+Dldxcj1ezAUNkU0gIBGoPL9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mZTfNxdG; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1757522846; c=relaxed/simple;
+	bh=62Kld7JTWpGcejeXzL2pSMaMWwHGWlpqGWR2nvOnp4Y=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=rFPpcf+RWzdv/MHj+TXZH9749RmwTgZUGn6VAY3EQBYqWV0Kfcq2iU3fiM0m31AhUt+4TWxl0X+XtNytmwGg+L+pOmrB5rmp/AvBsmL3BVvPbbSI2mSDjIaEBjwBtAtMqGe82ofKmKuD+hvDQNm6AWiZ47Em/0HAWyFBb83Tdr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FVnlEL1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mZTfNxdG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC15C4CEEB;
-	Wed, 10 Sep 2025 14:34:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FVnlEL1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFD1C4CEEB;
+	Wed, 10 Sep 2025 16:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757514895;
-	bh=xjYSrTXZn2L7+z07HiLOzSt4wzGMOD/saMQb5WcdX3g=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=mZTfNxdGDMJd16WavKni+yoqXTP+Gqz+lZsuuz8ArGJqWcu6LJwJRCqTuoIUbslaE
-	 JnpLpbgvTq1pjFCqt0go3f9iie1Zra0iWRO/JZ7oPMJWklYQvadpBCMljKdoIPsF5c
-	 j4s0+KMvmJlXyTpdssMKAkAr3mMGnu4RTTG8kAUragSTGUiB7jOyzuOHIjbIf2+3T4
-	 ZKrWUFvMSZOAM6TjiMJMzdXFl/xMZ8XFHSTRSoWUuCIOY7Fklzhx3ztXMrHL3UFBcn
-	 LGLe3ccIU7axC27rvLrRU3mgxEA4Td88GFTAgYWVGy/xI5Rki/AskwMkkhpwKGA2uj
-	 MqUIlPR9qXMaQ==
-Date: Wed, 10 Sep 2025 09:34:53 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Chen Wang <unicornxw@gmail.com>
-Cc: kwilczynski@kernel.org, u.kleine-koenig@baylibre.com,
-	aou@eecs.berkeley.edu, alex@ghiti.fr, arnd@arndb.de,
-	bwawrzyn@cisco.com, bhelgaas@google.com, unicorn_wang@outlook.com,
-	conor+dt@kernel.org, 18255117159@163.com, inochiama@gmail.com,
-	kishon@kernel.org, krzk+dt@kernel.org, lpieralisi@kernel.org,
-	mani@kernel.org, palmer@dabbelt.com, paul.walmsley@sifive.com,
-	robh@kernel.org, s-vadapalli@ti.com, tglx@linutronix.de,
-	thomas.richard@bootlin.com, sycamoremoon376@gmail.com,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev, rabenda.cn@gmail.com, chao.wei@sophgo.com,
-	xiaoguang.xing@sophgo.com, fengchun.li@sophgo.com
-Subject: Re: [PATCH v2 3/7] PCI: sg2042: Add Sophgo SG2042 PCIe driver
-Message-ID: <20250910143453.GA1533730@bhelgaas>
+	s=k20201202; t=1757522845;
+	bh=62Kld7JTWpGcejeXzL2pSMaMWwHGWlpqGWR2nvOnp4Y=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=FVnlEL1lDTV1YR+A8J7uibu4yWINGyomz3bF6CJfqS/UN6fvYIN6wqbHiIbf0/box
+	 3FAJG98TDCgaw7pzqq0BgmcM/FoWbrLw+G5U+VLpz/mr+Rr4jnzg7sdvgb2FBT7+Wl
+	 30Nf8QazzuJsL/Di9fq/ulNdZdZVvMLzdW2ChFJxZbmXrsuqfuePJ+KexOXmWXZSGQ
+	 BbXR7CxeJ+RNUDLHeSjnon1bu43HtBqIKX/9qeRiW0ET+RVUoykGvR5Uz9IXTZmm1M
+	 4/iFXIeDfd3wUmzFwNnZtNnBb+tJYHWrB4UjCIieOnj6zM1Q4CywaxKejr/vqOFWTu
+	 a7WHOQ/GLn2WQ==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>, Inochi Amaoto <inochiama@gmail.com>
+Cc: linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, 
+ Longbin Li <looong.bin@gmail.com>
+In-Reply-To: <20250708063038.497473-1-inochiama@gmail.com>
+References: <20250708063038.497473-1-inochiama@gmail.com>
+Subject: Re: [PATCH v5 0/2] riscv: sophgo: add USB phy support for CV18XX
+ series
+Message-Id: <175752284008.484319.10400801407053619384.b4-ty@kernel.org>
+Date: Wed, 10 Sep 2025 22:17:20 +0530
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <162d064228261ccd0bf9313a20288e510912effd.1757467895.git.unicorn_wang@outlook.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Wed, Sep 10, 2025 at 10:08:39AM +0800, Chen Wang wrote:
-> From: Chen Wang <unicorn_wang@outlook.com>
+
+On Tue, 08 Jul 2025 14:30:35 +0800, Inochi Amaoto wrote:
+> Add USB PHY support for CV18XX/SG200X series
 > 
-> Add support for PCIe controller in SG2042 SoC. The controller
-> uses the Cadence PCIe core programmed by pcie-cadence*.c. The
-> PCIe controller will work in host mode only, supporting data
-> rate(gen4) and lanes(x16 or x8).
+> Changed from v4:
+> - https://lore.kernel.org/all/20250611081804.1196397-1-inochiama@gmail.com
+> 1. patch 1: apply Conor's tag
+> 2. patch 2: remove dr_mode debugfs entry.
+> 3. patch 2: simplify the cv1800_usb_phy_set_clock function
+> 
+> [...]
 
-Strictly speaking, "gen4" is a spec revision, not a data rate.
-Include the GT/s rate instead or in addition.  We can fix this when
-merging if there's no other reason to repost (I assume you mean 16
-GT/s).  Will also add spaces before the open "(".
+Applied, thanks!
+
+[1/2] dt-bindings: phy: Add Sophgo CV1800 USB phy
+      commit: cdb2511bf3925ce095c31e1647c12086d34f9cc2
+[2/2] phy: sophgo: Add USB 2.0 PHY driver for Sophgo CV18XX/SG200X
+      commit: f0c6d776f74d1d8bda94f6f042b2919bcd615280
+
+Best regards,
+-- 
+~Vinod
+
+
