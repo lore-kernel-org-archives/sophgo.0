@@ -1,181 +1,664 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011028.outbound.protection.outlook.com [52.103.68.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C375822156B
-	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 03:21:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.28
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757474475; cv=fail; b=u3X8iTJdZ15ULDC0wL1jJAY3zW98R4+iRZOA0DMhaSIlvdeT+CLW1DW9rzksV6qclVqBu5OHqCd4s5/5uPKaypTphPCHBbTjf1lQv6pfZWW2g8rWDXWv4eqIG9ho0uo6d+uF1ArZTMQA944OIJcL7mrqNZ+PUDn7xnKv8kNh0b0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757474475; c=relaxed/simple;
-	bh=Jd+21r2hQAq77t6SNUtzD1lx6jT6dbNed2GBkVnzSW0=;
-	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=j4Q5d7Kcnl29ckcScyS0dVIJ3GnZkGI43tGES6dyPoG3RrZqomLS2SpPxt9yXP+twXD2Zna52R95eyJpvlkqZGG1NRfZ6EhXnCFjZQd/u5yPGnLHeBvFtID/59iPiRLCUL0/HLjxssqAB2kHGQgliyJGjZBfBhtGoKobA0Y1n/w=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=ohAdzmit; arc=fail smtp.client-ip=52.103.68.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5550D3148BB
+	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 10:55:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757501759; cv=none; b=LSTAiwPw/zEa/8YqSSBb/9gf2vUzcm7rf5M33RfiuHBx5CnQaJamOu0EY7mLZtaHEPt5z/BFkAA8ete779WNGIT9x8zieup+hBmv08/z38irzKJEL7aXi77UIpeoTVmJ3Z+jD6pRxKTy5k0EE6M6YnhjnY77K3SqwlDJw+E0nac=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757501759; c=relaxed/simple;
+	bh=+vQqT/ab6RDCQ93W8/+XtS3Em9BeynuKCLCurltT8Bs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mooErSUskabSS6AOSPhNLWSA+w6IFAIpPY42soJSUuKEt2CwTUy7e2xEC+UjwFMDChHsfruiwGRRcgPySJ9yPmVdAl9QuRsg+fdf62M6z5iRqn4AIEy+kJOXsRn8fBYMuU92sAYGVbmCXYrLQ4wR2UGX5/Q0CaQb+71RwJ6M5x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhmpXAuy; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="ohAdzmit"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=KJfZBThKIUxz6c1kXLPg3idJZZOS2MV/tBc3z8OREDOKpVqLWaQQbtA/6XSRSFDWQlFzqXn03ojhphXGInzRvEUAtwUbC1q3T52NYfJ/zOCfI7EaY2qYGq9XstOSCy400a+w7FZbzaKgeCfDzg9aGBbi4SrLgf9hX1VyUcpDG2tMQh5SdKd1/nWIdN0E09FAQ97d/pLOa5+nL1TAIqfVxqcFIfu5k/toQAG7+HAKvaJXqWs+4wR6nmFsCo2MNdIYwZ1xZaSy2Utn2KFIIrPLnoQDxM7B5vBQoFm4wplHmU1UPCCC76Cy/Si4aHo1DiKUqz/oaN6KD9QQWRqu5QQPEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qJGNrAkc4KIwLMfvnCdw2IejK4ZRwy4tABSe+MoJyxc=;
- b=A4TE9nUc/AolhJT+zyVxaQ5DL6WOtMVF1IaPUEm1E/zhkAjeDqqy0J1XCXr6L3GtPojUzGG5wQAcaBKF5mL7+6QHgu82JOLAiT/EHfoYYxImEHEPhNYYR79hxxBCCVcY2KgL2Wq2mq3akuwkZPa92qIr/wujWO948x9eChAjQyXqjjw5Ik9it4TeFTCZb+xHSvqtxBM+CN62ngP22pij3wgJWiIeQmYB6xpVpuabA6HSsf5Z3hdsd2y+HuGN4QluUj6oUKSP7ufb1nVmebPCqBeT+0r0jgOfYMy0khlfzHTpO9Gzj1E5NFsgaK8mRSsR+94c5wDec1NCBC+gt4jcLw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qJGNrAkc4KIwLMfvnCdw2IejK4ZRwy4tABSe+MoJyxc=;
- b=ohAdzmitLBDLFcI2k5rLVPNlcjYjG7ZFYG13FqOnoMKEg9OhQ4/IGo2dRZ7lVA5Q0GOfcLNQz2mf5aMeaSxM2anF30fzmo2hxGxdW7XQ40TW47KaKENr/BR1x5N1LYDGa8ZesmDpcj/J+vbqm0hLO/V8XWymyNb0nHv9HqUzPOdf15BsduwRHYM9M0Jjio+z4y3ra0B/lxUayBYDg1RB6CfU0MqrWWaA8hY8KAplqdN7+FfLCSA8mLsqN/rd0Ps2lRrTMngqyFCOHfQ95TvUM532miBtjh0Lg6F72lHP8NHHDPwrl4Y+f7G2hDgstNLixkM4VqyG0urLal2TwDpJTg==
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16) by PN2PR01MB10334.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:1f7::13) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Wed, 10 Sep
- 2025 03:20:59 +0000
-Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9094.021; Wed, 10 Sep 2025
- 03:20:58 +0000
-Message-ID:
- <MAUPR01MB11072EF3457DA48317FBFBB09FE0EA@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 10 Sep 2025 11:20:50 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/7] PCI: sg2042: Add Sophgo SG2042 PCIe driver
-To: Inochi Amaoto <inochiama@gmail.com>, Chen Wang <unicornxw@gmail.com>,
- kwilczynski@kernel.org, u.kleine-koenig@baylibre.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, arnd@arndb.de, bwawrzyn@cisco.com, bhelgaas@google.com,
- conor+dt@kernel.org, 18255117159@163.com, kishon@kernel.org,
- krzk+dt@kernel.org, lpieralisi@kernel.org, mani@kernel.org,
- palmer@dabbelt.com, paul.walmsley@sifive.com, robh@kernel.org,
- s-vadapalli@ti.com, tglx@linutronix.de, thomas.richard@bootlin.com,
- sycamoremoon376@gmail.com, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev,
- rabenda.cn@gmail.com, chao.wei@sophgo.com, xiaoguang.xing@sophgo.com,
- fengchun.li@sophgo.com
-References: <cover.1757467895.git.unicorn_wang@outlook.com>
- <162d064228261ccd0bf9313a20288e510912effd.1757467895.git.unicorn_wang@outlook.com>
- <xmk5uvnw7mcizxpaoarvx2c2sejaz2skaiyyac7oo5y6loyjgp@5v3sldwbqpw5>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <xmk5uvnw7mcizxpaoarvx2c2sejaz2skaiyyac7oo5y6loyjgp@5v3sldwbqpw5>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI1PR02CA0031.apcprd02.prod.outlook.com
- (2603:1096:4:1f6::11) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:16f::16)
-X-Microsoft-Original-Message-ID:
- <5292aef0-e2b2-46ce-8d3c-2ac9c80cb5a5@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhmpXAuy"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-251ace3e7caso55681445ad.2
+        for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 03:55:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757501756; x=1758106556; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7GXWw8MaeHW/oWTutEt1o2w6pMSijMTWoDbapjmuta4=;
+        b=RhmpXAuy412dpTWC53XZdiegSzn/Lh1ov8R9+MbIiFVjW5MBO4kWfAE2RjWRjOJ0FD
+         B39j35na6kbd7b8jcZApNbHDQGBCq7mW7l8ENU80zRR0ZOatmmtZcp2ks6epbJH8whzP
+         r2blwuUFDZqDlmWEowrb3rVcVLk0qx6vnA/8f0y5UryiUdLzJtaMcK+pU5fTB8ukSyyM
+         CcpLT5AyCy4seXzk6n5ihY3lzyZvjlkP9B1cTSWzo96dUTLUqCw2YJls2WrDWYiOXys5
+         IJd2hiF0EA5Je+AFknYZcdvmGO1ymSOirQESVzRtDBeWxi3/7Tqn2Miq/JIfMRrl1sa5
+         ui0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757501756; x=1758106556;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7GXWw8MaeHW/oWTutEt1o2w6pMSijMTWoDbapjmuta4=;
+        b=nhx01inWaIvbN/Ej16HReXKb6qKcwyZusDNfT28eF7NqKCFNcnMCpSoqKTrwoQRbkK
+         VtMOXgnaZ2uzddqbYsipVBAMGy6/cQV28u2SQd8oSAcymf96P+UORitqPkDVFfVCvH4X
+         pIsxF79FKw7V6fhKS3JTQgKWqlmJ+oePfhBV2a3nuN0iAeX9251dfXu8SYRxSwI28M+k
+         uLsCujd0KnjT9Ok3yytEl0v88KVPnP8yU7VLwXqmEOdd8+O8UL28ABV/mQ22ZM8v8yna
+         5KJutofrxFE+jAD2j7WiqOdS/50K2xNm5B0fYo9AsnU6hL23dZuZOvcHjm4oq5J+DbIK
+         S6UQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWcOR9OBUJ8Yhx8e83+ciPS724KUY9Rqxlx4fXhSNjAA8q/hp4ChHN3EfniijKthiGAvhy7zBU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwoCA9gRs0ysQqfXnypVdY0rleNlhx8FF2cguHp6MYLUnkZ+pP4
+	JfLnhcIqptyltQYREvXucn7VDyjY2QtodQlHenzH/F6OZJWLvBucpb9q
+X-Gm-Gg: ASbGncspUd7j5mFWqrFPrxpDkgccb6pwX7Fl+/KNESlIrgQ3czlXcpQxdK3piePFlvj
+	jmA3H20AmszZ5v05xk4QBBMc80e5UPT/o3YMoqvqUcdxrFgUf9Oc57T5kKe9NLCp8AowyaxX6UM
+	McW6VP9invZXQ98HEf2tVzaNQI+0/a2lX2PzBAJtg6Dl71zA2Gc9+CQQlKsuygbsyGOxbVQmxGh
+	ViGGEK+6rK/7M3bXwp15fEqBM+i/YmCk3eAx5PczHPV74B77vYVu6EPtMFivWXBdEe0OPPOBnHM
+	pTWYCDv1YQBBynqgj5NGCosEwEmCwagLU55lAbMjYRB/mf4QtgQiySwUvqCf7+En/ytojJthtLx
+	TEY5ePVsRz/C72oJ8J1PSSM41tqPQafzi
+X-Google-Smtp-Source: AGHT+IEc1SZvL9menS2CCGzMWuE65vRhggNsjQ+wsTtnGKyo5BGQkanHUlzqFtbunROhAfHt5DJDzA==
+X-Received: by 2002:a17:902:e843:b0:24c:7f2f:d9e6 with SMTP id d9443c01a7336-2516d81a032mr191413965ad.10.1757501755737;
+        Wed, 10 Sep 2025 03:55:55 -0700 (PDT)
+Received: from localhost.localdomain ([119.8.44.69])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25a2a922630sm23903705ad.104.2025.09.10.03.55.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Sep 2025 03:55:55 -0700 (PDT)
+From: Han Gao <rabenda.cn@gmail.com>
+To: devicetree@vger.kernel.org,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Zixian Zeng <sycamoremoon376@gmail.com>,
+	Han Gao <rabenda.cn@gmail.com>
+Cc: linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dts: sophgo: sg2042: added numa id description
+Date: Wed, 10 Sep 2025 18:55:31 +0800
+Message-ID: <20250910105531.519897-1-rabenda.cn@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PN2PR01MB10334:EE_
-X-MS-Office365-Filtering-Correlation-Id: a5b3abb4-1bf6-4ba2-3a1e-08ddf0190f94
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|8060799015|19110799012|461199028|5072599009|6090799003|15080799012|52005399003|40105399003|3412199025|440099028|41105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?anVmZjlkYUJGQlpFellURUFNdGhCNHQ5Z0VndmtCU0lxb2hXQjNjZjdGeG5H?=
- =?utf-8?B?cEppVU9BTExrQWxDOWZxdXdJcjl5dklFOE8xeWJ4ajZGRFlUc0JKRVp1YVRl?=
- =?utf-8?B?UlZFaU1uQ01sbnBvcnk4cEhmbFF0bU1RVm1PcnVQa1lodjgyaTJOZ2tYcDNa?=
- =?utf-8?B?YWhGbzhRdmRULyt2S3dDdTZGSFpDTXFWdW5XUzQxREF1Sjc2aUh6UlBTTU1i?=
- =?utf-8?B?amV1RzRYSUdYUndVVjN5eW5vMUZmNTZRNDJJR09UY2xTOWt2V2l3U0RDTlJs?=
- =?utf-8?B?T2NzSXVMN3NMQUJ2WG8rQjVXa2NBRHZFRlE0UEtQRXFSSzN1VmtWQzVoa2hP?=
- =?utf-8?B?TjZKUnA5Rm4rNnBIc3BLRlVESDVXT25LVlJJWngyMXlaZUd6SDh2OEo3ZWxB?=
- =?utf-8?B?TTNFMG9wd2tEWkZjUWY0MWZOY1R2NTIxOGdzejYraVUvNEltVFdhaXlwdlF2?=
- =?utf-8?B?VHd2QzNYUGlDenNWSFNlS0MyejZjZVR2Y2Q0c1RzTmgvL0FTTXRVT0FWSXFH?=
- =?utf-8?B?QVNUUmgwME5VbytzbVoyTDZuRlo0ZEUzeS84VFdvMUFCVmUxa3pQd0FuZVhy?=
- =?utf-8?B?VFlJcnZYQVdwRUtLSW9rcklLb2QyZ0ZXVUFtUE9MclRuYlJzYmxPcms4bjNs?=
- =?utf-8?B?OE5DREZJWWozTjR4dHhkeGFGaG5OcE9GMVBsZUc1d3FGU04vU3pudy9OTmtW?=
- =?utf-8?B?bHlVWHZ4K3lId3lhRkhPd3IwOFdsbjh2YTA3SnhDYlV4VWk1VWlGc0tkUG9Y?=
- =?utf-8?B?SC9MSlY3OFFrQUpBd3FFRHh1S0NLMFpYdjg1aVBSUkJ4a3FaNENCaEZJcW1z?=
- =?utf-8?B?TFZPYjlUQWVReERVZjNad3c2YnVNZlNZVUxLZE8zUElFNS9pMGlxTUZacnZV?=
- =?utf-8?B?NUF4WlFENzhBT3VIbENWN0xFbGNrcUVINGY4U1RqVGx0WjhZcnN4eVBjcDNQ?=
- =?utf-8?B?aWZQb2VWK29hRFJmek1pSVNhNWk3SGY3TlRQZjlFeFVKWGRidFpoRkhZcDBi?=
- =?utf-8?B?RmxtUHVuZmlwSEw5U3dqRVlObmFnWkh4aDltWjQrbk0vb1RFR1FxaDhVUnR4?=
- =?utf-8?B?eEd6Z3JMTGp6MnFmS1p1b1JGZGtvVEI2WG5yc002Q0NNL29yekdROHBHbk5X?=
- =?utf-8?B?WTRoNGszSzA3NW9EeEZXZ05TOCtuSWdRaERWUWQ2aGdtZWxJM0VrV0x5RzA2?=
- =?utf-8?B?aWYveXI3WDcrNHh0QktLZkJDR0hKK2NTSlBydWNWM0VQaVplN3pZZS9maUpZ?=
- =?utf-8?B?ZExCbDA0a0RzY2pteVhKTnhOSGxRMTk5d28xVXlPbWNCN1JBUUpLSk1kNVZS?=
- =?utf-8?B?SVRsRFVvejZFTW9UMFpWY3Rsbnp0bzA4anFCUFNselhld0hVREdlWEFNSGZS?=
- =?utf-8?B?aVJhT3c2V2VnU2U3VlRZMGpFNkkwMFg5SnBGYUhvSG56V3oxNUtJSXBXNGZL?=
- =?utf-8?B?RHBsRWpSVmxsc1VhL2xiWnRLYVdjY0RaOVljaUgxYUhxOTltaFVWUTVrUmtC?=
- =?utf-8?B?czRHdVdHTlVDdkphczErVTRwMnk1akF3OTdydU56dWtIaDhGRytoMklJd0lD?=
- =?utf-8?B?VFFPWSsrVjI3QitldjNnTGRxbWRjVjVzL1dmR05aQ0JMakxIMktjTjhqTDhC?=
- =?utf-8?Q?h1CPqrlqOZ5e8+sX+R++5toX3iAgZ303T3E/Nz8rq8aM=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cmFxdS9QV2prN0lIc2dFUzd3NERjNkNKQ0xGNzR1SEgxT1JOd2tJWmZhQ1pM?=
- =?utf-8?B?Sy9jL1NZWE05VEgza0pmSmt6NmZoZFVjWm90ZlZpTzFuYnNqUk1sY1VWZlR6?=
- =?utf-8?B?QTN1N29uTHFwb2I5UFlsT0RMN2RKM1Nob1QxVWVWMUt2L0dnbXVuUFBML3pl?=
- =?utf-8?B?VllkdTdIWENsRFVpMTVUVklQb3l3enRGZkEyK0Y0bnVMRWFoTnVHUWlIbTFG?=
- =?utf-8?B?UUxERnp0aEM4dWFVSm16V3Y5Y3QzM2U0b29zNHNTSDZZcjc4MTdRVnJkUGxQ?=
- =?utf-8?B?QUZVaklCNmlwWkZKWUwyOWxkdE4wL0RaTlVNbEdwa1Bla1YwNFF1UGdPWld5?=
- =?utf-8?B?Vm0zWXNDOC8zMWM0SlRISlNINTE3WHFIUG9zQUgvQi91UUk3VGVadVVXOVVy?=
- =?utf-8?B?OEg1eVhOSTl5UFo2Tjh2aU1iQXJuWHl1UjU2ZllLUTZEMTl5ZGl0ZnZIWGhS?=
- =?utf-8?B?QjNNeHNpamNFeWhVV2JZa2pSeTN2L2tlbXlBZDB0dktMK3VjWHV6a3lhcXBZ?=
- =?utf-8?B?cHZUcVBvcVp0TGdOcWVScTdQdjdXcTliZ2ROZitXVVZsU0NmcDJaMlgvRHQx?=
- =?utf-8?B?N2xCdHM3d2FGNi85L0ZUem1jOGUrdnoxVmNoWWkySU1qeGpJVTNoQVoyVFkz?=
- =?utf-8?B?dWpsdTU5YzZiY2x4UG1BRjhHYytFU0g3emZhdTFleTRPdlNUVlJQbVdrQnNR?=
- =?utf-8?B?NysyQm0vbHB2bEwrNTlidWgrTzRMd0dtU1dmMnAwWk44YWxTV2ZTVFpoc2ox?=
- =?utf-8?B?dm9pN3QxcW1SVWl1Q2JjVk5wSk94SDI4ZU94dXBsYlgyWHA4VTdTUHZiRG5p?=
- =?utf-8?B?YTZXTmI3dStVeGFvSWFsT0d0M0RxRjc4Y3Zld3NlMWtBYnlCR25COHFtdDNr?=
- =?utf-8?B?RmQyYXJtVEhVZFhoTHByU01uTzdDVGlIcTZqWXlralRSQ2tBWnBDbHNJMVZn?=
- =?utf-8?B?T3paaW9UY1dleG8rZXNid0ptalZmMTMrMFpJR1JiV1RQNFdEN2RzZmtCaGZZ?=
- =?utf-8?B?dS8xOVpiNzQ4aUZvbDJ3MDRxdFEwMGJJU3BrOFBJajJkT1NOR0swM2VCUzdp?=
- =?utf-8?B?K3M0a3RGclhtN1Y4YjRudXFxNXdBS1A2YWxISVV4aGkzNm9aZ0lNbjYvTW1W?=
- =?utf-8?B?YUR3QW5uKy9rYUtEZDVvRXpoWFh4OWtuUk41djdNTU9zMjE0YXhxZUg2c0VT?=
- =?utf-8?B?MzNXNlUvdlhzTXRIRHVzQXE4aGRSQVl6Tk9kT05yTmlKOHc1VWZYaHV3N3Bt?=
- =?utf-8?B?ZlIzdG1XOHYvRjRvOHB3K282VVZIYW5mQ1M3Rk9sZk1nb2hXQkRkTUs2VkpR?=
- =?utf-8?B?V0s5aDFsSUdwRERwVHNMWjF0TmcvRGRJZ0ozQnFIb21LVWRaS2JrV05KbmpL?=
- =?utf-8?B?MlkwQzI4dlUwcjVPT0l0MEw5YlVocEJaRDdDbzNnbmpuWWNJdGhSQUVSWnJZ?=
- =?utf-8?B?VTRVeFQvc3B1OENHeWQ2ejdTMDVlVG1ERlQvT290N2ZaQVdVWkV2UUtqN1ZX?=
- =?utf-8?B?SjJiMkRoSXNOUnF3K3cyRDdmeVV0elhZVDUweUVCeUdXd2pEWXVCTlA0SU81?=
- =?utf-8?B?VjlQSUZhTStlUjAvOEtXamw3ZUcwaTJaOThqUlJjakNkTGxueTZiekplMW1n?=
- =?utf-8?B?d2x2aG1odHVoZnQvbFg1Z2wvQ3psc2hINVlVU09aZlFCVlMzK1lYenN1N2RC?=
- =?utf-8?B?ZWh3N2hmZXdsQllLRDBnQkVmQnhzaVFJVFlwUmVROElLT1h6TmdkL0N1NElG?=
- =?utf-8?Q?gEKNB99vV5rE4b1JzBDndYfKeCgpiIxDKkHKvUf?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5b3abb4-1bf6-4ba2-3a1e-08ddf0190f94
-X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Sep 2025 03:20:58.6624
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB10334
+Content-Transfer-Encoding: 8bit
 
+According to the description of [1], sg2042 is divided into 4 numa.
+STREAM test performance will improve.
 
-On 9/10/2025 10:56 AM, Inochi Amaoto wrote:
-> On Wed, Sep 10, 2025 at 10:08:39AM +0800, Chen Wang wrote:
+Before:
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:           10739.7     0.015687     0.014898     0.016385
+Scale:          10865.9     0.015628     0.014725     0.016757
+Add:            10622.3     0.023276     0.022594     0.023899
+Triad:          10583.4     0.023653     0.022677     0.024761
 
-[......]
+After:
+Function    Best Rate MB/s  Avg time     Min time     Max time
+Copy:           34254.9     0.005142     0.004671     0.005995
+Scale:          37735.5     0.004752     0.004240     0.005407
+Add:            44206.8     0.005983     0.005429     0.006461
+Triad:          43040.6     0.006320     0.005576     0.006996
 
->> +static void sg2042_pcie_remove(struct platform_device *pdev)
->> +{
->> +	struct cdns_pcie *pcie = platform_get_drvdata(pdev);
->> +
->> +	cdns_pcie_disable_phy(pcie);
->> +}
->> +
-> I think this remove is useless, as it is almost impossible to
-> remove a pcie at runtime.
+[1] https://github.com/sophgo/sophgo-doc/blob/main/SG2042/TRM/source/pic/mesh.png
 
-I think since we implemented the driver as a module, supporting remove 
-is also a requirement for completeness. So I add this as per request 
-from Manivannan in the last review.
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+---
+ arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi | 64 +++++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi      | 20 +++++++
+ 2 files changed, 84 insertions(+)
 
-Thanks，
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi b/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
+index 77ded5304272..94a4b71acad3 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
+@@ -272,6 +272,7 @@ cpu0: cpu@0 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache0>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu0_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -299,6 +300,7 @@ cpu1: cpu@1 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache0>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu1_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -326,6 +328,7 @@ cpu2: cpu@2 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache0>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu2_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -353,6 +356,7 @@ cpu3: cpu@3 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache0>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu3_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -380,6 +384,7 @@ cpu4: cpu@4 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache1>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu4_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -407,6 +412,7 @@ cpu5: cpu@5 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache1>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu5_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -434,6 +440,7 @@ cpu6: cpu@6 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache1>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu6_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -461,6 +468,7 @@ cpu7: cpu@7 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache1>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu7_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -488,6 +496,7 @@ cpu8: cpu@8 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache4>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu8_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -515,6 +524,7 @@ cpu9: cpu@9 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache4>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu9_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -542,6 +552,7 @@ cpu10: cpu@10 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache4>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu10_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -569,6 +580,7 @@ cpu11: cpu@11 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache4>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu11_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -596,6 +608,7 @@ cpu12: cpu@12 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache5>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu12_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -623,6 +636,7 @@ cpu13: cpu@13 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache5>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu13_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -650,6 +664,7 @@ cpu14: cpu@14 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache5>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu14_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -677,6 +692,7 @@ cpu15: cpu@15 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache5>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu15_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -704,6 +720,7 @@ cpu16: cpu@16 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache2>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu16_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -731,6 +748,7 @@ cpu17: cpu@17 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache2>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu17_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -758,6 +776,7 @@ cpu18: cpu@18 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache2>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu18_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -785,6 +804,7 @@ cpu19: cpu@19 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache2>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu19_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -812,6 +832,7 @@ cpu20: cpu@20 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache3>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu20_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -839,6 +860,7 @@ cpu21: cpu@21 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache3>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu21_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -866,6 +888,7 @@ cpu22: cpu@22 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache3>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu22_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -893,6 +916,7 @@ cpu23: cpu@23 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache3>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <0>;
+ 
+ 			cpu23_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -920,6 +944,7 @@ cpu24: cpu@24 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache6>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu24_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -947,6 +972,7 @@ cpu25: cpu@25 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache6>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu25_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -974,6 +1000,7 @@ cpu26: cpu@26 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache6>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu26_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1001,6 +1028,7 @@ cpu27: cpu@27 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache6>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu27_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1028,6 +1056,7 @@ cpu28: cpu@28 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache7>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu28_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1055,6 +1084,7 @@ cpu29: cpu@29 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache7>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu29_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1082,6 +1112,7 @@ cpu30: cpu@30 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache7>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu30_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1109,6 +1140,7 @@ cpu31: cpu@31 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache7>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <1>;
+ 
+ 			cpu31_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1136,6 +1168,7 @@ cpu32: cpu@32 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache8>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu32_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1163,6 +1196,7 @@ cpu33: cpu@33 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache8>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu33_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1190,6 +1224,7 @@ cpu34: cpu@34 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache8>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu34_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1217,6 +1252,7 @@ cpu35: cpu@35 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache8>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu35_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1244,6 +1280,7 @@ cpu36: cpu@36 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache9>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu36_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1271,6 +1308,7 @@ cpu37: cpu@37 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache9>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu37_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1298,6 +1336,7 @@ cpu38: cpu@38 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache9>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu38_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1325,6 +1364,7 @@ cpu39: cpu@39 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache9>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu39_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1352,6 +1392,7 @@ cpu40: cpu@40 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache12>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu40_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1379,6 +1420,7 @@ cpu41: cpu@41 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache12>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu41_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1406,6 +1448,7 @@ cpu42: cpu@42 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache12>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu42_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1433,6 +1476,7 @@ cpu43: cpu@43 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache12>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu43_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1460,6 +1504,7 @@ cpu44: cpu@44 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache13>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu44_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1487,6 +1532,7 @@ cpu45: cpu@45 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache13>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu45_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1514,6 +1560,7 @@ cpu46: cpu@46 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache13>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu46_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1541,6 +1588,7 @@ cpu47: cpu@47 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache13>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu47_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1568,6 +1616,7 @@ cpu48: cpu@48 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache10>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu48_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1595,6 +1644,7 @@ cpu49: cpu@49 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache10>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu49_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1622,6 +1672,7 @@ cpu50: cpu@50 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache10>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu50_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1649,6 +1700,7 @@ cpu51: cpu@51 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache10>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu51_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1676,6 +1728,7 @@ cpu52: cpu@52 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache11>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu52_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1703,6 +1756,7 @@ cpu53: cpu@53 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache11>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu53_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1730,6 +1784,7 @@ cpu54: cpu@54 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache11>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu54_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1757,6 +1812,7 @@ cpu55: cpu@55 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache11>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <2>;
+ 
+ 			cpu55_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1784,6 +1840,7 @@ cpu56: cpu@56 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache14>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu56_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1811,6 +1868,7 @@ cpu57: cpu@57 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache14>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu57_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1838,6 +1896,7 @@ cpu58: cpu@58 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache14>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu58_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1865,6 +1924,7 @@ cpu59: cpu@59 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache14>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu59_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1892,6 +1952,7 @@ cpu60: cpu@60 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache15>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu60_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1919,6 +1980,7 @@ cpu61: cpu@61 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache15>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu61_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1946,6 +2008,7 @@ cpu62: cpu@62 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache15>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu62_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+@@ -1973,6 +2036,7 @@ cpu63: cpu@63 {
+ 			d-cache-sets = <512>;
+ 			next-level-cache = <&l2_cache15>;
+ 			mmu-type = "riscv,sv39";
++			numa-node-id = <3>;
+ 
+ 			cpu63_intc: interrupt-controller {
+ 				compatible = "riscv,cpu-intc";
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index b3e4d3c18fdc..029561b6ad81 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -19,6 +19,26 @@ / {
+ 	#size-cells = <2>;
+ 	dma-noncoherent;
+ 
++	distance-map {
++		compatible = "numa-distance-map-v1";
++		distance-matrix = <0 0 10>,
++				  <0 1 15>,
++				  <0 2 25>,
++				  <0 3 30>,
++				  <1 0 15>,
++				  <1 1 10>,
++				  <1 2 30>,
++				  <1 3 25>,
++				  <2 0 25>,
++				  <2 1 30>,
++				  <2 2 10>,
++				  <2 3 15>,
++				  <3 0 30>,
++				  <3 1 25>,
++				  <3 2 15>,
++				  <3 3 10>;
++	};
++
+ 	aliases {
+ 		serial0 = &uart0;
+ 	};
+-- 
+2.47.3
 
-Chen
-
-> Regards,
-> Inochi
