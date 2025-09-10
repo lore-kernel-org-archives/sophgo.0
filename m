@@ -1,63 +1,63 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2EF2309B3
-	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 02:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2730230274
+	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 02:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757470130; cv=none; b=IKWIKh3CJX//Xf4p/Wik1d8JKSh4KhUgaUdmTsVwArthJVYupyB39JwBcnO279BC8cbYv0NRfYerLjg2/GFknMRX2sU9sE0/w2PrZviWofGmRM2Ewkh4ONnoniCUmORQtxsOn/LrZLDve7mD00CcbtBU2gVFYKCrfgrpcrYRkGA=
+	t=1757470165; cv=none; b=q5bqf75p+UAqrhQaRESYlQWcswoPKec9GvRPvuDxhS842U1rZBHxqPxl0FdPAGjGmYSZb4r/whjkoC0nKaggprmu3xW93qM0qhcgPApYZaDyrsRIUAO2+UcuoP9D3Q9Lv71YT70zViIf0MmeIYFpozfi6YlhbczA44V3R6Y//DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757470130; c=relaxed/simple;
-	bh=khIEoJhgTqQOec4hXOVd9L/mM09/lGczpz+2cb8Mj1c=;
+	s=arc-20240116; t=1757470165; c=relaxed/simple;
+	bh=7smwJj7dQIrNWzLpxsZgOxIEd7UE823bj8z0yhG3OBw=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=CaRtCvXa6waycOEr1mlVsSrNMsD7Cc45gRQGg8cHFwQq0r8aBTCwwwlOaR1zXyh1yXilpSPFFs0+atAEEfmDpXqcO9JSm2tfz+emKBAY/BmNcFEkkGkr5ib4PqrUC4xbyxZjtFX0uWhXP22CdaEFneJLcF3ghvHKWPyAoJ10hro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwKZG+Cq; arc=none smtp.client-ip=209.85.219.48
+	 MIME-Version; b=iOMVJGLADnnbFBQS65rYouRnxBI5OcXpbNitILvDCpEoO1mmqlhnBUwjYPRykpMKXQyNGROxULsRAwf1jOOk+TnvQ1RTRikUmQXRODVUM3Le3kRJGhb15HTLdyNkkB1PiJTRrjBShtviUoWxoZQW99I7UvtILYJoSgJqJa8vCaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D21eH5PI; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwKZG+Cq"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-726e7449186so68934266d6.0
-        for <sophgo@lists.linux.dev>; Tue, 09 Sep 2025 19:08:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D21eH5PI"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-807e414be94so617679185a.1
+        for <sophgo@lists.linux.dev>; Tue, 09 Sep 2025 19:09:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757470128; x=1758074928; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757470163; x=1758074963; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/1kKuKImv7GctF9OqERXtoZe8KO1bpSjPCvzB+6cOlo=;
-        b=AwKZG+CqMkm9YQ2XrUpJbkYQcROIurzrVpf8osNBcQCF+CAizSQU+t/Yoy4iLFjcK2
-         vSZeRrkPg18QYl43IEuQANFQ2R3vG62cMuPf+txPA27FOvXQ4R1u1u9iHDGJCkQ2gfb5
-         hgq3V12W4l2X2GzsRuiCvOxd74eAzmO0DuFqp98zpyaNx9LjfKTuerHXhr8h721ticGF
-         uktzH05IeJS0RtIapyTv0AZL1Md/D3Pbn7J50FvhRpb2Cs9fN2WWXBZWiuPkQzxGbthP
-         AuM5srrUm9hkAkqLpJVIoQf5X98+Nuee+vcvjKgK+EzBmjnZLM7mpLTRujUo0zUnzRVj
-         XDdg==
+        bh=gvwjuScXFIOkNO4l0NAjh5hmUBFBDILktbVX+sGXQiQ=;
+        b=D21eH5PIyZ44rZ9Q9YyjczTqD1yPWSJecjJ71OjaVDLfpn0uUxicH33UrfHCjejVFj
+         7udvZ1RMcieqHBLvWMqe+aa7Sw1qAdDpkkn1/Ih3fvNwbFdbMdy60XRKWdnFEQH2F+xq
+         RCB79d0GX8cLGQa0L1dDL4BQ9IVZAX9k6jgnVHMuPDu1mEM5guoSfWVt1Wtg2O0o/1cV
+         P3fpzppHMms1hyDwDwVc320l9iXtpZ6b1K5UinkXZKXq/TifCbcjDPUpJDHhn2S/FQuR
+         kAwEameOBDHLyxxQxfporkggJ/yfOZZUqB9DNJW1i8Up9F6XKF4fapsl4+Rc1htt7Ags
+         6Klg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757470128; x=1758074928;
+        d=1e100.net; s=20230601; t=1757470163; x=1758074963;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/1kKuKImv7GctF9OqERXtoZe8KO1bpSjPCvzB+6cOlo=;
-        b=BML2+qsgPVj/nj2UD6gHLX3cZ0+w1DDfIiX02KgJAN6sUjhLMkAjXltk9lPz7YD7aj
-         EEnJRR2ULT0T8+04l/fIFRfwVfaiO8dl5y9ySuucSgoF4e94vMyIeHC6YU6f1oj09Qja
-         fJBq9tVvIl/cFydiw7l/rbX8OlnqPfy1Z1bvnsHqdAZmmSSgt/BLgFGeyoYqcwgYWO2l
-         MWdlxYbqhzgQsjxJ5WRu0OABksLB3Gar/5qGFONwSPJWDMk995X0xR2AJ/v6Io5NFFp0
-         x2hfkDubUgj4qhzfhS05YfhQqNFPFaXFEYl7dnoKc0InmVLbSD+lkzjzQklacZOasZkC
-         AV3w==
-X-Forwarded-Encrypted: i=1; AJvYcCU6jYSxEEM8iE+e4zO4LEPMLh9diD6w41YwTHVlfxTpRfalq1jTgpD2YxWaWcCGHrc76z4K8H0=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy+H+fYJpPuLul++ilAgOvtwat6WjW/JZeAwcOR/5fKdCN5SDO1
-	sKUjHGxHi6rnwO2nIbeHFi/alIwKTfNVcVZmMvsklFf6NKMiHvqzxyvE
-X-Gm-Gg: ASbGncvYLmukMc7vwwv5VBmNquzsd+1oJ1Hpway7UImwgddSgZx/28wcaWdvReDUOVJ
-	FjpOcySXEGNOgANtEgx0gzLgMca5OLmaHS5oWsuViQwzJaSfA327GlpMRIEoUNELycQG2mGOcG9
-	n7XOCorIF0kSeik1oqO8RlX5uhx0jaaLZaXnvhtbT884rljstbdk9nVjNm5RTW0gTUSyqZ45z8A
-	RtandeXQH3JBI9gOXJTE1JZLelu9ox17+26uKn9PU6oN5Lj7jPc3fRGa7AOWGaPOuf5h8JfzPlK
-	JvszfiptAleVFA2rAnZiSC6c63qZeYRC5xHHGIqe2VGZ7b6+cmyS7A+/uts/KLxFJtP6RYnBJtc
-	J36Tdqa8vwnVhT8PebYSLWt82cP7EP3Ww
-X-Google-Smtp-Source: AGHT+IEP0LcAhoihnbV2d1OBh2Z6NJtDjWlEEi8NwAlfZHgJtJ8a8yODK14yeBgI516xZ4vfhQNFaQ==
-X-Received: by 2002:a05:6214:2421:b0:720:e5a:fe3b with SMTP id 6a1803df08f44-7394425a27dmr153957196d6.58.1757470128096;
-        Tue, 09 Sep 2025 19:08:48 -0700 (PDT)
+        bh=gvwjuScXFIOkNO4l0NAjh5hmUBFBDILktbVX+sGXQiQ=;
+        b=PXPOZ0lVTAlDT9K6BkZvlCTXeoVs1v1+2ISkXLBOTQSv+HEY8xYyMMIS057fzd1ZNw
+         I5Bwahl3XXSTZ1JOo9GATtDlT2aQJsA0rC2PJiGsL8ew229MsUiuML9s6NKIEqbVtAuE
+         HVwvwu52Qkbec2+XWFXWMF/q4vNTMA7Hj0v81+3WqcjzF2M+vHpNYm3463IbvDhEaXAL
+         m7P//stYYMjwp0+hpqjyDrZOlOOPC7qW5jzGyvZGeG5karAHTWPFRaBL+rxpgusz9y05
+         JVJTRF9CNy5p2svftHy8H+yzQrBEtK8eEZzqhAktIGm3lTQqeIKrMn6WHsrcumfR/XQb
+         I2lg==
+X-Forwarded-Encrypted: i=1; AJvYcCVh073KAMVAka00HvuUGDzKQId5fBE4GYnxhXh79Uu1vJ44e/FCeuHHaJTKc0Y1CGxlputQHyE=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw8Towj2Dw/QB065ilnFkKml6BIB2JWylxupM0q44s7TtheEYW8
+	CA8kMiEyxaH32Vaf79EcJiIeEFioFjDCcfFDI3SE8gEeljbdLv6mZUax
+X-Gm-Gg: ASbGncsFVNFkwqYj3wAIWu34e8LmagBbAK16xAMbCDfpUOg2PEwULRktYEDOfLd2fiH
+	NTvU8nsx50tYfsiisY5CR+zQotBaLDvjey6xZ0LzFo7nZrAUMBuB+EQMhlHdrOEcfWxPPp/zlUd
+	U68Ma1Uj9Us98FfxCeU8B9cROOqO7/GejpkuwRNmM8bFJ7t3KH4YN+YMAql2K+afTjVmIwQjI5P
+	uSTFC5Q0lzwW+Chf7afclxVhk8lpYrP0sNoBkDNC5jQmLBmCwqJlEoKo0lWgywIsi1G15UOYz39
+	wOV++JOIEG9hseMBZeoiCN3BL0T3S/wfhHt0DwcY7sDFVhdU0vQvZlVqwfh0kZOVDYk0biKOAA1
+	XDAf/2EQBCuAZ1KqW4mfMovB8ji0sBu76
+X-Google-Smtp-Source: AGHT+IGWK15y3cJ0ySkBVFDMFIUT+JGKHEf8Zddz6BKl48R5eLCXjRJsTMqwRryUollNpWDOlRLpqQ==
+X-Received: by 2002:a05:622a:409:b0:4b4:9666:f1d0 with SMTP id d75a77b69052e-4b5f8445a7emr145405181cf.49.1757470163006;
+        Tue, 09 Sep 2025 19:09:23 -0700 (PDT)
 Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-725dda254d4sm132429776d6.8.2025.09.09.19.08.45
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b61ba742f9sm17682681cf.10.2025.09.09.19.09.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 19:08:47 -0700 (PDT)
+        Tue, 09 Sep 2025 19:09:22 -0700 (PDT)
 From: Chen Wang <unicornxw@gmail.com>
 To: kwilczynski@kernel.org,
 	u.kleine-koenig@baylibre.com,
@@ -90,9 +90,9 @@ To: kwilczynski@kernel.org,
 	chao.wei@sophgo.com,
 	xiaoguang.xing@sophgo.com,
 	fengchun.li@sophgo.com
-Subject: [PATCH v2 3/7] PCI: sg2042: Add Sophgo SG2042 PCIe driver
-Date: Wed, 10 Sep 2025 10:08:39 +0800
-Message-Id: <162d064228261ccd0bf9313a20288e510912effd.1757467895.git.unicorn_wang@outlook.com>
+Subject: [PATCH v2 4/7] riscv: sophgo: dts: add PCIe controllers for SG2042
+Date: Wed, 10 Sep 2025 10:09:13 +0800
+Message-Id: <5cecf3c854253e508a88995011dd4631fa0c6eae.1757467895.git.unicorn_wang@outlook.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1757467895.git.unicorn_wang@outlook.com>
 References: <cover.1757467895.git.unicorn_wang@outlook.com>
@@ -106,164 +106,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Wang <unicorn_wang@outlook.com>
 
-Add support for PCIe controller in SG2042 SoC. The controller
-uses the Cadence PCIe core programmed by pcie-cadence*.c. The
-PCIe controller will work in host mode only, supporting data
-rate(gen4) and lanes(x16 or x8).
+Add PCIe controller nodes in DTS for Sophgo SG2042.
+Default they are disabled.
 
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- drivers/pci/controller/cadence/Kconfig       |  10 ++
- drivers/pci/controller/cadence/Makefile      |   1 +
- drivers/pci/controller/cadence/pcie-sg2042.c | 104 +++++++++++++++++++
- 3 files changed, 115 insertions(+)
- create mode 100644 drivers/pci/controller/cadence/pcie-sg2042.c
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi | 88 ++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
-diff --git a/drivers/pci/controller/cadence/Kconfig b/drivers/pci/controller/cadence/Kconfig
-index 666e16b6367f..02a639e55fd8 100644
---- a/drivers/pci/controller/cadence/Kconfig
-+++ b/drivers/pci/controller/cadence/Kconfig
-@@ -42,6 +42,15 @@ config PCIE_CADENCE_PLAT_EP
- 	  endpoint mode. This PCIe controller may be embedded into many
- 	  different vendors SoCs.
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index b3e4d3c18fdc..b521f674283e 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -220,6 +220,94 @@ clkgen: clock-controller@7030012000 {
+ 			#clock-cells = <1>;
+ 		};
  
-+config PCIE_SG2042_HOST
-+	tristate "Sophgo SG2042 PCIe controller (host mode)"
-+	depends on OF && (ARCH_SOPHGO || COMPILE_TEST)
-+	select PCIE_CADENCE_HOST
-+	help
-+	  Say Y here if you want to support the Sophgo SG2042 PCIe platform
-+	  controller in host mode. Sophgo SG2042 PCIe controller uses Cadence
-+	  PCIe core.
++		pcie_rc0: pcie@7060000000 {
++			compatible = "sophgo,sg2042-pcie-host";
++			device_type = "pci";
++			reg = <0x70 0x60000000  0x0 0x00800000>,
++			      <0x40 0x00000000  0x0 0x00001000>;
++			reg-names = "reg", "cfg";
++			linux,pci-domain = <0>;
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0  0xc0000000  0x40 0xc0000000  0x0 0x00400000>,
++				 <0x42000000 0x0  0xd0000000  0x40 0xd0000000  0x0 0x10000000>,
++				 <0x02000000 0x0  0xe0000000  0x40 0xe0000000  0x0 0x20000000>,
++				 <0x43000000 0x42 0x00000000  0x42 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x41 0x00000000  0x41 0x00000000  0x1 0x00000000>;
++			bus-range = <0x0 0xff>;
++			vendor-id = <0x1f1c>;
++			device-id = <0x2042>;
++			cdns,no-bar-match-nbits = <48>;
++			msi-parent = <&msi>;
++			status = "disabled";
++		};
 +
- config PCI_J721E
- 	tristate
- 	select PCIE_CADENCE_HOST if PCI_J721E_HOST != n
-@@ -67,4 +76,5 @@ config PCI_J721E_EP
- 	  Say Y here if you want to support the TI J721E PCIe platform
- 	  controller in endpoint mode. TI J721E PCIe controller uses Cadence PCIe
- 	  core.
++		pcie_rc1: pcie@7060800000 {
++			compatible = "sophgo,sg2042-pcie-host";
++			device_type = "pci";
++			reg = <0x70 0x60800000  0x0 0x00800000>,
++			      <0x44 0x00000000  0x0 0x00001000>;
++			reg-names = "reg", "cfg";
++			linux,pci-domain = <1>;
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0  0xc0400000  0x44 0xc0400000  0x0 0x00400000>,
++				 <0x42000000 0x0  0xd0000000  0x44 0xd0000000  0x0 0x10000000>,
++				 <0x02000000 0x0  0xe0000000  0x44 0xe0000000  0x0 0x20000000>,
++				 <0x43000000 0x46 0x00000000  0x46 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x45 0x00000000  0x45 0x00000000  0x1 0x00000000>;
++			bus-range = <0x0 0xff>;
++			vendor-id = <0x1f1c>;
++			device-id = <0x2042>;
++			cdns,no-bar-match-nbits = <48>;
++			msi-parent = <&msi>;
++			status = "disabled";
++		};
 +
- endmenu
-diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
-index 9bac5fb2f13d..5e23f8539ecc 100644
---- a/drivers/pci/controller/cadence/Makefile
-+++ b/drivers/pci/controller/cadence/Makefile
-@@ -4,3 +4,4 @@ obj-$(CONFIG_PCIE_CADENCE_HOST) += pcie-cadence-host.o
- obj-$(CONFIG_PCIE_CADENCE_EP) += pcie-cadence-ep.o
- obj-$(CONFIG_PCIE_CADENCE_PLAT) += pcie-cadence-plat.o
- obj-$(CONFIG_PCI_J721E) += pci-j721e.o
-+obj-$(CONFIG_PCIE_SG2042_HOST) += pcie-sg2042.o
-diff --git a/drivers/pci/controller/cadence/pcie-sg2042.c b/drivers/pci/controller/cadence/pcie-sg2042.c
-new file mode 100644
-index 000000000000..c026e1ca5d6e
---- /dev/null
-+++ b/drivers/pci/controller/cadence/pcie-sg2042.c
-@@ -0,0 +1,104 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * pcie-sg2042 - PCIe controller driver for Sophgo SG2042 SoC
-+ *
-+ * Copyright (C) 2025 Sophgo Technology Inc.
-+ * Copyright (C) 2025 Chen Wang <unicorn_wang@outlook.com>
-+ */
++		pcie_rc2: pcie@7062000000 {
++			compatible = "sophgo,sg2042-pcie-host";
++			device_type = "pci";
++			reg = <0x70 0x62000000  0x0 0x00800000>,
++			      <0x48 0x00000000  0x0 0x00001000>;
++			reg-names = "reg", "cfg";
++			linux,pci-domain = <2>;
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0  0xc0800000  0x48 0xc0800000  0x0 0x00400000>,
++				 <0x42000000 0x0  0xd0000000  0x48 0xd0000000  0x0 0x10000000>,
++				 <0x02000000 0x0  0xe0000000  0x48 0xe0000000  0x0 0x20000000>,
++				 <0x03000000 0x49 0x00000000  0x49 0x00000000  0x1 0x00000000>,
++				 <0x43000000 0x4a 0x00000000  0x4a 0x00000000  0x2 0x00000000>;
++			bus-range = <0x0 0xff>;
++			vendor-id = <0x1f1c>;
++			device-id = <0x2042>;
++			cdns,no-bar-match-nbits = <48>;
++			msi-parent = <&msi>;
++			status = "disabled";
++		};
 +
-+#include <linux/mod_devicetable.h>
-+#include <linux/pci.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
++		pcie_rc3: pcie@7062800000 {
++			compatible = "sophgo,sg2042-pcie-host";
++			device_type = "pci";
++			reg = <0x70 0x62800000  0x0 0x00800000>,
++			      <0x4c 0x00000000  0x0 0x00001000>;
++			reg-names = "reg", "cfg";
++			linux,pci-domain = <3>;
++			#address-cells = <3>;
++			#size-cells = <2>;
++			ranges = <0x01000000 0x0  0xc0c00000  0x4c 0xc0c00000  0x0 0x00400000>,
++				 <0x42000000 0x0  0xf8000000  0x4c 0xf8000000  0x0 0x04000000>,
++				 <0x02000000 0x0  0xfc000000  0x4c 0xfc000000  0x0 0x04000000>,
++				 <0x43000000 0x4e 0x00000000  0x4e 0x00000000  0x2 0x00000000>,
++				 <0x03000000 0x4d 0x00000000  0x4d 0x00000000  0x1 0x00000000>;
++			bus-range = <0x0 0xff>;
++			vendor-id = <0x1f1c>;
++			device-id = <0x2042>;
++			cdns,no-bar-match-nbits = <48>;
++			msi-parent = <&msi>;
++			status = "disabled";
++		};
 +
-+#include "pcie-cadence.h"
-+
-+/*
-+ * SG2042 only supports 4-byte aligned access, so for the rootbus (i.e. to
-+ * read/write the Root Port itself, read32/write32 is required. For
-+ * non-rootbus (i.e. to read/write the PCIe peripheral registers, supports
-+ * 1/2/4 byte aligned access, so directly using read/write should be fine.
-+ */
-+
-+static struct pci_ops sg2042_pcie_root_ops = {
-+	.map_bus	= cdns_pci_map_bus,
-+	.read		= pci_generic_config_read32,
-+	.write		= pci_generic_config_write32,
-+};
-+
-+static struct pci_ops sg2042_pcie_child_ops = {
-+	.map_bus	= cdns_pci_map_bus,
-+	.read		= pci_generic_config_read,
-+	.write		= pci_generic_config_write,
-+};
-+
-+static int sg2042_pcie_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct pci_host_bridge *bridge;
-+	struct cdns_pcie *pcie;
-+	struct cdns_pcie_rc *rc;
-+	int ret;
-+
-+	bridge = devm_pci_alloc_host_bridge(dev, sizeof(*rc));
-+	if (!bridge) {
-+		dev_err_probe(dev, -ENOMEM, "Failed to alloc host bridge!\n");
-+		return -ENOMEM;
-+	}
-+
-+	bridge->ops = &sg2042_pcie_root_ops;
-+	bridge->child_ops = &sg2042_pcie_child_ops;
-+
-+	rc = pci_host_bridge_priv(bridge);
-+	pcie = &rc->pcie;
-+	pcie->dev = dev;
-+
-+	platform_set_drvdata(pdev, pcie);
-+
-+	pm_runtime_set_active(dev);
-+	pm_runtime_no_callbacks(dev);
-+	devm_pm_runtime_enable(dev);
-+
-+	ret = cdns_pcie_init_phy(dev, pcie);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "Failed to init phy!\n");
-+		return ret;
-+	}
-+
-+	ret = cdns_pcie_host_setup(rc);
-+	if (ret) {
-+		dev_err_probe(dev, ret, "Failed to setup host!\n");
-+		cdns_pcie_disable_phy(pcie);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void sg2042_pcie_remove(struct platform_device *pdev)
-+{
-+	struct cdns_pcie *pcie = platform_get_drvdata(pdev);
-+
-+	cdns_pcie_disable_phy(pcie);
-+}
-+
-+static const struct of_device_id sg2042_pcie_of_match[] = {
-+	{ .compatible = "sophgo,sg2042-pcie-host" },
-+	{},
-+};
-+MODULE_DEVICE_TABLE(of, sg2042_pcie_of_match);
-+
-+static struct platform_driver sg2042_pcie_driver = {
-+	.driver = {
-+		.name		= "sg2042-pcie",
-+		.of_match_table	= sg2042_pcie_of_match,
-+		.pm		= &cdns_pcie_pm_ops,
-+	},
-+	.probe		= sg2042_pcie_probe,
-+	.remove		= sg2042_pcie_remove,
-+};
-+module_platform_driver(sg2042_pcie_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("PCIe controller driver for SG2042 SoCs");
-+MODULE_AUTHOR("Chen Wang <unicorn_wang@outlook.com>");
+ 		clint_mswi: interrupt-controller@7094000000 {
+ 			compatible = "sophgo,sg2042-aclint-mswi", "thead,c900-aclint-mswi";
+ 			reg = <0x00000070 0x94000000 0x00000000 0x00004000>;
 -- 
 2.34.1
 
