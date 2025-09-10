@@ -1,63 +1,63 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3B81F463C
-	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 02:09:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7ED235355
+	for <sophgo@lists.linux.dev>; Wed, 10 Sep 2025 02:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757470189; cv=none; b=LNRhHUBXaskP0jiINXgNcvQBEv2cfRr1FmJhJ8UKzVX8CoNbmAn75nk7b77N7I9d9anfOy85+jSbJnol6j6FVkAipgKJ4ZhPH4XnJzH4txG3Nfd+LtdCaTPGjRIbjvfyN/U184lV9lpRIIivUW+c/iC5HI4usIudt74TZ2ir+2Q=
+	t=1757470213; cv=none; b=KPRTfZIt6+jvEtkL95Ydf1tmmPlGnwzn+eYd7uac0Kvly54CXHB6VlXAnvGWy4cIwjwGFH8EFx3djrme/xs2J4ubzzHvsKagaRVDDrAtpoWQ9KxhsLu4unZFU9oUL40EmkC8DS1+IVzBNPIIo7oOKFCesdmCIO8uyhG+ucNb5Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757470189; c=relaxed/simple;
-	bh=dgpNPFFxsdIAjczNzjU4PLG/4kOomJBC5GhTApKNwOw=;
+	s=arc-20240116; t=1757470213; c=relaxed/simple;
+	bh=7ZMKBRn7WTwBL6qsn+lHI9SZa+lKRdoNg2FdbjpyDqE=;
 	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OZ0klcWgDGV6RG95oiUAQjx2SI5Py2DfqMsyrxTXEy/JG3UiX+GYMVL+D96BgAFe/tmJqQB7UWr0cDqBw1dMP6ezB9oYSc+lk2oFzV9FPvQJR6U4O8SSyhGamP8rRoCTEV5qrRnc+4iVk111gV91AlUw7rtiBaGIfG2gfzDZWY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dLRS+vcu; arc=none smtp.client-ip=209.85.219.44
+	 MIME-Version; b=rSRT3LuaCgXNUzq71EBtyl22/tFZfDBYRkVkciF6E6l9ABo0iUFRpc0n+RCPmJNH+9LRGHhAkilR7mHpIf924BEpEMD9HxMlObofkEjtipPg3sk8ghUJ+m7c/06kn4x+4nKePAxGrKYdNmuC9ZSNRsgt8cOHa7GjPF2Nga0Mydo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L9laIBcq; arc=none smtp.client-ip=209.85.160.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dLRS+vcu"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-726ee1a6af3so69973836d6.1
-        for <sophgo@lists.linux.dev>; Tue, 09 Sep 2025 19:09:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L9laIBcq"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4b5f6ae99c3so38056461cf.1
+        for <sophgo@lists.linux.dev>; Tue, 09 Sep 2025 19:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757470187; x=1758074987; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1757470211; x=1758075011; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7rSqoF1bhRIMRZ/Ngttka/3cr36QgYmwYc1FwmVj14E=;
-        b=dLRS+vcu0rCEBmh4LU4ZDouX06Y7EDckNtqMERW0xF8BubEnSikEB3m0PFicghbm9X
-         w+gLaXdfdyNAVIuyCteeCsurLLZgVHexEnUQHy9PMxFGtVi+JBJbB+TL69y0C+5y8bac
-         WQ++S3MHS+4/0p4lweRGjkALieY27ujGPuStIdpdpZrBSlqyDXv0zOwtNRmMc43WbAph
-         PHOiH5iHqiUwDzx4yBkoljvmhC1VVt62mE8Q+LhIkp0BWO3U6h8m1om3x9OS+VpI11cG
-         c93zW8Vd9WPZxLis5DoAFIOko7uFiZ3tw3rU5/tF5mPI+PRskNI11Dm5w0FvhjEV+VJ8
-         giHw==
+        bh=a0NX4YDlfnF2moHa0Gi9m7awPoXSV0rkM143rN50kIc=;
+        b=L9laIBcqM1bWDZCP7w3He5/l3LDG4K55CD6WYLoJJklyFEKHAJ6HGm43OwobqHEDtk
+         GAS5Nt0ZGfHfqUnS/conkZ6USstOOujXM27LG1wLv85Co53t7R/bAwmFe96cWcO08CAu
+         FDuxgdG9hZXrZZePswrsDxRY+V4cEyS1zmUBoGR9biIsOuZX5AcZeXlvQZZ3fH7Ur9L0
+         +PXsIbEg8ml5RP5bC433ZxmFW1vYtoESse0iwN5edh3oE+Y/WyqMMwyZsFFivAAMFJdg
+         bVZfwC4LYKllwyygUoH+i9chhzklyjP1EFa/ZUwczz8HbCnq4/XC8BRGdkRxoAHUHHOG
+         dHvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757470187; x=1758074987;
+        d=1e100.net; s=20230601; t=1757470211; x=1758075011;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7rSqoF1bhRIMRZ/Ngttka/3cr36QgYmwYc1FwmVj14E=;
-        b=DrSaEPjvJQKRxmKz5PyOuLZHCiEqwfvrgHr0rPpOhVDLsurACKGx/dFybWlo8PRQBB
-         TWOFcoDocZNG/WxwnSoRkLfRho+5tMEY86gsbszKhNU4jGi+Tc/rrXdXF7JMcY7nsG8x
-         fyv8QqIEFSHleG8HA2paY01rXzPPL2/RY2yJ1dy0Vpo4YAbWE/TR396+gL0NSoWl08eG
-         AhI5lSWGbInXpR8nN9NcqOEnoNP7H1elHDnf65KHiXCh4NVAzgRpUz8v/KEaGImjtSNG
-         JZeE+IJNWVLK0d7aVSkMiV2MxQ+qDSVVsZoBQLHO44df5nye8O2D/JjyHDbOYeaaXlRx
-         1G+A==
-X-Forwarded-Encrypted: i=1; AJvYcCUQfsUiIToFYaTKa1zPf7UPJWX/s0+8KKMK7pI84sB9Pp+w5BkGUx5oh+XmopHS37VCfAX01qA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyA/hj1BzQLqlc2o3GrzkRNHjdXuWxJ3G9fxNSC/dEjVadG1DR2
-	xxkAX9BV3nDzHSDCDDpCvzTs8Z6Uvk03psWeroXdyTMFzBMfG3mevlyj
-X-Gm-Gg: ASbGncssIaqgxOb2pcBYF5OvTe0HWH/JEvqAEzBEgUJ/pgbHJnD0lvrZ6rYOCNpu3KT
-	E6EHHgUsWSbgJITzcDWXeczUDrWz6uVS0seZnnJQ02MW96ZxrRVHd+GEztwdHjPSOuTFTpB8B8b
-	b2PfhG2RVU7tUUaj19uBZo5Ae7nY54GlkgQNHaipyAmZGcQV1FjqOhoYR9iX/trCwBMyOr0h9z9
-	1Xi+4Iax1Bt1+7IyETKUu9riFTYT581ms3H2opugNmeeyqOiKSTKwt/9wS72YOAsGJPjG2AwPR/
-	MPh2q5Xh93VuVVRG6wYo/GQD9aFsN9wW/u7IIisXWMeQYtyUsMXqTQ+hp2FW5w65NrIPoubU/yd
-	FHM98C8jDy0cCfVYnni73iOYzdfss7bDl
-X-Google-Smtp-Source: AGHT+IE5QuSz5qdsE3xoQsl6qbxguCNJz3fvFYDs9yiT61/n8SvvUWZyK/OkyKtb2ZUzmAhsv1j6mA==
-X-Received: by 2002:a05:6214:130f:b0:711:b9f3:1fc2 with SMTP id 6a1803df08f44-739253e0b8bmr118544936d6.26.1757470187091;
-        Tue, 09 Sep 2025 19:09:47 -0700 (PDT)
+        bh=a0NX4YDlfnF2moHa0Gi9m7awPoXSV0rkM143rN50kIc=;
+        b=mJkjSrw2Ww+JFCbqYgK0XcUiE/yTTAELj3QhIOaXQhJ+CCYYoPiIsy30+kKZJpfTub
+         zD8yMQdFyjZuKrm0UblqyNDuN38zKEaP9bMp+JyOpBs3NufJklyPBxdrjcx8DAOpYRav
+         knFHs1ivSV7J2KtxyzkUSucsMYVuMlFONZkfaRBehyqPvXq3Qd54kKmb1uCmRpH3k8h4
+         tbaU83a63t2s8C/19/asuQZv1g+yNvHOpkjFmFRHIX+gS7WLqUUtKlbwrVFLRHrUVQ+7
+         sNjkyNy6EGFuHLaIJDvM6baoEyzSEVRahgOsFcBwWwD6b53v02F8lBbJTSOvTRXO5GhB
+         PgvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVodNC9y1q9ZVf9uOsh635CmSh2yIXIU7llcc6QND9cThOfKSh/nwxS9Tfc6zJWta2Z+/xhtWk=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxs904P6xMuXRDSz6XqyjPaPqhgAXDNocguARv5Zdbf+UhyuKOc
+	aKWZyys5H3hgIQIgAV9WZ6BEQ124QYHQRYpSatA8YaajHbgH3q8Dstdf
+X-Gm-Gg: ASbGncsbYNxV4J05bLUxx0bqsRh1Z7x7EABXUvHQrekelk0hAfJzGoy455taRcn2kvb
+	yNCzMIUxLbWqwmyqB9ZfQTwxh/CJwfQoRDGFFqXnrzQIIoSquWgcAZM9yIx/bOdtgzvYiy7+61j
+	B1hwThKWSYvoeQxY/6Vqwi1uNNcGMLGMrkUh+RkDnkJghAyBZd1WhS6/NL7LyGfzo3536tsFtdt
+	/AeKm5GFvH4fr5PK7jfoob2dAkDkVAByErtxLYvmqOB/1gab2i9id4nRG1rjqpEwfOOsh2tkIeI
+	iqElEExAhgdccILkDaOpsoSJpdt7kVE7r3LhGsbopezPWBTvF4e/HBDkXU94wPIM0rhRPp79VK/
+	IryZd9unRUgpXeS1ibfp4Br4fQoAlJ+NF
+X-Google-Smtp-Source: AGHT+IFuaLhFcKitf9ZA1Gn5XpJiUTwI3uqTd3riF4+17FcbGqTmvMmJT20lOqveQiIDe1ADGGm6JA==
+X-Received: by 2002:a05:622a:647:b0:4b3:cbc:18b9 with SMTP id d75a77b69052e-4b5f83c890dmr144732481cf.33.1757470210737;
+        Tue, 09 Sep 2025 19:10:10 -0700 (PDT)
 Received: from localhost.localdomain ([122.8.183.87])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-727d637082fsm117730896d6.34.2025.09.09.19.09.44
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4b61bbbc0ecsm17446521cf.25.2025.09.09.19.10.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 19:09:46 -0700 (PDT)
+        Tue, 09 Sep 2025 19:10:10 -0700 (PDT)
 From: Chen Wang <unicornxw@gmail.com>
 To: kwilczynski@kernel.org,
 	u.kleine-koenig@baylibre.com,
@@ -90,9 +90,9 @@ To: kwilczynski@kernel.org,
 	chao.wei@sophgo.com,
 	xiaoguang.xing@sophgo.com,
 	fengchun.li@sophgo.com
-Subject: [PATCH v2 5/7] riscv: sophgo: dts: enable PCIe for PioneerBox
-Date: Wed, 10 Sep 2025 10:09:38 +0800
-Message-Id: <4e885f30470ea07f499c9a83ab5dd327e00774ca.1757467895.git.unicorn_wang@outlook.com>
+Subject: [PATCH v2 6/7] riscv: sophgo: dts: enable PCIe for SG2042_EVB_V1.X
+Date: Wed, 10 Sep 2025 10:10:01 +0800
+Message-Id: <2d85c8b221bf4aceae6f3dfaef6d53221daf7e70.1757467895.git.unicorn_wang@outlook.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1757467895.git.unicorn_wang@outlook.com>
 References: <cover.1757467895.git.unicorn_wang@outlook.com>
@@ -106,18 +106,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Chen Wang <unicorn_wang@outlook.com>
 
-Enable PCIe controllers for PioneerBox, which uses SG2042 SoC.
+Enable PCIe controllers for Sophgo SG2042_EVB_V1.X board,
+which uses SG2042 SoC.
 
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
 Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
 ---
- arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 12 ++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-index ef3a602172b1..c4d5f8d7d4ad 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-@@ -128,6 +128,18 @@ uart0-rx-pins {
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
+index 3320bc1dd2c6..a186d036cf36 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
++++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts
+@@ -164,6 +164,18 @@ phy0: phy@0 {
  	};
  };
  
@@ -125,17 +127,17 @@ index ef3a602172b1..c4d5f8d7d4ad 100644
 +	status = "okay";
 +};
 +
++&pcie_rc1 {
++	status = "okay";
++};
++
 +&pcie_rc2 {
 +	status = "okay";
 +};
 +
-+&pcie_rc3 {
-+	status = "okay";
-+};
-+
- &sd {
- 	pinctrl-0 = <&sd_cfg>;
- 	pinctrl-names = "default";
+ &pinctrl {
+ 	emmc_cfg: sdhci-emmc-cfg {
+ 		sdhci-emmc-wp-pins {
 -- 
 2.34.1
 
