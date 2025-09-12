@@ -1,215 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011032.outbound.protection.outlook.com [52.103.68.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C248B329F05;
-	Thu, 11 Sep 2025 17:03:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757610215; cv=none; b=EvyVilcmbSMf+Zx6/yCFQMOTkGLdhzXNBH7V4CMeNNzgmQmmNfoIYvxSfmHMrCjsZcy2GngBkdTkLCCxasuJZMGS5ml76g3q6dP1/Ies4BAGcOEHoiqSw6rAPaCgqQJ+W3H+o5qOR+A5Z8TI9W18MtbEmuFYbIUa8F4Foi+rYQI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757610215; c=relaxed/simple;
-	bh=TTvuVinawS9W8wQljk6tvfI7GWfVRErAFH+QsdIVE4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gdfq/sRKRSCJDhC7f/nGiEIeo/1HTPh4FPrlXcW//3o5IL+ggg/qvlHjYZ8uuqL6jZG4P3DWtqEQiLbB3BeC1wtlsbqJHIlf/94GmuoZY4fG4VJuLucrdg79VjI4XvIQRmGmgzkhRIw5vns3+FVsX18YVrKSkSgQ91wJQbFOwBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AWg5mlZu; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C1517BD6
+	for <sophgo@lists.linux.dev>; Fri, 12 Sep 2025 00:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757638376; cv=fail; b=izLBnijpbZ5mN4pa7FwS8rKXHIdGaM+V1cjrHi07InepQojiBdk7/tmOG2q+UEtUDWYNqWd4U1Ufcfq8yazTJSokmK6KwKwBBIVg7l8gRaq7bkxfMU7J4FSYGur1QXMsaLDBzGCcvonaQhvSFACK01ngpkGiPWvFCDJopHwHUL4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757638376; c=relaxed/simple;
+	bh=nzsP0OSZDHDGmxiDK6uIiriqY9nm/mFSXeCC6LQNeiM=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=RtiGTEYafFhmygxWidxMceVLlUC6WXHx5x0HP2iLHAQCMqAQXCPF5QROMNBXI1KdKDcoaIRbacH06GsTgzfI/SEwuyAnMGdcaV1TPpJ9h3Y9Zv988Nja1oxAhNIO4LkjESDWrKbpZnKkgxfAHcZoid7hcq/cDwbNRpzvEy9I7Bo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=rPJV8mCE; arc=fail smtp.client-ip=52.103.68.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AWg5mlZu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F3EC4CEF0;
-	Thu, 11 Sep 2025 17:03:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757610215;
-	bh=TTvuVinawS9W8wQljk6tvfI7GWfVRErAFH+QsdIVE4c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AWg5mlZueWphEPcsiD+kwmQxEI7Ezhsu6WDl4OW4KDkE1U3zFeH6Z27HNNML2NBgf
-	 W+Fdlt9dr/92zKgGTbhtEgey1Ry2xc34L3adAFvpv4vwuvQGgVM2Y9VJPYS0YEY56u
-	 PRgrmuDiufwz1wRyljITASUEfC4U5GZw4SRSuPbdzccLzxtopNeG2zypDoIv09hZaF
-	 2qD/a2ZZjAQfQvKMGYLULtB93dUrA+VJSxFkYjfiGkScgAPQIdltwA1x5gB9nfI8+H
-	 5yEbE+FZQAwy1LRGOYPGbN4KWYm+G8fp1LB67rmi8d5uzNm+nxK+UL0bSUIGGlY7Cu
-	 8ARBZdCU/Kjvw==
-Date: Thu, 11 Sep 2025 22:33:18 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Chen Wang <unicornxw@gmail.com>, kwilczynski@kernel.org, 
-	u.kleine-koenig@baylibre.com, aou@eecs.berkeley.edu, alex@ghiti.fr, arnd@arndb.de, 
-	bwawrzyn@cisco.com, bhelgaas@google.com, unicorn_wang@outlook.com, 
-	conor+dt@kernel.org, 18255117159@163.com, kishon@kernel.org, krzk+dt@kernel.org, 
-	lpieralisi@kernel.org, palmer@dabbelt.com, paul.walmsley@sifive.com, robh@kernel.org, 
-	s-vadapalli@ti.com, tglx@linutronix.de, thomas.richard@bootlin.com, 
-	sycamoremoon376@gmail.com, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, 
-	rabenda.cn@gmail.com, chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, 
-	fengchun.li@sophgo.com
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="rPJV8mCE"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VwnSYYF1GV+yDEhaDOU5fh+gUmFFWD0ppMHgwou7wLSs9CxNxvrUgS4gzU7B5Zxw01K38d/550eHvQ82jjE5pt+6Whkkun6I/gZhFHWJIqkBy+v7dfiC/8U4G2fcmowbIlJC8i1s7lnVKHghciage405zAz3lG1Pf3yzVuuPpi+hVsWv1PlXAuI26qff8vM0wU7U2ddJThhbZakoTOdXSL9/MqM+EKQwJMhqGjORE1MWmKVXs/IH16IpaD4Z4EMvo4bt2ec4GtfYqOYJcLpMsOl7F+eF4x/DyR+f4kX9m0jI1jdA4pPrWFQ8Gp/iRWkth6ng03GYk0lLr+rUptGDWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4PZiunQQhYoddhB7VtpKOQHxcmiwCRo05CXFAsw3IuA=;
+ b=PJPE03jvoLbhlDEIq3pb2gGIZjy/hS+pi56o9JLkwO8b53E0TJfLguyZk8axLQ0mHhUmTmSCX7XfYubYvgxvYRl1VSQ2AqmI7bjuqLFDzwiEm9q0PvpWoMwDd7otKgxDRBLJG0bvFEduphfXyCRYyyJL4R0JGCOp5FG0bmDy5wF/absLNrBkZM49xHRvHAVKq9ouEKr9e7cGOz7/T/QE33PBEwGFWMbYl7BM3pSGe7LsFvwOba1l0OZLIAFM3ca/uYYv5v+ZJs7UHW5/Czckzw7kTvBNMXgBt4/mcSw1rMyFaqm8UTRtv6jNtgC4sg4Ujl1FbyPHABeGHbkyDMQZDg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4PZiunQQhYoddhB7VtpKOQHxcmiwCRo05CXFAsw3IuA=;
+ b=rPJV8mCEyq+NGh3TbvPTjkrfTjSkHxIHMpC3I+Gi5vF0usYgB9X292RyK8PtJif1eQ2448bUHDjl/nKSwenc0P9WTjCWUReg6pAyQ54FQf/X9TYgzdZxcYX69+cFX5xCTGPcoQcEt9P7Rmj9K66g+dFc+etC6cdIMqz8b4mM8NkwFC5tEkvJipj4vFPVcN28UXndXKcjWwluSOLgQVrlLKPXSCYDD+F+TLC0T3PRI0fugEW0CK1tT2A2f8nHjk4aL6hK+juFgtT5jqQVltCjpfoYiGSmk/5gQdogsBCj8JycSLBY0d8VJMsIVjspGRqH+VD23D9AM6mTffF2p60QxA==
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16) by PN4PR01MB11915.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:2da::13) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.22; Fri, 12 Sep
+ 2025 00:52:40 +0000
+Received: from MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b]) by MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5dff:3ee7:86ee:6e4b%4]) with mapi id 15.20.9094.021; Fri, 12 Sep 2025
+ 00:52:39 +0000
+Message-ID:
+ <MAUPR01MB1107222DD9BBA9349C3907E21FE08A@MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM>
+Date: Fri, 12 Sep 2025 08:52:30 +0800
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 3/7] PCI: sg2042: Add Sophgo SG2042 PCIe driver
-Message-ID: <rarvqtex3vsve3sscaky3rw727hwp5avmxve3lluwoviqbt6m6@h3nlqbi2s3fd>
+To: Mingcong Bai <jeffbai@aosc.io>, Chen Wang <unicornxw@gmail.com>,
+ kwilczynski@kernel.org, u.kleine-koenig@baylibre.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, arnd@arndb.de, bwawrzyn@cisco.com, bhelgaas@google.com,
+ conor+dt@kernel.org, 18255117159@163.com, inochiama@gmail.com,
+ kishon@kernel.org, krzk+dt@kernel.org, lpieralisi@kernel.org,
+ mani@kernel.org, palmer@dabbelt.com, paul.walmsley@sifive.com,
+ robh@kernel.org, s-vadapalli@ti.com, tglx@linutronix.de,
+ thomas.richard@bootlin.com, sycamoremoon376@gmail.com,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, rabenda.cn@gmail.com, chao.wei@sophgo.com,
+ xiaoguang.xing@sophgo.com, fengchun.li@sophgo.com
 References: <cover.1757467895.git.unicorn_wang@outlook.com>
  <162d064228261ccd0bf9313a20288e510912effd.1757467895.git.unicorn_wang@outlook.com>
- <xmk5uvnw7mcizxpaoarvx2c2sejaz2skaiyyac7oo5y6loyjgp@5v3sldwbqpw5>
+ <35447ba0-21c2-4a12-9d27-033a7be0af3e@aosc.io>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <35447ba0-21c2-4a12-9d27-033a7be0af3e@aosc.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TYWPR01CA0019.jpnprd01.prod.outlook.com
+ (2603:1096:400:aa::6) To MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16f::16)
+X-Microsoft-Original-Message-ID:
+ <d6f1156d-a438-49ff-a287-6bc029f588f5@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmk5uvnw7mcizxpaoarvx2c2sejaz2skaiyyac7oo5y6loyjgp@5v3sldwbqpw5>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MAUPR01MB11072:EE_|PN4PR01MB11915:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2cd1babf-94f7-4190-848f-08ddf196abff
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|15080799012|23021999003|8060799015|19110799012|461199028|5072599009|6090799003|52005399003|41105399003|40105399003|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Q2F0bk04M3dremZ2M1czdEpMLy9Kakg4WXBNVURDbWlhbVh3N0ViWE8vWmdx?=
+ =?utf-8?B?aGMxYXB0RU5lTTFYMUUrZkx3QjQzUVJLS1VPN2ZaSFVrS2F6VDB5cGJibmhQ?=
+ =?utf-8?B?aThnWlhIREZBWWZSck5iSE9QdmNnTEVFUm1BenE5OXdHR2JVbDR3eTdwQm0r?=
+ =?utf-8?B?eXluMkExK0tSSzFvNWlqSHZVNW9nVzhpU0JOU3dEVFVFc01zdUJzLzRwYW5z?=
+ =?utf-8?B?MFQvMHF1MDdaU0dvbWZKamF5K1c4Mk9MNFNMNWdzbUZoTDd2b1RuNjJvWi84?=
+ =?utf-8?B?b1VVQ3BtMmlSVC80Z1J4V2ZyQ3JQbStwQ1dYUXhsTTZ4dGNLSkU1RVJNWVcy?=
+ =?utf-8?B?L1VBamNEZERvL1F5M0tpclVub2NVbWJURVlEUGxXV2pqWFY0VUxhSlpab21r?=
+ =?utf-8?B?NjB2VEd1UGVwVjdwbEpDMU5Fd2M5eFd4d0wra0t5Ykc3SXYwNHAvVHIrdG13?=
+ =?utf-8?B?ZVpSNWpsczFuMDFUcWRFalEvaHFiYkovdlVlNjBGQUtUMHFRM0xHVENaMzBN?=
+ =?utf-8?B?QWhFanhYOUVGa3hnRmVLZ0d1ci9SajJaR25iSW9zei9zTDhDT21SK29VUWda?=
+ =?utf-8?B?UWI2UVg4eTgxQ1JPbTJQdHdwQWplOW5pOWpLRkZwN1JvbkZJclBZN1EvcUZn?=
+ =?utf-8?B?VmR2d1BuT1ZDV2pKR0ZCT3dveHJtUzVrWmlNM3k3UWQ0TldBblZOZXdzZy83?=
+ =?utf-8?B?K0MzUEpTSzhZWFFVS1FNVGhQOWhoU05GSTRtR1orWUtsTm04WGpYMGFFamlp?=
+ =?utf-8?B?YWVPWVQrSE1ndzNCQ1NmeTZHMGJqN3pBVCs5c2xGUkdxRVJWVDZvazZxeExX?=
+ =?utf-8?B?OWU1cWhXYTVDWHJTSkFIUXF2ZnZ6ODBERS9mZGlvV0J2Q0ZZK0dnajA0Umh2?=
+ =?utf-8?B?Q2k0ZUtrSVEzK0VZMkgvTFdyZzhwS0IzdFBrN1dNckdSMWdNRG5LZjdrd1du?=
+ =?utf-8?B?VUkwV2dKL0tMY1JyYXNZZGJ3UUxWLzhBK2MvT0JVcHNESDczWjJ1Ym9aUU9S?=
+ =?utf-8?B?YmF5NXBGRHBLbjBKTW1GN2htbmpFUHJtM0s3YUlQQ05zbkF6VEVyQ0dSOWxM?=
+ =?utf-8?B?NENmOUxqeTFqQW9CVHB3YlFLM1pMdW02T2hSYnN4YmZIUEVydTVUNy9nd3Bq?=
+ =?utf-8?B?R1BKWVR4WUt2enJYRDF1Q1lTQTBnWW5Na3cwZnYyRGtWMi9mNG5CTFRaU0p6?=
+ =?utf-8?B?REZMSEN4ZEVDYnFxeFEyOGRTRDdMeENGNmZOVnR3VG9jOS9LODB2d0REVmtU?=
+ =?utf-8?B?M05MYkxOa1hVeFNKOU1STVlJTkRxOS9qRE9ZenlYQXBHbHhOTWpUUGY3ZHFF?=
+ =?utf-8?B?OG96b05semRQbjZTb3JvdDNjTmhSQWRLemRkOEh0a040eUs2NUtqK2N2SjNV?=
+ =?utf-8?B?QS9YMkJTNkNOdXhYdk9NdVFzVDIzT0JjSlFlbG5mYWl3elBmZnYrVWxHbFpM?=
+ =?utf-8?B?U2lRUlV3OFRDM0hTVVRuVTg3TFhESU8vRE9rdG9YRzNwR240S2wwazg4dDZy?=
+ =?utf-8?B?djhaanE0TDhUUEtUclpRM0RHTFgxdWpwMXIwMXRzcDk1V1lkS1JKZTJMRG1h?=
+ =?utf-8?B?T25nS1R5RzZxNG5YclBSSlN0a2V0TDdkSGE3c3Fmc3F5RnNBZEovcTNWZHdH?=
+ =?utf-8?Q?OljsJPB4n2IUWfWLXV2xV3eW6aL21q3aEzM08PXmg43w=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?bkdaTFlqbEFyQlNKUWg0VlE5Szg2ZUsyNklxRmtWcnpVbGtCTkNYSGg1c2d4?=
+ =?utf-8?B?TWkvVXYzQ2VaWTJhV3psYlJqYlBPZnViMHY3SG9PM1J5MlJxMmIzK05zMlBH?=
+ =?utf-8?B?SGJTYVpxL09TOGFqalV5cmgvS0V6cEFzTVNyV2paYzIzQmFkSlFVdGd1aXhR?=
+ =?utf-8?B?ZjduRW9EQkRZSTd1YzRFSFZHdHJmZ1ZRZVZnY0ozdHFhTEp6dENOV2VnUE5P?=
+ =?utf-8?B?UjVXQjE0RmV4QXh5dXMzbTZnZ3J3eHlrWFRQYWxReVJiWnpNOWtXTS9lNEo1?=
+ =?utf-8?B?N1ZqUDRkTlZlZTFqVUI2eU9pQWs5QXZlQmVRYUMwbkFtb2xCbXg1RGlnVkds?=
+ =?utf-8?B?RWVTWHM4UFZFaTluT1Q4b3FybUdkSFMzS3FLWGFWYThFT2d6T2M5emtIWFcw?=
+ =?utf-8?B?K0M2MXdOZ0t0eklJLy95RzNIZkZsQnZHdXJJS1cyS1ZSSXM0dURnTDRCdTFv?=
+ =?utf-8?B?MHFnV0N0ZXh0NmdkbStCSW45eGV1a2IwSlFGRkl0emlpNjVXbzdaaTBLbERB?=
+ =?utf-8?B?WG83cGRXWlpaNTJsYWd6RTJTcG4xeGZYai9tVjBWcnBKWVZUYzNDRWdPWHlK?=
+ =?utf-8?B?aEhkaHRiZndlYjArM2xMTDFQQ1FGZEY3WTM0Z0s3OVJxQ3FSOTlqZ0xqYW5m?=
+ =?utf-8?B?V0lIQUJtK2pYNHlsa1ZXY2lCQ1kyTjBMa244YmROSmNqNTBNdHpkWEhidmdm?=
+ =?utf-8?B?SnBnT3dSSDY2aUtDR3RSRmRyNXJqQm5ZWWdUSEpWeldKWFZFcUwydFl4cE5M?=
+ =?utf-8?B?ZDBvRXh5M3EzYzEyYXBwZHRCWTYyM0tyV1V3Y2pGL0lEeGdTaUdyZ0VPU0VP?=
+ =?utf-8?B?OGY3MlFaeDV0U0d6VTV5TjhBZWJPcS84d0F2NHhGK2l6RmJQMzRiTitCRXRJ?=
+ =?utf-8?B?dGFrcjRrWDBVTGc1NlRvOSthNURoUTVxOCtRMkVQRzl4YjB6bEZCbG9mcGtK?=
+ =?utf-8?B?eTYyVjRRZVFBQXBFZTh6dkhjZUdOUUtId1psU0JoTWs2OWRKNExDQ3I5TnpP?=
+ =?utf-8?B?UUNyUUVOTzFJN0Q4R2lHWkVyRFRaZjNhUy9kL1BsYW41T3F2QTh4N2p3YmRP?=
+ =?utf-8?B?T3pLdVJCRXF6YW9OUWhxUDJqRDRjQll5NFZPMDMzNzFKNHlRbUpxeGg4dWQy?=
+ =?utf-8?B?MWFmR21KN3BndlhEMXdKR0dFQXB6TWUxRHV2R0NFQkpuR2VYWVJpVVgxemNS?=
+ =?utf-8?B?RmVRd2ZYUEgybEluL0VteGRDQ1dhUUJwZXJUdjRmSDdCd3ZhT1RSUDhkS1c5?=
+ =?utf-8?B?VDV1eWNrdVg3eURpQlNyUldKdVNDUDdhYkRFTkEydDRvMHVESW9ya2dKNlBq?=
+ =?utf-8?B?YUdEbytScENJbGk1eW9JRXN2TjRMeWdWUXhCNnh0Qi92N1hNSjk0WkVSb2tL?=
+ =?utf-8?B?Z213dFptQTY3OEF6MXdJWkJMdnNERDdvdXFPYUxOcTlGb1NNbGRJc1NSKzlX?=
+ =?utf-8?B?MWpQWVc0dzE5RkpFR1hGakNYV1BXNy8zNmhSbU1lckp0MkkwNFUwVjV3aGtW?=
+ =?utf-8?B?emEzazBFMWpUT051TkVlcVM2MWFBcjhndG44SEZVTlEvZUdFczM3Q2lkbEQ1?=
+ =?utf-8?B?R1NNNGRReVYzV2k1dUhJcHYrTnExcDFLc3A3Wk9jdDFnaFhJMDEwUXdWUWF3?=
+ =?utf-8?B?dy9kelZKNDFHcVo3TGlDTmRRVCtDWEc3UmkwQmdLSUtsT1NrSGRwMW44QnZZ?=
+ =?utf-8?B?Sk9ZM1ZpYlBteE5BbTRVTWpuREZ3LzR3ZUNoWDlnWFQ4K2JwekVHeCtiTXVH?=
+ =?utf-8?Q?FyMM4SNaoTSakLacudaZeF6xF9rzrvDuDlUAtWM?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2cd1babf-94f7-4190-848f-08ddf196abff
+X-MS-Exchange-CrossTenant-AuthSource: MAUPR01MB11072.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Sep 2025 00:52:39.6040
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN4PR01MB11915
 
-On Wed, Sep 10, 2025 at 10:56:23AM GMT, Inochi Amaoto wrote:
-> On Wed, Sep 10, 2025 at 10:08:39AM +0800, Chen Wang wrote:
-> > From: Chen Wang <unicorn_wang@outlook.com>
-> > 
-> > Add support for PCIe controller in SG2042 SoC. The controller
-> > uses the Cadence PCIe core programmed by pcie-cadence*.c. The
-> > PCIe controller will work in host mode only, supporting data
-> > rate(gen4) and lanes(x16 or x8).
-> > 
-> > Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-> > ---
-> >  drivers/pci/controller/cadence/Kconfig       |  10 ++
-> >  drivers/pci/controller/cadence/Makefile      |   1 +
-> >  drivers/pci/controller/cadence/pcie-sg2042.c | 104 +++++++++++++++++++
-> >  3 files changed, 115 insertions(+)
-> >  create mode 100644 drivers/pci/controller/cadence/pcie-sg2042.c
-> > 
-> > diff --git a/drivers/pci/controller/cadence/Kconfig b/drivers/pci/controller/cadence/Kconfig
-> > index 666e16b6367f..02a639e55fd8 100644
-> > --- a/drivers/pci/controller/cadence/Kconfig
-> > +++ b/drivers/pci/controller/cadence/Kconfig
-> > @@ -42,6 +42,15 @@ config PCIE_CADENCE_PLAT_EP
-> >  	  endpoint mode. This PCIe controller may be embedded into many
-> >  	  different vendors SoCs.
-> >  
-> > +config PCIE_SG2042_HOST
-> > +	tristate "Sophgo SG2042 PCIe controller (host mode)"
-> > +	depends on OF && (ARCH_SOPHGO || COMPILE_TEST)
-> > +	select PCIE_CADENCE_HOST
-> > +	help
-> > +	  Say Y here if you want to support the Sophgo SG2042 PCIe platform
-> > +	  controller in host mode. Sophgo SG2042 PCIe controller uses Cadence
-> > +	  PCIe core.
-> > +
-> >  config PCI_J721E
-> >  	tristate
-> >  	select PCIE_CADENCE_HOST if PCI_J721E_HOST != n
-> > @@ -67,4 +76,5 @@ config PCI_J721E_EP
-> >  	  Say Y here if you want to support the TI J721E PCIe platform
-> >  	  controller in endpoint mode. TI J721E PCIe controller uses Cadence PCIe
-> >  	  core.
-> > +
-> >  endmenu
-> > diff --git a/drivers/pci/controller/cadence/Makefile b/drivers/pci/controller/cadence/Makefile
-> > index 9bac5fb2f13d..5e23f8539ecc 100644
-> > --- a/drivers/pci/controller/cadence/Makefile
-> > +++ b/drivers/pci/controller/cadence/Makefile
-> > @@ -4,3 +4,4 @@ obj-$(CONFIG_PCIE_CADENCE_HOST) += pcie-cadence-host.o
-> >  obj-$(CONFIG_PCIE_CADENCE_EP) += pcie-cadence-ep.o
-> >  obj-$(CONFIG_PCIE_CADENCE_PLAT) += pcie-cadence-plat.o
-> >  obj-$(CONFIG_PCI_J721E) += pci-j721e.o
-> > +obj-$(CONFIG_PCIE_SG2042_HOST) += pcie-sg2042.o
-> > diff --git a/drivers/pci/controller/cadence/pcie-sg2042.c b/drivers/pci/controller/cadence/pcie-sg2042.c
-> > new file mode 100644
-> > index 000000000000..c026e1ca5d6e
-> > --- /dev/null
-> > +++ b/drivers/pci/controller/cadence/pcie-sg2042.c
-> > @@ -0,0 +1,104 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * pcie-sg2042 - PCIe controller driver for Sophgo SG2042 SoC
-> > + *
-> > + * Copyright (C) 2025 Sophgo Technology Inc.
-> > + * Copyright (C) 2025 Chen Wang <unicorn_wang@outlook.com>
-> > + */
-> > +
-> > +#include <linux/mod_devicetable.h>
-> > +#include <linux/pci.h>
-> > +#include <linux/platform_device.h>
-> > +#include <linux/pm_runtime.h>
-> > +
-> > +#include "pcie-cadence.h"
-> > +
-> > +/*
-> > + * SG2042 only supports 4-byte aligned access, so for the rootbus (i.e. to
-> > + * read/write the Root Port itself, read32/write32 is required. For
-> > + * non-rootbus (i.e. to read/write the PCIe peripheral registers, supports
-> > + * 1/2/4 byte aligned access, so directly using read/write should be fine.
-> > + */
-> > +
-> > +static struct pci_ops sg2042_pcie_root_ops = {
-> > +	.map_bus	= cdns_pci_map_bus,
-> > +	.read		= pci_generic_config_read32,
-> > +	.write		= pci_generic_config_write32,
-> > +};
-> > +
-> > +static struct pci_ops sg2042_pcie_child_ops = {
-> > +	.map_bus	= cdns_pci_map_bus,
-> > +	.read		= pci_generic_config_read,
-> > +	.write		= pci_generic_config_write,
-> > +};
-> > +
-> > +static int sg2042_pcie_probe(struct platform_device *pdev)
-> > +{
-> > +	struct device *dev = &pdev->dev;
-> > +	struct pci_host_bridge *bridge;
-> > +	struct cdns_pcie *pcie;
-> > +	struct cdns_pcie_rc *rc;
-> > +	int ret;
-> > +
-> > +	bridge = devm_pci_alloc_host_bridge(dev, sizeof(*rc));
-> > +	if (!bridge) {
-> > +		dev_err_probe(dev, -ENOMEM, "Failed to alloc host bridge!\n");
-> > +		return -ENOMEM;
-> > +	}
-> > +
-> > +	bridge->ops = &sg2042_pcie_root_ops;
-> > +	bridge->child_ops = &sg2042_pcie_child_ops;
-> > +
-> > +	rc = pci_host_bridge_priv(bridge);
-> > +	pcie = &rc->pcie;
-> > +	pcie->dev = dev;
-> > +
-> > +	platform_set_drvdata(pdev, pcie);
-> > +
-> > +	pm_runtime_set_active(dev);
-> > +	pm_runtime_no_callbacks(dev);
-> > +	devm_pm_runtime_enable(dev);
-> > +
-> > +	ret = cdns_pcie_init_phy(dev, pcie);
-> > +	if (ret) {
-> > +		dev_err_probe(dev, ret, "Failed to init phy!\n");
-> > +		return ret;
-> > +	}
-> > +
-> > +	ret = cdns_pcie_host_setup(rc);
-> > +	if (ret) {
-> > +		dev_err_probe(dev, ret, "Failed to setup host!\n");
-> > +		cdns_pcie_disable_phy(pcie);
-> > +		return ret;
-> > +	}
-> > +
-> > +	return 0;
-> > +}
-> > +
-> 
-> > +static void sg2042_pcie_remove(struct platform_device *pdev)
-> > +{
-> > +	struct cdns_pcie *pcie = platform_get_drvdata(pdev);
-> > +
-> > +	cdns_pcie_disable_phy(pcie);
-> > +}
-> > +
-> 
-> I think this remove is useless, as it is almost impossible to
-> remove a pcie at runtime.
-> 
 
-Why impossible? We only have concerns with removing PCIe controllers
-implementing irqchip, but this driver is not implementing it and using an
-external irqchip controller.
+On 9/12/2025 12:17 AM, Mingcong Bai wrote:
+> Hi Chen,
+>
+> 在 2025/9/10 10:08, Chen Wang 写道:
+>> +config PCIE_SG2042_HOST
+>> +    tristate "Sophgo SG2042 PCIe controller (host mode)"
+>> +    depends on OF && (ARCH_SOPHGO || COMPILE_TEST)
+>> +    select PCIE_CADENCE_HOST
+>> +    help
+>> +      Say Y here if you want to support the Sophgo SG2042 PCIe platform
+>> +      controller in host mode. Sophgo SG2042 PCIe controller uses 
+>> Cadence
+>> +      PCIe core.
+>> +
+>
+> While build testing this patch against v6.16.6, PCIE_SG2042_HOST is 
+> set to "M", the kernel would fail to build during MODPOST:
+>
+> ERROR: modpost: "cdns_pcie_pm_ops" 
+> [drivers/pci/controller/cadence/pcie-sg2042.ko] undefined!
+> make[2]: *** [scripts/Makefile.modpost:147: Module.symvers] Error 1
+> make[1]: *** [[...]/linux-6.16.6/Makefile:1953: modpost] Error 2
+> make: *** [Makefile:248: __sub-make] Error 2
+>
+My fault, seems there were some problems when I submitted the driver 
+code. I will correct them immediately and submit a new version.
 
-So it is safe and possible to remove this driver during runtime.
+Thanks,
 
-- Mani
+Chen
 
--- 
-மணிவண்ணன் சதாசிவம்
+
+> Best Regards,
+> Mingcong Bai
