@@ -1,264 +1,130 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011029.outbound.protection.outlook.com [52.103.68.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC2121CC71
-	for <sophgo@lists.linux.dev>; Tue, 16 Sep 2025 11:06:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.29
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758020811; cv=fail; b=PcsNfqrKMvuESUsxg0T053oYRQys0cNQkWDmin7AXJz92sTl17Yyjs+xVbvxYC64RFWnAIKMrc2TP6qkT0Gi5F8Dx9+KrsYhd76GH2edwPjoosHTi5EnyK/0ZTgYlS41SRbjrezbA8dImC1+xZatsNcRfM8uRwJG8Yuinx6dRTs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758020811; c=relaxed/simple;
-	bh=H/VNUBnrwXbXDKLcaKNIsowRVgAOnaFEkop2WEPkKTI=;
-	h=Message-ID:Date:Subject:To:References:From:Cc:In-Reply-To:
-	 Content-Type:MIME-Version; b=cw0LVj8bH9YamIGxCRgRptTBAqu9tdENJFtoa2DIbpXB85p5X5B3MR4A5ovL6JNa4QbKyTIyz4BnfqPb3oNyAsh2Z1TYb9ymqL1h22K2Tyyr4+sOhuOs0jlVsLBaL1DpNFniMR0f7I2rlt1XUtDXMHN0CFfkxnRPK1yTFJtuZgE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=BrW9Nbhf; arc=fail smtp.client-ip=52.103.68.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE5E2032D
+	for <sophgo@lists.linux.dev>; Tue, 16 Sep 2025 13:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758028979; cv=none; b=c6LrH5I7+/hURkdhPzh07T6QkjWG+vz5FOkCu9mHBckKsubfbc/viTz0zqqT51XBTxQgeh0J+nmXfc7vEWQsMgKoXrPV0WxX2qax/LgKm12oZ79DuO0SnLi52B5BZM7ZjV4J2LgMa84ZJmcgXtbk+RAJ/fB+F+FdzqBpKio8Uvs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758028979; c=relaxed/simple;
+	bh=CGgTSIYt63qsmZdwIds4EcFmwLudv2lGpTjjwlt+HoE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DEmea3COZl0Vn0rdaEi7GylnVeY7GGI+Rv0l4Duc5rR4jHSiPVOavrCdph65vfZowdQWr7kxfKCQqWyGmcKVECXFNVeKzapTCpHmZ2R0IG5JUCqLvFndiQFCOaxWvi7rKvapGgWuXsr65LD+hkpNyigM2A4OLANPPBjVK1wk9LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EC3yjoxe; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="BrW9Nbhf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rCEajQEFaMK0Mby5pxLITQw0SxPxh/iELYQgqPr8hG/8vLmQvgC1ioOB6aXsW4dmGar66XSZglFr2i8FMHihxxSzUFQAWRJETwTAPxqCo/dQdIKg33AXztErZpnZ5/kdjCNSYm/eFQh8Z2z6r1TI5BhvzYBjpI1qHqdU7cvzAqys856NTYASdtkkuY1ekDh7zvhFttdB8hfgc6CMP2va5CRsX/7bwJZC4x7J2wkuRRAQG1iHcSk7+YSx33nDrseY4ziZF+ptEf2IgIJgSTxZwNwJgSNtCosRxKrXmAp+sSfJFdqpD7v8GD7K0twkPWWaBznlR0FZuF+sei+u0YXL3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Op3D7/goUTQ5LpwwKdFPv/F+JK5K0I/OMeTRnPwrwv4=;
- b=Ft7tJcwlf/Roz8tb2yGEi6yg0Us/zHpmDo2klMC8cwh+cQG8uWHnkkYEvHWadhaw0hrxwX7G9fDDLVu8/UqS821J3YzKGdgdfGr46UyJANn6bh9fITuJCCjGBCcN8dEUhKAyJ2e4UuDv4smmp80uihHZB9uG/eW6qUR6ICgRn82iB5pxNqkEefYEmwdXc77XcMFbQbLa184tm111Ty0yvmkuZSzDJJTWIa0gA70Q9eMNs/wVV+6YHNXLZPmYwPgubBisylAMqCjoK8WVXrnjij5WnHJQ7bgW6MsKPuHMr4rzv/ga/qcFFflVEEjxxzX/Z7wKHq3yE+TZs+Ix3h+8EQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Op3D7/goUTQ5LpwwKdFPv/F+JK5K0I/OMeTRnPwrwv4=;
- b=BrW9NbhfSh2XZ+ZqoGI/SR8M+YttC5E6jy5fYLWZXKzur4iP3IZ0aHV9qrdGxxToH4poiOVTbhy67ZK9K2rDyYpX3udQp6RWcIouekMRXfqQlGVQGDFgaWyt6ELS7xzVfo4uGhnM0zG4pLTOIlcvsY5CD5FY0D21Uf5tUziicdLZZmHqMpS2bXzb+VVASPcTTUyf+AcdNATqAYpBmypDAfLnH5Ubvv1m2hOAw5s0psuddGvUvc8VHrRENGJlavo+sGKWlgovVhH3Dbce3WdFncfrbDNF7KJ0RedhoaW9lmLRxSMxA1U4WHTnWt9Rze2TPALfevod8j5oRE3nRsGhIQ==
-Received: from PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2f4::10) by MA0PR01MB9078.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:11a::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.23; Tue, 16 Sep
- 2025 11:06:34 +0000
-Received: from PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::aedf:9d47:d2fd:7de0]) by PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::aedf:9d47:d2fd:7de0%7]) with mapi id 15.20.9115.017; Tue, 16 Sep 2025
- 11:06:34 +0000
-Message-ID:
- <PN4PR01MB11064C24A188A68558B5CD94DFE14A@PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM>
-Date: Tue, 16 Sep 2025 19:06:21 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] Add PCIe support to Sophgo SG2042 SoC
-To: Bjorn Helgaas <bhelgaas@google.com>
-References: <cover.1757643388.git.unicorn_wang@outlook.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-Cc: Chen Wang <unicornxw@gmail.com>, kwilczynski@kernel.org,
- u.kleine-koenig@baylibre.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- arnd@arndb.de, bwawrzyn@cisco.com, bhelgaas@google.com, conor+dt@kernel.org,
- 18255117159@163.com, inochiama@gmail.com, kishon@kernel.org,
- krzk+dt@kernel.org, lpieralisi@kernel.org, mani@kernel.org,
- palmer@dabbelt.com, paul.walmsley@sifive.com, robh@kernel.org,
- s-vadapalli@ti.com, tglx@linutronix.de, thomas.richard@bootlin.com,
- sycamoremoon376@gmail.com, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev,
- rabenda.cn@gmail.com, chao.wei@sophgo.com, xiaoguang.xing@sophgo.com,
- fengchun.li@sophgo.com, jeffbai@aosc.io
-In-Reply-To: <cover.1757643388.git.unicorn_wang@outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SGXP274CA0003.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::15)
- To PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:2f4::10)
-X-Microsoft-Original-Message-ID:
- <291160b7-5431-46ba-b53a-5ecebb896bde@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EC3yjoxe"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-77b0a93e067so357189b3a.2
+        for <sophgo@lists.linux.dev>; Tue, 16 Sep 2025 06:22:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758028977; x=1758633777; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zw7XcaE2r1FmXR6hLChylDYbe2XxfsRNzLzDm93R3xY=;
+        b=EC3yjoxepz+7gOOVvyYoGroJerlso3luKeke2HsH02WIxspqbZ3qn1T+zRnjF90ahu
+         cz4/8ATaADpl4QSD/LiEUOGhXYI1loK75wvQl+3tykzeoCjElQ83K8qjytrUivJOd0hR
+         g77yZi0tfbTSNtZE8eUnABlAgMXk6xwgtcLVwAn+Ovbiu6tj59xTckqbOAVLwmiNWBaL
+         WWH2MhITA2WbbrozrcwY5kuR5pD+MTWEICEwLAiaFhWr35evMuJtjqdqC1m1TI2LdWD9
+         yV2lIC1nUWsoSanATdzBZS3e+ZbybDCFlTB4VFoTbpGgMlKbPjY65jwDcicfalT//Vf0
+         hohA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758028977; x=1758633777;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zw7XcaE2r1FmXR6hLChylDYbe2XxfsRNzLzDm93R3xY=;
+        b=S74j8EeaVcORCJBQs5AJutP29RD5wxJP6cjCC9113NRsi6d5FXIKtbKG1hYD4sOxDx
+         X2SkLpmx9RnLtt9i2+sOmOdZBre1aEz6+qDjMo7BiRS5IR4Nr0r+AhCLsNYMng+fSmii
+         3lL+ERuOy3jk8mUt7q72kIEPBm8QVIrYrlWnwUFC6nGO1p2EwTif8OblLjGPcgHmR2oa
+         Jqa8oZ0jduEqv4B4PRkH+KQP7JAtVqvn7SDKHs60LXf1TEX749aGNvHcU/BGVgSerGxS
+         2b3U6T02KyBWUwcWJbhZxjkjNW4o2YzpOQMJnV7FcRK4G9wexK4DGx9x94dtFc4cTyH9
+         UaQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVkzi+z6VqyHMspNegRmCODCmRHzBpCb3qoSx5Ly7QruWBXtwlkEr5H0jlKYAv0NUIbaYrvTno=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwA0atL+JszYnHm+vKxN4FUXz9HvEU/Zm4fP+1Sln54kj747TWu
+	sW6MsYwFkCFFf2/KV2cdzXD74Oyj4UR/7Wdku9ylBf3aN3/Ipuac2oUv
+X-Gm-Gg: ASbGncs+6tFy/gA/n+ioZ/vbRxFj4j2r1BXsKyCquUoDHinbMqNO2PBejx4D4Di8i7H
+	Aqc8BtQizrrybw3ZjtOppZNprgD0yPrx95WZFlzuN4MFh140OVl4Y9X8fzrMh+gr3m7r5ZQRTwg
+	VgAkJQCCdZ8EwYlbRAQ0NVtFMa5EPaJxCkUT6LkVewa/yA9BumI0UxyFiR38Bao1DfDyIBIXlNw
+	keCUGjC88YAivtBumD/H2trf7ZUuw2sKenTtWjn5inxGxWfo0RJDCD4qtmV+R1nFVUt7jqeJeFb
+	CfCB+Czxzi5XmY1w0cYUd4yR3uNYu4Uudsmx6f/iIXt9z5rFQrFGmgzb1HaIdg+olpHYF8km7Js
+	wlmpxgxJpcYcCXpCR7w2k6XS7xvHLhQ==
+X-Google-Smtp-Source: AGHT+IH8qtkp61xqbdRtMzYn6rP/97r4rWCE3eOFI0oW0kXWAEgQS9ZSayzpkellSCtSLE8uefRSpQ==
+X-Received: by 2002:a05:6a00:8c6:b0:776:1804:6fe with SMTP id d2e1a72fcca58-776180409c5mr16008326b3a.7.1758028976698;
+        Tue, 16 Sep 2025 06:22:56 -0700 (PDT)
+Received: from [127.0.0.1] ([101.76.241.248])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7761562f25dsm13277310b3a.74.2025.09.16.06.22.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 06:22:56 -0700 (PDT)
+From: Zixian Zeng <sycamoremoon376@gmail.com>
+Subject: [PATCH v2 0/4] Add SPI NOR DTS node for SG2042 SoC and boards
+ using it
+Date: Tue, 16 Sep 2025 21:22:49 +0800
+Message-Id: <20250916-sfg-spidts-v2-0-b5d9024fe1c8@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN4PR01MB11064:EE_|MA0PR01MB9078:EE_
-X-MS-Office365-Filtering-Correlation-Id: b3cbf5ee-30e5-4eb0-b3c1-08ddf51118e4
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|23021999003|15080799012|461199028|8060799015|19110799012|5072599009|6090799003|1602099012|40105399003|52005399003|41105399003|440099028|3412199025|4302099013|10035399007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?eHZnVUk0SmkvcUkvMVJTMERraUYzVlgwamVHamptdWlqZnlzU29OREdmR0E3?=
- =?utf-8?B?aUU4ZlpZVEZCcXc5QkhnNjBoQ29lcHFqTEppY2ZLT1BWQ1dJY0NvT2RLVk9n?=
- =?utf-8?B?clU0ZEJaZE1tOUtVMVByUmtmZ2xRNHFEeXpPSlBhV3FyaE5XbVU0QmV4ektN?=
- =?utf-8?B?VThhNC9pOEorRm10YThyaExlNU9oejRibXlvTUZxYzQ3ODZUQVd4VXgwdWFN?=
- =?utf-8?B?U2dKTUE3QUtvbFlQZFRkWGU2YnFHS2x4d0JWMURuTkZ3a0FUS0I3Q1FnZS9i?=
- =?utf-8?B?ZUJpazlXYzN1bUhQWEVJUTlQZmpvUGtXcER1U3VuRVd2UFN3TnVseC9jMFdC?=
- =?utf-8?B?ZjBZTjRLUjBoMXBuYmp3Y3FtR2R2eUlxRUU0dHRaWkJDM3VnM1dxallzTGRV?=
- =?utf-8?B?QldwMzJMZmFkdE5ZWGFvWkU4TzF3SU4vMmR6QXM0WHRWdHNTb0FJaHJnOC9m?=
- =?utf-8?B?N1ZDbHZPTEJURUl1TXlVWHJwZW56Z29SQzk1dFhSdDdrSGNsaEJ6c2JoK3Rw?=
- =?utf-8?B?WnRjUklYNmVGQ0hCekplZzFFdDE4VUthSXc2OGVXUU80YUlNK0ROaGVnVVp2?=
- =?utf-8?B?cnlRaTR0SjJ2bjYzZEZEdlJONVBIL2tnNSt3ODVWbEMzZFdsa04wRFlVSjNk?=
- =?utf-8?B?dVIzd01ibnIyc2JoYWlzVGVxYkcxZGROYUhNNDVTdHVwVGt4bVZuWGg1VWdk?=
- =?utf-8?B?bmZoTG1rSnJqWkRMMXRMRGMyMDM3ZHJqK0d0a2duOHp1RnI1dFFCQmc2UUhj?=
- =?utf-8?B?RHEyRTBjSW42U2NGcXA3MlkzdUFxWVZFbFgwclNtZXAvZWdaTUxFb1JVbDR5?=
- =?utf-8?B?NkdpcjdCRm5BU0NNbWtYTmlNcGVQM01GaTVjWFc1eFJRb3A2NFZHRmF2NUlV?=
- =?utf-8?B?N0VkSDlwMkpFc1hFN3lHSXFTeWQ0dTdtQ21RRVVYTkN3TWtMQkRrT01EU3dE?=
- =?utf-8?B?aFdOa0ZMN21OR0tmUlZOMTA4dkxEdFBmUk1TM2xrR3ZMbWhkcFBKdVJKcmZS?=
- =?utf-8?B?WE5ya0trU0QvSGZ5dVFJVHJmRXFUT3JmcWNPbzkzWTUzKzI2UzMvaHJyMEpK?=
- =?utf-8?B?NldGUkt2U3lDTDdEaHRuZk84dm5FYyswMGduQ1IyRjRVRTNOSHZXQnVUTkdP?=
- =?utf-8?B?K3d2YXZ2NTluaktEekZKTnN0cXdGSUZibXBiTDRET0pVa1BWVUNoU0p2RHNW?=
- =?utf-8?B?M2YxdmcxY1F5ajFrS0ZqQnpJTmhSb01sQWRrOHhwNlN1OFNQWlRSb1R2RFcr?=
- =?utf-8?B?RlJGMjBFUXZKbUZmaW1YVnVaU0xSQXhqV1d4M0V2Z21ZYndsWFgwVHJSSTNX?=
- =?utf-8?B?dVp6bjlxUGJzV2lWK2VVcGVSeFBoRksxalNZZWFWYnkzQ2twdWh5UEpnN1Rt?=
- =?utf-8?B?SFBsa0ZDSWo3M1dXRHMvMnlNbzdPMCtUM2U4dXBFcVVVZXFDZk9MRFlXd3hO?=
- =?utf-8?B?SjBPNnhNT1hMT1RDeXVkYU5VdWlYeExUMXpES1JabTd1S29UMUxSOHNNMXdJ?=
- =?utf-8?B?N0VtZXBwNnd4TWRHcEl5cmVmWE5DYnJSYkFtbklwUFpOZmlSVkIxVm5HMktl?=
- =?utf-8?B?bmI1L0N5OFhLQnVGYmsyOE55eFZrV0FVZzBFbFZYK1M0ZGJMSzM4UUZOb2Iv?=
- =?utf-8?B?dnYxQzlIRXpIY2VPUmlqSTJaT05uZXB4K0Q0NFJOU0dkUXJlQTBPZU1iZWJh?=
- =?utf-8?B?Q09QRmR0MW50V0kxZEhIUjJjNkRUa2s0YVZwbnk3ck8xc3NPV0xDU0VCQVdC?=
- =?utf-8?B?QzIwN3FIQkZQemVnTVRIbnhtZzU2V3ZGRFlKRkN0V3JTcVIwbFYwekZWQlNH?=
- =?utf-8?B?Sk43R1pTUUVhaWhxUFhmemRJVG5SQVdKSEF4RGJ1SXlrYmphOCtyWnRQMS96?=
- =?utf-8?Q?+qbSCq3OoSgWZ?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SzZMb3l0TGtRbS9KNkpKajdQVUlSUGlPVWNwbFhsUUFTcjlpYWhmNHRJamh2?=
- =?utf-8?B?NUtzVERocjFTN1ZhT2lReDF2VVg2T01mUDJiLyt4eUttMFJJR0tQaGJzRW1v?=
- =?utf-8?B?WVg4djZRZklwNGQ1WnVrbWxiRHRUdExmNGMydEdVS29yUU93TjdxMk5ubEM3?=
- =?utf-8?B?ZTNPUnB6akMvWUlnRFpENDhJOXdYVk1kRjRlc3VjY3dmRFRQOHgzd1ozYzE1?=
- =?utf-8?B?clBadmRtK2tzVzRnV1VqejdmblltNDFWV2I5aGl3SEtscnZYZ3BkNVcyMHVz?=
- =?utf-8?B?Q3BJMHgrSHhiejduc1g2NnFvY0xZdGh3WFA2TTk3R2ZEeEE0RVVldnNYVjYw?=
- =?utf-8?B?bzFWdU9kUUlkTGNkVm82cS81RE9yUUM5MTlwbVlwbW43RTN5ajNpVDlxbFdu?=
- =?utf-8?B?NlFUVldEMkl3dEgyTGhrcVp6VHlzcmNnVnE3RVZsajRqaTVRUVo3SVJFZmlF?=
- =?utf-8?B?RVNndVV2T2l2Z1BYOTlURGozVS8xOXZlY3M2Qy9ia1VmQlNkTHJsV004RjZE?=
- =?utf-8?B?R2c3aFJVOGdsd0ZzSVZoK2hsYVlmcis1VEEyUEswQVNIckJSRTM3MzJ4d0Qv?=
- =?utf-8?B?UC9ucXplU1RyVGduSFVpUEdNdnNXMVJKRnV0Q01BRk5Wblc4WnRidHl5MEVH?=
- =?utf-8?B?TFMwSFlqK0x4NWxoazIwb24wOUkxTVJxUlBzUHZadWpVaG5HVEJXcnljRFJl?=
- =?utf-8?B?NllNL2pJYVhTTmFoa1RMUVc2S1Q0dXZJcWQwL1NXUE1wdGwvNHB2aHhKUzJy?=
- =?utf-8?B?S1RlR00vVFlEMTJXckZTOEpubDA2L041UnJNMXo5dmQ1eVNXWXNSekdWbldr?=
- =?utf-8?B?bFgzRlB5N3NFRGFrY3VoSTdyYzJ5WWkwWDhxWVBKdlI4VTl0Z21aN0ZITThq?=
- =?utf-8?B?Q0g4Z2paWWNmbGF3YnQvQ2JvQ3JUenByS1B5aG1ramYrRXpiMGtvbEhMM3ht?=
- =?utf-8?B?OEpVUHUvck5peXBYbVVOamdqdCtycXIwKzVhbjlGeUlwYis3TE5wdVNQSUYz?=
- =?utf-8?B?bHpINTF3VWE0S3NBb0R2c0J5Y1p4dHhnZVJRTjk3cTR4Z3BNS1ZSekhNVWx2?=
- =?utf-8?B?bEUvcFkxWWcybUYwVXhIdHdBZGt0Q3JncGdTWXEyUENDWHFOM3h3L2htanM1?=
- =?utf-8?B?NDI1dGtwMU9OWml1L1NXeVRlcVdaNTVoTFpBRjFoM0JXNDdUMDhVZVFaY21E?=
- =?utf-8?B?RzdwVFNWL0x3RlNPV0hVbGd2UXBvQkV1aDZwcStYRFhiYTdENDdQUnFobFB2?=
- =?utf-8?B?NFdvM0NJbFpaemY1ZFdwUnVjVGVsQUsxRGRRaGRKWnNvdktMNDZxaEViQW1i?=
- =?utf-8?B?eFRXc3hXb28yRGs0bm9na3I0VXd0bjZTMnVSV1NrTkp3S2ZWU29uSUpHUTQr?=
- =?utf-8?B?b2hXdHpVM3cvM1BMU0xkN0tMN3lyaWJRczUrY2UrWHBaTzlIL2ZsMWUwNWR0?=
- =?utf-8?B?QWloMmpqS1NBZnphbGxJNVlvYTAzYXRpcjdwd1E1ejJLS3FxVmorZGxoMTBI?=
- =?utf-8?B?V0cvT0hUeXpXSmx2YW5PVXpYRGs1Z0c3dkQvdU5STm5ya29JUHZtVEgvVnRx?=
- =?utf-8?B?MWp1VjllaFdIbU01ekRmeStPanRCQlFYSWthc21FekNiRFVjRjNNK3U5TTBk?=
- =?utf-8?B?dWlhYlZDajl1cWtEbGJqVVRCdFZuMFFXdzRWUFB1Ukx0c1lpUC9pcmhyQ1VG?=
- =?utf-8?B?VTROWlM2aStIcXlNMzl4Y0hXQjY1QlBsRndGaE9jRUJ5U1FVZmJMM2MrYnFE?=
- =?utf-8?Q?h0vLhGYey+gF0BaJCUQ7oP1aYk1Xl3KB9fqpUop?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b3cbf5ee-30e5-4eb0-b3c1-08ddf51118e4
-X-MS-Exchange-CrossTenant-AuthSource: PN4PR01MB11064.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Sep 2025 11:06:34.0720
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB9078
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKlkyWgC/23Myw6DIBCF4Vcxsy4NULXiqu/RuFAZcJJ6CWNIG
+ 8O7l7ru8j/J+Q5gDIQMbXFAwEhM65JDXwoYp37xKMjmBi11JRt1E+y84I3szgKxqmVZmto4hHz
+ YAjp6n9izyz0R72v4nHZUv/UvE5WQwpjhjnrAxljz8HNPr+u4ztCllL5rQK5+pAAAAA==
+X-Change-ID: 20250813-sfg-spidts-ee56044969fe
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, 
+ Paul Walmsley <paul.walmsley@sifive.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Han Gao <rabenda.cn@gmail.com>, Longbin Li <looong.bin@gmail.com>, 
+ Zixian Zeng <sycamoremoon376@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758028972; l=1435;
+ i=sycamoremoon376@gmail.com; s=20250113; h=from:subject:message-id;
+ bh=CGgTSIYt63qsmZdwIds4EcFmwLudv2lGpTjjwlt+HoE=;
+ b=frGV+4xLcAYmFm8cXKHpsQaD0uBvclAaMVxAAhak1hE/IpCvgEap926nsl9BMP/TlwV0EZZ+P
+ mFr1wUbMukKDMfYQpgs48Il27cqhMfYZvRtaGw2q/TNe6z0g4TVVak7
+X-Developer-Key: i=sycamoremoon376@gmail.com; a=ed25519;
+ pk=OYfH6Z2Nx3aU1r0UZdvhskmddV6KC6V1nyFjsQQt4J8=
 
-Hello, Bjorn,
+[PATCH 1/4] and [PATCH 2/4] are copied from patch set [1]
+[PATCH v4 4/4] with content changes:
 
-Is it ok for you to pick this patchset, so we can see this in next 6.18.
+According to SG2042 Pioneer and SG2042_EVB_V1/V2 schematics, SPI-NOR Flash
+cannot support QSPI due to hardware design.
+Thus spi-(tx|rx)-bus-width must be set to 1.
 
-You can pick [1/7]~[3/7], I can handle the left dts part.
+Link: https://lore.kernel.org/linux-riscv/20250720-sfg-spifmc-v4-0-033188ad801e@gmail.com/ [1]
 
-Thanks,
+Signed-off-by: Zixian Zeng <sycamoremoon376@gmail.com>
+---
+Changes in v2:
+- Change value of spi-(tx|rx)-bus-width properties to 1 of all boards.
+- Decrease spi-max-frequency to 50MHz.
+- Link to v1: https://lore.kernel.org/r/20250813-sfg-spidts-v1-0-99b7e2be89d9@gmail.com
 
-Chen
+---
+Zixian Zeng (4):
+      riscv: dts: sophgo: Add SPI NOR node for SG2042
+      riscv: dts: sophgo: Enable SPI NOR node for PioneerBox
+      riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V1
+      riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V2
 
-On 9/12/2025 10:35 AM, Chen Wang wrote:
-> From: Chen Wang <unicorn_wang@outlook.com>
->
-> Sophgo's SG2042 SoC uses Cadence PCIe core to implement RC mode.
->
-> This is a completely rewritten PCIe driver for SG2042. It inherits
-> some previously submitted patch codes (not merged into the upstream
-> mainline), but the biggest difference is that the support for
-> compatibility with old 32-bit PCIe devices has been removed in this
-> new version. This is because after discussing with community users,
-> we felt that there was not much demand for support for old devices,
-> so we made a new design based on the simplified design and practical
-> needs. If someone really needs to play with old devices, we can provide
-> them with some necessary hack patches in the downstream repository.
->
-> Since the new design is quite different from the old code, I will
-> release it as a new patch series. The old patch series can be found in
-> here [old-series].
->
-> Note, regarding [2/7] of this patchset, this fix is introduced because
-> the pcie->ops pointer is not filled in SG2042 PCIe driver. This is not
-> a must-have parameter, if we use it w/o checking will cause a null
-> pointer access error during runtime.
->
-> Link: https://lore.kernel.org/linux-riscv/cover.1736923025.git.unicorn_wang@outlook.com/ [old-series]
->
-> Thanks,
-> Chen
->
-> ---
->
-> Changes in v3:
->
->    This patchset is based on v6.17-rc1.
->
->    Fixed following issues for driver code based on feedbacks from Bjorn Helgaas,
->    Mingcong Bai, thanks.
->
->    - Fixed the issue when building the driver as a module. Define own pm_ops
->      inside driver, don't use the ops defined in other built-in drivers.
->    - Improve .remove() function to properly disable the host.
->
-> Changes in v2:
->
->    This patchset is based on v6.17-rc1. You can simply review or test the
->    patches at the link [2].
->
->    Fixed following issues based on feedbacks from Rob Herring, Manivannan Sadhasivam,
->    Bjorn Helgaas, ALOK TIWARI, thanks.
->
->    - Driver binding:
->      - Removed vendor-id/device-id from "required" property.
->    - Improve drivers code:
->      - Have separated pci_ops for the root bus and child buses.
->      - Make the driver tristate and as a module.
->      - Change the configuration name from PCIE_SG2042 to PCIE_SG2042_HOST.
->      - Removed "Fixes" tag from commit [2/7], since this is not for an existing bug fix.
->      - Other code cleanups and optimizations
->    - DT:
->      - Add PCIe support for SG2042 EVB boards.
->
-> Changes in v1:
->
->    The patch series is based on v6.17-rc1. You can simply review or test the
->    patches at the link [1].
->
-> Link: https://lore.kernel.org/linux-riscv/cover.1756344464.git.unicorn_wang@outlook.com/ [1]
-> Link: https://lore.kernel.org/linux-riscv/cover.1757467895.git.unicorn_wang@outlook.com/ [2]
->
-> ---
->
-> Chen Wang (7):
->    dt-bindings: pci: Add Sophgo SG2042 PCIe host
->    PCI: cadence: Check pcie-ops before using it
->    PCI: sg2042: Add Sophgo SG2042 PCIe driver
->    riscv: sophgo: dts: add PCIe controllers for SG2042
->    riscv: sophgo: dts: enable PCIe for PioneerBox
->    riscv: sophgo: dts: enable PCIe for SG2042_EVB_V1.X
->    riscv: sophgo: dts: enable PCIe for SG2042_EVB_V2.0
->
->   .../bindings/pci/sophgo,sg2042-pcie-host.yaml |  64 ++++++++
->   arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts  |  12 ++
->   arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts  |  12 ++
->   .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  |  12 ++
->   arch/riscv/boot/dts/sophgo/sg2042.dtsi        |  88 +++++++++++
->   drivers/pci/controller/cadence/Kconfig        |  10 ++
->   drivers/pci/controller/cadence/Makefile       |   1 +
->   .../controller/cadence/pcie-cadence-host.c    |   2 +-
->   drivers/pci/controller/cadence/pcie-cadence.c |   4 +-
->   drivers/pci/controller/cadence/pcie-cadence.h |   6 +-
->   drivers/pci/controller/cadence/pcie-sg2042.c  | 138 ++++++++++++++++++
->   11 files changed, 343 insertions(+), 6 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
->   create mode 100644 drivers/pci/controller/cadence/pcie-sg2042.c
->
->
-> base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+ arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts       | 24 ++++++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts       | 12 +++++++++++
+ .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts | 24 ++++++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi             | 24 ++++++++++++++++++++++
+ 4 files changed, 84 insertions(+)
+---
+base-commit: 8a4fdd09c96f6713e6cb47d36e9f9dd6f6694215
+change-id: 20250813-sfg-spidts-ee56044969fe
+
+Best regards,
+-- 
+Zixian Zeng <sycamoremoon376@gmail.com>
+
