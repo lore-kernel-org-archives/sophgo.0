@@ -1,188 +1,106 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC66A55;
-	Sat, 20 Sep 2025 07:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841091DE89A
+	for <sophgo@lists.linux.dev>; Sat, 27 Sep 2025 17:36:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758354140; cv=none; b=tg3vp0qIGXxtk6d+VD/kA3rwL2qoZ4tUOa4Sdy5mWvlN3CGcQtAzQzDFkg3xCp4k0/YoCPCU5CqLG9s8AEqOANOpgJdrJGl7+l+YBkHUunwpJETJ02kQTmT5bAo5dpbUh0bTW3gOli5NPiNk1whAH0S/3DQvZ++q5tnEuH630G0=
+	t=1758994610; cv=none; b=hiaR5dTjp850M0eoAypMwCwpQD8+5Bw0SMqJkkDssAhtrRZ69edBork8ZFfvCAE02tfxheJ9DAk+V2Av4KZ6sc4eJ9v50LGQVdqJi77VLVImrhbGDcXUXb2e01JIw/QwsgzRZRlQWxDdG9SEVCFqnRP3Lzjw+UUMrRyAetbrZKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758354140; c=relaxed/simple;
-	bh=00/ZcdeScyYNhHtGZfw/xJV1F83XgBgalo+slKN3fjw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZnpNnZEFNkYggMObW/wi7SjBbkNOolFNAQLj63hxdOVqRQUXKh0XPar7KLyazyH2LjzMQYNzdUQyGO0ydURP86BH+Yo/e3tcJSf7ommhJGGbDEvg9x9vnJRn+nBGv9t9dSyRLEXyYCyGJQF+UsavEsxozH5FfWUy0TNDW7bE59o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dvVfkc9p; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1758994610; c=relaxed/simple;
+	bh=XF+APECUX9F0rvdCvp5Uds/TNmoRS4fjsm/tqEnUQD4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YVI8KDp3ACI4K5wnd8spoSeoBfiP0QyOPt7saA+5MzjXVjLEJPsQjasm+LjrwbJIBkB4TAw+/KNlHp0w8zy0zVT3yv22HGfpBE6qQjD3XXZnnyMGn3PdEYbw9O9Oq+XA8tbDiZTsfMlU4M+R01CDh2ZyjkfwFOCjgoqoNIcWnbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iASoLPJZ; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dvVfkc9p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AEC7C4CEEB;
-	Sat, 20 Sep 2025 07:42:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758354139;
-	bh=00/ZcdeScyYNhHtGZfw/xJV1F83XgBgalo+slKN3fjw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dvVfkc9p1DQkPQGO6GvJxUSVuzwQyG0dxhdApalfEBZOdOBtSMcgKk0xJmK0jQuSI
-	 XJCEEZuu3VbGnRULFowmzwbchAXvDXUvZpGCmgsUuRslFce1oMhKt7E6EcErgv28Wg
-	 RyDp2qZDwjG2Y7kOPZXACiBEAOHtVl6rlsUUxQlC6lUi8rMdwh/6e79eUW49+2FUBX
-	 zok+//sVZGZwSXAqgmZu4pmzJgNCWIVHVs9xQdvaFa/JRRaTL3wxR+jFonqq5Il91m
-	 VOjFZP0Pokvf691m8TEg6SZgdo3SFE65v43VtPDUquAzoW0lGYueiwehQWKtAPNC5C
-	 znSjsF7BW7Udg==
-Date: Sat, 20 Sep 2025 13:12:06 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Chen Wang <unicornxw@gmail.com>
-Cc: kwilczynski@kernel.org, u.kleine-koenig@baylibre.com, 
-	aou@eecs.berkeley.edu, alex@ghiti.fr, arnd@arndb.de, bwawrzyn@cisco.com, 
-	bhelgaas@google.com, unicorn_wang@outlook.com, conor+dt@kernel.org, 
-	18255117159@163.com, inochiama@gmail.com, kishon@kernel.org, krzk+dt@kernel.org, 
-	lpieralisi@kernel.org, palmer@dabbelt.com, paul.walmsley@sifive.com, robh@kernel.org, 
-	s-vadapalli@ti.com, tglx@linutronix.de, thomas.richard@bootlin.com, 
-	sycamoremoon376@gmail.com, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, 
-	rabenda.cn@gmail.com, chao.wei@sophgo.com, xiaoguang.xing@sophgo.com, 
-	fengchun.li@sophgo.com, jeffbai@aosc.io
-Subject: Re: [PATCH v3 4/7] riscv: sophgo: dts: add PCIe controllers for
- SG2042
-Message-ID: <cwc3hnre3s3rvzcgzjdbdrhlrizz4obifwragusrixa5owj5qg@yotfd3l3qxf4>
-References: <cover.1757643388.git.unicorn_wang@outlook.com>
- <828860951ec4973285fe92fceb4b6f0ecb365a2f.1757643388.git.unicorn_wang@outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iASoLPJZ"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-71d6051afbfso32462187b3.2
+        for <sophgo@lists.linux.dev>; Sat, 27 Sep 2025 10:36:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758994607; x=1759599407; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VbjnLuSMG8yw44v3Cfmga/MZCs0G/sV0E2m0ttu4jog=;
+        b=iASoLPJZ+oIsOL+hChPe841StH7CV71FdcFXXlAybYyOX0Wcl5hMGqoOq/lik2B5e7
+         6rCpTx6qS9V5Rk6yQ1+IPH3iQUazZHuf/j0tSWEkoMpXzUee8eMBj02jVIUuDxX+7272
+         tH2bBIn5cN1sZwdSYHXJcrGdxx1qJbvPVb/7POrurywZ/pBmNboVJnVZzkaqK5u4zNg/
+         XPM+Uj7235azqX5vQ9s8ZvI27Br1aDfXt/GCW+yk7HiXlZt4oyH8qc43DQOn1+bJTlK+
+         xpiwyOr0Whq0RECbZ/Ft6aJKfO7pwijxFhcEEN0wvBPeLhfnNA++SXDOYoQ5YFni6ilQ
+         cLLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758994607; x=1759599407;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VbjnLuSMG8yw44v3Cfmga/MZCs0G/sV0E2m0ttu4jog=;
+        b=iB+YGt6h34tRkM0ZBieeV2T563d26Zx3LsuzFcm15Y0dIz6EH4TDvvC1iuUE3Ye3qO
+         7wPiwv3W8m6+1rNImZqQCIAo10Goa8QFCZvXfbmvcWnJvw9NMcKhLVxFp+vQAhCZQ6b2
+         fVGmysu6geEsdKJgJeMXMMsEiReuo9DoZmQs/AmW5pqxDWXxMMSOGngiVrpU5SK2IRWS
+         n4WcxqurJeM+pXa3UfAyaY0Ld60YDaRBiKndy+WKxl5PqYL4imgZBr7tQVQRWNF6zK6Y
+         Wl+twPK6ALpW38/saXcUtCIzzBG0rpFN6D9sSlT7/vr/3ZJBbKxAjxF6wg9G3EYHgfUz
+         A9NA==
+X-Forwarded-Encrypted: i=1; AJvYcCURanrqW3shvBeiXAGFpqwhvhVmuGTJ+70lrE+h4qkT7IoaaGSDzrS+n82ZbD5e9JOjqFkzgE8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxaV47qXq82BoIEjVjMkUOFh8D2Sb5hGehffy6gVvIt6Y9R34jD
+	1bUNAMEYT5hy/X89Dgrzcwn9h/JB3cJRIZLnNNp217ltMBc4Ztd8n9YF
+X-Gm-Gg: ASbGncsxwRBpwH5wi0Jvidt6pSf84qePkb51HMBm/fJp7XLOJTIG6xhfgTUtNHBem3Q
+	0hdpFgU01MHrDsKE/hg8i5uynar/gHMsgpKhms3V/b+dSxs03d7KNChcjy1e+JpXvubO6G+HMaU
+	rP5I5RS6LVkVQfXK+asoAuA6qCDgk65qG+k8DAcNUNEEX6reod3EyNZODasOCxUArBHzu6MU0eP
+	/zYGMv7bXq55SMEtQfL3pq/pcXu8/t3J6Vwpcklqs284Cd8FElIrRYlnf7NP0rx2Eu9M91aLjsh
+	ghb9X2IWsxpfv7aHVSyeZefhVkPZo6jHrzELzc7k12tqBaPI1s86aoHscPeAwyUCCGNX31SmnwA
+	a
+X-Google-Smtp-Source: AGHT+IEGcKO9QkTdCPSVULH6h3vDhccsiVZFl7VwP7XTGYSwXlANev1tcrw0B+/ELVgNxVhu49n3Vg==
+X-Received: by 2002:a05:690e:d4c:b0:636:111b:a4c9 with SMTP id 956f58d0204a3-6361a745f42mr13438608d50.21.1758994607358;
+        Sat, 27 Sep 2025 10:36:47 -0700 (PDT)
+Received: from sleek ([2600:6c65:7f7f:fe0b::ec0])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-636d5b1d83csm1269716d50.11.2025.09.27.10.36.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Sep 2025 10:36:47 -0700 (PDT)
+From: Joshua Milas <josh.milas@gmail.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	unicorn_wang@outlook.com,
+	inochiama@gmail.com,
+	alexander.sverdlin@gmail.com,
+	rabenda.cn@gmail.com,
+	thomas.bonnefille@bootlin.com,
+	chao.wei@sophgo.com
+Cc: josh.milas@gmail.com,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev
+Subject: [PATCH 0/2] Add initial Milk-V Duo S board support
+Date: Sat, 27 Sep 2025 13:36:17 -0400
+Message-ID: <20250927173619.89768-1-josh.milas@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <828860951ec4973285fe92fceb4b6f0ecb365a2f.1757643388.git.unicorn_wang@outlook.com>
 
-On Fri, Sep 12, 2025 at 10:36:50AM +0800, Chen Wang wrote:
-> From: Chen Wang <unicorn_wang@outlook.com>
-> 
-> Add PCIe controller nodes in DTS for Sophgo SG2042.
-> Default they are disabled.
-> 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Signed-off-by: Han Gao <rabenda.cn@gmail.com>
-> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-> ---
->  arch/riscv/boot/dts/sophgo/sg2042.dtsi | 88 ++++++++++++++++++++++++++
->  1 file changed, 88 insertions(+)
-> 
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> index b3e4d3c18fdc..b521f674283e 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> @@ -220,6 +220,94 @@ clkgen: clock-controller@7030012000 {
->  			#clock-cells = <1>;
->  		};
->  
-> +		pcie_rc0: pcie@7060000000 {
-> +			compatible = "sophgo,sg2042-pcie-host";
-> +			device_type = "pci";
-> +			reg = <0x70 0x60000000  0x0 0x00800000>,
-> +			      <0x40 0x00000000  0x0 0x00001000>;
-> +			reg-names = "reg", "cfg";
-> +			linux,pci-domain = <0>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0  0xc0000000  0x40 0xc0000000  0x0 0x00400000>,
+This adds an initial device tree for the Milk-V Duo S board
+with support for reading from the SD card. This is continued
+work from Michael Opdenacker's v6 series on the ARM64 side.
+I'm still working on confirming the RISCV side.
 
-PCI address of the I/O port starts from 0. So this should be:
+https://lore.kernel.org/linux-riscv/20240421055710.143617-1-michael.opdenacker@bootlin.com/
 
-				<0x01000000 0x0  0x00000000  0x40 0xc0000000  0x0 0x00400000>,
+Patch produced against the "for-next" branch of the sophgo "linux" tree:
+https://github.com/sophgo/linux.git
 
-Same comment for other nodes.
+Joshua Milas (2):
+  dt-bindings: soc: sophgo: add Milk-V Duo S board compatibles
+  arm64: dts: sophgo: add initial Milk-V Duo S board support
 
-With this fixed,
-
-Acked-by: Manivannan Sadhasivam <mani@kernel.org>
-
-- Mani
-
-> +				 <0x42000000 0x0  0xd0000000  0x40 0xd0000000  0x0 0x10000000>,
-> +				 <0x02000000 0x0  0xe0000000  0x40 0xe0000000  0x0 0x20000000>,
-> +				 <0x43000000 0x42 0x00000000  0x42 0x00000000  0x2 0x00000000>,
-> +				 <0x03000000 0x41 0x00000000  0x41 0x00000000  0x1 0x00000000>;
-> +			bus-range = <0x0 0xff>;
-> +			vendor-id = <0x1f1c>;
-> +			device-id = <0x2042>;
-> +			cdns,no-bar-match-nbits = <48>;
-> +			msi-parent = <&msi>;
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie_rc1: pcie@7060800000 {
-> +			compatible = "sophgo,sg2042-pcie-host";
-> +			device_type = "pci";
-> +			reg = <0x70 0x60800000  0x0 0x00800000>,
-> +			      <0x44 0x00000000  0x0 0x00001000>;
-> +			reg-names = "reg", "cfg";
-> +			linux,pci-domain = <1>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0  0xc0400000  0x44 0xc0400000  0x0 0x00400000>,
-> +				 <0x42000000 0x0  0xd0000000  0x44 0xd0000000  0x0 0x10000000>,
-> +				 <0x02000000 0x0  0xe0000000  0x44 0xe0000000  0x0 0x20000000>,
-> +				 <0x43000000 0x46 0x00000000  0x46 0x00000000  0x2 0x00000000>,
-> +				 <0x03000000 0x45 0x00000000  0x45 0x00000000  0x1 0x00000000>;
-> +			bus-range = <0x0 0xff>;
-> +			vendor-id = <0x1f1c>;
-> +			device-id = <0x2042>;
-> +			cdns,no-bar-match-nbits = <48>;
-> +			msi-parent = <&msi>;
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie_rc2: pcie@7062000000 {
-> +			compatible = "sophgo,sg2042-pcie-host";
-> +			device_type = "pci";
-> +			reg = <0x70 0x62000000  0x0 0x00800000>,
-> +			      <0x48 0x00000000  0x0 0x00001000>;
-> +			reg-names = "reg", "cfg";
-> +			linux,pci-domain = <2>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0  0xc0800000  0x48 0xc0800000  0x0 0x00400000>,
-> +				 <0x42000000 0x0  0xd0000000  0x48 0xd0000000  0x0 0x10000000>,
-> +				 <0x02000000 0x0  0xe0000000  0x48 0xe0000000  0x0 0x20000000>,
-> +				 <0x03000000 0x49 0x00000000  0x49 0x00000000  0x1 0x00000000>,
-> +				 <0x43000000 0x4a 0x00000000  0x4a 0x00000000  0x2 0x00000000>;
-> +			bus-range = <0x0 0xff>;
-> +			vendor-id = <0x1f1c>;
-> +			device-id = <0x2042>;
-> +			cdns,no-bar-match-nbits = <48>;
-> +			msi-parent = <&msi>;
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie_rc3: pcie@7062800000 {
-> +			compatible = "sophgo,sg2042-pcie-host";
-> +			device_type = "pci";
-> +			reg = <0x70 0x62800000  0x0 0x00800000>,
-> +			      <0x4c 0x00000000  0x0 0x00001000>;
-> +			reg-names = "reg", "cfg";
-> +			linux,pci-domain = <3>;
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +			ranges = <0x01000000 0x0  0xc0c00000  0x4c 0xc0c00000  0x0 0x00400000>,
-> +				 <0x42000000 0x0  0xf8000000  0x4c 0xf8000000  0x0 0x04000000>,
-> +				 <0x02000000 0x0  0xfc000000  0x4c 0xfc000000  0x0 0x04000000>,
-> +				 <0x43000000 0x4e 0x00000000  0x4e 0x00000000  0x2 0x00000000>,
-> +				 <0x03000000 0x4d 0x00000000  0x4d 0x00000000  0x1 0x00000000>;
-> +			bus-range = <0x0 0xff>;
-> +			vendor-id = <0x1f1c>;
-> +			device-id = <0x2042>;
-> +			cdns,no-bar-match-nbits = <48>;
-> +			msi-parent = <&msi>;
-> +			status = "disabled";
-> +		};
-> +
->  		clint_mswi: interrupt-controller@7094000000 {
->  			compatible = "sophgo,sg2042-aclint-mswi", "thead,c900-aclint-mswi";
->  			reg = <0x00000070 0x94000000 0x00000000 0x00004000>;
-> -- 
-> 2.34.1
-> 
+ .../bindings/soc/sophgo/sophgo.yaml           |  1 +
+ arch/arm64/boot/dts/sophgo/Makefile           |  1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 88 +++++++++++++++++++
+ 3 files changed, 90 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.51.0
+
