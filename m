@@ -1,76 +1,77 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED61972617
-	for <sophgo@lists.linux.dev>; Wed,  1 Oct 2025 06:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82921B423C
+	for <sophgo@lists.linux.dev>; Fri,  3 Oct 2025 01:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759301241; cv=none; b=geR2asemh+m+6YEcehDpOcPX7nrtIHIaMKoUhpG9WV2ENHioksUKc3fRzTLIunDNDrlJEAKHvYF+06qz2nYvRBKK6Ah5k1Gxl6fHhBMgPD29Xf+duO4m//Ug0uLY59orxfZxBEv2/S3Uj5NJ+lJQX7sMqDOeyv9mrTrGmqf5CA0=
+	t=1759453883; cv=none; b=HcDWtOZtJ+2lVSTUrsWUomIRFDZLRfAUos5KqBMJRYosBPEnUlPVZWZVhplo7WsKM0Hu4aEdK0M5U6xDCPFwHI2UybqShk131AguZH7gpBxEGDxy0W0XszJ/4KvyiV0TE1rCRUaHlQxoIcvI4TliXy2v8KTQB+RHWQ6FWWO/DlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759301241; c=relaxed/simple;
-	bh=oq5an/fFkig8qvVoZG7Z4PYEyXusdmyfEix6wDVL5NI=;
+	s=arc-20240116; t=1759453883; c=relaxed/simple;
+	bh=N9GazPrt5YI0AJMEN+qVpDTwc+mmy8FLL3tPBD7Nz/M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fT6MlRaDFd5WsTVqUcA02c6Ax1bABJm9+k5LANXqWbyt4utx0vgGJq3LSljFucGfawsKSsVYXEasJBzYXXPe4JeKoPjRjKgLN/iupNfL0Rj5+WfpHjYa7H8IUx0MtzNq9iDXsAr0CMLE9EunKbD1MqGGfE2GTnl6KmMTmiz6/Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RQ+gRBrp; arc=none smtp.client-ip=209.85.216.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=e1WFZuDnq6DHwITUI6/O1v2GOUX1CG3P+6c2FOexqrn+VbdCgV94hFKdNXqofULnYwHV23L1gLqUmM7aQ8cfRoMyOUR5/+htVAjqHOPyH5zkwJtAf140w5+EZaFqHMDTG3MFn5nKzWHe43jHoW0tC7zJ3fg4WWyat+toLtruV7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iC3D+j/k; arc=none smtp.client-ip=209.85.222.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RQ+gRBrp"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-32df5cae0b1so8094529a91.2
-        for <sophgo@lists.linux.dev>; Tue, 30 Sep 2025 23:47:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iC3D+j/k"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7f04816589bso197262485a.3
+        for <sophgo@lists.linux.dev>; Thu, 02 Oct 2025 18:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759301239; x=1759906039; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1759453876; x=1760058676; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rrg8YiOupFAOsk+i3SkSSloZ647XAd/cSDAukzzjg7U=;
-        b=RQ+gRBrpjcFa65DoKqAMShDRtWktXhSxycNngkCm73iJCJM6MAi2t95L08uTEvC5Pc
-         FW7CsX2eR5exAmyOp3iX8xmb42kCkJ8HdxcOg3afOOSTjPu+94uW9qUQVa04qf5Tjitz
-         2NvfO5Mt8RQwZ1EWxofP5Izq/PvCaNBJa+lmRu1cGSapohO74/pXLTlhVZ4BC4uovnBL
-         IWSQYLNZ2/y2YqjsQLYdsetXESmXbfvN1/t38TXZXnA1h556ikO9Aju3QVSFRWqiD37R
-         559BeDpYKU4BsHYLj50cvpmOPnUeLBCseI0lhqvCHSUGaqe267z3ZmmCDXGfdLZ3386+
-         Wv+A==
+        bh=KvAaRy7mKlC1Ciw+3P3SH6DtmjBFBnfiIqdIEUbSJm0=;
+        b=iC3D+j/ksB3b+/gGSQvgFsP4P66ULyihMFcQZeGw9vW2SWX7rgZ0+9pfgw5lGHuA7V
+         nPJ52nAcsnFmjQwnnPj85hCe+OY6+JwGgNaae5u+VMM0sjmAOPg0VhpZaorrrpXHaqX6
+         KVWWfAGZo5SXjvzjeiPXh0xN7XgKbukoN/+W0djxOos7erh9Skosmjt6KQZQoGdke60a
+         slSmZnXlULOUC9IEzpx7uY6tshhBzKoodXVbiD5Xo6ZOOvgc+M3nP1PTQyjU8RK+wWCl
+         fYWJDHk9lj4KAOgIwro54HNw6UeCqknR5vwR4pOOeeKzYc+YOeZw6VBOQM6bWnnAeQgF
+         nK+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759301239; x=1759906039;
+        d=1e100.net; s=20230601; t=1759453876; x=1760058676;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rrg8YiOupFAOsk+i3SkSSloZ647XAd/cSDAukzzjg7U=;
-        b=N3A9b5BfjnmelfGMssifPg/QL1PC5WHKGcxImAtiMgt8l/9mR+9rj+sPNzy9I5wwDh
-         VvVcBSDeC0sByv2BwUCRlq+hylx7mrwJPFmAfMF6SKx75AgekTK9nkYtf46vWJCCCfdw
-         k0N1K83yFI2OWsG5Sri+EPfqf4eyjDxDywHxk77By2Xg3tAalpPhj/e3iEMBP8yUxcyM
-         nvm3aEkEywMUZMDORUZ+eeqPzlhgSoUmGiVuPYKWuhnIlcXul/+oy+cf3t4vgJ4VFajL
-         KmPPcwAyL8QPiqVxTX0JnESXLmtItSXN4ucXIMdtOADupigncYkXWtqoIaPPChZqd1Uz
-         Ueag==
-X-Forwarded-Encrypted: i=1; AJvYcCUoMNf9dSVNqEnQePsQ2/sYeG5PymS+Qh7N7R5vjriTetzvl3Phh0WKa71YXPVIiBimMjx0gOg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwuTwKtsyVO/Zczu9jAvv90fy/qKCns5q/HWMrKMHSuoPI7ZOD+
-	UBb9OIinNfGky+xNgoTYfgJySbxvJzr7XUaRzAtFuu6lo2DSzRyNJrdE
-X-Gm-Gg: ASbGncsphEQk83vI1OttjgcHC9D+j4iZ+IzMrKWqdW7vLDJI2LHWTDnCs4Jihtmba91
-	9Je3rKTUHu0ESjYNFhcq1jhcxgb+3cqTfgAsgYJmIs0plel4Dy3AFJT//b06QGs/W5mSwJd5RDP
-	QUAnIshXmbbiELVcCpctx2recaqvIcMV2ZMMVAg1HT1PrMlQhiidTXacP1MiLG15c3CMnWL5BXG
-	RHQaKQaNbVxB56UQ7krqZw+MSd3f+ZJP4/sMNmAkVhSbsOHx7C201Io2V3/3+efcWHxRK5pgiAq
-	ZM3Dc8nMgMas3ggbXznfGAhBFaiVgNiDZsowVcfBVsZA1VN+LKZ40N+hHyGfIhoCC+2odg6FBoa
-	VQBl1lH7vw76v5LrdwGFGcj4e9sUA9tUxs4eBtwOOHnxMOA==
-X-Google-Smtp-Source: AGHT+IHqcjg7cX3i0cLBfYp3CcUQtOuDhdAqQoQ+5y0QHajwwC6YPvB0Ubk+8W/P1F9XaXoOJJ99KA==
-X-Received: by 2002:a17:90b:4d06:b0:32d:17ce:49d5 with SMTP id 98e67ed59e1d1-339a6f06af6mr2501078a91.23.1759301239132;
-        Tue, 30 Sep 2025 23:47:19 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-339a6ea0d5dsm1501579a91.4.2025.09.30.23.47.17
+        bh=KvAaRy7mKlC1Ciw+3P3SH6DtmjBFBnfiIqdIEUbSJm0=;
+        b=qAzpxRxzRiHwmL7frbMw3i8OXrfrScJKYsXInHlefxVblFOu55U/L/HYVZqyJUEz0g
+         YnT+kU5KKR5Eu5lsJzbvD8jGUXjBDMmxeofmKgPcsfBZObEJcsetBM58ZYhrvV+d1CY/
+         AzXyh+a8uI5mmVLN0uEA3yuDYDcm6rBfTe9tITYCTnDHLWGOuZzHNIz90AMq5Hzc4B/W
+         1Kj5N+Wojg6wmt0yJOMlZozxZAQk8/W12yuGAOWT+/v0L7c0NuTeobUnv6UV6CD19zXz
+         w/WboiKjsCB/6zYsEMTg6TLxe9x/93UtR+fIzC0qS797ur3UjVSWdCLTKFe8Gw+OJ9y/
+         917g==
+X-Forwarded-Encrypted: i=1; AJvYcCV6UaWGMKwTN9Rh7vZEsV2mF8YP8bq39F1fSQM4Ukvs2R+asoRMKS1YKYuyqPtmG2d1w3J26zQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4cTzGSMWgLjsAo8BZURA19G8bi9Y0gZl8yrVoHZL+oUA18+dC
+	jL/2c+6eM9BXwKYxytyDiu1LJg+80AL41v2UJiLApsoD9TF61rlh6wdM
+X-Gm-Gg: ASbGncvjlRtz8lcyJ4AAbpY0dh3uq8LuTPbk6M27i8JXRpL+Qauqot1C4su+UdoQAcW
+	Y4lwe1/LnA9SWi7WPKB22DZNoc1ax+OH83ARDb5LSSCQgcaVdN3yw7DTfPm8Cc3S5bvW0+FIWab
+	1QT5yQhHbfTQg9hLr6J/A/wreWb64OH33T65DShF7LcaoAaWJhWLUtUbKw/jp/xsLOmYP0vUWKn
+	0E8GAqh342E/gTMMrqTygv2zKQCXOwzJq8h7qEw2oY76Hlqt0mtGSvQvPaePZmkE1VX4HEo7DWY
+	9+tB8fu2tIUK/2KuL5l9sV+60TAzlGwtGaiYJNT0dw8OjR9pH+iWyNMFPVbG+xkqRSBRItrSz2M
+	vuguSH8Vd7dRSuQLUS9IGmg66L0oA+PZYAFJ1ApVIBoPZ773aeWD/LEljwFm0WoUzsxiRd5LwD4
+	IsYKoD
+X-Google-Smtp-Source: AGHT+IGrPCS2A1xaxD+NT2pS1Wo5vKnVoemfXFHvdjgwkCSU8FnmDVxqfEdaNGA9zE3GdjsXrVMAjw==
+X-Received: by 2002:a05:620a:28cd:b0:82a:930:9cea with SMTP id af79cd13be357-87a3b89132amr197471785a.76.1759453876489;
+        Thu, 02 Oct 2025 18:11:16 -0700 (PDT)
+Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-877725550e5sm308746785a.22.2025.10.02.18.11.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Sep 2025 23:47:18 -0700 (PDT)
-Date: Wed, 1 Oct 2025 14:46:47 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
-	Inochi Amaoto <inochiama@gmail.com>, Joshua Milas <josh.milas@gmail.com>, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, unicorn_wang@outlook.com, 
-	rabenda.cn@gmail.com, thomas.bonnefille@bootlin.com, chao.wei@sophgo.com
-Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev
+        Thu, 02 Oct 2025 18:11:16 -0700 (PDT)
+Date: Thu, 2 Oct 2025 21:11:14 -0400
+From: Joshua Milas <josh.milas@gmail.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	unicorn_wang@outlook.com, alexander.sverdlin@gmail.com,
+	rabenda.cn@gmail.com, thomas.bonnefille@bootlin.com,
+	chao.wei@sophgo.com, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, josh.milas@gmail.com
 Subject: Re: [PATCH 2/2] arm64: dts: sophgo: add initial Milk-V Duo S board
  support
-Message-ID: <ik7co4cfasicx7ent3grhdk4dkvmdgtxc7jcsxwmkmmb46v42u@vwkayyqswv6k>
+Message-ID: <aN8isoQpdENTrxNJ@sleek>
 References: <20250927173619.89768-1-josh.milas@gmail.com>
  <20250927173619.89768-3-josh.milas@gmail.com>
  <nkzpfylhxyqf5u3bjlokhe4udgcxohbaanhwuofjzatan3iwio@45ljfquf5sui>
- <ad86009bff38ddae0b291d3edbf958ce6363ece2.camel@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -79,39 +80,81 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ad86009bff38ddae0b291d3edbf958ce6363ece2.camel@gmail.com>
+In-Reply-To: <nkzpfylhxyqf5u3bjlokhe4udgcxohbaanhwuofjzatan3iwio@45ljfquf5sui>
 
-On Tue, Sep 30, 2025 at 07:03:24AM +0200, Alexander Sverdlin wrote:
-> Hi Inochi, Joshua,
-> 
-> On Tue, 2025-09-30 at 07:54 +0800, Inochi Amaoto wrote:
-> > > --- /dev/null
-> > > +++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-> > > @@ -0,0 +1,88 @@
-> > > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-> > > +
-> > > +/dts-v1/;
-> > > +
-> > > +#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
-> > > +#include "sg2000.dtsi"
-> > > +
-> > > +/ {
-> > > +	model = "Milk-V DuoS";
-> > > +	compatible = "milkv,duo-s", "sophgo,sg2000";
-> > > +
-> > > +	aliases {
-> > > +		serial0 = &uart0;
-> > > +		mmc0 = &sdhci0;
-> > > +	};
-> > 
-> > It is better for adding gpio and other serial there?
-> 
-> I believe, gpio is long time discouraged here.
-> 
-> Link: https://lore.kernel.org/all/CACRpkdYErJH5RUjL+jPC5vnaqGiOqBwHsr0E42wOWrpBGrpS3w@mail.gmail.com/
-> 
+Hi Inochi,
 
-Good to know, let's drop it.
+> Small suggestion: please ensure the pinctrl is correct, different
+> board may require different configuration.
 
-Regards,
-Inochi
+Is there a certain way to do that? I have been checking it against
+the board schematic [1]. It shows that it is using UART0 on the
+pins defined in pinctrl-sg2000.h.
+
+Link: https://github.com/milkv-duo/duo-files/blob/main/duo-s/hardware/duo_s_SCH_v1.1.pdf
+
+
+> I suggest adding all the support devices instead of a minimum one.
+> Like ethernet, wifi, bluetooth.
+> In the next cycle, there should be a patch for adding USB device node,
+> as the driver is already merged. I also hope you can take it.
+
+Lets do it! I tried adding the following but could not get some items working:
+* emmc from 'sg2000-milkv-duo-module-01.dtsi'
+* sdhci1 from 'sg2000-milkv-duo-module-01.dtsi'
+* mdio
+* gmac0
+* dmac
+* saradc
+* i2c*
+* spi*
+
+I pulled the following logs of interest:
+
+---
+...
+[    0.647426] faux_driver regulatory: no of_node; not parsing pinctrl DT
+...
+[    0.732380] serial8250 serial8250: no of_node; not parsing pinctrl DT
+...
+[    2.418965] sophgo-cv1800-rtc cv1800b-rtc.0.auto: no of_node; not parsing pinctrl DT
+[    2.427695] alarmtimer alarmtimer.1.auto: no of_node; not parsing pinctrl DT
+...
+[    2.441722] sophgo-cv1800-rtc cv1800b-rtc.0.auto: hctosys: unable to read the hardware clock
+...
+[    2.525580] SPI driver fb_st7789v has no spi_device_id for sitronix,st7789v
+...
+[    2.555363] faux_driver snd-soc-dummy: no of_node; not parsing pinctrl DT
+...
+[    2.767235] mmc1: Failed to initialize a non-removable card
+...
+[    2.900631] dw-apb-uart 4140000.serial: forbid DMA for kernel console
+...
+[   13.058020] stmmaceth 4070000.ethernet: IRQ eth_wake_irq not found
+[   13.086915] stmmaceth 4070000.ethernet: IRQ eth_lpi not found
+[   13.096993] stmmaceth 4070000.ethernet: IRQ sfty not found
+[   13.105407] stmmaceth 4070000.ethernet: Hash table entries set to unexpected value 0
+[   13.115751] stmmaceth 4070000.ethernet: dt configuration failed
+[   13.127832] platform 3009800.mdio-mux: deferred probe pending: mdio-mux-mmioreg: failed to register mdio-mux bus /soc/mdio-mux@3009800
+[   13.142739] platform 4070000.ethernet: deferred probe pending: (reason unknown)
+[   13.152434] platform 4000000.i2c: deferred probe pending: (reason unknown)
+[   13.161898] platform 4010000.i2c: deferred probe pending: (reason unknown)
+[   13.171078] platform 4020000.i2c: deferred probe pending: (reason unknown)
+[   13.180353] platform 4030000.i2c: deferred probe pending: (reason unknown)
+[   13.189629] platform 4040000.i2c: deferred probe pending: (reason unknown)
+[   13.198817] platform 3020000.gpio: deferred probe pending: gpio-dwapb: Cannot get reset descriptor
+[   13.210208] platform 3021000.gpio: deferred probe pending: gpio-dwapb: Cannot get reset descriptor
+[   13.221737] platform 3022000.gpio: deferred probe pending: gpio-dwapb: Cannot get reset descriptor
+[   13.233111] platform 3023000.gpio: deferred probe pending: gpio-dwapb: Cannot get reset descriptor
+[   13.244422] platform 4150000.serial: deferred probe pending: (reason unknown)
+[   13.253971] platform 4160000.serial: deferred probe pending: (reason unknown)
+[   13.263513] platform 4170000.serial: deferred probe pending: (reason unknown)
+[   13.274037] platform 41c0000.serial: deferred probe pending: (reason unknown)
+---
+
+I believe I have the correct drivers enabled for everything. I'm figuring there
+is some pinctrl configuration ('PIN_ETH_*'?) I have to add to the device tree
+but unsure what it would look like.
+
+Thanks for the feedback,
+- Joshua Milas
