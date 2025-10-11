@@ -1,97 +1,101 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FD41EDA03
-	for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 06:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98D21957FC
+	for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 19:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760163277; cv=none; b=D4hHGdsuS22v4oaHtbk1eA7XO/L7A4jNScCjToUeMN3UtJ6BC43mVclE8U+L43eEJYr2bCmv5lYKfKqLlm/60YO+lFRTWEvmpfBO2wAdz2gN+ffoTeuszhDHT3g11EZIntjhFbtTsRIQiIuQo4XvlwHUUA/OX93l+bpdXBQBgc4=
+	t=1760210364; cv=none; b=cmlrMNw55mTLhg6QQ7bE77RNGtQCCHIFEAZEHqGnbs/Zsycw1yc1H0UoQZ23nuB0M0y2jDkXcGyh+iy73WonyfTczQvgA9zRLKlT0vTG0hmrcEPpJ3/uSGCaFvLw2lJbQ6AoRt1gRhT2GdbqJLGIEtDBz0aRniMHlN2+U/kHPcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760163277; c=relaxed/simple;
-	bh=UTjaf42LIjeTyo3K/jv+vC5L/FS5z6g6VwMZQWcCu2s=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=YN/d84eKj12ypJmJA5g05CjOGC8TXncySSEtnsmHRAYQ3YLz+G95S2Gwsvl+Nc+ecFPBV0dI84hMJNAjY7d4CZUqmrW9xM9UiC1CjSxlFHI3SItqg5IsmvcsFCBshghet+ooTL69AZQEE5oShmOrWJnWxUIdoSPOIXA8kx9PPAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M7pMfoJY; arc=none smtp.client-ip=209.85.218.47
+	s=arc-20240116; t=1760210364; c=relaxed/simple;
+	bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dy8iKV33oxrOIENV471UFXMLd13CkDx3nSqV2AhcTD0xsJFhiwkxwwxXqy4e79Jw8O0WiwVmLQv89TUqwXn656sndlpwQHn1oBfqGywRF1NRFbi/UlJdStBp01s5MTftg/dye6O4uAZZ6wTQtX8iMqCLIxr7oZ3LLZ4fBF5YBE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBbXCJvf; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M7pMfoJY"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b41870fef44so502180266b.3
-        for <sophgo@lists.linux.dev>; Fri, 10 Oct 2025 23:14:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBbXCJvf"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-856cbf74c4aso513123385a.2
+        for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 12:19:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760163274; x=1760768074; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UTjaf42LIjeTyo3K/jv+vC5L/FS5z6g6VwMZQWcCu2s=;
-        b=M7pMfoJYn2R3wPHZnhKeq501td4OysuzMd5CxpkzBZZD/xCoTe0V0mFEC8O6hsbWTA
-         P1unA61qAC18zZF64kH4X9FuLwFhtzSkKCyhvvK7P6UEw+X1crF4Qdf/h4yGRC+UYtBk
-         E4nd2Wovt+G8xej/cTBeZM1i5wyAVPcq2aD9MAV2jkXv4Zl256d0oyCQQxCPUwJnkdxX
-         kpNQktx0huqqkqEx5VFGTGsP82EVfjG5woS6cwX/B1yjED4cm7PABKZaWbp9lqwlyErC
-         X3ve/Xg12agkr6NzGL1gQ1U2Wn0uLTpK+nDg0QW0Uv/EnGm6mSmUPNJUfD9hls0YA4TF
-         DvAw==
+        d=gmail.com; s=20230601; t=1760210362; x=1760815162; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
+        b=kBbXCJvf5Ds5TkuVti8DDEjDAagx47nOfWqaS6f3GSgkzygLndzd1Po4d6J3Aq5Y2e
+         Yx506Xi8rjO+pA2xy1iOwXXOu21dKJIwOU1e9P4+UUwaSxMG+ywuc2BgcfRLwkaz10vr
+         JW6KgY8wB0RR2DfSb42AGL7leSGjZg3T82LsHufDCIvzj/BsvBuA+QMU8OJiU0o3zTIN
+         PGkW7Aub/lzXWnFXpuGAvKAgATmKX4f9pEhdsWm27Z8MQsY5oALoYtSXyKEdwLO7wsbJ
+         hsh8jAZ1aAc/HZUYn2O6Np0zyIjzGxRAuj0XyXQ3CPFAXleB/86K98fyDZrzNuI9X1BN
+         z1yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760163274; x=1760768074;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UTjaf42LIjeTyo3K/jv+vC5L/FS5z6g6VwMZQWcCu2s=;
-        b=XKOuw0YeNCchFzJbInFMEiorYt/Tnc3yHPHLWOFB/2x6rbKKEiVOgha54thzxwU6QH
-         41fVv/887LJkGt5XhUZlOxML6BSyYOoqWk/9VW2ipwDBpOMwpbbZsFqJ5POVLR/MxLET
-         qlDqdvQBAOWO06hyxuvQpUNDxbiuWMtXW5ltNY89r6nphTWOwKaEGr5xjOUsXlx5X/L0
-         4UWLMDBzfsATadp1wYmgJ30LmI0vHkUC8Gdvu1E4Rpe0E8BW5qu6rC2aGU/63UI8G7rN
-         uEcysWWBgvkX3IeeOv6eObQLNjan+BzgOxFpjNaJsR1eAnsm3hThhRUwer36Gafa815R
-         GTcw==
-X-Forwarded-Encrypted: i=1; AJvYcCVWY7AUI7CNA2A6pULQ4rvBG41KOLSVAGmqDKGkRWnJDt5B3Zr6Z7ythMOa7yT8XNxiRlElfZQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzBpz90SrVmrdGWfz/NPl+t6kZ3+fyDCw4H/mcmoIufy7ohm6se
-	FBq4lbi6Im2fmcGbL8DYvNHivolgCnjaZIpx9vr+Ldgz2oLoLhZpeugx
-X-Gm-Gg: ASbGncv9fwTJGZez35f0uEU+Sqrk9U0NEp+ULgAFJK/ZxuIFZVDta9JyuouKD6RuaBu
-	fmdGAktPl8nr0H01YghhuiuQis3N/EyUj4o0XsF/UkzNazUH8HepaGr1ixxQQyOkmeQISY7snxY
-	AieQzOto8OZH7MUiIojKwsQgPtEXfVuvreRPmM/Nk1lRgum4FZew/WPr/G0qGcXIQRVGO+hiAj1
-	qYFihJw0cU40nl7QiQtn4SMAVnjL7s4ugwuBsK/ZOM3pUVHupafGLO9rpwhRBy5R7GCO1a1maTl
-	RFJOV50mro1/dLpA8dNDEK9nCo4qDRWCcEbJfv1g6l2iU8GqlzUZssbJLXfNTO9cN6gkdNgrge/
-	NFn/obAuYE9LLj2C18ZerFFbZcExW27Z3WR3CzdNg0QpmPJ3pWF/AIuoLWPkoYfXrTtn61kDH
-X-Google-Smtp-Source: AGHT+IG9SiURtmUDXsCj0m5qBSvP5bZNzNwwIMu2kUT/BVhDH/YQM5FZneBmwBkIJ7WDhNDUvCu1Qw==
-X-Received: by 2002:a17:907:9621:b0:b4f:3169:3ec3 with SMTP id a640c23a62f3a-b50aa9a25a7mr1564821966b.21.1760163274281;
-        Fri, 10 Oct 2025 23:14:34 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([91.187.204.41])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b55d951d210sm414765366b.74.2025.10.10.23.14.33
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 10 Oct 2025 23:14:33 -0700 (PDT)
-Date: Sat, 11 Oct 2025 08:14:30 +0200
-From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
-To: Joshua Milas <josh.milas@gmail.com>
-CC: Inochi Amaoto <inochiama@gmail.com>, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, unicorn_wang@outlook.com, rabenda.cn@gmail.com,
- thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
- devicetree@vger.kernel.org, sophgo@lists.linux.dev
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_2/2=5D_arm64=3A_dts=3A_sophgo=3A_a?=
- =?US-ASCII?Q?dd_initial_Milk-V_Duo_S_board_support?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <aOcVeFTUx_Qn85cs@sleek>
-References: <20250927173619.89768-1-josh.milas@gmail.com> <20250927173619.89768-3-josh.milas@gmail.com> <nkzpfylhxyqf5u3bjlokhe4udgcxohbaanhwuofjzatan3iwio@45ljfquf5sui> <ad86009bff38ddae0b291d3edbf958ce6363ece2.camel@gmail.com> <aOcVeFTUx_Qn85cs@sleek>
-Message-ID: <55E9C068-3ADA-443D-BC51-1D50B09219A1@gmail.com>
+        d=1e100.net; s=20230601; t=1760210362; x=1760815162;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
+        b=ujIkdXd9kY/wERJyXQ8vQ5xbSaU0Mt0nri5YnKyc2TRDNa0ATq3JfmvmY8OeD/skAA
+         0XpFwLfkZjCuFonG1j6uYIUR+J5JCmZqyuE+vuuPX3QoHrYnmab/5aSA00GkAN46i/To
+         i7Pj9SHTX/iUMUh4B9M0C5otJVmyX/MCQ8TKGMj0zk9jkn6lBC//X76NMdO1UlfCDGV4
+         yPfENEemfMJ6RxA9YJNhQPcLghpCUPwXCiAU7JIeSK2zUznps+mgMAFz0lDBNmWwWuCk
+         +TTZiW86JnZn2xPImope8Z1IyKrZ1NPEA+GuLZjVGlK2fh1diNQKoPoFgk2BR5y7vIUP
+         2niA==
+X-Forwarded-Encrypted: i=1; AJvYcCVKO3VQfD6SiM8ogjh04oVGrvxbpg/0p6q+1mdcFb6NuRnfyL+IltsJhq9UpIHJRXbfPKXAWG0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzbjK3FN1KF7eklEw2K5e6MpIlnuZ9Cml51kke7p4aKaRc3bae2
+	3Rozr+wsq6dN52WHT+2ZZcUjEDy5i9+lgVSq+LgZyynV84L5wI7Vgx2A
+X-Gm-Gg: ASbGncvLyi3YI+5an8T0dH4i4pFH+QLpF4CkMuwMHjz5p4IbhJ/QOBqMM1ubqYVDFSF
+	Ip4gl/bdE+E2Qk9xNsIAURYQX6KfTK+2YMNJDqOEdi4r2XPMWB5kVDRbluI/R935Xo4cU/5Qnrj
+	BFW8lmb72HJKPfHSXHcSpMP76lhbApCpi2uLdYJT5fBg5VIRIKcEb2qACZLuD8ofouiGKBMQeUo
+	3iX9kv5i3nnaHFjyLJO300l7ebDJxQpPqI1i7Yjzojxjl9t5IYz0oVySwOnvBuFM86s6/PKQZyB
+	qX48G3LtKtTJrbjPvBGGdK/VODVwUivtzOW7zhaiRtCIhkgR/l6gi/S8gDD+8avmZifw40NJCae
+	JL1WojPJQjLwUv0RiQyGLx+ZAi9nnTfblMNjouY2NFjGdpu0kBGQN53QgrLbV01q8FrjGWmcwKS
+	9RlBTDV+6qmA==
+X-Google-Smtp-Source: AGHT+IHpHxjrJNzOqbK5tHqMhgA5n1l4SV+seUg0G29TGsGABvLXeLmwLJWYLUvepxnNA5AGAnNdhw==
+X-Received: by 2002:a05:622a:40cc:b0:4de:3a4c:15d1 with SMTP id d75a77b69052e-4e6ead6acccmr223084331cf.78.1760210361652;
+        Sat, 11 Oct 2025 12:19:21 -0700 (PDT)
+Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e706bde811sm44233681cf.17.2025.10.11.12.19.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 11 Oct 2025 12:19:21 -0700 (PDT)
+Date: Sat, 11 Oct 2025 15:19:19 -0400
+From: Joshua Milas <josh.milas@gmail.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	unicorn_wang@outlook.com, paul.walmsley@sifive.com,
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
+	alexander.sverdlin@gmail.com, rabenda.cn@gmail.com,
+	thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
+	liujingqi@lanxincomputing.com, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 2/3] arm64: dts: sophgo: add initial Milk-V Duo S board
+ support
+Message-ID: <aOqtt7BDXxItrs7W@sleek>
+References: <20251011014811.28521-1-josh.milas@gmail.com>
+ <20251011014811.28521-3-josh.milas@gmail.com>
+ <hkdnjyldwr4watvizsju4qcvpvkb3mtt5rathaooembpceyufx@ega5xrqj6v3y>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <hkdnjyldwr4watvizsju4qcvpvkb3mtt5rathaooembpceyufx@ega5xrqj6v3y>
 
-On 9 October 2025 03:52:56 CEST, Joshua Milas <josh=2Emilas@gmail=2Ecom> wr=
-ote:
->Hi Alex,
->
->> I believe, gpio is long time discouraged here=2E
->
->Does this mean just the '&gpio*' entries, or other GPIO
->items like i2c and spi?
->
->Thanks,
->- Joshua Milas
+Hi Inochi,
 
-Hi!
-I referred to "&gpio*" entries only being deprecated=2E
+> Only enable device that can be accessed directly. These devices share
+> some pins and only one of them can be used. I suggest enabling devices
+> that are accessed by default (which means it is compatible with the
+> vendor kernel).
+
+I decompiled the vendor device tree and will match what is in that.
+Surprisingly most of these are enabled there. I also tried to check
+the pinouts [1] but didnt really get anything out of it.
+
+Link: https://github.com/milkv-duo/duo-files/raw/refs/heads/main/duo-s/hardware/SG2000-PINOUT.xlsx [1]
+
+Thanks,
+- Joshua Milas
