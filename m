@@ -1,101 +1,110 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98D21957FC
-	for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 19:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD24C2E0
+	for <sophgo@lists.linux.dev>; Sun, 12 Oct 2025 02:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760210364; cv=none; b=cmlrMNw55mTLhg6QQ7bE77RNGtQCCHIFEAZEHqGnbs/Zsycw1yc1H0UoQZ23nuB0M0y2jDkXcGyh+iy73WonyfTczQvgA9zRLKlT0vTG0hmrcEPpJ3/uSGCaFvLw2lJbQ6AoRt1gRhT2GdbqJLGIEtDBz0aRniMHlN2+U/kHPcY=
+	t=1760235974; cv=none; b=YlJ48cL6EYD2+xW0PFrgiXLVsN4rhMZvhWCHU8X1XkPO3c12Msvv0x2EE+nFcXtDVzmNRY/dUVpZalHyEZ1iOB91QmKtR7rlnaIpIH3TRXHyQipxhtWtWqMMoWxvQ76h0NIRqnVteayul/QWwwOz/YiXncio+nkXQyx8CQT5eaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760210364; c=relaxed/simple;
-	bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dy8iKV33oxrOIENV471UFXMLd13CkDx3nSqV2AhcTD0xsJFhiwkxwwxXqy4e79Jw8O0WiwVmLQv89TUqwXn656sndlpwQHn1oBfqGywRF1NRFbi/UlJdStBp01s5MTftg/dye6O4uAZZ6wTQtX8iMqCLIxr7oZ3LLZ4fBF5YBE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBbXCJvf; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1760235974; c=relaxed/simple;
+	bh=sZlWQ+Ehq+TFmw/e0r2RP5C7hm4PItV+0AnNbZePiLQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PJPjIvVR3WYWGpu7BV4uCY8jdK2BpFQCunS/SrJX4lSglVYJJtxV5Scz60Q/4iCV5PQ5hDkVexsy7w6lMF7EXdZW269P/6BBFEDAFHCjKlfHpcup3EojOLScX77ivRhUb1yMq7LSBXSqIP8fPtkOuBb5CgXHaT3tJ31/MtWxrgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i5b4uL3+; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBbXCJvf"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-856cbf74c4aso513123385a.2
-        for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 12:19:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i5b4uL3+"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-781206cce18so3288757b3a.0
+        for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 19:26:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760210362; x=1760815162; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
-        b=kBbXCJvf5Ds5TkuVti8DDEjDAagx47nOfWqaS6f3GSgkzygLndzd1Po4d6J3Aq5Y2e
-         Yx506Xi8rjO+pA2xy1iOwXXOu21dKJIwOU1e9P4+UUwaSxMG+ywuc2BgcfRLwkaz10vr
-         JW6KgY8wB0RR2DfSb42AGL7leSGjZg3T82LsHufDCIvzj/BsvBuA+QMU8OJiU0o3zTIN
-         PGkW7Aub/lzXWnFXpuGAvKAgATmKX4f9pEhdsWm27Z8MQsY5oALoYtSXyKEdwLO7wsbJ
-         hsh8jAZ1aAc/HZUYn2O6Np0zyIjzGxRAuj0XyXQ3CPFAXleB/86K98fyDZrzNuI9X1BN
-         z1yA==
+        d=gmail.com; s=20230601; t=1760235970; x=1760840770; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Y+1XwSbsMVPSTNdYmAt47Cu/9qwf4w36EkkfnGxXMU=;
+        b=i5b4uL3+qBUgG8VK8je+E9Yk/NqYCN+kA4ZaHQLvLPvYQd13BelPiqlhkurBlzIRCd
+         GilgZrQCqDIjicZyVBHjFL+p/oe92fvN7Rg9jgMTfs7nhRRQ4k4ogs/koQldpqYqC2rp
+         CQ57fUSgENFoVaGMja8oFrcuGekkBhK9+l6nTRDScgVM6jl3YBpiK4ZjnW7Q0P8iv9qE
+         Nzko6SkQW5kqAQ+MrAJXiiJR8oTPrYERRWw+KN0HVf4x6MnzScqTsls94Wga+Mq/ipFu
+         ASxlKpJ+kwlqdoccHY8ZjuwLogfwNbHvZ2IvNxBcrxMK1SnNsEMxQ3N32iV4bQBy5B1y
+         MFfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760210362; x=1760815162;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cJ5I2qU/WGgH3J8qqI/SaEyRmBZys9/OsHe+c9FD/hw=;
-        b=ujIkdXd9kY/wERJyXQ8vQ5xbSaU0Mt0nri5YnKyc2TRDNa0ATq3JfmvmY8OeD/skAA
-         0XpFwLfkZjCuFonG1j6uYIUR+J5JCmZqyuE+vuuPX3QoHrYnmab/5aSA00GkAN46i/To
-         i7Pj9SHTX/iUMUh4B9M0C5otJVmyX/MCQ8TKGMj0zk9jkn6lBC//X76NMdO1UlfCDGV4
-         yPfENEemfMJ6RxA9YJNhQPcLghpCUPwXCiAU7JIeSK2zUznps+mgMAFz0lDBNmWwWuCk
-         +TTZiW86JnZn2xPImope8Z1IyKrZ1NPEA+GuLZjVGlK2fh1diNQKoPoFgk2BR5y7vIUP
-         2niA==
-X-Forwarded-Encrypted: i=1; AJvYcCVKO3VQfD6SiM8ogjh04oVGrvxbpg/0p6q+1mdcFb6NuRnfyL+IltsJhq9UpIHJRXbfPKXAWG0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzbjK3FN1KF7eklEw2K5e6MpIlnuZ9Cml51kke7p4aKaRc3bae2
-	3Rozr+wsq6dN52WHT+2ZZcUjEDy5i9+lgVSq+LgZyynV84L5wI7Vgx2A
-X-Gm-Gg: ASbGncvLyi3YI+5an8T0dH4i4pFH+QLpF4CkMuwMHjz5p4IbhJ/QOBqMM1ubqYVDFSF
-	Ip4gl/bdE+E2Qk9xNsIAURYQX6KfTK+2YMNJDqOEdi4r2XPMWB5kVDRbluI/R935Xo4cU/5Qnrj
-	BFW8lmb72HJKPfHSXHcSpMP76lhbApCpi2uLdYJT5fBg5VIRIKcEb2qACZLuD8ofouiGKBMQeUo
-	3iX9kv5i3nnaHFjyLJO300l7ebDJxQpPqI1i7Yjzojxjl9t5IYz0oVySwOnvBuFM86s6/PKQZyB
-	qX48G3LtKtTJrbjPvBGGdK/VODVwUivtzOW7zhaiRtCIhkgR/l6gi/S8gDD+8avmZifw40NJCae
-	JL1WojPJQjLwUv0RiQyGLx+ZAi9nnTfblMNjouY2NFjGdpu0kBGQN53QgrLbV01q8FrjGWmcwKS
-	9RlBTDV+6qmA==
-X-Google-Smtp-Source: AGHT+IHpHxjrJNzOqbK5tHqMhgA5n1l4SV+seUg0G29TGsGABvLXeLmwLJWYLUvepxnNA5AGAnNdhw==
-X-Received: by 2002:a05:622a:40cc:b0:4de:3a4c:15d1 with SMTP id d75a77b69052e-4e6ead6acccmr223084331cf.78.1760210361652;
-        Sat, 11 Oct 2025 12:19:21 -0700 (PDT)
-Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e706bde811sm44233681cf.17.2025.10.11.12.19.20
+        d=1e100.net; s=20230601; t=1760235970; x=1760840770;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/Y+1XwSbsMVPSTNdYmAt47Cu/9qwf4w36EkkfnGxXMU=;
+        b=csEXBzQFEpUcf1qlYpH0eoI6iEqYRqKqhxYfx1LpMWJHGzxiQQPF5myp5ZJhW/WWz1
+         E4Y+sgzNNsaxxkF976/nnPedRcLi63keaBrUUTH0cEYbm8kOKRgsUZvKQQtc2n/WdfqG
+         KE3P0o6X9gKsGQ74uvmU6+WVieEKgIPpMWeKmM4MnZtwh0J1Z8o9yrcVug9MB/Ffboil
+         Lz7fxI6x4oCloFkkrLn5g3iOekj+Sf9fawXgZ/+vCH9kEFl/kPCiL5YTAcyKFm/yL3WX
+         Cm/e3NS8EUPDPp3ZwXr1j/kXD8TQngbHWJ247uNTqqhV2hDMdE1zjVNAp+6qRjC4Tw8J
+         VZjA==
+X-Forwarded-Encrypted: i=1; AJvYcCXI6m+R+iZ56zb1f1w0Sid5P27NE24wbLTHDd7eQtB3cqYl/p03Gxfdk4ccvY6++wDW7wi1tbc=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyj95e89Lw681j6NdH3YArGE+u/lnoZe3oBH7znYD82V4RfUsG8
+	r5lxLy9Ps8B1Q9V0kOH+DBhY3GsfrZFsFdX2Lyj0xJbR99DyeUOJbBxX
+X-Gm-Gg: ASbGncurQIM8figXco7XK3ThFaDtrxgYNVyGPP09eiP2gnQcxdO6tQn9LUXjYo4WYBO
+	KwPnGFoknRO1YlSJ0fisuLBuSVx0BaOXoncZRlh9O6cLyQ1ksnjpo3nYjguEHOHJIjhzt2CECZi
+	cBv+PN/W+wtS1vblZUm0HGpSYP9hgdNHVqztHxGlwhdB+/ts3kIkIz+pibECi3zhuGH4/OPAE2Q
+	5AUutGqtJ5pS4Cfpwkm0TJUCe06YyCjvJfljvetL7Q+24nc6h+ZNJgoBz3vghZVCY2Ptv1tNJEn
+	jnHxQMbTOl6vQvfwEqQWSiPZTZWi/2uMI61P/MhaWJ0fnGrFROqevGTBt6hKuIqa5/J7HZ2k893
+	nyvft733g41LQISTaG/Qp2s373QzuXHSsAW5B+bhqIX+kt4QKqEjdYdmv18arx4LYpiEb
+X-Google-Smtp-Source: AGHT+IHTAezIVOlurkAg+7C74kvmB+nBt5xlXqzzzPRnJHFMzlSR8jL/NpvTl40u3+f4D1RCNQ2gDg==
+X-Received: by 2002:a05:6a20:3d95:b0:278:bc13:d83e with SMTP id adf61e73a8af0-32da8e360e0mr23314655637.11.1760235970292;
+        Sat, 11 Oct 2025 19:26:10 -0700 (PDT)
+Received: from localhost.localdomain ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d9992ddsm7180489b3a.80.2025.10.11.19.26.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Oct 2025 12:19:21 -0700 (PDT)
-Date: Sat, 11 Oct 2025 15:19:19 -0400
-From: Joshua Milas <josh.milas@gmail.com>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	unicorn_wang@outlook.com, paul.walmsley@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	alexander.sverdlin@gmail.com, rabenda.cn@gmail.com,
-	thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
-	liujingqi@lanxincomputing.com, devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 2/3] arm64: dts: sophgo: add initial Milk-V Duo S board
- support
-Message-ID: <aOqtt7BDXxItrs7W@sleek>
-References: <20251011014811.28521-1-josh.milas@gmail.com>
- <20251011014811.28521-3-josh.milas@gmail.com>
- <hkdnjyldwr4watvizsju4qcvpvkb3mtt5rathaooembpceyufx@ega5xrqj6v3y>
+        Sat, 11 Oct 2025 19:26:09 -0700 (PDT)
+From: Longbin Li <looong.bin@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Longbin Li <looong.bin@gmail.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
+	Ze Huang <huangze@whut.edu.cn>
+Cc: devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: [PATCH v1 0/3] riscv: sophgo: add top syscon device for cv18xx
+Date: Sun, 12 Oct 2025 10:25:51 +0800
+Message-ID: <20251012022555.6240-1-looong.bin@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <hkdnjyldwr4watvizsju4qcvpvkb3mtt5rathaooembpceyufx@ega5xrqj6v3y>
+Content-Transfer-Encoding: 8bit
 
-Hi Inochi,
+Add top syscon device bindings related DTS change for CV1800.
 
-> Only enable device that can be accessed directly. These devices share
-> some pins and only one of them can be used. I suggest enabling devices
-> that are accessed by default (which means it is compatible with the
-> vendor kernel).
+Changed by RFC:
 
-I decompiled the vendor device tree and will match what is in that.
-Surprisingly most of these are enabled there. I also tried to check
-the pinouts [1] but didnt really get anything out of it.
+https://lore.kernel.org/all/20250611082452.1218817-1-inochiama@gmail.com/
 
-Link: https://github.com/milkv-duo/duo-files/raw/refs/heads/main/duo-s/hardware/SG2000-PINOUT.xlsx [1]
+Longbin Li (3):
+  dt-bindings: soc: sophgo: add TOP syscon for CV18XX/SG200X series SoC
+  riscv: dts: sophgo: Add syscon node for cv18xx
+  riscv: dts: sophgo: Add USB support for cv18xx
 
-Thanks,
-- Joshua Milas
+ .../soc/sophgo/sophgo,cv1800b-top-syscon.yaml | 59 +++++++++++++++++++
+ .../boot/dts/sophgo/cv1800b-milkv-duo.dts     |  5 ++
+ arch/riscv/boot/dts/sophgo/cv180x.dtsi        | 42 +++++++++++++
+ .../boot/dts/sophgo/cv1812h-huashan-pi.dts    |  5 ++
+ .../dts/sophgo/sg2002-licheerv-nano-b.dts     |  5 ++
+ 5 files changed, 116 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/soc/sophgo/sophgo,cv1800b-top-syscon.yaml
+
+--
+2.51.0
