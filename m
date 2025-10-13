@@ -1,172 +1,112 @@
 Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B541DE3C7
-	for <sophgo@lists.linux.dev>; Sun, 12 Oct 2025 02:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D80F211F
+	for <sophgo@lists.linux.dev>; Mon, 13 Oct 2025 00:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760235996; cv=none; b=ke2ioq8+I6HbvDSnFnROcj71i+z58m+NKFCcn/bH/k59EUk7qzTrUh4aUqt87SWePIBbbraV0nh6YmExHoWu3Y6xuiF4rkNiYOeY+VZRiDUPpwssE0HCwcir5q3GrBeARl2i61LEVJPaue13A2Bzz45cDFePSEIKv1d2QAO/LTM=
+	t=1760316246; cv=none; b=M9m98g/d3oqF/lJfPQtNqR+iYApN/6wtitKz73ksASvBYK2vMD/CZeAa2q0C+txApB4iHWos+VShTEx/8OsGwbpn7fc/WPFixsVkFcoaz2BH99Ro1Vn2LqRn+CUVx+sKoHYb2BLTOizBDIrSX9oo76hJlL4fxhGc5nqspWpjWBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760235996; c=relaxed/simple;
-	bh=T3O+FvgSCE0ciL32Lxybza6PkMpzWQQ+tRJLN6YZEiI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GSooNQ/uMBn/e2jtg8R5Ww72G6ImgvQQSA/UkI39os7pnu3pQFWtO0vN9bkemMF9sRrBALgccQ0o46qYYkv9MT1tux64fblAcUML9lklOyXmXaxrvbEC9i8+G0uObEnzFbQZRZPsksm7XDdgYaE8To17x9ifuQT+gDFB33tD9pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IKyPPGoa; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1760316246; c=relaxed/simple;
+	bh=ua47nQqcjG90ipA1ouLjou96IW22yuNv/8wyBnPHseQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nfHw7uGtaHC4OU0Cgh4Ly7/H8FmaE6bpwPQW2ZJ+LoH/KR3WlmrjqNznrTP4bj/oGTBjNcu5ygZLH30Qw4yA7JX4utBMaQpQHB3a1Zs7FdgzooXvVVmOuoTnmdyYPfUYFC+49tDjA5vUQT9Ous+CBtlk1KgxThxQMmwy3pj6DcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k9r0qntK; arc=none smtp.client-ip=209.85.210.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKyPPGoa"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7835321bc98so3102495b3a.2
-        for <sophgo@lists.linux.dev>; Sat, 11 Oct 2025 19:26:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k9r0qntK"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-78af9ebe337so2837077b3a.1
+        for <sophgo@lists.linux.dev>; Sun, 12 Oct 2025 17:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1760235994; x=1760840794; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bfXUkC2C3C9BwOnkDvFBK7i0+SebLg1iuS2buoBW7lc=;
-        b=IKyPPGoaYoPSgca0wGIxLDW1Y0JEPkudy5s7ODs6RP8b/PHrqZw4TOgYZmkDm4Urbj
-         TxNfCAjPGHhJNRCNeZHRLIfpWkcOoDAi5Fw4VFQFY1w3aT5CDx6BrZ9xN7ijJGyl1uyL
-         OJaIlYd7M2L80Xah5UEyF+pKlk7Ye/bTSJIcmqMabYm9lI8U5yRO8zLYVOD6o8vaHamL
-         FJ0cx1JgMLfLAGKIXxg1gudusxmERb273DKSVitZVi5/bd8rf1TilWAA/XpO9p1mErz5
-         /Ut5W3tge79wgEgS/7KnO/gWaa4gihQBYcMIFILDcymZ+j0inVWLIb3BupCQP+QB9ux+
-         NeEQ==
+        d=gmail.com; s=20230601; t=1760316245; x=1760921045; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yPwgPz14QMmJyiGXqsXB/z8FmJN7/401xIlwLm/DIq0=;
+        b=k9r0qntKFjT4GgrIeWG7ZtXxiKanZXtg6VJJkRt/xhPmEdtlYaTrPULd+UF8sEE3Nj
+         YdKATCEcqt5PhCS1eftiGQ5vYarwWp1mYCGIN6R64yu2yrngqY63+Va7CslJ/3uOpMhg
+         2aVjpC1b5OrG7lpd0GfzZr/1BmX+jXYH+fC65HgQjYgDsiNGlgtfgZLvmpfOTBp6+Ca+
+         S1ZB14e6nYFkG4SVI1lPhETZ0XRMucQqWf71TpON6Scbk0WGYV07tQ7vCkvcU3ISJTdm
+         ccXgQUdAo0nm0tetr2Oj/SP0WXPrDipYuD62rLEmC10jB/aWEkVBUZOCl+7bC7C4BMnU
+         g2Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760235994; x=1760840794;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bfXUkC2C3C9BwOnkDvFBK7i0+SebLg1iuS2buoBW7lc=;
-        b=qBGr/nQR5wD4TrTqyovsY2hgse99t3ti0iFyI9dqANbvzktuaGpmx6H2Vn6s+UYvlW
-         DF8tqF2zuTdbPku4SgxegWNx3tBJ2W/rPbUkPRk2F/AFtSZz73EcU9UAx06NAKeMb/gb
-         OV7b9mN6W62NUVxMhztmEEcgp/MBoux3ub/FF+iY1xh7iD/J9fKTUv7KK4M0lKFZVzAQ
-         YQUOg1yzT5R3LI3M/tA836pSgaF+TNIh1kVRTF8y9F+FfmYLDRijjGCHsVUfON4o5ICy
-         oJIm3Ok0U4g38ARUTXAIwunO7Pa2jkMn8YOf7iOI3OesoMdG8Tl29Kx/IXJ2pTRdoV5s
-         NwCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWAzlcJArSiVxmvaXnwks1eedDN2oZq9fz45ZXk6UMzfbOxMLAdNlvJZxBDWwsLWV4E9VlRvjI=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz4081WeihrzyjkUm9Uvtlyq4SjXSYEHHqbTrAdKpriNT7EQtWI
-	LWitBHIm4tcZUp3T2PXIcRzEAxr+sHVZunxDFbyU33WEyhwjD6oaWcgJ
-X-Gm-Gg: ASbGnctQkEC1GvPB2PznUqmRfrQkWqkrcverYbKx2lRPceHfONaCBuWRUbC8TN9tf1T
-	/iR9aUKp6Uov4iJhSGXug4JIItdJidNni521tr8aswLfpP4A4NjcpXZsZNi7MUhOcVBJz7+u2Eu
-	s3Fr7Y6nHbxC74NTbQ05UmsjTATB4zpLBwLOR/w5tvWasCknAbVeJz6eY1eMKxV2xFnLcomIk3H
-	dyZVv3ElqWGf3u/sPdnJ/e9CrH29lVtIJcDlh42+zOwEVsZLavupUddP0679KZ7koVzWe415zA8
-	vEOcTdjcH8kFH3axTHm9FFXidyxVKYapIh9IyWeNXrShuyOD+cIakf6FjSmUEOvpUd2b5P8E+zE
-	yrWiCcBncLC2xYcOUGELjLUlWhlieg9szQbPxC6E1dOmp8kzyOLx7Iu2E/BmYF03NY8Dh
-X-Google-Smtp-Source: AGHT+IHZ9NyGaDIFzKfo3jw9RHib9r8nk9b6aSs/8IZVATsbwnwanfHCirNVwYIHZT/pMIdteZPgFw==
-X-Received: by 2002:a05:6a00:391a:b0:77e:8130:fda with SMTP id d2e1a72fcca58-79385ddc9f9mr22273636b3a.13.1760235994437;
-        Sat, 11 Oct 2025 19:26:34 -0700 (PDT)
-Received: from localhost.localdomain ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7992d9992ddsm7180489b3a.80.2025.10.11.19.26.27
+        d=1e100.net; s=20230601; t=1760316245; x=1760921045;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yPwgPz14QMmJyiGXqsXB/z8FmJN7/401xIlwLm/DIq0=;
+        b=ruFUH44ULr0/Tla4ye3DXOmYllUGauKWV7LWPypUXf0Q8AqHOO7GEXGuGgttIaHCgr
+         YDnQ5jxpVye5JRWr1zccASM2+q5W0hTS72Mqm7+5lzKNnSjPDFI/nsrcC3qdejuW6l81
+         0txMQ7vA3PbrkMoWDv4LVfsyj4WGem0YdyIG/6Gqx4kq4s5BVpFmAXW8a9PPNKKpx6DV
+         CJK/7LTOoVwr4mMghXekZOc3Hfbtz4VZ/5xjHv8ndmr4o7Gw4cKX/MLvReSVTGyCHXnu
+         O+AAyZemISfC51EbN2e4vhVy/m79GQu7pZCfIIhneL0BfyA16hKNVK5WmVOcRXkVvxRX
+         +EuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUDVXxUZHBO31msW37fZY9Z3JdbZOEfrwN89m40yncx5vEHuPuQMf7X6NLqJPkSYnN5VQ+sZfU=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy4t5g/6SWzf+orxuSFLGQdl7pPI2pjRQUFLjpPS9p1y6oMtRML
+	ZDHjJrqe+H/ZseL/J+S+WU5gM4boBF9fPY6hqltCu7JqL3ErJg2iN4xe
+X-Gm-Gg: ASbGnct7hRPH2ENERWUJwxxEcnxZkUz2eOtVQkggUpOM3iuuxvyZCrz1bMcPK2sYAmP
+	sX2X0TBRp22OT6fCnVZgSxLrJgoWDrtXIklpWoWVVZMS3sK0qWRQrSGS3quihq8fv43TnRKMhLc
+	qXy851DJhI1eqMWUa6uTELUJulgpmwc+qXfu4txZC6Kjf1aINpfkxYaGNfyHLwj13UaZi2EUXVx
+	ZTbaDESLP+RTlWrNm93LxDdrfHN7BsjiSsg7VTsbjv+uOzyT/QCs7wCSPBjbK8g94hCGQs4nusf
+	9PPcyeY/FauanTjf7HeUQnEGyhjMhwcFAHT2vhLPUHQPBuIJJ3FEuLROpILAM7/U2JQQG+/jW33
+	I7kDQtc0jMl+RUpGUNwmvc37vNRoywUUczFiSUjLz
+X-Google-Smtp-Source: AGHT+IECq70NJ5A63ESJRalAid7RnpozwDsfbFxId8ZL43D2ZxgrEq0z+oLu5gMzH/ZQF72Zp3uEIA==
+X-Received: by 2002:a17:903:948:b0:249:37ad:ad03 with SMTP id d9443c01a7336-290273ee21fmr266565455ad.34.1760316244858;
+        Sun, 12 Oct 2025 17:44:04 -0700 (PDT)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-29034f9d177sm115904685ad.123.2025.10.12.17.44.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 11 Oct 2025 19:26:33 -0700 (PDT)
-From: Longbin Li <looong.bin@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Longbin Li <looong.bin@gmail.com>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Thomas Bonnefille <thomas.bonnefille@bootlin.com>,
-	Ze Huang <huangze@whut.edu.cn>
-Cc: devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
+        Sun, 12 Oct 2025 17:44:04 -0700 (PDT)
+Date: Mon, 13 Oct 2025 08:43:20 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Joshua Milas <josh.milas@gmail.com>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	unicorn_wang@outlook.com, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, alexander.sverdlin@gmail.com, 
+	rabenda.cn@gmail.com, thomas.bonnefille@bootlin.com, chao.wei@sophgo.com, 
+	liujingqi@lanxincomputing.com, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
 	linux-riscv@lists.infradead.org
-Subject: [PATCH v1 3/3] riscv: dts: sophgo: Add USB support for cv18xx
-Date: Sun, 12 Oct 2025 10:25:54 +0800
-Message-ID: <20251012022555.6240-4-looong.bin@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251012022555.6240-1-looong.bin@gmail.com>
-References: <20251012022555.6240-1-looong.bin@gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: sophgo: add initial Milk-V Duo S board
+ support
+Message-ID: <bsol3uim4brrrsdmvuk6f3uzampbki2pyhziap6x4rw7txl435@rwoxrnctkf3y>
+References: <20251011014811.28521-1-josh.milas@gmail.com>
+ <20251011014811.28521-3-josh.milas@gmail.com>
+ <hkdnjyldwr4watvizsju4qcvpvkb3mtt5rathaooembpceyufx@ega5xrqj6v3y>
+ <aOqtt7BDXxItrs7W@sleek>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aOqtt7BDXxItrs7W@sleek>
 
-Add USB controller node for cv18xx and enable it for Huashan Pi, milkv-duo.
+On Sat, Oct 11, 2025 at 03:19:19PM -0400, Joshua Milas wrote:
+> Hi Inochi,
+> 
+> > Only enable device that can be accessed directly. These devices share
+> > some pins and only one of them can be used. I suggest enabling devices
+> > that are accessed by default (which means it is compatible with the
+> > vendor kernel).
+> 
+> I decompiled the vendor device tree and will match what is in that.
+> Surprisingly most of these are enabled there. 
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Signed-off-by: Longbin Li <looong.bin@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts |  5 +++++
- arch/riscv/boot/dts/sophgo/cv180x.dtsi           | 16 ++++++++++++++++
- .../riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts |  5 +++++
- .../boot/dts/sophgo/sg2002-licheerv-nano-b.dts   |  5 +++++
- 4 files changed, 31 insertions(+)
+Yeah, the vendor enable almost all, but it can not access at
+the same time. The pinmux control which device can be accessed
+IIRC, milkv already provides a tool, named duo-pinmux, for you
+to check the pinmux.
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts b/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
-index 9feb520eaec4..0e6d79e6e3a4 100644
---- a/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
-+++ b/arch/riscv/boot/dts/sophgo/cv1800b-milkv-duo.dts
-@@ -100,3 +100,8 @@ &uart0 {
- 	pinctrl-names = "default";
- 	status = "okay";
- };
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index 42303acb2b39..1b2b1969a648 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -432,6 +432,22 @@ dmac: dma-controller@4330000 {
- 			status = "disabled";
- 		};
+> I also tried to check the pinouts [1] but didnt really get anything
+> out of it.
+> 
+> Link: https://github.com/milkv-duo/duo-files/raw/refs/heads/main/duo-s/hardware/SG2000-PINOUT.xlsx [1]
 
-+		usb: usb@4340000 {
-+			compatible = "sophgo,cv1800b-usb";
-+			reg = <0x04340000 0x10000>;
-+			clocks = <&clk CLK_AXI4_USB>, <&clk CLK_APB_USB>;
-+			clock-names = "otg", "utmi";
-+			g-np-tx-fifo-size = <32>;
-+			g-rx-fifo-size = <536>;
-+			g-tx-fifo-size = <768 512 512 384 128 128>;
-+			interrupts = <SOC_PERIPHERAL_IRQ(14) IRQ_TYPE_LEVEL_HIGH>;
-+			phys = <&usbphy>;
-+			phy-names = "usb2-phy";
-+			resets = <&rst RST_USB>;
-+			reset-names = "dwc2";
-+			status = "disabled";
-+		};
-+
- 		rtc@5025000 {
- 			compatible = "sophgo,cv1800b-rtc", "syscon";
- 			reg = <0x5025000 0x2000>;
-diff --git a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-index 4a5835fa9e96..aedf79f47407 100644
---- a/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-+++ b/arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts
-@@ -86,3 +86,8 @@ &sdhci1 {
- &uart0 {
- 	status = "okay";
- };
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
-diff --git a/arch/riscv/boot/dts/sophgo/sg2002-licheerv-nano-b.dts b/arch/riscv/boot/dts/sophgo/sg2002-licheerv-nano-b.dts
-index 86a712b953a5..b1853770d017 100644
---- a/arch/riscv/boot/dts/sophgo/sg2002-licheerv-nano-b.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2002-licheerv-nano-b.dts
-@@ -93,3 +93,8 @@ &uart0 {
- 	pinctrl-names = "default";
- 	status = "okay";
- };
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
---
-2.51.0
+You need to dump the pinconf register and check the configuration
+with the document (the link you mentioned).
+
+Regards,
+Inochi
