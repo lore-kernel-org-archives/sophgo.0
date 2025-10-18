@@ -1,34 +1,28 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D202561D1;
-	Fri, 17 Oct 2025 18:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A2623AD
+	for <sophgo@lists.linux.dev>; Sat, 18 Oct 2025 00:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760725002; cv=none; b=KVuosJuxkijDBq2qCxvd6ftgEQOSmPIm/HfcgXOqDaBfxdYy18PKQio4q7Pplkm3evKcXuraS2wP9HF1kfkRoMrPdaHZE3ydEohNxZuXWxCsQ4Dum5vQvhvpzPB4fOdNcEtlkkNziga39c7mi6qDFxSzm004YsKZ4JJiNt4+h0U=
+	t=1760745962; cv=none; b=XARe1bb1A5jXkyy/KK+78JaPMe9fKhito2nUuCmLvXY6OuE0QtTnCCUkvMb4h2rbnGJhZ6joxjdknd0HrFbCMxkRoGZZV6N2MHIEmIM0y4ZKbP+e477DRrIOaXisWBc3irq0xlFPJHSZwPf3G0BdEuVANRxLx9+7TOXhk1iX0rE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760725002; c=relaxed/simple;
-	bh=PzKxQGwu2lsRdLqcmha5dsUh0TOLFixGPNBu88zqJRo=;
+	s=arc-20240116; t=1760745962; c=relaxed/simple;
+	bh=cvYny5yQsHJFubeXGJElbL68TJTK+OiH5rxfRGrAUuo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VrtjqaVcqbQsMm5eeQ2yB7DEGd7ReL5hcwVL4Ivb0zlonKr3fRYGYMODFMWaXhahQV/6t9GsCyWlxV8LoMc19BIV780WeKOS19EE6/X6gHu6NEZAi2q32DRDIhhl+dNj8+K9U4GVZ/M1gh639QgmvIz5eo+BMaKoNdxdm3iwq1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=SKKZAasN; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="SKKZAasN"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=fO2f6mURH8bQZYGfr1Lrr+16q3HGGYwVpFWAgRU4ZMA=; b=SKKZAasNBz3jruAECyAjMqftbi
-	YjSr/IHx0LNgu/gwWoBxRT9vJ672lGqiMf9jY4kjA2Qn9D08oJdRzxsGxmGq2xqatPMRanlpA+wgR
-	jNN83D9izslqFUcUA/TJVo0ZhHqZtGG6cosMyVpjp4nEEG+kA60sYEKM5tVJTPmiKPrM=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1v9ozx-00BJbN-Qd; Fri, 17 Oct 2025 20:16:17 +0200
-Date: Fri, 17 Oct 2025 20:16:17 +0200
-From: Andrew Lunn <andrew@lunn.ch>
+	 Content-Type:Content-Disposition:In-Reply-To; b=jOswPImiCz0AE+ReGmwutahtGcNGx4iJRJP95rwyFWanB4NfMa0P+OPNVXL2eC8qfBilvVgJkU1xTWpuyht4BFIcsQ+raQFvTdS2l4y+S07mb4bWU8wkJJSSAr4yCJTg9pLiScpP3HmqIsaYxKenRIMjR7cDzzeYbdUdID5BBEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from localhost (unknown [116.232.147.23])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dlan)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C82DD341FD5;
+	Sat, 18 Oct 2025 00:05:58 +0000 (UTC)
+Date: Sat, 18 Oct 2025 08:05:48 +0800
+From: Yixun Lan <dlan@gentoo.org>
 To: Inochi Amaoto <inochiama@gmail.com>
 Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -43,9 +37,9 @@ Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
 	netdev@vger.kernel.org, sophgo@lists.linux.dev,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+	Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH] net: stmmac: dwmac-sophgo: Add phy interface filter
-Message-ID: <34fcc4cd-cd3d-418a-8d06-7426d2514dee@lunn.ch>
+Message-ID: <20251018000548-GYA1481334@gentoo.org>
 References: <20251017011802.523140-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
@@ -57,14 +51,91 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20251017011802.523140-1-inochiama@gmail.com>
 
-On Fri, Oct 17, 2025 at 09:18:01AM +0800, Inochi Amaoto wrote:
+Hi Inochi,
+
+On 09:18 Fri 17 Oct     , Inochi Amaoto wrote:
 > As the SG2042 has an internal rx delay, the delay should be remove
+                                                     s/remove/removed/
 > when init the mac, otherwise the phy will be misconfigurated.
+s/init/initialize/
+> 
+> Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Tested-by: Han Gao <rabenda.cn@gmail.com>
+> ---
+>  .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 25 ++++++++++++++++++-
+>  1 file changed, 24 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+> index 3b7947a7a7ba..b2dee1399eb0 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
+> @@ -7,6 +7,7 @@
+> 
+>  #include <linux/clk.h>
+>  #include <linux/module.h>
+> +#include <linux/property.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/platform_device.h>
+> 
+> @@ -29,8 +30,23 @@ static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
+>  	return 0;
+>  }
+> 
+> +static int sophgo_sg2042_set_mode(struct plat_stmmacenet_data *plat_dat)
+> +{
+> +	switch (plat_dat->phy_interface) {
+> +	case PHY_INTERFACE_MODE_RGMII_ID:
+> +		plat_dat->phy_interface = PHY_INTERFACE_MODE_RGMII_TXID;
+> +		return 0;
+> +	case PHY_INTERFACE_MODE_RGMII_RXID:
+> +		plat_dat->phy_interface = PHY_INTERFACE_MODE_RGMII;
+> +		return 0;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+>  static int sophgo_dwmac_probe(struct platform_device *pdev)
+>  {
+> +	int (*plat_set_mode)(struct plat_stmmacenet_data *plat_dat);
+>  	struct plat_stmmacenet_data *plat_dat;
+>  	struct stmmac_resources stmmac_res;
+>  	struct device *dev = &pdev->dev;
+> @@ -50,11 +66,18 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+> 
+> +	plat_set_mode = device_get_match_data(&pdev->dev);
+> +	if (plat_set_mode) {
+> +		ret = plat_set_mode(plat_dat);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+>  	return stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
+>  }
+> 
+>  static const struct of_device_id sophgo_dwmac_match[] = {
+> -	{ .compatible = "sophgo,sg2042-dwmac" },
+> +	{ .compatible = "sophgo,sg2042-dwmac", .data = sophgo_sg2042_set_mode },
+I'd personally prefer to introduce a flag for this, it would be more readable and
+maintainable, something like
+struct sophgo_dwmac_compitable_data {
+	bool has_internal_rx_delay;
+}
 
-Are there any in tree DT blobs using invalid phy-modes? In theory,
-they should not work, but sometimes there is other magic going on. I
-just want to make sure this is not going to cause a regression.
+then.
+	if (data->has_internal_rx_delay)
+		sophgo_sg2042_set_mode(..)
 
-Also, does the DT binding document list the valid phy-modes?
 
-      Andrew
+>  	{ .compatible = "sophgo,sg2044-dwmac" },
+>  	{ /* sentinel */ }
+>  };
+> --
+> 2.51.0
+> 
+
+-- 
+Yixun Lan (dlan)
