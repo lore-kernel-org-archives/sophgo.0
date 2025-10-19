@@ -1,46 +1,35 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01ED2882DB
-	for <sophgo@lists.linux.dev>; Sat, 18 Oct 2025 20:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882BE1373;
+	Sun, 19 Oct 2025 00:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760820632; cv=none; b=rhWe1qDSZZSFhaybNUqanWNsGSi3ETGN0YBPHJkcnpDzm0vVUSDiBwPXOXLzAXKIRg01NEHdtYS9qsSTa05eBFQpq7DKXGIPH2jx0LVKflVQnrCAirm3lCu77xARg5vzCqKMao/rhI/5JicVkGp/I9ya5Oo2c3SLj1G8rnz0fFg=
+	t=1760832292; cv=none; b=H4YfrTCq9HkHScBz52/KtK+xXtgjUBFBWvb5vU/VeZLEmrOSl1xA09umYg0sGwHmWobsQhUGkl5Y+ESFILH1iLNWCC3rRVNqY/TB3zpRxVTf72mRRv5FdUdxYuLzY2/l7rB6qkF5OWY+qHzxhZExeUkQWsiFIJFz0QURj+ptUiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760820632; c=relaxed/simple;
-	bh=C20+hjWvZwhIHkR+40TDuko+jAUIyKW54m5q3JcgMqE=;
+	s=arc-20240116; t=1760832292; c=relaxed/simple;
+	bh=NIlHXsTrn95hUwIwQiqLjVMv/ZLorBcbB6zrOrzvKRo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cto27yfTboxugBjAToOywiVxsHAyZsJAej5r9oDiP8xBU2T3CEIeiJbY1wT1dmSDCvc5EwC82ZnAvaRkWL4h1YiLFGCEJmt3j8TK5L090atALiu4+KYuN9/sryvzufYJoLk8X5Dvdaerkj9Ph7lEUmhifC7/egCda3jb9WXXUl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=S8RVQB9g; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+	 Content-Type:Content-Disposition:In-Reply-To; b=azlLtUvIldOUCNdMWB+Oarka9+d9b0tA9s4MGjCLArulDOHl6wnYz+nChXHlBIvapq/sg/2GUSAKEYWmCD1zBfYF/YGiCZnN6r399oUkorQwuReLX2MYdgqR3IE929Zt3nLutYYwb6WM4cWSO03ZyvsZq82z2VDlekfHDvetnNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=AcN5Xqb1; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="S8RVQB9g"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=HZVFyQFH/N6BlbXZw7Nya2jm1NlFu/aT9k9hJeAWYd0=; b=S8RVQB9gc5V85YTnJ25mLHH2Vs
-	jYcPLDoDMEB7wJ3GereehfiJA/tHV9Qc71uSKDF4TlPs8FyhXlcyaUoJeUPZvlz6Y5JdQoX+Zhr+r
-	RVmVRq0wk05pUUXtc+J/P39mOXEN0XPmRT7ibqUkCTOk9rcM3BewqOYeBBrylj6u7A9uoowpHa5o3
-	Azqt2pju1pTzqbWHNYythB3qFjEh+M+rzQSEuX++nmhDN1RnCdfXLybWNYJSJuJow+KFvo+9qSYcY
-	kUew1Zpz4oNZttZXiC3p1WzmZjUcNMjGH72MEDReMLkZnFqKZTiKDlJUd8ZcMACGg5XA+as8/OW/K
-	ukzTLkjw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:50152)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1vADsJ-000000000i9-1B5b;
-	Sat, 18 Oct 2025 21:50:03 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1vADsA-000000005aS-0gvN;
-	Sat, 18 Oct 2025 21:49:54 +0100
-Date: Sat, 18 Oct 2025 21:49:54 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="AcN5Xqb1"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=rz0DjI9FG3R+Vf1dNEL5GbVU6jXA/C1j8hwA+dUf/6I=; b=AcN5Xqb1JNtWQtEk5ZUe7Vs44j
+	z6+QascX8RZXSMzyNmZzlFs0g6XLvpMzTZ0U8eTgVmWGTWkCOapk0xir30PnWmjZ3UOLRQTKoWVuS
+	ukLu99pJOm6qI3+yfv+f7nNyf4DISn160d2zMZr8VTYh9aVfCTZXUGhortzxREz4zatY=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vAGu2-00BP9M-KF; Sun, 19 Oct 2025 02:04:02 +0200
+Date: Sun, 19 Oct 2025 02:04:02 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
 Cc: Inochi Amaoto <inochiama@gmail.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
@@ -56,11 +45,12 @@ Cc: Inochi Amaoto <inochiama@gmail.com>,
 	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
 Subject: Re: [PATCH] net: stmmac: dwmac-sophgo: Add phy interface filter
-Message-ID: <aPP9cjzwihca-h6C@shell.armlinux.org.uk>
+Message-ID: <370d13b7-bba8-449d-9050-e0719d20b57c@lunn.ch>
 References: <20251017011802.523140-1-inochiama@gmail.com>
  <34fcc4cd-cd3d-418a-8d06-7426d2514dee@lunn.ch>
  <i5prc7y4fxt3krghgvs7buyfkwwulxnsc2oagbwdjx4tbqjqls@fx4nkkyz6tdt>
  <c16e53f9-f506-41e8-b3c6-cc3bdb1843e1@lunn.ch>
+ <aPP9cjzwihca-h6C@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -69,44 +59,24 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c16e53f9-f506-41e8-b3c6-cc3bdb1843e1@lunn.ch>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <aPP9cjzwihca-h6C@shell.armlinux.org.uk>
 
-On Sat, Oct 18, 2025 at 10:38:17PM +0200, Andrew Lunn wrote:
-> On Sat, Oct 18, 2025 at 08:42:07AM +0800, Inochi Amaoto wrote:
-> > On Fri, Oct 17, 2025 at 08:16:17PM +0200, Andrew Lunn wrote:
-> > > On Fri, Oct 17, 2025 at 09:18:01AM +0800, Inochi Amaoto wrote:
-> > > > As the SG2042 has an internal rx delay, the delay should be remove
-> > > > when init the mac, otherwise the phy will be misconfigurated.
-> > > 
-> > > Are there any in tree DT blobs using invalid phy-modes? In theory,
-> > > they should not work, but sometimes there is other magic going on. I
-> > > just want to make sure this is not going to cause a regression.
-> > > 
-> > 
-> > I see no SG2042 board using invalid phy-modes. Only rgmii-id is used,
-> > which is vaild.
-> 
-> Great, thanks for checking.
+> "rgmii-id" doesn't mean "there is a delay _somewhere_ in the system".
+> It's supposed to mean that the PHY should add delays on both tx and
+> rx paths.
 
-Hang on. Is this right?
+When passed to the PHY it means that.
 
-The commit says that SG2042 has an internal receive delay. This is
-presumably the MAC side.
+However, DT describes the hardware, the PCB. "rgmii-id" means the PCB
+does not provide the delays. So the MAC/PHY combination needs to add
+the delays. We normally have the PHY provide the delays, so the
+phy-mode is normally passed straight to the PHY. However, if the MAC
+is adding a delay, which it is in this case, in one direction and
+cannot be turned off, the value passed to the PHY needs to reflect
+this, to avoid double delays.
 
-To work around that, you map rgmii-id to rgmii-txid for the PHY, to
-prevent the PHY from enabling its receive-side clock delay.
+And because the MAC delay cannot be turned off, it means there are PCB
+designs which don't work, double delays. So it would be nice not to
+list them in the binding.
 
-It seems to me that you're saying that rgmii-rxid and rgmii-id
-should not be used with these MACs, and you're fixing up to remove
-the receive-side delay.
-
-"rgmii-id" doesn't mean "there is a delay _somewhere_ in the system".
-It's supposed to mean that the PHY should add delays on both tx and
-rx paths.
-
-Confused.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+	Andrew
