@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85AF227EB9;
-	Mon, 20 Oct 2025 10:04:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877212F658A;
+	Mon, 20 Oct 2025 10:05:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760954653; cv=none; b=Y21I3U2klsnkwJ72qrAy+r9zcxl+0uAL88IFxoP4oDYr7aAEV7nSsJDHLlF7X7gG2YQP0Um0edkiJof0OFv11vjOUDManTXuT44+5gvcL+W9gIvX4AO6DP06dJA1wEKS1+88A9qOy5hYshhC2/XAEh0GGsEJT1ssgKmNqLtoRFU=
+	t=1760954724; cv=none; b=IV6U5zaABNB6u2n+nWeNHcEMvMZw34VjYQlvrmQ1o9S+54RdWxM0YUyrcSmEm3BW372ntM1qUAoNHTcAu3x0iP5qciIOyoGmuoERcq69wDQUpuPeVyWTpS/Gtz17/XG/ZizEWjIlnvUKWqH1OsTnGLP1BpusQnNQxPYOyYwpwOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760954653; c=relaxed/simple;
-	bh=O7CSLXdkG96nqjZPq+FkyyDWvL5sJW9UxsJ3bE5vHCg=;
+	s=arc-20240116; t=1760954724; c=relaxed/simple;
+	bh=LEJa4nVNw8tfsdDCMXntw7FGau+RHUPD4op9UMRn+z0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eVxErccLR1i3YNJ7zBIUj0btzaxGyP1vx/uutNjn3uVUZJ7CziRYUD7ATwaExxPIe3Hgs5hLy6vVl/KIjBWeXQBD8GY3Sy4O0Lghnq41r43JfnDu9rXE83yFnBUZESS4muFrTbe1u6iWqm37A4lO+apXpGQaqd/t9nyV3O38CuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s59ugeqc; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=ZRzH+bz2oJ4x02UZFj1/7EYh3okorgUn5abpLCAYmBBXQ6/MyAbc0V+uDSgsMs3a3RunW1pd+FERtHsNujZE3+ftC/Mu46NPYfX9pwOBw/cXtaKHNX7Jm2lvd2xyg7of31CsiUNWoZPCN2UeQpzp53q7sNi2bqiNjfsWXn3+i0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W6syjB+F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s59ugeqc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5681C4CEF9;
-	Mon, 20 Oct 2025 10:04:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W6syjB+F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5735C4CEF9;
+	Mon, 20 Oct 2025 10:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760954652;
-	bh=O7CSLXdkG96nqjZPq+FkyyDWvL5sJW9UxsJ3bE5vHCg=;
+	s=k20201202; t=1760954724;
+	bh=LEJa4nVNw8tfsdDCMXntw7FGau+RHUPD4op9UMRn+z0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s59ugeqc7TgNCHMzuBRi161/pOXpZrL9EhC2iGEoH5/DtfaD0SGPWHWbcY4jibWgC
-	 rWw4FE//CWAnAJPLyn9D4v6vVJoY8577pLovc8ru1avvyz8TUEvxiNt1arcu7xhMqL
-	 luReNlC0C+ZblwiGnqsjnf8SFNRGaUzu04JRjt/GDI/HOApVAo8ZvkZ+16AOoSbHDe
-	 3W7J+f99yWz3sPLR4LMJX2TO7fQq+Fodqbq9UrJhv2HWQRJRl8Ecgiwd0A/+jLvAwp
-	 4HEPwqnGOAlLqLRI47g2PNViZdx5/9bo+uzuPGtZKtwIk0no9JLOK+NH0kxNdKO8Fn
-	 iXiOKLvEDr/4w==
-Message-ID: <62bb4f8d-ffbb-4529-ab0a-70fd8c77078d@kernel.org>
-Date: Mon, 20 Oct 2025 12:04:06 +0200
+	b=W6syjB+FtK58rE3gEot5TWnxDuMpO2oulrhpGYHskT6blC6WcpHWBVtxS6HGFGIs9
+	 XCdvbA0o10C9JejVwPGOxThdPKO5A2DVw49/4kJOUbJre05DP8LX2FG3m3y0TOt7Em
+	 dPIxH+OHQ09P6ZV69x3jZSAEj3HMwJk44u62BMP0o2AFC38i1iVzUw+Bb3LTrtqV5U
+	 GLX6klcHYjh7PSvmLrSFlbeKywFYLDBmZKZyiIrebl+0H2RA7d7aiziXguNjFNTmZs
+	 R2l7Z8ix8Dwgl98obnjGXwfRUE+4lgSA3+GLRSdO0Y7MwGJazLULY3+PXWg6CLWLmp
+	 rzIJvqkDqNziA==
+Message-ID: <c6d9434f-5c7b-4b65-acc4-fb07af9dd89d@kernel.org>
+Date: Mon, 20 Oct 2025 12:05:18 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -35,7 +35,8 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] riscv: sophgo: add top syscon device for cv18xx
+Subject: Re: [PATCH v2 1/3] dt-bindings: soc: sophgo: add TOP syscon for
+ CV18XX/SG200X series SoC
 To: Longbin Li <looong.bin@gmail.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
@@ -48,6 +49,7 @@ To: Longbin Li <looong.bin@gmail.com>, Rob Herring <robh@kernel.org>,
 Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev,
  linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
 References: <20251020083838.67522-1-looong.bin@gmail.com>
+ <20251020083838.67522-2-looong.bin@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -93,33 +95,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20251020083838.67522-1-looong.bin@gmail.com>
+In-Reply-To: <20251020083838.67522-2-looong.bin@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 20/10/2025 10:38, Longbin Li wrote:
-> Add top syscon device bindings related DTS change for CV1800.
+> The Sophgo CV1800/SG2000 SoC top misc system controller provides register
+> access to configure related modules. It includes a usb2 phy and a dma
+> multiplexer.
 > 
-> ---
-> 
-> Changes in v2:
-> 
->   - Add ranges property.
->   - Use proper regex in patternProperties.
->   - Add complete example including child nodes.
-> 
-> Changes in v1:
-> 
->   - https://lore.kernel.org/all/20251012022555.6240-1-looong.bin@gmail.com/
-> 
-> Changed by RFC:
-> 
->   - https://lore.kernel.org/all/20250611082452.1218817-1-inochiama@gmail.com/
+> Co-authored-by: Inochi Amaoto <inochiama@gmail.com>
 
+There is no such tag. Also incomplete DCO.
 
-So this is v3, not v2. We do not count from 0, -1 or -2 (of you have
-three RFCs). Please start using b4, so you will get it right. Otherwise
-how can we compare versions between v1 and RFC? Try yourself with `b4 diff`.
+Read carefully submitting patches.
 
 Best regards,
 Krzysztof
