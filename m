@@ -1,103 +1,124 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A83E208D0;
-	Mon, 20 Oct 2025 12:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4FF2C327D;
+	Mon, 20 Oct 2025 18:52:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760961942; cv=none; b=izdAdomigohDJ6fHbQXDd7X+ioY34iJx1x+O9pySKQTjAlsV3ZpH6VbOXLmuroT4BPEn9CMhJpV4w2S3OmQOjs1QljfVpTxl1cGbfc7KOE+4xX4EbNnc7a0Mof8ZXt5Pp2yanguEjLmo1QKy/XyM++Uvt2PQ8coEzDr36A8mnCU=
+	t=1760986340; cv=none; b=mj6JDuAFouhukhMd1/2mDftCTZGKmo5HyAGFahWoDTlwRO4/7OP5GRPo9e5+a0hCZOtPKfbECSymODTh7RMoY/eF3CmL6hk/ieDYeCk6SF1yv4TGxOtVHbJNceglOLeZCrb7h5HWMy0ALs1axSiNHUvqpOgwUQEcpnwbHhUob50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760961942; c=relaxed/simple;
-	bh=E4WIZb94VFhTqzi+aDX1vJifr1WIC9U+ZUXLJ7Ld2B4=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=nrF4PcMdVyEHSQocHGLU8OZW/6ZiqnkOqHEX7dVSdo/WBIz/BjgddcAxYRkx22pmb0uuBySGXagoITLqIof6IxKU7mqMvZT9uF9kzI4SJrgdGxa6kscoZpwo9CIB5kAr2NFolBc76rV5JmU3nNoSxqqZtE37HcTnfhUbUm5Q5Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y6d3ZFZQ; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1760986340; c=relaxed/simple;
+	bh=EQ8t7tB+D4tqgjE5FX3+AxWSSwDJe9Zy/EctcpllNj4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sub9IwwUn5ECZEIHYhAo1YM1aerpzSpeY2RG23jh1pCNLtulQe9JWUOCm8Cp0lkvsonOGVrhlVAegXgqk0FMg/Z2N+fshbrhkaz38jYsird556697cxt6pCKXcsZAkXuKxl9Hi70K68gxQ3k3YUzNKaT07v3DtI68xe+QtSo12M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Rn166uEX; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y6d3ZFZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F1BC4CEF9;
-	Mon, 20 Oct 2025 12:05:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760961941;
-	bh=E4WIZb94VFhTqzi+aDX1vJifr1WIC9U+ZUXLJ7Ld2B4=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Y6d3ZFZQusyCn275mQM8m6fv+vlFbWdyQgK1qBx2RBm2w129gB3UGUUQqJrI1KbGh
-	 dRLa8UTq7a2oN/8opFrWdcm7Tmjms5qQrNAlh/mBdBEN8ROsQ36K5Oirlzl9ZRhf/H
-	 D01z3n2KpP0z+dCVufJVd9WShC1ESdYlxjefVp+CCApYiBlBIg0XnkeLuc+2RT49Gs
-	 I2058kerY79xlKJkPvBYin5SSweaQrZH0AA9JLeoVAwCVOG8BtWcra57gnbQ8KCYFy
-	 QfwFwrGGzqigceRLR+dkPdwH50dkcrl85WIsNpvuH9QfUx3BWm8WDdx+dURU11Roc2
-	 sC9/lMNiMJs/w==
-Date: Mon, 20 Oct 2025 07:05:39 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Rn166uEX"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=tvR/JOCDykbUtNBkJ2YheNXEBp8e8ja99yZKcJe41jk=; b=Rn166uEXHRAoxorCRcipzvbU/Y
+	9LYEOK9yuC6IL2lh2+2j0hi6aIl1fJxE2sNKydc1xihXpchLrcP9i5vDopTNPtE1+PhuYWignc4PL
+	/6YlFTFIs3+FkMKTw723y1lHHMx/rp+8d1Cig0WScb12/aNttg/tNHV2+hjX5GnOcfbo=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vAuyu-00BY4z-B8; Mon, 20 Oct 2025 20:51:44 +0200
+Date: Mon, 20 Oct 2025 20:51:44 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v2 2/3] net: phy: Add helper for fixing RGMII PHY mode
+ based on internal mac delay
+Message-ID: <8da7450f-ef1a-4d8f-9081-a31585e2da19@lunn.ch>
+References: <20251020095500.1330057-1-inochiama@gmail.com>
+ <20251020095500.1330057-3-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Icenowy Zheng <uwu@icenowy.me>, Han Gao <rabenda.cn@gmail.com>, 
- Yao Zi <ziyao@disroot.org>, linux-kernel@vger.kernel.org, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Chen Wang <unicorn_wang@outlook.com>, sophgo@lists.linux.dev, 
- Vivian Wang <wangruikang@iscas.ac.cn>, Conor Dooley <conor+dt@kernel.org>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Eric Dumazet <edumazet@google.com>, Russell King <linux@armlinux.org.uk>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, netdev@vger.kernel.org, 
- Yixun Lan <dlan@gentoo.org>, 
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
- devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- linux-stm32@st-md-mailman.stormreply.com, Longbin Li <looong.bin@gmail.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Heiner Kallweit <hkallweit1@gmail.com>, 
- "David S. Miller" <davem@davemloft.net>
-To: Inochi Amaoto <inochiama@gmail.com>
-In-Reply-To: <20251020095500.1330057-2-inochiama@gmail.com>
-References: <20251020095500.1330057-1-inochiama@gmail.com>
- <20251020095500.1330057-2-inochiama@gmail.com>
-Message-Id: <176096193973.211044.5323192704803945227.robh@kernel.org>
-Subject: Re: [PATCH v2 1/3] dt-bindings: net: sophgo,sg2044-dwmac: add phy
- mode restriction
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251020095500.1330057-3-inochiama@gmail.com>
 
-
-On Mon, 20 Oct 2025 17:54:57 +0800, Inochi Amaoto wrote:
-> As the ethernet controller of SG2044 and SG2042 only supports
-> RGMII phy. Add phy-mode property to restrict the value.
+On Mon, Oct 20, 2025 at 05:54:58PM +0800, Inochi Amaoto wrote:
+> The "phy-mode" property of devicetree indicates whether the PCB has
+> delay now, which means the mac needs to modify the PHY mode based
+> on whether there is an internal delay in the mac.
 > 
-> Also, since SG2042 has internal rx delay in its mac, make
-> only "rgmii-txid" and "rgmii-id" valid for phy-mode.
+> This modification is similar for many ethernet drivers. To simplify
+> code, define the helper phy_fix_phy_mode_for_mac_delays(speed, mac_txid,
+> mac_rxid) to fix PHY mode based on whether mac adds internal delay.
 > 
 > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 > ---
->  .../bindings/net/sophgo,sg2044-dwmac.yaml       | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
+>  drivers/net/phy/phy-core.c | 43 ++++++++++++++++++++++++++++++++++++++
+>  include/linux/phy.h        |  3 +++
+>  2 files changed, 46 insertions(+)
 > 
+> diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
+> index 605ca20ae192..4f258fb409da 100644
+> --- a/drivers/net/phy/phy-core.c
+> +++ b/drivers/net/phy/phy-core.c
+> @@ -101,6 +101,49 @@ const char *phy_rate_matching_to_str(int rate_matching)
+>  }
+>  EXPORT_SYMBOL_GPL(phy_rate_matching_to_str);
+> 
+> +/**
+> + * phy_fix_phy_mode_for_mac_delays - Convenience function for fixing PHY
+> + * mode based on whether mac adds internal delay
+> + *
+> + * @interface: The current interface mode of the port
+> + * @mac_txid: True if the mac adds internal tx delay
+> + * @mac_rxid: True if the mac adds internal rx delay
+> + *
+> + * Return fixed PHY mode, or PHY_INTERFACE_MODE_NA if the interface can
+> + * not apply the internal delay
+> + */
 
-My bot found errors running 'make dt_binding_check' on your patch:
+I think a helper like this is a good idea. But there are a couple of
+things i don't like about this implementation.
 
-yamllint warnings/errors:
+I don't like returning PHY_INTERFACE_MODE_NA on error. I would prefer
+-EINVAL.  of_get_phy_mode() passed a phy_interface_t *, and returns an
+errno. The same would be good here.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml: allOf:1:then: 'anyOf' conditional failed, one must be fixed:
-	'phy-mode' is not one of ['$ref', 'additionalItems', 'additionalProperties', 'allOf', 'anyOf', 'const', 'contains', 'default', 'dependencies', 'dependentRequired', 'dependentSchemas', 'deprecated', 'description', 'else', 'enum', 'exclusiveMaximum', 'exclusiveMinimum', 'items', 'if', 'minItems', 'minimum', 'maxItems', 'maximum', 'multipleOf', 'not', 'oneOf', 'pattern', 'patternProperties', 'properties', 'required', 'then', 'typeSize', 'unevaluatedProperties', 'uniqueItems']
-	'type' was expected
-	from schema $id: http://devicetree.org/meta-schemas/keywords.yaml#
+I find:
 
-doc reference errors (make refcheckdocs):
+phy_fix_phy_mode_for_mac_delays(interface, true, false)
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251020095500.1330057-2-inochiama@gmail.com
+hard to read. You cannot see what these true/false mean. Which is Rx
+and which is Tx?
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Rather than true false, how about passing an
+PHY_INTERFACE_MODE_RGMII_* values?
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+PHY_INTERFACE_MODE_RGMII_ID would indicate the MAC is doing both
+delays.  PHY_INTERFACE_MODE_RGMII_RXID the MAC is implementing the RX
+delay? I'm open to other ideas here.
 
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+	Andrew
