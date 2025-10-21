@@ -1,45 +1,45 @@
 Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FEB2E7F0D
-	for <sophgo@lists.linux.dev>; Tue, 21 Oct 2025 09:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378572E8B78
+	for <sophgo@lists.linux.dev>; Tue, 21 Oct 2025 09:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761039946; cv=pass; b=FHGm3t6Fen4pnZeXy4OdTF3zjEWBsqPLfJGCzAU+/KDIxKiqCHHmBXYGYaMOpH3/ZmsXzu7F7Fq4RdxTMnRaY0o0JzoqSAaKlPAy2FnQApc92vvjPq+EBsjbNTUdc6RWoFFAyX5adoDosI9/VOnH7FOrIaVcfxvnXv8YMclIY5Y=
+	t=1761039951; cv=pass; b=it1c0v4otNBZZI/C8Rumrqz4XfyRAOAEs4+H3K5e2luUyoEmOgb9e+/9B9m+Vd1n79AQHhOrXaxgq2u7WNNyksW6YUXDZHESMciCscRMwxXMd3FJD2xdO/mwTYfLn0I+3pcVPao4hPDUjhyheihKGwAuLCm/hpsvGZZ0cX1nWt0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761039946; c=relaxed/simple;
-	bh=qLFixdERw6/lQNqNbS7Kg6KosBChJd6vjjzVCdUNNm8=;
+	s=arc-20240116; t=1761039951; c=relaxed/simple;
+	bh=Fpln/c7ViYj8ZfX4F0j41NWe9lauWJxk/Gt9COIjgLs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VYrtnhm/VNmOhBWQkVdmSSFWygYvuV7pwufyeLIKQt0I59ulHQSZ2IChX4TpY0U4v4Jw/PojT1JZOPfrmkRC8tneeaPgTLVe3dLvZPG6oKRNRFQRrl8Wr91dueUdReMVEZMzdF9T3XLnSaD9Rc/ItNp827jGAIXa/2AKPdmtKBk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=G/5mFZbu; arc=pass smtp.client-ip=136.143.188.15
+	 In-Reply-To:To:Cc; b=de5+n0peN+mdcmtFB5h/igZVyq1CfC0Yinet/1RAjfNWGiuD75bSFPRCyzH19Y66EEXw5k0rz9N7t9KY7MWsOJyUO8KoMD1kYma8x6SbxKWBmKDcU3UFCX3g/SUl4EKsgahd+RiljISli8O42mNoCvrzVqE1WW9hq5HaIfM61vU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=pqQ6rMfk; arc=pass smtp.client-ip=136.143.188.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="G/5mFZbu"
-ARC-Seal: i=1; a=rsa-sha256; t=1761039927; cv=none; 
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="pqQ6rMfk"
+ARC-Seal: i=1; a=rsa-sha256; t=1761039935; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=dfhpZYKoveexamaQCVElCGaJLiTc2xrns0AMRTqOxr8+7bpkDioT6j4W/+S+AYMpT+WKdqLxxD7F0MQLWc/QQ8g6HQHiHzJ4T/jJojllfiNiimVCPxakiwbk31Pm+fXd0DiT86M2L6B4hMcXQ8peaz+Wng0Hr7KP9i4Ux+B9JG8=
+	b=HQkxjO5iKvKerkP31KU/PD9qvpi37bFi+/V4w27Fs1//eTTx8V24CjbTKVS1E2gADYCfsH0l5tnyRDlhYc9yKKFf3CY/WNN7B0BmlIHxkmmoX2YSbZq1QAke0eBFFgyDpsNL0I6dq0t8gm1gdsjkgy3heEBxoQlah0WgAuKXY+M=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761039927; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=3XKmOUD68v7s8B225JgJPjyUttooN2f1rFW8XAfBjsE=; 
-	b=mbKP6VZKmd3C4VH0IXOJz5gHX/FhnRCllBfEX02h5F9lus+rUnv79ncUb+hId53ucgCYH1AnogdPGcshGT4/i32sugu7U1iHJFpQY6q8cKnlb/Ifrdl+VtMFnp/+Enh1JXA0GrCiTi+kI112lk2+zZkYr1XpsflzRNzEfglA8bQ=
+	t=1761039935; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=5rI5kYlc0kJFlzyj6FrlL3BrdxouM7Eoa2weCOJQey4=; 
+	b=LVlxBy+T19swqdTKQAebVq5KKzXbeC6qv80h6PxM/7NjAUDNRzOx+QYVZmz0n42Gx12B8y+yblIbxPpcDfjDq2Ot+5hvbhz3O9KXLTIMjN6UxqlZ51yPSOYVr7UPOo4EVpbyTan3lC4+j7H/uSTtwGa4/WceeKcnQfAwiqApDPw=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=pigmoral.tech;
 	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
 	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761039927;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761039935;
 	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
 	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=3XKmOUD68v7s8B225JgJPjyUttooN2f1rFW8XAfBjsE=;
-	b=G/5mFZbux2cR5YesIjvgQUAo1lD986wBftc5/Wmun+nocEjkWwYAwZPz3ASPtWNh
-	e2Lz48nwgMSeGLwZ7aiJQfA+3bDGrCLBJl9ErkSWMVRwdb4IloIsTSfmt9/AeA/HTyL
-	CNJyCqpprLWl60yEJHGZUVPdymX7+3KuoPW2MQEI=
-Received: by mx.zohomail.com with SMTPS id 1761039925257369.8137969868252;
-	Tue, 21 Oct 2025 02:45:25 -0700 (PDT)
+	bh=5rI5kYlc0kJFlzyj6FrlL3BrdxouM7Eoa2weCOJQey4=;
+	b=pqQ6rMfkwSxXcdYsUN2AvSq0XjhZgkPCQzEQtfVys83PIBER0PSR91a9dMDq+LZ5
+	tniNzHgMoFcuyzcy4H2/omub8qBYi+8RaBv5bBU7YwXM8hV1wWFt4c+dyreTXD+G5eI
+	s1z8bzsCgnljHgZTorRQGkddtWDek8yT9/3voVKw=
+Received: by mx.zohomail.com with SMTPS id 1761039933613557.3508358472184;
+	Tue, 21 Oct 2025 02:45:33 -0700 (PDT)
 From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Tue, 21 Oct 2025 17:41:42 +0800
-Subject: [PATCH v3 07/13] dt-bindings: timer: Add Anlogic DR1V90 ACLINT
- MTIMER
+Date: Tue, 21 Oct 2025 17:41:43 +0800
+Subject: [PATCH v3 08/13] dt-bindings: serial: snps-dw-apb-uart: Add
+ Anlogic DR1V90 uart
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-dr1v90-basic-dt-v3-7-5478db4f664a@pigmoral.tech>
+Message-Id: <20251021-dr1v90-basic-dt-v3-8-5478db4f664a@pigmoral.tech>
 References: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 In-Reply-To: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -67,57 +67,36 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-riscv@lists.infradead.org, Inochi Amaoto <inochiama@outlook.com>, 
  sophgo@lists.linux.dev, linux-serial@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761039846; l=1564;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761039846; l=995;
  i=junhui.liu@pigmoral.tech; s=20250910; h=from:subject:message-id;
- bh=qLFixdERw6/lQNqNbS7Kg6KosBChJd6vjjzVCdUNNm8=;
- b=QVg+Wg0v4lyB+LuQvRbsyM+X0St+qBC6zWgPsYRjcIMc7Qpj2Rc4PoAfSdiOuqJRhG9B1Ywqf
- GEli48LJQfAAs8eXixUtp/vX2BPn7ljmxmx9h29fW/xJolvYod2Xyqu
+ bh=Fpln/c7ViYj8ZfX4F0j41NWe9lauWJxk/Gt9COIjgLs=;
+ b=Yt5fVqhedU/VD+SIsk26FcgaoStoJXGo0lAzMwTYEQmUXKYAxnfBjKdMwE95mTXMeHk5Eq22u
+ NMztlh0taDeAmq+Dt+RXQ5PHF/awr1WndatmjzT0OFHGY9pco7VygTL
 X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
  pk=cgATWSU1KfGWmdwNmkPyHGnWgofhqqhE8Vts58wyxe4=
 X-ZohoMailClient: External
 
-Add MTIMER support for Anlogic DR1V90 SoC, which uses Nuclei UX900 with
-a TIMER unit compliant with the ACLINT specification.
+The Anlogic DR1V90 SoC integrates a UART controller compatible with
+snps,dw-apb-uart, operating at a 50 MHz clock.
 
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
 ---
- .../bindings/timer/thead,c900-aclint-mtimer.yaml        | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ Documentation/devicetree/bindings/serial/snps-dw-apb-uart.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml b/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
-index 4ed30efe40525f9e70b7f1b1dda1c833b0c3a40c..cf7c82e980f674afcf59fc726742dc4f49c1a820 100644
---- a/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
-+++ b/Documentation/devicetree/bindings/timer/thead,c900-aclint-mtimer.yaml
-@@ -4,18 +4,23 @@
- $id: http://devicetree.org/schemas/timer/thead,c900-aclint-mtimer.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Sophgo CLINT Timer
-+title: ACLINT Machine-level Timer Device
- 
- maintainers:
-   - Inochi Amaoto <inochiama@outlook.com>
- 
- properties:
-   compatible:
--    items:
--      - enum:
--          - sophgo,sg2042-aclint-mtimer
--          - sophgo,sg2044-aclint-mtimer
--      - const: thead,c900-aclint-mtimer
-+    oneOf:
-+      - items:
-+          - enum:
-+              - sophgo,sg2042-aclint-mtimer
-+              - sophgo,sg2044-aclint-mtimer
-+          - const: thead,c900-aclint-mtimer
-+      - items:
-+          - enum:
-+              - anlogic,dr1v90-aclint-mtimer
-+          - const: nuclei,ux900-aclint-mtimer
- 
-   reg:
-     items:
+diff --git a/Documentation/devicetree/bindings/serial/snps-dw-apb-uart.yaml b/Documentation/devicetree/bindings/serial/snps-dw-apb-uart.yaml
+index cb9da6c97afcfd27a315414959b2b17beb4454cf..691bd0bac6be449516e213b550415acd37badad6 100644
+--- a/Documentation/devicetree/bindings/serial/snps-dw-apb-uart.yaml
++++ b/Documentation/devicetree/bindings/serial/snps-dw-apb-uart.yaml
+@@ -51,6 +51,7 @@ properties:
+           - const: renesas,rzn1-uart
+       - items:
+           - enum:
++              - anlogic,dr1v90-uart
+               - brcm,bcm11351-dw-apb-uart
+               - brcm,bcm21664-dw-apb-uart
+               - rockchip,px30-uart
 
 -- 
 2.51.1
