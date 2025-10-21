@@ -1,44 +1,45 @@
 Received: from sender4-op-o16.zoho.com (sender4-op-o16.zoho.com [136.143.188.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80366329C49
-	for <sophgo@lists.linux.dev>; Tue, 21 Oct 2025 09:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96268322C99
+	for <sophgo@lists.linux.dev>; Tue, 21 Oct 2025 09:45:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.16
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761039911; cv=pass; b=C7qbWdfDqkyxTOTKN/sjxupZz4ccy3VmQWl9yZZda181HDbZTlo6+SBlei/vXvGQoYgPFY6kjL0xUrpWYhXWXittciGfuOW4AxLUeojwkNhdBldUrl9XvywhpIahQvkIXxeeQCVhYV2gp+QX5CKWyiXD8ppGOAqyW0XB1pVKWLI=
+	t=1761039919; cv=pass; b=rciL4j0jqv2jJBCmVLsl+zAPtvVshahxl1Yi3bQCpQLo5KSxJBjr3OWwXssaETYn/AmltDMpDBwdkuRxJ8NZdd3sqSx9yACEGLLwOiDLsLXF6Zf7knLz8HGkMb1wuF8GSh5MQdm45Ivf4DJgtK6N+uJAjxeu9am5WbI3hg3lq5E=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761039911; c=relaxed/simple;
-	bh=5OYq33h90o1+r7OH7UN8UF/BUb5PEB3MS3L1zmHF3vw=;
+	s=arc-20240116; t=1761039919; c=relaxed/simple;
+	bh=3kGr1Cc0QZvmfkpfrjnKuu3joB/2132DDmbBOQEMYJE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n9vf+pmw1NhQukJnRkKCi9T7DvXPVS5qdNdWmynVgtHtr5jTsA83J8XvqGNLTN/6yaRwG0y5YZnNRF7b6Kds+197M/3haWr0HdmQXU6JAoIOroAvaJdWyO/gIrdzN+ghXsoeRqTVnsUsVYHBd6gRVdcaHtkkpcpzXrl0zTjPeGM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=CVEgXSJe; arc=pass smtp.client-ip=136.143.188.16
+	 In-Reply-To:To:Cc; b=PB/zp7RzQt5NlDJb+4TG026N3vdl6tMN1MHQCH4E25GEtHVkYVvy4XkaMroA0jzxBy0c2raWrzQ9AdDZbLG1N5/1CCpTi7HLerNgJfM4NOU9PYDiaPlxn5T0GCfA340IVYS3BDV0f5Y3LZ3tet4aTzTBnbFPdhEdwH/2d3Ohm00=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=FwuDYuVg; arc=pass smtp.client-ip=136.143.188.16
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="CVEgXSJe"
-ARC-Seal: i=1; a=rsa-sha256; t=1761039878; cv=none; 
+	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="FwuDYuVg"
+ARC-Seal: i=1; a=rsa-sha256; t=1761039898; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=CzhPh0E1MzU/He1kp2d8LJG8YcAuqE0BD9sKX0R79U5LKrpF1cNy2IWRfjNWMoVGZ/tl91XnCGzPkkz3ZzNoyXV1kN3/wL0QPgJYUKatlEOYDW+FChKZ+R7SivVA35kMm8pKH5Ns0H9/O3Eja4oqM790s3GzDQeoWklmBUhkxDw=
+	b=L/nwTHZCbjyMZ1Vqpb7XELvhgwzJGXGfMEs+1dW9wPA4MxGQ2q7QazEg+LghuPHAW16lzcv1py8v+pUCUy+8o3UGNGBlwGzG+qln8mStjIbzr9iL0jB8JUqlUtlvAMVtyHyxO70bLYrfFIXBD8h9QMsub3KulO5tzrZ6xgxgXwc=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761039878; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=RilxgnaE6+nQcWx0vQ+3dyIGCcddcgCTt1jy8Noi5+4=; 
-	b=KLKyIWwHs5FWpyq2AGRcOqSb9aTRqek8h46xIN4VsvaMifL/mnAxCn5T49Um4ecTgmzcy8xUdDHYBVa1tqBYgfphvR1k9UghnqTk5OQ/HTMA51SoWT12K0LIfSVXY1awMCfEppi7TsjA0ybXHyT5ZONvWwZoxj6pPjb6+wgf6aE=
+	t=1761039898; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=AmOqVWfAgfLRDh3J46Y8FaHobM05maEtveqQQFcI/Ck=; 
+	b=kPH7f6HtX2oDTbCfgPG6JhMFKbukBi7ibDoJSKKji38XIU7UbxxwGf1X+k7jYZHPVyylz+43SqDNADGkkt4U8vlCq1pfXMxn+1JS0t/96nuzWDmSMSc4QIOGooi0VVAIHJ15bofbj826CWiv0tU02M/PZ0LYL/3ebY0NQk/hT7c=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=pigmoral.tech;
 	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
 	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761039878;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761039898;
 	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
 	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=RilxgnaE6+nQcWx0vQ+3dyIGCcddcgCTt1jy8Noi5+4=;
-	b=CVEgXSJeAfY820DC0XFAUZ+4RwBYYPZUbnrK+fTB8Zm9mk15kGZ23qqHtRjlvkaC
-	auWVhNfeDHywwHXSex23iaieNsh5IHj66GJxJnp4KR7NGdAjj6AU39Yy/o+8/qGMZWn
-	w4hHdECvgPkr+sOnAviANFb8xUf+moqy2mlann7o=
-Received: by mx.zohomail.com with SMTPS id 1761039877372806.2676973256036;
-	Tue, 21 Oct 2025 02:44:37 -0700 (PDT)
+	bh=AmOqVWfAgfLRDh3J46Y8FaHobM05maEtveqQQFcI/Ck=;
+	b=FwuDYuVg/Bc5akguipAzZUuMPaMh7BpW2V7P1YpAP78+LRbmTmLjAatqNruX5V1t
+	GFBVKDB0sUDyrcWfAWttnrJW/F+P93Gfg0rQ8DSkf6pxEQ61xCBRdPhZi0ICUjZzOxQ
+	OFNYZ0d+fEEYUcJJZ7jWpoYvAgEUlmP19DORERbY=
+Received: by mx.zohomail.com with SMTPS id 1761039896018451.7502829999422;
+	Tue, 21 Oct 2025 02:44:56 -0700 (PDT)
 From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Tue, 21 Oct 2025 17:41:37 +0800
-Subject: [PATCH v3 02/13] dt-bindings: riscv: Add Nuclei UX900 compatibles
+Date: Tue, 21 Oct 2025 17:41:39 +0800
+Subject: [PATCH v3 04/13] dt-bindings: interrupt-controller: Add Anlogic
+ DR1V90 PLIC
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -47,7 +48,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-dr1v90-basic-dt-v3-2-5478db4f664a@pigmoral.tech>
+Message-Id: <20251021-dr1v90-basic-dt-v3-4-5478db4f664a@pigmoral.tech>
 References: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 In-Reply-To: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -67,37 +68,35 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  sophgo@lists.linux.dev, linux-serial@vger.kernel.org, 
  Conor Dooley <conor.dooley@microchip.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761039846; l=999;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1761039846; l=983;
  i=junhui.liu@pigmoral.tech; s=20250910; h=from:subject:message-id;
- bh=5OYq33h90o1+r7OH7UN8UF/BUb5PEB3MS3L1zmHF3vw=;
- b=H/b+n5Z2ErCQTJ9UpdLacCYN9dWlOcEXkm7NsiwvteVCpJkHVGwXRaCyO1AUN7qZntq4NrGxt
- 0X3AOAqG7u+A1GD5IEr4pNVPHr2eSMGcmNej/poUpbvaX31l1vju6K2
+ bh=3kGr1Cc0QZvmfkpfrjnKuu3joB/2132DDmbBOQEMYJE=;
+ b=oL/dw3MGWZ13QEbvWZcweHyeDNmfzMSb8YZ7uRMjG+UmepuDbMhtrMv+aMWS9MA/LWJ/84/HD
+ dUhCtG0xIuFAMywNAk+MZRObB4IEAsC97etJIeGMRu1zQ+CCn1CnXn0
 X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
  pk=cgATWSU1KfGWmdwNmkPyHGnWgofhqqhE8Vts58wyxe4=
 X-ZohoMailClient: External
 
-The UX900 is a RISC-V core from Nuclei, used in the Anlogic DR1V90 SoC.
-It features a 64-bit architecture and dual-issue, 9-stage pipeline, with
-lots of optional extensions including V, K, Zc, and more.
+Add PLIC support for Anlogic DR1V90.
 
 Acked-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
 ---
- Documentation/devicetree/bindings/riscv/cpus.yaml | 1 +
+ .../devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml      | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Documentation/devicetree/bindings/riscv/cpus.yaml
-index 153d0dac57fb39d39219e138792f4cb831cb88dc..20b7c834559cb11d17dd4e4119787b88b85e19b0 100644
---- a/Documentation/devicetree/bindings/riscv/cpus.yaml
-+++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
-@@ -48,6 +48,7 @@ properties:
-               - amd,mbv64
-               - andestech,ax45mp
-               - canaan,k210
-+              - nuclei,ux900
-               - sifive,bullet0
-               - sifive,e5
-               - sifive,e7
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+index f683d696909b9da302c53a64f6332f6251705c0d..9ebc483a05abcfcb162d9a8e4ad181ffe4c8732a 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+@@ -58,6 +58,7 @@ properties:
+           - const: andestech,nceplic100
+       - items:
+           - enum:
++              - anlogic,dr1v90-plic
+               - canaan,k210-plic
+               - eswin,eic7700-plic
+               - sifive,fu540-c000-plic
 
 -- 
 2.51.1
