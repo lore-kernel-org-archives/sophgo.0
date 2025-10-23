@@ -1,228 +1,108 @@
-Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBCC2D5C97
-	for <sophgo@lists.linux.dev>; Tue, 21 Oct 2025 09:48:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761040088; cv=pass; b=sZ3TPH4xCn+gccghaJsBdHztccai9dfRNvXRXTuqoY8M1bPimDvpV5OLCDUuvJ5/5w5qoJzkLn9qbmQ0mAwZOTtYC6F4lvTks+7GeEi3yldRiPgnIigPS1bNZVhjXewYYtXktNDMCObfDHz5sNyiR9wdW/BKc+3WO3mRtABxqJw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761040088; c=relaxed/simple;
-	bh=RDVWZeAxgz1alDJPsqpgTVocpV8c0UxJ9gg4n/HME6s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d5d31kp0PzNG6cLSWv2ZwaPhhP97CkjniuLvY6AwOjYhJ1w+b6ocyMyQ2YuCOw6Ph0ksMpCr06aTF9Ri3hd2YUz//KgIsxOJg2i/yRWeGF8MMg6Px+OnDPd+fsCyFFBkGSzyQrnKVEs0G/iGDkDA48yNqpovqEfRv2E+83iUfZo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=GbWDWsfv; arc=pass smtp.client-ip=136.143.188.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7DC5DF72
+	for <sophgo@lists.linux.dev>; Thu, 23 Oct 2025 21:18:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1761254329; cv=none; b=l0zZGXCT4Ednq0RjNxX9L+gSpIInhgPmWEjbOJ9ZP8V3GJGDii9sw4nZjnsV5tb4BeGeQAHgAavi7EAoSyfSgMwcmp+egKZiJqru9ZjpZXl9+nxCvnn4+QZ4wpLuVP8/M1iZ4KSTVc5rVO1WKFhXuvTiHg4hbw03BhKr1HRyX/A=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1761254329; c=relaxed/simple;
+	bh=zqdMx4BWZftJP4zcBY1Z5+B4QE2/WdMi8WQpGousUlE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=nT0qiPwiJ+vItT5/q+C2QvEXSrCSTZqfEbz7Tbmm+GimhcPXSz9YvitQH1sf1WyCTd9FR1IsagBUWNiqrv9rK5TbkmClKAUFlLLAgpTM12gZIC+BSfbkWT4D1w6ZgZeyVBbOkT+W+fnhOaHjRW9JKnmfDJn/qE94K0QeRieqdnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UWOxZzfv; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="GbWDWsfv"
-ARC-Seal: i=1; a=rsa-sha256; t=1761039961; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=P/EFRnhemYf+Fm4Fglh30csavqYDo3TiJIUspKpafk3m6JyEEwBsgr9GVwFY7bFBR1jcOabPfgvV/LRUo6w6SpQ+m8Ir/kjxdksG8MZ3Mju/PG85sEz4zla3OJjxTvo9CDiKuOzI6WfRNZw4fc2V7e89jc0AoYMySCpcaJCVGrk=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1761039961; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=hqiQC5ayX+JN5fxtyr14jM4MC4pfQMFMI0LCqJastRo=; 
-	b=RPAtb8tKgaFEM41mD4ke34oWrQd3M3dmwM9rwpD7aHn2DChJKgy+JNiOr1/NhrGkGJkTid+0g8E50pUfsJTD2bLIIQOey2COm586NCM26UPiAvgdrA+h/CaW+zl13wvuatm3L4GnEIoVBXFp5L7y1VvtG+NHCxMVsy+PNK2YUxM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1761039961;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
-	bh=hqiQC5ayX+JN5fxtyr14jM4MC4pfQMFMI0LCqJastRo=;
-	b=GbWDWsfv6Ftb35C/7s4NJ9NiGsB9nLl1TWrAfOeICsiQA4qR1qjnGPnJGQNvUY7n
-	I8ehy4ufUCQFQ1SGVLZ+dxuuE05B3cpIV7poLCkszO8JRxaa2fQBpwZkOctA9hDAMCk
-	wspT+yJiO10mwtMJdAFGWZij8NyIGPeroAFnFgEY=
-Received: by mx.zohomail.com with SMTPS id 1761039959167749.4138204173319;
-	Tue, 21 Oct 2025 02:45:59 -0700 (PDT)
-From: Junhui Liu <junhui.liu@pigmoral.tech>
-Date: Tue, 21 Oct 2025 17:41:46 +0800
-Subject: [PATCH v3 11/13] riscv: dts: Add initial Anlogic DR1V90 SoC device
- tree
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UWOxZzfv"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b6d2f5c0e8eso278388666b.3
+        for <sophgo@lists.linux.dev>; Thu, 23 Oct 2025 14:18:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1761254325; x=1761859125; darn=lists.linux.dev;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zqdMx4BWZftJP4zcBY1Z5+B4QE2/WdMi8WQpGousUlE=;
+        b=UWOxZzfvYOKqdZYtpB+fKZvsz5nj5niTq9Xzer9ao317E4tN/kUfn7orhcNBBMpyyT
+         XtuPT2SxW/J/Q07gDEQKDi4C5xGOM4O0pihG1I6HkXWdkOEDGB9ZNicLLb06ghWSxEKC
+         9Fd7ifBTMHrMfhqTCFOWd8OgZnbkO/yWaK6hYYhJZ0uADPmhMlOCuB/BRRRTVk5M+Nsd
+         s1n8m5guLDTCcFOKThb2zIjVDhGSwOWqny7x8oWhksGAltMVY6tI3Qlr4xi4ePP+v9kz
+         7gGVUFDj0aSCaLxMHxtvYqf9nCh58tMVXJnWY55dHRs0wrklhprbJfUFG8RI9Pf1BA+H
+         7G+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1761254325; x=1761859125;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=zqdMx4BWZftJP4zcBY1Z5+B4QE2/WdMi8WQpGousUlE=;
+        b=vG38IOFFqIHvVPZsf3oJ/W4SBp+byHxpoj6tqnX+gz1hwDlVWCbL2h20ekakEO2JSt
+         T6z5gIkr5WnHb9r6J37XOA4l+RSC+ekZg1lAVL+GEokRP535eZF/yuk+KtT21/S423qx
+         Py9zetRe4TsGKuNllzfWoYuAjlLfisB+45/GkE9SmccmZhS3CAJ2icHl0gmtG2gt9bAE
+         +fIa8ikgdXioKo8MrVQfvjPjMWOsJunW8fME/Gu+8aE2D4/dd5p1xejcj5vQv19EKjIE
+         b5yiKoauXRVcXJcg3tR6Cqh5uLcQdUNMW/DcBB4gBQBFdY7NL0UfTeJ1DAqWh/++iEjz
+         3meA==
+X-Forwarded-Encrypted: i=1; AJvYcCUh6xpvYMs6pyp1jTJeGjONgn0IR1FCijrThmEfSqpVLclHcabcn0o//oGZg8Ktd0mdOjUl9gE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwGUxeuBvi79imeKRev6WHrgZzllzxFkfz10k+oRjV0uUwkMrrW
+	7W3xyF6byTMTuskY+GZRXFv5rlo1j6k1ZkWXZyO08R+ZdBsV7l0AFQoo
+X-Gm-Gg: ASbGncvk8HscgxWh2FSm7EnbIlfzyPsm55PApViKbQ/q6QDcu4RIyIzyh29zyIwIYV+
+	oV0BkACp+O5wlxnel13b8E/lN4tU5p9IHdzY+xFIM29yT1LGtYPeSTgg4rjZSTnX28bgzmwQZSF
+	3Q1GKxPcZ3LwIKl8fxy9YlxzQBDFblexqxchuUFk3yAFbNaG9cjWvirWZW+gI8ThxG015+lH3eX
+	oz6yMiK8UayrAqnYxKfvBzwSvWu7se9JaqB54TK6ohSmBXVZO/mdIz12l4wvUtAfL0iOlbcb9s2
+	9yTBDwK9w8PqDhCmnP/CiRvRyxEh9vnVjKWr0UPjrwCgILGn03QFPJV/h5UWOsbeSMqOqWVq4xV
+	XjUbJqnvM2KDri1XUXnGbB1MKkEvoberSZvDEut34SfyHWELGo/mVwaesosfK0GawNaJRMd9dnD
+	fqa2U5Zto1Xi5EUG4bZ+w+yGth7o9FzDUHpTQKG7j3fy8rDrNjvVNWelwtaABUnkAONuNPN2x2K
+	cIezg==
+X-Google-Smtp-Source: AGHT+IHwxspN3hm1IKB4H9V+c3IpDHqztSqky8Q11VvJkuMeM6pHmJx5hJJAnadnKwijqWeRSs5KTw==
+X-Received: by 2002:a17:907:9415:b0:b6d:2d0b:1ec2 with SMTP id a640c23a62f3a-b6d51c3132amr473461566b.54.1761254324927;
+        Thu, 23 Oct 2025 14:18:44 -0700 (PDT)
+Received: from 0.1.2.1.2.0.a.2.dynamic.cust.swisscom.net ([2a02:1210:8642:2b00:82ee:73ff:feb8:99e3])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b6d5144ece8sm310786266b.68.2025.10.23.14.18.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Oct 2025 14:18:44 -0700 (PDT)
+Message-ID: <cd436879784d6843a32c12abff9f9a60d4c6da93.camel@gmail.com>
+Subject: Re: [PATCH v2 2/3] riscv: dts: sophgo: Add syscon node for cv18xx
+From: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+To: Longbin Li <looong.bin@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Chen Wang	 <unicorn_wang@outlook.com>, Inochi Amaoto
+ <inochiama@gmail.com>, Paul Walmsley	 <pjw@kernel.org>, Palmer Dabbelt
+ <palmer@dabbelt.com>, Albert Ou	 <aou@eecs.berkeley.edu>, Alexandre Ghiti
+ <alex@ghiti.fr>, Thomas Bonnefille	 <thomas.bonnefille@bootlin.com>, Ze
+ Huang <huangze@whut.edu.cn>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Date: Thu, 23 Oct 2025 23:18:43 +0200
+In-Reply-To: <20251020083838.67522-3-looong.bin@gmail.com>
+References: <20251020083838.67522-1-looong.bin@gmail.com>
+	 <20251020083838.67522-3-looong.bin@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.0 
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251021-dr1v90-basic-dt-v3-11-5478db4f664a@pigmoral.tech>
-References: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
-In-Reply-To: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Junhui Liu <junhui.liu@pigmoral.tech>, 
- Thomas Gleixner <tglx@linutronix.de>, 
- Samuel Holland <samuel.holland@sifive.com>, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Paul Walmsley <paul.walmsley@sifive.com>, 
- Palmer Dabbelt <palmer@sifive.com>, Conor Dooley <conor@kernel.org>, 
- linux-riscv@lists.infradead.org, Inochi Amaoto <inochiama@outlook.com>, 
- sophgo@lists.linux.dev, linux-serial@vger.kernel.org, 
- Conor Dooley <conor.dooley@microchip.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1761039846; l=4796;
- i=junhui.liu@pigmoral.tech; s=20250910; h=from:subject:message-id;
- bh=RDVWZeAxgz1alDJPsqpgTVocpV8c0UxJ9gg4n/HME6s=;
- b=2DvHOsMqdF+wdj5Cz+HgdyjhVfgbbd4sID/wYYDvXeI4GxcnrBDmQF3VrnJanLFjClkIPhteZ
- lBrt1aD6kxFDEC3imTux8KP9x5HoCMuyomffiSaxHQRjoFf08wMF/P9
-X-Developer-Key: i=junhui.liu@pigmoral.tech; a=ed25519;
- pk=cgATWSU1KfGWmdwNmkPyHGnWgofhqqhE8Vts58wyxe4=
-X-ZohoMailClient: External
 
-DR1V90 is a FPSoC from Anlogic, which features a RISC-V core as the PS
-part and 94,464 LUTs for the PL part.
+Hi Longbin,
 
-The PS part integrates a Nuclei UX900 RISC-V core with 32KB L1 icache
-and 32KB L1 dcache. It also provides two "snps,dw-apb-uart" compatible
-UART controllers.
+On Mon, 2025-10-20 at 16:38 +0800, Longbin Li wrote:
+> Add top syscon node and all subdevice nodes for cv18xx series SoC.
+>=20
+> Co-authored-by: Inochi Amaoto <inochiama@gmail.com>
+> Signed-off-by: Longbin Li <looong.bin@gmail.com>
 
-Some basic information of the processor can be obtained by running a
-simple application from nuclei-sdk [1]:
+Successfully tested in host mode on Milk-V Duo Module 01 EVB:
 
------Nuclei RISC-V CPU Configuration Information-----
-         MARCHID: 0xc900
-          MIMPID: 0x20300
-             ISA: RV64 A B C D F I M P S U
-            MCFG: TEE ECC ECLIC PLIC PPI ILM DLM ICACHE DCACHE IREGION No-Safety-Mechanism DLEN=VLEN/2
-             ILM: 256 KB has-ecc
-             DLM: 256 KB has-ecc
-          ICACHE: 32 KB(set=256,way=2,lsize=64,ecc=1)
-          DCACHE: 32 KB(set=256,way=2,lsize=64,ecc=1)
-             TLB: MainTLB(set=32,way=2,entry=1,ecc=1) ITLB(entry=8) DTLB(entry=8)
-         IREGION: 0x68000000 128 MB
-                  Unit        Size        Address
-                  INFO        64KB        0x68000000
-                  DEBUG       64KB        0x68010000
-                  ECLIC       64KB        0x68020000
-                  TIMER       64KB        0x68030000
-                  PLIC        64MB        0x6c000000
-     INFO-Detail:
-                  mpasize : 0
-             PPI: 0xf8000000 128 MB
------End of Nuclei CPU INFO-----
+Tested-by: Alexander Sverdlin <alexander.sverdlin@gmail.com>
+(please don't forget to take this tag into your v4 if it still will apply)
 
-Link: https://github.com/Nuclei-Software/nuclei-sdk/blob/master/application/baremetal/cpuinfo/main.c [1]
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Junhui Liu <junhui.liu@pigmoral.tech>
----
- arch/riscv/boot/dts/anlogic/dr1v90.dtsi | 100 ++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+> ---
+> =C2=A0arch/riscv/boot/dts/sophgo/cv180x.dtsi | 26 +++++++++++++++++++++++=
++++
+> =C2=A01 file changed, 26 insertions(+)
 
-diff --git a/arch/riscv/boot/dts/anlogic/dr1v90.dtsi b/arch/riscv/boot/dts/anlogic/dr1v90.dtsi
-new file mode 100644
-index 0000000000000000000000000000000000000000..a5d0765ade3231ece0afbe8835d95cd918a44ad9
---- /dev/null
-+++ b/arch/riscv/boot/dts/anlogic/dr1v90.dtsi
-@@ -0,0 +1,100 @@
-+// SPDX-License-Identifier: GPL-2.0 OR MIT
-+/*
-+ * Copyright (C) 2025 Junhui Liu <junhui.liu@pigmoral.tech>
-+ */
-+
-+/dts-v1/;
-+/ {
-+	#address-cells = <2>;
-+	#size-cells = <2>;
-+	model = "Anlogic DR1V90";
-+	compatible = "anlogic,dr1v90";
-+
-+	cpus {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		timebase-frequency = <800000000>;
-+
-+		cpu@0 {
-+			compatible = "nuclei,ux900", "riscv";
-+			d-cache-block-size = <64>;
-+			d-cache-sets = <256>;
-+			d-cache-size = <32768>;
-+			device_type = "cpu";
-+			i-cache-block-size = <64>;
-+			i-cache-sets = <256>;
-+			i-cache-size = <32768>;
-+			mmu-type = "riscv,sv39";
-+			reg = <0>;
-+			riscv,isa-base = "rv64i";
-+			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "zba", "zbb", "zbc",
-+					       "zbkc", "zbs", "zicntr", "zicsr", "zifencei",
-+					       "zihintpause", "zihpm";
-+
-+			cpu0_intc: interrupt-controller {
-+				compatible = "riscv,cpu-intc";
-+				#interrupt-cells = <1>;
-+				interrupt-controller;
-+			};
-+		};
-+	};
-+
-+	soc {
-+		compatible = "simple-bus";
-+		interrupt-parent = <&plic>;
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		aclint_mswi: interrupt-controller@68031000 {
-+			compatible = "anlogic,dr1v90-aclint-mswi", "nuclei,ux900-aclint-mswi";
-+			reg = <0x0 0x68031000 0x0 0x4000>;
-+			interrupts-extended = <&cpu0_intc 3>;
-+		};
-+
-+		aclint_mtimer: timer@68035000 {
-+			compatible = "anlogic,dr1v90-aclint-mtimer", "nuclei,ux900-aclint-mtimer";
-+			reg = <0x0 0x68035000 0x0 0x8000>;
-+			reg-names = "mtimecmp";
-+			interrupts-extended = <&cpu0_intc 7>;
-+		};
-+
-+		aclint_sswi: interrupt-controller@6803d000 {
-+			compatible = "anlogic,dr1v90-aclint-sswi", "nuclei,ux900-aclint-sswi";
-+			reg = <0x0 0x6803d000 0x0 0x3000>;
-+			#interrupt-cells = <0>;
-+			interrupt-controller;
-+			interrupts-extended = <&cpu0_intc 1>;
-+		};
-+
-+		plic: interrupt-controller@6c000000 {
-+			compatible = "anlogic,dr1v90-plic", "sifive,plic-1.0.0";
-+			reg = <0x0 0x6c000000 0x0 0x4000000>;
-+			#address-cells = <0>;
-+			#interrupt-cells = <1>;
-+			interrupt-controller;
-+			interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
-+			riscv,ndev = <150>;
-+		};
-+
-+		uart0: serial@f8400000 {
-+			compatible = "anlogic,dr1v90-uart", "snps,dw-apb-uart";
-+			reg = <0x0 0xf8400000 0x0 0x1000>;
-+			clock-frequency = <50000000>;
-+			interrupts = <71>;
-+			reg-io-width = <4>;
-+			reg-shift = <2>;
-+			status = "disabled";
-+		};
-+
-+		uart1: serial@f8401000 {
-+			compatible = "anlogic,dr1v90-uart", "snps,dw-apb-uart";
-+			reg = <0x0 0xf8401000 0x0 0x1000>;
-+			clock-frequency = <50000000>;
-+			interrupts = <72>;
-+			reg-io-width = <4>;
-+			reg-shift = <2>;
-+			status = "disabled";
-+		};
-+	};
-+};
-
--- 
-2.51.1
-
+--=20
+Alexander Sverdlin.
