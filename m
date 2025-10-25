@@ -1,127 +1,157 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412E0223DDA
-	for <sophgo@lists.linux.dev>; Sat, 25 Oct 2025 11:58:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0831B242D7F;
+	Sat, 25 Oct 2025 12:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761393504; cv=none; b=NoE/Nf66QWjHfqRa9yQHF3WiBkPNBWFJ1XA+cvtJJ5/BB4Qs87uLvOY/ZZGHtMcqbjjBvM70BUcr8VwRC6pgZ6pZsCNqCu2XE2m6/9lY3pYu8oluWMNSNSw4l8wKbzNmumCV6J97GD6MGnkjmWD0o0G/Q+orRDVzes2/QXdt46o=
+	t=1761396246; cv=none; b=DAzs811LytlswBFDrwB0KJIEvUPPE9xVmhGDzHQEnCvQBFb8BLcWDHpqrbK/7sYQEBRarSlB+ifiMx4wP6Ok/xB2OBE/sV4dQJwZAYHyftq0ZcmLNrQIZA8O+WtYg5DDHv3Ygu3vCfP8O7FiMGf7FNXh481Ze/aq7G8nFXuvDkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761393504; c=relaxed/simple;
-	bh=Dq8AJOmwfhEJ4N/eqWoVBUPmAtuFUn4vvyR6OHjX8zI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WK0V9UOxmBMeGHZZ1bKGeKlJuPDKiD7/laL/9X2sZ5iJYZKfc9syP+PGfBSd7UWOaOV4dL6bxEMwv6WzmuY/ZgGyKYEdbdrpAkefRfLk3zRkWU8B5un2CVfecu7H5tZ9M4Z5Z2HM2HFD3BZ6JAW+QiQOWrIaRvAaE+/XByJw2IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqP838Yu; arc=none smtp.client-ip=209.85.221.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761396246; c=relaxed/simple;
+	bh=b5QpYMZmMe9U2UEWN9ko4/SOjOQwMOaP9+o4qUFvVF8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TUf0dBVvlvVTu6MVjZewEn3TukZmToq+Fve7yEJHoh6sXXa7Ao3/2dfAZ6RRa2QsoPYpYEpPNy0RhDRtwiz3OcvIVrsdedSy35zKuI9AtN8cwIOms6BWUAlQb2ne1yVx8wtJLh+opwxzehQXYdCbGqSrRqBbs1mz8SxVL4zUpFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m0oqDjVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqP838Yu"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-556f518b527so77499e0c.2
-        for <sophgo@lists.linux.dev>; Sat, 25 Oct 2025 04:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761393502; x=1761998302; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8I9TkdogdsV9nixdXBith0cDlYgPpHBpTVoAhEFR6cE=;
-        b=dqP838Yu8+4eve7vprczgTEVWbQ3FeVeApiavci+jSo5oUMUQ7xOX6zBrGQsWWExPk
-         QF4XkNvbI1xJpohPRjEGzbOyCq5JFWCylcwgwDqgsxGhAa96Rhb/Wg8IqryfFkJ09AMi
-         eZrOqem57ESHAuzULtbiZYuO5wn5aAdqBxlzv/WtPcJzijRfAbDM1HmoFfwZmGaN3rGy
-         Q6LURnvIUjAIVnIbbjG6wEbau3qzt90nmPfKl5gZ6UmYFV0olmGZrm807qqxFaTRnzYm
-         /8Zvbo8Qic7aeiBLay4F9+imlabNlpfEZ24s1yt6knYYyTZQmugumY6tvST394hVT2Hp
-         7d/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761393502; x=1761998302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8I9TkdogdsV9nixdXBith0cDlYgPpHBpTVoAhEFR6cE=;
-        b=uMj9mx1AnQKJULliubh9VH/FUM34Jb1JIuKojNx5pqdLfQpqgHADO/IkRlAa6Jov0b
-         KOE03XjkmSpECq2X6BMEKOeshTSEmNobr5t+truVe7ahiz535+hJSG+DteYfcxbQkZ9M
-         xLwuG/LgJ/xCXWA5NDYeCcjp7kMlno2mi4s9uex/Rb2PEdamefo4c/hUjZJXC+xLgwAs
-         PtkeLKBPhM/Rr4Kr6WwfoN3MzMKkWLmIlxyw/gvfI894onzWnmEOaRWvo9EvAR1W/Ch/
-         4rSD+nMKDt5tr2MFwphNa91lSOYhs34o5FbxHLa+Sy5FlfIUhUrnQ+DDH0HQ+X0+MGdz
-         PjjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW7wgHREIwQ4EdaV99cB8Zac0KSyhUxZ/QGaR7jXnW3/Gb79kE8ptztxN8LUgVUlq9XFD9RZXc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxuuvoIcBIJnlgDVBLdmUeH2+vDyw934aYDJ4vOQXgQuJ3FhMas
-	RCC0lZKWckQPS1sRoP0hm+2kh4+G7172H6wo5sgCs253N0q0miDfJdpIKECKvxgKcVV86Q66Et7
-	vrGcSw4xPQXIRSOvNvlnETb+is1Rd20E=
-X-Gm-Gg: ASbGncuep7nAkHcyTZvQrcLGD8pkSTf1aW/6EMaPaPYC8CJYiPaqbJ3NN6bJJMbgMKB
-	iwvNiLjb7+s1p3D2m9lmJW0Uf7RVoB5cmxFtpCHsv3BKthCp9mD2E00a+rnwGQbGSM0tPgmL8Wy
-	qcJ0qlmohV/iDLT8ijRPgHmIzwlKB8JVWsNImcMcT6dgwXPtd1E7c573QLYhnEBUbVbtoxrfeMH
-	D+vHO4u1INEOEd14FN5ivOQwZGA59hlaIntFspLh4rujjFAnffGGn6ExjBHtNWMMDZbwFOA
-X-Google-Smtp-Source: AGHT+IEjjxEtU4jsBOkQ9KzzJg48mbR9wHZxw8HVS/t5afsmBknagybFZ4yDuSvqyYJYMpWyOtsSCOSfKUdve+9kw7s=
-X-Received: by 2002:a05:6122:e1dc:b0:556:9cb9:65c8 with SMTP id
- 71dfb90a1353d-5569cb9739fmr2881748e0c.0.1761393501810; Sat, 25 Oct 2025
- 04:58:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m0oqDjVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F2EC4CEF5;
+	Sat, 25 Oct 2025 12:44:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761396245;
+	bh=b5QpYMZmMe9U2UEWN9ko4/SOjOQwMOaP9+o4qUFvVF8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m0oqDjVDFfQ9fTKk4ScPbIJezjt4zWQx7Y4LueSWL7XLlQtXTsKp5EEg5EY+SOdTU
+	 Z9243Me9Stozh4c3HL6aMqpqqo9NyhSYLavRmj0E5ZkuE90XkXhLL8EiNDMjN+QaqI
+	 NcuOaZqWGJvQ8D22AGN8cnqxIuR6LGo5vd7dPHFXYJHCGTAfXob/I1JPK2jxR92GFB
+	 wN5++uQ/4SJjxX4zc/u/eXvzFnITz9y1M9XqnAaolvyC2fJSdiaYaYa/dYgT5jxEoB
+	 TRtcdej4/bEnyIMQaMSe2d525pjYuaidWNAW8iH01QCp+tEUOr8KqMe+q8s4O8pNK7
+	 JvHNt+DTi5RlA==
+Date: Sat, 25 Oct 2025 13:44:00 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Longbin Li <looong.bin@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Yu Yuan <yu.yuan@sjtu.edu.cn>, Ze Huang <huangze@whut.edu.cn>,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v4 1/3] dt-bindings: soc: sophgo: add TOP syscon for
+ CV18XX/SG200X series SoC
+Message-ID: <20251025-shakable-jujitsu-3a5e9c8895a5@spud>
+References: <20251024030528.25511-1-looong.bin@gmail.com>
+ <20251024030528.25511-2-looong.bin@gmail.com>
+ <20251024-hangout-designing-33e96c0d35fc@spud>
+ <oymxspgopaqja63nipufgzn6kpobkdopemfaw3azhom3ikvk5f@e7cg4lq64j2o>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1760929111.git.unicorn_wang@outlook.com> <PN6PR01MB1171791524E2BC1C227E342F6FEF5A@PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To: <PN6PR01MB1171791524E2BC1C227E342F6FEF5A@PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM>
-From: Han Gao <rabenda.cn@gmail.com>
-Date: Sat, 25 Oct 2025 19:58:10 +0800
-X-Gm-Features: AWmQ_bkPkZoLoqCmIL-grA_sDMwqczj2smKSV0IWSOxGD1NzJo1hieHmZhU-890
-Message-ID: <CAAT7Ki_4nkKM1-D_8ybwusxTTsR=Lf09v8Cx6QDWfuy8KLtbBg@mail.gmail.com>
-Subject: Re: [PATCH 0/4] Add PCIe support in DTS for Sophgo SG2042 SoC
-To: Chen Wang <unicorn_wang@outlook.com>
-Cc: Chen Wang <unicornxw@gmail.com>, u.kleine-koenig@baylibre.com, 
-	aou@eecs.berkeley.edu, alex@ghiti.fr, conor+dt@kernel.org, 
-	inochiama@gmail.com, krzk+dt@kernel.org, mani@kernel.org, 
-	liujingqi@lanxincomputing.com, palmer@dabbelt.com, pjw@kernel.org, 
-	robh@kernel.org, tglx@linutronix.de, sycamoremoon376@gmail.com, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, chao.wei@sophgo.com, 
-	xiaoguang.xing@sophgo.com, fengchun.li@sophgo.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="BNmCECBWFm1Puo0R"
+Content-Disposition: inline
+In-Reply-To: <oymxspgopaqja63nipufgzn6kpobkdopemfaw3azhom3ikvk5f@e7cg4lq64j2o>
+
+
+--BNmCECBWFm1Puo0R
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Oct 20, 2025 at 11:49=E2=80=AFAM Chen Wang <unicorn_wang@outlook.co=
-m> wrote:
->
-> hi, Han Gao,
->
-> Please help test this out on EVB, I don't have those boards and just
-> tested with my pinoeerbox.
->
-> Thanks,
->
-> Chen
->
-> On 10/20/2025 11:32 AM, Chen Wang wrote:
-> > From: Chen Wang <unicorn_wang@outlook.com>
-> >
-> > This new patch set is a continuation of the previous patchset
-> > "[PATCH v3 0/7] Add PCIe support to Sophgo SG2042 SoC" [1].
-> >
-> > The drivers and bindings have already been merged into the kernel
-> > mainline, and this patchset will focus on submitting the remaining
-> > DTS changes into the mainline.
-> >
-> > This patchset is based on v6.18-rc1 and the only changes since v3
-> > is a fix to address the comments from Manivannan Sadhasivam to make
-> > sure PCI address of the I/O port to start from 0.
-> >
-> > Link: https://lore.kernel.org/linux-riscv/cover.1757643388.git.unicorn_=
-wang@outlook.com/ [1]
-> >
-> > Chen Wang (4):
-> >    riscv: sophgo: dts: add PCIe controllers for SG2042
-> >    riscv: sophgo: dts: enable PCIe for PioneerBox
-> >    riscv: sophgo: dts: enable PCIe for SG2042_EVB_V1.X
-> >    riscv: sophgo: dts: enable PCIe for SG2042_EVB_V2.0
-> >
-> >   arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts  | 12 +++
-> >   arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts  | 12 +++
-> >   .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  | 12 +++
-> >   arch/riscv/boot/dts/sophgo/sg2042.dtsi        | 88 ++++++++++++++++++=
-+
-> >   4 files changed, 124 insertions(+)
-> >
-> >
-> > base-commit: 3a8660878839faadb4f1a6dd72c3179c1df56787
+On Sat, Oct 25, 2025 at 10:27:13AM +0800, Longbin Li wrote:
+> On Fri, Oct 24, 2025 at 05:46:03PM +0100, Conor Dooley wrote:
+>=20
+> > > ...
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    oneOf:
+> > > +      - items:
+> > > +          - const: sophgo,cv1800b-top-syscon
+> > > +          - const: syscon
+> > > +          - const: simple-mfd
+> > > +
+> > > +  reg:
+> > > +    maxItems: 1
+> > > +
+> > > +  "#address-cells":
+> > > +    const: 1
+> > > +
+> > > +  "#size-cells":
+> > > +    const: 1
+> > > +
+> > > +  ranges: true
+> >=20
+> > Do you actually use ranges?
+> >=20
+> > > +patternProperties:
+> > > +  "dma-router@[0-9a-f]+$":
+> >=20
+> > Do these actually appear at variable addresses, or is it always 48 for
+> > the phy and 53 for the dma router?
+> >=20
+> > > +    $ref: /schemas/dma/sophgo,cv1800b-dmamux.yaml#
+> > > +    unevaluatedProperties: false
+> > > +
+> > > +  "phy@[0-9a-f]+$":
+> > > +    $ref: /schemas/phy/sophgo,cv1800b-usb2-phy.yaml#
+> > > +    unevaluatedProperties: false
+> > > +
+> > > +required:
+> > > +  - compatible
+> > > +  - reg
+> > > +  - "#address-cells"
+> > > +  - "#size-cells"
+> > > +
+> > > +additionalProperties: false
+> > > +
+> > > +examples:
+> > > +  - |
+> > > +    #include <dt-bindings/clock/sophgo,cv1800.h>
+> > > +
+> > > +    syscon@3000000 {
+> > > +      compatible =3D "sophgo,cv1800b-top-syscon", "syscon", "simple-=
+mfd";
+> > > +      reg =3D <0x03000000 0x1000>;
+> > > +      #address-cells =3D <1>;
+> > > +      #size-cells =3D <1>;
+> > > +
+> > > +      usbphy: phy@48 {
+> >=20
+> > Drop the labels off of these two, since they're unused in the example.
+> >=20
+>=20
+> Hi,
+>=20
+> Thanks for the review.
+>=20
+> There are a couple of different opinions here.
+> Could you please help confirm which approach is preferred here?
+>=20
+> This is Rob's reply:
+> https://lore.kernel.org/all/20251015134144.GA3265377-robh@kernel.org/
 
-EVB1.X/2.0 can be started normally.
+I don't think that Rob and I disgree about the example, having child
+nodes is good, having the label on them is what I don't want.
+
+Re: the child node patterns, I was not looking for a return to what Rob
+didn't like, but rather a move to just making them normal properties
+rather than a pattern, if there's only one possible address.
+
+--BNmCECBWFm1Puo0R
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaPzGCgAKCRB4tDGHoIJi
+0hKmAP9wppNOTqUcMNHIzevx1pK2MIBbfFM0ow0FlUnLwre+jAEA+1Y1ihrGIpfc
+64g6hgbEVSbSRUo+VAr3/aMAaFlHdQo=
+=AyBe
+-----END PGP SIGNATURE-----
+
+--BNmCECBWFm1Puo0R--
