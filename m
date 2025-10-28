@@ -1,170 +1,137 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44C1221FD4
-	for <sophgo@lists.linux.dev>; Tue, 28 Oct 2025 00:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A89A18C31;
+	Tue, 28 Oct 2025 19:22:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761611960; cv=none; b=e4640OpZqLEu91uUpCE7mYf6UZd1SGwz97uj8OswWQ59zKpPTuO7cgyq4me6SOlwcrunVX0kaPD3nRhmOWTK0dIrb6jZi1f9UD6+EBN4M2cNbr05Of4Y9izcT5EUZhbxCbEH1G1DzZeNd1a0WZvY1N4JofW/mDvQG+izlCYS1ZI=
+	t=1761679365; cv=none; b=qF+VO946leiJyb6Rvjj8a0WnhPArfXytOAcCkYoVnGQUC6c/np3VxxeAIcBC9rv1qjYL9f2+wHOBHpiqeD9YWL3e4eXJ0VtBBvMjXGMY84Y9qui0BrByIASc79pGPpD0/j5UfNV7y49XVPlaA8Snt+Q4o07lB1T+UGVUWbGyGYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761611960; c=relaxed/simple;
-	bh=P2La+FoJZ35MJzEo8yVcVLSFzhQhJljTmUai3XD3wr8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kYtIAiK+lhq+k308RIZ8SFzULwlJZBA9s0k0DuwTyMKSJW+NlUp61SIsIDimHOmgUTTT8Z+0HDvR3OCcoT5TV6vcDpbfO2KDTWpEdX8dOsLYbeZ0AvswILNktbi87kIL5PseJSxVgVLUu1F9B0S3nvRyBt0SqrW7NMM/mL3a1zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gCe2kXSd; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1761679365; c=relaxed/simple;
+	bh=ul+M2CYqBXyeu0QhZfiqDxRQGUWEmL/wId6aCQowrfU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FToRnbP5MSWXjuaQRdwDQiYfBZbYrdHIEs2KrH4zantVHGG4zq1nh+xXsr7DXWd6+8auZdO34eDcE4xxaYgbi67TV/S5RQuur7mBNzofVNqVkMI4JTvxBaXxG2GcicZsJ+w88Nc23ZpJcy7qnzUblGygyIoqN3kFwQr6tkGdjzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KyOsWYwk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gCe2kXSd"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-292322d10feso44624295ad.0
-        for <sophgo@lists.linux.dev>; Mon, 27 Oct 2025 17:39:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1761611958; x=1762216758; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6e+TNG8HQKWjELTx3r9i/rdMStiwaJjw+wxw++IoG08=;
-        b=gCe2kXSd290CQ1fO/+BxWOi9nBL4q/N1AGweVZ67fpYragmbkE2EX40PogLsPYMAX1
-         +r+AzB+lkP5KiY1moXqqWx2COjJjR3A+qi/oXnweY8PLQzEwgny9CMEPTk3pZgpIdfl/
-         zeH1U7uYOIgDRPy0xHad20x6VWyHjVcntiIoAsYJjjZrt6WfePYDLRs9u7qTY1KhW2ed
-         ToF+NZwwssP7wkSH+whX02+APilIbGui89FB74mUwwXXn33NqmT+z7Ysupr84/QE+3Ba
-         8mJBumI3Yf4dwz/ORN0gGNQTv1ViVoDcGt1dWjsBTnp4IpMU0wN2ls3w4AhZH4uvKJIJ
-         V/5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1761611958; x=1762216758;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6e+TNG8HQKWjELTx3r9i/rdMStiwaJjw+wxw++IoG08=;
-        b=BpJ0kqySDVQQGzmfngdZtFseaE8EYX7hXqqekdZBVBiJ817lf2gNl3hfgKe9IzoUXu
-         66G0v+0YZq08Zaivz7SGqZXQ0v2Fvvo62piKH2nYFfQzrdQFVkAbUkUsXN6bBCy5KBhk
-         EQRQ0x0wjGIe3rFu6VHKLnk0XsNXMOL5k2RZ5prH/RDM0YQOOw6AlL21gq7lVxv3UdDU
-         NonvB6giJKKTHci+bNU74+wYq3rJnXVfnrMO55l0mgptNPnU0nF69QpeYtXPIia696v8
-         BraFOJZTFsR+oo0nWoqRrV7w7khY1s+YhFtxPzo59cVBiPA5z+ggdhLa+iyX5mer968d
-         PJ8w==
-X-Forwarded-Encrypted: i=1; AJvYcCVGCOB1v3kWCBA7XhxqrY5vV7XFQ4iEt6BLhA0AXkUUTpyK33V/Qe19GPMXohKoJGTmiEaXBRY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy9k9DpST4B0DFi9/NHwPEMuKu9fxGGpc4y1mVzxBlkc4uMFd6G
-	lNm3Thyd9d0QNR2aMn31vY0L6XHNHbJzwSiuT266NYZbr8FId8S/MLz5
-X-Gm-Gg: ASbGncvMmGB5n8N3dOy3qSBrbwqFF2Ml5BzOV2ViKMJl9pXWI6WnhIE+HvnS6y7pIKE
-	JW7dxMyHcbVbkHLiqvlGP1og8cgppuZxLi9aMY8dgQNQ0TCTrGBtDNc4R5U4D508sDES75nbDI5
-	fRyBJRzKs9ATziwox/pLGgaeDz2fpIa5HXxdXqR12J6fZcxWpCuoi9zAcnhlWpO8QBauI1dJTT1
-	o6Jm0sPyrxH8obrTnZMo8vKGhRxHk1Lk0hOHY/kXCvBOpdOrHtruVbG8/aaAOnPIO3ahtOfoR9j
-	024hKJPFLuy6IgYBoiTu5u52wfDaLHZrj9wNMtXIyMwvQ9uiYZIpXF+LhDLRAmxyr8zeD27NbyL
-	oKpSCxwtNP06YgeFPqirE4Nl2drsMokDMaXXxCmBua9kEaehP+53eiMfIEbyQZq6yHHWDOysfhk
-	ilq9XIiwGiGA==
-X-Google-Smtp-Source: AGHT+IGvU4zqUoctToOTJAwyDs9+4diulCuRP+v5NnW7F2ld07v4djcWl4rSSI6JXslPZV+bpZFdZA==
-X-Received: by 2002:a17:902:ea0a:b0:271:fa2d:534c with SMTP id d9443c01a7336-294cc74e4dfmr14030645ad.22.1761611956679;
-        Mon, 27 Oct 2025 17:39:16 -0700 (PDT)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29498cf3bbcsm94917065ad.15.2025.10.27.17.39.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Oct 2025 17:39:16 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Han Gao <rabenda.cn@gmail.com>,
-	Icenowy Zheng <uwu@icenowy.me>,
-	Vivian Wang <wangruikang@iscas.ac.cn>,
-	Yao Zi <ziyao@disroot.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KyOsWYwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBEFC4CEE7;
+	Tue, 28 Oct 2025 19:22:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1761679365;
+	bh=ul+M2CYqBXyeu0QhZfiqDxRQGUWEmL/wId6aCQowrfU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KyOsWYwk9QfYOsdLD4kfsDn8KLPhLhQT5F0pbHoyrM6O2YT5RKXThX6pU60tvWO7F
+	 N9xWe/dDRm9bgR3vwKdwHPPVB5Bdut+wFqUxZv0dj4ClJM9j0Qo77dczGTZIBlw+DX
+	 RsztmnW0IVxYLiUUYEo9S9XM1KS/UrafUZwonNP6rsp0BScGUpBpByo9IrBpnDRoez
+	 ycW1o5oWd4H1Um4MDVYf5qW3oANlwHXFdE2yGmVRDF3OJld3FRxcj3r3qIpqQG+muf
+	 Hc+wwVPqngl2Fy+QFSQux7LNMiRWap9rBCB6oVrEwveU3QOncxxP8HCw9blB1uX7S9
+	 b7Gvd2+xnq/mA==
+Date: Tue, 28 Oct 2025 19:22:37 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
 	Russell King <linux@armlinux.org.uk>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Cc: netdev@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
 	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>,
+	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH v4 3/3] net: stmmac: dwmac-sophgo: Add phy interface filter
-Date: Tue, 28 Oct 2025 08:38:58 +0800
-Message-ID: <20251028003858.267040-4-inochiama@gmail.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251028003858.267040-1-inochiama@gmail.com>
+Subject: Re: [PATCH v4 1/3] dt-bindings: net: sophgo,sg2044-dwmac: add phy
+ mode restriction
+Message-ID: <20251028-parka-proud-265e5b342b8e@spud>
 References: <20251028003858.267040-1-inochiama@gmail.com>
+ <20251028003858.267040-2-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="96h0QxX1n7q2W7DY"
+Content-Disposition: inline
+In-Reply-To: <20251028003858.267040-2-inochiama@gmail.com>
 
-As the SG2042 has an internal rx delay, the delay should be removed
-when initializing the mac, otherwise the phy will be misconfigurated.
 
-Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: Han Gao <rabenda.cn@gmail.com>
----
- .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 20 ++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+--96h0QxX1n7q2W7DY
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-index 3b7947a7a7ba..7f0ca4249a13 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-@@ -7,11 +7,16 @@
- 
- #include <linux/clk.h>
- #include <linux/module.h>
-+#include <linux/property.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
- 
- #include "stmmac_platform.h"
- 
-+struct sophgo_dwmac_data {
-+	bool has_internal_rx_delay;
-+};
-+
- static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
- 				    struct plat_stmmacenet_data *plat_dat,
- 				    struct stmmac_resources *stmmac_res)
-@@ -32,6 +37,7 @@ static int sophgo_sg2044_dwmac_init(struct platform_device *pdev,
- static int sophgo_dwmac_probe(struct platform_device *pdev)
- {
- 	struct plat_stmmacenet_data *plat_dat;
-+	const struct sophgo_dwmac_data *data;
- 	struct stmmac_resources stmmac_res;
- 	struct device *dev = &pdev->dev;
- 	int ret;
-@@ -50,11 +56,23 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	data = device_get_match_data(&pdev->dev);
-+	if (data && data->has_internal_rx_delay) {
-+		plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
-+									  false, true);
-+		if (plat_dat->phy_interface == PHY_INTERFACE_MODE_NA)
-+			return -EINVAL;
-+	}
-+
- 	return stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
- }
- 
-+static struct sophgo_dwmac_data sg2042_dwmac_data = {
-+	.has_internal_rx_delay = true,
-+};
-+
- static const struct of_device_id sophgo_dwmac_match[] = {
--	{ .compatible = "sophgo,sg2042-dwmac" },
-+	{ .compatible = "sophgo,sg2042-dwmac", .data = &sg2042_dwmac_data },
- 	{ .compatible = "sophgo,sg2044-dwmac" },
- 	{ /* sentinel */ }
- };
--- 
-2.51.1
+On Tue, Oct 28, 2025 at 08:38:56AM +0800, Inochi Amaoto wrote:
+> As the ethernet controller of SG2044 and SG2042 only supports
+> RGMII phy. Add phy-mode property to restrict the value.
+>=20
+> Also, since SG2042 has internal rx delay in its mac, make
+> only "rgmii-txid" and "rgmii-id" valid for phy-mode.
 
+Should this have a fixes tag?
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+
+>=20
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  .../bindings/net/sophgo,sg2044-dwmac.yaml     | 20 +++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.ya=
+ml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+> index ce21979a2d9a..916ef8f4838a 100644
+> --- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+> +++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
+> @@ -70,6 +70,26 @@ required:
+> =20
+>  allOf:
+>    - $ref: snps,dwmac.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: sophgo,sg2042-dwmac
+> +    then:
+> +      properties:
+> +        phy-mode:
+> +          enum:
+> +            - rgmii-txid
+> +            - rgmii-id
+> +    else:
+> +      properties:
+> +        phy-mode:
+> +          enum:
+> +            - rgmii
+> +            - rgmii-rxid
+> +            - rgmii-txid
+> +            - rgmii-id
+> +
+> =20
+>  unevaluatedProperties: false
+> =20
+> --=20
+> 2.51.1
+>=20
+
+--96h0QxX1n7q2W7DY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaQEX/QAKCRB4tDGHoIJi
+0j2LAP9HvD5s5HhSulkZQfpKk77nSCLRHuUpAGScnvLLJbI5JAD7Bc580Q4YP2oc
+NbiZmgJg4mN/5vfDxejV7+SeFM+7xgM=
+=uLPY
+-----END PGP SIGNATURE-----
+
+--96h0QxX1n7q2W7DY--
