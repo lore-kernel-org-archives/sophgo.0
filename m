@@ -1,159 +1,167 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CFB51DF271;
-	Wed, 29 Oct 2025 17:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8D628312F
+	for <sophgo@lists.linux.dev>; Wed, 29 Oct 2025 19:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761760497; cv=none; b=KERDGwmHBcExE++Uw+H/OtHQPDk3EzMrypDuVjOO7TNBQkliIZfS8b8IUYBXK03QxeRe4xmqfek3e9ur0CHRLNNANAn7a/PCGr3nUXZgtqO9pnsU8m3270L6PbQLXs8DUmgIER2Gys4UOVI7eIbwBAfxd2YnNn+5EkJBb6GUoy4=
+	t=1761766150; cv=none; b=rehDbKFxqFQVmlzud1w+tysLnCqHlne6MiJjymq5LbAQ2ZpzR+eNBo6cBhbS4TQunNaYIB2Pl9gqJkfIsGt9WC/N2VX8zuk+J0jFBaqAmz7B7OVBoAjoM+p3zwYVWZLBUbd4NS0YnaaGHkGeV2WLHWoZY8bPz0/agHnQ5mYw0SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761760497; c=relaxed/simple;
-	bh=bCXLipd8jw4UWfF/s5HKsZqILEHRwryjypVy7tkLUjI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SE8hhSF6VjXj3UE8gGu0sTtWBR3mQErjtPDknQEHe0uyy/a1yF8OrTv6POX16q2y+TKBwdWV2BdOI0vuYl2Z9JyNk/1oHf7a1024ACHc7HABI9luhkbIdKa0UiqxlK2jMwA0Kpsnb2rQNT2aigIgSmveEik/dorqlAFnD1gm+Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e2tj5JN3; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761766150; c=relaxed/simple;
+	bh=cn6+LSWhqCb3Iyby4JKZcVRtc6O/oEK/B7/tN5XpHJ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TAy3CveI0O2xmM9e0CuapB+7Ldbc3K6sN4hORMPIjtO3V2Eu4wqNkKbRM1gsWFjwgr/EnGw58CD9wKK/+pVGeelXkhsku14jdwO7gJyb0XQqJdRvzn1EyoHL+wFd0FbHjbMpwTP82wTy2hatwEBq8Wu9NNbmwvvPAM1yyzwPSV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=er6dy6F0; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e2tj5JN3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99C8C4CEF7;
-	Wed, 29 Oct 2025 17:54:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761760496;
-	bh=bCXLipd8jw4UWfF/s5HKsZqILEHRwryjypVy7tkLUjI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e2tj5JN387EOqfUzqfbcncN6EFYT4OwAISQxnGTNRwt+7QYfTddUa14wSsM/M0eA/
-	 lY+4h6ETkKg7o3jpW85ZU0y2lae7avMVcvFP7v/SEFsbARyqbD0oNiAiLvpe1CYzaT
-	 IuuzqvjzurbH11uNGwmCPkUZ546lWRVfgAUGPFrvFYOTckwvUFggfO++KsGCS+GWm1
-	 /xbtIUCkwcQ31tp67OcF3lTVc55SJPPSso6hov6boz113Vahc+Jifr4Q5NNedVELLK
-	 jLA5Jby4dX9uSizqMTZpb9knFrinWRP79P6aK0nswAcv++PSsewUjwlZK90MSo9Nlt
-	 NG/j0vZNGZQHQ==
-Date: Wed, 29 Oct 2025 17:54:49 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
-	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v4 1/3] dt-bindings: net: sophgo,sg2044-dwmac: add phy
- mode restriction
-Message-ID: <20251029-fading-expulsion-f0911c28d23d@spud>
-References: <20251028003858.267040-1-inochiama@gmail.com>
- <20251028003858.267040-2-inochiama@gmail.com>
- <20251028-parka-proud-265e5b342b8e@spud>
- <rclupbdjyk67fee2lgf74k6tkf7mnjcxzwcjvyk2bohgpetqt5@toxvy3m5orm2>
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="er6dy6F0"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 55A04C0DA92;
+	Wed, 29 Oct 2025 19:28:45 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 89565606E8;
+	Wed, 29 Oct 2025 19:29:05 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id B7CC4117FD242;
+	Wed, 29 Oct 2025 20:28:52 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1761766144; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=ScvcTy8ozlqmT8s8gsLtsWpW/tRbjYKzmG+MWRwqsow=;
+	b=er6dy6F0AkewbZOEtLIUH1uP7pet6Cc/msERkGQj89coxq5gPxp79ydF7hrtmMaQwPae2e
+	uKdCy801xdNppwVzk/dnqIlmlEooSk/olx+i977JcRUAOAZsVebEvZLagVUJ0GR5gFCoYj
+	1wG5ZcCJvB5MbkqzdG+DEVfkE9enbz3rcHSu3T8DRrGQ5IEFBbaXpBi2/WIWrY/8uFjC58
+	uDQ6O6z2aTI7krrSv6/9WHoGrx8Gg1HrDd7uxWjdQuLgdxX5Gm0kERnj+x6t7h14gCgG5w
+	xU5A0dKajRosGpPsX+Autsu+EYwon2yf2lb9QOA6VLsOi9U/q565lvcFW9s9fQ==
+Message-ID: <45ebd2eb-9b09-43fa-a451-29299b33f06a@bootlin.com>
+Date: Wed, 29 Oct 2025 20:28:51 +0100
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xiR9j6m1veV/qNYv"
-Content-Disposition: inline
-In-Reply-To: <rclupbdjyk67fee2lgf74k6tkf7mnjcxzwcjvyk2bohgpetqt5@toxvy3m5orm2>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/3] net: phy: Add helper for fixing RGMII PHY mode
+ based on internal mac delay
+To: Inochi Amaoto <inochiama@gmail.com>, Han Gao <rabenda.cn@gmail.com>,
+ Icenowy Zheng <uwu@icenowy.me>, Vivian Wang <wangruikang@iscas.ac.cn>,
+ Yao Zi <ziyao@disroot.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Heiner Kallweit <hkallweit1@gmail.com>, Russell King
+ <linux@armlinux.org.uk>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+ Longbin Li <looong.bin@gmail.com>
+References: <20251028003858.267040-1-inochiama@gmail.com>
+ <20251028003858.267040-3-inochiama@gmail.com>
+From: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Content-Language: en-US
+In-Reply-To: <20251028003858.267040-3-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Last-TLS-Session-Version: TLSv1.3
 
+Hi,
 
---xiR9j6m1veV/qNYv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 28/10/2025 01:38, Inochi Amaoto wrote:
+> The "phy-mode" property of devicetree indicates whether the PCB has
+> delay now, which means the mac needs to modify the PHY mode based
+> on whether there is an internal delay in the mac.
+> 
+> This modification is similar for many ethernet drivers. To simplify
+> code, define the helper phy_fix_phy_mode_for_mac_delays(speed, mac_txid,
+> mac_rxid) to fix PHY mode based on whether mac adds internal delay.
+> 
+> Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 
-On Wed, Oct 29, 2025 at 08:56:09AM +0800, Inochi Amaoto wrote:
-> On Tue, Oct 28, 2025 at 07:22:37PM +0000, Conor Dooley wrote:
-> > On Tue, Oct 28, 2025 at 08:38:56AM +0800, Inochi Amaoto wrote:
-> > > As the ethernet controller of SG2044 and SG2042 only supports
-> > > RGMII phy. Add phy-mode property to restrict the value.
-> > >=20
-> > > Also, since SG2042 has internal rx delay in its mac, make
-> > > only "rgmii-txid" and "rgmii-id" valid for phy-mode.
-> >=20
-> > Should this have a fixes tag?
-> > Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> >=20
->=20
-> Although I add a fixes tag to the driver, I am not sure whether the
-> binding requires it. But if it is required, I think it should be
+Name may be a bit long, but I'm not the best at naming stuff :)
 
-Kinda depends for bindings, amending a binding for completeness probably
-doesn't need one but amending it to actually permit a functional
-configuration does. This is somewhere in-between I suppose. If a driver
-change is coming along with it which is likely to be backported, that'd
-be a vote in favour of a fixes tag here too, so that the binding and
-driver match in stable.
+I agree with the logic of that helper,
 
->=20
-> Fixes: e281c48a7336 ("dt-bindings: net: sophgo,sg2044-dwmac: Add support =
-for Sophgo SG2042 dwmac")
->=20
-> > >=20
-> > > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > > ---
-> > >  .../bindings/net/sophgo,sg2044-dwmac.yaml     | 20 +++++++++++++++++=
-++
-> > >  1 file changed, 20 insertions(+)
-> > >=20
-> > > diff --git a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwma=
-c.yaml b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> > > index ce21979a2d9a..916ef8f4838a 100644
-> > > --- a/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> > > +++ b/Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml
-> > > @@ -70,6 +70,26 @@ required:
-> > > =20
-> > >  allOf:
-> > >    - $ref: snps,dwmac.yaml#
-> > > +  - if:
-> > > +      properties:
-> > > +        compatible:
-> > > +          contains:
-> > > +            const: sophgo,sg2042-dwmac
-> > > +    then:
-> > > +      properties:
-> > > +        phy-mode:
-> > > +          enum:
-> > > +            - rgmii-txid
-> > > +            - rgmii-id
-> > > +    else:
-> > > +      properties:
-> > > +        phy-mode:
-> > > +          enum:
-> > > +            - rgmii
-> > > +            - rgmii-rxid
-> > > +            - rgmii-txid
-> > > +            - rgmii-id
-> > > +
-> > > =20
-> > >  unevaluatedProperties: false
-> > > =20
-> > > --=20
-> > > 2.51.1
-> > >=20
->=20
->=20
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 
---xiR9j6m1veV/qNYv
-Content-Type: application/pgp-signature; name="signature.asc"
+Maxime
 
------BEGIN PGP SIGNATURE-----
+> ---
+>  drivers/net/phy/phy-core.c | 43 ++++++++++++++++++++++++++++++++++++++
+>  include/linux/phy.h        |  3 +++
+>  2 files changed, 46 insertions(+)
+> 
+> diff --git a/drivers/net/phy/phy-core.c b/drivers/net/phy/phy-core.c
+> index 605ca20ae192..4f258fb409da 100644
+> --- a/drivers/net/phy/phy-core.c
+> +++ b/drivers/net/phy/phy-core.c
+> @@ -101,6 +101,49 @@ const char *phy_rate_matching_to_str(int rate_matching)
+>  }
+>  EXPORT_SYMBOL_GPL(phy_rate_matching_to_str);
+>  
+> +/**
+> + * phy_fix_phy_mode_for_mac_delays - Convenience function for fixing PHY
+> + * mode based on whether mac adds internal delay
+> + *
+> + * @interface: The current interface mode of the port
+> + * @mac_txid: True if the mac adds internal tx delay
+> + * @mac_rxid: True if the mac adds internal rx delay
+> + *
+> + * Return fixed PHY mode, or PHY_INTERFACE_MODE_NA if the interface can
+> + * not apply the internal delay
+> + */
+> +phy_interface_t phy_fix_phy_mode_for_mac_delays(phy_interface_t interface,
+> +						bool mac_txid, bool mac_rxid)
+> +{
+> +	if (!phy_interface_mode_is_rgmii(interface))
+> +		return interface;
+> +
+> +	if (mac_txid && mac_rxid) {
+> +		if (interface == PHY_INTERFACE_MODE_RGMII_ID)
+> +			return PHY_INTERFACE_MODE_RGMII;
+> +		return PHY_INTERFACE_MODE_NA;
+> +	}
+> +
+> +	if (mac_txid) {
+> +		if (interface == PHY_INTERFACE_MODE_RGMII_ID)
+> +			return PHY_INTERFACE_MODE_RGMII_RXID;
+> +		if (interface == PHY_INTERFACE_MODE_RGMII_TXID)
+> +			return PHY_INTERFACE_MODE_RGMII;
+> +		return PHY_INTERFACE_MODE_NA;
+> +	}
+> +
+> +	if (mac_rxid) {
+> +		if (interface == PHY_INTERFACE_MODE_RGMII_ID)
+> +			return PHY_INTERFACE_MODE_RGMII_TXID;
+> +		if (interface == PHY_INTERFACE_MODE_RGMII_RXID)
+> +			return PHY_INTERFACE_MODE_RGMII;
+> +		return PHY_INTERFACE_MODE_NA;
+> +	}
+> +
+> +	return interface;
+> +}
+> +EXPORT_SYMBOL_GPL(phy_fix_phy_mode_for_mac_delays);
+> +
+>  /**
+>   * phy_interface_num_ports - Return the number of links that can be carried by
+>   *			     a given MAC-PHY physical link. Returns 0 if this is
+> diff --git a/include/linux/phy.h b/include/linux/phy.h
+> index 3c7634482356..0bc00a4cceb2 100644
+> --- a/include/linux/phy.h
+> +++ b/include/linux/phy.h
+> @@ -1813,6 +1813,9 @@ static inline bool phy_is_pseudo_fixed_link(struct phy_device *phydev)
+>  	return phydev->is_pseudo_fixed_link;
+>  }
+>  
+> +phy_interface_t phy_fix_phy_mode_for_mac_delays(phy_interface_t interface,
+> +						bool mac_txid, bool mac_rxid);
+> +
+>  int phy_save_page(struct phy_device *phydev);
+>  int phy_select_page(struct phy_device *phydev, int page);
+>  int phy_restore_page(struct phy_device *phydev, int oldpage, int ret);
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaQJU6QAKCRB4tDGHoIJi
-0r18AP9YHrFoYXPV2dEPqru+c49A0QRQ0TNcKAkMQ1H/ppaEYgD9FQ3HpD0h2vUk
-e+BRSTPq5uaZbxl+044FWdyYYKRVCQE=
-=moFb
------END PGP SIGNATURE-----
-
---xiR9j6m1veV/qNYv--
