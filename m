@@ -1,103 +1,78 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AFA324B2D;
-	Fri, 31 Oct 2025 11:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154E41C5D44;
+	Fri, 31 Oct 2025 16:21:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1761908989; cv=none; b=UelWbha8zmIKUzZPTuHP7AGfY8KOym3QSVSaBe5Hc1wHB126rfRIQNy17ZPIToOw9evSKMTrJ5BqyjU1VAHneY2CFeslN92oJL5bKmBRocczBeQD7c80RypPschlC/yDuuBeDCLo4x5befQS4R0jNoh4MlVvjXqqSCOY8PpIKDM=
+	t=1761927711; cv=none; b=S6e3vQSBahi+aKg4i5M7y8AYZiibEE9WFSLLHd5HhmfNK0oxRxp5kKjfhveyQJLtHTryxoOgHig4fF2E08QQ/jO3oHeGIIfzbtXarPebOFwdk62riYtWhvYMujNNAYGLmxzcb13c1NHtohShn36Yx6vNzz/C9BqTL0R3EOY6Wjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1761908989; c=relaxed/simple;
-	bh=I7rzIGhL8xOCEwjsSLVh7bEj5BilIr1yhKEWjb49+sU=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=KoBjap4wYVTAqK+6REDtGcFkb3W8hlohV7CpjhzJXNENERogAUUxaQN4ttidnKKd3piiM0zwn0fOph10/CBi9OJZ4BbmKWHm7RlClDXCa9MBbaiq72NeyxCOa2azPRptcUmyTSpI+5nKhCmz3AcwgKCDOKZFGaxrQcJ9a3qasOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DUjVSJhg; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1761927711; c=relaxed/simple;
+	bh=A1OJuNy89ReYWRyHUw9vxGZ2tkUrpbPHpld8uz9ZjbU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y4oggxrgovetSdBMxRJBfAYxCSKz7FhLm19ebIhWgW3qlKb1eXo6+dk5l91+21oEH4z3gCaK4Yr8Y1EPuKIedj7krG9ZDAQ9tEWGJym4ycPcClZQUFh8NiKBmtHOGvyzvCnx2dX58s+bNzPLpDnrynVEtbCxG4YAjTT3T7yLWS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=okGIWs0d; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DUjVSJhg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9919CC4CEF8;
-	Fri, 31 Oct 2025 11:09:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1761908989;
-	bh=I7rzIGhL8xOCEwjsSLVh7bEj5BilIr1yhKEWjb49+sU=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=DUjVSJhggL+MIhCfTYxlHlZ6dS+T8pcQycIa9IRczO/3FIGe/wO2IifwIaNys5NK2
-	 BboHfUyOPBXi8OmZjQitgIZe6ZvEH8+NCckKqO547SZvXW9fvt/hq3K0HYlgeB4vjl
-	 3MKx3balmoI/1JfVJUv6yvv4tf26x1P+8E/d1zxUMqvLuTE/r0sh4H3UARc0ALOiK4
-	 +WnE3GshC4coJDUehLB2xuPs8GRQk+yfZe6tuqR6+R7TWgxf8I/h5qjWxDA77B6Zq2
-	 EWQu/rz7d0btKSr8ndLszUeubQwRlZnvJ0HSYZdBSw7dgUz7je0mkKiRUvMNH8klss
-	 dHGh+gTtMZMgA==
-Date: Fri, 31 Oct 2025 06:09:47 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="okGIWs0d"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=Fq379oOiqAtrnZ+bkfMKSoTJYOqJ/R3/WeAnEYH+Yms=; b=okGIWs0d0rRBVlo4THIcI4Yndw
+	CiHGWSGVQamirayhs3edW5StzRgTkwolWHI8YN1SRf0J0EmlNpv7HywE02ZQZsZDSy4h9FCEsIb67
+	ytMp1vXS2uywm9SUp1JvUd+Yy0nOwcq2/Zni6w5eE9tcv1olf1PIEdMweCCZJhIU37fc=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1vErsW-00Cc9X-R6; Fri, 31 Oct 2025 17:21:28 +0100
+Date: Fri, 31 Oct 2025 17:21:28 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v5 3/3] net: stmmac: dwmac-sophgo: Add phy interface
+ filter
+Message-ID: <651ae46b-8ca2-476a-8545-4c26c4e10f99@lunn.ch>
+References: <20251031012428.488184-1-inochiama@gmail.com>
+ <20251031012428.488184-4-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Russell King <linux@armlinux.org.uk>, 
- Conor Dooley <conor.dooley@microchip.com>, Paolo Abeni <pabeni@redhat.com>, 
- Conor Dooley <conor+dt@kernel.org>, 
- linux-stm32@st-md-mailman.stormreply.com, 
- "David S. Miller" <davem@davemloft.net>, Longbin Li <looong.bin@gmail.com>, 
- Heiner Kallweit <hkallweit1@gmail.com>, 
- "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
- Han Gao <rabenda.cn@gmail.com>, devicetree@vger.kernel.org, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Chen Wang <unicorn_wang@outlook.com>, Eric Dumazet <edumazet@google.com>, 
- sophgo@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- Vivian Wang <wangruikang@iscas.ac.cn>, Yixun Lan <dlan@gentoo.org>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, Jakub Kicinski <kuba@kernel.org>, 
- linux-kernel@vger.kernel.org, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, netdev@vger.kernel.org, 
- Yao Zi <ziyao@disroot.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-In-Reply-To: <20251031012428.488184-2-inochiama@gmail.com>
-References: <20251031012428.488184-1-inochiama@gmail.com>
- <20251031012428.488184-2-inochiama@gmail.com>
-Message-Id: <176190898726.569389.4934903700571310952.robh@kernel.org>
-Subject: Re: [PATCH v5 1/3] dt-bindings: net: sophgo,sg2044-dwmac: add phy
- mode restriction
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251031012428.488184-4-inochiama@gmail.com>
 
-
-On Fri, 31 Oct 2025 09:24:26 +0800, Inochi Amaoto wrote:
-> As the ethernet controller of SG2044 and SG2042 only supports
-> RGMII phy. Add phy-mode property to restrict the value.
+On Fri, Oct 31, 2025 at 09:24:28AM +0800, Inochi Amaoto wrote:
+> As the SG2042 has an internal rx delay, the delay should be removed
+> when initializing the mac, otherwise the phy will be misconfigurated.
 > 
-> Also, since SG2042 has internal rx delay in its mac, make
-> only "rgmii-txid" and "rgmii-id" valid for phy-mode.
-> 
-> Fixes: e281c48a7336 ("dt-bindings: net: sophgo,sg2044-dwmac: Add support for Sophgo SG2042 dwmac")
+> Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
 > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> ---
->  .../bindings/net/sophgo,sg2044-dwmac.yaml     | 20 +++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
+> Tested-by: Han Gao <rabenda.cn@gmail.com>
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/net/sophgo,sg2044-dwmac.yaml:93:1: [warning] too many blank lines (2 > 1) (empty-lines)
-
-dtschema/dtc warnings/errors:
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251031012428.488184-2-inochiama@gmail.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+    Andrew
