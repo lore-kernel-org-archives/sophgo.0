@@ -1,67 +1,67 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A38F2FB0A4
-	for <sophgo@lists.linux.dev>; Tue,  4 Nov 2025 13:09:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEF92FC037
+	for <sophgo@lists.linux.dev>; Tue,  4 Nov 2025 13:09:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762261779; cv=none; b=kzQ6WkRuq7kWxk0F+4dxN+GuaVVTJPyAZVQU9JQMR0IIu1373rCntvvdTDbz5IMahKjmoue3uypRzb+c1HfZj7lOvnuvmHzRmnz+AVTlAECF7TS7FoGben6btI8VwZ/a9BfATkKORAyAjGwJCCRBrSEAdLAgEZSdZk6BW1ng7lc=
+	t=1762261783; cv=none; b=eTheFl4D53MXkRXxVO3QgEh4NuqCLJgaUUyxJXeRC0gJhMLJeJ+VV/lmnxSZn1jNnshdXB5LX52K91LGiu9hwLJ5ZSA+qvKRCYHnD6UtGJYhlOhgiKGCvwSMJv0LNawcHufF4YhhoI6PttSoYqYDKIiuMf8WcmZF6NRh0MTrhLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762261779; c=relaxed/simple;
-	bh=C6E2nfuOJyT6zEzejZLhVEYSKPR67hQomXuzQ9//N0I=;
+	s=arc-20240116; t=1762261783; c=relaxed/simple;
+	bh=RftDSrG8k9UKl5gPmTd6+qE6aIUSENSDbkOBTlUFJCs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aWMcdtlkqvqdIrSwNtr/QLvRPjzthba/WWJswqv/42B9xOvq6owA5/8AzDh5PY5HExyl0uk5FpmeDg0owkUg5/XnF8R/Wq5SQVne7v8OF8lqTvquZh9VTeVJkz8XtRTlcZ5HFCQXTSl8x26DFOAFB/tNZuJDLkmPj7aaNk3CFBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=IDiTmynI; arc=none smtp.client-ip=209.85.128.54
+	 In-Reply-To:To:Cc; b=LDakZ+jBIy/EA+3h4Dhy9YKORsqOzOFmw1q1q8vCsCtq8L+q0OEuh4jLcfpYdjuOVUHSFVLa5Xi48ds9CUX/jdd8xqeFhAPhUSO9uKYBjkZzITL0vl61gMEtYccfnnYb4EAf3qNLTCDZcYS1Hve1gnhPxWhH6+TNcBjpRYR4J7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lrJFSTQt; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="IDiTmynI"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-47755de027eso4607005e9.0
-        for <sophgo@lists.linux.dev>; Tue, 04 Nov 2025 05:09:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lrJFSTQt"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-47117f92e32so45082455e9.1
+        for <sophgo@lists.linux.dev>; Tue, 04 Nov 2025 05:09:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762261773; x=1762866573; darn=lists.linux.dev;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762261778; x=1762866578; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ohz6eJ3JY6PCTOt6pOm4PJLek87cyeexjL7soGZmZnQ=;
-        b=IDiTmynItO+g9kaeYvrzrkOi7WD8FsglPe68MnxWzdnfQhDYzJXov0o6JnC+fc/Cxg
-         DAZo9/eEO8A4CVbb6sLbHKvmhkhOJqmi/A0rcRv986NMWXFH2oKTmxEFMfPhiaZ2u5Nd
-         UOBfyfHdFDDXH6M9Bt04T9IGh7PLfH1mzzn1hEX1NvuNeWItERgtknMR/aa4UVKT/seS
-         6a/vMeY4xYnL3PUZSzTihNUp5eeqhW/sRrMKpmtk6fnuKJILWqNPswOpodY/aM0Tqh6+
-         CAnedrAIpmJmYGpZxDSWJZ+M2mmkYNFKPaD5Vb4AS2PTgnKO0c9FOWQe9vJwB1Uz6HNe
-         I0Mw==
+        bh=IW9Ne798a3XGNxpeP/XYKMinJIQLw0sjHAkXdXk9L6c=;
+        b=lrJFSTQti9P2Bt7mh6lEMIMjB41BhPR6yE7mSSybKOnwzCFPToYMuKPEo7RX3DtX77
+         VmNh3DdMk0Hp2Y11iSArzG+KS3IZytmQd+gixvcqHIrB6ut4uVykGjM2FMcM3gKMo0SO
+         n9hKrecSLjzPa3VHheohX67rhV9zxTcCjBsfUgo2VL4nXIyxnhzwI3uZY7hA5kuII4sG
+         6robwZiW0C4CYa8ddWG2FSafZshSf/g2hVZTMqBRP8ePEP7i8hjGwoTRbpndZwNQpxw1
+         NDoTwid0KWg4ZGjPzuBFPVJJ0Nhs/3npYNnSDYfxx+5ui7A0eDLb7hoSGNg76cyk8Rds
+         gsXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762261773; x=1762866573;
+        d=1e100.net; s=20230601; t=1762261778; x=1762866578;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ohz6eJ3JY6PCTOt6pOm4PJLek87cyeexjL7soGZmZnQ=;
-        b=M9FhPgzd5FlrkL5/hTnU+X79Ia7L6IgBAHqkbuOXrWKZf7Ex/i56z5uF7T2dy40kls
-         6r6+/DEtBTaVejIMWrScNHR51fewFKuq1vEtqyvnpsy652Wdc6Y7gVCqGeKdzeVZOw4c
-         jJ4MdcMrW+NSw+9SMkcZ75rxDmqFWpf0EEgUIMIEf9OS0tR61m42WqfFYcC0b0wy1MaT
-         Ef134JYNYMVRqXtnutGxNeadhH/Fz4LtT+hxO5miV0ZZ1w1NoXDb4Gdrx+sEFQnbGmr6
-         iXMvTncPyw3xGdcvfExNEAkjIx/97IcecFcOkjKtQc+CYB946hpDdQ4OOKq6yIQLi0gO
-         Vh8g==
-X-Forwarded-Encrypted: i=1; AJvYcCUj6mMvuw748+BAlf0KwIeAXT9CmoZsIlkARTY03oxpS/C2Gnrlwm8pkbv04N3RdNJ+iQVJwqQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyrj2iOq/59fGifiUyabHevY7n3F+4gLWicjS+vJLdz+pVRhMJU
-	EMuVN+/66Na5p3BhUG1Ci0hWimsQrnnYJaJR29AjE9gPnnJGTD1iNsIGA0qKcLH2Qcs=
-X-Gm-Gg: ASbGncvRH1PxHhEM6NTe9zK03COSNz5InHUtb6V8bJ71m13mA6E4o77Tn/VZUVMSCvh
-	2RZkEPIySoB1zyqyfTdg39FeVZTKv0g3kbYtpeDCE1RG7tn2kR7A7oRZWUxG3pJangIGKtbtsNd
-	tund9eLTgE9AzSXkYE+CXTmI6Cu8l5fjqdoN8Wo3GZ0qmX/fWF9BU1vLi60uKfg4RNse1+Q/K4Y
-	+3gLQtSl+4aUCfjdo3uXc4RIAqrYep8y+dPy3AYEzd0rF4aZG9GQmKwDL/H5Fth6SIlf3M0MRul
-	Rf/JjoajQziplzy65AicX9umI69bfhFFOQ6+wFsy8Kx02FkH0HFW5kUBsNCuvCGa8Gul1USxMz6
-	pGKB5FozzG4Vb4yFFPT4kx/BEGb9g45MXYIJSYq+IGaUVtvv+s6FuhDZCI/bEg2ciG0eLpA==
-X-Google-Smtp-Source: AGHT+IHLeJTkz3Z9JUhRNQIdfiIz3zju/KKqwii1AcstjAWBhNyTLGOcii2tELicylV8dY7OWKqeQQ==
-X-Received: by 2002:a05:600c:3485:b0:471:13dd:bae7 with SMTP id 5b1f17b1804b1-4773bfb51f8mr122528535e9.30.1762261773214;
-        Tue, 04 Nov 2025 05:09:33 -0800 (PST)
+        bh=IW9Ne798a3XGNxpeP/XYKMinJIQLw0sjHAkXdXk9L6c=;
+        b=V31xBYn5eJZOam1GttWi/J53FfNH60hziH1kIZ7pNx7bdYcU6hYS8aduW3NOjNv/Vd
+         G3UyTVg9AkoY9f6vToSMu9MNzz1Gt14QSUs6Py4BkGVP87a4VT7H2ZlKb9544NJRXK9V
+         CFTHFF39sTWmwbZsWTUzqnGdZSwHf0BmTMMPBJtoGTPlZqym/htQh68SXDghnErfqWVB
+         5m/FNhWt1c8ja9bTxjF0V+0ZEFW8yNeQjyNQPi/39N2gOjydqDdfQyy0IsHNvcZCK8tr
+         hnoSr9GWRaMwtvi6JYMD1861EY1mngMROaahciwRluX2xwk0pHlcB6jc/Jl/XFDzHZo1
+         87Zg==
+X-Forwarded-Encrypted: i=1; AJvYcCXp23U0XYGLkE1L8URgCbk85FTrtW1X3GNMv7gfmVo4KjbLKYyfXfOvEquna7CiCCeQ+T4vUJA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyFtUVn5K3/DztIVpHP0BH+G6yDk+RUlHN+UbmTgfjg20FUnkUj
+	wyQ2O1OL1TTMCJWcJJXk42Yp3iQ5HY8n9hRKaI5FQCBLoWkDaWlZbwJ4Njq04glPAzw=
+X-Gm-Gg: ASbGnctSjn/caXMe67gPjj5Blck7xohW/maeJxQyT7HYE5Kw2sDuy+sPNs1WXe7n9oL
+	EUwGQBEsAVuHAxOExdRRoutodD/SlMuAGjrEOx7OtJboSDCZIWPWoWbsnXiPxcbfO8YktaZ+Q6M
+	ornI6tzZcjnb7SGEP8BS96X4QAvpQmkRCjSDYW+/Wrho8p5xJ1LEuvl3L0hifHDAG8En3u3Jll/
+	Du8w5jYud0Fts99ImBTPhKmKk7+cQl3FO8Kp4nwX6m0CR5xrjM7o9jA0md5zyLI5XCguWdlcDgf
+	SHcPoXDz3646Vr8c6Y4ji9fQpuavi2rkfI+RfYABTm1eNj4MrmM9xcQNJ6Rr2Zow89EXKhiahsM
+	jRjbhcIbOKJAUDBIlgbxl06DJI90d3lP7JNXQsQRNWIYwhbG1RtnQqY3fJtMMB4dHtKC7xA==
+X-Google-Smtp-Source: AGHT+IG1GvRdz1G4OVuTzfGg2rW2umU84ydK8m7ey6D7UWi4H5D+BCD/zY38vh6KQiL9kxoSITMbLQ==
+X-Received: by 2002:a05:600c:3b0f:b0:46e:4a60:ea2c with SMTP id 5b1f17b1804b1-477308a897dmr149553725e9.37.1762261777808;
+        Tue, 04 Nov 2025 05:09:37 -0800 (PST)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:9ea1:7ab7:4748:cae3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc18efd3sm4554431f8f.5.2025.11.04.05.09.27
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-429dc18efd3sm4554431f8f.5.2025.11.04.05.09.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Nov 2025 05:09:29 -0800 (PST)
+        Tue, 04 Nov 2025 05:09:35 -0800 (PST)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 04 Nov 2025 14:08:56 +0100
-Subject: [PATCH v4 5/8] net: stmmac: qcom-ethqos: split power management
- fields into a separate structure
+Date: Tue, 04 Nov 2025 14:08:57 +0100
+Subject: [PATCH v4 6/8] net: stmmac: qcom-ethqos: split power management
+ context into a separate struct
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -70,7 +70,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251104-qcom-sa8255p-emac-v4-5-f76660087cea@linaro.org>
+Message-Id: <20251104-qcom-sa8255p-emac-v4-6-f76660087cea@linaro.org>
 References: <20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org>
 In-Reply-To: <20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -124,116 +124,167 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3440;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4943;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=GhJny0rrOhbWO9GcfNfulcQ1HGUq/SGEEOh5ESB4E5E=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpCfrt1PXYHKJt2IulJ2CyvGw0mRwafmetNOR2Y
- 5zJmQ+uGwGJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQn67QAKCRARpy6gFHHX
- crVLEADE2sKmE+cnYe6vd8MrSPmBXpfZ48+xv9duA0AFvw0Jl0TIVags+e1ih+VNlrPKVQkDN1E
- 4hvIVk5690c3a7nxPof8XwbSvHgwyqCuAu9+rR2qjl3J010XvLAjdjJQBWKUQXOhLWDomWEEHNG
- mgCVEHSsM8vWjKT7puhWaGverUX8oMQ1aMQt8wHHcbw0YpWz7QEI8oAduybvItGU0SS2C3tLaH7
- Jd3Eab4GHdc1anBVlXj9a71lYduzL4icKt6e2gR3cn7pTAfGEeDU8K3aXwXYyiUKaMHlDPO3AsK
- Fr+ivt8c63rfdqbPTHNjeQLAf64hx+XfXcg4DvlUImNOjGESEoJiE0fxuMaz2citgMG246tCSYU
- C5uLvQbjLqchzLfNPDaA2QihiKOQmHRRkGKcqFqk5Xhw46XlYCItAnlkMKm71+2tkb+xswW9NAN
- iwi2Tba4S6v9um/tsCcXu4R2gRT46lYwFGNHj3ndHgtdafKm3jGsLmiEDYuX6n5HPZkxm/1qQCr
- HjlYxUxuRoFDhUZ7MxewBMebBxObzXfWGg01dynSHvIzFBogam2kDjrtSCOYxEiXq7ZdTExPbzK
- z+l9sZSchK0d1c8tZffhQ/6KlCSXT79aF5UfiQJj6KCvGC5x8i7+YLETdMQ//TKcwS11rR7IXeL
- MYJ/8y8lkrz6tPA==
+ bh=ywDusXCc0OEyB5wkP2D4YZe7bremgDjiZGqRKKOTVlo=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpCfrtclrVDAlMIr4bBijfyWznJtGzxJmoLoxKY
+ +2FL+/n8aeJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQn67QAKCRARpy6gFHHX
+ ctIBEAC2l+TiXa3iP8a5AInCFJWKNapCdwbhYWx13UqtZMBgW57BQKI3iEtjlqAPNohvqcgOctk
+ 0JUeVMqskmHXPpKwwqXRPXzoNcJlfipAmbpDAzCKW5iALUWMCiaFodgqdz97ML0c0AyT/PoLbrw
+ XiUG6dk5NJ0tD5FL0E0tOGhQEcTv0llsBYVuwRBVNSih7rrSmLIzNECL0arhuok0qFj4R2v5YYX
+ 1F0ol9gnXR7+OMae+CNJUSmao4IGbk1uotH7t5QQAnw9hroGg2dCtNdzX/pesedZR4OGaP/R9P9
+ 2tAq63d7pcOZUdwrvoSiBCdncHK5IqlM43kBDojNWhirTdjWhHKVgPJn72ZjZzQ7FD5MRJqRyAw
+ e+7OtVgHYukGRDwG2OaXWZbBnxVInaIOoniDe1GCRgIgS6mM2rw0CetFQSWGQ3ZG2acoLvkh4lV
+ 9vBPdvoIfSzZTY2R+MEUJIqGRK5HYHu6mxbtEr8fck31gHO8MRyW/lu6YFC8hdbUDrGuz3rtkx+
+ G8Vv10l2V7R/fjBI+kdB5yBACw0w79wQbFLyjvw5hdCrT1B4TmqCWuLT8twrdUZaIxTGPsrbImt
+ pd1NcGf7YFp3IasjD5uizb7PejGV/SG8p8rUuiN1q6g/l9/Tz2nFK6/zrSv9zmEvgLcfXLWWEBD
+ LXjn9oDxsxIrmnQ==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Now that we have a separate wrapper for device match data, let's extend
-this structure with a pointer to the structure containing fields related
-to power-management only. This is done because a device may have the
-same device settings but different power management mode (e.g.: firmware
-vs manual).
+With match data split into general and power-management sections, let's
+now do the same with runtime device data.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c   | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 46 ++++++++++++----------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 9cafe101049d5412d649b3beaca350c497ffc981..1f00556bbad997e2ec76b521cffe2eb14fabb79e 100644
+index 1f00556bbad997e2ec76b521cffe2eb14fabb79e..09f122062dec87aa11804af2769ddff4964e6596 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -91,14 +91,18 @@ struct ethqos_emac_driver_data {
- 	unsigned int num_por;
- 	bool rgmii_config_loopback_en;
- 	bool has_emac_ge_3;
--	const char *link_clk_name;
- 	u32 dma_addr_width;
- 	struct dwmac4_addrs dwmac4_addrs;
- 	bool needs_sgmii_loopback;
+@@ -105,17 +105,21 @@ struct ethqos_emac_match_data {
+ 	const struct ethqos_emac_pm_data *pm_data;
  };
  
-+struct ethqos_emac_pm_data {
-+	const char *link_clk_name;
++struct ethqos_emac_pm_ctx {
++	struct clk *link_clk;
++	unsigned int link_clk_rate;
++	struct phy *serdes_phy;
 +};
 +
- struct ethqos_emac_match_data {
- 	const struct ethqos_emac_driver_data *drv_data;
-+	const struct ethqos_emac_pm_data *pm_data;
- };
- 
  struct qcom_ethqos {
-@@ -292,7 +296,6 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
- 	.num_por = ARRAY_SIZE(emac_v4_0_0_por),
- 	.rgmii_config_loopback_en = false,
- 	.has_emac_ge_3 = true,
--	.link_clk_name = "phyaux",
- 	.needs_sgmii_loopback = true,
- 	.dma_addr_width = 36,
- 	.dwmac4_addrs = {
-@@ -313,8 +316,13 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
- 	},
- };
+ 	struct platform_device *pdev;
+ 	void __iomem *rgmii_base;
+ 	void __iomem *mac_base;
+ 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
  
-+static const struct ethqos_emac_pm_data emac_sa8775p_pm_data = {
-+	.link_clk_name = "phyaux",
-+};
-+
- static const struct ethqos_emac_match_data emac_sa8775p_data = {
- 	.drv_data = &emac_v4_0_0_data,
-+	.pm_data = &emac_sa8775p_pm_data,
- };
+-	unsigned int link_clk_rate;
+-	struct clk *link_clk;
+-	struct phy *serdes_phy;
+-	int serdes_speed;
++	struct ethqos_emac_pm_ctx pm;
+ 	phy_interface_t phy_mode;
++	int serdes_speed;
  
- static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
-@@ -771,11 +779,13 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
- static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	const struct ethqos_emac_por *por;
+ 	unsigned int num_por;
+@@ -181,9 +185,9 @@ ethqos_update_link_clk(struct qcom_ethqos *ethqos, int speed)
+ 
+ 	rate = rgmii_clock(speed);
+ 	if (rate > 0)
+-		ethqos->link_clk_rate = rate * 2;
++		ethqos->pm.link_clk_rate = rate * 2;
+ 
+-	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
++	clk_set_rate(ethqos->pm.link_clk, ethqos->pm.link_clk_rate);
+ }
+ 
+ static void
+@@ -639,7 +643,7 @@ static int ethqos_configure_rgmii(struct qcom_ethqos *ethqos, int speed)
+ static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
  {
- 	const struct ethqos_emac_driver_data *drv_data;
-+	const struct ethqos_emac_pm_data *pm_data;
- 	const struct ethqos_emac_match_data *data;
- 	struct plat_stmmacenet_data *plat_dat;
- 	struct stmmac_resources stmmac_res;
- 	struct device *dev = &pdev->dev;
- 	struct qcom_ethqos *ethqos;
-+	const char *clk_name;
- 	int ret, i;
+ 	if (ethqos->serdes_speed != speed) {
+-		phy_set_speed(ethqos->serdes_phy, speed);
++		phy_set_speed(ethqos->pm.serdes_phy, speed);
+ 		ethqos->serdes_speed = speed;
+ 	}
+ }
+@@ -708,23 +712,23 @@ static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
+ 	struct qcom_ethqos *ethqos = priv;
+ 	int ret;
  
- 	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
-@@ -823,6 +833,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+-	ret = phy_init(ethqos->serdes_phy);
++	ret = phy_init(ethqos->pm.serdes_phy);
+ 	if (ret)
+ 		return ret;
  
- 	data = device_get_match_data(dev);
- 	drv_data = data->drv_data;
-+	pm_data = data->pm_data;
-+	clk_name = pm_data && pm_data->link_clk_name ?
-+				pm_data->link_clk_name : "rgmii";
+-	ret = phy_power_on(ethqos->serdes_phy);
++	ret = phy_power_on(ethqos->pm.serdes_phy);
+ 	if (ret)
+ 		return ret;
  
- 	ethqos->por = drv_data->por;
- 	ethqos->num_por = drv_data->num_por;
-@@ -830,7 +843,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+-	return phy_set_speed(ethqos->serdes_phy, ethqos->serdes_speed);
++	return phy_set_speed(ethqos->pm.serdes_phy, ethqos->serdes_speed);
+ }
+ 
+ static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
+ {
+ 	struct qcom_ethqos *ethqos = priv;
+ 
+-	phy_power_off(ethqos->serdes_phy);
+-	phy_exit(ethqos->serdes_phy);
++	phy_power_off(ethqos->pm.serdes_phy);
++	phy_exit(ethqos->pm.serdes_phy);
+ }
+ 
+ static int ethqos_clks_config(void *priv, bool enabled)
+@@ -733,7 +737,7 @@ static int ethqos_clks_config(void *priv, bool enabled)
+ 	int ret = 0;
+ 
+ 	if (enabled) {
+-		ret = clk_prepare_enable(ethqos->link_clk);
++		ret = clk_prepare_enable(ethqos->pm.link_clk);
+ 		if (ret) {
+ 			dev_err(&ethqos->pdev->dev, "link_clk enable failed\n");
+ 			return ret;
+@@ -746,7 +750,7 @@ static int ethqos_clks_config(void *priv, bool enabled)
+ 		 */
+ 		ethqos_set_func_clk_en(ethqos);
+ 	} else {
+-		clk_disable_unprepare(ethqos->link_clk);
++		clk_disable_unprepare(ethqos->pm.link_clk);
+ 	}
+ 
+ 	return ret;
+@@ -843,9 +847,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
  	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
  	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
  
--	ethqos->link_clk = devm_clk_get(dev, drv_data->link_clk_name ?: "rgmii");
-+	ethqos->link_clk = devm_clk_get(dev, clk_name);
- 	if (IS_ERR(ethqos->link_clk))
- 		return dev_err_probe(dev, PTR_ERR(ethqos->link_clk),
+-	ethqos->link_clk = devm_clk_get(dev, clk_name);
+-	if (IS_ERR(ethqos->link_clk))
+-		return dev_err_probe(dev, PTR_ERR(ethqos->link_clk),
++	ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
++	if (IS_ERR(ethqos->pm.link_clk))
++		return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
  				     "Failed to get link_clk\n");
+ 
+ 	ret = ethqos_clks_config(ethqos, true);
+@@ -856,9 +860,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ethqos->serdes_phy = devm_phy_optional_get(dev, "serdes");
+-	if (IS_ERR(ethqos->serdes_phy))
+-		return dev_err_probe(dev, PTR_ERR(ethqos->serdes_phy),
++	ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
++	if (IS_ERR(ethqos->pm.serdes_phy))
++		return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
+ 				     "Failed to get serdes phy\n");
+ 
+ 	ethqos->serdes_speed = SPEED_1000;
+@@ -880,7 +884,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	if (drv_data->dma_addr_width)
+ 		plat_dat->host_dma_width = drv_data->dma_addr_width;
+ 
+-	if (ethqos->serdes_phy) {
++	if (ethqos->pm.serdes_phy) {
+ 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+ 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+ 	}
 
 -- 
 2.51.0
