@@ -1,146 +1,230 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3D133A01E;
-	Thu,  6 Nov 2025 17:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEF33002DB
+	for <sophgo@lists.linux.dev>; Fri,  7 Nov 2025 10:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762449046; cv=none; b=Q/S+xYoJ/AvXP5m6Z6BehdcWdmgzr03cpG/VckHnZxjlM6hHFOSR71mN3UL4lbNrJvbngCBu64INZnEPIPCnwppBsVCv4d6EMIV3rqFDe6GkMTm4ihsiF6/uQO3Hn9i+VxyGcaEtXSiED63a8YbIHTon2IxiJWIZRiME1nEjLuw=
+	t=1762511408; cv=none; b=sFfGjUBEmGaNRyNZA0GZFuHQEG09dsOgULjuAMYLUeNIGTtAj5sFuQbTJIGj+N7HpVhzbdRLjtPNvOLx2OjMt4jpWDkFV/bVhNAHi5kHU9CeWMOo4Lmwh5Y+0VZm9pxqQE6V9EVhwa9SYH8kWNBnVnd/0T1Ydt/nIlnKmqc/CNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762449046; c=relaxed/simple;
-	bh=5RJd2yoe7u43AeupxdyVCQ4K/Vt3gB+8I1S4CehziNE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=F6dFYXAtman14XrNWBl41peA+qjWgOCr41GwU798ddWHkztYXN/KJOg2KOpwbbx4MoZNgjPD3aWZa8QoKvBjTRs/+aCu+2DNLXsuPUGiRx8YxLg2DRH7GPcoNxTNjGBEbcgGp1Pe6jdEOgGLdsXpoSomFBOhitqJdkpmJOCi5NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkBZ2i+/; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762511408; c=relaxed/simple;
+	bh=ZivlGpi+T1c5DUoMpOPkmITE34pLl/IzVvSOHSJ88dQ=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X0PUuOrKFWxYW8XOhCoffWmgc3damVWoqMjQBWFMB3cUKnqwepKxDCC5/N8gLs5eOzb2D65eJKYN0/K8TQS3hq4NeCLFFxvPqcXDeH6ESqFkUNG/aVfxK3JrcjnoYVbQSMUTBRcs9LYTMj6V3KK9730z/JvQxTsMLiX06IUt3cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=QMCMWwWq; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkBZ2i+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A649C4CEF7;
-	Thu,  6 Nov 2025 17:10:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762449045;
-	bh=5RJd2yoe7u43AeupxdyVCQ4K/Vt3gB+8I1S4CehziNE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lkBZ2i+/mwOOuX9GhGdECytYLR4ZoDkJl849J2hQtO1L+/oDFNXYCeNt174ancQT3
-	 xbCnN9sPThUf3r7wQHPF8iYrx9QE8ByQfGeeXHSpXSc7X1ozl146yDIHzIyhN477Zl
-	 24roSdsWpljUoU1b1XPiOx3tQ9nNpNF0qwmsuiok+l3p312VCp83G1KCMDxzYj3j4R
-	 V6CN2ulyVc4L6VZFinUoMZZKTE8+9ekl/LsZXnN1C4wR4qq87Iee247p9DqgX4zpQx
-	 Mdo/2h36rXZ5gLXNVAuKxGQMnTO8WdbmjhK4ji+z1/V5GYGE6HlP6rgt50139EhDg6
-	 7lEF3XunOSRJA==
-Date: Thu, 6 Nov 2025 17:10:38 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Junhui Liu <junhui.liu@pigmoral.tech>, tglx@linutronix.de
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@sifive.com>, linux-riscv@lists.infradead.org,
-	Inochi Amaoto <inochiama@outlook.com>, sophgo@lists.linux.dev,
-	linux-serial@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: Re: [PATCH v3 00/13] riscv: Add initial support for Anlogic DR1V90
-Message-ID: <20251106-tinfoil-primer-30ff181203f4@spud>
-References: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
- <20251028-busybody-disallow-e068b221db6c@spud>
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="QMCMWwWq"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-477563bcaacso4163655e9.1
+        for <sophgo@lists.linux.dev>; Fri, 07 Nov 2025 02:30:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1762511404; x=1763116204; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6lK1bWhoDlOt3D7+OTYGFbwlQlHjc0qM/7Y1vcvdtOY=;
+        b=QMCMWwWqwtm5jgo2iqEKgpCc/vjZP7m79jHYhtre/Hp0pAjvj7AwUmKqjLy1G7u90G
+         JrJhnAihYvi7wdZOUlw08dQcnIFseU6Wc0U2WCVqc0DGFAiBFzkCPbsUsnkQSMFyPFiW
+         FlnQ5b6QfJW9dtGED+5JqiNnHeqfYzhCG+PZEJhr2ao1N8W5HmVuvK3d+vInsTfn0RjS
+         SmHS3Vt8yYiaxOu1tiMwhf6CH2slqmkuwlpvB9+RmF8Mqu78YaMQe/vc4JssP5I4b7aX
+         HuO+4bYerr0xoMDKKfCckdaQiNYQXCmDw7wn6swoNTNxdwxEvsMuoVokmdh+2Vn265ub
+         1obA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1762511404; x=1763116204;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6lK1bWhoDlOt3D7+OTYGFbwlQlHjc0qM/7Y1vcvdtOY=;
+        b=hvU5xtoKV+rmCJqlwFYvyoihwfTdxcwEurIvxhDtT1kRAS8l1ckOWoQlRfcmdfPwo+
+         XDOnBn8B9XqozIJhBpzcNrxU2XpOHMYGeHDLcl4g+AolqrbrOD1+wf8xfbuuo2Hkb1p2
+         aEQh129t1FZx4Agri2OKPsKN664DiYk6SbINJAcmUyeD0m6tyOC6mhkTd1yIE7lY76HA
+         BE8ST6r9rwVRsOtpst0joKaI/xdUTWgJ3OIsqorwqNkfjAfG5OSWwlT+i3u52mY1MsIS
+         tX8iA8rgR9zCs927STqeRED5Cm4s5rsrnixJbFYGGkNTgfXCyAOMg5yCUOGzQUlBr1HL
+         illw==
+X-Forwarded-Encrypted: i=1; AJvYcCVZQNNExyC7H/DI95ST3d9MRmi/QgAJbuJB7U4fcCJNSa+TwKOJRuCh7eNrK09GgkMyXb/9MQQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxptxb+U8HRCi01VUdZKJxk5eVxVh8Olnt0Yq0rw2CkdH08ocnP
+	VJ29G3wLdBg4H+SgCnFyYN7wQKydQajXmo+mxL/+fhl+WJeoOgAzbCxMF1i/cPWSlvI=
+X-Gm-Gg: ASbGncvnk19Tk2ZCSCaVBkHphaztC3FOAqg8fv/ZQj/aynMF++iwRrFEXZsa7l8/QHr
+	MIhF/FkQmKqoE3jFNQMkF9P1tbBaU568JZOM+/6Ts/C66TJEbCWQx5edmrjJQtwPom5iLYXDEjJ
+	eQfuvmULl0aMNFzBX6DWFq7Tv54ZBgW/Ei5EBm3BaTFsn58+kX+ojXlGhpax9QWJbdKdBT3TGDc
+	ATAH1j8Y0plRuaTp3l9pmU7VxudogWgpwOi3siobPxlRKKLrhpoqGsV8HoySGEwf0GdFQHocC6P
+	tgYsUj9J4erIN4BnR/TmpHGWa0dX3fs2sAQ7EDbQ5KnVIKP5OiytHGgi2X9lXLJL/5tWDavZTcA
+	PCIEcRW6GXaJ/pbK7Hkn4T0t5Q6Kb9oIJYQFYlSswgq5bihV45RUip4NQrYSYS8FEdXCaiuDnYy
+	2PUyG9TcbQUS7gHg==
+X-Google-Smtp-Source: AGHT+IGLasgznDpysA1VVPTGU5y82R7RrVgkRw3m6DuFOG2T0Xrl7Qi/ZwJh7t3lCXtqhciZW19mKg==
+X-Received: by 2002:a05:600c:1384:b0:471:14b1:da13 with SMTP id 5b1f17b1804b1-4776bc93e89mr17460965e9.14.1762511404248;
+        Fri, 07 Nov 2025 02:30:04 -0800 (PST)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:fb6d:2ee:af61:f551])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42ac67920fcsm4414864f8f.39.2025.11.07.02.30.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Nov 2025 02:30:03 -0800 (PST)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v5 0/8] net: stmmac: qcom-ethqos: add support for SCMI
+ power domains
+Date: Fri, 07 Nov 2025 11:29:50 +0100
+Message-Id: <20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RxsOAUIaAk6EjGuV"
-Content-Disposition: inline
-In-Reply-To: <20251028-busybody-disallow-e068b221db6c@spud>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB7KDWkC/23PSwrCMBCA4auUrI1M3q0r7yEu0pi2AdvURIJSe
+ nfTCorY5T8w3zATijY4G9GhmFCwyUXnhxxiVyDT6aG12F1yIwpUgAKOb8b3OOqSCjFi22uDSy6
+ BMqGNIBTlvTHYxj1W83TO3bl49+G5nkhkmb61isCGlggGzKhWlWmIlbI8Xt2gg9/70KKFS+xDE
+ KBqi2CZUEJJVVeUga7/CP4lyOZPiWeiUVJKgFIZq3+IeZ5fGplk2DkBAAA=
+X-Change-ID: 20250704-qcom-sa8255p-emac-8460235ac512
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Richard Cochran <richardcochran@gmail.com>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+ Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Matthew Gerlach <matthew.gerlach@altera.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, 
+ s32@nxp.com, Romain Gantois <romain.gantois@bootlin.com>, 
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
+ Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Emil Renner Berthing <kernel@esmil.dk>, 
+ Minda Chen <minda.chen@starfivetech.com>, Drew Fustini <fustini@kernel.org>, 
+ Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
+ Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
+ Shuang Liang <liangshuang@eswincomputing.com>, 
+ Zhi Li <lizhi2@eswincomputing.com>, 
+ Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+ "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, 
+ Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>, 
+ Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+ Samin Guo <samin.guo@starfivetech.com>, 
+ Christophe Roullier <christophe.roullier@foss.st.com>, 
+ Swathi K S <swathi.ks@samsung.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, 
+ Drew Fustini <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev, 
+ linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org, 
+ imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
+ linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev, 
+ linux-riscv@lists.infradead.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4165;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=ZivlGpi+T1c5DUoMpOPkmITE34pLl/IzVvSOHSJ88dQ=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBpDcojt3k/2PQCBq6F4SnzHXqKBXG0p9VyMcZAB
+ IR/euEb67iJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaQ3KIwAKCRARpy6gFHHX
+ cq4aEADTN+ZUS9OBISS21hcbWDotjjlsSXxfMzNstpmanMhTAjTDqTozFbZykCw0Vf274vKfVTb
+ 3g3WrNgP5cYiyZLsDLBQrRu6Ymi7HMPV/05dLA/ZwUDNCnI1z7BZ88PIdxY5BkCZVJ3GKChFHtc
+ /MO9zH6RfTWIudWrMD7Lfd9ZY6jZIvDoq773GGAi6RNBmUIuMwrmFa6KoiNx9FQ0NswFVmDySZh
+ JXxm6zVaFTbIkl9oXrLqI2XJ/gVgWH0/Z84+6CyYJJfsal7i8ARil61hGY321B8LC7SosFR+j7j
+ B++DT5/YtpyqEq7RWzvA9k+oYt2zfujGqApAhNHp98SeFy5vw7tmBvrmtAU5n+KbCm9f3NTe1i2
+ fknVSt8R40eV+g1TckJWN/2/vn4TyZd0s9D7Xa8ovqOBTJDAbL9f+suLfjhBL3R5AIF1jlWhh64
+ mk81XGCxt6IW5TnYAMUXhE+G4unUmH8c2hdj/NqoR1owhNhOADjIgBosXOV3YrxLMKT0gL57ydA
+ hvbBFUSxE6/hrs7QM6W8VUkwoGv2QB0OI8zxJo6s2F2ZMuoMMLhGpkgud1m20fPaPHx4HQTSZR5
+ +NT8ZRc9bQyTREbDWHw9J0JKcCeAP3mxkCDn1v3X1p7YmUtI4pBF/WjLgOT6OM9riUztf9yMJFV
+ h4+xLNJvvsQjMdw==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
+Add support for the firmware-managed variant of the DesignWare MAC on
+the sa8255p platform. This series contains new DT bindings and driver
+changes required to support the MAC in the STMMAC driver.
 
---RxsOAUIaAk6EjGuV
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It also reorganizes the ethqos code quite a bit to make the introduction
+of power domains into the driver a bit easier on the eye.
 
-Thomas,
+The DTS changes will go in separately.
 
-On Tue, Oct 28, 2025 at 07:39:07PM +0000, Conor Dooley wrote:
-> Thomas, Junhui,
->=20
-> On Tue, Oct 21, 2025 at 05:41:35PM +0800, Junhui Liu wrote:
-> > This introduces initial support for the Anlogic DR1V90 SoC [1] and the
-> > Milianke MLKPAI-FS01 [2] board.
-> >=20
-> > The DR1V90 is a RISC-V based FPSoC from Anlogic, featuring a Nuclei
-> > UX900 [3] core as its processing system (PS) and 94,464 LUTs in the
-> > programmable logic (PL) part. The Milianke MLKPAI-FS01 board is one of
-> > the first platforms based on this SoC, with UART1 routed to a Type-C
-> > interface for console access.
-> >=20
-> > Tested on the Milianke MLKPAI-FS01 board with both the vendor's OpenSBI
-> > and the not-yet-upstreamed mainline OpenSBI [4], as well as the vendor=
-=E2=80=99s
-> > U-Boot. Because the vendor=E2=80=99s OpenSBI is loaded at 0x1f300000, w=
-e have
-> > to additionally reserve the DRAM region 0x1fe00000=E2=80=930x1fffffff t=
-o prevent
-> > overlap if using vendor's OpenSBI.
-> >=20
-> > Link: https://www.anlogic.com/product/fpga/saldragon/dr1 [1]
-> > Link: https://www.milianke.com/product-item-104.html [2]
-> > Link: https://nucleisys.com/product/900.php [3]
-> > Link: https://github.com/pigmoral/opensbi/tree/dr1v90 [4]
-> > ---
-> > Changes in v3:
-> > - Update DT binding to use ACLINT instead of CLINT
-> > - Drop MAINTAINERS patch
-> > - Rebase on v6.18-rc1
-> > - Link to v2: https://lore.kernel.org/r/20250922-dr1v90-basic-dt-v2-0-6=
-4d28500cb37@pigmoral.tech
-> >=20
-> > Changes in v2:
-> > - Add MAINTAINERS entry for the DR1V90 platform
-> > - Remove the riscv,isa property of cpu and reorder propertyies
-> > - Fix clint base address in the dtsi
-> > - Change the memory node to cover the full 512MB RAM in board dts
-> > - Link to v1: https://lore.kernel.org/r/20250721-dr1v90-basic-dt-v1-0-5=
-740c5199c47@pigmoral.tech
-> >=20
-> > ---
-> > Junhui Liu (13):
-> >       dt-bindings: vendor-prefixes: Add Anlogic, Milianke and Nuclei
-> >       dt-bindings: riscv: Add Nuclei UX900 compatibles
-> >       dt-bindings: riscv: Add Anlogic DR1V90
-> >       dt-bindings: interrupt-controller: Add Anlogic DR1V90 PLIC
-> >       dt-bindings: interrupt-controller: Add Anlogic DR1V90 ACLINT MSWI
-> >       dt-bindings: interrupt-controller: Add Anlogic DR1V90 ACLINT SSWI
-> >       dt-bindings: timer: Add Anlogic DR1V90 ACLINT MTIMER
-> >       dt-bindings: serial: snps-dw-apb-uart: Add Anlogic DR1V90 uart
-> >       irqchip/aclint-sswi: Add Nuclei UX900 support
->=20
-> I'm happy enough with this series to grab it, but while I don't mind
-> taking some trivial binding changes with it, I don't want to take an
-> irqchip driver patch. Would you be able to apply the irqchip stuff
-> Thomas?
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v5:
+- Name the DT binding document after the new compatbile
+- Add missing space
+- Make the power-domains limits stricter
+- Link to v4: https://lore.kernel.org/r/20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org
 
+Changes in v4:
+- Remove the phys property from the SCMI bindings
+- Mark the power-domain-names property as required
+- Set maxItems for power-domains to 1 for all existing bindings to
+  maintain the current requirements after modifying the value in the
+  top-level document
+- Link to v3: https://lore.kernel.org/r/20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org
 
-Could you pick up 4-6 and 9 here please?
+Changes in v3:
+- Drop 'power' and 'perf' prefixes from power domain names
+- Rebase on top of Russell's changes to dwmac
+- Rebase on top of even more changes from Russell that are not yet
+  in next (E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk)
+- Link to v2: https://lore.kernel.org/all/20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org/
 
---RxsOAUIaAk6EjGuV
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes in v2:
+- Fix the power-domains property in DT bindings
+- Rework the DT bindings example
+- Drop the DTS patch, it will go upstream separately
+- Link to v1: https://lore.kernel.org/r/20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org
 
------BEGIN PGP SIGNATURE-----
+---
+Bartosz Golaszewski (8):
+      dt-bindings: net: qcom: document the ethqos device for SCMI-based systems
+      net: stmmac: qcom-ethqos: use generic device properties
+      net: stmmac: qcom-ethqos: improve typing in devres callback
+      net: stmmac: qcom-ethqos: wrap emac driver data in additional structure
+      net: stmmac: qcom-ethqos: split power management fields into a separate structure
+      net: stmmac: qcom-ethqos: split power management context into a separate struct
+      net: stmmac: qcom-ethqos: define a callback for setting the serdes speed
+      net: stmmac: qcom-ethqos: add support for sa8255p
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaQzWjgAKCRB4tDGHoIJi
-0pjLAP4i3LKjrcugZ1SHa8IN8d1ahJjzKig/a42m3C3BLhx/6AD8CjGNPrqdnGjb
-X9OAq+b6bdQXfUDl2Y1epPRbb3x1AwE=
-=g1P8
------END PGP SIGNATURE-----
+ .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |   3 +
+ .../bindings/net/altr,socfpga-stmmac.yaml          |   3 +
+ .../bindings/net/amlogic,meson-dwmac.yaml          |   3 +
+ .../devicetree/bindings/net/eswin,eic7700-eth.yaml |   3 +
+ .../devicetree/bindings/net/intel,dwmac-plat.yaml  |   3 +
+ .../bindings/net/loongson,ls1b-gmac.yaml           |   3 +
+ .../bindings/net/loongson,ls1c-emac.yaml           |   3 +
+ .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |   3 +
+ .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |   3 +
+ .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |   3 +
+ .../devicetree/bindings/net/qcom,ethqos.yaml       |   3 +
+ .../bindings/net/qcom,sa8255p-ethqos.yaml          |  98 ++++++
+ .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |   3 +
+ .../bindings/net/renesas,rzv2h-gbeth.yaml          |   3 +
+ .../devicetree/bindings/net/rockchip-dwmac.yaml    |   3 +
+ .../devicetree/bindings/net/snps,dwmac.yaml        |   5 +-
+ .../bindings/net/sophgo,cv1800b-dwmac.yaml         |   3 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml          |   3 +
+ .../bindings/net/starfive,jh7110-dwmac.yaml        |   3 +
+ .../devicetree/bindings/net/stm32-dwmac.yaml       |   3 +
+ .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |   3 +
+ .../devicetree/bindings/net/thead,th1520-gmac.yaml |   3 +
+ .../bindings/net/toshiba,visconti-dwmac.yaml       |   3 +
+ MAINTAINERS                                        |   1 +
+ drivers/net/ethernet/stmicro/stmmac/Kconfig        |   2 +-
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 342 +++++++++++++++++----
+ 26 files changed, 448 insertions(+), 63 deletions(-)
+---
+base-commit: 9c0826a5d9aa4d52206dd89976858457a2a8a7ed
+change-id: 20250704-qcom-sa8255p-emac-8460235ac512
 
---RxsOAUIaAk6EjGuV--
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
