@@ -1,161 +1,135 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0406F320A38;
-	Fri,  7 Nov 2025 11:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B2533F8A6;
+	Mon, 10 Nov 2025 20:09:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762514541; cv=none; b=YcoJ9TDgV9D8m/Ed3E4aXgDvZ0hiGCk8UfSeqiRmfE8C+cxESbq+4sSYpy3K2l9spQLwVGbvXkHw1IJrYbZIjwQOzrhZgyYFFOEHvZYOv7S09DxZHBBEhAsbLnHywSUqhU+zghyARghSQyFnO8zn+Ao/utW3B5bAZngg5eBFThE=
+	t=1762805358; cv=none; b=XBOFPDMF8Jo4sSgjh0BBahNYdjraf3UJUpLCwjB/P5IdOzrCYCQDj9N5LXNvV/JEWuhtVuWIfvchja+e2C/hZpVzueZf50+NMDz52SZrpX4MS1gC0iBdp67oQjf738oyz5xNrDatlMcu4GUHQikMtBzg2hq1rpAhXl/453pvutw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762514541; c=relaxed/simple;
-	bh=WqJuyrothph0jJUBiuUUbS1FvhvPkDqkS2NhaeN0xV0=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=QredjCOU8zlUyJ/7Joi7+QKVPC9ei+fvD3PXcAJJJxuUsxNT4uCPqOj9sMVPA6Zjk912FkRg2N2CLgTK0h5HiDZfB4/bR2h9z4MIlCt32NTPLoKD/ckNI6ig35/s1nS05XBUJh5Kd6aL7LdD6svEEe2xkFLsV0d2vEmyOddL3cc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rImSqDdr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1762805358; c=relaxed/simple;
+	bh=0iOhbGLxfSoLRBYgw+mP+RQa87LiNVPt6z/z3LThk5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u/KO+aqcWae+8d3sflX7rxMV+sBE/nrpnT5e5VWLtCHVIKJJSZ3p8mLKjJOceuRCinyQpdBcPST2XABYwCsxShQ2aX4dkoWBgogL+WvlW8sXqtTgmASKOsL/6wq/26jqQMhjORHDoNIPxEaeDbaLx6qCURtZRYHZ8o/vqoF42R0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QcpUyVdm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rImSqDdr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45321C4CEF7;
-	Fri,  7 Nov 2025 11:22:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QcpUyVdm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50174C4CEF5;
+	Mon, 10 Nov 2025 20:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1762514540;
-	bh=WqJuyrothph0jJUBiuUUbS1FvhvPkDqkS2NhaeN0xV0=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=rImSqDdr0csAuwceoiZMORIrJXnobUCP+yoqx199IwW4RPtIeHWgGg8yhQ45V/D7R
-	 HxCBJlEMisUSTZWQ74AkbgFanp3OacerkO8+FsunvIN8Qv1PJjoKvEhbkIBisz2yNh
-	 fHEnA2G6Z+rnjMkyoYcahxv0PRsrM8NiFmSYDw5XFjOljLa3mMJnwZAikRLma8aHey
-	 0V3PWYoagJTX1nuIdJ2Oom+6PchZMhCgWc6c354u4h/wXc/BosroSeZA0hazMf3txS
-	 iSFPT4TBGUlSnwuvzF4pqevVMyluivzg/6sz2Tim0ZSb22VBqsrJyyImM6xekisJtj
-	 QhXJiXhB/cEDw==
-Date: Fri, 07 Nov 2025 05:22:18 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1762805357;
+	bh=0iOhbGLxfSoLRBYgw+mP+RQa87LiNVPt6z/z3LThk5Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QcpUyVdmcLgbVnPvtvG5sn+9VBwKYizaBkOPJ4X74CZDnGzJtx7BAJ+tIxFT21Fc3
+	 kuqmvrJf3ya8gDyeZhjrs97LF4iKzBJX+0qjLU2uDBpRj33RsHW7WQe0f1a6wMULsK
+	 MHACPV9+uXAHvFPFb8X1myONhP1kPiEGf/spaX/s4HySFB9r8akxvZuqLJRMmHyzOj
+	 WQUq3suhO1/hWXwR5IdxvwzYWwP5s0d0pAsX0p+V74Gc+MZCCi+JLZEkAY6sRJwvNO
+	 mRp3nvkU4CihCyV3xqso5fKJMu09coOWxk01X2N2w3NYFxPA5T4LgFDolk3DbjgZ0F
+	 1MBO1cOUQqWug==
+Date: Mon, 10 Nov 2025 20:09:10 +0000
+From: Simon Horman <horms@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	netdev@vger.kernel.org, devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>, Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH v7 3/3] net: stmmac: dwmac-sophgo: Add phy interface
+ filter
+Message-ID: <aRJGZjgTgcjZgIqe@horms.kernel.org>
+References: <20251107111715.3196746-1-inochiama@gmail.com>
+ <20251107111715.3196746-4-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: linux-stm32@st-md-mailman.stormreply.com, 
- Eric Dumazet <edumazet@google.com>, Fabio Estevam <festevam@gmail.com>, 
- David Wu <david.wu@rock-chips.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Samin Guo <samin.guo@starfivetech.com>, linux-amlogic@lists.infradead.org, 
- netdev@vger.kernel.org, imx@lists.linux.dev, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- linux-renesas-soc@vger.kernel.org, Clark Wang <xiaoning.wang@nxp.com>, 
- Jerome Brunet <jbrunet@baylibre.com>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, Guo Ren <guoren@kernel.org>, 
- Jose Abreu <joabreu@synopsys.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Shuang Liang <liangshuang@eswincomputing.com>, 
- Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
- Swathi K S <swathi.ks@samsung.com>, linux-arm-msm@vger.kernel.org, 
- Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
- linux-rockchip@lists.infradead.org, Frank Li <Frank.Li@nxp.com>, 
- Emil Renner Berthing <kernel@esmil.dk>, 
- Shangjuan Wei <weishangjuan@eswincomputing.com>, 
- Vinod Koul <vkoul@kernel.org>, Richard Cochran <richardcochran@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Maxime Ripard <mripard@kernel.org>, linux-arm-kernel@lists.infradead.org, 
- Jan Petrous <jan.petrous@oss.nxp.com>, 
- Drew Fustini <dfustini@tenstorrent.com>, s32@nxp.com, 
- Conor Dooley <conor+dt@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Samuel Holland <samuel@sholland.org>, Kevin Hilman <khilman@baylibre.com>, 
- devicetree@vger.kernel.org, Chen-Yu Tsai <wens@kernel.org>, 
- linux-mips@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- Matthew Gerlach <matthew.gerlach@altera.com>, 
- Zhi Li <lizhi2@eswincomputing.com>, linux-sunxi@lists.linux.dev, 
- Heiko Stuebner <heiko@sntech.de>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Fu Wei <wefu@redhat.com>, Linux Team <linux-imx@nxp.com>, 
- Christophe Roullier <christophe.roullier@foss.st.com>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Keguang Zhang <keguang.zhang@gmail.com>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Romain Gantois <romain.gantois@bootlin.com>, 
- Magnus Damm <magnus.damm@gmail.com>, Drew Fustini <fustini@kernel.org>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Shawn Guo <shawnguo@kernel.org>, 
- linux-kernel@vger.kernel.org, Inochi Amaoto <inochiama@gmail.com>, 
- Jakub Kicinski <kuba@kernel.org>, sophgo@lists.linux.dev, 
- Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
- Minda Chen <minda.chen@starfivetech.com>, linux-riscv@lists.infradead.org, 
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Chen Wang <unicorn_wang@outlook.com>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <20251107-qcom-sa8255p-emac-v5-1-01d3e3aaf388@linaro.org>
-References: <20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org>
- <20251107-qcom-sa8255p-emac-v5-1-01d3e3aaf388@linaro.org>
-Message-Id: <176251453854.1709481.17350672291824662534.robh@kernel.org>
-Subject: Re: [PATCH v5 1/8] dt-bindings: net: qcom: document the ethqos
- device for SCMI-based systems
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251107111715.3196746-4-inochiama@gmail.com>
 
-
-On Fri, 07 Nov 2025 11:29:51 +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, Nov 07, 2025 at 07:17:15PM +0800, Inochi Amaoto wrote:
+> As the SG2042 has an internal rx delay, the delay should be removed
+> when initializing the mac, otherwise the phy will be misconfigurated.
 > 
-> Describe the firmware-managed variant of the QCom DesignWare MAC. As the
-> properties here differ a lot from the HLOS-managed variant, lets put it
-> in a separate file. Since we need to update the maximum number of power
-> domains, let's update existing bindings referencing the top-level
-> snps,dwmac.yaml and limit their maxItems for power-domains to 1.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Tested-by: Han Gao <rabenda.cn@gmail.com>
+> Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 > ---
->  .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |  3 +
->  .../bindings/net/altr,socfpga-stmmac.yaml          |  3 +
->  .../bindings/net/amlogic,meson-dwmac.yaml          |  3 +
->  .../devicetree/bindings/net/eswin,eic7700-eth.yaml |  3 +
->  .../devicetree/bindings/net/intel,dwmac-plat.yaml  |  3 +
->  .../bindings/net/loongson,ls1b-gmac.yaml           |  3 +
->  .../bindings/net/loongson,ls1c-emac.yaml           |  3 +
->  .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |  3 +
->  .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |  3 +
->  .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |  3 +
->  .../devicetree/bindings/net/qcom,ethqos.yaml       |  3 +
->  .../bindings/net/qcom,sa8255p-ethqos.yaml          | 98 ++++++++++++++++++++++
->  .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |  3 +
->  .../bindings/net/renesas,rzv2h-gbeth.yaml          |  3 +
->  .../devicetree/bindings/net/rockchip-dwmac.yaml    |  3 +
->  .../devicetree/bindings/net/snps,dwmac.yaml        |  5 +-
->  .../bindings/net/sophgo,cv1800b-dwmac.yaml         |  3 +
->  .../bindings/net/sophgo,sg2044-dwmac.yaml          |  3 +
->  .../bindings/net/starfive,jh7110-dwmac.yaml        |  3 +
->  .../devicetree/bindings/net/stm32-dwmac.yaml       |  3 +
->  .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |  3 +
->  .../devicetree/bindings/net/thead,th1520-gmac.yaml |  3 +
->  .../bindings/net/toshiba,visconti-dwmac.yaml       |  3 +
->  MAINTAINERS                                        |  1 +
->  24 files changed, 166 insertions(+), 1 deletion(-)
+>  .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 20 ++++++++++++++++++-
+>  1 file changed, 19 insertions(+), 1 deletion(-)
 > 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
 
-My bot found errors running 'make dt_binding_check' on your patch:
+...
 
-yamllint warnings/errors:
+> @@ -50,11 +56,23 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> +	data = device_get_match_data(&pdev->dev);
+> +	if (data && data->has_internal_rx_delay) {
+> +		plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
+> +									  false, true);
+> +		if (plat_dat->phy_interface == PHY_INTERFACE_MODE_NA)
+> +			return -EINVAL;
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml: $id: Cannot determine base path from $id, relative path/filename doesn't match actual path or filename
- 	 $id: http://devicetree.org/schemas/net/qcom,ethqos-scmi.yaml
- 	file: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/net/qcom,sa8255p-ethqos.yaml
+I'm sorry if this is a false positive. Because, more so than Russell [1], I
+confused about how about the treatment of phy_interface. But it seems that
+there is a miss match between the use of phy_fix_phy_mode_for_mac_delays()
+above and the binding.
 
-doc reference errors (make refcheckdocs):
+The call to phy_fix_phy_mode_for_mac_delays() above will return
+PHY_INTERFACE_MODE_NA unless phy_interface is PHY_INTERFACE_MODE_RGMII_ID
+or PHY_INTERFACE_MODE_RGMII_RXID.
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20251107-qcom-sa8255p-emac-v5-1-01d3e3aaf388@linaro.org
+  phy_interface_t phy_fix_phy_mode_for_mac_delays(phy_interface_t interface,
+						bool mac_txid, bool mac_rxid)
+  ...
+	if (mac_rxid) {
+		if (interface == PHY_INTERFACE_MODE_RGMII_ID)
+			return PHY_INTERFACE_MODE_RGMII_TXID;
+		if (interface == PHY_INTERFACE_MODE_RGMII_RXID)
+			return PHY_INTERFACE_MODE_RGMII;
+		return PHY_INTERFACE_MODE_NA;
+	}
+  ...
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Looking at phy_modes(), unsurprisingly, the following mappings occur:
+* "rgmii" -> PHY_INTERFACE_MODE_RGMII
+* "rgmii-id" -> PHY_INTERFACE_MODE_RGMII_ID
+* "rgmii-rxid" -> PHY_INTERFACE_MODE_RGMII_RXID
+* "rgmii-txid" -> PHY_INTERFACE_MODE_RGMII_TXID
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+And in the binding, patch 1/3 of this series, only phy-mode rgmii-txid or
+rgmii-id is allowed.
 
-pip3 install dtschema --upgrade
+But if rgmii-txid is used, PHY_INTERFACE_MODE_RGMII_TXID will be passed to
+phy_fix_phy_mode_for_mac_delays(), which will return PHY_INTERFACE_MODE_NA.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Again, I'm confused about the mapping in phy_fix_phy_mode_for_mac_delays().
+But there does seem to be some inconsistency between the binding and
+the driver implementation here.
 
+Flagged by Claude Code with https://github.com/masoncl/review-prompts/ 
+
+[1] https://lore.kernel.org/all/aPSubO4tJjN_ns-t@shell.armlinux.org.uk/
+
+...
