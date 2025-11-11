@@ -1,84 +1,98 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A67301025
-	for <sophgo@lists.linux.dev>; Mon, 10 Nov 2025 22:26:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117782FCC1D;
+	Tue, 11 Nov 2025 11:48:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762813619; cv=none; b=kTCFi5/tIM12uTLdPbg5oSJtpBVo9PvAcmQ+3qyvnULur/R5MmRurmp7nXwDvEyzSqDJmesaui5oitdFP0v0f+CPujbsfiQuH1dymCQBkkGbGPrlFlDiy48JjhLAVxy/ktrEyrUcV9QLM2qis7naLZ6EBVFoIQCYW5P7KA8YIT4=
+	t=1762861690; cv=none; b=cubzvfEkNEPLzbigtnaIyNsDCL6ZbHyZesuF3/PYEFWFt0k/CE0nFarz0fbW4aPxs4TVKt20eqS3YN5TwqqK8olsElk7dEVJ/ubSyaaSHNkE5kgP6XqwXOsi6WXGLtxQYW0mrNddhMIhMhMMEAJT2vEX5vbqRThsYO8ByAQULLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762813619; c=relaxed/simple;
-	bh=ga02Licy+YKpNgCmYN1YVytkG6Mk2o7Q83NArawwZFo=;
+	s=arc-20240116; t=1762861690; c=relaxed/simple;
+	bh=jxi1Gv6OcPtGGFXGFF2QxkwKjLaMbfnLeBrhrAyU/Tg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QOh8Hxi4fsxOoat0zexcwOJDl9IutJpQCMrVNftUy/3In+bwvgJOlWeWmqpMplErSowkFWu8c7drzB9zvQZn2q906LzfVdNrKHZL/IwYnQSE3Rf1pFJ0ayjCEAIr1RjCYGFM3RCV7f/h1WoCYK5yPigohnFSfop92NxT6hAtebU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TjgkxYtW; arc=none smtp.client-ip=209.85.210.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=eBb8CuLulkcRfgDBNrTtvai+z/CPZGRVItQRz7rSFsDqGRI2o6PT3i/ZB3TSNixW3FzznThFhMdiP46o2EBRIaaW8hEblvHrSJVBKgOrhbqUmb0z9fgIJtMfMLKa66ObFGY59erJygs8ZvthxnTwhG8FWxjduQxvhyv/pb6W4Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U8wDzG2j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TjgkxYtW"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7833765433cso4014533b3a.0
-        for <sophgo@lists.linux.dev>; Mon, 10 Nov 2025 14:26:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1762813616; x=1763418416; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xLyXGRaLm6sEsE+EXjhF05M8r/IYZLjTnBThGk29/Q8=;
-        b=TjgkxYtWx1AjvJ4VnQ+TdWEeQBkCDyUsD76L7C98UZYhu4VOAkBBjpFXwVsI7p8hk4
-         5shX6wOjPJstmeVLQKeA8VLrZsvurLOQqldI8dkmYpYa1OL5DFEgn2dOJaUXQEVT0m64
-         BdJneSeLtaGoz90ssrtwFMtKBRi44v0kvTLciMo+Sm9cTvoSxlZDkGpPP/h75gmG5LcZ
-         AUM8IK+TuA2VBRu4+9tkx/GvQ/37wDEAmSP0vvkniVk5rFKdfjMZWzaywr4TgYukzefd
-         qt5Sbf8mWL9c0ml2aPgLgAaRTCLxn0dBtOe4QKvttpgdVCGWrm8ffCTAKjj7wdapKhga
-         QI9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1762813616; x=1763418416;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xLyXGRaLm6sEsE+EXjhF05M8r/IYZLjTnBThGk29/Q8=;
-        b=pSwfyXK2EioFHzx4zXlfhfvszH4DEL0Q0zknx7/U8/mK1l4Fwz7gobShzovEijeKNA
-         /impbatZZv/53Egsl8SAkIEyv364QzgZ5xcVg08OPLphWXhpfYjfXlpSJNnMOYRw+y28
-         1p78hkwUxsA903xSqXO7ao5HQHBcv87FF+C8z7TQQYH72i52duUIj8nV5LP0ougy3cp5
-         aA8FhVLdF6bGRbp9w0xbL2ARWxkdCM1WL8UhOafi1+HeZi4isHWl20ztXFoj/JRZOMPu
-         02ld5TwJ0jLpoN5H3DG3OEP5hGombm5CHwoIe/z/qrN4+MrwukKuyWCNOP6NZjDlakqh
-         199g==
-X-Forwarded-Encrypted: i=1; AJvYcCV6MD8C7hviDWdAq51/EUdgAGD7lJTOdYGHIP4D743Rr/TBbaJcMwTeos8q5wEmlvU7e8D2hrc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwjiC7gUl/3oYQ2gVLW7gaI6Lm3Z1aMz7iWElpdChH1muYosj+T
-	1Zxx+3IPJX37KQOX9N4AJYLpzOOHH+MYJ/eAMdBapyPf+PVB+mTtj59e
-X-Gm-Gg: ASbGncsqK8x7Mege1oYQxFKOI5Xqyorl0N3u3CB8HnfE0fHhyRsh+oDOLUF57Q7xt16
-	/v2Oos4ROKLl1IY9mjFoGGHaj2VvG5eLFl+I9zcRgX8St+SGBN/cm6zSe3oLQa/4I/nnprYLTcA
-	2l1pHD5UJ4iRg7RYvxF/p50pE9vuXYxM/ucLNB/YM7dnxfcL+2e5Liw5xOk1Q/QQPIedMz5cB/e
-	7rPVMpAeSbOUPcOdW/43QLlbc0MmawxeaABpHAx634kwsBo92mias274z0zOr6SQVaQYnv3ifUU
-	IejPSKsutaRq0QIqD7e6hxsW4Y5A0lOZv5IG2W1V/7oIAyMobhZajRyEaoEsfYH5lISQVXMaGo5
-	9b0WXBVnWHfqCXXvpRvEIsNexN7PDCf6fgd28HOG5Ne7HQA8O/2B15hUBexrh5Znha3PShr0A0+
-	YWCLYO4gDwSw==
-X-Google-Smtp-Source: AGHT+IEk3kYn28lJz/C+AXXcRWMVZ9b5FI05N3tJpVXS4fy3dE0avtehbQZNj/cOBXS8KtnzWEvWzw==
-X-Received: by 2002:a05:6a20:e605:b0:357:be83:d026 with SMTP id adf61e73a8af0-357be83d02fmr681099637.35.1762813616432;
-        Mon, 10 Nov 2025 14:26:56 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ba8f8c880c5sm13710401a12.6.2025.11.10.14.26.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Nov 2025 14:26:56 -0800 (PST)
-Date: Tue, 11 Nov 2025 06:26:32 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Simon Horman <horms@kernel.org>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>, 
-	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Russell King <linux@armlinux.org.uk>, "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>, 
-	netdev@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>, 
-	Andrew Lunn <andrew@lunn.ch>
-Subject: Re: [PATCH v7 3/3] net: stmmac: dwmac-sophgo: Add phy interface
- filter
-Message-ID: <g2tqvcw7ocewzbqy7txz6sumdxeelhl4jk2s3btnnijyt572di@nrfcac6grpvn>
-References: <20251107111715.3196746-1-inochiama@gmail.com>
- <20251107111715.3196746-4-inochiama@gmail.com>
- <aRJGZjgTgcjZgIqe@horms.kernel.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U8wDzG2j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E74BC116D0;
+	Tue, 11 Nov 2025 11:47:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762861689;
+	bh=jxi1Gv6OcPtGGFXGFF2QxkwKjLaMbfnLeBrhrAyU/Tg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U8wDzG2jhPfzS4KLy6BBXjLkq8tbdJdbZ2HLPt/oCduCWbREVPz6XahhQXZNBZvqk
+	 rL61nJbROp9KbKpanxP6Xm+RhhBC2JjGt3mq5g1Vt8UeeKM8gOKgcYiPO0I2jAA8oR
+	 2vP9zcZsjezzMSY7lXp0qcTehuQ5Bvcn5PLIyv21tVd9pJmlDNPzRzYLCVga+fJVZC
+	 exeLAcTwq2GZWVxiqi/O5Hs9YfEKaR3AZUbkmkVOA0uPAeCkVjy4pmp9+BXSwywuet
+	 qQS5xfNfqALbItTHOqCEixH82CxNQPweybJmarDGuJMjWDhzcw/4Ag1g8TdQPeJwJh
+	 M8yYB1Fdu26pw==
+Date: Tue, 11 Nov 2025 11:47:53 +0000
+From: Simon Horman <horms@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
+	Fu Wei <wefu@redhat.com>,
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Shuang Liang <liangshuang@eswincomputing.com>,
+	Zhi Li <lizhi2@eswincomputing.com>,
+	Shangjuan Wei <weishangjuan@eswincomputing.com>,
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
+	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
+	Samin Guo <samin.guo@starfivetech.com>,
+	Christophe Roullier <christophe.roullier@foss.st.com>,
+	Swathi K S <swathi.ks@samsung.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-mips@vger.kernel.org, imx@lists.linux.dev,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v5 8/8] net: stmmac: qcom-ethqos: add support for sa8255p
+Message-ID: <aRMiafCQNPVDOljU@horms.kernel.org>
+References: <20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org>
+ <20251107-qcom-sa8255p-emac-v5-8-01d3e3aaf388@linaro.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -87,92 +101,122 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aRJGZjgTgcjZgIqe@horms.kernel.org>
+In-Reply-To: <20251107-qcom-sa8255p-emac-v5-8-01d3e3aaf388@linaro.org>
 
-On Mon, Nov 10, 2025 at 08:09:10PM +0000, Simon Horman wrote:
-> On Fri, Nov 07, 2025 at 07:17:15PM +0800, Inochi Amaoto wrote:
-> > As the SG2042 has an internal rx delay, the delay should be removed
-> > when initializing the mac, otherwise the phy will be misconfigurated.
-> > 
-> > Fixes: 543009e2d4cd ("net: stmmac: dwmac-sophgo: Add support for Sophgo SG2042 SoC")
-> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> > Tested-by: Han Gao <rabenda.cn@gmail.com>
-> > Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-> > ---
-> >  .../ethernet/stmicro/stmmac/dwmac-sophgo.c    | 20 ++++++++++++++++++-
-> >  1 file changed, 19 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-> 
-> ...
-> 
-> > @@ -50,11 +56,23 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
-> >  	if (ret)
-> >  		return ret;
-> >  
-> > +	data = device_get_match_data(&pdev->dev);
-> > +	if (data && data->has_internal_rx_delay) {
-> > +		plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
-> > +									  false, true);
-> > +		if (plat_dat->phy_interface == PHY_INTERFACE_MODE_NA)
-> > +			return -EINVAL;
-> 
-> I'm sorry if this is a false positive. Because, more so than Russell [1], I
-> confused about how about the treatment of phy_interface. But it seems that
-> there is a miss match between the use of phy_fix_phy_mode_for_mac_delays()
-> above and the binding.
-> 
-> The call to phy_fix_phy_mode_for_mac_delays() above will return
-> PHY_INTERFACE_MODE_NA unless phy_interface is PHY_INTERFACE_MODE_RGMII_ID
-> or PHY_INTERFACE_MODE_RGMII_RXID.
-> 
->   phy_interface_t phy_fix_phy_mode_for_mac_delays(phy_interface_t interface,
-> 						bool mac_txid, bool mac_rxid)
->   ...
-> 	if (mac_rxid) {
-> 		if (interface == PHY_INTERFACE_MODE_RGMII_ID)
-> 			return PHY_INTERFACE_MODE_RGMII_TXID;
-> 		if (interface == PHY_INTERFACE_MODE_RGMII_RXID)
-> 			return PHY_INTERFACE_MODE_RGMII;
-> 		return PHY_INTERFACE_MODE_NA;
-> 	}
->   ...
-> 
-> Looking at phy_modes(), unsurprisingly, the following mappings occur:
-> * "rgmii" -> PHY_INTERFACE_MODE_RGMII
-> * "rgmii-id" -> PHY_INTERFACE_MODE_RGMII_ID
-> * "rgmii-rxid" -> PHY_INTERFACE_MODE_RGMII_RXID
-> * "rgmii-txid" -> PHY_INTERFACE_MODE_RGMII_TXID
-> 
-> And in the binding, patch 1/3 of this series, only phy-mode rgmii-txid or
-> rgmii-id is allowed.
-> 
+On Fri, Nov 07, 2025 at 11:29:58AM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-rgmii-txid is a mistake and should be rgmii-rxid. This is because
-the mac of SG2042 add rx delay, and the phy can only add tx delay or
-no delay. So the phy-mode can only be rgmii-id or rgmii-rxid. I will
-fix it in the next version.
+...
 
-> But if rgmii-txid is used, PHY_INTERFACE_MODE_RGMII_TXID will be passed to
-> phy_fix_phy_mode_for_mac_delays(), which will return PHY_INTERFACE_MODE_NA.
-> 
-> Again, I'm confused about the mapping in phy_fix_phy_mode_for_mac_delays().
-> But there does seem to be some inconsistency between the binding and
-> the driver implementation here.
-> 
+> +static int qcom_ethqos_pd_init(struct platform_device *pdev, void *priv)
+> +{
+> +	struct qcom_ethqos *ethqos = priv;
+> +	int ret;
+> +
+> +	/*
+> +	 * Enable functional clock to prevent DMA reset after timeout due
+> +	 * to no PHY clock being enabled after the hardware block has been
+> +	 * power cycled. The actual configuration will be adjusted once
+> +	 * ethqos_fix_mac_speed() is called.
+> +	 */
+> +	ethqos_set_func_clk_en(ethqos);
+> +
+> +	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_CORE);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
+> +	if (ret) {
+> +		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
+> +		return ret;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void qcom_ethqos_pd_exit(struct platform_device *pdev, void *data)
+> +{
+> +	struct qcom_ethqos *ethqos = data;
+> +
+> +	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
+> +	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
+> +}
+> +
+>  static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
+>  {
+>  	struct plat_stmmacenet_data *plat_dat = priv->plat;
 
-I think this inconsistency begin with the change for ethernet-controller
-binding.
-https://lore.kernel.org/all/20250430-v6-15-rc3-net-rgmii-delays-v2-1-099ae651d5e5@lunn.ch/
+...
 
-And this function serves as an helper so the driver can only add
-the delay once.
+> @@ -852,28 +993,63 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	ethqos->rgmii_config_loopback_en = drv_data->rgmii_config_loopback_en;
+>  	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
+>  	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
+> -
+> -	ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
+> -	if (IS_ERR(ethqos->pm.link_clk))
+> -		return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
+> -				     "Failed to get link_clk\n");
+> -
+> -	ret = ethqos_clks_config(ethqos, true);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
+> -	if (IS_ERR(ethqos->pm.serdes_phy))
+> -		return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
+> -				     "Failed to get serdes phy\n");
+> -
+> -	ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
+>  	ethqos->serdes_speed = SPEED_1000;
+> -	ethqos_update_link_clk(ethqos, SPEED_1000);
+> +
+> +	if (pm_data && pm_data->use_domains) {
+> +		ethqos->set_serdes_speed = ethqos_set_serdes_speed_pd;
+> +
+> +		ret = devm_pm_domain_attach_list(dev, &pm_data->pd,
+> +						 &ethqos->pd.pd_list);
+> +		if (ret < 0)
+> +			return dev_err_probe(dev, ret, "Failed to attach power domains\n");
+> +
+> +		plat_dat->clks_config = ethqos_pd_clks_config;
+> +		plat_dat->serdes_powerup = qcom_ethqos_pd_serdes_powerup;
+> +		plat_dat->serdes_powerdown = qcom_ethqos_pd_serdes_powerdown;
+> +		plat_dat->exit = qcom_ethqos_pd_exit;
 
-> Flagged by Claude Code with https://github.com/masoncl/review-prompts/ 
-> 
-> [1] https://lore.kernel.org/all/aPSubO4tJjN_ns-t@shell.armlinux.org.uk/
-> 
-> ...
+Hi Bartosz,
 
-Regards,
-Inochi
+It seems that the intention of this is to ensure
+that domains turned on by qcom_ethqos_pd_init()
+are turned off again on exit or clean-up in error paths.
+
+> +		plat_dat->init = qcom_ethqos_pd_init;
+> +		plat_dat->clk_ptp_rate = pm_data->clk_ptp_rate;
+> +
+> +		ret = qcom_ethqos_pd_init(pdev, ethqos);
+> +		if (ret)
+> +			return ret;
+
+And here those domains are turned on.
+
+> +
+> +		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
+> +		if (ret)
+
+But it seems that if we reach this error path then the cleanup is not
+performed. This is because plat_dat and thus it's exit callback are
+registered until the call to devm_stmmac_pltfr_probe() towards the end of
+this function.
+
+Sorry if I'm on the wrong track here. I did dig into it.
+But this was flagged by Claude Code running
+https://github.com/masoncl/review-prompts/
+
+> +			return dev_err_probe(dev, ret,
+> +					     "Failed to enable the serdes power domain\n");
+
+...
