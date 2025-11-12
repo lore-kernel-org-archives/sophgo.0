@@ -1,90 +1,122 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99F52FC019
-	for <sophgo@lists.linux.dev>; Wed, 12 Nov 2025 08:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C3632ABD6;
+	Wed, 12 Nov 2025 17:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1762937549; cv=none; b=IlCLave6gfq0B1fO2Yxwy1h+D+nv3PfwWMhhsXFsapg5fd44goGPppANBEUggaijoBigX5Ftg+btRqgShQpM+Jc06jiGNs/pT0cEAbb/GCkih1GOsTIGQ170wr+80cV1ZMqIBLDbCud8OFVG9oKAs1AFS3bTdpzXXT3YENGKwok=
+	t=1762967887; cv=none; b=F8YLhFfSEzkSMRAsMXArr3qHh06uxQWL/gVoQbUbzMP2TiALD4GNi6OnARXPKBlLG5IsMso3ekGuI9RcMTHYmITXVlYTP39QWrDVtoavhxhDQgALdiZRSZdtLR8mvpWAFxZ31vue66G6gt2lgng8ak9ZaP68rjRr2aOCKcJS6mM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1762937549; c=relaxed/simple;
-	bh=/HupXrEtviHKeYqFWD2xOuGaa1w8dBZFeGJomcGBZZ8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iC/aIzDnpQgNqwrcXaJrEVAyg6boszA5RRU73+pD8sshrEhwe9UxsKFHhJ+BhVAXZbg7//rDGpZIbJ1d5UPVXM0MaZjum0bNigrS+OCfQWhPy7lzINRpkOllaR9i7TQnSAB4pDOexWUr5XKFCYMYFfWGm2BJOd1CxW/vIl+IUTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Ey6FdFtt; arc=none smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1762967887; c=relaxed/simple;
+	bh=lywOI3ugT5GWb9bwVFXxkmySZuCeiZT6yvSuaKP0HcU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JXWTRAO2CedNUgSWMcUgxQsSPPSl9Sq4lY53c5FkQi+NxZn8q9Tb/UZW5FiqcSRtNihhYBVXCrgneN/gaa3fgvGLoKoOO5AaxvwXOmNSsjXrrPcP5LWY1yNetY1LsGPQ+ydrPAux8ICrYgJKaJr9/6V2js7Eatwr3rXgCQ5uPSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwK61djM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Ey6FdFtt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1762937547; x=1794473547;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=/HupXrEtviHKeYqFWD2xOuGaa1w8dBZFeGJomcGBZZ8=;
-  b=Ey6FdFtt5tGy3GGU38CiF6gePomlLwHo15YNRD1BYn2Ud73Ug1K/CCmf
-   r+rOGS1JalwIrXm7RCfvHzAWZYJYA644VLA2hfC397bmGfjZzND+q4t6H
-   IC08Af4NU0U+Ew+vwP+YAq0U2vD01JKCkv0fNlPO9SnV0UJRgbHUdDXsZ
-   r7g8vj/eCb3SiLmhplzUhn58PNumQ6yMIASeS+SFU6hKYkUyYTAjp8+mQ
-   YQh3BHZI06SAfC4RUphUo6ccWRTiKkjqb3LIASwKg6pPo6paWEdyRj9Zl
-   jrmAAwQThkFIFt4r55FCUGpNKTMBx+zOPfA+eR8HVXtgc4RVHX2EGz0d6
-   w==;
-X-CSE-ConnectionGUID: /jSsOu07Q1actheXPd/yVw==
-X-CSE-MsgGUID: hP+SnGjfREWjBA+RZ7zPcg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11610"; a="64900541"
-X-IronPort-AV: E=Sophos;i="6.19,299,1754982000"; 
-   d="scan'208";a="64900541"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Nov 2025 00:52:26 -0800
-X-CSE-ConnectionGUID: PlNl9rPYTWWXs8v5DozB/g==
-X-CSE-MsgGUID: Yx4G9kIMTnG3StpM5ARJhw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.19,299,1754982000"; 
-   d="scan'208";a="219894591"
-Received: from black.igk.intel.com ([10.91.253.5])
-  by fmviesa001.fm.intel.com with ESMTP; 12 Nov 2025 00:52:25 -0800
-Received: by black.igk.intel.com (Postfix, from userid 1003)
-	id 4E2F295; Wed, 12 Nov 2025 09:52:24 +0100 (CET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Inochi Amaoto <inochiama@gmail.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	linux-phy@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>
-Subject: [PATCH v1 1/1] phy: sophgo: Remove unused of_gpio.h
-Date: Wed, 12 Nov 2025 09:52:20 +0100
-Message-ID: <20251112085220.1452530-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.50.1
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwK61djM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1882C4CEF7;
+	Wed, 12 Nov 2025 17:17:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1762967885;
+	bh=lywOI3ugT5GWb9bwVFXxkmySZuCeiZT6yvSuaKP0HcU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bwK61djMIzlYVBJc4Z+qj++gbp7r+37xPxbLaPk/yQnLIoBvSOEuXsvHZYOd7uFzw
+	 AazikNH2wSTsfKCKQoT4J7Yj/XOt83DkO+Y6752a3ur8rfvKcQyL3Md9GHy8pzJj39
+	 a+xb2ppjv/PZ2gTEf+8OjgIlhSFPRC/2nMbtXTH7MVDY4S2OpdWnD88oOqp3hdJ/eK
+	 UlUcv0XSDLkriDXp1QKO8YIKuxycCakV/M2WvQfoC9HpoLylVoXc7WuafnKiBDQ7Um
+	 EoscBrZSBliWNOgV0rJh+az/NLMf1Yj6U23fykSjLTWGDNWPI5v+dSF4nECmNMLnsz
+	 IU5A8BD7Dd8PQ==
+Date: Wed, 12 Nov 2025 17:17:57 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Junhui Liu <junhui.liu@pigmoral.tech>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@sifive.com>, linux-riscv@lists.infradead.org,
+	Inochi Amaoto <inochiama@outlook.com>, sophgo@lists.linux.dev,
+	linux-serial@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: [PATCH v3 00/13] riscv: Add initial support for Anlogic DR1V90
+Message-ID: <20251112-bazooka-dragster-cf5c508094e3@spud>
+References: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sV5/agMmM68jKYjx"
+Content-Disposition: inline
+In-Reply-To: <20251021-dr1v90-basic-dt-v3-0-5478db4f664a@pigmoral.tech>
 
-of_gpio.h is deprecated and subject to remove.
-The driver doesn't use it, simply remove the unused header.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/phy/sophgo/phy-cv1800-usb2.c | 1 -
- 1 file changed, 1 deletion(-)
+--sV5/agMmM68jKYjx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/phy/sophgo/phy-cv1800-usb2.c b/drivers/phy/sophgo/phy-cv1800-usb2.c
-index 64f8e37b4b52..6fe846534e9c 100644
---- a/drivers/phy/sophgo/phy-cv1800-usb2.c
-+++ b/drivers/phy/sophgo/phy-cv1800-usb2.c
-@@ -11,7 +11,6 @@
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/of_address.h>
--#include <linux/of_gpio.h>
- #include <linux/platform_device.h>
- #include <linux/phy/phy.h>
- #include <linux/regmap.h>
--- 
-2.50.1
+On Tue, Oct 21, 2025 at 05:41:35PM +0800, Junhui Liu wrote:
+> This introduces initial support for the Anlogic DR1V90 SoC [1] and the
+> Milianke MLKPAI-FS01 [2] board.
+>=20
+> The DR1V90 is a RISC-V based FPSoC from Anlogic, featuring a Nuclei
+> UX900 [3] core as its processing system (PS) and 94,464 LUTs in the
+> programmable logic (PL) part. The Milianke MLKPAI-FS01 board is one of
+> the first platforms based on this SoC, with UART1 routed to a Type-C
+> interface for console access.
+>=20
+> Tested on the Milianke MLKPAI-FS01 board with both the vendor's OpenSBI
+> and the not-yet-upstreamed mainline OpenSBI [4], as well as the vendor=E2=
+=80=99s
+> U-Boot. Because the vendor=E2=80=99s OpenSBI is loaded at 0x1f300000, we =
+have
+> to additionally reserve the DRAM region 0x1fe00000=E2=80=930x1fffffff to =
+prevent
+> overlap if using vendor's OpenSBI.
+>=20
+> Link: https://www.anlogic.com/product/fpga/saldragon/dr1 [1]
+> Link: https://www.milianke.com/product-item-104.html [2]
+> Link: https://nucleisys.com/product/900.php [3]
+> Link: https://github.com/pigmoral/opensbi/tree/dr1v90 [4]
 
+Thanks for grabbing the irqchip stuff Thomas.
+
+I've applied this, with myself listed as maintainer. I set the status to
+"Odd Fixes" because I will be doing no work on it and only applying
+patches that people send in. I'll happy pass the platform off to someone
+qualified to maintain it, should that person be willing to do so :)
+
+Patches are here:
+https://git.kernel.org/pub/scm/linux/kernel/git/conor/linux.git/log/?h=3Dan=
+logic-initial
+
+I'll submit as a standalone PR to Arnd et al over in the soc group for
+the next release.
+
+Cheers,
+Conor.
+
+--sV5/agMmM68jKYjx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaRTBRQAKCRB4tDGHoIJi
+0m7BAQD1yYi9jfzMwFoKsn729d+GEAmzldurXKdZYtAcmWmIdAEAxWTgsRJKilvT
+RFkLQvvfFeBChW/ncbEBG5CxBatGEg0=
+=CwfP
+-----END PGP SIGNATURE-----
+
+--sV5/agMmM68jKYjx--
