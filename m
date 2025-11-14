@@ -1,60 +1,60 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1687B2FBDE9;
-	Fri, 14 Nov 2025 09:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677D6328260
+	for <sophgo@lists.linux.dev>; Fri, 14 Nov 2025 15:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763111728; cv=none; b=qtxdOXwzwmR+iSFKbXm7vBxiDWrjjhe61UH7qXclPMuUYT89S6jG6Pfw5v0lY/jXWBEWexCJ4WD7qecAa3z8Zoac5/HC/7ozKwmQYIm7sdmZf/JhntMlSETE3IzTWqY97PXMLv6wer5O4Tv5PS5SATPyGm8JoGo0FVENObEWiN8=
+	t=1763134058; cv=none; b=gJOubkqmPhD5NKtfzVId41B0/p1SDbqxGGwLjaCR4na9EknwlS2Bmr89fniongXQRszWO1NUReGSeZrUFtQcgkbOWstkg5/eshNdKrWMajCtkgRN/Jzolz2uew40DtHh4VqYpX447G3lLS8SR96c5nd2sansPgn4eeWbK4Haakw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763111728; c=relaxed/simple;
-	bh=uIoL6F17tP0jesir1V6cycmjCPl3jlFWKbnDbifqVNU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ew44PmuqCHJEvQAWbobqBOL1ph22AA0j85BKLSV26rHe+MSqC7Lr1jgjg1Oj++FIFRf1p4cKLjihbJXv6flsqpMRNvYtTFVnxxH02L1WgNx4Ry6PWDfaMgDrOTjlyQPzV5l+6cdrGWyYCME2fz2FkPX3y6q+VMEAz4SLtkO8GZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LrPTgg0j; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1763134058; c=relaxed/simple;
+	bh=mu2YNn50UMDRZXKZjg2XxkHg0xLTlZF3qSBikoeevQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=nI3EzMrsYyArJEeVtTFpc/J8peta46EuQiKaKKyx5F+boGwRwjL3tFrzCYSyLEgGT02sL/o01kcrg3bRyT2h4aZDsomZUwKlRhM0C6sbhlahM9lGExycVSPNGSwnMAQzQ6G5wmQuR9ElTgGhJmoxF7r8PG4zIAEjJ77k0rT8IkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Zn9Awb85; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LrPTgg0j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A643AC4CEF8;
-	Fri, 14 Nov 2025 09:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763111727;
-	bh=uIoL6F17tP0jesir1V6cycmjCPl3jlFWKbnDbifqVNU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LrPTgg0jchX4Ugutwsxk2kal2kbS9DxT4VFtFczn+X5exV8VYs6kZIojrfoayxUqE
-	 zzdiEO3q3qjna1vVu88ui0pLLODqJD1bTpfPt7y73u7cSzsuIxL3ve+XtyC2gOo97u
-	 pno6F4BUb47da/BARTZVBu/2SFBfKFIqDdb56AxXeNCnaUDjIVDJPCVMR86CKlG83/
-	 k7FQpGkPtb/QN3jSJzZ+HeoQOOOnS5stT9LC+2vftjet7p5wveEzKACaXSgSSY+UBw
-	 s+DSZOJ5sgV3UgwG7rBFuT4BnpLbIEdxlSNB4fCDrcpL4HTqRN3Ef0CuHuIFBu3e1h
-	 HhMGtc4ZbWzTA==
-Date: Fri, 14 Nov 2025 09:15:20 +0000
-From: Simon Horman <horms@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, Icenowy Zheng <uwu@icenowy.me>,
-	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <ziyao@disroot.org>,
+	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Zn9Awb85"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=x8I9KPnocTwYvke4KmXVCDz7cZG6pMchNENixp9PaBs=; b=Zn9Awb85lPONKsoStmaW7puSJd
+	sWvTakfmHty+CMm9yYGn2u9kg/IUnrIviU8J6r5+kbjT2c+0wtalE3+CQn/03msl6F6/VZrPMbHGN
+	SIUgk6n5hY7iVXH8HC565xoQMEjiJg6gFliLTIarrIhlSYHmFiGQ0rUDvcG+D9jhTV/iuCzoMyxLg
+	26hEe04rdRWNm3bEIBDiqg1tYbPZAsQo3Y9Tamx1CNrxYEHaKhKoVwZgm9ogMPW3psyb12bFKmQd8
+	rmH+Xyh4lmrtsZACjXvvFBQRK4WyREdITOuOn74qX++CZCzNG5vHB5w1eAVUvsJMW3pl2a4KDOZUd
+	HTD62yYg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35954)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vJvho-0000000075e-1H7F;
+	Fri, 14 Nov 2025 15:27:20 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vJvhk-000000005wa-1i8p;
+	Fri, 14 Nov 2025 15:27:16 +0000
+Date: Fri, 14 Nov 2025 15:27:16 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Chen Wang <unicorn_wang@outlook.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
 	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>
-Subject: Re: [PATCH v8 2/3] net: phy: Add helper for fixing RGMII PHY mode
- based on internal mac delay
-Message-ID: <aRbzKI3NpXPv-JpK@horms.kernel.org>
-References: <20251114003805.494387-1-inochiama@gmail.com>
- <20251114003805.494387-3-inochiama@gmail.com>
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, sophgo@lists.linux.dev
+Subject: [PATCH net-next 00/11] net: stmmac: clean up plat_dat
+ allocation/initialisation
+Message-ID: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -63,20 +63,22 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251114003805.494387-3-inochiama@gmail.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Fri, Nov 14, 2025 at 08:38:04AM +0800, Inochi Amaoto wrote:
-> The "phy-mode" property of devicetree indicates whether the PCB has
-> delay now, which means the mac needs to modify the PHY mode based
-> on whether there is an internal delay in the mac.
-> 
-> This modification is similar for many ethernet drivers. To simplify
-> code, define the helper phy_fix_phy_mode_for_mac_delays(speed, mac_txid,
-> mac_rxid) to fix PHY mode based on whether mac adds internal delay.
-> 
-> Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+This series cleans up the plat_dat allocation and initialisation,
+moving common themes into the allocator.
 
-Reviewed-by: Simon Horman <horms@kernel.org>
+This results in a nice saving:
 
+ drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c  | 43 +---------------
+ .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 22 +-------
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c |  1 -
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h       |  2 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  | 34 ++++++++++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c   | 39 +-------------
+ .../net/ethernet/stmicro/stmmac/stmmac_platform.c  | 60 ++++------------------
+ 7 files changed, 53 insertions(+), 148 deletions(-)
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
