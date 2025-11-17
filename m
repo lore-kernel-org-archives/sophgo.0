@@ -1,186 +1,109 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7372B335BC5
-	for <sophgo@lists.linux.dev>; Fri, 14 Nov 2025 15:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B89316182
+	for <sophgo@lists.linux.dev>; Mon, 17 Nov 2025 07:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763134173; cv=none; b=Jc2GQu2Ug9kQzdM7j0HbzKgIaYT826tlND6u8MDZIMdySSdaq6AsJf3WNLFmkrA88O98A2xjPbUTn2oP5c8bQzabj+4zCIzSWDpis6gKxhrjUQWIoaeg5oPv51c5Ss3L/XJZiyEItoAiHQANJw8rG3EReeKQEoWeVomn9k70AHk=
+	t=1763366074; cv=none; b=th827KccwPQUw9LJr1Rt33vQhQjUvSemYu161hVKjNKQARRVoNXAiI5oJyDQAYLfYDuFKG9cg9EXd56DDzBM7BblPqExJjWh47CgRJRuA72kh9+xABrha71RA6voMnX5zhmN4cfJ1QP0m28aJe1sXVrnySdRFQZwfC9H51b0MFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763134173; c=relaxed/simple;
-	bh=buLEXxKTio/q7yy+nF9f8FXb1Aqqxw5iQi6XWS+mvN8=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=dFiVCXyoDgG6FMGjiWnvjDTgp+ZKW6qrW49HbyqAMZhwNOPNjXoQJJINBM1OGvQQjrubGNWE3cVmmfgOpB7CgQFjZeMLMxiFJwhj+Ijj4QTKtuJA/RZqU4ai43DFObgZ/jyD53lOSS2GwOXHdDO0UUp88dOPn4GlJoLILGDs/Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=MLVrMTf4; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+	s=arc-20240116; t=1763366074; c=relaxed/simple;
+	bh=YGc8Ft9DASPI0bBxZnU24htuMBkWHAOG+ihNABWr+Q8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A8vcF7SCbivZ0w5J0dXZ6P64sUx1Uq+8tWPVqd1YpemZ0IoZ+1nRRZ6lOWHvACJ/knc02vH7sIs2IXRlrYjgHjGj1u/8Z2ORM/qjq9DLCXVjAIoUW1JAcSUyH9QUKvhdxEsSyhmqCPrewl/qSXUz9clWQEijMMjf6xhbJEqN2o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBfKiDZ5; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="MLVrMTf4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=qmAr7y1MZIR7+UMwfpzen+bn9PyappMKRUAOO+ujmB0=; b=MLVrMTf4O/qqzJTMxOQnuOj8K0
-	cmyBJ65/oaZbjSaRY+CfruCbgSfG9Dze66kdVsNBnMrfsmtHlfmZLv5hUxJQRnPoKpuT1wEfLybk7
-	mK7mcfC9K9pJXie7IOkXZL2wLZb/SuE2JigLEVDfF4ByYjg/gb4D5Gr1fZlutfa/cQIlq4bSwPNQF
-	RrTCfbZEhJnw/rK+PQOKJfveRVD2Lp2aUMthPwnnMbKCfeDHiWzG/OTGTUqGmTn7F55H7fFYuEOkp
-	5b3+A4rATAPtjujPtlb6Qxml3R5BwfGxEVCnhD5EahynJvS8ylhaAHKeWIRSVaQ3gKKRaRcEEl+K+
-	SiQNTjBw==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:58390 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vJvjh-0000000079N-1Iao;
-	Fri, 14 Nov 2025 15:29:17 +0000
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vJvjf-0000000EVkO-1ZaO;
-	Fri, 14 Nov 2025 15:29:15 +0000
-In-Reply-To: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
-References: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBfKiDZ5"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-bbf2c3eccc9so3482955a12.0
+        for <sophgo@lists.linux.dev>; Sun, 16 Nov 2025 23:54:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1763366071; x=1763970871; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YJFYXjrZqLDFgZC57MuR9/7D9zTgqgt6RRzSRexdHss=;
+        b=cBfKiDZ507qTslPzQEdfGo26pOhr/dzyZSyTO6De1UICJZodnMss2mx1lYIbWhrTf4
+         spO4V0ZxVFiYD/YKZplrKAnYE9xslWg09+Rj/7eeudnlyS0OwmtSU8wavuvgdCnwfvsd
+         KPhjbIiJvroA1GxnfGZpJSwPdxkbocrF/7Dz0GiUAaDKhdj7hpt9rqNFGiVuN6PZrn25
+         n0Ak+sWGg8NKffK0B17AxLI8ZBH2oR1ebH7F429HS4IBg5950U9n7VHsSLfUMu6wOE4v
+         6JQJl2eFn696K7oZInf6M8TkUg4h/VteRHCB0YG85JNwowJIc4Br675NCZ7tTOAsKzIB
+         PwnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763366071; x=1763970871;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=YJFYXjrZqLDFgZC57MuR9/7D9zTgqgt6RRzSRexdHss=;
+        b=T6StWZXzVgs7eg0wQKpiz/uiWUBevoQCTLHVRaBA/EHuYPJb8scsTc7ia6mjT4DtYa
+         k/NgJjLJV58qWwuOtYSfQhm1CJLUtJ1AD5w1ayDPSnosIYVemWd7pqKmADLE5jDF6Y60
+         W8mU5JHC1olX+R9vnM8fRcuSzTIJ9WomE9IEy+AkWDQz8sB7c6y9Eadpt/Mai0lOCRp1
+         aaIToeBGj9W45QQTU1XgLOTvUyIP/d2YsdJPTjxfZ+SmbqrvqhN6DigP1tEtJKWMQipL
+         je44S9LQIPoVSvjjCadE5e1H0+RzUtQ10ZhmanQ5MTC1Q3odtyJRIFZgpeUBKjU40hIY
+         9Seg==
+X-Forwarded-Encrypted: i=1; AJvYcCUs0MM6odx+4uC/vb7LYAC4np8G8HQZ9nTpjc8dWqMokNiaWsqFz2e5lGTuhsjDk1yv0rsg8Xk=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy0Sl14g70TYxk3Mu/OAv6n/Yv8IZOfGNN4HcUaYGSza7qQbFtv
+	NiJA8uUKcbNbkfT2/Ul5EKicVvxJ4lSDq1JKlxdRCAYL0Iyr/OeS5WTtpZEJEA==
+X-Gm-Gg: ASbGncv17Aw0bcCLXY0KwiaTWphvni08Rr+7qHzCGdKDyxFblpKyzLkKP7i1mlBsusf
+	2pSm61aiTm34Pg+6v379AoLSOxUtjup4n/EWPC9uh4IT1LF/bT3uCUYKdGNvaGM379zCts29nnB
+	MLl5rx5cQ1XRK5eTMXZjsCBAz5X2/ASChj77L1osIj4YEZqNtJv9T5KlhS021OnrhSwhsVCLTHn
+	8XYwsQOYwYyGjVhY2P6NbKgiJSglysCAwJf04AtO/Aef57pPF7S4zBcqB4buGXTZd160V020sDS
+	EPYh1V/0B+k48K2yJfOKT3dNg5l9z0sBVXRnO5x+xQ5dSY0tc+rvIJGo7e1bIcYeGdTnZThXVg4
+	lDvtcWPRndGvPIIPKTnnu2xzcZnSldfuowKgnpBNeC5n5cs0+00EHOvIqNParaKba+iQe94yruF
+	M=
+X-Google-Smtp-Source: AGHT+IG9sGqvuDwl6M8wyl+rjAQw7Vc6OPhJaA3ppAqLpuVnEaDJYf6M8j/2uygP8YUk8imuBKovyw==
+X-Received: by 2002:a05:693c:60c6:b0:2a4:86e5:6b2a with SMTP id 5a478bee46e88-2a49af801a3mr4018516eec.14.1763366071370;
+        Sun, 16 Nov 2025 23:54:31 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2a49d9ead79sm57344385eec.1.2025.11.16.23.54.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Nov 2025 23:54:30 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	sophgo@lists.linux.dev
-Subject: [PATCH net-next 11/11] net: stmmac: remove unnecessary .pkt_route
- queue initialisation
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Ze Huang <huangze@whut.edu.cn>,
+	Longbin Li <looong.bin@gmail.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v5 0/3] riscv: sophgo: add top syscon device for cv18xx
+Date: Mon, 17 Nov 2025 15:53:57 +0800
+Message-ID: <176336602776.743994.11109487529493161809.b4-ty@gmail.com>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20251101014329.18439-1-looong.bin@gmail.com>
+References: <20251101014329.18439-1-looong.bin@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vJvjf-0000000EVkO-1ZaO@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Fri, 14 Nov 2025 15:29:15 +0000
+Content-Transfer-Encoding: 8bit
 
-PCI drivers explicitly set .pkt_route to zero. However, as the struct
-is allocated using devm_kzalloc(), all members default to zero unless
-explicitly initialised. Thus, explicitly setting these to zero is
-unnecessary. Remove these. This leaves only stmmac_platform.c where
-this is explicitly initialised depending on DT properties.
+On Sat, 01 Nov 2025 09:43:20 +0800, Longbin Li wrote:
+> Add top syscon device bindings related DTS change for CV1800.
+> 
 
-$ grep '\.pkt_route =' *.c
-dwmac-intel.c: plat->rx_queues_cfg[0].pkt_route = 0x0;
-dwmac-intel.c: plat->rx_queues_cfg[i].pkt_route = 0x0;
-dwmac-loongson.c: plat->rx_queues_cfg[0].pkt_route = 0x0;
-stmmac_main.c: if (priv->plat->rx_queues_cfg[queue].pkt_route == 0x0)
-stmmac_pci.c: plat->rx_queues_cfg[0].pkt_route = 0x0;
-stmmac_pci.c: plat->rx_queues_cfg[i].pkt_route = 0x0;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = PACKET_AVCPQ;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = PACKET_PTPQ;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = PACKET_DCBCPQ;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = PACKET_UPQ;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = PACKET_MCBCQ;
-stmmac_platform.c: plat->rx_queues_cfg[queue].pkt_route = 0x0;
+Applied to dt/riscv, thanks!
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c     | 9 +--------
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c  | 3 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c      | 7 +------
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 2 --
- 4 files changed, 2 insertions(+), 19 deletions(-)
+[1/3] dt-bindings: soc: sophgo: add TOP syscon for CV18XX/SG200X series SoC
+      https://github.com/sophgo/linux/commit/565c450124c105a0b4f4ff3265e19502d44bf23b
+[2/3] riscv: dts: sophgo: Add syscon node for cv18xx
+      https://github.com/sophgo/linux/commit/126a1b3c61cbec15ffaadf141adb9c4163da1757
+[3/3] riscv: dts: sophgo: Add USB support for cv18xx
+      https://github.com/sophgo/linux/commit/e307248a3c2df4432a7bbbde306ffcb33ec55898
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-index 72f6acde544f..8938e7a59925 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -569,9 +569,6 @@ static void common_default_data(struct plat_stmmacenet_data *plat)
- 	plat->force_sf_dma_mode = 1;
- 
- 	plat->mdio_bus_data->needs_reset = true;
--
--	/* Disable RX queues routing by default */
--	plat->rx_queues_cfg[0].pkt_route = 0x0;
- }
- 
- static struct phylink_pcs *intel_mgbe_select_pcs(struct stmmac_priv *priv,
-@@ -612,13 +609,9 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
- 
- 	plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
- 
--	for (i = 0; i < plat->rx_queues_to_use; i++) {
-+	for (i = 0; i < plat->rx_queues_to_use; i++)
- 		plat->rx_queues_cfg[i].mode_to_use = MTL_QUEUE_DCB;
- 
--		/* Disable RX queues routing by default */
--		plat->rx_queues_cfg[i].pkt_route = 0x0;
--	}
--
- 	for (i = 0; i < plat->tx_queues_to_use; i++) {
- 		plat->tx_queues_cfg[i].mode_to_use = MTL_QUEUE_DCB;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-index c64a24bb060f..5f9472f47e35 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -98,9 +98,6 @@ static void loongson_default_data(struct pci_dev *pdev,
- 	/* Increase the default value for multicast hash bins */
- 	plat->multicast_filter_bins = 256;
- 
--	/* Disable RX queues routing by default */
--	plat->rx_queues_cfg[0].pkt_route = 0x0;
--
- 	plat->clk_ref_rate = 125000000;
- 	plat->clk_ptp_rate = 125000000;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c
-index 2f45b7986903..2fd4660838bb 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c
-@@ -27,9 +27,6 @@ static void common_default_data(struct plat_stmmacenet_data *plat)
- 	plat->force_sf_dma_mode = 1;
- 
- 	plat->mdio_bus_data->needs_reset = true;
--
--	/* Disable RX queues routing by default */
--	plat->rx_queues_cfg[0].pkt_route = 0x0;
- }
- 
- static int stmmac_default_data(struct pci_dev *pdev,
-@@ -77,10 +74,8 @@ static int snps_gmac5_default_data(struct pci_dev *pdev,
- 	}
- 
- 	plat->rx_sched_algorithm = MTL_RX_ALGORITHM_SP;
--	for (i = 0; i < plat->rx_queues_to_use; i++) {
-+	for (i = 0; i < plat->rx_queues_to_use; i++)
- 		plat->rx_queues_cfg[i].mode_to_use = MTL_QUEUE_DCB;
--		plat->rx_queues_cfg[i].pkt_route = 0x0;
--	}
- 
- 	plat->bus_id = 1;
- 	plat->phy_interface = PHY_INTERFACE_MODE_GMII;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-index e769638586fe..1fefa6c55db1 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -196,8 +196,6 @@ static int stmmac_mtl_setup(struct platform_device *pdev,
- 			plat->rx_queues_cfg[queue].pkt_route = PACKET_UPQ;
- 		else if (of_property_read_bool(q_node, "snps,route-multi-broad"))
- 			plat->rx_queues_cfg[queue].pkt_route = PACKET_MCBCQ;
--		else
--			plat->rx_queues_cfg[queue].pkt_route = 0x0;
- 
- 		queue++;
- 	}
--- 
-2.47.3
+Thanks,
+Inochi
 
