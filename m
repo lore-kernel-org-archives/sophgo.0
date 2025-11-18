@@ -1,117 +1,105 @@
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B093224B1E
-	for <sophgo@lists.linux.dev>; Tue, 18 Nov 2025 01:19:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E635CBA5;
+	Tue, 18 Nov 2025 04:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763428790; cv=none; b=P7g91qXTl6WopfLyutvJ2PotwSIPOhMG1W+OYgV2RptJ9seNSYpeUBW9ftCGOyWy7Y3VNtAb5GDim83L4iNsPrspGRdxH4+WbBCt6RNgiRwHaYpyop/D4AIqaF3plDbFB+GxUYeqSbeaLwKarikVlH82a5nkjngRzc1nucyLROs=
+	t=1763438458; cv=none; b=JPRhqoF63a9c9O/8GnKsKk7mMYPgNMNdA3nVBPlMi25s2rppkKH/d1G6BlmO7dKe9lZqkqZnfkU3M/DhYWE35GE6zFXG5ZlOz9myGkn6RxzR7tBVOS9XM46enGdKlTUDhgwcCguM270QcohJGocN+62vjJ7fAJHWKWdmoLPay9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763428790; c=relaxed/simple;
-	bh=KfZrY4abbwxsQcwx1AzWdikpfTyaAs+44RSqcFkZ/Pw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sx5ncq0V/CLUy1OPZhztfAzP7i+KWkkMycju2o8JqSKE9aM5LpkYanDhC/u8InlrqCHvAILrNjSvwDAeelRK3NTvwEeIhmDEQYbaYgxluOngtSfXcFaxTsjrbOhAeRTLIL4X80STDu2aq/H0LHUAb6aWW0LSJIeBzfkWKU3E3+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2ELQUY1; arc=none smtp.client-ip=209.85.215.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1763438458; c=relaxed/simple;
+	bh=F4b0uEqOqFj1s5GHGqft9QBk76aJhOT/4bbfeDN+fD4=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=ut/x6fGwk7jAkjsztbEowCCTR26ENRLc52+EKRqpYIQ3pUb+TiMAZK04mylwV2VItruHvyUmi4F+X8mhoAhMCcUNqRNA0lfCfDTQ4DFSNtvMp+IuVZrEn7ctQQV5rr0JwwHEI3W6aslPIhP72G7rnGCY6wi3JS3fGc5Suyyhn6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVj55Qex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2ELQUY1"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-bc274b8ab7dso3508494a12.3
-        for <sophgo@lists.linux.dev>; Mon, 17 Nov 2025 17:19:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763428788; x=1764033588; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/JBgoq+z6jGecNEGkZTUmDc8yTXhWwsgJ8qD9aHwpDI=;
-        b=j2ELQUY1b/RGq9T/JAIVqkvEaV6LLWFAfoJqNSD0E920crCYirs7mWu9vZb4jKH7mp
-         NU5uuPW9+gAWkODBVP2Dk8gBNe9Dx7SEkmZcjtMtVhV/2n+uD+ap4AsR3iw5zfLug9gk
-         t7sQjD0EYoQjJd5j2nAOJzM3iQGAKlA/e5LgPHF8gFwiYqMYUV7/n/78HQ4xc2gChjWU
-         c4Kc+0TqFCjQxlIcWHKubH/uSIDWZbFli0uunDO9Fn08wrx69JW8UYPlro5mQchgyDx1
-         tlX4xufyMdjxvQIx/KL5xvgixCNfr86p0zsts+04stpv32AdavkNIWBZ2ilRm7pGPO1F
-         Ctwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763428788; x=1764033588;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/JBgoq+z6jGecNEGkZTUmDc8yTXhWwsgJ8qD9aHwpDI=;
-        b=KIRhy99xGIbzhOrs2y3YJQ09aLT4hyV8kAEQdWcG4cKNdttEhKZDJZBpOqUiYd3I/s
-         BqPyFuEO/i4Md5BXLRJjfRyecj5o6Sarw4+wa6J9MHyPahmZ8sOr54JvAzaaj15STfuR
-         /rsvjx7hAnK3SUlj39Cv4bI1vk6TsBTR6XflrIpP47a4hAVQBGYzJt3gIvIY/CuaAozg
-         bK7kdL7pWg49+QAGAL+yHlza9CvzjQgg33UWe51EHyC32clcG5EaLvualYcMpihTx/OH
-         9PlyhKIQoS9wv/xamXbubKlvlffZnHCC1GChXr4Qk5vkNP4cqmfJhHBeMm7fR4+4lvk8
-         L7dg==
-X-Forwarded-Encrypted: i=1; AJvYcCUW6HH01+1JR7It1v5XxKID+EDpMLIyfhgbjvTWW4HN/u1QoCl8DP0UuOLMnW/S0lNoctc4o+s=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxnGfliiNJbecGXjAxxsRKQmbsWIFuEIVSnFj/qn9PMeBPsKPWS
-	aCjlH/r6rh8L/nLyy5pt3ltA1YBfHLAy8yz6oB+unZhbnCGLlB2jongm
-X-Gm-Gg: ASbGncvTlyREGgU+NaWSvNmN2422it2Q4YCXq/sllBoEX59CdGsaT12lnN/oXeqVqIv
-	R1CnpRzVujVOUDHHnoVJ8ex9iyP0Bl5N1Tp5wsDUzOF2xhhcWgOpfYGu/cMOKX+T2p/d4Sr62eU
-	RiIEDxxDDYDSQnKvvSHE2TAIlu/4PlwJo9GBiyy8supTrsgxhNqTNM9dGbJAk1VMqb4DkJuFBRj
-	XYkfzXFDHjxKeJ5MIk/CTeOzAh1zoNG6Cx6k6QtLRJlyUOI2J/MxMHyadDDxxTS8Qw8Uu6iq9N+
-	aUZ0GGhnfYybd/Wx7mfsppX5LMjCxPixSf5ZWFyPWZ5x86owQ0hL3woaqzhW9LGHJmDrlH3dqSe
-	GeTzcSc3cY/IJ8gDF2oMdM3i4m7ZStKGX00+S7tw3wN9Wmh9IlWfW8LqAO+cz5cU5Fti1oKJ7jk
-	0AJpQD/ObzLtgXY3NXMO+KEYakeVuk6Tk=
-X-Google-Smtp-Source: AGHT+IHAlVYCgwLwhG5dvCsbxSy4/6DoRbKsslM0o7aXrisHTVE8SaDF04sXPQlYXdqI+lq/6xvytQ==
-X-Received: by 2002:a05:701b:281b:b0:11b:9386:a381 with SMTP id a92af1059eb24-11b9386a5e1mr2777708c88.48.1763428787615;
-        Mon, 17 Nov 2025 17:19:47 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b060885e3sm53255982c88.0.2025.11.17.17.19.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 17:19:46 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Zixian Zeng <sycamoremoon376@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Han Gao <rabenda.cn@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: Re: [PATCH v2 0/4] Add SPI NOR DTS node for SG2042 SoC and boards using it
-Date: Tue, 18 Nov 2025 09:19:12 +0800
-Message-ID: <176342869620.638242.11529006624321296909.b4-ty@gmail.com>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20250916-sfg-spidts-v2-0-b5d9024fe1c8@gmail.com>
-References: <20250916-sfg-spidts-v2-0-b5d9024fe1c8@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVj55Qex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9026EC116D0;
+	Tue, 18 Nov 2025 04:00:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763438457;
+	bh=F4b0uEqOqFj1s5GHGqft9QBk76aJhOT/4bbfeDN+fD4=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=EVj55QexA1j6BraMVP2dlwMLN2CRv/d0/XGEpHooJ1Yep11lNKf3yEUw+fd74fQb0
+	 0PUhZI/fW2p0yuHqQd3q+NUU3+AdT3QojoSXQprU7AWQSoI0r45Wt+HIOFqI0L5awv
+	 Su4ZfcZEn6yptm61rjpMFZ9FlapiYRmCE/EuReG8l62zx9vGMT9SfNPeIK8mPd83+2
+	 wPtLT1zFknOTZxQ/bPuO1EjtB9r41MWNVGQYLyTiKPtPqKMakQvowEA13SUjkzthic
+	 2N/xdmvS2WmI4SzYmVNqDO2bgV8nFV0j56D5T2DF4w09WXfsSiZdzl+SZpc10DAP3U
+	 sWTwPiVgRZEPA==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70FE93809A1C;
+	Tue, 18 Nov 2025 04:00:25 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next 00/11] net: stmmac: clean up plat_dat
+ allocation/initialisation
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <176343842426.3578356.2997761543219536696.git-patchwork-notify@kernel.org>
+Date: Tue, 18 Nov 2025 04:00:24 +0000
+References: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
+In-Reply-To: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
+To: Russell King (Oracle) <linux@armlinux.org.uk>
+Cc: andrew@lunn.ch, hkallweit1@gmail.com, alexandre.torgue@foss.st.com,
+ andrew+netdev@lunn.ch, unicorn_wang@outlook.com, davem@davemloft.net,
+ edumazet@google.com, inochiama@gmail.com, kuba@kernel.org,
+ linux-arm-kernel@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, mcoquelin.stm32@gmail.com,
+ netdev@vger.kernel.org, pabeni@redhat.com, sophgo@lists.linux.dev
 
-On Tue, 16 Sep 2025 21:22:49 +0800, Zixian Zeng wrote:
-> [PATCH 1/4] and [PATCH 2/4] are copied from patch set [1]
-> [PATCH v4 4/4] with content changes:
+Hello:
+
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
+
+On Fri, 14 Nov 2025 15:27:16 +0000 you wrote:
+> This series cleans up the plat_dat allocation and initialisation,
+> moving common themes into the allocator.
 > 
-> According to SG2042 Pioneer and SG2042_EVB_V1/V2 schematics, SPI-NOR Flash
-> cannot support QSPI due to hardware design.
-> Thus spi-(tx|rx)-bus-width must be set to 1.
+> This results in a nice saving:
 > 
-> [...]
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c  | 43 +---------------
+>  .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 22 +-------
+>  drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c |  1 -
+>  drivers/net/ethernet/stmicro/stmmac/stmmac.h       |  2 +
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  | 34 ++++++++++++
+>  drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c   | 39 +-------------
+>  .../net/ethernet/stmicro/stmmac/stmmac_platform.c  | 60 ++++------------------
+>  7 files changed, 53 insertions(+), 148 deletions(-)
 
-Applied to dt/riscv, thanks!
+Here is the summary with links:
+  - [net-next,01/11] net: stmmac: add stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/511171e47f8b
+  - [net-next,02/11] net: stmmac: move initialisation of phy_addr to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/99e6ddaabdb4
+  - [net-next,03/11] net: stmmac: move initialisation of clk_csr to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/ae4f29712bf3
+  - [net-next,04/11] net: stmmac: move initialisation of maxmtu to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/528478a746a5
+  - [net-next,05/11] net: stmmac: move initialisation of multicast_filter_bins to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/07cedb9eed41
+  - [net-next,06/11] net: stmmac: move initialisation of unicast_filter_entries to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/bcb145c69690
+  - [net-next,07/11] net: stmmac: move initialisation of queues_to_use to stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/d5e788e86fe3
+  - [net-next,08/11] net: stmmac: setup default RX channel map in stmmac_plat_dat_alloc()
+    https://git.kernel.org/netdev/net-next/c/b6d013b3260b
+  - [net-next,09/11] net: stmmac: remove unnecessary .use_prio queue initialisation
+    https://git.kernel.org/netdev/net-next/c/c03101cb1bf0
+  - [net-next,10/11] net: stmmac: remove unnecessary .prio queue initialisation
+    https://git.kernel.org/netdev/net-next/c/0a20999ed452
+  - [net-next,11/11] net: stmmac: remove unnecessary .pkt_route queue initialisation
+    https://git.kernel.org/netdev/net-next/c/6409249ccc15
 
-[1/4] riscv: dts: sophgo: Add SPI NOR node for SG2042
-      https://github.com/sophgo/linux/commit/59dc89fdfe0bbcce186116651bd017cfb9f70fc0
-[2/4] riscv: dts: sophgo: Enable SPI NOR node for PioneerBox
-      https://github.com/sophgo/linux/commit/f49314cbbc98f9ab2bf4eb82ccacbf79f179db6c
-[3/4] riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V1
-      https://github.com/sophgo/linux/commit/11f4d84c9f724ec4c6810567d6b9713b054bb28b
-[4/4] riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V2
-      https://github.com/sophgo/linux/commit/af5eb17ff893bf6e52680a31059e1816749c2d20
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-Thanks,
-Inochi
 
