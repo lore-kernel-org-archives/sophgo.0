@@ -1,113 +1,117 @@
 Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838BB320A38
-	for <sophgo@lists.linux.dev>; Mon, 17 Nov 2025 09:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B093224B1E
+	for <sophgo@lists.linux.dev>; Tue, 18 Nov 2025 01:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763370375; cv=none; b=uvKuNxH6y6INiBYtPyvOdDnQqswpprEbRk5l5NR2DBmZukq7WaqbbNGYhNbNCGPUaUmfT60gRmHH3nhnEJgDwpT8WLVSpHxHmLSkNhnexwFR9eNXMc3WlyGOzNovD6YsSiyQiDZGs6b/la3hidsjEFDy9yadPFFSA3zhxMOKPF8=
+	t=1763428790; cv=none; b=P7g91qXTl6WopfLyutvJ2PotwSIPOhMG1W+OYgV2RptJ9seNSYpeUBW9ftCGOyWy7Y3VNtAb5GDim83L4iNsPrspGRdxH4+WbBCt6RNgiRwHaYpyop/D4AIqaF3plDbFB+GxUYeqSbeaLwKarikVlH82a5nkjngRzc1nucyLROs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763370375; c=relaxed/simple;
-	bh=hcAuad7b1ccILM/PHJHj5cUkxmyMOCNodizLhyRt8bo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ePAu8Rhuq1eZAWDYcZSvsWz0NeFr+45uaJ91fzjOAvv3rwXf45n5AxW1J8L3pPgJpBW1P1wOXLmmF8LxMRWFWkcmZn65hsjWL5RdcEDCYwRcxh+ihb9GDbVNtirgVKRkk9mhiXdtF1YAaBfXozCdTUzKJm49dAdFeUR1hcWJ8L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NPnG6W2T; arc=none smtp.client-ip=209.85.215.175
+	s=arc-20240116; t=1763428790; c=relaxed/simple;
+	bh=KfZrY4abbwxsQcwx1AzWdikpfTyaAs+44RSqcFkZ/Pw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sx5ncq0V/CLUy1OPZhztfAzP7i+KWkkMycju2o8JqSKE9aM5LpkYanDhC/u8InlrqCHvAILrNjSvwDAeelRK3NTvwEeIhmDEQYbaYgxluOngtSfXcFaxTsjrbOhAeRTLIL4X80STDu2aq/H0LHUAb6aWW0LSJIeBzfkWKU3E3+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j2ELQUY1; arc=none smtp.client-ip=209.85.215.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NPnG6W2T"
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-bc29d64b39dso2401847a12.3
-        for <sophgo@lists.linux.dev>; Mon, 17 Nov 2025 01:06:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j2ELQUY1"
+Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-bc274b8ab7dso3508494a12.3
+        for <sophgo@lists.linux.dev>; Mon, 17 Nov 2025 17:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1763370373; x=1763975173; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OMO5ie94w8lcBT6lm38XSRIvwKFLL7hEmJp5CRt+oh8=;
-        b=NPnG6W2TM/3pu5qL5Klzat3vNkp2UbF07urAuFw8FNLhl0D96LeaYIlYPCW+nrwMV5
-         0C/vVbmnwrMJsi5zlM2gu4o4OWrMAlbijz9U0N5WxsDnS4BUxU/lfZSAmOwJafT9Gl99
-         cZVUKExpFmM9OuNStg+yxT5iNMrszLO1YrW24X0oBJqfQn3p1B/ykS87C/8UxvRSWVd9
-         Z7TSDxQg82piCXzo1kfw+Nz+bkmeiDY2SjSW7H9fa+BSvr1Fmeag+gn2Y5rR16RaYTTT
-         n0ALeX2R79twd06nLjVqnHsvH+qBMHyFGcrLLXu776hnyr56TaoVy//OGTW3DwrVnsvC
-         H+rA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1763370373; x=1763975173;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1763428788; x=1764033588; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OMO5ie94w8lcBT6lm38XSRIvwKFLL7hEmJp5CRt+oh8=;
-        b=eMdx5j91FuYd7sTZt6LnrEOe4xaz/XuMEE5O1i8lktZfSq76rB1TJ5LE1TaxAlkdRN
-         lseWAFc+zSjR228/krAA3ps8R1QV7cClIH5ExQQfLLAuG4QiuQ5S7SY5osL+HmGgBA5y
-         bOusMB/7yraDfxTxfozr5lUj+RyKZCCroX4EwtwNszPNA93ssfpJZyaBGxKOGHKObfs8
-         d/V65pN+fMPIdzXRfJuIrMMjxaCldAA46aprSjCKuAleOdZ+HMmLLakg+jX9iByNBHKI
-         zUiuV64clshhUx1Q2VZ7kPPYIqSmzpS0MhqrCDdnJkJQ71TRbcoJCp6lO6D5pNcbj9g8
-         bXyg==
-X-Forwarded-Encrypted: i=1; AJvYcCVkCYcDQst2RxXAhZ8fMgvYrCg+AUBFLgS+k5rNaeXwA2tRkZBKpCFroe7LqUL+vvXu7bZDaD8=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4zx64pKa9iqfcDTl/krVkDWpsfLeHLoUL3ZYzuSGPOo5r+Ptv
-	/pUfzx8TLw/h1uZg+cB8EDA/0Hu3CMX63rZLHTROgjteW2unbIVJ3gMx
-X-Gm-Gg: ASbGncvzLzOEbexBqSVLbcYNTv7RW0YjL+c+IMALvx+1U4nHlGViw7Oxbh7T5QtlQRx
-	0QCVUd+D8owHf2GnZLwTz0o5lXg8ajzvNpvXNUMEngk7faTP8zDPNDjNRh8Q0+ilO+ysjT9zk88
-	8Zu94POCjNLfjX3RAvC7Lf9adkB6yaCWiSlB9CoJt7SEP8luCqgQrpVwqasdwdVpVwpkK43IFx0
-	0ok6Zc8Ums0s3BWwe+8L6DKJXl4NKgtOE4h+pAPrKKWjjBUu8Enzc5qtv7M5YS4CDDRKaing4Pk
-	O7CZF0W/tS2WhJIGTRafrAc43iZ42vX7TBK9/8qNJZg4gIMIO/y+X+kOokda47LXfPJEc//CwlE
-	YE18xwiExIDlqdZkvdVCluDXrWzyuM/3Bjal6MTCS4uleRx6Vz+LdzVf+cya6nCmPWdx2GzOPHR
-	BeVzuMu5E9eEafSOveLt1IKgGCybs=
-X-Google-Smtp-Source: AGHT+IF/JU+kMFiIAfX2k1Dm6SWfMM6AyWK7LDvkc6/yQQso64rIW9bWr+iBK9Lwln4yavxaqi7imQ==
-X-Received: by 2002:a05:7022:6621:b0:119:e56b:91e6 with SMTP id a92af1059eb24-11b411f0b58mr4788078c88.23.1763370372524;
-        Mon, 17 Nov 2025 01:06:12 -0800 (PST)
-Received: from localhost.localdomain ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b06088604sm47916498c88.7.2025.11.17.01.06.09
+        bh=/JBgoq+z6jGecNEGkZTUmDc8yTXhWwsgJ8qD9aHwpDI=;
+        b=j2ELQUY1b/RGq9T/JAIVqkvEaV6LLWFAfoJqNSD0E920crCYirs7mWu9vZb4jKH7mp
+         NU5uuPW9+gAWkODBVP2Dk8gBNe9Dx7SEkmZcjtMtVhV/2n+uD+ap4AsR3iw5zfLug9gk
+         t7sQjD0EYoQjJd5j2nAOJzM3iQGAKlA/e5LgPHF8gFwiYqMYUV7/n/78HQ4xc2gChjWU
+         c4Kc+0TqFCjQxlIcWHKubH/uSIDWZbFli0uunDO9Fn08wrx69JW8UYPlro5mQchgyDx1
+         tlX4xufyMdjxvQIx/KL5xvgixCNfr86p0zsts+04stpv32AdavkNIWBZ2ilRm7pGPO1F
+         Ctwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763428788; x=1764033588;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/JBgoq+z6jGecNEGkZTUmDc8yTXhWwsgJ8qD9aHwpDI=;
+        b=KIRhy99xGIbzhOrs2y3YJQ09aLT4hyV8kAEQdWcG4cKNdttEhKZDJZBpOqUiYd3I/s
+         BqPyFuEO/i4Md5BXLRJjfRyecj5o6Sarw4+wa6J9MHyPahmZ8sOr54JvAzaaj15STfuR
+         /rsvjx7hAnK3SUlj39Cv4bI1vk6TsBTR6XflrIpP47a4hAVQBGYzJt3gIvIY/CuaAozg
+         bK7kdL7pWg49+QAGAL+yHlza9CvzjQgg33UWe51EHyC32clcG5EaLvualYcMpihTx/OH
+         9PlyhKIQoS9wv/xamXbubKlvlffZnHCC1GChXr4Qk5vkNP4cqmfJhHBeMm7fR4+4lvk8
+         L7dg==
+X-Forwarded-Encrypted: i=1; AJvYcCUW6HH01+1JR7It1v5XxKID+EDpMLIyfhgbjvTWW4HN/u1QoCl8DP0UuOLMnW/S0lNoctc4o+s=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxnGfliiNJbecGXjAxxsRKQmbsWIFuEIVSnFj/qn9PMeBPsKPWS
+	aCjlH/r6rh8L/nLyy5pt3ltA1YBfHLAy8yz6oB+unZhbnCGLlB2jongm
+X-Gm-Gg: ASbGncvTlyREGgU+NaWSvNmN2422it2Q4YCXq/sllBoEX59CdGsaT12lnN/oXeqVqIv
+	R1CnpRzVujVOUDHHnoVJ8ex9iyP0Bl5N1Tp5wsDUzOF2xhhcWgOpfYGu/cMOKX+T2p/d4Sr62eU
+	RiIEDxxDDYDSQnKvvSHE2TAIlu/4PlwJo9GBiyy8supTrsgxhNqTNM9dGbJAk1VMqb4DkJuFBRj
+	XYkfzXFDHjxKeJ5MIk/CTeOzAh1zoNG6Cx6k6QtLRJlyUOI2J/MxMHyadDDxxTS8Qw8Uu6iq9N+
+	aUZ0GGhnfYybd/Wx7mfsppX5LMjCxPixSf5ZWFyPWZ5x86owQ0hL3woaqzhW9LGHJmDrlH3dqSe
+	GeTzcSc3cY/IJ8gDF2oMdM3i4m7ZStKGX00+S7tw3wN9Wmh9IlWfW8LqAO+cz5cU5Fti1oKJ7jk
+	0AJpQD/ObzLtgXY3NXMO+KEYakeVuk6Tk=
+X-Google-Smtp-Source: AGHT+IHAlVYCgwLwhG5dvCsbxSy4/6DoRbKsslM0o7aXrisHTVE8SaDF04sXPQlYXdqI+lq/6xvytQ==
+X-Received: by 2002:a05:701b:281b:b0:11b:9386:a381 with SMTP id a92af1059eb24-11b9386a5e1mr2777708c88.48.1763428787615;
+        Mon, 17 Nov 2025 17:19:47 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11b060885e3sm53255982c88.0.2025.11.17.17.19.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Nov 2025 01:06:12 -0800 (PST)
-From: Longbin Li <looong.bin@gmail.com>
-To: Mark Brown <broonie@kernel.org>,
+        Mon, 17 Nov 2025 17:19:46 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Longbin Li <looong.bin@gmail.com>,
-	linux-spi@vger.kernel.org,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Zixian Zeng <sycamoremoon376@gmail.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev
-Subject: [PATCH] spi: sophgo: Fix incorrect use of bus width value macros
-Date: Mon, 17 Nov 2025 17:05:39 +0800
-Message-ID: <20251117090559.78288-1-looong.bin@gmail.com>
+	Han Gao <rabenda.cn@gmail.com>,
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH v2 0/4] Add SPI NOR DTS node for SG2042 SoC and boards using it
+Date: Tue, 18 Nov 2025 09:19:12 +0800
+Message-ID: <176342869620.638242.11529006624321296909.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20250916-sfg-spidts-v2-0-b5d9024fe1c8@gmail.com>
+References: <20250916-sfg-spidts-v2-0-b5d9024fe1c8@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-The previous code initialized the 'reg' value with specific bus-width
-values (BUS_WIDTH_2_BIT and BUS_WIDTH_4_BIT), which introduces ambiguity.
-Replace them with BUS_WIDTH_MASK to express the intention clearly.
+On Tue, 16 Sep 2025 21:22:49 +0800, Zixian Zeng wrote:
+> [PATCH 1/4] and [PATCH 2/4] are copied from patch set [1]
+> [PATCH v4 4/4] with content changes:
+> 
+> According to SG2042 Pioneer and SG2042_EVB_V1/V2 schematics, SPI-NOR Flash
+> cannot support QSPI due to hardware design.
+> Thus spi-(tx|rx)-bus-width must be set to 1.
+> 
+> [...]
 
-Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
-Signed-off-by: Longbin Li <looong.bin@gmail.com>
----
- drivers/spi/spi-sg2044-nor.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Applied to dt/riscv, thanks!
 
-diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
-index af48b1fcda93..37f1cfe10be4 100644
---- a/drivers/spi/spi-sg2044-nor.c
-+++ b/drivers/spi/spi-sg2044-nor.c
-@@ -42,6 +42,7 @@
- #define SPIFMC_TRAN_CSR_TRAN_MODE_RX		BIT(0)
- #define SPIFMC_TRAN_CSR_TRAN_MODE_TX		BIT(1)
- #define SPIFMC_TRAN_CSR_FAST_MODE		BIT(3)
-+#define SPIFMC_TRAN_CSR_BUS_WIDTH_MASK		GENMASK(5, 4)
- #define SPIFMC_TRAN_CSR_BUS_WIDTH_1_BIT		(0x00 << 4)
- #define SPIFMC_TRAN_CSR_BUS_WIDTH_2_BIT		(0x01 << 4)
- #define SPIFMC_TRAN_CSR_BUS_WIDTH_4_BIT		(0x02 << 4)
-@@ -122,8 +123,7 @@ static u32 sg2044_spifmc_init_reg(struct sg2044_spifmc *spifmc)
- 	reg = readl(spifmc->io_base + SPIFMC_TRAN_CSR);
- 	reg &= ~(SPIFMC_TRAN_CSR_TRAN_MODE_MASK |
- 		 SPIFMC_TRAN_CSR_FAST_MODE |
--		 SPIFMC_TRAN_CSR_BUS_WIDTH_2_BIT |
--		 SPIFMC_TRAN_CSR_BUS_WIDTH_4_BIT |
-+		 SPIFMC_TRAN_CSR_BUS_WIDTH_MASK |
- 		 SPIFMC_TRAN_CSR_DMA_EN |
- 		 SPIFMC_TRAN_CSR_ADDR_BYTES_MASK |
- 		 SPIFMC_TRAN_CSR_WITH_CMD |
---
-2.51.2
+[1/4] riscv: dts: sophgo: Add SPI NOR node for SG2042
+      https://github.com/sophgo/linux/commit/59dc89fdfe0bbcce186116651bd017cfb9f70fc0
+[2/4] riscv: dts: sophgo: Enable SPI NOR node for PioneerBox
+      https://github.com/sophgo/linux/commit/f49314cbbc98f9ab2bf4eb82ccacbf79f179db6c
+[3/4] riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V1
+      https://github.com/sophgo/linux/commit/11f4d84c9f724ec4c6810567d6b9713b054bb28b
+[4/4] riscv: dts: sophgo: Enable SPI NOR node for SG2042_EVB_V2
+      https://github.com/sophgo/linux/commit/af5eb17ff893bf6e52680a31059e1816749c2d20
+
+Thanks,
+Inochi
+
