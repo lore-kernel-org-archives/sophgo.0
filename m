@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04E635CBA5;
-	Tue, 18 Nov 2025 04:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BE61459FA;
+	Tue, 18 Nov 2025 04:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763438458; cv=none; b=JPRhqoF63a9c9O/8GnKsKk7mMYPgNMNdA3nVBPlMi25s2rppkKH/d1G6BlmO7dKe9lZqkqZnfkU3M/DhYWE35GE6zFXG5ZlOz9myGkn6RxzR7tBVOS9XM46enGdKlTUDhgwcCguM270QcohJGocN+62vjJ7fAJHWKWdmoLPay9g=
+	t=1763440259; cv=none; b=k9Zfcog4Kv1oyWqXC/0uXLHlzrUFeL/GfDC2gS5CnkGFut9UamW4hxGCrvEj0m4Ayd4rZVCSsH3N98dVfL18FxWtJXYvn2wq4q9GfZ5EgR3zksHsx6UMgnRrMFEwHhdp7qacSNOqrwSNmpExZJQXRqePSxptELgSI+14kzoLGjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763438458; c=relaxed/simple;
-	bh=F4b0uEqOqFj1s5GHGqft9QBk76aJhOT/4bbfeDN+fD4=;
+	s=arc-20240116; t=1763440259; c=relaxed/simple;
+	bh=b0tK/QFOidIQQqfzTvlAPr1kSgWygac/TGHNviqWPbU=;
 	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=ut/x6fGwk7jAkjsztbEowCCTR26ENRLc52+EKRqpYIQ3pUb+TiMAZK04mylwV2VItruHvyUmi4F+X8mhoAhMCcUNqRNA0lfCfDTQ4DFSNtvMp+IuVZrEn7ctQQV5rr0JwwHEI3W6aslPIhP72G7rnGCY6wi3JS3fGc5Suyyhn6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EVj55Qex; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:To:Cc; b=LfWQ4sFJUgok0ont+/wk3W6QRTxdz+waK9VUoyycEVjSPagO+fj28Hfr4cEY4fvOn/yGOc6YsWhKOcffQgTAnEOiIs69Yu/L7aynOtKjDBnvDQSEH+8Vwa+cgzssLOM6vBrc1Mna/hflZy+HbJykIzhxdCsoMkeQO756TWFk7S8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kHr0Uw0B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EVj55Qex"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9026EC116D0;
-	Tue, 18 Nov 2025 04:00:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kHr0Uw0B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C70AC116B1;
+	Tue, 18 Nov 2025 04:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763438457;
-	bh=F4b0uEqOqFj1s5GHGqft9QBk76aJhOT/4bbfeDN+fD4=;
+	s=k20201202; t=1763440258;
+	bh=b0tK/QFOidIQQqfzTvlAPr1kSgWygac/TGHNviqWPbU=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=EVj55QexA1j6BraMVP2dlwMLN2CRv/d0/XGEpHooJ1Yep11lNKf3yEUw+fd74fQb0
-	 0PUhZI/fW2p0yuHqQd3q+NUU3+AdT3QojoSXQprU7AWQSoI0r45Wt+HIOFqI0L5awv
-	 Su4ZfcZEn6yptm61rjpMFZ9FlapiYRmCE/EuReG8l62zx9vGMT9SfNPeIK8mPd83+2
-	 wPtLT1zFknOTZxQ/bPuO1EjtB9r41MWNVGQYLyTiKPtPqKMakQvowEA13SUjkzthic
-	 2N/xdmvS2WmI4SzYmVNqDO2bgV8nFV0j56D5T2DF4w09WXfsSiZdzl+SZpc10DAP3U
-	 sWTwPiVgRZEPA==
+	b=kHr0Uw0Bjoa7ZnKIST07TsbWvMUE7coMCj+Mn+sszlvaBiJPkR45qgQEmyH0T33cJ
+	 vwa7fSHLmtvdybBP8E9lnjb8zlIqCfSaX1NxNseYS5YrH/eYTQd93gQ723mIJBV310
+	 ZgzPP2k+/Xwc8SWo1C8oQKmD35q/G2YJdMssggnMOVtQw7aqQiGRvccfxmBHeg953M
+	 0mgNR3xgmJveKIbcHjMeyrqs4AmOtS4MG5/K829TC3wKSShgH5UwTqFEe9F29OXhvD
+	 WAVk2GvaqYjeqeBkHMB5Sl/2kk+3JcERe3sAQQzaOTFgSRZZMBfuqugbkGF6/7/xR1
+	 +DPh6QTK1f7Eg==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70FE93809A1C;
-	Tue, 18 Nov 2025 04:00:25 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 70E143809A1E;
+	Tue, 18 Nov 2025 04:30:25 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
@@ -37,65 +37,51 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 00/11] net: stmmac: clean up plat_dat
- allocation/initialisation
+Subject: Re: [PATCH v8 0/3] net: stmmac: dwmac-sophgo: Add phy interface
+ filter
 From: patchwork-bot+netdevbpf@kernel.org
 Message-Id: 
- <176343842426.3578356.2997761543219536696.git-patchwork-notify@kernel.org>
-Date: Tue, 18 Nov 2025 04:00:24 +0000
-References: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
-In-Reply-To: <aRdKVMPHXlIn457m@shell.armlinux.org.uk>
-To: Russell King (Oracle) <linux@armlinux.org.uk>
-Cc: andrew@lunn.ch, hkallweit1@gmail.com, alexandre.torgue@foss.st.com,
- andrew+netdev@lunn.ch, unicorn_wang@outlook.com, davem@davemloft.net,
- edumazet@google.com, inochiama@gmail.com, kuba@kernel.org,
- linux-arm-kernel@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, mcoquelin.stm32@gmail.com,
- netdev@vger.kernel.org, pabeni@redhat.com, sophgo@lists.linux.dev
+ <176344022426.3968687.3804479598141783177.git-patchwork-notify@kernel.org>
+Date: Tue, 18 Nov 2025 04:30:24 +0000
+References: <20251114003805.494387-1-inochiama@gmail.com>
+In-Reply-To: <20251114003805.494387-1-inochiama@gmail.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: rabenda.cn@gmail.com, uwu@icenowy.me, wangruikang@iscas.ac.cn,
+ ziyao@disroot.org, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, unicorn_wang@outlook.com,
+ mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
+ hkallweit1@gmail.com, linux@armlinux.org.uk, rmk+kernel@armlinux.org.uk,
+ netdev@vger.kernel.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, dlan@gentoo.org, looong.bin@gmail.com
 
 Hello:
 
 This series was applied to netdev/net-next.git (main)
 by Jakub Kicinski <kuba@kernel.org>:
 
-On Fri, 14 Nov 2025 15:27:16 +0000 you wrote:
-> This series cleans up the plat_dat allocation and initialisation,
-> moving common themes into the allocator.
+On Fri, 14 Nov 2025 08:38:02 +0800 you wrote:
+> As the SG2042 has an internal rx delay, the delay should be remove
+> when init the mac, otherwise the phy will be misconfigurated.
 > 
-> This results in a nice saving:
+> Since this delay fix is common for other MACs, add a common helper
+> for it. And use it to fix SG2042.
 > 
->  drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c  | 43 +---------------
->  .../net/ethernet/stmicro/stmmac/dwmac-loongson.c   | 22 +-------
->  drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c |  1 -
->  drivers/net/ethernet/stmicro/stmmac/stmmac.h       |  2 +
->  drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  | 34 ++++++++++++
->  drivers/net/ethernet/stmicro/stmmac/stmmac_pci.c   | 39 +-------------
->  .../net/ethernet/stmicro/stmmac/stmmac_platform.c  | 60 ++++------------------
->  7 files changed, 53 insertions(+), 148 deletions(-)
+> Change from v7:
+> - https://lore.kernel.org/all/20251107111715.3196746-1-inochiama@gmail.com
+> 1. patch 1: fix a mistake that using rgmii-txid instead of rgmii-rxid
+>             for SG2042
+> 
+> [...]
 
 Here is the summary with links:
-  - [net-next,01/11] net: stmmac: add stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/511171e47f8b
-  - [net-next,02/11] net: stmmac: move initialisation of phy_addr to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/99e6ddaabdb4
-  - [net-next,03/11] net: stmmac: move initialisation of clk_csr to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/ae4f29712bf3
-  - [net-next,04/11] net: stmmac: move initialisation of maxmtu to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/528478a746a5
-  - [net-next,05/11] net: stmmac: move initialisation of multicast_filter_bins to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/07cedb9eed41
-  - [net-next,06/11] net: stmmac: move initialisation of unicast_filter_entries to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/bcb145c69690
-  - [net-next,07/11] net: stmmac: move initialisation of queues_to_use to stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/d5e788e86fe3
-  - [net-next,08/11] net: stmmac: setup default RX channel map in stmmac_plat_dat_alloc()
-    https://git.kernel.org/netdev/net-next/c/b6d013b3260b
-  - [net-next,09/11] net: stmmac: remove unnecessary .use_prio queue initialisation
-    https://git.kernel.org/netdev/net-next/c/c03101cb1bf0
-  - [net-next,10/11] net: stmmac: remove unnecessary .prio queue initialisation
-    https://git.kernel.org/netdev/net-next/c/0a20999ed452
-  - [net-next,11/11] net: stmmac: remove unnecessary .pkt_route queue initialisation
-    https://git.kernel.org/netdev/net-next/c/6409249ccc15
+  - [v8,1/3] dt-bindings: net: sophgo,sg2044-dwmac: add phy mode restriction
+    https://git.kernel.org/netdev/net-next/c/6b1aa3c87fcb
+  - [v8,2/3] net: phy: Add helper for fixing RGMII PHY mode based on internal mac delay
+    https://git.kernel.org/netdev/net-next/c/24afd7827efb
+  - [v8,3/3] net: stmmac: dwmac-sophgo: Add phy interface filter
+    https://git.kernel.org/netdev/net-next/c/db37c6e510de
 
 You are awesome, thank you!
 -- 
