@@ -1,170 +1,201 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010008.outbound.protection.outlook.com [52.103.67.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB0E22127B
-	for <sophgo@lists.linux.dev>; Sat, 13 Dec 2025 00:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765587232; cv=fail; b=I+FZxyZ/3gvyhnEBUblH4WKQPJR/XhfNGRW6mmjamzQjXTNqua3C0c/JR1CNFznQd2oFo3lDGKJ6J6m5YxkDkF3uVKf2zohtU4/2nFBQSds0IlrrViTZUByJgo3QIyeQeRVgBMGDVg476Ek70PckDgGmD0WnKw9FuD61Y+vw1go=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765587232; c=relaxed/simple;
-	bh=r97qVXXXUoY4Zy8JnNTu4MS8kg3oHKRxm1dswb9KU94=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=MauWD9YxKk6JlY7DjcTVkU8JtycS0gPueAcOvUJ4+v1DaFegs96R0ngSbHK3iEBdgetmLCEPPoFhc9+wQGk5ykc/6J6uQN7okkfvageWN4O75jJl2WCD/9jN+2xi/Jxs7Y6KA7ouTFWWL0cmTdJtH9a63Dpb3/8CqcEHDNinVp8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=X9O206jW; arc=fail smtp.client-ip=52.103.67.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8FD23A994
+	for <sophgo@lists.linux.dev>; Sat, 13 Dec 2025 07:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765612515; cv=none; b=rDBmraXQKBC8F3A80Kxox8EpYUXg4kBQtxzth2vEoi6D8S5sIqA10tMHKNTpyv3ySQs4ut8TjZKLiGTfrwwfFCn+sTdxvyV0h0VLrKHXWd2JC/Iys4+v0HlxZ/mIN1zwqQGrAtpZDPsKUZQ6HNhT7uSuxSaCdhVsoRUanEWjNzk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765612515; c=relaxed/simple;
+	bh=/1Y7ZubKQzIS9Nn9KYozZYf4WuMV9JVNDqL7JrO650Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hHHVJpzgS3qlvjYfNh1w8F8y36YvFH3WEDi/d/8cM1UuVdlMIsg7L+gfERPSZPlTPta2zMqk/DwFtRBNEbALvIRJ+4EyI+els4HQ+789lcQzQsG8MKgMIb39AwTdKkz66d2KpV8ufMqjEttMDZ7cZe0nl6M7wIR7k+C7Gl4Zsag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com; spf=pass smtp.mailfrom=sifive.com; dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b=EgsMOr3e; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sifive.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sifive.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="X9O206jW"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WWzuPXlE8vpG+khBQdPdjv5DhYDo+dxkVu1HeMb6ESXM/tC7dmPli6x+5pgwnbqn96piXwokq/p7Hb6TZbJeYSKt4qAQVbxOQ/ToE2y75AVv59L55WIFKoSHKAU09YSh64A19pu3Pdzra+Z7I5qj9sSOhzPdK0aeAva316m+wfbHpZnOpDI6tv4E+mixcZkKofvrj5phX5mKLWxbX+rZe6Qu4kibs5PCkGrKg/RlEl18LqAhEDG3n+c9HJsvXIGpKTQo1tcebks3PDTNYrOOE6YEG/XKY/zB6oVEJoE8XE3aa7dA9r6JTXyJ3CWX0J0JdwbZrr0uZARs6z0nMhwXZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=paaA78dQke/SqLgawF9V57i9JX8LLcbcpToYKwZ5CJ0=;
- b=Ev6PX3WQZcJ+jZQwJRzeNJFGwyZXViyXNRBFC3h3Dyuz11Dz4JWhmNzzXvqfzHMMiZCMbw9Gi44dEPdoYlhDONreCF5tjmxFkelE7Ktl7+T9AynuwHxYTEpMQ7FncHY6PEJEhQw30GGxreYS7oTErnB300w5H6E2cGbkRMZLevOjwvMnv3GTa2oUajbX87gybpiTeJtVo+rpfidSZNZWKohqbTs2HigDYn20t1BvYnZ+NLm7wwFXvafsWe8FNsPQ4LCBel06Co0d7UQZyvMDSRfQjTCXldf5oEVcbqcg6Ad4saqRs/W2S6nwjY2hNM33svDCfoiRFcz4DsgmlhQ4AQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=paaA78dQke/SqLgawF9V57i9JX8LLcbcpToYKwZ5CJ0=;
- b=X9O206jW6pTMqMrP3mbbH9q8wa0D4cU2gxa6wYAdnmG1LqFeB2ywBdJOhZRobCoVrL2LBDUWEMfk0ZZ/rtRHUFCJ5oU08roFSfgDThxcXLtS86785OJY7P178SeApVg8to3k+CcuUnWDamIJfE0/QAeRgL4YgwxzCvytUSPUnRT69JL3oKdFRJmRV7eYqgwagMqfCu/TOBlsPb7KA39XxaF2Td9rzOi2a9WDYPjCQqtGJher9ltSpAb54dnvF42YxeUXmD8TpXkDBPJJ/gIs0AZTTsnOX6jiKJSq2FovgJbbFQdI48hnGQ8islclj40HsJ99OmQtyDYeuPmAfFBmjw==
-Received: from PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:2f1::8)
- by PN0PR01MB9496.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:109::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9412.12; Sat, 13 Dec
- 2025 00:53:41 +0000
-Received: from PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::bae0:5b38:5068:9ec0]) by PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::bae0:5b38:5068:9ec0%5]) with mapi id 15.20.9412.011; Sat, 13 Dec 2025
- 00:53:41 +0000
-Message-ID:
- <PN6PR01MB11717B13B2AE78DDD36D2F0BBFEAFA@PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM>
-Date: Sat, 13 Dec 2025 08:53:34 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: dma: snps,dw-axi-dmac: Add CV1800B
- compatible
-To: Anton Stavinsky <stavinsky@gmail.com>, Inochi Amaoto <inochiama@gmail.com>
-Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
- Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>,
- Alexander Sverdlin <alexander.sverdlin@gmail.com>,
- Longbin Li <looong.bin@gmail.com>, Yixun Lan <dlan@gentoo.org>,
- Ze Huang <huangze@whut.edu.cn>, dmaengine@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev
-References: <20251212020504.915616-1-inochiama@gmail.com>
- <20251212020504.915616-2-inochiama@gmail.com>
- <A0AF03A6-1F0B-462D-A088-3B4DF6BA6292@gmail.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <A0AF03A6-1F0B-462D-A088-3B4DF6BA6292@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0031.apcprd02.prod.outlook.com
- (2603:1096:4:195::16) To PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2f1::8)
-X-Microsoft-Original-Message-ID:
- <aece5334-4ab2-4c14-b23f-8893af2aa427@outlook.com>
+	dkim=pass (2048-bit key) header.d=sifive.com header.i=@sifive.com header.b="EgsMOr3e"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7b9c17dd591so1650257b3a.3
+        for <sophgo@lists.linux.dev>; Fri, 12 Dec 2025 23:55:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sifive.com; s=google; t=1765612513; x=1766217313; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PSg2TYT9sWOtcESEo56kzWemNLsi4EVpvVRgATHWE1A=;
+        b=EgsMOr3eXfV4LLUk4EwxWl39BRlgHg9SgLhn4wibzETLHUXMcFmNi0+gan86yGHOJa
+         X2CP3yD05nZit/8XFcjz04nK5AbM8qLUktviboaI1oS0/e4TRzp7ITGitylEQGFIyExe
+         FrHjn60XeLCKGshZP3fv5GIbzNIvRMdjygGHX45n/ivw0hJxosGhAhHYwY9cKSXoM8Kc
+         7RhTLf9QZdGrVMUiqnGBIiSxtmLzg/aAhLc/DOe+Bjig5fVFVFvESEuzEyzOD7kxlAMs
+         zHyG1luCjC7s6ClQE8Pep/lf2ne4CCmchP4vHWi+xo86wEalpgf6RbJ9pFK7LzREfjTM
+         R1IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765612513; x=1766217313;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PSg2TYT9sWOtcESEo56kzWemNLsi4EVpvVRgATHWE1A=;
+        b=oW85JxSpPwZtQFWTI3kt+RGxVbY2+K/WyZBd6hdIUZZSH5HGfLBLMhSO6dig53PO65
+         2tagjQNW+VKRzPdl1vE/CDVvr4PZprdxKBNq32uefE11GIA3aBHGW2kO5t0rDuirBDWK
+         Z5ESeLd/A7NWmSh6eo9TVD5LnDhzYXveDnB61pKzCfCryZ7b7UW2Jwqawa36TXu/imdW
+         5TXlZ+6yqgQ0orTfynqOgCrZLlqvQWMfvzHdJiLzWYN8xO02aIoB/NPPsPsz9+gL861+
+         fvIUAyD8qO+Kcw8+4zcD7iNk28qqJvyPWLaP4W+7AtnD4biNjYNwi4gEFBVE+bnBNGYk
+         /0Vg==
+X-Forwarded-Encrypted: i=1; AJvYcCXh3PLwlgb3fih/Ujav4lORSfw8WQ25Zx7VfZyPD3x+J1KKLdiVncOskv/R43CgLB43p6qxIW8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YynhpGlShdCVAkQSWsKyyysJjlogr63XgHMa50SEwNUrkgfmx4b
+	Qr8/4yGDnD0UiK1x0u9/ztaVRvM6weWpZFrZgju8LA1SXbHnQPNbKHnw7PsBYAl2/ms=
+X-Gm-Gg: AY/fxX6yq+ncQsYEDmA8i/c4mu6yk/plQbq9Yn7RvdCFoRp4idPhpIW2TDcLpGpNePB
+	2VVMIQ3dl1760PHKEDOiDo0Xi7x3vOXP1vYWOD4fQCiP++OlUW36sVbyvy5RoDmVebn8hmmQs8N
+	cxyfchmdqSVQ8JnGlmkkK/E2RQn4Km1aw9nnYOrARPv7MthXQA8AheqcZgl+RpHGITZSVlbSRA4
+	y67KXtN3mHe0obcDWijx288DikyCm7TNlEIU3knnq7GrVfw623P/ZjtaBmbK7nZPPIOuYONoj7R
+	D96u8wFck+8RXALAK8afndaGzSRcMmUFCNNblVR4x4yvtJRHf4U7KnlrJ2pF12nIbzYsN8qtHx0
+	wwMhZaFHKYcNlRRWkWbnlGJfNskWyykPH5uV5v/rnQLdlrTo8m2XpAGQGSl3U17aGrAAhl9CFWY
+	EoHVVnIwkuXvs+EbRIn2j8bEOi5wArwQ==
+X-Google-Smtp-Source: AGHT+IHOWrUINqZuvftQzED4J6JEOwCF3MwpJCzvYtbDq2TpenTmo8Kz5bbfjFWruq5ev9Hib6L/8Q==
+X-Received: by 2002:a05:6a00:1f13:b0:7f6:3f21:7d22 with SMTP id d2e1a72fcca58-7f6693a69e9mr3821365b3a.45.1765612512724;
+        Fri, 12 Dec 2025 23:55:12 -0800 (PST)
+Received: from [100.64.0.1] ([167.103.29.104])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7f4c27733edsm7218185b3a.20.2025.12.12.23.55.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Dec 2025 23:55:12 -0800 (PST)
+Message-ID: <8a3d3db6-6614-42f7-a271-e6188391daf6@sifive.com>
+Date: Sat, 13 Dec 2025 16:55:06 +0900
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN6PR01MB11717:EE_|PN0PR01MB9496:EE_
-X-MS-Office365-Filtering-Correlation-Id: d7d4a435-8647-4c13-1285-08de39e20f25
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|6090799003|5072599009|23021999003|8060799015|15080799012|19110799012|3412199025|440099028|53005399003|40105399003|41105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?aG5xNFFaY2hGSzA1dUFtV1JDVVZMaXdNcllUMXFJZ1VBTTZWa2hGTzJKNkd1?=
- =?utf-8?B?ODhKODlkQ0E4eEl5SG1pa3NVUUdCZ2xycGVJZit4aVZzQXlWUkE0TzZsT3ZH?=
- =?utf-8?B?ZHQxK2ovTkJaNWJoaGtRM3pIdC92em9JNXUrRXdpcGR4U2w2MkhBNDZTK3p4?=
- =?utf-8?B?ZkNrVEtXSUxEN0xLNkxYTnVETk1QYW1LWHhZaXREZ01rS25uRWR2ZFMydHNF?=
- =?utf-8?B?cUxhMHR5dFdvVHF3YWJHcXlqSnZXQkhmVmwxVmpqd3RHemVYdXhUNlBqdFQv?=
- =?utf-8?B?ZGdSUERETVJNUURhWEppOXU1bDUvU0FpWmdvZzh6aDExb1pkVHFOWm5CZE9h?=
- =?utf-8?B?anMvYXc2WmZqWDg2bE1nVk05VUV1YU9NYmRLbWRsVjRIK3JEL2xwN3lxRFMz?=
- =?utf-8?B?bWVYd1NtbWxhclZWSXRMTTBKOWsyTEh0TW9rb2xlYi9VcFdNd051VHY3MlNX?=
- =?utf-8?B?UElna2pWZkZnVXF5bm5Sa1pPMTFpN3ArSkZjRFUwa3hhWExTWWROdXJRa0Er?=
- =?utf-8?B?cU1Ec1g1a01KT25pQVI5dURoWGtweERMNTFmak5nMVZFZUcrQnZUcW1QMXky?=
- =?utf-8?B?UjdkVVJBSFRTd3JrbktEbWpwWExqNXFUOVFpTXBQc0tOdDBGUEhvSmJhQlls?=
- =?utf-8?B?ZWJjQ2RRMkFvMUYvOEtyNElWSFFzZGpudmtVNEtvbEovRTd4M3Jwamhham9X?=
- =?utf-8?B?Uzd3cGZVeWlWRnMzR1hEc2t2YXVtSm8zV1dPb3FacFdORHkrMnQ5M3NiNGRi?=
- =?utf-8?B?WFgyK2FCeFZ4eTdZbmwveXFpN1U0enp2T2Z3Zm5ZMkpJbVdIR1k3R0RZZEFl?=
- =?utf-8?B?aW8wWnpGSkdFMGNaQ0R6MjhkZENmaU9obE5HMmhMNVRiLzF6NFpwUExOR2Vl?=
- =?utf-8?B?NGUrMEQ3cmhMREhIamt4bUc4TVhXalVyZUhxMzNGbjZMWG9reUtLM3dJbzBt?=
- =?utf-8?B?YWlFZWE4TUV1VENUc0VtbWU4cDIxbUw5c2tnWHI0VGQ0cWpySXdFa2FScmNT?=
- =?utf-8?B?aFVvT2VVQlVDck1JRjZIeTZpWENHRkJXNmIzbWpXQmloamlSK0dkckRKNm1x?=
- =?utf-8?B?eTBncGJBMTBOYUljazNpQVVFeWFhODJiSGxsVlVhS3RhdzhUaE90akVZeThS?=
- =?utf-8?B?THVOWjZWS3dTNnZucWFqaDg0bjR3RXBKUHIybGpMeXI2TmFHZGxPMHAwWkdj?=
- =?utf-8?B?NVZlRG1LZWNnNVBNOEQ5NjB1M2JDUm9VNytRU0ZjVjNldUtQQ2RIdEl3TkdI?=
- =?utf-8?B?SElKczZ5OXhwN0ViY2lSdjNjWkhNdklhQUZMUW43Vy9oZEM0anY4UDlFWUZs?=
- =?utf-8?B?c2c2QmpUYmk4VmhhV2FkNHpZZ2J0VS9CeStvSnAxS0cvT05lRGFURGlnYUNw?=
- =?utf-8?B?dGhKSTdmdXZsMzRlQjY4QjEzek9HZlNSL2Vlc3lKSVlkK2FqOHFCUCtVazVk?=
- =?utf-8?B?NUJ5cmZOenY0TnI0YnRjVXg3TUVkM2pTYmpkaUZxTmZEeU5QSUwxb1hRVlRF?=
- =?utf-8?B?U1JjSmNibmVXUG94bVZEVTBPcjBjdEt3QXhLOWkxc1BiOWtiSm16L1gzNFVL?=
- =?utf-8?B?RW5aZjhDZEd0N2FWUnF5T0dPY1JFZk9Wbm40OG5ITnU2c0doL0VkQXJoMUxL?=
- =?utf-8?Q?jLVQi9vFLTIw/iwyTQ1sTcCbi75/br0l1eV5PcubEVpU=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Tk5EY0JUMFpQc3JMekI3MWxuSHF5c1ZzZ3FWbGZMZzlLemRCcElId211TXNQ?=
- =?utf-8?B?VnhHQ2M5VmdBVWp3RlBybFJheDFUK1hMRE1TTmd3cGF6YVdHRzNmYXNxR05k?=
- =?utf-8?B?ajdRd2pDcDBCQUtHMW1jbytIZVVpdHVKbDZVZVQ4TG1IVTYvS2hWOHNKSUZE?=
- =?utf-8?B?aCtEanVRcnB0b08vVVB4TDIydjRDWmxpZFZVaXNadkxJTmgwN1BlSTFDSlhB?=
- =?utf-8?B?OXNweU10L2JqYmxQbnpxaEpIcWNzb1JTUHAxVUx4WHRaSVV2ZlhSMDU2c3VV?=
- =?utf-8?B?L3o4WXBZa1JRSmU5ZVIzaFFEMW5aeU4raHdDNnRoVlhLUzFQYVFnZlYyNHQ5?=
- =?utf-8?B?aWpWQ2w1d0MxM2poRmwzSXZGMC81RjlOcHBXMUhYcnBETkJUU2EvdFd0eTVI?=
- =?utf-8?B?algyRUVMUXp5aTV1WDNTb05KNlVYNUNZdTFWU3crVkJaQ1Zwd2RqR1BSbERV?=
- =?utf-8?B?T2FiK2J4Z1NJUWE0Zm51NG5mdC9DMU5FbzVaQjR0UjZ5WWtCSDluY1o2L0hh?=
- =?utf-8?B?Sy9MUnh2TmNOSC9QQkN0V3F6Um9FYWFTRDIxYllGV2JZcHFBU3Y3bVprM1V3?=
- =?utf-8?B?RGNCanVTZGdUVlZ5dFhvejV6Njh2N3N4WTlqazJ3WmFzNTZtbWNCK2VXM1VC?=
- =?utf-8?B?OWMvV0NwSGFzc2J1d3JpamFKWDdtcUhnK0pLUkxzbDdQUnptYnluZmxJdGRP?=
- =?utf-8?B?UG1YaTkzNVFSMDI3VGFBZHRYNFBvYUZSck95NU5yWk9KZ2lRVGtXelQwcHpo?=
- =?utf-8?B?U2RHYytuZ2FWd2F2c0oyTitUSVZGOGU2UzMyQnJhaEx6RUk5KzdVVkROcjJS?=
- =?utf-8?B?NE8xWDlRUWlad0d2blViM1U0TkY3MnhrRW9xd28wdzFNYVQ5QUVZbFpFbjNn?=
- =?utf-8?B?MmoycFRlR0syS1lGWWx2SytFc3RYWCtBbGJQS2lRb0pCdWd1U0lZbHp3SzlM?=
- =?utf-8?B?Mng1MU1EYkdMTHN6blVBaVJ6b25zMEI5WHRjMnh4QjgxcjBEbldXaU1vMUc4?=
- =?utf-8?B?SVVXL1hweG9nbGNUYmJiT01Pbi9WVkpnNXVEQkZVRFhGR3RrK1RnNGRudTd1?=
- =?utf-8?B?RkdDclFDV0taNjltTTlwSUpKNldLeG52V2M2dG0ydittekRHWnhlazZ3dnlM?=
- =?utf-8?B?Tlp1VFJ1eDFjbEZleVNiR3FrUXRrNkhneTJJbVcvZll4c0p6SDE1ZXpFMnZD?=
- =?utf-8?B?R3ozVktWY01WOHZIaldjMlJGQU42amZFSkw3cXJRQzE4b0U1bGZhOWxMNkNI?=
- =?utf-8?B?MVhiWFFvc29HSGsvNmY5dDlYN2VJMUFrOEsyNFNYWXVPZUdRZ0JPUm9jR1c0?=
- =?utf-8?B?UFQrSGNuSUFsOVVJUWpzcGMyd1hSanNyWkVZbHd5MzhCdVdWbEYxSFJLU0Vq?=
- =?utf-8?B?RGVGUittbjJPVklTVUlhajBGaVZMRGJocFdHY3M4WEhGbEttcDNBQ0grQlQ0?=
- =?utf-8?B?b2NqTEN5Z2duenVRV3crditocXJISnVjSVlHajRCWVdvRlJVUDZGQ1NDdnd0?=
- =?utf-8?B?VXZsZmRKdWZyeTc4LzNMNmJ4YXE1Y0h5b0E1QnNCUHp4MVhPb1NheW5wR2ov?=
- =?utf-8?B?YWtQWHBKS0x4WnlGZDZEZG9nMys3RnYxbUcyZFpzeFlIbmZ4MkNYalUwcE9W?=
- =?utf-8?B?VUFDZmw4ZVExenBXM0FMSWJWQkZPYXRPcmdXZ3pLa29ISGlNbHRFTXhUNXJ3?=
- =?utf-8?B?M1o4a2R4SVZ4U0xtVVN3bXJGMU9mS3pqeUZhdTlXZE83b0kraDVEc1lKcFZk?=
- =?utf-8?Q?LC1UuiGL8u5JwziH8O7LikYTtm0G47vFSm1Abgp?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d7d4a435-8647-4c13-1285-08de39e20f25
-X-MS-Exchange-CrossTenant-AuthSource: PN6PR01MB11717.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2025 00:53:41.6147
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB9496
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] dmaengine: dw-axi-dmac: Add support for CV1800B DMA
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: "Anton D . Stavinskii" <stavinsky@gmail.com>, dmaengine@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-riscv@lists.infradead.org, sophgo@lists.linux.dev,
+ Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Vinod Koul
+ <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Chen Wang <unicorn_wang@outlook.com>,
+ Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+ Longbin Li <looong.bin@gmail.com>, Yixun Lan <dlan@gentoo.org>,
+ Ze Huang <huangze@whut.edu.cn>
+References: <20251212020504.915616-1-inochiama@gmail.com>
+ <20251212020504.915616-3-inochiama@gmail.com>
+From: Samuel Holland <samuel.holland@sifive.com>
+Content-Language: en-US
+In-Reply-To: <20251212020504.915616-3-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+Hi Inochi,
 
-On 12/13/2025 2:48 AM, Anton Stavinsky wrote:
->> The DMA controller on CV1800B needs to use the DMA phandle args
->> as the channel number instead of hardware handshake number, so
->> add a new compatible for the DMA controller on CV1800B.
-> Thanks a lot,  Inochi. I've tested on my Milk Duo 256M board.
-> Seems to be working with the I2S driver, which I'm working on right now.
-> No issues with DMA interrupts anymore, DMA router used right channel.
+On 2025-12-12 11:05 AM, Inochi Amaoto wrote:
+> As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
+> the SoC provides a dma multiplexer to reuse the DMA channel. However,
+> the dma multiplexer also controlls the DMA interrupt multiplexer, which
 
-Thank you, Anton. Could you also add a "Tested-by" signature?
+typo: controls
 
-Chen.
+> means that the dma multiplexer needs to know the channel number.
+> 
+> Allow the driver to use DMA phandle args as the channel number, so the
+> DMA multiplexer can route the DMA interrupt correctly.
+> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 23 ++++++++++++++++---
+>  drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
+>  2 files changed, 21 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> index b23536645ff7..62bf0d0dc354 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+> @@ -50,6 +50,7 @@
+>  #define AXI_DMA_FLAG_HAS_APB_REGS	BIT(0)
+>  #define AXI_DMA_FLAG_HAS_RESETS		BIT(1)
+>  #define AXI_DMA_FLAG_USE_CFG2		BIT(2)
+> +#define AXI_DMA_FLAG_HANDSHAKE_AS_CHAN	BIT(3)
+> 
+>  static inline void
+>  axi_dma_iowrite32(struct axi_dma_chip *chip, u32 reg, u32 val)
+> @@ -1361,15 +1362,26 @@ static struct dma_chan *dw_axi_dma_of_xlate(struct of_phandle_args *dma_spec,
+>  					    struct of_dma *ofdma)
+>  {
+>  	struct dw_axi_dma *dw = ofdma->of_dma_data;
+> +	unsigned int handshake = dma_spec->args[0];
+>  	struct axi_dma_chan *chan;
+>  	struct dma_chan *dchan;
+> 
+> -	dchan = dma_get_any_slave_channel(&dw->dma);
+> +	if (dw->hdata->use_handshake_as_channel_number) {
+> +		if (handshake >= dw->hdata->nr_channels)
+> +			return NULL;
+> +
+> +		chan = &dw->chan[handshake];
+> +		dchan = dma_get_slave_channel(&chan->vc.chan);
+> +	} else {
+> +		dchan = dma_get_any_slave_channel(&dw->dma);
+> +	}
+> +
+>  	if (!dchan)
+>  		return NULL;
+> 
+> -	chan = dchan_to_axi_dma_chan(dchan);
+> -	chan->hw_handshake_num = dma_spec->args[0];
+> +	if (!chan)
 
+When use_handshake_as_channel_number is false, chan is uninitialized here.
+
+Regards,
+Samuel
+
+> +		chan = dchan_to_axi_dma_chan(dchan);
+> +	chan->hw_handshake_num = handshake;
+>  	return dchan;
+>  }
+> 
+> @@ -1508,6 +1520,8 @@ static int dw_probe(struct platform_device *pdev)
+>  			return ret;
+>  	}
+> 
+> +	chip->dw->hdata->use_handshake_as_channel_number = !!(flags & AXI_DMA_FLAG_HANDSHAKE_AS_CHAN);
+> +
+>  	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
+> 
+>  	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
+> @@ -1663,6 +1677,9 @@ static const struct of_device_id dw_dma_of_id_table[] = {
+>  	}, {
+>  		.compatible = "intel,kmb-axi-dma",
+>  		.data = (void *)AXI_DMA_FLAG_HAS_APB_REGS,
+> +	}, {
+> +		.compatible = "sophgo,cv1800b-axi-dma",
+> +		.data = (void *)AXI_DMA_FLAG_HANDSHAKE_AS_CHAN,
+>  	}, {
+>  		.compatible = "starfive,jh7110-axi-dma",
+>  		.data = (void *)(AXI_DMA_FLAG_HAS_RESETS | AXI_DMA_FLAG_USE_CFG2),
+> diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+> index b842e6a8d90d..67cc199e24d1 100644
+> --- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+> +++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+> @@ -34,6 +34,7 @@ struct dw_axi_dma_hcfg {
+>  	bool	reg_map_8_channels;
+>  	bool	restrict_axi_burst_len;
+>  	bool	use_cfg2;
+> +	bool	use_handshake_as_channel_number;
+>  };
+> 
+>  struct axi_dma_chan {
+> --
+> 2.52.0
+> 
+> 
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
 
