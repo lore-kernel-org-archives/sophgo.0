@@ -1,104 +1,288 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F13933FE03
-	for <sophgo@lists.linux.dev>; Tue, 16 Dec 2025 22:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F39531AAAD
+	for <sophgo@lists.linux.dev>; Fri, 19 Dec 2025 11:42:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765925123; cv=none; b=Sgjs3L2cNJrCopqAgGdVrHJB+9Dx4unW/9PXqQsjkXuZtg16LCVDyE5OA1uY0IrJm3RpDZHV1urFf1bdkgRQIcVox7ZiFBduEJav86dTs4FeN6ywd4tpXuF3Q856iwgplpEbDHTttC/kl4uavbVS8h8Shx9upTnFkLr/CVX85Zg=
+	t=1766144568; cv=none; b=dz1ELnc58ht1stW98mh/SFobqPM7VSK/0mtHDKJJrvxKAJb5dHh/i/bz9jA64/SbjkR2EKZo5DuCxfVByGJBlYurNXEn+niFi+SNGpfp3m6q5CsH3e/rZbeBs1eSpv+U5TYofA3W4kum3KXuNLbm7h4vVT2Kr4kkXRUEi0L274U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765925123; c=relaxed/simple;
-	bh=/ns1Rp/WSyMte8FAqNCkjuzh1ej9BUVs0MBSnMXCYb8=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VwVCtBzEbIBxlVNCz4HL4gy8q6Gxox/VJOjN4B6dSLIl+NCXjEwxdSQUV7HM9UJ1vU2gHuUaiHNKNzZ1o4YoQLPcv+hUKq4BeTRzH6blGVgu1DY2Fyj7Het2RiNq5h+jQAoGOVv8GCLU+DrgHztZX3oR6+CoQEym+MYmoPQIpdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OxlCTRBn; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1766144568; c=relaxed/simple;
+	bh=UaHO7/eOvI9UQifWvLpwmCqdh2eotyE0wYd3BHrZ6yo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=X6BYYmn9dkMZFSWd/ArIB18B1MPZua5OMcOzKWh4YTfdfdbEqxQgR3g3e1Clp+u6tBzm3sqaUmwJcIY48G+XaZ+Idn0Npd1rcYBCbZETw67XDNeHtbZ7r+F/3kegjCRqBrqZYECdIZRjZJxa8MdX/3PouTYFWUI44wt0Q6p/OuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RzTHsM0X; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NhNmuU4b; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OxlCTRBn"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7b8bbf16b71so5543963b3a.2
-        for <sophgo@lists.linux.dev>; Tue, 16 Dec 2025 14:45:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RzTHsM0X";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NhNmuU4b"
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 5BJ4chH23992425
+	for <sophgo@lists.linux.dev>; Fri, 19 Dec 2025 11:42:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pWp06pWmbjSJvf7fIHkRuG
+	NgN8f0S0siEmA5b1mlZsk=; b=RzTHsM0X2eAVgNkpqzV4KcHaBNbRa8NsXlPAxt
+	42E1B9C8t4UZ7DRJQSLJNmBT5HoZanJhTGHOxwQKdKRMzjO7VmRpjYny/gJm4cHA
+	c/AKbn+yDDxMez/LuoP93x4n/kWRXNYw+w1PiQ0+X1HFdesFVQE2Wd5EQleXpOFi
+	P83ccJH61gP+B9P8A93PaamGzq9B+v6Oe7VGpyWSMt9ao2wgvUb17b6whR9repqz
+	YeF3uEKa1nOJuHRgSyLVO9IAFAb8fI5BbH0PJuY35JZufcCGQ6O/9N/IXR5huMcc
+	PotSODojz7ryMlBtHRIcEZeP3WTb766UV6I2+1UisFqKPLLQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4b4r2daeqw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sophgo@lists.linux.dev>; Fri, 19 Dec 2025 11:42:44 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4ed7591799eso36416841cf.0
+        for <sophgo@lists.linux.dev>; Fri, 19 Dec 2025 03:42:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765925120; x=1766529920; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=A7nXoigv9/yz61HlMjawiCb2Rzy4kdcjqDMu4uuBc3o=;
-        b=OxlCTRBnr04ZmL9WUw0TqBDmB45UBRDqn2DMEg4WPUzT/MzzJ+A8hllcC1/csaTd72
-         ohw8J00ws/P/Ffelz3QkewLx7X6yDod4dzgXDaTq17c6rDFkgacwnzvVrXueEZqHA+mK
-         Qr13LKE9hNU7u1WX2kLDi29p6otFgGy9pja4saxAXxpY8R3Vwe5UqrjoCoKGQtu70IWv
-         x+PZBSZlmAzk2FN8XTjrpuwJRnuEeyvkPuQy5ZV9el3NxGRSc7UOWeNTzHYiX33HYt5/
-         cCb+gE5U5rrt2zdsmvC9OfCpo7RMt3sddnKnTZF45zSV7sCzPCJGwcs81NZjqAXF5NkJ
-         LDeQ==
+        d=oss.qualcomm.com; s=google; t=1766144564; x=1766749364; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pWp06pWmbjSJvf7fIHkRuGNgN8f0S0siEmA5b1mlZsk=;
+        b=NhNmuU4bVmixAv4ZpSEMWNd2C8C49GBGgogGqO69ERAJMz8ttDFRofAo4GDNUps5F3
+         CYYxwrLUMCn2owsUuvdz5uH57zUg29TUF0ayeb0Uls6hYD3aTtrIgwZaQBHKHdiS7oBY
+         0ijpWU7nwwlJUWo8PN8pJt0UrKlGtObR4R+O9g+Falzdn9gycLBlplWz7VGCdZ+A6NUT
+         BzagjRVhwUuAW8ZUFM4xtrnMJs26+zSXLCw2ZZ2XozuOgmXro1pT3cdYP+G/GPDVszMl
+         kwrOzqCjp22OeA1Vlzi3EYxCHZXnUuzPA12cwNCWukMmcakqQ4m44dhpSvEpUkJ4gM7S
+         eAFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765925120; x=1766529920;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=A7nXoigv9/yz61HlMjawiCb2Rzy4kdcjqDMu4uuBc3o=;
-        b=wuBFwVjQmTYM4gustIBuad1OCF03/OAoUHI/8EyYAWDvaEuyZlSo8iTT0l7WLgH2In
-         vATag914oAug1i1iWWbxCXLPvAW4HeMnrbt2eoigTnRs9cuy5rEPQzCbZky90FuZsAKL
-         /03F+dVwWLACrnwqeRDE914hhmHzOfacwcDV8mXl/PZS0rxEqAyKt44jD1vPsdnHyrRG
-         kjxUlgr4zwtBgvNcK5RHaY2p/KiWseRZ0pWtXkLvgdTt4brptK+wE5Zz63TMmcPCzfzJ
-         yYXwfyufvQOmNtlmD6Av4aKNFJfo3wmxWbNFlE9tRMBPNtmqozBtDOhX9hIak6+W52Ov
-         8s6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVQljOOXB0w6AwPE2Zu/+rpsLNz6LhGtWoTJDmqlgxAINYXftH5qPpl+PGuYY56opdun5RBYA4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxmOhMS+lpMU9VOwSRK8cXRDAWC0ggeLOSf5MrhaNBLCYj3HMJ4
-	3YE1Igk66i/URNrYcluf1Oa/zzmgf0YOyGaDHg8+gruxaJaQxRREfn2K
-X-Gm-Gg: AY/fxX4phKwHnTP2Z2uhec2w8hjmRLFl/blPYa8QXi/SspROMxLZfpCJAPV9H4DCc3e
-	WOXFyT+y1NxvD+Khafo4P4WyzxUWiRu6GkU72WsgOpSLGGVj4oFzQSJrKY4nQv+WOVtTe7I+y4s
-	+bpzgLJgAQ9uLZff8QwgvokZROba2sqjMasZ3wB82N/ludkftRXZbX4+KpPP24Iibc8+Ro2iInz
-	PhNp7W1Z3n4U7s/scT+7AfkO+a5B2/JhvGG5p3lwhqS/+NmMxIcHfRWWT/ecsORK3/YDbU1yR7H
-	u/9zm5Mav5O+bKVAVIyhLty9b4ia64LxpvHTzni4D2ieANz4S0Im8+DAdbLqLtJqpBWf+COk1SH
-	xKVNvYNV9TkH1d3vyvSjpN+Hbr6uym2YXQ5PpoqL+8JR1IEh2Q+uVGpre4Kl3mYrjpBQF5NkuJL
-	hZVn/w/UDjDQ==
-X-Google-Smtp-Source: AGHT+IE9nIlDHsFmfYsacNR6G1ZVOO+zgg/tDfoQF+xuebBoHAyCLps0J4BtB+5eml9RBwlgxvUP1Q==
-X-Received: by 2002:a05:701b:2719:b0:11b:c4ee:66b with SMTP id a92af1059eb24-11f354dd89amr8447143c88.37.1765925120396;
-        Tue, 16 Dec 2025 14:45:20 -0800 (PST)
-Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f2e1bb28dsm57479374c88.2.2025.12.16.14.45.19
+        d=1e100.net; s=20230601; t=1766144564; x=1766749364;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pWp06pWmbjSJvf7fIHkRuGNgN8f0S0siEmA5b1mlZsk=;
+        b=qxWDr55gUBenta0cOnqUaoJv64dvqv1tT5StxGLcE54S4z7pIKUBDbXK/W4giJ44H3
+         +9ghbhVqMZrb/H5SsD0ExYnVOyIgM+rLEwxaB0dixJR2zWGXxBeEEnEdBy0ebioVtIYV
+         xVrskUXF62naweZwl6mvbuVH9qTuZrGmPG2FZG/qJZG72J/umPMiV/Z4AglaY25/BpyG
+         QpcsqxI7/guZuVMy90vNpHjInrFHZ1Jgc14m0uhrscZ/b+RQdVCJVfftt8edLH6/Du0O
+         VQVDjQdNj8GF9h6yK9B1SbxH8eBsEmul37DRb6gKezE3g+so8w8KhyKJhZDa1lVr4vHn
+         2ACw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9ITXfCDwAJCFm0Ksw6ZHGYATIpeeU6j2/jP8zTCEtAlgNJgdudzg8YRIx+BhE1M9IzTBT3io=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxbfRA28hHWNacZjezF2ApXyJbONWjDbOqWwowy71eY5Z66xZXr
+	or1jsAkVsLRJMD+9JjoO4htdH9awhnU+mQe9XNV43qNOatQ1X9Omj2W7NbifPnJWZ/aqaLVI7nC
+	LU4ZZPJcJJ40cK9P2Tk/IoZP78z3NtLqVig8Xob7iFb3y8ErXuBvZJ2pKsXQ=
+X-Gm-Gg: AY/fxX7yIXh7tPjH0Id9t7yWlAU/hlUVb0hA//JjwQfqnV1Mi3wDkXVwS4ezgusvu+1
+	EdLbTy64hr+X3QczWufvSF1OSsifCj4GWT3uzks2j5/yMNlTB/Tq2+BZDsx9/lyrwyxc2rJoBfD
+	5otdmzsy9WO/ZDknbsRsL5KH8w4wVap5EFgObDsFh9imJX98VEFGf+KEc/ghVrHrZVqheUvigON
+	c8BbeBR3QbTBdhEVY/mzxFWkQCeHvVp2M60keDZ/Dbw0O6k7UFyINqu7WFb5MfIzZVCIFZtlRUr
+	WgfaQPLuxFqKaslBzwWanIS6qS0ePfHgEkDuks8TnrId5AbFdOcvDK7XaSlkVAlIZ63Ukcn6l6G
+	W/TEtJFCVzlzdZ1vKdgkByfEoE9FU+BaIIvKwENk=
+X-Received: by 2002:a05:622a:250c:b0:4ee:24b8:2275 with SMTP id d75a77b69052e-4f4abcf6df2mr32638301cf.1.1766144564316;
+        Fri, 19 Dec 2025 03:42:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHmBbFYUgOlr6WN956Einac/qKi2Xml3/A2v+AE7uUKmhMDZRt/gScziSp2QVRxwtyeDwUkJA==
+X-Received: by 2002:a05:622a:250c:b0:4ee:24b8:2275 with SMTP id d75a77b69052e-4f4abcf6df2mr32637891cf.1.1766144563807;
+        Fri, 19 Dec 2025 03:42:43 -0800 (PST)
+Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:d857:5c4e:6d25:707c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d193d4f09sm41134425e9.12.2025.12.19.03.42.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 14:45:19 -0800 (PST)
-Date: Wed, 17 Dec 2025 06:44:17 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Inochi Amaoto <inochiama@gmail.com>, 
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Chen Wang <unicorn_wang@outlook.com>, Alexander Sverdlin <alexander.sverdlin@gmail.com>, 
-	Longbin Li <looong.bin@gmail.com>, Ze Huang <huangze@whut.edu.cn>, dmaengine@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	sophgo@lists.linux.dev, Yixun Lan <dlan@gentoo.org>
-Subject: Re: [PATCH v2 0/3] riscv: sophgo: allow DMA multiplexer set channel
- number for DMA controller
-Message-ID: <aUHgt8caOoo1gsES@inochi.infowork>
-References: <20251214224601.598358-1-inochiama@gmail.com>
- <aUE9hDtflXpcgGnX@inochi.infowork>
- <aUF4w9sO5lmU9T6v@anton.local>
+        Fri, 19 Dec 2025 03:42:43 -0800 (PST)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH v6 0/7] net: stmmac: qcom-ethqos: add support for SCMI
+ power domains
+Date: Fri, 19 Dec 2025 12:42:15 +0100
+Message-Id: <20251219-qcom-sa8255p-emac-v6-0-487f1082461e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aUF4w9sO5lmU9T6v@anton.local>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABc6RWkC/23PywoCMQwF0F+Rrq2k7fQxrvwPcRFrRgs61VaKI
+ vPvVgUfOMsbyEnujWVKgTKbT24sUQk5xL4GM50wv8N+SzxsamYSpAYLDT/5eOAZndT6yOmAnrv
+ GgFQavRaS1b1joi5cnuZyVfMu5HNM1+eJIh7Tl9YKGNGK4MCVRNv6TpAxbrEPPaY4i2nLHlxRb
+ 0KAtGOEqoTV1th1KxXg+o9oPoQY7VSaSnTWGAPgrCf8I/Q3MfqFrgSIjSKF2Cn3W2QYhjugyuI
+ afAEAAA==
+X-Change-ID: 20250704-qcom-sa8255p-emac-8460235ac512
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Matthew Gerlach <matthew.gerlach@altera.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Keguang Zhang <keguang.zhang@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+        Romain Gantois <romain.gantois@bootlin.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Minda Chen <minda.chen@starfivetech.com>,
+        Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
+        Fu Wei <wefu@redhat.com>,
+        Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Shuang Liang <liangshuang@eswincomputing.com>,
+        Zhi Li <lizhi2@eswincomputing.com>,
+        Shangjuan Wei <weishangjuan@eswincomputing.com>,
+        "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
+        Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
+        Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
+        Samin Guo <samin.guo@starfivetech.com>,
+        Christophe Roullier <christophe.roullier@foss.st.com>,
+        Swathi K S <swathi.ks@samsung.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        Drew Fustini <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+        imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+        linux-riscv@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4401;
+ i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
+ bh=UaHO7/eOvI9UQifWvLpwmCqdh2eotyE0wYd3BHrZ6yo=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpRTokWXsa2gKI4nKr8h3MYxFUimxm2O4dHtXW6
+ KCiHQiv+CiJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaUU6JAAKCRAFnS7L/zaE
+ w5TBD/0VsHh57NK5nQksuR+8VSL79RDSjE5N4Uss3l4JwiFExzXFJZFpCwifvwH9coSoqlwSmi/
+ HJxLjwprjYGZnaU+rNXkOiZ0EsDovcObvNYahOJjd6Lo56NFM5cKuvxZIPtBE+iyaBwmzxnLmu/
+ T2hRwgo12C7kTrrBKQUhlfxq8n1b/ffXt8j3ZcPGUYWSirWStJVUES0McEPRujOtu1OkWm1SPmV
+ Ejrd9L49HQ+nO6ayV3/BwwVVypRf+179KBzXtsYmh2ARvDwjC12TUaLQ1v4RX9OXsYdoYgch/S6
+ yvKvCxXExRkXnvfNQShDqpwxsqQH+ugBqbTLmnyBt4Yr9mDyozKPTqaktQISbSrpK229wF+8Wqv
+ 8y4/UN1sWaRnu0hyRREDiaMQRMu9WPHyGDpBBS8WNsUk7q//HXhhNZhgg3nn9uvVNiEqwD0mE/F
+ awDlTEUaCzTLaExwn/CKC+RL+ri68hNQj1CiAfnruILFOSDcjcS6x2jWeVHJ2DjVby4z6+Gf2vV
+ oduw+zcDEJ1Xe9k2AEYXRVqWBwYmIbh2NxHM9AaMWrxwouwIUENXthjhKxJB9V+Z08rtzMIYqnf
+ jYCydlPUBZgHMvymTXbhPio9aTl7NoQa5wAPhUk2jOJbwWYIDgFqegzo+VSItUKDNtUvi8/qrdR
+ +XbsmEDfNuXywwQ==
+X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-Authority-Analysis: v=2.4 cv=AcG83nXG c=1 sm=1 tr=0 ts=69453a34 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=wP3pNCr1ah4A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=PHq6YzTAAAAA:8
+ a=h7uu4O38hj_b6GN6T5YA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+ a=cvBusfyB2V15izCimMoJ:22 a=ZKzU8r6zoKMcqsNulkmm:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMjE5MDA5NiBTYWx0ZWRfX9+lofkH8886O
+ XqWhUjNeyHWq7FID/pniEqi5I6xIao8R7RFFWrUHLm63wU4HwYnCWL16ZaZw7Y0SqU5qMjrwuWx
+ qNlRjMEAspKhS/Ctrjs6LIxsN7e2kc4134pmPfLnEBrHqNIUGSSXhAYVrFFDA5iiPx3q6VvcOSJ
+ eVgfC7ELCz/EFSD4eTOsBkSqP3ZwbBiCJaD1wurbY+QBYgD0FS2ABlzJzAW9km+H/R6nrWjYl5D
+ gJivDXqilTsEi1Wl+9SsCxvmPYhq1i5fBexmkOSvUt04YVgR/HuNN080RQGPFNg96gIkutcvxvT
+ RmmGtbp+qtLSmgpC4mjv/F8uK1SsAOUWIlqeXKh5ZiXgWIUDzhLTlriYdqCS130aYyIv9JJERvb
+ 7oWcHsaqhkYjY54WXR4YBiEIyXEuQmeTujUdDGotqfaPP6v7Qkn7P6PCXec9eslsboR07bn2CjZ
+ q/nk6sAf13wQVt+4kPg==
+X-Proofpoint-GUID: 2OKrglOXLyya7EHx19fv6EPwCa_vDoV1
+X-Proofpoint-ORIG-GUID: 2OKrglOXLyya7EHx19fv6EPwCa_vDoV1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2025-12-19_03,2025-12-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1011
+ priorityscore=1501 adultscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2512120000 definitions=main-2512190096
 
-On Tue, Dec 16, 2025 at 07:25:06PM +0400, Anton D. Stavinskii wrote:
-> On Tue, Dec 16, 2025 at 07:09:16PM +0400, Inochi Amaoto wrote:
-> 
-> > Hi Anton,
-> > 
-> > Since you have tested this patch before, could you give a Tested-by?
-> > 
-> Done. V2 works fine with Milk Duo 256M with 2 channels RX and TX working
-> simultaneously.
-> 
-> 
-> Tested-by: Anton D. Stavinskii <stavinsky@gmail.com>
+Add support for the firmware-managed variant of the DesignWare MAC on
+the sa8255p platform. This series contains new DT bindings and driver
+changes required to support the MAC in the STMMAC driver.
 
-Thanks
+It also reorganizes the ethqos code quite a bit to make the introduction
+of power domains into the driver a bit easier on the eye.
 
-Regards,
-Inochi
+The DTS changes will go in separately.
+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+---
+Changes in v6:
+- Fix $id value in the bindings
+- Drop patch 3/8 from the series
+- Update init/exit callback signatures
+- Link to v5: https://lore.kernel.org/r/20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org
+
+Changes in v5:
+- Name the DT binding document after the new compatbile
+- Add missing space
+- Make the power-domains limits stricter
+- Link to v4: https://lore.kernel.org/r/20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org
+
+Changes in v4:
+- Remove the phys property from the SCMI bindings
+- Mark the power-domain-names property as required
+- Set maxItems for power-domains to 1 for all existing bindings to
+  maintain the current requirements after modifying the value in the
+  top-level document
+- Link to v3: https://lore.kernel.org/r/20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org
+
+Changes in v3:
+- Drop 'power' and 'perf' prefixes from power domain names
+- Rebase on top of Russell's changes to dwmac
+- Rebase on top of even more changes from Russell that are not yet
+  in next (E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk)
+- Link to v2: https://lore.kernel.org/all/20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org/
+
+Changes in v2:
+- Fix the power-domains property in DT bindings
+- Rework the DT bindings example
+- Drop the DTS patch, it will go upstream separately
+- Link to v1: https://lore.kernel.org/r/20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org
+
+---
+Bartosz Golaszewski (7):
+      dt-bindings: net: qcom: document the ethqos device for SCMI-based systems
+      net: stmmac: qcom-ethqos: use generic device properties
+      net: stmmac: qcom-ethqos: wrap emac driver data in additional structure
+      net: stmmac: qcom-ethqos: split power management fields into a separate structure
+      net: stmmac: qcom-ethqos: split power management context into a separate struct
+      net: stmmac: qcom-ethqos: define a callback for setting the serdes speed
+      net: stmmac: qcom-ethqos: add support for sa8255p
+
+ .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |   3 +
+ .../bindings/net/altr,socfpga-stmmac.yaml          |   3 +
+ .../bindings/net/amlogic,meson-dwmac.yaml          |   3 +
+ .../devicetree/bindings/net/eswin,eic7700-eth.yaml |   3 +
+ .../devicetree/bindings/net/intel,dwmac-plat.yaml  |   3 +
+ .../bindings/net/loongson,ls1b-gmac.yaml           |   3 +
+ .../bindings/net/loongson,ls1c-emac.yaml           |   3 +
+ .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |   3 +
+ .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |   3 +
+ .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |   3 +
+ .../devicetree/bindings/net/qcom,ethqos.yaml       |   3 +
+ .../bindings/net/qcom,sa8255p-ethqos.yaml          |  98 ++++++
+ .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |   3 +
+ .../bindings/net/renesas,rzv2h-gbeth.yaml          |   3 +
+ .../devicetree/bindings/net/rockchip-dwmac.yaml    |   3 +
+ .../devicetree/bindings/net/snps,dwmac.yaml        |   5 +-
+ .../bindings/net/sophgo,cv1800b-dwmac.yaml         |   3 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml          |   3 +
+ .../bindings/net/starfive,jh7110-dwmac.yaml        |   3 +
+ .../devicetree/bindings/net/stm32-dwmac.yaml       |   3 +
+ .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |   3 +
+ .../devicetree/bindings/net/thead,th1520-gmac.yaml |   3 +
+ .../bindings/net/toshiba,visconti-dwmac.yaml       |   3 +
+ MAINTAINERS                                        |   1 +
+ drivers/net/ethernet/stmicro/stmmac/Kconfig        |   2 +-
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 344 +++++++++++++++++----
+ 26 files changed, 454 insertions(+), 59 deletions(-)
+---
+base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+change-id: 20250704-qcom-sa8255p-emac-8460235ac512
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+
