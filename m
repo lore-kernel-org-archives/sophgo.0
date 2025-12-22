@@ -1,105 +1,138 @@
-Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746503A1E7F
-	for <sophgo@lists.linux.dev>; Sat, 20 Dec 2025 17:05:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C76232ABDC
+	for <sophgo@lists.linux.dev>; Mon, 22 Dec 2025 16:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766250331; cv=none; b=VAAcqGkqxL+WWusIKk2Ize8bz+/WJi0ZM4GwGvlw0Rquy1MdMhP2SZK354k8WEvt5PrYyg5y6qANiwn/jnl6twUAoftaTtwMg4xU81i/NbTdnE/92fjSZFGUXO1h288RDId/x6Ji4eRnkp7oaUjYYGx1GkLxNTFmb1ISE6te8a4=
+	t=1766420341; cv=none; b=RkRQ31JsKks4o0lFkKf/aX2dlYj/8p27RrGd+ZdJyMPeTGEFuyIIvVr4xkP0PRe5SXCXbGnUVE1lHNOxRuxkS6fKG/nbHqyXvCnj1fe1Qc/VlzqNndAYo8XDDzO8W2v4RO797Xf5Lk+xtnumcwqrHAOuQZ2BbsFAKFpa/2CTVyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766250331; c=relaxed/simple;
-	bh=M2zY+ORks0cZb9fQOPCAtCkb/gOnoNoTpekU/t+OfFI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hQ1a6+XQpkmzQ8bUVa9z7cQOGo4MjIPGxHJ1YgimGg3jmfE4bQCQn99/tARdLnMUinANb3wqmYRHnan9n0xW76Svb2DMJKFumN5vUEtI2vuE+bfnVzWK9OErfvMqp1sdgNZkRQHXHrX6tPCA+hR80HISVEc7tRRu9nlRTvVoLZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [223.166.92.103])
-	by APP-05 (Coremail) with SMTP id zQCowADneQ1E10ZpEbtTAQ--.25750S2;
-	Sun, 21 Dec 2025 01:05:19 +0800 (CST)
-From: Han Gao <gaohan@iscas.ac.cn>
-To: Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Maxim Mikityanskiy <maxtram95@gmail.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	Stuart Hayhurst <stuart.a.hayhurst@gmail.com>,
-	linux-sound@vger.kernel.org
-Cc: Han Gao <rabenda.cn@gmail.com>,
-	linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH] ALSA: hda: intel: Introduce msi64 parameter to override 64-bit MSI restriction
-Date: Sun, 21 Dec 2025 01:05:01 +0800
-Message-ID: <20251220170501.3972438-1-gaohan@iscas.ac.cn>
-X-Mailer: git-send-email 2.47.3
+	s=arc-20240116; t=1766420341; c=relaxed/simple;
+	bh=PfLjGt4ILvtHBKymPMS6ul5a90UcBf84tYBUCNfdu+4=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=eevOSQombK4KrR8BqIVeuAD8w/2bn3WyRqQFcdpD1fiHo3edEvD8HHhUdbhQz6MxMDmylF5MnUVyPXVN3IOUHCuVkzFOGbihPKXJcmUScM2Feir3TSVoey7iubg54ot1i8XrbTIybnj/XrTYD0rZVEUEL2cH0PBRAoxHkzVhDME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=nExDy6ip; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v0VPwC2D; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="nExDy6ip";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v0VPwC2D"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id D1835EC00DE;
+	Mon, 22 Dec 2025 11:18:58 -0500 (EST)
+Received: from phl-imap-17 ([10.202.2.105])
+  by phl-compute-04.internal (MEProxy); Mon, 22 Dec 2025 11:18:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1766420338;
+	 x=1766506738; bh=+TRtegKusBZuDP3wYEst9VXFu3lvOUyuyn/E3Z9nZgY=; b=
+	nExDy6ipWdxE+xADtBRQsPp1dsstUjKaTlYxYLdTHBPtDvwiXJYQLJWh9mAHxJL6
+	6NeHoj4I3NIGhqEdNzezdlh+fd3s9fW1KtLRsC5htN/cN+VeVz6WQwUiXUR5A+Wr
+	ZxNE/OqpCLDvWQy/hxjfh9tFJzOucuE7ce1YCBABf1w05osWkXEsAHvUSFoutBBs
+	ruy8tuw8auzDBCupNGJgInLwh3UveObiALHDCGZG3grxbcPOR9yogA5GQ4+Kv5Qj
+	CtmZGuF4rfITcomOsCaU1cSwDkiY4XuZChxfL9G6x+DiNuIWxYU8Sl20XKGPycCP
+	YB3EcU1YFz/s2VWRVK9EsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1766420338; x=
+	1766506738; bh=+TRtegKusBZuDP3wYEst9VXFu3lvOUyuyn/E3Z9nZgY=; b=v
+	0VPwC2Dasfw5FOUeVr4D3MPl0R+k9rjRSz2DtnfRA4/MazYargWTuRJ46UWXNaPX
+	le+4koZf4BMgTmlgL+ThgtWeAHICHRBTqOfck4+tpz2jv4N0ncthoFPhr/oaYl0t
+	xYw9R1Eyel5cazSV0Nm9Bq3yhsn+reTFufLBXqGzxp3+QxT0TqszumTVEzvJ7ZDS
+	uMzoOyAuWSsirF/i9pJUpJNUg8oTX/HkEUcs0d6+iONBA6w+Q1WLE4acJHhRJLSM
+	jywuy5QJo4zm04coWocqhiEQw8qVHXooMaBmELm3wdO7rPTeKelyL97SSUtJ965A
+	3rk+BRNapR+7PQoAa2u7g==
+X-ME-Sender: <xms:cW9JaeXATCRZmbqDSJ2kWc6ydh4tCG9s9cdarIjyprUNIiQdcrSAXg>
+    <xme:cW9JaVazpq6BK5iQd8VU_zu-0Hi04XoJZh55YvxaMQh5qY2d7dGMBp61qyb4Vxs8-
+    koVe_ZpYMoEc52Qan6rjMLqUCRtBzz3z-X0aB7UP_PcjesKgX3TKV0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdehjeegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdetrhhnugcu
+    uegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtthgvrh
+    hnpefhtdfhvddtfeehudekteeggffghfejgeegteefgffgvedugeduveelvdekhfdvieen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrhhnug
+    esrghrnhgusgdruggvpdhnsggprhgtphhtthhopeduhedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepmhgrgihtrhgrmhelheesghhmrghilhdrtghomhdprhgtphhtthhope
+    hrrggsvghnuggrrdgtnhesghhmrghilhdrtghomhdprhgtphhtthhopehsthhurghrthdr
+    rgdrhhgrhihhuhhrshhtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghgrohhhrghnse
+    hishgtrghsrdgrtgdrtghnpdhrtghpthhtohepphhivghrrhgvqdhlohhuihhsrdgsohhs
+    shgrrhhtsehlihhnuhigrdguvghvpdhrtghpthhtohepkhgrihdrvhgvhhhmrghnvghnse
+    hlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtohepphgvthgvrhdruhhjfhgrlhhu
+    shhisehlihhnuhigrdhinhhtvghlrdgtohhmpdhrtghpthhtoheprhgrnhhjrghnihdrsh
+    hrihguhhgrrhgrnheslhhinhhugidrihhnthgvlhdrtghomhdprhgtphhtthhopeihuhhn
+    ghdqtghhuhgrnhdrlhhirghosehlihhnuhigrdhinhhtvghlrdgtohhm
+X-ME-Proxy: <xmx:cW9JaU3xsEmuQWIabub-BBUxkjwU3ST7Q7RE11jDb6bzOZTrigWswA>
+    <xmx:cW9Jaba1nz8OAwQNTbnnpb7UskG5z43xKYV8gDXNDJMnlHJODygdLQ>
+    <xmx:cW9JaeiE_6U-EBssBB6QEWM2aeN-zYH__08z_3WWtIcKQRXu6mEc8g>
+    <xmx:cW9Jaa_FWD5k9guM_9H7dlxfxFcC-nkRDMm9FBYx4fdovSTuTnTDLw>
+    <xmx:cm9Jab-FVCTmeeUgSN_5WxywbaPMzAQtL15jnDzTeXew5sA7ZXSBfjwt>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 03DF7C40054; Mon, 22 Dec 2025 11:18:57 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:zQCowADneQ1E10ZpEbtTAQ--.25750S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7uw4rAw18uw4DAF1UXr1kKrg_yoW8WFW3pa
-	1UCFW7tFsIqFZxGa1UKF48WFnaga93C343Ga95K34fX3Za9340q3W7KryfJFyxGFW8GryY
-	9F1UZFy8Ww43Aa7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9014x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
-	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
-	I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
-	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
-	n2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7x
-	kEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E
-	67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCw
-	CI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1x
-	MIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIda
-	VFxhVjvjDU0xZFpf9x0JUd-B_UUUUU=
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwoCDGlGu0YipgAAsV
+X-ThreadId: AgVwluaQAvf7
+Date: Mon, 22 Dec 2025 17:18:26 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Han Gao" <gaohan@iscas.ac.cn>, "Jaroslav Kysela" <perex@perex.cz>,
+ "Takashi Iwai" <tiwai@suse.com>,
+ "Kai Vehmanen" <kai.vehmanen@linux.intel.com>,
+ "Peter Ujfalusi" <peter.ujfalusi@linux.intel.com>,
+ "Ranjani Sridharan" <ranjani.sridharan@linux.intel.com>,
+ "Bard Liao" <yung-chuan.liao@linux.intel.com>,
+ "Maxim Mikityanskiy" <maxtram95@gmail.com>,
+ "Pierre-Louis Bossart" <pierre-louis.bossart@linux.dev>,
+ "Stuart Hayhurst" <stuart.a.hayhurst@gmail.com>, linux-sound@vger.kernel.org
+Cc: "Han Gao" <rabenda.cn@gmail.com>, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org
+Message-Id: <ad17d046-158d-4019-b801-423896fcf5fc@app.fastmail.com>
+In-Reply-To: <20251220170501.3972438-1-gaohan@iscas.ac.cn>
+References: <20251220170501.3972438-1-gaohan@iscas.ac.cn>
+Subject: Re: [PATCH] ALSA: hda: intel: Introduce msi64 parameter to override 64-bit MSI
+ restriction
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Sophgo SG2042 MSI driver does not support 32-bit MSI.
-Introduce an 'msi64' kernel parameter to bypass NO_MSI64 for ATI/HDMI.
+On Sat, Dec 20, 2025, at 18:05, Han Gao wrote:
+> Sophgo SG2042 MSI driver does not support 32-bit MSI.
+> Introduce an 'msi64' kernel parameter to bypass NO_MSI64 for ATI/HDMI.
+>
+> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+> ---
+> +module_param(msi64, bool, 0444);
+> +MODULE_PARM_DESC(msi64, "Force use msi 64bit.");
 
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- sound/hda/controllers/intel.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+This does not seem like an appropriate use for a module
+parameter. There are very few things we want to use those
+for in new code, and working around hardware bugs is
+clearly not one.
 
-diff --git a/sound/hda/controllers/intel.c b/sound/hda/controllers/intel.c
-index 1e8e3d61291a..b4bad9e65235 100644
---- a/sound/hda/controllers/intel.c
-+++ b/sound/hda/controllers/intel.c
-@@ -121,6 +121,7 @@ static bool beep_mode[SNDRV_CARDS] = {[0 ... (SNDRV_CARDS-1)] =
- #endif
- static bool dmic_detect = 1;
- static bool ctl_dev_id = IS_ENABLED(CONFIG_SND_HDA_CTL_DEV_ID) ? 1 : 0;
-+static bool msi64;
- 
- module_param_array(index, int, NULL, 0444);
- MODULE_PARM_DESC(index, "Index value for Intel HD audio interface.");
-@@ -161,6 +162,8 @@ MODULE_PARM_DESC(dmic_detect, "Allow DSP driver selection (bypass this driver) "
- 		 "deprecated, use snd-intel-dspcfg.dsp_driver option instead");
- module_param(ctl_dev_id, bool, 0444);
- MODULE_PARM_DESC(ctl_dev_id, "Use control device identifier (based on codec address).");
-+module_param(msi64, bool, 0444);
-+MODULE_PARM_DESC(msi64, "Force use msi 64bit.");
- 
- #ifdef CONFIG_PM
- static int param_set_xint(const char *val, const struct kernel_param *kp);
-@@ -1903,7 +1906,7 @@ static int azx_first_init(struct azx *chip)
- 		chip->gts_present = true;
- #endif
- 
--	if (chip->msi && chip->driver_caps & AZX_DCAPS_NO_MSI64) {
-+	if (chip->msi && chip->driver_caps & AZX_DCAPS_NO_MSI64 && !msi64) {
- 		dev_dbg(card->dev, "Disabling 64bit MSI\n");
- 		pci->no_64bit_msi = true;
- 	}
--- 
-2.47.3
+> @@ -1903,7 +1906,7 @@ static int azx_first_init(struct azx *chip)
+>  		chip->gts_present = true;
+>  #endif
+> 
+> -	if (chip->msi && chip->driver_caps & AZX_DCAPS_NO_MSI64) {
+> +	if (chip->msi && chip->driver_caps & AZX_DCAPS_NO_MSI64 && !msi64) {
+>  		dev_dbg(card->dev, "Disabling 64bit MSI\n");
+>  		pci->no_64bit_msi = true;
+>  	}
 
+The behavior is also wrong: if the system can use neither 32-bit
+MSI nor 64-bit MSI, this would accidentally try to use the
+64-bit variant and then cause runtime issues.
+
+I would expect the only possible fallback to be using legacy IntX
+interrupts, or returning a probe failure if that doesn't work
+either.
+
+      Arnd
