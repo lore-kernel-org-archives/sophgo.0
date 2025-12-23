@@ -1,51 +1,34 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010056.outbound.protection.outlook.com [40.93.198.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA0D727A91D
-	for <sophgo@lists.linux.dev>; Tue, 23 Dec 2025 14:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.56
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1766501769; cv=fail; b=YJzpHzJDNp1NuD9g1+va9qZTs6GJmKslOOx8/xW43ZrLF8WL6YVZmWtNIYlq843W8cGNnGDdhSMrxFQeCvYT+bLL9I3NAAmmmriwH/ahYUs7d4oHTkkDfp8O8cbjdhEQgQd1Q0g5al9HIMCQoGSXTbLeOgay4bJhp91qzaCXnyQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1766501769; c=relaxed/simple;
-	bh=8XBgUEaBoSwjqPUoEmzz4QxPQCNFSdwSEtL1xwFyZV8=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=M/Jfd++G6yTkNNbV8zTfgOX46ty+DGtmjFkHwFEpKckBGObnaxm54DJxeFpeGXKOmOQ7o7juIyCbXwUE74WhJaK1CP5D1h3TU44OuLSvqWRjZxKRfg8R/OR/G57JuKXlUeIG7sc++XrmAiKSGMFQck6W/SAOhYkMjWvj+yTuOqE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=rOeV5MyK; arc=fail smtp.client-ip=40.93.198.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="rOeV5MyK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hx5jT9V4hzLdXzBFRsu5cDy9WdFG0n8M9n7LB8FDdJLHFaSvS31tG2aR0+mVa5Ra9Oqje/TXhtONCZzZpxqTi3qb/k4Jh2EthjIj2xAMgH4onIsBJyqtbzHPx/0+Ftwm3C73enyqAU7RjybaZVPQUwODTx34MeJG7I9nBzbn7BoindTy2+kJcXgvmq3grdmYk3Z3uoOhVeIX8T6ROmzjy3YW6xN5f4NmHj20KhpvzTQ070w5P/fCBLqFQTOnFAygC24znIIPCGuG9fYArkpggS/eeGK8w0ly6kcOkk6ENc4R9WxQstP/LznMcYb7VXE+G/FTSmiMnJnWoB3/pncWaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gBRbSgTrnOl2VSe7lIEcRI5wbYulO2HOl9Q1ik4Wanc=;
- b=WdDzoPJe0Q3xKdp2SxmU7o/+C7Nj+pF+7HCOrhumYyMWJKBGoavBtqSKZ4/ScyhmZxv07/l98lesPcLakS+cJwjE2LkOrlaijhr7mAQUhCKo5oVJqFMZTPQatVOIyAqEUE3yzTicLBgLDNh/lWgGwkDNSj1VPrKAnAToEO6G9zbHbXjXiPVNbs3z7/HHWm/PXEA2QUIWuF38E4VwNLGDpGQIi7dxHd5NpzigLZP4y99wxQbZeRYaKcmKq8uDMJrHbRF69z9rNsnGVm4bDJFf4G/tNlg7OGASLfYr5k+fDZdpFAwke8tJ9IalowxQgRhpxuZkmX3ZnPDPaZ21b7yYXQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gBRbSgTrnOl2VSe7lIEcRI5wbYulO2HOl9Q1ik4Wanc=;
- b=rOeV5MyKK5erNnBhBcZqlqNIqnlguNPI8xOqv9u0H/zGpvz2hTLk+asytEH5RPnjBTQCl0dfEjU0HyeyvfkVKxqp8EOxOQIDsa+E/Bgs51hwnKWtEsEIp5Q/2CosmqORD1L3iZX+KR6vggetLnuB49/OVSROeOLsQ/NQZbd1IE8=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by SA1PR12MB6749.namprd12.prod.outlook.com (2603:10b6:806:255::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9434.11; Tue, 23 Dec
- 2025 14:56:01 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::46fb:96f2:7667:7ca5]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::46fb:96f2:7667:7ca5%4]) with mapi id 15.20.9456.008; Tue, 23 Dec 2025
- 14:56:01 +0000
-Message-ID: <2ab9f73d-ef7b-40b3-b2bb-650f83ac236f@amd.com>
-Date: Tue, 23 Dec 2025 15:55:56 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D90B35505A
+	for <sophgo@lists.linux.dev>; Tue, 23 Dec 2025 15:32:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1766503931; cv=none; b=hC6F+ty/L18tndDRuwrrrtxO+K1+ZFatvvpnT5+DuvcmclR3DkeI5qtCcDHRI8lBB3IrvMOmaLlJHDpaX1+XvwYoJIAwlAiy7x/y11hYrdjoIOOcZkBrgcv/TEUNXTuGENSv9ZV64qeYqcxqNL/vCw/VNwQwEXSkaDhCCbYHv7E=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1766503931; c=relaxed/simple;
+	bh=xFQd0cn+GpkjGOelTvNHC0tADDce2LpSoeJNV93QCC8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hegXVsUpviF/XW7cVt5t/jiYAwmjnD9jua2ai287gTszX5JB6fCchCmUgz9JGUwqMXsr3hTkvtHffoy8VVtxTKfjIyg5tBMNji1C7w+PE1fuNt1wN8YNk/4gdbnVbIeknoW7BtFoTjvUoIZd4rxZFivHAq3vGUGIHNPJAw5d8eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [192.168.0.114] (unknown [114.241.82.59])
+	by APP-03 (Coremail) with SMTP id rQCowABnhdzstUppR2S4AQ--.711S2;
+	Tue, 23 Dec 2025 23:31:57 +0800 (CST)
+Message-ID: <5ea0ff13-04b3-4b2a-80e2-4f87146d00d5@iscas.ac.cn>
+Date: Tue, 23 Dec 2025 23:31:56 +0800
+Precedence: bulk
+X-Mailing-List: sophgo@lists.linux.dev
+List-Id: <sophgo.lists.linux.dev>
+List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] drm/radeon: bypass no_64bit_msi with new msi64 parameter
-To: Arnd Bergmann <arnd@arndb.de>, Han Gao <gaohan@iscas.ac.cn>,
+To: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ Arnd Bergmann <arnd@arndb.de>, Han Gao <gaohan@iscas.ac.cn>,
  Alex Deucher <alexander.deucher@amd.com>, Dave Airlie <airlied@gmail.com>,
  Simona Vetter <simona@ffwll.ch>, amd-gfx@lists.freedesktop.org,
  dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org
@@ -53,171 +36,78 @@ Cc: Han Gao <rabenda.cn@gmail.com>, linux-riscv@lists.infradead.org,
  sophgo@lists.linux.dev
 References: <20251220163338.3852399-1-gaohan@iscas.ac.cn>
  <e86b823f-5e83-4105-8e4d-1db141d088a4@app.fastmail.com>
+ <2ab9f73d-ef7b-40b3-b2bb-650f83ac236f@amd.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <e86b823f-5e83-4105-8e4d-1db141d088a4@app.fastmail.com>
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+In-Reply-To: <2ab9f73d-ef7b-40b3-b2bb-650f83ac236f@amd.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YT4PR01CA0042.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:b01:fe::22) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
-Precedence: bulk
-X-Mailing-List: sophgo@lists.linux.dev
-List-Id: <sophgo.lists.linux.dev>
-List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|SA1PR12MB6749:EE_
-X-MS-Office365-Filtering-Correlation-Id: eb5d373b-981a-4a0d-aeb2-08de4233635d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?MmlidDVRRHZNbk4rbjRIcnNUOEFKd1huZlYvSlRBakw3blcwcmJDVnpGZUZn?=
- =?utf-8?B?ZTZGSFUzc2pzQUtmMmgvazRqcmRHc216TUZTdk9TY2w4TERuU3B5Y1hsajB6?=
- =?utf-8?B?TnNHUG11cVBTczN2L1VVZDVGQnNWY01zOVh5SU9sZXdRcFlIa2ZYRFc4UWpB?=
- =?utf-8?B?MVU0azlibDFTa2F1bHhxdy9ncFpuak9yVTl6NUtySlVrNkhwWkFjcFhUSTRZ?=
- =?utf-8?B?SWhxU1hxMVYrajdVR2FuaGdtbnRJZE9QSGNRYi9ySVAxa2dyVnpIOUpGcWxS?=
- =?utf-8?B?dGVIeUVNZmFuVGhEU0ZTUVlsaSswT3ZnUkdlQmQwL2h5cW9mVUpPdWxaV2V0?=
- =?utf-8?B?WXkyems4Q09CTWdQUHR1VFFhalZJWnhoWllxQ1VEbS9ORGk0RGZPcTljNEFy?=
- =?utf-8?B?KzNIcFpjZ0czczdIZllNd2ppUjFpci90bXpMd2NwUmVkL3VTSk1MR2pNYzdV?=
- =?utf-8?B?bHVSN0dMekxUZjNyamUvanhPS0ZOd2JwVlB5THhDdEMvbjFoWmYxK0lFeTda?=
- =?utf-8?B?VnJjYmdjcnZRUzYvL0VVQWxNZDc1eDA3NEozb2dEUnppa1YxZEMyTVBPTjYy?=
- =?utf-8?B?a0FuS2Nhb3RRNWNzcmFPREY3SzJ1SzMxYVlqV2pvSGdpT2NkVTh1R0djTVF3?=
- =?utf-8?B?SVpmeW0wUUtWRFdBaEg5NmpqMjh2aFppNEtUa0hFN041b2tSOUt5TXlERk1l?=
- =?utf-8?B?L0YxWnVkc1lldlcyT1ZRcS9VNlVHeEpXYkYvRUlhV2todVdKSkpOOFBiV2kx?=
- =?utf-8?B?b1AvanVQUnJocTVrdElpdjhlUU1iK3gxb00rb3RBaS8zdDZzQU5QZjdDcDZr?=
- =?utf-8?B?cDIxenpYczhqY0ZkRGpDUjNkWGU2ZEZFRlhhc3lPUkRiL2JodjBpT08xVG9P?=
- =?utf-8?B?QXJiM0JTdmNrbHJocktSRVdHVHM0aXpIQkNEdnpMbHJpMGxveG9ZM3BQMmJP?=
- =?utf-8?B?RGpnNGRqT0lVK2x4OFdaMlpsV2Z3UTlkMFZWdXlYblBrSEFCTTVYSmdWT0Fh?=
- =?utf-8?B?TWRYZEZkemxFSzFIWTQxdnpDQ1B6SnlYUVpGVWxrTWRGbW9Hcml5ajNCQmxB?=
- =?utf-8?B?b1hZSTBHdGlHcFhINk9KS2ZqQ1lwM0xVQXhncnV2cG1Yalk2TFVoaGlHQUVu?=
- =?utf-8?B?SlhWdHNDMmtOQW5zVXYxSkliS3Q5OHY4K1o5S2I2b0lrUlZ0TnFRQ1NWT1Ey?=
- =?utf-8?B?QkUyZnF3TjBrQytzN3VLRy9IdkcxWlBUb3UxSDh2M2p6bHVBcHk2czh4UVpS?=
- =?utf-8?B?Z0QzWmJ0eWNoMXFQUEV5ZCs0ZVpQc1Znb3ExM1cyQStZWFpGRmd2Q3U2dkFz?=
- =?utf-8?B?UW5BVDN4YTVEZGF6bk1HWCtPK25RVEt3NEdjdFdubWpmS2k5aFUrM1RjYzBj?=
- =?utf-8?B?U2VjdFR3a0YvOHZWU1RxcVdjMlNGak4yaDYya2lOaHNoYnVkQlV0dzRCZ1Q3?=
- =?utf-8?B?VlA1U0V2TS81aldESkJiUTVCamhLelZZYUJqQml1aHlvN1lDdFBzbzFEWFkx?=
- =?utf-8?B?UWUxOXV3dTdLbElOMnRMWElSamMySkQyeUtaVW9aRnRWVWF4MGgyN21WTHhE?=
- =?utf-8?B?cjd4YkJ5d0F2SVZtV0FFaXpUeGI1eW5uRlcveEtmNFB4MklzVE1mZzFCM0lT?=
- =?utf-8?B?aXUyUndhNVNBampEZlZyYnhpVDRKSW9jV0VIN05LNmEyMWRJSmtzSkJMeXh5?=
- =?utf-8?B?dFVDVFJNdU4zanBsZHp4SkJ2WjdHcTcvaVlEWll5L1RuVVo0TVJQMkhGSVpE?=
- =?utf-8?B?UytsM3FyeEQ0S2dldnllVzBVeWJGdWF4ZGVYOHk0aG41WWd5Z1Z6TkxRSDcz?=
- =?utf-8?B?ZENRNlNaZ0xMbE14ZFBVTGFVK24vQ2tHc1QrRkhaaGNYOHBCS2xRUWZyM1JG?=
- =?utf-8?B?YXN6OERSajB2aVh0S0M3L0JkbVdsVklpeXlHSTlUNzJLc1FqK2dNc1RGWndY?=
- =?utf-8?Q?zOXxiPaOwd0WgKcKrsWfLk2J2/BKMdtY?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?eWVyRGZ5dmk3U3JDZDVMSEFWZTJjcnJGcmZJelZDYmdidWhxVHMvb1JQVTZw?=
- =?utf-8?B?emV2NythSFJUbHk5Y3pxQlloaFJ5UXE4UXBqanNSMTNaUU5yRHo0ZWY5V0Zo?=
- =?utf-8?B?cS9Dd0NxdSt5TlhFUWJtT0tpVXdJRCs4WkcvVVhnSnRyb3VXeitNOENiOUFm?=
- =?utf-8?B?aVU3WXJSc0w3SWdGT3FrWk1oMVFPVzFwWEtXRXdnamU0bXl3Q2tYdVZObEIz?=
- =?utf-8?B?Rk5tcmVVeHJpbUJHa1RkOWNNVTdqZnpaYS94bUtRUi92OGdwcDRRRTZDaTVB?=
- =?utf-8?B?dGJQd1RYNFpOdCtnVi9MMS9rSk5mWGswcW9LME1RM1NYYTZxUy9LazlRbERn?=
- =?utf-8?B?NnFCL3A3V1FHSzRLMjc0ZkE5OERjQXhsSTNxYitmdWpqay9pS2ZIYnU4ejAv?=
- =?utf-8?B?VFVML094NFBTM3dTWjE3bEZHYjFrQkpFNFRlTUtINWdVcU1haU1QOHlnQzQ3?=
- =?utf-8?B?dElIajNBZUs0eUF5TXd1UjB3Vk4vcEZmMGplNkdYTSsvL1lQbytqcW51WmlN?=
- =?utf-8?B?ejZTQmRPQ0d1bUpBT0FQckZHWVd2MGdiTXQ0eVdvd2lMbWJuMjdJYjYrTno1?=
- =?utf-8?B?bHNtaDBldkhHMnVKc1o2ZDlPVEtoUk9LbVoybWJjTVdGRFV5bFdyYmlqUnJU?=
- =?utf-8?B?UDdtcFpUeURyL3pwVW1FQ3ZDcDRJWXFHWGlyN0lza1B4Ri9xNFlkelhMWUJC?=
- =?utf-8?B?Mk52T1IrbmVUa2VxQ3kzdHJmemo5MkxOU3htODdSUjVjZHlkbzZROG9VSzN4?=
- =?utf-8?B?Z082amJTUWMvTkVubHhyWGJsbDRTTlJwYlBUdVlPWkMxKzdmdjZXOHZhb0xP?=
- =?utf-8?B?eGNkcXBZakFGSEVWR3VqYnpKR1E0MjArTUZVeEk2RkREUmwrRHhiaU96c0FR?=
- =?utf-8?B?QzVxTzVXZ3Q0S3FzdG50M3B4NlpvV3BzZFI1U0oxaVdDVWJKd245OVpqMWtk?=
- =?utf-8?B?ejJ4eDBWaEpXWFk0eXh6WHFsdDh5L25aalR3V29sMGdQMThlTk95WkVFUWd4?=
- =?utf-8?B?YVhrdXVSVDVZM3dOVi9aSi9oRVRXUWZRbmNHZkRmTUlEMEF0dHRGdFBaVFFw?=
- =?utf-8?B?dGllZlkydVpuaUZMeXY5QUNjdXZKeGVhdGRGOWtaRzU4T1ZLT0t5end4Q25m?=
- =?utf-8?B?dTlDMjBJbGx0QjJmbFUwZ3RtdWtzZ1FuMnBKbUhPamlaZnFxeEE0NHQ4Zm5h?=
- =?utf-8?B?WStwSDV5Um5JemtzVFFWU0doZ1BFbDFBQnp3aFo4TnlxVU9rNjN0MkJBTjgw?=
- =?utf-8?B?TDJUZ3dnUUJMNzYzcUVzK012TE9GY2NGTzJySUx3eklWekhzdUs0TWRYMFFu?=
- =?utf-8?B?bEpXaW1iN1NSY3Bqek81YjVDVE5QWVZyUVRVRWtHV2tLeTZTNWZsZGsxWnc3?=
- =?utf-8?B?SGNaNmJkSEtEaVUyODFaaDkyOFBrbEFWNTlzUEVtbEpKN1FTbmNqZnBFbW5l?=
- =?utf-8?B?b0dxZ3JGNTNBajRRbWJhUVp1dW5zd0R0SnNWemVtTFVkNXJQWEhVWHo2Tlgw?=
- =?utf-8?B?cVJBbGc5WEFSQWlvZ0dwbVlRaW4vdmw0dTZwczN3RkNkdkdaNGJlejNOMkx5?=
- =?utf-8?B?K2VQYlI1RGI4THlxYlZuWVNsZjMzWSsrdTRRWjBORTdsZUlMQnVKdEtFNTdk?=
- =?utf-8?B?TWxkOXdvSFNGRi9TMGlsMGFEbHJvMm96bEphL3NJaUVVQlE0Tkp2cUNhN3Rj?=
- =?utf-8?B?SGRmRGtxT1NUQ1pDTC9ZM2VkZ2xyeVlSbW1VTG51aFhTM3VMeFFqcWE2N29v?=
- =?utf-8?B?QkYzVXQ1ckdWUEFCaktBNjhsS3JaVkR5TERNbmRnbkFEUmdMalVacXZ4VU85?=
- =?utf-8?B?S2xkT0MvRXZvZ2dqV3Q3QXRONjdjR25YRkFDNG5tTHU2d0wxdEE0aFhpU3R5?=
- =?utf-8?B?TEYyZERKTWR0dzB0cEttS0YzeE0zYzVYeFhMZGVERlpKaWNwc0l3dE8xdWho?=
- =?utf-8?B?SEtEQmUxYnZwTXZHN1piMEVocHErYzRvUGtxRHBvOXhFb05lSFlmdXZCallE?=
- =?utf-8?B?ZTI0T3BaUnQ0emtpcWd2Zlg3a1N1by9JcnY1UytyZ0w2blJGNGpFeDI3K1l5?=
- =?utf-8?B?MGpGSFpXcUtSczRIcTE2ZFZXd0ZYaFk0UDFFRU1UVGxJVHpodFNSZTNGUHhK?=
- =?utf-8?B?bStidkxCMFJGUVFiZWRBeEl1QytSUkV0V282anJXakR1RXpIbnAwaCtMSGlJ?=
- =?utf-8?B?emVJU2JDbE96eTA2MEkvSk1QVXdYSTZRS01GbmMrWTA3a2ZsbXlwWlVDRnNl?=
- =?utf-8?B?RlVCdm9GYnJMRWFmTElXTURqQmtZWjNRSVVMR0VvcGVRLytxaStVcTZUMmxR?=
- =?utf-8?Q?kg2ozxmZ8fwE5HNj45?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb5d373b-981a-4a0d-aeb2-08de4233635d
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Dec 2025 14:56:01.3140
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 2ebPD9nb3n4cg/All/bS+RZJ8FXDAtTStSMv85IOorrkZGl4iYPk9FZARNa/wGL+
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6749
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:rQCowABnhdzstUppR2S4AQ--.711S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7CF1ftFyUZF18KFWDCw1UAwb_yoW8urWkpa
+	y5CFWagrn7tr47K39rZa1xXF1fZw4IgayrXFn0kryfC3y5Ar17KFW7Ar4ak3W8Xr1vkr4I
+	v34Ig34xuFn0yFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVWUtVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
+	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
+	wI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
+	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
+	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
+	ZFpf9x07betCcUUUUU=
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 12/22/25 22:32, Arnd Bergmann wrote:
-> On Sat, Dec 20, 2025, at 17:33, Han Gao wrote:
->> diff --git a/drivers/gpu/drm/radeon/radeon_drv.c 
->> b/drivers/gpu/drm/radeon/radeon_drv.c
->> index 87fd6255c114..53af28494c03 100644
->> --- a/drivers/gpu/drm/radeon/radeon_drv.c
->> +++ b/drivers/gpu/drm/radeon/radeon_drv.c
->> @@ -249,6 +249,10 @@ int radeon_cik_support = -1;
->>  MODULE_PARM_DESC(cik_support, "CIK support (1 = enabled, 0 = disabled, 
->> -1 = default)");
->>  module_param_named(cik_support, radeon_cik_support, int, 0444);
+Hi Christian,
+
+I have a question about this 40-bit restriction.
+
+On 12/23/25 22:55, Christian König wrote:
+> On 12/22/25 22:32, Arnd Bergmann wrote:
+>> On Sat, Dec 20, 2025, at 17:33, Han Gao wrote:
+>> [...]
+>>> diff --git a/drivers/gpu/drm/radeon/radeon_irq_kms.c 
+>>> b/drivers/gpu/drm/radeon/radeon_irq_kms.c
+>>> index 9961251b44ba..62eb5a6968ff 100644
+>>> --- a/drivers/gpu/drm/radeon/radeon_irq_kms.c
+>>> +++ b/drivers/gpu/drm/radeon/radeon_irq_kms.c
+>>> @@ -250,7 +250,7 @@ static bool radeon_msi_ok(struct radeon_device 
+>>> *rdev)
+>>>  	 * of address for "64-bit" MSIs which breaks on some platforms, 
+>>> notably
+>>>  	 * IBM POWER servers, so we limit them
+>>>  	 */
+>>> -	if (rdev->family < CHIP_BONAIRE) {
+>>> +	if (rdev->family < CHIP_BONAIRE && !radeon_msi64) {
+>>>  		dev_info(rdev->dev, "radeon: MSI limited to 32-bit\n");
+>>>  		rdev->pdev->no_64bit_msi = 1;
+>> According to the comment above it, the device can apparently
+>> do 40-bit addressing but not use the entire 64-bit space.
 >>
->> +int radeon_msi64;
->> +MODULE_PARM_DESC(msi64, "MSI64 support (1 = enabled, 0 = disabled)");
->> +module_param_named(msi64, radeon_msi64, int, 0444);
->> +
-> 
-> As with the hda-intel patch, this should not be a module argument,
-> but we should have the kernel figure out what to do itself.
+>> I assume the SG2042 chip has the irqchip somewhere above the
+>> 32-bit line but below the 40-bit line, so it ends up working.
+>>
+>> I wonder if the msi_verify_entries() function should check
+>> against dev->coherent_dma_mask instead of checking the
+>> upper 32 bits for being nonzero, that probably gives you
+>> the desired behavior.
+> Again completely agree, that sounds like a plan to me.
+>
+> IIRC the modified code here is basically just a workaround because the MSI control dword on older radeon HW was not setup correctly.
 
-Yeah, completely agree. This is basically just a workaround (and a bit ugly one).
+Does this mean that on Bonaire and onwards, MSI can reach full 64-bit
+space, while DMA still only does 40-bit?
+(drivers/gpu/drm/radeon/radeon_device.c sets DMA mask to at most 40 bits.)
 
->> diff --git a/drivers/gpu/drm/radeon/radeon_irq_kms.c 
->> b/drivers/gpu/drm/radeon/radeon_irq_kms.c
->> index 9961251b44ba..62eb5a6968ff 100644
->> --- a/drivers/gpu/drm/radeon/radeon_irq_kms.c
->> +++ b/drivers/gpu/drm/radeon/radeon_irq_kms.c
->> @@ -250,7 +250,7 @@ static bool radeon_msi_ok(struct radeon_device 
->> *rdev)
->>  	 * of address for "64-bit" MSIs which breaks on some platforms, 
->> notably
->>  	 * IBM POWER servers, so we limit them
->>  	 */
->> -	if (rdev->family < CHIP_BONAIRE) {
->> +	if (rdev->family < CHIP_BONAIRE && !radeon_msi64) {
->>  		dev_info(rdev->dev, "radeon: MSI limited to 32-bit\n");
->>  		rdev->pdev->no_64bit_msi = 1;
-> 
-> According to the comment above it, the device can apparently
-> do 40-bit addressing but not use the entire 64-bit space.
-> 
-> I assume the SG2042 chip has the irqchip somewhere above the
-> 32-bit line but below the 40-bit line, so it ends up working.
-> 
-> I wonder if the msi_verify_entries() function should check
-> against dev->coherent_dma_mask instead of checking the
-> upper 32 bits for being nonzero, that probably gives you
-> the desired behavior.
+If so, checking coherent_dma_mask would be wrong for those devices.
 
-Again completely agree, that sounds like a plan to me.
+Do you think maybe it would be safer to introduce a msi_addr_mask for
+occasions like these? We can have msi_addr_mask = DMA_BIT_MASK(40) for
+pre-Bonaire, and then the ppc PCI stuff can check the mask and see if
+it's usable. Probably something similar for hda.
 
-IIRC the modified code here is basically just a workaround because the MSI control dword on older radeon HW was not setup correctly.
-
-Regards,
-Christian.
-
-> 
->      Arnd
+Vivian "dramforever" Wang
 
