@@ -1,227 +1,425 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEC3335553
-	for <sophgo@lists.linux.dev>; Thu,  8 Jan 2026 21:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF98A33436A
+	for <sophgo@lists.linux.dev>; Thu,  8 Jan 2026 21:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767907032; cv=none; b=a+DGVMD6GLcYRgPCXFJ1KLllNPEpHcTXIU6rY+KVp3CoWU8NDBxBKidkY58BmORZBqOr2LJBMkK4yIPi0jConzc3mHBGWyPe4gPSsV9plrNOTwclqwrcL6q4rM71YbuO4SroeQ3043cD8XPR9ZJN+0sel2R1CjtD6BGzzsbI4DE=
+	t=1767907045; cv=none; b=Ix5+Si1I1YwKV+CiM861aQX2jdBXbfidGfgQ1J1dEx1t3Ceq5KlEwrdDDryliszbBYOcyeaLaJFnd37SBJU2TKHBx78P9jlToL366+OFnZQfzGjMqEPKnR+ZW6vgPSSHVtRli1PHJF/R83osHey4PI6MjbleEALcbrYiceiGLSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767907032; c=relaxed/simple;
-	bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
-	h=From:Subject:Date:Message-Id:MIME-Version:To:Cc:Content-Type; b=BsjY8I++E0KWgKQHYb3H70v2kVV0t/3ijjLyK6Ymwn2/ORs7GrWGeSj+bdkXdcUndFxCcCpBNYylBe0qqvcmDdfGAnW3MBtYYv4zsTmw9gTIVVl2IO2nO1+3MMyyEPfms5M7B7yQSNueSZFkGxQBOLvE8tAynDmSkqhC+ugfT3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JxU0u2rA; arc=none smtp.client-ip=170.10.133.124
+	s=arc-20240116; t=1767907045; c=relaxed/simple;
+	bh=vDAetoqqs6cXCl7bwwNO4+syHzby9vdv3IeOGAXMg98=;
+	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
+	 To:Cc:Content-Type; b=Z97IamKkXLkL+mlaHBt9moLyGoYiJ+GKyt5AQ7kwBy/D6oWTgiAs8eCDcNzFF9u5vBkhxtUmAf3CIpahznMQAq/4OZoUTQ0xSNfajZS+9yIvVaDhg6ApenHRNnZ+g+MR//5NE0jDSZJKfbPUuZ+UVnloTNGNP6yGIBVJ7PnlPYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=e7tEz1Vp; arc=none smtp.client-ip=170.10.133.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JxU0u2rA"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="e7tEz1Vp"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1767907026;
+	s=mimecast20190719; t=1767907032;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
-	b=JxU0u2rAqLLgObICtO/LydX4/F68sVrdPi7tDQ8qIcYcf/4q4vTBeCQt8APznRlIc3irsA
-	mSc/8w1RSNM7WyKl/gEBKqBqeEZiGg3L+W8KZTE0V1EFK+kEMthHtMnwyKbSXzJ262L/Fp
-	8K4OjlHCkk3MEkwSd5785vNfEzVmoCs=
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XN7FseKUHh/NOjCMySF93+tmLbyPj2jDN7x2b6v0jTM=;
+	b=e7tEz1Vpaw1lIvrRUXjktLAT8SOGWr3jJ8wTbyV3pXsxH7vggWqp9iT5a+Zgoz0lo4+ZkU
+	JlD7+XvfcGRDuAJBbNrV96JkEUYTlaD0fi2EFhs7IdBinyul4Ffc/oYNLTp0Jzk49qS7Oq
+	7xUfhtZP8lX+BsqMVMrC1rtbWXjMZus=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-544-ELgD8dlMNPWmUybWdAMmqA-1; Thu, 08 Jan 2026 16:17:05 -0500
-X-MC-Unique: ELgD8dlMNPWmUybWdAMmqA-1
-X-Mimecast-MFC-AGG-ID: ELgD8dlMNPWmUybWdAMmqA_1767907025
-Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-94120e0acbdso3870695241.1
-        for <sophgo@lists.linux.dev>; Thu, 08 Jan 2026 13:17:05 -0800 (PST)
+ us-mta-606-5c80CjxDOiO4rXfZlHaGyQ-1; Thu, 08 Jan 2026 16:17:11 -0500
+X-MC-Unique: 5c80CjxDOiO4rXfZlHaGyQ-1
+X-Mimecast-MFC-AGG-ID: 5c80CjxDOiO4rXfZlHaGyQ_1767907030
+Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-9412e0b1ec7so2915949241.1
+        for <sophgo@lists.linux.dev>; Thu, 08 Jan 2026 13:17:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767907025; x=1768511825;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
-        b=ddIQVAN0jSqDvrNJVyX5Y/eT+iq6O9ldkUZHzIMYAsgHwM3Y2xv6mf0xQfyeFjoHBP
-         C+ZFvntxGAP/eYSeDu/QezYXTEr6FydSokt9VYm7ivgz21wggn+xhZwFPlSjfUxQmL7m
-         kyTbYoD+KullzXdCnVsbRpIsZNxqRVuLE/YaY6OTvMPzNW2B/lEmPdSymdc5i9Uj1zWk
-         R5CZUkLLkXKxlV9ZILFWclehLZDOLRhVytSxw5QZ9hX4z2OUUfqi/YCHsvofYSIAngF9
-         ywzg7dYq2yxst1xQkB9hT224NLmki8Y/SuPYoakNkzcQacKqLHmvnz8/IT7u70h/sl4x
-         Oa4g==
-X-Forwarded-Encrypted: i=1; AJvYcCWdRMqi0YEoihXttG1Y+FttVA4R32A+h5AujMiDz6x7xj+rEwY5aD8TXlk/ikYoraYRrf1ydyM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YybMgUorXymIj8QS6TAL7/XBJEgDqMONxpp/pEe7/2Dj8JJl1Jh
-	bjIQhCKkeE6MFZ69sw+cfiXd8nsggCpyL7QwPuYsc//MSvcN3TtKfaW75D9Z31BVQNvC4yTrWxy
-	eR9Ty6xvTW8i5jL4H8ESYR8AftdCHs8qc8hlfu3wP83H/rgHtdsmRojPl2Q==
-X-Gm-Gg: AY/fxX6ItmaPptncFmVNgYkGjW+BrA/8wrMR/pR1ZMfzPx+MtcDxjGQfXWPKR6dCRiN
-	zdFfjXJyP8gHoa4eI4MNzsF/6r9SFdNvQVFpBuqOwyzAo8AmGm/HuaMEmW4DBBTzG1JZj73/fAK
-	YlMJAGTaJZ61ojtneHY+eUiNiCMlLJaOqdaxQZ0Qs/MjljAA4DqFsCVEOAneW3eLJYaoyZbJGQ0
-	VvpKSyqNIrsOYpnCdRSK1PzUKsguSXB9xXXv5jikdro0sTEtoj8JAmFnYvevTfHpteAR0etZM5V
-	//ghV6wTzCVGxIWYZ0yVmT9YtkJdr/zT8R/+zxZrz0mGCzLLqYxqRSDW0/hZMns5qt87ZOR9F9J
-	4qnXNozA0FhTwX9U=
-X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988596137.21.1767907024797;
-        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFz/p7kGP9fvfk2vXLPq3R9VUjKVw1cdN6NrP5mq/P0PGpCjqA4/hKeGKMrVWaYIPrb1wIVZw==
-X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988572137.21.1767907024314;
-        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
+        d=1e100.net; s=20230601; t=1767907030; x=1768511830;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XN7FseKUHh/NOjCMySF93+tmLbyPj2jDN7x2b6v0jTM=;
+        b=GTV+rEdRZgYXfJO9lbFtdOg4uwpz6WmJl80OHX/Vh3Gx3EIo4xjd61dE80yVSnAHkS
+         j7xQegiAOjbXp8tvih32GiuRuQyY+ktFZoYMFiwpDB3BzWcWHnvvYBdt86105ddjxBCO
+         KGrc7f0cJkpbOfEwihXtGRJJ8jSRDRDx9wWaxAZADzONKhWT6ozBfHtDsu7JvZoCo80j
+         T6po9UFeF5WYS2d99CQJzcv8zwPVn4H0SblIkWHSVMJr/iZSPKdEe5e7ARucmU06sepN
+         Eer0DgCvMr/AmP1l5AiuA+g9LOKnHpAYq374r+rUpNI3SW5EcZBcFzsVN4udSewuMZjX
+         IHRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXa6UVQppdQIqt3RSwdUm5ctdgS5QfMlQ1/to1u+7kcICEn7tx8B6ZsketpsrlpuRQFv3wGzm0=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw3p94lMwtPk8n6lN8HfeL6GDddNO1GIPfkqlKh8V9wIv9YOWOI
+	1K7+c2vhOd8fMuWZNVAcUA0xuFo3c8sdByfTSqxbVIyrEa60SvlG2VnPcpcAHWxcqM9XWrZv9iD
+	kYbN41YDc7275nPBxB3nXKq/ynQHf1LUsWMqYK1Leg4stfl/0KzrVPimwjA==
+X-Gm-Gg: AY/fxX7HJRprhWSZ5FyAnGAJdYLreFVbxfv32sk3iSqX6vQU12qFd2BRh3MBTm2qp8s
+	DYxt2MoDzmmhvU1ElU1a9o6jeUf3cZVKdo7GYuAnIG8Z8tNvF5hiVF+0/QKbLHRH8cpQrNjMQFH
+	pgY3KvERB3VgEvQc4Ss+IPfpF+Vnx1va2CHQ9QI9Qozr2eRmxQSo5ptCKjSeTy2rBNx4+j/j06D
+	FHOpLztSvd5JVCNUTjaqIfmZb1MCO43Cc0uwpx05+69t7S8kIzQEVZmnEuDvYyaoVRCfjjUgADc
+	5PS/lolqrpXDomG1Hsni6zrhTl7VF2ey8BFf16Vk6E8aFEPR3GfBf+H2Bv29F0iR+4Kv1dfgy5U
+	XcKDn7zAo2Ovtz4Y=
+X-Received: by 2002:a05:6102:3a0e:b0:5db:e0e6:1b47 with SMTP id ada2fe7eead31-5ecb687e38dmr2866207137.19.1767907030333;
+        Thu, 08 Jan 2026 13:17:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFAuo8P1DVVYLEUFmVagZkpaMAOpF5fYSBa0FJUBbxBObMth/Sozaer46fZbr04KdGAsepD+g==
+X-Received: by 2002:a05:6102:3a0e:b0:5db:e0e6:1b47 with SMTP id ada2fe7eead31-5ecb687e38dmr2866203137.19.1767907029839;
+        Thu, 08 Jan 2026 13:17:09 -0800 (PST)
 Received: from [10.30.226.224] ([2600:382:811f:d757:daa5:b867:12a3:9d12])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.16.43
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.17.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 13:17:03 -0800 (PST)
+        Thu, 08 Jan 2026 13:17:09 -0800 (PST)
 From: Brian Masney <bmasney@redhat.com>
-Subject: [PATCH 00/27] clk: remove deprecated API divider_round_rate() and
- friends
-Date: Thu, 08 Jan 2026 16:16:18 -0500
-Message-Id: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+Date: Thu, 08 Jan 2026 16:16:19 -0500
+Subject: [PATCH 01/27] clk: sophgo: cv18xx-ip: convert from
+ divider_round_rate() to divider_determine_rate()
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MwQqDMAyA4VeRnA0kHizsVcYO2kQNG3WkKkLpu
- 6/s+B3+v0BWN83w6Aq4XpZtTw3cdxC3Ka2KJs0w0DASU8D4eaPYZaKOvp9J0KdDkeMizGGmMRC
- 0+Ou62P0fP1+1/gDlVpEzaAAAAA==
-X-Change-ID: 20260107-clk-divider-round-rate-1cfd117b0670
+Message-Id: <20260108-clk-divider-round-rate-v1-1-535a3ed73bf3@redhat.com>
+References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 To: Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>
 Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Brian Masney <bmasney@redhat.com>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev, 
- Chen-Yu Tsai <wens@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- linux-rtc@vger.kernel.org, 
- =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
- Manivannan Sadhasivam <mani@kernel.org>, linux-actions@lists.infradead.org, 
- Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org, 
- Taichi Sugaya <sugaya.taichi@socionext.com>, 
- Takao Orito <orito.takao@socionext.com>, Jacky Huang <ychuang3@nuvoton.com>, 
- Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- linux-stm32@st-md-mailman.stormreply.com, 
- Michal Simek <michal.simek@amd.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
- linux-phy@lists.infradead.org
+ Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5523; i=bmasney@redhat.com;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10331; i=bmasney@redhat.com;
  s=20250903; h=from:subject:message-id;
- bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5Lb+j2COyZDSrq1aGtHuW3Hnjb6jSZa7wqEZi1UKM
- +/wfPfoKGVhEONikBVTZFmSa1QQkbrK9t4dTRaYOaxMIEMYuDgFYCLePxj+cE8JZ4ir1XC94hPf
- wLfqhfvjO0u5RdiClDPF9/n9TrNyZGT4NKcq8ciUz4qK0XG3a+4381Zd+31jtWu5nMfx+TvuVsY
- xAAA=
+ bh=vDAetoqqs6cXCl7bwwNO4+syHzby9vdv3IeOGAXMg98=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5LaaVEnvkj5atqHg3IzVzbXxV6+EspR37K3jPvw0a
+ nXaK/WzHaUsDGJcDLJiiixLco0KIlJX2d67o8kCM4eVCWQIAxenAEzkERsjw5H7TTetW69lqOfd
+ ed94M5n9zoRlsU0eJ0P3rvogdSLDS4HhJ+PZ5Cmlm68ynBJ5v9jEfV6eHd+5hUc31HuuiwmY83a
+ WOCMA
 X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
  fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
 X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: IcMX0kG4JByxyiK6K71sLiJPFgNSjT4RPTpVek3FYbE_1767907025
+X-Mimecast-MFC-PROC-ID: qMpBoWPwoKvG1tdvMJXhxn3G893QJ_9fB9g-bDKPdqY_1767907030
 X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
-Here's a series that gets rid of the deprecated APIs
-divider_round_rate(), divider_round_rate_parent(), and
-divider_ro_round_rate_parent() since these functions are just wrappers
-for the determine_rate variant.
-
-Note that when I converted some of these drivers from round_rate to
-determine_rate, this was mistakenly converted to the following in some
-cases:
-
-    req->rate = divider_round_rate(...)
-
-This is invalid in the case when an error occurs since it can set the
-rate to a negative value. So this series fixes those bugs and removes
-the deprecated APIs all in one go.
-
-Three of the patches ended up being a more complicated migration, and I
-put them as the first three patches in this series (clk: sophgo:
-cv18xx-ip), (clk: sunxi-ng), and (rtc: ac100). The remaining patches I
-feel are all straight forward.
-
-Merge strategy
-==============
-
-Only three of the patches are outside of drivers/clk (drm/msm, phy, and
-rtc). For simplicity, I think it would be easiest if Stephen takes this
-whole series through the clk tree. Subsystem maintainers please leave an
-Acked-by for Stephen. Thanks!
+The divider_round_rate() function is now deprecated, so let's migrate
+to divider_determine_rate() instead so that this deprecated API can be
+removed. Also go ahead and convert all of the driver from round rate
+type to determine rate that accepts a 'struct clk_rate_request' to
+simplify the overall driver code.
 
 Signed-off-by: Brian Masney <bmasney@redhat.com>
----
-Brian Masney (27):
-      clk: sophgo: cv18xx-ip: convert from divider_round_rate() to divider_determine_rate()
-      clk: sunxi-ng: convert from divider_round_rate_parent() to divider_determine_rate()
-      rtc: ac100: convert from divider_round_rate() to divider_determine_rate()
-      clk: actions: owl-composite: convert from owl_divider_helper_round_rate() to divider_determine_rate()
-      clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()
-      clk: bm1880: convert from divider_ro_round_rate() to divider_ro_determine_rate()
-      clk: bm1880: convert from divider_round_rate() to divider_determine_rate()
-      clk: hisilicon: clkdivider-hi6220: convert from divider_round_rate() to divider_determine_rate()
-      clk: loongson1: convert from divider_round_rate() to divider_determine_rate()
-      clk: milbeaut: convert from divider_ro_round_rate() to divider_ro_determine_rate()
-      clk: milbeaut: convert from divider_round_rate() to divider_determine_rate()
-      clk: nuvoton: ma35d1-divider: convert from divider_round_rate() to divider_determine_rate()
-      clk: nxp: lpc32xx: convert from divider_round_rate() to divider_determine_rate()
-      clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
-      clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
-      clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
-      clk: sophgo: sg2042-clkgen: convert from divider_round_rate() to divider_determine_rate()
-      clk: sprd: div: convert from divider_round_rate() to divider_determine_rate()
-      clk: stm32: stm32-core: convert from divider_ro_round_rate() to divider_ro_determine_rate()
-      clk: stm32: stm32-core: convert from divider_round_rate_parent() to divider_determine_rate()
-      clk: versaclock3: convert from divider_round_rate() to divider_determine_rate()
-      clk: x86: cgu: convert from divider_round_rate() to divider_determine_rate()
-      clk: zynqmp: divider: convert from divider_round_rate() to divider_determine_rate()
-      drm/msm/dsi_phy_14nm: convert from divider_round_rate() to divider_determine_rate()
-      phy: ti: phy-j721e-wiz: convert from divider_round_rate() to divider_determine_rate()
-      clk: divider: remove divider_ro_round_rate_parent()
-      clk: divider: remove divider_round_rate() and divider_round_rate_parent()
 
- drivers/clk/actions/owl-composite.c        |  11 +--
- drivers/clk/actions/owl-divider.c          |  17 +---
- drivers/clk/actions/owl-divider.h          |   5 -
- drivers/clk/clk-bm1880.c                   |  13 +--
- drivers/clk/clk-divider.c                  |  44 ---------
- drivers/clk/clk-loongson1.c                |   5 +-
- drivers/clk/clk-milbeaut.c                 |  15 +--
- drivers/clk/clk-versaclock3.c              |   7 +-
- drivers/clk/hisilicon/clkdivider-hi6220.c  |   6 +-
- drivers/clk/nuvoton/clk-ma35d1-divider.c   |   7 +-
- drivers/clk/nxp/clk-lpc32xx.c              |   6 +-
- drivers/clk/qcom/clk-alpha-pll.c           |  21 ++--
- drivers/clk/qcom/clk-regmap-divider.c      |  16 +--
- drivers/clk/sophgo/clk-cv18xx-ip.c         | 154 ++++++++++++++++-------------
- drivers/clk/sophgo/clk-sg2042-clkgen.c     |  15 +--
- drivers/clk/sprd/div.c                     |   6 +-
- drivers/clk/stm32/clk-stm32-core.c         |  42 +++-----
- drivers/clk/sunxi-ng/ccu_div.c             |  25 +++--
- drivers/clk/sunxi-ng/ccu_mp.c              |  26 ++---
- drivers/clk/sunxi-ng/ccu_mult.c            |  16 +--
- drivers/clk/sunxi-ng/ccu_mux.c             |  49 +++++----
- drivers/clk/sunxi-ng/ccu_mux.h             |   8 +-
- drivers/clk/sunxi-ng/ccu_nkm.c             |  25 ++---
- drivers/clk/x86/clk-cgu.c                  |   6 +-
- drivers/clk/zynqmp/divider.c               |   5 +-
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c |   7 +-
- drivers/phy/ti/phy-j721e-wiz.c             |   5 +-
- drivers/rtc/rtc-ac100.c                    |  75 +++++++-------
- include/linux/clk-provider.h               |  28 ------
- 29 files changed, 257 insertions(+), 408 deletions(-)
 ---
-base-commit: f8f97927abf7c12382dddc93a144fc9df7919b77
-change-id: 20260107-clk-divider-round-rate-1cfd117b0670
+To: Chen Wang <unicorn_wang@outlook.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: sophgo@lists.linux.dev
+---
+ drivers/clk/sophgo/clk-cv18xx-ip.c | 154 ++++++++++++++++++++-----------------
+ 1 file changed, 85 insertions(+), 69 deletions(-)
 
-Best regards,
+diff --git a/drivers/clk/sophgo/clk-cv18xx-ip.c b/drivers/clk/sophgo/clk-cv18xx-ip.c
+index c2b58faf0938b7d537dc3a81aef59c549b9c9c79..e936e315400393662a24e0d0189f7f74e01fa586 100644
+--- a/drivers/clk/sophgo/clk-cv18xx-ip.c
++++ b/drivers/clk/sophgo/clk-cv18xx-ip.c
+@@ -152,28 +152,27 @@ static u32 div_helper_get_clockdiv(struct cv1800_clk_common *common,
+ 	return clockdiv;
+ }
+ 
+-static u32 div_helper_round_rate(struct cv1800_clk_regfield *div,
+-				 struct clk_hw *hw, struct clk_hw *parent,
+-				 unsigned long rate, unsigned long *prate)
++static int div_helper_determine_rate(struct cv1800_clk_regfield *div,
++				     struct clk_hw *hw,
++				     struct clk_rate_request *req)
+ {
+ 	if (div->width == 0) {
+ 		if (div->initval <= 0)
+-			return DIV_ROUND_UP_ULL(*prate, 1);
++			req->rate = DIV_ROUND_UP_ULL(req->best_parent_rate, 1);
+ 		else
+-			return DIV_ROUND_UP_ULL(*prate, div->initval);
++			req->rate = DIV_ROUND_UP_ULL(req->best_parent_rate, div->initval);
++
++		return 0;
+ 	}
+ 
+-	return divider_round_rate_parent(hw, parent, rate, prate, NULL,
+-					 div->width, div->flags);
++	return divider_determine_rate(hw, req, NULL, div->width, div->flags);
+ }
+ 
+-static long div_round_rate(struct clk_hw *parent, unsigned long *parent_rate,
+-			   unsigned long rate, int id, void *data)
++static int do_div_determine_rate(struct clk_rate_request *req, int id, void *data)
+ {
+ 	struct cv1800_clk_div *div = data;
+ 
+-	return div_helper_round_rate(&div->div, &div->common.hw, parent,
+-				     rate, parent_rate);
++	return div_helper_determine_rate(&div->div, &div->common.hw, req);
+ }
+ 
+ static bool div_is_better_rate(struct cv1800_clk_common *common,
+@@ -188,53 +187,60 @@ static bool div_is_better_rate(struct cv1800_clk_common *common,
+ 
+ static int mux_helper_determine_rate(struct cv1800_clk_common *common,
+ 				     struct clk_rate_request *req,
+-				     long (*round)(struct clk_hw *,
+-						   unsigned long *,
+-						   unsigned long,
+-						   int,
+-						   void *),
++				     int (*round)(struct clk_rate_request *,
++						  int,
++						  void *),
+ 				     void *data)
+ {
+ 	unsigned long best_parent_rate = 0, best_rate = 0;
+ 	struct clk_hw *best_parent, *hw = &common->hw;
+ 	unsigned int i;
++	int ret;
+ 
+ 	if (clk_hw_get_flags(hw) & CLK_SET_RATE_NO_REPARENT) {
+-		unsigned long adj_parent_rate;
++		struct clk_rate_request tmp_req = *req;
+ 
+ 		best_parent = clk_hw_get_parent(hw);
+-		best_parent_rate = clk_hw_get_rate(best_parent);
++		tmp_req.best_parent_hw = best_parent;
++		tmp_req.best_parent_rate = clk_hw_get_rate(best_parent);
+ 
+-		best_rate = round(best_parent, &adj_parent_rate,
+-				  req->rate, -1, data);
++		ret = round(&tmp_req, -1, data);
++		if (ret)
++			return ret;
++
++		best_parent_rate = tmp_req.best_parent_rate;
++		best_rate = tmp_req.rate;
+ 
+ 		goto find;
+ 	}
+ 
+ 	for (i = 0; i < clk_hw_get_num_parents(hw); i++) {
+-		unsigned long tmp_rate, parent_rate;
++		struct clk_rate_request tmp_req = *req;
+ 		struct clk_hw *parent;
+ 
+ 		parent = clk_hw_get_parent_by_index(hw, i);
+ 		if (!parent)
+ 			continue;
+ 
+-		parent_rate = clk_hw_get_rate(parent);
++		tmp_req.best_parent_hw = parent;
++		tmp_req.best_parent_rate = clk_hw_get_rate(parent);
+ 
+-		tmp_rate = round(parent, &parent_rate, req->rate, i, data);
++		ret = round(&tmp_req, i, data);
++		if (ret)
++			continue;
+ 
+-		if (tmp_rate == req->rate) {
++		if (tmp_req.rate == req->rate) {
+ 			best_parent = parent;
+-			best_parent_rate = parent_rate;
+-			best_rate = tmp_rate;
++			best_parent_rate = tmp_req.best_parent_rate;
++			best_rate = tmp_req.rate;
+ 			goto find;
+ 		}
+ 
+ 		if (div_is_better_rate(common, req->rate,
+-				       tmp_rate, best_rate)) {
++				       tmp_req.rate, best_rate)) {
+ 			best_parent = parent;
+-			best_parent_rate = parent_rate;
+-			best_rate = tmp_rate;
++			best_parent_rate = tmp_req.best_parent_rate;
++			best_rate = tmp_req.rate;
+ 		}
+ 	}
+ 
+@@ -254,7 +260,7 @@ static int div_determine_rate(struct clk_hw *hw,
+ 	struct cv1800_clk_div *div = hw_to_cv1800_clk_div(hw);
+ 
+ 	return mux_helper_determine_rate(&div->common, req,
+-					 div_round_rate, div);
++					 do_div_determine_rate, div);
+ }
+ 
+ static unsigned long div_recalc_rate(struct clk_hw *hw,
+@@ -301,24 +307,28 @@ hw_to_cv1800_clk_bypass_div(struct clk_hw *hw)
+ 	return container_of(div, struct cv1800_clk_bypass_div, div);
+ }
+ 
+-static long bypass_div_round_rate(struct clk_hw *parent,
+-				  unsigned long *parent_rate,
+-				  unsigned long rate, int id, void *data)
++static int do_bypass_div_determine_rate(struct clk_rate_request *req, int id,
++					void *data)
+ {
+ 	struct cv1800_clk_bypass_div *div = data;
+ 
+ 	if (id == -1) {
+-		if (cv1800_clk_checkbit(&div->div.common, &div->bypass))
+-			return *parent_rate;
+-		else
+-			return div_round_rate(parent, parent_rate, rate,
+-					      -1, &div->div);
++		if (cv1800_clk_checkbit(&div->div.common, &div->bypass)) {
++			req->rate = req->best_parent_rate;
++
++			return 0;
++		}
++
++		return do_div_determine_rate(req, -1, &div->div);
+ 	}
+ 
+-	if (id == 0)
+-		return *parent_rate;
++	if (id == 0) {
++		req->rate = req->best_parent_rate;
++
++		return 0;
++	}
+ 
+-	return div_round_rate(parent, parent_rate, rate, id - 1, &div->div);
++	return do_div_determine_rate(req, id - 1, &div->div);
+ }
+ 
+ static int bypass_div_determine_rate(struct clk_hw *hw,
+@@ -327,7 +337,7 @@ static int bypass_div_determine_rate(struct clk_hw *hw,
+ 	struct cv1800_clk_bypass_div *div = hw_to_cv1800_clk_bypass_div(hw);
+ 
+ 	return mux_helper_determine_rate(&div->div.common, req,
+-					 bypass_div_round_rate, div);
++					 do_bypass_div_determine_rate, div);
+ }
+ 
+ static unsigned long bypass_div_recalc_rate(struct clk_hw *hw,
+@@ -414,13 +424,11 @@ static int mux_is_enabled(struct clk_hw *hw)
+ 	return cv1800_clk_checkbit(&mux->common, &mux->gate);
+ }
+ 
+-static long mux_round_rate(struct clk_hw *parent, unsigned long *parent_rate,
+-			   unsigned long rate, int id, void *data)
++static int do_mux_determine_rate(struct clk_rate_request *req, int id, void *data)
+ {
+ 	struct cv1800_clk_mux *mux = data;
+ 
+-	return div_helper_round_rate(&mux->div, &mux->common.hw, parent,
+-				     rate, parent_rate);
++	return div_helper_determine_rate(&mux->div, &mux->common.hw, req);
+ }
+ 
+ static int mux_determine_rate(struct clk_hw *hw,
+@@ -429,7 +437,7 @@ static int mux_determine_rate(struct clk_hw *hw,
+ 	struct cv1800_clk_mux *mux = hw_to_cv1800_clk_mux(hw);
+ 
+ 	return mux_helper_determine_rate(&mux->common, req,
+-					 mux_round_rate, mux);
++					 do_mux_determine_rate, mux);
+ }
+ 
+ static unsigned long mux_recalc_rate(struct clk_hw *hw,
+@@ -512,24 +520,28 @@ hw_to_cv1800_clk_bypass_mux(struct clk_hw *hw)
+ 	return container_of(mux, struct cv1800_clk_bypass_mux, mux);
+ }
+ 
+-static long bypass_mux_round_rate(struct clk_hw *parent,
+-				  unsigned long *parent_rate,
+-				  unsigned long rate, int id, void *data)
++static int do_bypass_mux_determine_rate(struct clk_rate_request *req, int id,
++					void *data)
+ {
+ 	struct cv1800_clk_bypass_mux *mux = data;
+ 
+ 	if (id == -1) {
+-		if (cv1800_clk_checkbit(&mux->mux.common, &mux->bypass))
+-			return *parent_rate;
+-		else
+-			return mux_round_rate(parent, parent_rate, rate,
+-					      -1, &mux->mux);
++		if (cv1800_clk_checkbit(&mux->mux.common, &mux->bypass)) {
++			req->rate = req->best_parent_rate;
++
++			return 0;
++		}
++
++		return do_mux_determine_rate(req, -1, &mux->mux);
+ 	}
+ 
+-	if (id == 0)
+-		return *parent_rate;
++	if (id == 0) {
++		req->rate = req->best_parent_rate;
++
++		return 0;
++	}
+ 
+-	return mux_round_rate(parent, parent_rate, rate, id - 1, &mux->mux);
++	return do_mux_determine_rate(req, id - 1, &mux->mux);
+ }
+ 
+ static int bypass_mux_determine_rate(struct clk_hw *hw,
+@@ -538,7 +550,7 @@ static int bypass_mux_determine_rate(struct clk_hw *hw,
+ 	struct cv1800_clk_bypass_mux *mux = hw_to_cv1800_clk_bypass_mux(hw);
+ 
+ 	return mux_helper_determine_rate(&mux->mux.common, req,
+-					 bypass_mux_round_rate, mux);
++					 do_bypass_mux_determine_rate, mux);
+ }
+ 
+ static unsigned long bypass_mux_recalc_rate(struct clk_hw *hw,
+@@ -639,27 +651,31 @@ static int mmux_is_enabled(struct clk_hw *hw)
+ 	return cv1800_clk_checkbit(&mmux->common, &mmux->gate);
+ }
+ 
+-static long mmux_round_rate(struct clk_hw *parent, unsigned long *parent_rate,
+-			    unsigned long rate, int id, void *data)
++static int do_mmux_determine_rate(struct clk_rate_request *req, int id, void *data)
+ {
+ 	struct cv1800_clk_mmux *mmux = data;
+ 	s8 div_id;
+ 
+ 	if (id == -1) {
+-		if (cv1800_clk_checkbit(&mmux->common, &mmux->bypass))
+-			return *parent_rate;
++		if (cv1800_clk_checkbit(&mmux->common, &mmux->bypass)) {
++			req->rate = req->best_parent_rate;
++
++			return 0;
++		}
+ 
+ 		id = mmux_get_parent_id(mmux);
+ 	}
+ 
+ 	div_id = mmux->parent2sel[id];
+ 
+-	if (div_id < 0)
+-		return *parent_rate;
++	if (div_id < 0) {
++		req->rate = req->best_parent_rate;
++
++		return 0;
++	}
+ 
+-	return div_helper_round_rate(&mmux->div[div_id],
+-				     &mmux->common.hw, parent,
+-				     rate, parent_rate);
++	return div_helper_determine_rate(&mmux->div[div_id], &mmux->common.hw,
++					 req);
+ }
+ 
+ static int mmux_determine_rate(struct clk_hw *hw,
+@@ -668,7 +684,7 @@ static int mmux_determine_rate(struct clk_hw *hw,
+ 	struct cv1800_clk_mmux *mmux = hw_to_cv1800_clk_mmux(hw);
+ 
+ 	return mux_helper_determine_rate(&mmux->common, req,
+-					 mmux_round_rate, mmux);
++					 do_mmux_determine_rate, mmux);
+ }
+ 
+ static unsigned long mmux_recalc_rate(struct clk_hw *hw,
+
 -- 
-Brian Masney <bmasney@redhat.com>
+2.52.0
 
