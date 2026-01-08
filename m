@@ -1,109 +1,227 @@
-Received: from mail2.viabit.com (mail2.viabit.com [65.246.80.16])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA4F2DECCB
-	for <sophgo@lists.linux.dev>; Wed,  7 Jan 2026 11:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.246.80.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEC3335553
+	for <sophgo@lists.linux.dev>; Thu,  8 Jan 2026 21:17:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767785395; cv=none; b=QOTxYv3vn4Z6GY8pTnZIMelzAH9YjQK9n3s5PjCNXIAAQ7Eh4V2OGqxwON88w2VZDqgZunk68YGTUMyVcknuXh7rWtJduRUoegGkhWJfkLNncNgGcFkez5t8E1LlSEa6ooI9v/GTjU9h5mLEWUZq+v8AOkKqVYhE/N7sqEB0zMo=
+	t=1767907032; cv=none; b=a+DGVMD6GLcYRgPCXFJ1KLllNPEpHcTXIU6rY+KVp3CoWU8NDBxBKidkY58BmORZBqOr2LJBMkK4yIPi0jConzc3mHBGWyPe4gPSsV9plrNOTwclqwrcL6q4rM71YbuO4SroeQ3043cD8XPR9ZJN+0sel2R1CjtD6BGzzsbI4DE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767785395; c=relaxed/simple;
-	bh=OPuueHmMVj3SNcW4TnjonoWNxcWCK8kzhB9Rxd5LFmE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WO6vNHapfp0oZ/zd/nn2Hy5TDl6a9MNMWgNFsxK6urJfLZBVTB7jZFH2gjIrqwqAlZuUg4fFl/p4vLBKL7hVD/eqC/v/Qtan1wTBzqsNhuE6bStqZWfGlfXaPcbGwy8UCh5f8Ytweh+aTwvjKYaVBYF7NY67nu0gyJ8epWbVwwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com; spf=pass smtp.mailfrom=orlitzky.com; dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b=C5daeKu4; arc=none smtp.client-ip=65.246.80.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=orlitzky.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=orlitzky.com
+	s=arc-20240116; t=1767907032; c=relaxed/simple;
+	bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:To:Cc:Content-Type; b=BsjY8I++E0KWgKQHYb3H70v2kVV0t/3ijjLyK6Ymwn2/ORs7GrWGeSj+bdkXdcUndFxCcCpBNYylBe0qqvcmDdfGAnW3MBtYYv4zsTmw9gTIVVl2IO2nO1+3MMyyEPfms5M7B7yQSNueSZFkGxQBOLvE8tAynDmSkqhC+ugfT3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=JxU0u2rA; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=orlitzky.com header.i=@orlitzky.com header.b="C5daeKu4"
-Received: from mertle.michael.orlitzky.com (vpn1.metro-data.com [65.213.236.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail2.viabit.com (Postfix) with ESMTPSA id 4dmQml20MPz3wgB;
-	Wed, 07 Jan 2026 06:29:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=orlitzky.com; s=mail2;
-	t=1767785384; bh=OPuueHmMVj3SNcW4TnjonoWNxcWCK8kzhB9Rxd5LFmE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=C5daeKu4Hu/tLjIVGWDyiuNDK2ZpoVmp/x2f4NVmBcoeVzgD6oXsxzmWgDCS4wOAl
-	 N9TzPa5c/+SzrD5rRhO6Blh5sJ+KQU5e9heRHvmmHwckwxceMExnlmmx4vtBVmYakg
-	 1J1GiCiGf1vLKAK4ngWwuHksJlOiSX9rFj5aBPnw=
-From: Michael Orlitzky <michael@orlitzky.com>
-To: unicorn_wang@outlook.com,
-	inochiama@gmail.com
-Cc: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: [PATCH v2 1/1] riscv: dts: sophgo: enable hardware clock (RTC) on the Milk-V Pioneer
-Date: Wed,  7 Jan 2026 06:29:22 -0500
-Message-ID: <20260107112922.20013-2-michael@orlitzky.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260107112922.20013-1-michael@orlitzky.com>
-References: <20260107112922.20013-1-michael@orlitzky.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="JxU0u2rA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1767907026;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
+	b=JxU0u2rAqLLgObICtO/LydX4/F68sVrdPi7tDQ8qIcYcf/4q4vTBeCQt8APznRlIc3irsA
+	mSc/8w1RSNM7WyKl/gEBKqBqeEZiGg3L+W8KZTE0V1EFK+kEMthHtMnwyKbSXzJ262L/Fp
+	8K4OjlHCkk3MEkwSd5785vNfEzVmoCs=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-ELgD8dlMNPWmUybWdAMmqA-1; Thu, 08 Jan 2026 16:17:05 -0500
+X-MC-Unique: ELgD8dlMNPWmUybWdAMmqA-1
+X-Mimecast-MFC-AGG-ID: ELgD8dlMNPWmUybWdAMmqA_1767907025
+Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-94120e0acbdso3870695241.1
+        for <sophgo@lists.linux.dev>; Thu, 08 Jan 2026 13:17:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1767907025; x=1768511825;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ne57iAfUngCEZ/eJnFXNUIoW6Gx1gYxdMUdG2ktOUNY=;
+        b=ddIQVAN0jSqDvrNJVyX5Y/eT+iq6O9ldkUZHzIMYAsgHwM3Y2xv6mf0xQfyeFjoHBP
+         C+ZFvntxGAP/eYSeDu/QezYXTEr6FydSokt9VYm7ivgz21wggn+xhZwFPlSjfUxQmL7m
+         kyTbYoD+KullzXdCnVsbRpIsZNxqRVuLE/YaY6OTvMPzNW2B/lEmPdSymdc5i9Uj1zWk
+         R5CZUkLLkXKxlV9ZILFWclehLZDOLRhVytSxw5QZ9hX4z2OUUfqi/YCHsvofYSIAngF9
+         ywzg7dYq2yxst1xQkB9hT224NLmki8Y/SuPYoakNkzcQacKqLHmvnz8/IT7u70h/sl4x
+         Oa4g==
+X-Forwarded-Encrypted: i=1; AJvYcCWdRMqi0YEoihXttG1Y+FttVA4R32A+h5AujMiDz6x7xj+rEwY5aD8TXlk/ikYoraYRrf1ydyM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YybMgUorXymIj8QS6TAL7/XBJEgDqMONxpp/pEe7/2Dj8JJl1Jh
+	bjIQhCKkeE6MFZ69sw+cfiXd8nsggCpyL7QwPuYsc//MSvcN3TtKfaW75D9Z31BVQNvC4yTrWxy
+	eR9Ty6xvTW8i5jL4H8ESYR8AftdCHs8qc8hlfu3wP83H/rgHtdsmRojPl2Q==
+X-Gm-Gg: AY/fxX6ItmaPptncFmVNgYkGjW+BrA/8wrMR/pR1ZMfzPx+MtcDxjGQfXWPKR6dCRiN
+	zdFfjXJyP8gHoa4eI4MNzsF/6r9SFdNvQVFpBuqOwyzAo8AmGm/HuaMEmW4DBBTzG1JZj73/fAK
+	YlMJAGTaJZ61ojtneHY+eUiNiCMlLJaOqdaxQZ0Qs/MjljAA4DqFsCVEOAneW3eLJYaoyZbJGQ0
+	VvpKSyqNIrsOYpnCdRSK1PzUKsguSXB9xXXv5jikdro0sTEtoj8JAmFnYvevTfHpteAR0etZM5V
+	//ghV6wTzCVGxIWYZ0yVmT9YtkJdr/zT8R/+zxZrz0mGCzLLqYxqRSDW0/hZMns5qt87ZOR9F9J
+	4qnXNozA0FhTwX9U=
+X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988596137.21.1767907024797;
+        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFz/p7kGP9fvfk2vXLPq3R9VUjKVw1cdN6NrP5mq/P0PGpCjqA4/hKeGKMrVWaYIPrb1wIVZw==
+X-Received: by 2002:a05:6102:554b:b0:5ea:67f4:c1ad with SMTP id ada2fe7eead31-5ecb68aff05mr2988572137.21.1767907024314;
+        Thu, 08 Jan 2026 13:17:04 -0800 (PST)
+Received: from [10.30.226.224] ([2600:382:811f:d757:daa5:b867:12a3:9d12])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.16.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jan 2026 13:17:03 -0800 (PST)
+From: Brian Masney <bmasney@redhat.com>
+Subject: [PATCH 00/27] clk: remove deprecated API divider_round_rate() and
+ friends
+Date: Thu, 08 Jan 2026 16:16:18 -0500
+Message-Id: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MwQqDMAyA4VeRnA0kHizsVcYO2kQNG3WkKkLpu
+ 6/s+B3+v0BWN83w6Aq4XpZtTw3cdxC3Ka2KJs0w0DASU8D4eaPYZaKOvp9J0KdDkeMizGGmMRC
+ 0+Ou62P0fP1+1/gDlVpEzaAAAAA==
+X-Change-ID: 20260107-clk-divider-round-rate-1cfd117b0670
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Brian Masney <bmasney@redhat.com>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev, 
+ Chen-Yu Tsai <wens@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, linux-arm-kernel@lists.infradead.org, 
+ linux-sunxi@lists.linux.dev, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ linux-rtc@vger.kernel.org, 
+ =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+ Manivannan Sadhasivam <mani@kernel.org>, linux-actions@lists.infradead.org, 
+ Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org, 
+ Taichi Sugaya <sugaya.taichi@socionext.com>, 
+ Takao Orito <orito.takao@socionext.com>, Jacky Huang <ychuang3@nuvoton.com>, 
+ Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Orson Zhai <orsonzhai@gmail.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ Michal Simek <michal.simek@amd.com>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+ Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+ linux-phy@lists.infradead.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5523; i=bmasney@redhat.com;
+ s=20250903; h=from:subject:message-id;
+ bh=5gEzfGrJrZBcK9ab2+97vww3qO4uDY2TibGccFpsz3I=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5Lb+j2COyZDSrq1aGtHuW3Hnjb6jSZa7wqEZi1UKM
+ +/wfPfoKGVhEONikBVTZFmSa1QQkbrK9t4dTRaYOaxMIEMYuDgFYCLePxj+cE8JZ4ir1XC94hPf
+ wLfqhfvjO0u5RdiClDPF9/n9TrNyZGT4NKcq8ciUz4qK0XG3a+4381Zd+31jtWu5nMfx+TvuVsY
+ xAAA=
+X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
+ fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: IcMX0kG4JByxyiK6K71sLiJPFgNSjT4RPTpVek3FYbE_1767907025
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 
-These boards have a working hardware clock if you put a CR-1220
-battery in them. We enable it using information from a 6.1.x vendor
-kernel.
+Here's a series that gets rid of the deprecated APIs
+divider_round_rate(), divider_round_rate_parent(), and
+divider_ro_round_rate_parent() since these functions are just wrappers
+for the determine_rate variant.
 
-Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-Signed-off-by: Michael Orlitzky <michael@orlitzky.com>
+Note that when I converted some of these drivers from round_rate to
+determine_rate, this was mistakenly converted to the following in some
+cases:
+
+    req->rate = divider_round_rate(...)
+
+This is invalid in the case when an error occurs since it can set the
+rate to a negative value. So this series fixes those bugs and removes
+the deprecated APIs all in one go.
+
+Three of the patches ended up being a more complicated migration, and I
+put them as the first three patches in this series (clk: sophgo:
+cv18xx-ip), (clk: sunxi-ng), and (rtc: ac100). The remaining patches I
+feel are all straight forward.
+
+Merge strategy
+==============
+
+Only three of the patches are outside of drivers/clk (drm/msm, phy, and
+rtc). For simplicity, I think it would be easiest if Stephen takes this
+whole series through the clk tree. Subsystem maintainers please leave an
+Acked-by for Stephen. Thanks!
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
 ---
- .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  | 21 +++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Brian Masney (27):
+      clk: sophgo: cv18xx-ip: convert from divider_round_rate() to divider_determine_rate()
+      clk: sunxi-ng: convert from divider_round_rate_parent() to divider_determine_rate()
+      rtc: ac100: convert from divider_round_rate() to divider_determine_rate()
+      clk: actions: owl-composite: convert from owl_divider_helper_round_rate() to divider_determine_rate()
+      clk: actions: owl-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: bm1880: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: bm1880: convert from divider_round_rate() to divider_determine_rate()
+      clk: hisilicon: clkdivider-hi6220: convert from divider_round_rate() to divider_determine_rate()
+      clk: loongson1: convert from divider_round_rate() to divider_determine_rate()
+      clk: milbeaut: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: milbeaut: convert from divider_round_rate() to divider_determine_rate()
+      clk: nuvoton: ma35d1-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: nxp: lpc32xx: convert from divider_round_rate() to divider_determine_rate()
+      clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
+      clk: sophgo: sg2042-clkgen: convert from divider_round_rate() to divider_determine_rate()
+      clk: sprd: div: convert from divider_round_rate() to divider_determine_rate()
+      clk: stm32: stm32-core: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: stm32: stm32-core: convert from divider_round_rate_parent() to divider_determine_rate()
+      clk: versaclock3: convert from divider_round_rate() to divider_determine_rate()
+      clk: x86: cgu: convert from divider_round_rate() to divider_determine_rate()
+      clk: zynqmp: divider: convert from divider_round_rate() to divider_determine_rate()
+      drm/msm/dsi_phy_14nm: convert from divider_round_rate() to divider_determine_rate()
+      phy: ti: phy-j721e-wiz: convert from divider_round_rate() to divider_determine_rate()
+      clk: divider: remove divider_ro_round_rate_parent()
+      clk: divider: remove divider_round_rate() and divider_round_rate_parent()
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-index 54d8386bf9c0..ecf8c1e29079 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-@@ -52,6 +52,17 @@ &emmc {
- 	status = "okay";
- };
- 
-+&i2c0 {
-+	pinctrl-0 = <&i2c0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+
-+	rtc: rtc@68 {
-+		compatible = "dallas,ds1307";
-+		reg = <0x68>;
-+	};
-+};
-+
- &i2c1 {
- 	pinctrl-0 = <&i2c1_cfg>;
- 	pinctrl-names = "default";
-@@ -89,6 +100,16 @@ sdhci-emmc-rst-pwr-pins {
- 		};
- 	};
- 
-+	i2c0_cfg: i2c0-cfg {
-+		i2c0-pins {
-+			pinmux = <PINMUX(PIN_IIC0_SDA, 0)>,
-+				 <PINMUX(PIN_IIC0_SCL, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <26800>;
-+			input-schmitt-enable;
-+		};
-+	};
-+
- 	i2c1_cfg: i2c1-cfg {
- 		i2c1-pins {
- 			pinmux = <PINMUX(PIN_IIC1_SDA, 0)>,
+ drivers/clk/actions/owl-composite.c        |  11 +--
+ drivers/clk/actions/owl-divider.c          |  17 +---
+ drivers/clk/actions/owl-divider.h          |   5 -
+ drivers/clk/clk-bm1880.c                   |  13 +--
+ drivers/clk/clk-divider.c                  |  44 ---------
+ drivers/clk/clk-loongson1.c                |   5 +-
+ drivers/clk/clk-milbeaut.c                 |  15 +--
+ drivers/clk/clk-versaclock3.c              |   7 +-
+ drivers/clk/hisilicon/clkdivider-hi6220.c  |   6 +-
+ drivers/clk/nuvoton/clk-ma35d1-divider.c   |   7 +-
+ drivers/clk/nxp/clk-lpc32xx.c              |   6 +-
+ drivers/clk/qcom/clk-alpha-pll.c           |  21 ++--
+ drivers/clk/qcom/clk-regmap-divider.c      |  16 +--
+ drivers/clk/sophgo/clk-cv18xx-ip.c         | 154 ++++++++++++++++-------------
+ drivers/clk/sophgo/clk-sg2042-clkgen.c     |  15 +--
+ drivers/clk/sprd/div.c                     |   6 +-
+ drivers/clk/stm32/clk-stm32-core.c         |  42 +++-----
+ drivers/clk/sunxi-ng/ccu_div.c             |  25 +++--
+ drivers/clk/sunxi-ng/ccu_mp.c              |  26 ++---
+ drivers/clk/sunxi-ng/ccu_mult.c            |  16 +--
+ drivers/clk/sunxi-ng/ccu_mux.c             |  49 +++++----
+ drivers/clk/sunxi-ng/ccu_mux.h             |   8 +-
+ drivers/clk/sunxi-ng/ccu_nkm.c             |  25 ++---
+ drivers/clk/x86/clk-cgu.c                  |   6 +-
+ drivers/clk/zynqmp/divider.c               |   5 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c |   7 +-
+ drivers/phy/ti/phy-j721e-wiz.c             |   5 +-
+ drivers/rtc/rtc-ac100.c                    |  75 +++++++-------
+ include/linux/clk-provider.h               |  28 ------
+ 29 files changed, 257 insertions(+), 408 deletions(-)
+---
+base-commit: f8f97927abf7c12382dddc93a144fc9df7919b77
+change-id: 20260107-clk-divider-round-rate-1cfd117b0670
+
+Best regards,
 -- 
-2.52.0
+Brian Masney <bmasney@redhat.com>
 
