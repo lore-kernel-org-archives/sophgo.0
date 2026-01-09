@@ -1,166 +1,147 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f44.google.com (mail-dl1-f44.google.com [74.125.82.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D597B338585
-	for <sophgo@lists.linux.dev>; Thu,  8 Jan 2026 21:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E111F03D2
+	for <sophgo@lists.linux.dev>; Fri,  9 Jan 2026 04:08:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1767907125; cv=none; b=SEV5oeJ/p24QXfnDJ0goMBu4Ues4KOTGua3VEUatywl7Nrf8t4wYuiDH8q8H86iOi73zb0/oj2g69uNfjlckCmaOH9W4wfTXP4nIuyc+y8uZV8dppgTSVAErHNEBrMxhWprkIgkNRG1lEMBtK2nH8ke/1yAaFHRsHGbe9TnKvdw=
+	t=1767931710; cv=none; b=MFO+Te0ex9Tq55xVNuTy8GFufAbwvtayBTUpOaj9QTpDBVrY7ZWnDVmYl1QlGz7KabB6V4HlKKYklfA8PJS36bTJwJ2J+FuM/AS4ET8m5xnQ+ez4mNNgrAoqofNxWpX0I82IgvgrOWK2b3Znxl7n4Q23c7aInZmzcuykBcXxqJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1767907125; c=relaxed/simple;
-	bh=Ge9eXc7hiD/dbOFdwq4ZbwJA1t1aWqrp8YuWJZaaqt8=;
-	h=From:Date:Subject:MIME-Version:Message-Id:References:In-Reply-To:
-	 To:Cc:Content-Type; b=YoCwk6GmJS/IEFUE7I9M1B+TBpkW8expMsH7d2fkqKNzvuaXZmsmT0QVn+NfqxK/9zFXQnPIqXTH52kZcWCJDqLsDmYn+w43rRPJNJHuvPqo7rwkaw1hkNOZ2+0sdTao5d6MZcnGbDvO75VfQL0GiF1m5h9o/4G1IgdFKNfjaeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=evQSZQ/i; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1767931710; c=relaxed/simple;
+	bh=2mcRdk8NIW4UsXr59JY8Y3kTFZlEmbKvPrEyHwut2sM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QBfqoMbJP/XRRjx+r8NK8pPA4R5peCxFS3jpuP0hTE+VxqwBNH6L73sXlNp42wvWth3KsqAPtqBnSs3uhdkEKddCZMVlw2LMmAZjwriLhTN66KxddJy0Nuoid5jlRgEiBX2y/dWEIvwldiYv4oSNgQ9i5tt9aeuF90ayOeY37dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WSd94LU1; arc=none smtp.client-ip=74.125.82.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="evQSZQ/i"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1767907118;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/fdI4HNVMXpScbiOdWnmJAMr7E0Pkfpku5YlZKipJgA=;
-	b=evQSZQ/iESK9ecNgYaOQz9zcD16Yms+nToPRahPorISktxNc6YhHeAm3H49xi8POvtW6wG
-	lGewxBnjDT125hw+SSRTgl7ETaUV2t6EAHNmULQ5ZxrEh6sTr8x4gu4zbzsMhSoIUdubYd
-	ejY/CvqyZRRJSLj3iu+NQWZKpVh0mU8=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-g70CC_tCPo-x3s0bheO8Yw-1; Thu, 08 Jan 2026 16:18:37 -0500
-X-MC-Unique: g70CC_tCPo-x3s0bheO8Yw-1
-X-Mimecast-MFC-AGG-ID: g70CC_tCPo-x3s0bheO8Yw_1767907117
-Received: by mail-ua1-f71.google.com with SMTP id a1e0cc1a2514c-9433e125af6so8532659241.0
-        for <sophgo@lists.linux.dev>; Thu, 08 Jan 2026 13:18:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WSd94LU1"
+Received: by mail-dl1-f44.google.com with SMTP id a92af1059eb24-11beb0a7bd6so1863389c88.1
+        for <sophgo@lists.linux.dev>; Thu, 08 Jan 2026 20:08:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1767931707; x=1768536507; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EDDoKbdnv2trjkmUU76X6syGqHliuOylCy3tou2sxDA=;
+        b=WSd94LU1eMXaF2/Oxv2Zp3jZYUWBgp6asxVR4UrkuaLrH7k02Ci2kBtI6l5xEaoj5P
+         q37lmcjJEKHuwH8Rpv95d61A1isVWZT+L2bG5h1LtwRAJq2VccOLzG6V9XYuhTAJnoKK
+         bmBL212uZQ8e3fbja84FxCwqQyA3qBEVjDepv3cQtZ9GYinlLe6PUXK0cZaAmiyqFGIf
+         J5cdnQuKBeM6xOWzJioqFYirO7i9vpFOsSP6wLX+SoUgIlgfvWXeP/L2k1y3omWkH++H
+         pZV+qwVgDv5Zz7GtMsntSdGtgD+/UAOxR8dQimIvON/C0r7azU8sdjkKrdNIdMTZtfL2
+         iLNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1767907117; x=1768511917;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/fdI4HNVMXpScbiOdWnmJAMr7E0Pkfpku5YlZKipJgA=;
-        b=CwF8gIdHuNYLKoCd+ylbqteNqdUXmUoYRQRaIOsCwlLUnORsJKPnE07I5Ncxc6aON8
-         qhCIQF2T4D293DLUAJCUTxAy1ZqgTuodCXzJzLiwpKX04DmSVXNGxVSPJwxEL3gmKu16
-         MZ1TCK4Mb0mUTyFJBXnN8zG/tqgb8aQ++P2xDSpygE/N850Hm3dsg39BtltLY/ne9GSL
-         g+hYpW6uFSkN97wndXecd8chfuQdZDrBEHMjKdke/3LuTE8qnTq06soa0MqzrDBdrzKU
-         IX3B/u48VjKSiwMEpmAP+0lxzQzqLtxkiVIfD8lOyMVj3HbNi9DU0cgayjF6E91M1d7W
-         od2w==
-X-Forwarded-Encrypted: i=1; AJvYcCWZYqTGGzUXP1qLiJScqNHyEaMR7AtXSmNtTSbzgR3yexTH/ci5KAwRyirT65IGGn4xpGDMbNU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YysC3v0SL/+BsPm+QKJ6mbrwvYdlRJ69x2nMJEpj5O8xPBBekbF
-	lcfVoOezQV+3euXC/pmqzg4F+NGxsuv+QjbE2FFi+RBRy1gA+t++SRDuy64w3PJg91t1SfJGk7e
-	6w+uqimPs7IauV9QPOjdzF/3EXV4NrglfsMdH815HHCw2P3aY5Xb/U/wyAQ==
-X-Gm-Gg: AY/fxX785L6CZ1nJEYNdL37cHDz33cjtLD/zA9jId9+y65LNqsQNdnUyb0W5othT86L
-	44EPpWsrfmzKptW02ZxBnwDu1yNOXxBvVVZitxvOSPRxBHhfdn86K2XQR1sWxQxoGozkSwdmJ8H
-	dF2G6tp0hToX5tzaCqRI0wd9dFxgMAInj/x7nTv3MC6VqbcYbsYTGSBfIQ8wooFP/W/TUZ1YnyZ
-	LTxuBTsC4h8QAD01SgU3YufAxGZRN4ze1nwvQcmM+h7bL4iDTVqFJkmO3qUWYPjmWa8O+0cEOOH
-	fa8IdkZmzI7/a1cahOTGT0WY6LtnQOkphrpc4RVtbpFyuQ+Wf2lGcSdXF6XwYuqfOUcNo7+Bdwv
-	TjpYaFin217Zucic=
-X-Received: by 2002:a05:6102:161f:b0:5db:ce49:5c71 with SMTP id ada2fe7eead31-5ecb687fccdmr3306761137.18.1767907117134;
-        Thu, 08 Jan 2026 13:18:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEqkSY3g2BRFtVH/hTwOCP8SDHCsAmoUI/QIHDt4YAq9tFbNnfPKjO/MN6CStqRG69amOeAKQ==
-X-Received: by 2002:a05:6102:161f:b0:5db:ce49:5c71 with SMTP id ada2fe7eead31-5ecb687fccdmr3306747137.18.1767907116769;
-        Thu, 08 Jan 2026 13:18:36 -0800 (PST)
-Received: from [10.30.226.224] ([2600:382:811f:d757:daa5:b867:12a3:9d12])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ec77064e86sm7623329137.7.2026.01.08.13.18.32
+        d=1e100.net; s=20230601; t=1767931707; x=1768536507;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EDDoKbdnv2trjkmUU76X6syGqHliuOylCy3tou2sxDA=;
+        b=tQL3DsUuFQ7ETgMST8eaKsLI6oLAkgtsHlOd6pxi31Thejddw6hZ0Y/P0zynhqiowx
+         gMJNdQzrkiM7aCAr5VxaCxN/GvCp7G2Ld/bcpebaIx94yATOPS5RYTQUw9RzXjPfCaF8
+         7hgAjcrkZKHoVJdiF49OL1x0ai/3W5U/0cXpCADnpyrusmbagRWYutfIO3jifiI/rFXE
+         AuhA7952rFVShxbjQ3iuG06n0Yr0n1tf7qKRwPWmlLn+phzA/07hYR0sevHPKzKpq/9u
+         BRxxXIOu+aczAx+qwduuDg5wzUhWZQmANns1gMbiHKa0QUXn2bcHa4Jz2wv40SfSkQ7H
+         891g==
+X-Forwarded-Encrypted: i=1; AJvYcCVse5tIOUAGDmSyKNKr7mvhlgiErEtEz6LGF5saj0GboyCepZzx8A93drMc50kIdIQ6gtftKVo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwdpR8Nc98PjjVIc4IGYUoaG0/a4DPf96ZK/dqAT4HzBa40+rzd
+	nhvU1b7usrfDhTKTjDz+Q38yss2xbqgUtGqEVQRS+5HyrRMXPWBNAnX6
+X-Gm-Gg: AY/fxX7DvyJVUDQkGX5JBsCkAS+WQo7FPQAXvM0vHO3Lv/SUnZc0gQ8Q87d+Pc9YELN
+	sdjZ4CUdJGtgi28t8oBv81L+0qye6IWB51Y8oL6hnMzE48xWx58a0lSbgfVU2ZEk3RVy5EXIs3z
+	Yc1KMF1rvh7Cwp4uVCvjLk0/MleTzdabWvKRKkuQXLkDi9cqHVWmPzv+uEjcpeM+2l8QU0Tohwu
+	Q/GZ2deJ50KNyQiTlcuynKeare7C3GsWvxXHGbgUCZND3VeVO7wg5fbytkUSeV+WSGIccuZOdCS
+	Rup/Q3mrX7f9ot9OqKoRGsae3Cp5VraEP4aevqxtgPOmefRL1clS1/Wr2M6/uVDEC1sXQVcCFWk
+	nCPz/lk/mAhGAYePbai05WkCu9XTvvdbVjcbeVTw7d/ucZyE/vb1O2SBVZHw/+3Ay+ZgdZpH1BK
+	JadTtlztEqAw==
+X-Google-Smtp-Source: AGHT+IHYEyj9/7o+tBP0yDD4Xk/5DkC3757Xe2hVibZ6VY5BlbkB0VR0LKgl6GAvoD4FVDJZvGGtvQ==
+X-Received: by 2002:a05:7022:3d04:b0:119:e569:f86a with SMTP id a92af1059eb24-121f85f242fmr7240325c88.7.1767931707386;
+        Thu, 08 Jan 2026 20:08:27 -0800 (PST)
+Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-121f248c239sm12869881c88.9.2026.01.08.20.08.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jan 2026 13:18:36 -0800 (PST)
-From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 08 Jan 2026 16:16:35 -0500
-Subject: [PATCH 17/27] clk: sophgo: sg2042-clkgen: convert from
- divider_round_rate() to divider_determine_rate()
+        Thu, 08 Jan 2026 20:08:26 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: Han Gao <rabenda.cn@gmail.com>,
+	linux-pci@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>,
+	Longbin Li <looong.bin@gmail.com>,
+	Han Gao <gaohan@iscas.ac.cn>
+Subject: [PATCH] PCI/sophgo: Avoid L0s and L1 on Sophgo 2044 PCIe Root Ports
+Date: Fri,  9 Jan 2026 12:07:53 +0800
+Message-ID: <20260109040756.731169-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-Id: <20260108-clk-divider-round-rate-v1-17-535a3ed73bf3@redhat.com>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Brian Masney <bmasney@redhat.com>, Chen Wang <unicorn_wang@outlook.com>, 
- Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2276; i=bmasney@redhat.com;
- s=20250903; h=from:subject:message-id;
- bh=Ge9eXc7hiD/dbOFdwq4ZbwJA1t1aWqrp8YuWJZaaqt8=;
- b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDIT5HaYum9WmXVj6rbsy2f4dzpsW9yyZHPyW24TnwdtH
- 9OOCC5m7ihlYRDjYpAVU2RZkmtUEJG6yvbeHU0WmDmsTCBDGLg4BWAiFecY/te7KlaaCBU3MLco
- CP6oUzgTsVrRaPqa01/lfQzZLs5LV2P4p/smNuhbq3RQ/K9CF/ncXdfal2aUnT3y8Ijd1or3m5/
- PZgQA
-X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
- fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: 6Ha6JJebAKRmtW2VTnqCR4YLwxOAd0UYaduP2hIKRW8_1767907117
-X-Mimecast-Originator: redhat.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-The divider_round_rate() function is now deprecated, so let's migrate
-to divider_determine_rate() instead so that this deprecated API can be
-removed.
+Since commit f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM
+states for devicetree platforms") force enable ASPM on all device tree
+platform, the SG2044 root port breaks as it advertises L0s and L1
+capabilities without supporting it.
 
-Note that when the main function itself was migrated to use
-determine_rate, this was mistakenly converted to:
+Mask the L0s and L1 Support advertised in Link Capabilities
+in the LINKCAP register SG2044 Root Ports, so the framework
+won't try to enable those states.
 
-    req->rate = divider_round_rate(...)
-
-This is invalid in the case when an error occurs since it can set the
-rate to a negative value.
-
-Note that this commit also removes a debugging message that's not really
-needed.
-
-Fixes: 9a3b6993613d ("clk: sophgo: sg2042-clkgen: convert from round_rate() to determine_rate()")
-Signed-off-by: Brian Masney <bmasney@redhat.com>
-
+Fixes: 3309df45e6b5 ("riscv: dts: sophgo: sg2044: add PCIe device support for SG2044")
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+Tested-by: Han Gao <gaohan@iscas.ac.cn>
 ---
-To: Chen Wang <unicorn_wang@outlook.com>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: sophgo@lists.linux.dev
----
- drivers/clk/sophgo/clk-sg2042-clkgen.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+Change from original patch:
+1. use driver to mask the ASPM advertisement
 
-diff --git a/drivers/clk/sophgo/clk-sg2042-clkgen.c b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-index 683661b71787c9e5428b168502f6fbb30ea9f7da..9725ac4e050a4e6afd3fd50241fbd2fc105a31ca 100644
---- a/drivers/clk/sophgo/clk-sg2042-clkgen.c
-+++ b/drivers/clk/sophgo/clk-sg2042-clkgen.c
-@@ -180,7 +180,6 @@ static int sg2042_clk_divider_determine_rate(struct clk_hw *hw,
- 					     struct clk_rate_request *req)
- {
- 	struct sg2042_divider_clock *divider = to_sg2042_clk_divider(hw);
--	unsigned long ret_rate;
- 	u32 bestdiv;
- 
- 	/* if read only, just return current value */
-@@ -191,17 +190,13 @@ static int sg2042_clk_divider_determine_rate(struct clk_hw *hw,
- 			bestdiv = readl(divider->reg) >> divider->shift;
- 			bestdiv &= clk_div_mask(divider->width);
- 		}
--		ret_rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, bestdiv);
--	} else {
--		ret_rate = divider_round_rate(hw, req->rate, &req->best_parent_rate, NULL,
--					      divider->width, divider->div_flags);
--	}
-+		req->rate = DIV_ROUND_UP_ULL((u64)req->best_parent_rate, bestdiv);
- 
--	pr_debug("--> %s: divider_round_rate: val = %ld\n",
--		 clk_hw_get_name(hw), ret_rate);
--	req->rate = ret_rate;
-+		return 0;
-+	}
- 
--	return 0;
-+	return divider_determine_rate(hw, req, NULL, divider->width,
-+				      divider->div_flags);
+Separate from the folloing patch
+- https://lore.kernel.org/all/20251225100530.1301625-1-inochiama@gmail.com
+---
+ drivers/pci/controller/dwc/pcie-sophgo.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/drivers/pci/controller/dwc/pcie-sophgo.c b/drivers/pci/controller/dwc/pcie-sophgo.c
+index ad4baaa34ffa..044088898819 100644
+--- a/drivers/pci/controller/dwc/pcie-sophgo.c
++++ b/drivers/pci/controller/dwc/pcie-sophgo.c
+@@ -161,6 +161,22 @@ static void sophgo_pcie_msi_enable(struct dw_pcie_rp *pp)
+ 	raw_spin_unlock_irqrestore(&pp->lock, flags);
  }
- 
- static int sg2042_clk_divider_set_rate(struct clk_hw *hw,
 
--- 
++static void sophgo_pcie_disable_l0s_l1(struct dw_pcie_rp *pp)
++{
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	u32 offset, val;
++
++	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
++
++	dw_pcie_dbi_ro_wr_en(pci);
++
++	val = dw_pcie_readl_dbi(pci, PCI_EXP_LNKCAP + offset);
++	val &= ~(PCI_EXP_LNKCAP_ASPM_L0S | PCI_EXP_LNKCAP_ASPM_L1);
++	dw_pcie_writel_dbi(pci, PCI_EXP_LNKCAP + offset, val);
++
++	dw_pcie_dbi_ro_wr_dis(pci);
++}
++
+ static int sophgo_pcie_host_init(struct dw_pcie_rp *pp)
+ {
+ 	int irq;
+@@ -171,6 +187,8 @@ static int sophgo_pcie_host_init(struct dw_pcie_rp *pp)
+
+ 	irq_set_chained_handler_and_data(irq, sophgo_pcie_intx_handler, pp);
+
++	sophgo_pcie_disable_l0s_l1(pp);
++
+ 	sophgo_pcie_msi_enable(pp);
+
+ 	return 0;
+--
 2.52.0
 
