@@ -1,211 +1,293 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010011.outbound.protection.outlook.com [52.103.67.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E16D25B311
-	for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 06:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768198711; cv=fail; b=bXQmDX4UeIH4W3AUL3tHyX/raUwAleHQJEs2c1Lj3IqtNd0AEdjJnto5n24rJgMu7N8qOs4MsMqs2RBhuSJlA3JTzaljl190NdXnapcq7IuC6OgP8xieDn0ne+eLtroomq0UQUnOIf+KhvP+UMRdrUN6YmfJNIkGJhH/V1Ab1cw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768198711; c=relaxed/simple;
-	bh=atk3YPtHuAJdRqUVud+J5nsnsXfgz2iC1qioVFNXvZo=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=qPCNhqvRS9/b3+ce4gIx9w/ZsouvRhRGE8SUH67rhTVcmlAzraoW7T+EQtA8a84MEbvh3CbErhjIY76YuaaHRkMOz4RqpXS+ACRREIP6ewDSThCV4Y+wXtQiQBC1FEnAOBO6M8Ol0z0ZtidM5oI9tM4nDFXrbmjbjyCHZbdn4R8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=savm+Qye; arc=fail smtp.client-ip=52.103.67.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC22E2C0260
+	for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 10:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768212981; cv=none; b=n4S5NcsUYp9qAu1Va5BDjTLAVXYx3eiLDtIcAZi4lX1eZ+rmeBjW25GvIz19D1Gwwst/vCxbmXc31X0vRo7gJPvAgdyeqbgoOBrg5CwGSTYFHUPkd8EzxnZMQn6fgjg0Zbxbxryowaorp8C9KWfH/ipvb8nvoMjiTva3EtfYPjs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768212981; c=relaxed/simple;
+	bh=T4dB7qhSOB7MNSy9r85wdPbIeNqb5QyQF+j4L2O76eE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iY9glCr0hNjr/c1cHiuLQxS7zPUfc7JbRnEQQX/ja7dw1mxJYdMTKgfh8VK308Gl9WWtcIwJnt72/yhrA3FfnH0oi+Hh9Ak7UsUGspnXjH9Qib6gSRKz0QXEVA8Qh43KP4WtBOMsrhDYq16xtf4E5ULOdV8Kl4koc+sw/S6dbgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UUvp/+Oi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HNsOitQl; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="savm+Qye"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pvfYV/aClfrSxukq2wjRt55jYoRiO2mpOfvgU38lITUECKUIj+zx8oDF97WQInDHHYQCb6qfP66ZxA8kexa6XyA1WNU6Lj86kZl3YchABTnX455rF3TrS5O2MLBbG7Wkh/U884eyh0zo+GyxIXSwQOtWMpEB7pgLW5BrpsO30a1MjNAPFMDVxgjCSUeZKSQoiq+lyyQ0/wZZcsZvBGtUmvQcPDNVLpB4mUqIY9uJmAjRPueWI+xBpbf8Rf6RVGr8Ocio7FTZoIZ5HuwG79au9mukBqxjZed+cdplZUHwjfB5iuh2RHp6Dq46DWTwP+7Wrw7RAchcqebIma/QFFsBMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eKoJsEXQwB2cxMfeX5l6fLmP6hK29l7aK+AklFCZSss=;
- b=G5geOJ8Btx0pG8xGLMErWDm4rRlAFlt4PKVvfiZJNv20+FIJ3sNxmVlXm/O4zUfWRx+c7RnsVrwrwY5+b2e/sS8+bjpA1xRghHWfvCSTjRd9OjZGBNIOLv/sWsiN3xS1r6lL04fEOQHfV7BgGCfVMHul5QoeBlSopsoMBTNIMZw/NxiWHJakaxzpTpaJE80C7HDXuqPaacQzJY8hhhgMaaVwKgMeLcObnnq0i/GO2MfvDLcFPmX1FJCmQLOaRhmB9p9NaIyTL+g5Zhqvy2lkHzv/Kae4MQ+Y2pywdSkquhs0fVAP7NBfyj/U2H4pNBj/dkudV83hPWcCB3DXFU5AYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eKoJsEXQwB2cxMfeX5l6fLmP6hK29l7aK+AklFCZSss=;
- b=savm+QyeGem6rzSRQp03GTrk+zadKTTHltQhBnK6Q6N3p7SPlwzF+/uofN9GKxRTfTf84SapfezH0V0sSF07BxF+eCfaY6O3Q/bgislGltJrvtSPFNMmgnGOq/L5iK6rBE10YPuCYq6TDUs2PDwiH42arczdlxpqMauaE3usKIOboMGnUoxqH0vaDGLeh3uuAY5PAeRyOJC0y/cjVkfpztQT9Ni5FA5CL9VLBhMg1YdCMxjzGDlhZqsEclc6BaIDZZIQlEDGWAYyT+d9uv8U1nCJ9mBryBd7qXiIX0WFwp73GJPuWsG1B5MnMz6r5zLkTUby33ojvocHixMyxEPzCQ==
-Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1e9::18) by PN6PR01MB12287.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2fc::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9499.7; Mon, 12 Jan
- 2026 06:18:22 +0000
-Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::8a6b:3853:1bc:67e4]) by MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::8a6b:3853:1bc:67e4%6]) with mapi id 15.20.9499.005; Mon, 12 Jan 2026
- 06:18:22 +0000
-Message-ID:
- <MA5PR01MB12500A900256013C7ACC21FB0FE81A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 12 Jan 2026 14:18:15 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] riscv: dts: sophgo: enable hardware clock (RTC) on
- the Milk-V Pioneer
-To: Michael Orlitzky <michael@orlitzky.com>, inochiama@gmail.com
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org,
- palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org
-References: <20260107112922.20013-1-michael@orlitzky.com>
- <20260107112922.20013-2-michael@orlitzky.com>
-From: Chen Wang <unicorn_wang@outlook.com>
-In-Reply-To: <20260107112922.20013-2-michael@orlitzky.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0015.apcprd02.prod.outlook.com
- (2603:1096:4:194::16) To MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:1e9::18)
-X-Microsoft-Original-Message-ID:
- <a8c750e3-8f71-4241-9c8d-e4be712d299e@outlook.com>
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UUvp/+Oi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HNsOitQl"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60C7OcMQ555254
+	for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 10:16:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=I5WkPX0kRroo4V3hS9zD0M
+	7qGrJz1a+233BafHlg7M8=; b=UUvp/+Oirl/JKPuLWMZJav/yN6zNonSorJhHyc
+	HjPQMtsEhHtxvh5lVrgwjIvbIw/j5TqpgfwSE+F2/e0SH0p0LtPEJ9jlwnDGFvuA
+	hWyKt+yzS394njsmcmKzqLU+kSc9S+AwydI76tkAAS1/NP2AKijN0IM5HbKz9oAM
+	klj/yE4PW7pxkrIfYAGQL0EtCjvVprXF8fOg/EyKddcAMmgN09Me4j43+UAGQEXz
+	RO11BRsy9emAJJeTNJQuZNWz9xUYn9mbqw9jbsdWRfaL3/2UMptnfs7CzT7h868b
+	sntlQ9/RAcom+7rw81sByH7O9r05dPxuyOwFtAMeObXrUSjQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bmvhw0kbt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 10:16:18 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8bb6a7fea4dso1529692885a.0
+        for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 02:16:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1768212978; x=1768817778; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=I5WkPX0kRroo4V3hS9zD0M7qGrJz1a+233BafHlg7M8=;
+        b=HNsOitQlFi0SaPv/9rV09HsCV0xXIQ9sPvSEv7nJ4PIJ6VyDLs91iL2BDusNfRExNO
+         X+uvAmz9Jahhr1zhK3TbO/cJHS/XXXefLIZcBZe4m6sUvyzeop6AecovwZ4fRijIMsEB
+         kmiR3CLTcZGgtukH+hxcwv4WcYpup7kWsY25OpjNhdd64Yj4t9JTpRZXIDwLsOaPMc5h
+         ke8/rmlk77JlyOfARyHGHpx+R1L/BLbWVySWJ7GcgiK8nlhxIiNmqnIFWvg6jQMLrOL7
+         afOskz5t7RAnTtHwlfKFTXM0H9y3nnPzU8GOb4nZbbpOylhT08UGf9OyLzNy6bzal8lj
+         3EWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768212978; x=1768817778;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I5WkPX0kRroo4V3hS9zD0M7qGrJz1a+233BafHlg7M8=;
+        b=JCfOJjIp3m6VfQUZRj9rETQgSQcE8nlQE5gu3B6WxWW25ReO6X/lJxBva1+oP6Ud5G
+         F6awcRdMI/jgH0t2fXHyqdmgr4AJq+PzNVPSKHTGbZYTjhNX9vd7XdRFhq4CJm0utD6s
+         dLCSICZJ3I6bZ6PaIVN1fvUEJDukuoUKkOYisvThMx2uPtAcpNu/Xtm0Z0JggZbyTt7e
+         YwS8+B3/clPKlz01agGxlev0XNg8xCMi1JlSz3blEfkxOokJpMn/Mb3xU3PLJXDJH2uR
+         NG6k0sBpPCYqXkwmYo41Y00hQ+6SuJvg9+AmitKaHel0OeYS355hYAibYo2UQHt/2ZjI
+         K34w==
+X-Forwarded-Encrypted: i=1; AJvYcCUcmGjkTdY/ql/hz0xvxMAeMPlGI7Louw4OAZk8AuTofQtvg5D8OJq0RItNYGLOMEJyuJyaMYw=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwbOMuTxcZ2QeUxDrUX/AwkG7yi79Ihw8ANBmBRvpvm2eaek/mu
+	fQcvkQqus0itGZr1u6AvFpHYq2h6EQOD+et0NyEU4gEiqSTZjDxFKED/G3yvRuJyPtRQYHJQToK
+	nhfRvTUQILF4uCZnGAvrC+J2ra3rIqCqGpIDfjPJYHRZ9DY0n7RA4DAFwvfg=
+X-Gm-Gg: AY/fxX65bk8O/uc8dLoFIQZTPHfhdoxrr5JPyByAXQBp+hzUd8SwDm3SKxXxHJth3kD
+	Sz2hqZ1SDX6LdElNicfTEQWf1TEnf2dDnez1CuoXa/mDCP3hjUVrBF22LQWh1z09FQCymuGs/RK
+	fhOoTdNjiXst4fGoVzXaF90zNDSo1fO7hx1whT7j6lcuGHtb5+xO/veSWCMO6ps8tlKJX/GaZE4
+	cREMLNIWNhPpsBJgKMeyNKWuh/4E5uVG74nO8uKjw/J+1hPvoN10/BxH0UJhVDkbL3ACldcwGR8
+	Xy9ul1VgARTZNzyp9v6XV3KFjpabyBFzev9qJ/6sOddVpoObV0E6gPoaTG1pi1AclnG76OGRxda
+	iXA8hZhfpzeLvAe3haAkTzgPAZk1HeV7k+0XCkq+9
+X-Received: by 2002:a05:620a:40c9:b0:8c3:6603:cf63 with SMTP id af79cd13be357-8c3893f6de8mr2627912085a.68.1768212977802;
+        Mon, 12 Jan 2026 02:16:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGs8ShypNhVdDakSevb2ZS1sNpt+R6FIEerItjbw5zTxbNLfiPTZKzHXym+g0nfOdJdvZoOQA==
+X-Received: by 2002:a05:620a:40c9:b0:8c3:6603:cf63 with SMTP id af79cd13be357-8c3893f6de8mr2627906885a.68.1768212977127;
+        Mon, 12 Jan 2026 02:16:17 -0800 (PST)
+Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:eb74:bf66:83a8:4e98])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-47d865f0cf2sm126530355e9.3.2026.01.12.02.16.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jan 2026 02:16:16 -0800 (PST)
+From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: [PATCH RESEND net-next v6 0/7] net: stmmac: qcom-ethqos: add
+ support for SCMI power domains
+Date: Mon, 12 Jan 2026 11:15:39 +0100
+Message-Id: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MA5PR01MB12500:EE_|PN6PR01MB12287:EE_
-X-MS-Office365-Filtering-Correlation-Id: 90d67643-d58f-4174-af93-08de51a262ee
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799015|5072599009|23021999003|19110799012|6090799003|15080799012|461199028|440099028|3412199025|53005399003|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?QVR6NFpCSC9UUHlsaFFKSGtaamhLVVRCWWl6OTc3OTVCNVhMNCtlMHZEV1li?=
- =?utf-8?B?dWhnNFpjQkF4VU0yQ2s5Vy9jeUUvcmxTVE5YNU4xK0MvMzFhcnhzc1I0cU1l?=
- =?utf-8?B?NFd2NktzV3lRTE8weTduYTE3ckFjdnpSdnhBdjN5RWhNbTBSbDlGRnp0MU9B?=
- =?utf-8?B?N0lmK0xPYTNDMUM4RUJVVzUrRE9mTUFsTko3dGtBSWc2SnRpTCtQTzFRTDZw?=
- =?utf-8?B?Z1drcFo0djBYZ0htbnFBbkU2RXpHNVFpenkzRVcySmpkQTUveXVBSlJwOEJD?=
- =?utf-8?B?dFRLQlU5TVlMM21PVzRZWDQrdHZ2dDVoVi9jT0h5Y2RXai82VVg0aFhiR3RR?=
- =?utf-8?B?U0luUFhoY2pSU0tLZnNLcHM0Z2pFZStOaHVpSHN3YTdlMm9QdnRlMEl3NGU5?=
- =?utf-8?B?UnVsUlMvdHFWMnd5KzYrdUlBQ2k0bWtJd0ZnYTMwSjA1U3hMaStxQ3JndEZT?=
- =?utf-8?B?TWRTb3ZleHN1U29uWnpFUHJQRjRhOHpicHR2YWMvd3dMcTJPZkdkR3FXNmZi?=
- =?utf-8?B?SlJ3Ym02MG1VRld0ZlAxbXdRUXdqRDJRZDRrMDhEUEVtMmVOMHV0aUZFc0F5?=
- =?utf-8?B?S0NVK0kyemNCdEpuZkhrWVdld3ZkRWdKbmJpRmFWZk5FS1lCNENaOTZSQXYz?=
- =?utf-8?B?VEJ3dFJCOHFhNGR2RGNyd3l1Z09rWDhQZ2RIQ21iemxFVkhXQVRISktVcU4w?=
- =?utf-8?B?N0tmQWNuZFRycVF4dkxsb3YrOTJZdXdReHNxQ1dnaVZ3OC92UWwyNHpHY1hY?=
- =?utf-8?B?cDVvOVRPL3RnalNJRkJ3Sjc2SXFVQk1LYmdBUWc5Yk4wRGs5MmNOdmVuRHBs?=
- =?utf-8?B?U2F1SUVlMXhiUTRWZHdnb21HVjdDemZoUmNSS1NlTU5QbytRekxQd241WmF2?=
- =?utf-8?B?VXJ3NFJtdmtvR3h3V3krVmM1TUt5TFMyQzBtNElNQ0h1b1ZRd2RPSlgzSzBX?=
- =?utf-8?B?eGJGaUxHVUFZc1E4WFU0c3ROZDlxdS9IMXQ1Wk9Hc0lMbFYvVGFOa0dvSlZV?=
- =?utf-8?B?NHI1V2QxOGV6ZHRIY21zTzFvV2l3WVFXSWhrMCs2andHcW10M2FseEVUV1Nm?=
- =?utf-8?B?cEp2dHF4Z0F3emtSM3Q2eU92N1V2bURsRjRhdjBFZE01YzhtRk1XWlRZSjBl?=
- =?utf-8?B?YUE3ZVozWVExeEhFMWZWVDRLc0NkcTZ2NjhIalA5NzRuelo1L1hOZ05CNEJh?=
- =?utf-8?B?S1ZVR0ZHRExITnVDVjdUZEFRejlUaFB5YjNjZWd4RzU2Z01uNEduNGNFMThL?=
- =?utf-8?B?ckYyMldxSUhzN01obzNUbk5Ibmx0eDBQQ3dUTDNXVmFPa0NKckc3RVhRd3hQ?=
- =?utf-8?B?RWV1NW9PUWFDbTh2R2hYK0U1WXhGSHlRU1JFZTRIb3ZuVy9ySUlwTCs4TWxh?=
- =?utf-8?B?aXNDYlpNYm4xS0FoZEVHMk5VRlFyVVduZ21jQzlnUW84ZkxsZ0NKUTNzVDBS?=
- =?utf-8?B?a2VYcEhtTUZwdXFIM2hOMkQ5b0tKQWdJRVVWRDM5Wnd0dVJYRXBSU3pTT1A2?=
- =?utf-8?B?MjVUaVdvUTNZc1lUdzFicmpYcEtjK2tHU0JINGtPdnpxYkI3U1RoSEJqMnMx?=
- =?utf-8?B?S0pPS3dZQWJUUlZqaWR3emhhMHYwTHFKMDdLTE1Db0Z5UVZLWjJPTVZFOXpm?=
- =?utf-8?B?ZXJJU01jUGhqOG5aSUpGUzBOSkFYK1E9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?bktzeDFVTHlEUmtNeW9qN3NWMy9YSVFDeVZYU0dhOGxaaFBEeDlQUWNIU0hS?=
- =?utf-8?B?MHkreDR6M3lmbXU1aW1qMHhKLzd1MGIrbVVEbWcycFBFb2tKeVRYK1k3dFJN?=
- =?utf-8?B?YXdMSDRQUEhMNDNzN01iSWl6bVpZUkF0SjRWNDRlaW1rTjBjS2RuTzBiUWsw?=
- =?utf-8?B?TUcwcHpsYzFMTGFQc1J0SWl3KzB3a2lwM1ZTdWR4WVR6b3pqUTFWSGhLcmh2?=
- =?utf-8?B?TmNYaEtYRW9hOGZpMUM5bitPbS9nUE1iMVl2YWMwN25mTEFTaStOYmxHdmU5?=
- =?utf-8?B?dUI0aFZUZENIcEJ6Z0dsbEVDWDJlYkFEa0NvalhBSkdzRUR6SUI1UmhGaWli?=
- =?utf-8?B?WENXV0lGUlhXTmp0MEFFYUdHWjdUR2JYRUlwSCtsOFNIdDMxWURkdWhtOTV3?=
- =?utf-8?B?NzRmY1BYZXVEMHVHV2VIUWQ1Q2g3bVdQb1lyZTkzbWJhTmFhYmZyWkZPYURE?=
- =?utf-8?B?WmM3eHRhTWx6QjFaSFlrV09sa3haUm5WdVQzZ01tNGQyUXY1ellCTEs1RzNU?=
- =?utf-8?B?WlozUkJ1MXNNYS9uOHdkMDlraXFHNDJ5eGVBK1lETHoyUkZ3RWdnbkNTUldO?=
- =?utf-8?B?RVB1d2Q2N3YvSVdZWjkwTGRGWDdtVTdKL1FzVXJsUkN1Qk0wRmxFVTdGcnU3?=
- =?utf-8?B?NFZlTnU4R0RqYktydnZETmNRSDdmbHdKbUtYcTdzQW14YTNhYnpMbEcyQzZW?=
- =?utf-8?B?UWFoOXdydWpiM2kyU1RWSlozUGpyWUZyS1Bqc29lcjFKb1NQb2EvQ2gyVzRQ?=
- =?utf-8?B?OGlTbXkwaWlDcGlQbWJSY0RZOS9LZUFSajAxNnpzc01sRUZucnJNakdIMWdZ?=
- =?utf-8?B?SVYvcVJGSVF2Sll4eDlaTjJwY2R5VDJBZkxuSHByc3lweDRzSEJxRGMyZ1Ax?=
- =?utf-8?B?R052OXlLR2Z1UVJWQVp2Q2xTRCt0S3E5clZFa3Ivem13NitGWGU1ZXpORDFO?=
- =?utf-8?B?RlU4V3A3SVNUWWxGYkFIODVZOXdZZC9OVGVUL0U1V2MwNS9YbTQ4L3h4elpy?=
- =?utf-8?B?eDVFNVVMcUEyZmdxd1dwR1FXcVlxOVV0QTQvOWRXL2hqSmo5UzhLNUltVVVk?=
- =?utf-8?B?UTBXOWRJNldQTUU2SW5JWGE3S2pZQU04U1o0WFNvbW1jSVFmbnVyNFhlUktv?=
- =?utf-8?B?VzVyU1p5K2VKL1BQV1hHMCtNR0x2WmFnTU9JQUJDWDFiTmorSWVCYzlqZzMy?=
- =?utf-8?B?eFBBYStiT1NlcEJHS1RrZ1NFQU1RSjNORWFqVTVvemRSZ0xaNElZVlduYjMz?=
- =?utf-8?B?U3RtblNHcFJ6empFTXd3Y3pzRFhiNzArMXFpZkNPenRtQ2tlQ0hKUGl2aHhD?=
- =?utf-8?B?WE0xVkQ4Z3NKeE9heCtwenc5OWFrbXlqVy85VTNyckxtZk8rYUtMVWJQa0N1?=
- =?utf-8?B?T2o0TW9YditrdDRFYTYxb3RZTHZLNXNOdmNyajJ1UXhtWStsVmtWYWR6dmo1?=
- =?utf-8?B?VkJPMnQxKzVuOFJzK3BQSWNvWkNYRCtEbEZqOTQ0Y05JSWQzZVVERWhFdy93?=
- =?utf-8?B?TWZoQTU2UjJkckY5Y0F1SkZOMG01Z3lLenFlaUxKOWhramJiSStuTmJEbGVu?=
- =?utf-8?B?elpwcXIxRHU1Tkk2UzVkdWlEUG1lTjdOT0lHTWkzd3pRc1MzanppbllLMkxp?=
- =?utf-8?B?OXVGY2FOaWFKbXRrbEVrTGVWNVBiTDhrcHE3L0NoalN4c2tEZHhLdlBIZDV5?=
- =?utf-8?B?VnNFbWRZWEhxbElNd3E4bzlCeEhLOFE3dElhNUtxRnFoN282K3FmMmtjcVpJ?=
- =?utf-8?B?c1dESnZWaDBhVjFobkZ4bHk4dEplVjYyd1VqU3hiZW9RdU9abjVpTnBLNTBo?=
- =?utf-8?B?a1dOaXRRYXpDOHNZOWFMMmFXYldnMWRNNW9ndlFRL0ovOTByODFhUFJ5UVVF?=
- =?utf-8?B?UWVLc0FmbFBvZ0dwTGs5T3dJNTNzTFdkbWhXM0ZsNXdIdVBDbTVLOGFWT0RJ?=
- =?utf-8?Q?K7GcNteBOKv6Y1n2U48WhtN7bJbufb+T?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 90d67643-d58f-4174-af93-08de51a262ee
-X-MS-Exchange-CrossTenant-AuthSource: MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jan 2026 06:18:22.4126
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN6PR01MB12287
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMvJZGkC/23PPW/CMBAG4L8Sea6j87fTiaGsDO1YMRhzAUskB
+ jtEVCj/vVaGUilZTjrpvefuniRjCpjJe/UkCceQQ+xLo98q4s+uPyENx9ITDlyBAUlvPnY0O8u
+ VulLsnKdWauBCOa8YJ2XumrANj9n8Jp/br+3uo+pxoD0+BrIvgXPIQ0w/886RzbGZbxis8COjQ
+ AV3pvEtQ63t5hJ6l2Id02nmRvFHMOBmjRCFMMpoc2i4AHdYEPJFsNUnR1mI1mitAazx6BaE+k+
+ sXqEKAewoUDjXCrt8RL8Izpo1QhdCWtMysFxqhpuYc327u0uJdnUpZD9N0y8pfHmS1gEAAA==
+X-Change-ID: 20250704-qcom-sa8255p-emac-8460235ac512
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Matthew Gerlach <matthew.gerlach@altera.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Keguang Zhang <keguang.zhang@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+        Romain Gantois <romain.gantois@bootlin.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Minda Chen <minda.chen@starfivetech.com>,
+        Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
+        Fu Wei <wefu@redhat.com>,
+        Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Shuang Liang <liangshuang@eswincomputing.com>,
+        Zhi Li <lizhi2@eswincomputing.com>,
+        Shangjuan Wei <weishangjuan@eswincomputing.com>,
+        "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
+        Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
+        Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
+        Samin Guo <samin.guo@starfivetech.com>,
+        Christophe Roullier <christophe.roullier@foss.st.com>,
+        Swathi K S <swathi.ks@samsung.com>,
+        Bartosz Golaszewski <brgl@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org,
+        Drew Fustini <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+        imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+        linux-riscv@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4504;
+ i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
+ bh=T4dB7qhSOB7MNSy9r85wdPbIeNqb5QyQF+j4L2O76eE=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpZMngqzZ8uvruPvEUoAlIERmJXZV4GOvLD2CUA
+ 2jk6739/fCJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaWTJ4AAKCRAFnS7L/zaE
+ wxLsD/4pIBV9PSLE5cLStoWto/nEchd0bGE8MvbAwpY7xBNhsGbWLx5qp7yR/7ipfEsRkp+n2w8
+ dDysWC7Pz4fAkEk4FtwXRb+R5d/2QncX00PG3luGttmg6zSJcNvGNnnBaGKKSBmgqyjwTIJQ2Dx
+ qVjNEW137Sm4alGKEtkzhPmGECSWlii1AwKTcDQWEIJPPPTh+0bhFL+zi8kSgYMAJDMm0AsvMk1
+ kyc3bdP8vYqFzhW1iXRVBQ2EtaZkYwflo9aUMrbREmHfOtcR7DwOkAD605RA1QmBsCKizR0Qphq
+ 0tk83ExlrDkRqK24PjAQByuN4gq0MICaVQfj1QAlNSVrAZA9HWIL179Q7j1tBaff7SAJ6I+f7h4
+ Kba+rBS1aOF/2x4inPQXPcoecyJvQQLrHvSVkJPOY+8LaHRqFsBfTC5MP7zl87mmHHRo7e+WCr2
+ V4eudb2DJwf9MQG4HMNDlRBQjctY/HQdcQODvJzycFFDkaGQ9UR0yNGCziPRj+l8DNKOQaTMtdT
+ CdW8HN1Aia0NAg5TOmP9La2/8J90fInR6UufA8+X+RmuspgHWcSu+GwWQeLOol/nfqeNgo2G6/r
+ R2hKOuoUwXqPLKKwYaNyjSW9cXRY7Ps71Ttwyrx3d7r04rLYz2jN0ZK4Ws6zA9MfIDqcj0I4MCM
+ hANNzlBXjH4lQvA==
+X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTEyMDA4MSBTYWx0ZWRfX8/kqaCMTFOrR
+ eqzvwsve4yBmtIQwwQhORWEhJ1lOgNT12/YHOIGhaB8CXKZ/a+hI0MCft8LRvPiNb9Iz5+xZLLr
+ Y8QwJVcR/wCCbks9IxfxGBm18tqyqH2nzkfXLgUCCs6CZzAAxqjcNscht0uUgBy49bsB2u4M45c
+ f13VWr1puTI62KuaOij0U4GAAqJUY38ip/grPSz22ELnTEvFZbTW8kdQnS0kKfH2V6pdhXWjiTF
+ IG4Pyr6dsfs/HZ7yHTqzOGWalPX+NapLjltyTN9mvVL2l4LS7vFBOI3gYV7Ae4Ss6+J6asAyEiS
+ 3vUWzo6n3q6yE7aumpqtW5RJbS15SPZb6BhZ60sQ8QsMQrtINWHaB+/mNvMTlk4aGpRuhMzPYWJ
+ ZP5rMGcdbkZA8wf99/oVevbjNaBUfQyJgHFwQJOklQ9ceBY8fY2EkOCN8xIfIR4gdgqPfga8PXV
+ H020kyS+NymK+c0Eb3w==
+X-Authority-Analysis: v=2.4 cv=JP02csKb c=1 sm=1 tr=0 ts=6964c9f2 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=PHq6YzTAAAAA:8
+ a=h7uu4O38hj_b6GN6T5YA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22 a=ZKzU8r6zoKMcqsNulkmm:22
+X-Proofpoint-GUID: 9jBc7gbRceCzgUnVy9iW8DqTtK0KC7gA
+X-Proofpoint-ORIG-GUID: 9jBc7gbRceCzgUnVy9iW8DqTtK0KC7gA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-12_03,2026-01-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 clxscore=1015 malwarescore=0 adultscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
+ definitions=main-2601120081
 
+Add support for the firmware-managed variant of the DesignWare MAC on
+the sa8255p platform. This series contains new DT bindings and driver
+changes required to support the MAC in the STMMAC driver.
 
-On 1/7/2026 7:29 PM, Michael Orlitzky wrote:
-> These boards have a working hardware clock if you put a CR-1220
-> battery in them. We enable it using information from a 6.1.x vendor
-> kernel.
->
-> Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
-> Signed-off-by: Michael Orlitzky <michael@orlitzky.com>
-> ---
->   .../boot/dts/sophgo/sg2042-milkv-pioneer.dts  | 21 +++++++++++++++++++
->   1 file changed, 21 insertions(+)
->
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> index 54d8386bf9c0..ecf8c1e29079 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts
-> @@ -52,6 +52,17 @@ &emmc {
->   	status = "okay";
->   };
->   
-> +&i2c0 {
-> +	pinctrl-0 = <&i2c0_cfg>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +
-> +	rtc: rtc@68 {
-> +		compatible = "dallas,ds1307";
-> +		reg = <0x68>;
-> +	};
-> +};
-> +
->   &i2c1 {
->   	pinctrl-0 = <&i2c1_cfg>;
->   	pinctrl-names = "default";
-> @@ -89,6 +100,16 @@ sdhci-emmc-rst-pwr-pins {
->   		};
->   	};
->   
-> +	i2c0_cfg: i2c0-cfg {
-> +		i2c0-pins {
-> +			pinmux = <PINMUX(PIN_IIC0_SDA, 0)>,
-> +				 <PINMUX(PIN_IIC0_SCL, 0)>;
-> +			bias-pull-up;
-> +			drive-strength-microamp = <26800>;
-> +			input-schmitt-enable;
-> +		};
-> +	};
-> +
->   	i2c1_cfg: i2c1-cfg {
->   		i2c1-pins {
->   			pinmux = <PINMUX(PIN_IIC1_SDA, 0)>,
+It also reorganizes the ethqos code quite a bit to make the introduction
+of power domains into the driver a bit easier on the eye.
 
-Tested based off 6.19-rc1 and passed.
+The DTS changes will go in separately.
 
-Thanks,
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+---
+Changes in v6:
+- Fix $id value in the bindings
+- Drop patch 3/8 from the series
+- Update init/exit callback signatures
+- Link to v5: https://lore.kernel.org/r/20251107-qcom-sa8255p-emac-v5-0-01d3e3aaf388@linaro.org
+- Link to v6: https://lore.kernel.org/r/20251219-qcom-sa8255p-emac-v6-0-487f1082461e@oss.qualcomm.com
 
-Chen
+Changes in v5:
+- Name the DT binding document after the new compatbile
+- Add missing space
+- Make the power-domains limits stricter
+- Link to v4: https://lore.kernel.org/r/20251104-qcom-sa8255p-emac-v4-0-f76660087cea@linaro.org
 
+Changes in v4:
+- Remove the phys property from the SCMI bindings
+- Mark the power-domain-names property as required
+- Set maxItems for power-domains to 1 for all existing bindings to
+  maintain the current requirements after modifying the value in the
+  top-level document
+- Link to v3: https://lore.kernel.org/r/20251027-qcom-sa8255p-emac-v3-0-75767b9230ab@linaro.org
 
+Changes in v3:
+- Drop 'power' and 'perf' prefixes from power domain names
+- Rebase on top of Russell's changes to dwmac
+- Rebase on top of even more changes from Russell that are not yet
+  in next (E1vB6ld-0000000BIPy-2Qi4@rmk-PC.armlinux.org.uk)
+- Link to v2: https://lore.kernel.org/all/20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org/
+
+Changes in v2:
+- Fix the power-domains property in DT bindings
+- Rework the DT bindings example
+- Drop the DTS patch, it will go upstream separately
+- Link to v1: https://lore.kernel.org/r/20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org
+
+---
+Bartosz Golaszewski (7):
+      dt-bindings: net: qcom: document the ethqos device for SCMI-based systems
+      net: stmmac: qcom-ethqos: use generic device properties
+      net: stmmac: qcom-ethqos: wrap emac driver data in additional structure
+      net: stmmac: qcom-ethqos: split power management fields into a separate structure
+      net: stmmac: qcom-ethqos: split power management context into a separate struct
+      net: stmmac: qcom-ethqos: define a callback for setting the serdes speed
+      net: stmmac: qcom-ethqos: add support for sa8255p
+
+ .../bindings/net/allwinner,sun7i-a20-gmac.yaml     |   3 +
+ .../bindings/net/altr,socfpga-stmmac.yaml          |   3 +
+ .../bindings/net/amlogic,meson-dwmac.yaml          |   3 +
+ .../devicetree/bindings/net/eswin,eic7700-eth.yaml |   3 +
+ .../devicetree/bindings/net/intel,dwmac-plat.yaml  |   3 +
+ .../bindings/net/loongson,ls1b-gmac.yaml           |   3 +
+ .../bindings/net/loongson,ls1c-emac.yaml           |   3 +
+ .../devicetree/bindings/net/nxp,dwmac-imx.yaml     |   3 +
+ .../devicetree/bindings/net/nxp,lpc1850-dwmac.yaml |   3 +
+ .../devicetree/bindings/net/nxp,s32-dwmac.yaml     |   3 +
+ .../devicetree/bindings/net/qcom,ethqos.yaml       |   3 +
+ .../bindings/net/qcom,sa8255p-ethqos.yaml          |  98 ++++++
+ .../devicetree/bindings/net/renesas,rzn1-gmac.yaml |   3 +
+ .../bindings/net/renesas,rzv2h-gbeth.yaml          |   3 +
+ .../devicetree/bindings/net/rockchip-dwmac.yaml    |   3 +
+ .../devicetree/bindings/net/snps,dwmac.yaml        |   5 +-
+ .../bindings/net/sophgo,cv1800b-dwmac.yaml         |   3 +
+ .../bindings/net/sophgo,sg2044-dwmac.yaml          |   3 +
+ .../bindings/net/starfive,jh7110-dwmac.yaml        |   3 +
+ .../devicetree/bindings/net/stm32-dwmac.yaml       |   3 +
+ .../devicetree/bindings/net/tesla,fsd-ethqos.yaml  |   3 +
+ .../devicetree/bindings/net/thead,th1520-gmac.yaml |   3 +
+ .../bindings/net/toshiba,visconti-dwmac.yaml       |   3 +
+ MAINTAINERS                                        |   1 +
+ drivers/net/ethernet/stmicro/stmmac/Kconfig        |   2 +-
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 344 +++++++++++++++++----
+ 26 files changed, 454 insertions(+), 59 deletions(-)
+---
+base-commit: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
+change-id: 20250704-qcom-sa8255p-emac-8460235ac512
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
