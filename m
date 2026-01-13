@@ -1,81 +1,111 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3ED2EB859;
-	Tue, 13 Jan 2026 07:53:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B751D38BF9E
+	for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 12:37:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768290828; cv=none; b=D3OBEXF4GPk9iEJf3y4t+EINV2ReEjyU9Uilmo+LmnI5jpFi/9CW6xIeNGaaoand1iP4o43OvmuAn/YRJxrEk6tMQ9+o6S4zt+UZYGlqHpbTh865mwRpPOL3kWeyvuNaRjjXKVQCGspWEi/mYWVkbHw+PWvwPttKY+mGS+ti91k=
+	t=1768307828; cv=none; b=R62IorVZxZsKZp5IdCTc9QclLI225uoWns+mY2cXrEcH/ivyi2tTtMpzQbpr8vcy4wq7vSwXFDisFzGw74BRfAwRbKMe65t+sViVj99pAX1Ew10hopsyGMM6ohn6F82e7mLffIi1Tb5Dq7icYIXiujoBg1+drQ1zvMjIJL3+UAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768290828; c=relaxed/simple;
-	bh=h5+vouM/Jp0/qproZWkjY885M2rm4+ktQAA3Wl8iWbA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wf4uTqxaIj36YGag0+iXKzfx/Bg4ScuyrzgIdOfNQ5u6POrUbeyn3GTId16B2OAwPjQ0Yn3KDKcGH9uUw3+S0gpVhJj8haeilDdMnlOc5lqr8yc0KTOJcuuZhbYZQUKayACHNusExXBxvDVOIkI5wyeVubU856S8750q0QmKuaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from localhost (unknown [116.232.18.222])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange secp256r1 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dlan)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3969B340E6C;
-	Tue, 13 Jan 2026 07:53:43 +0000 (UTC)
-Date: Tue, 13 Jan 2026 15:53:39 +0800
-From: Yixun Lan <dlan@gentoo.org>
-To: Guodong Xu <guodong@riscstar.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Junhui Liu <junhui.liu@pigmoral.tech>, linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	spacemit@lists.linux.dev
-Subject: Re: [PATCH 2/2] riscv: dts: Add "b" ISA extension to existing
- devicetrees
-Message-ID: <20260113075339-GYA25466@gentoo.org>
-References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
- <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com>
+	s=arc-20240116; t=1768307828; c=relaxed/simple;
+	bh=/jEbcQNNf+2y5DghSoCRU+Htja2/wQhqeKPPtGlgrS8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tMHVqS9JAuO95UmhiMkrzvYLzJLZO7RH/i/i7c6ks9L75KzUIzZ7EhhDXJwQ+Ajp80BpbHTlWw0xbCb2TaiapH16kcYeYX90SfktvnV/tXb1mqCkWCNLVhT/d4vBefOwAACf87bko9F3iGXvqSCc+P7q1wFGLEjoLe6F2h/tgQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ComgjcI5; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ComgjcI5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997E9C2BCB4
+	for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 12:37:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768307828;
+	bh=/jEbcQNNf+2y5DghSoCRU+Htja2/wQhqeKPPtGlgrS8=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ComgjcI5VNR9q3dPbYO78SELFnXvnbFO3a2D+MW7vnjF21y21j+R6bjEBdIqVKVyI
+	 rBaal5wvdHui7U8Vn1fb6UXphD7tmYI7EbURPOenXwtO/8BFJOXF4fYhwMIid5IDPQ
+	 n4Yv61wK0o8M4u6SAR0BNoMHD6N03YK94He8dfhIOxwaNymlEtAjpOfVcMe+61HySM
+	 dx/kdO75/NGB5MC8dfbtjbSLuJZUVYIwS474XlBn/9h4vbDBOoraoVTtiEwsoBzBrz
+	 Qgte2rouu6eR1GVZeWVhX7P5t8Svn2VeDz2MRnzSYh2JwcXq9n4q8ACQ8N5eM139iR
+	 s+7GlbXdpnT1A==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-38301bf7864so56412851fa.0
+        for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 04:37:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVR8lhsSCXRGzObK9eNkT7yAnt+0FGucDjpFEmt29X0Ay323PhQTCg/91DXphNydzjNKyFg6Z0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzFQwntBQux+9EGbbZ6gEpr7LhyQBvD0hBqxge+mk45/LjQYiM8
+	GaneRHrpY40HvNqx1ha6+0j1+X3HaUEz5tKqSt+VBrjXnU8ECJ2USrhR79+E1BLyY6vERLWrW0l
+	XWc8r7jLNRErr/elhLtXO0Aws8/ExiYxovkjG5y7IjA==
+X-Received: by 2002:a2e:ab19:0:b0:37b:9361:711d with SMTP id
+ 38308e7fff4ca-38350a55384mr8601501fa.8.1768307826023; Tue, 13 Jan 2026
+ 04:37:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com>
+References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
+ <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com> <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch>
+In-Reply-To: <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Tue, 13 Jan 2026 13:36:53 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+X-Gm-Features: AZwV_QhI9rebW3ffX0n9A2EUYniK94gLsNSjXRbzl9peLeeXv9eI-nHhZ9l6ybY
+Message-ID: <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
+ generic device properties
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
+	Romain Gantois <romain.gantois@bootlin.com>, 
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
+	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
+	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+	Samin Guo <samin.guo@starfivetech.com>, 
+	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Guodong,
+On Mon, Jan 12, 2026 at 2:45=E2=80=AFPM Andrew Lunn <andrew@lunn.ch> wrote:
+>
+> On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <brgl@kernel.org>
+> >
+> > In order to drop the dependency on CONFIG_OF, convert all device proper=
+ty
+> > getters from OF-specific to generic device properties and stop pulling
+> > in any linux/of.h symbols.
+>
+> Is the intention to read these properties from ACPI tables?
+>
 
+No. Other than a couple property getters which can use the fwnode
+abstraction, there's nothing here that requires the OF dependence.
 
-On 15:45 Tue 13 Jan     , Guodong Xu wrote:
-> "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
-> (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> checking rule is now enforced, which requires that when zba, zbb, and zbs
-> are all specified, "b" must be added as well. Failing to do this will
-> cause dtbs_check schema check warnings.
-> 
-> According to uabi.rst, as a single-letter extension, "b" should be added
-> after "c" in canonical order.
-> 
-> Update existing devicetree files to conform to this rule. Line balancing
-> is performed where needed to improve readability.
-> 
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
-> ---
->  arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
->  arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++--------------
->  arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
->  3 files changed, 147 insertions(+), 146 deletions(-)
-please have separated patch for different SoCs, so they can go via
-their own SoC tree.. thanks
-
--- 
-Yixun Lan (dlan)
+Bartosz
