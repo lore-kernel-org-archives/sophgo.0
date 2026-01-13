@@ -1,67 +1,68 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC6B30F946
-	for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 07:46:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B562D1ACEDE
+	for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 07:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768290376; cv=none; b=aaEoSt+Lj+PKXDcp70rXSgL2qBy+tOv4ldl4dQ4LqPFaJ7JbKeeFDg6RK8f/HvwixQ19LB9Mn/f+ZzMwbe20XqomgJ9RLYsXTF0Ot0SSX3hbnhnpRjy+KvYxLv6xxrTVgjrqOff0+tM7v/vdY0FTx7Phl2fgJj+huZcSR8Fznlc=
+	t=1768290381; cv=none; b=DuaNouS6/bQkxu7DZoRSSU2WMfQ1kInA8JE9LXhsKw/hnQ9iO0TZSDhr2tKINo8iogjItwZylk9ZOdZ+ux2n1pFlRi2yOgYKVpD7keonf7pvBf8xeEdzURrbXkrG6jVlZaw4PW5N52WH6K6+gxNFgMjPk+a8DhUArJ2d+SrKmPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768290376; c=relaxed/simple;
-	bh=G/wZDvuQOJ/sIgMSogrhCI0LOUdTTDMoWlE7v4CDGBw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iOBowvrUj9IVGNW0ONBsd6iN+X2AbpKo2twwnPnbITlM5Cgm1Mm+O5gmGLDz+dnnRD66OHtuDbXPwcb/XRbZ9U6HZaDmz1DhP/mGDeELyPJK1hVkftCQRE8CAWwOYGBNq+eivJLv2Fp8JLG1j2MB3Ro3+GYMr4VKXHDSqrPDwuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=1ytSTmzf; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1768290381; c=relaxed/simple;
+	bh=wimpNbGQyk9u8e5Qt5gFXUuJ3GuTlbtVqW9EiDOWvHc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=kpDhDxGhOh1CSKax5kenLLURZ/uAFXKgtI9uPoZdkZTz3aVxHX7pHP/E5lTAwvslwn/Q47JPnprzABSoyd3vMkVk64Hr+rZUOQH2wGPCpF3wuY5OA0C4o8Z5BwaIOYya/l196cG6waPZpdZXK/pvKl0UMnf+hk+pLh7F/BNlC2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=DM1vLJ0R; arc=none smtp.client-ip=209.85.214.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="1ytSTmzf"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a1388cdac3so51365425ad.0
-        for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 23:46:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="DM1vLJ0R"
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2a0834769f0so50224085ad.2
+        for <sophgo@lists.linux.dev>; Mon, 12 Jan 2026 23:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768290371; x=1768895171; darn=lists.linux.dev;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sVxSFr5roBVYFLRhnAgNNp/8sMao7GowEf9CUckDDWw=;
-        b=1ytSTmzfUwtjm/zX7+r50DBqAtmxuEUsB4CLFOSZvkOaya5jHEPOSmfqXlA3DEFVjZ
-         2c6NlpizmFjeCvSRCNg/dXaWvFyD0LVkvYdp3f7eKqqgrfs9WLvk+4GZh7cPpzVNOZwU
-         WXdobyf59JW7MKDBv9mCruU1t22ekxKthFl/IM//eU31wIvocxbxyQKbRCtsHCJFwxe2
-         YfmbqFX7f4rr3rSG1yh81xWZYO4ZzExJOiMufK3KaFKabuzi40T3hCD9TIp1MmFfGz3I
-         MVg554w07cYnBdxYHRUxquXdx0seDrLUuSovGL8JIIGou6bw69SXgqYI7KVfQY3x8BdO
-         ornA==
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768290379; x=1768895179; darn=lists.linux.dev;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fNeknCfa8wEEbV/WEcBxY/dqGiWsyOavd00Bwdi/7Iw=;
+        b=DM1vLJ0RsQ1m58KH5Q570UNN49xePEL3fHV5Ih531xg/ToukukrHMt+K8Gp7LH2T4k
+         TuEU8BgmayYFWa3rIOcYHGJGxQihqa8nTeIeI6sK5u/3ZWx1mczuFlTjq46VWUIhogXs
+         MtRQSMr23sJ+eRcnyv0h+sNXv0X8Xf5EkvHiRDqGRVpk90PEEOGyyQTzuXDFnbaN4iHf
+         7wgJFS8IRQZ2r0mmhOEjr39v70EfKojRlpcxuNb15EVfUM/00hKEALRII6MWbuZUOKur
+         SPScFGpUEMrIPQDbcAohhx/TAYvH2CvNPFMn8mgXY8ZZ2M6392YLhc5XXWSsbPpyjv1F
+         bkOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768290371; x=1768895171;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sVxSFr5roBVYFLRhnAgNNp/8sMao7GowEf9CUckDDWw=;
-        b=IGxCsyUtNQ2c/6Jr4lkAFO0xp0lRhFL/meeqof/rC26p4m2GDusM1FVxsCs/VvuCbW
-         7ExG9prPRB+Isd72j8ptZ9gcCg8XTGvFIRQZHNvTNYyu7kt5hVfO18xargDZUdFqKUAP
-         e+708Lp3xM8jD3iWXzYmSJt9xbWIf5JT2wn3h+TB2qxaVfmXr8Ec4JPS69ltNgcul4f5
-         WAb81oday5sFjO3mI8dnGqWSulLPhhvpBF64dc4bKu5hnjrgVi/xOT+SRcHjhmC0AmdM
-         UdQMpLi/ijcPlk9/FK3QXg74F8/VbgOmucquauBe+Ilf9uhwpojoKo0FREZ7DVMlIhrD
-         Kkqw==
-X-Forwarded-Encrypted: i=1; AJvYcCVPRnj9pMg1v2URMurv2iKyDrfuSKfbAFbgKMFwspRog/L8CB6kfOmCBdX7errxHoNlvaKgpXQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwF4Ff4rUYsZQjMnbMt+SQqq74eC0ej+0lIsFko5ZxBRssoacE0
-	uzE5koRzWZ15rdSK8cxceqkDniBmqwrJQinpZLvcwUe8PGijeTs3Wc2ni8/hqdA885I=
-X-Gm-Gg: AY/fxX6q2JFT4U5vOxW8KzqoVdmkm7/HaSNkcVWoBGdZAX50HE3YRVx61LAonQLq++Z
-	ZZqt3Zku/hhzvIYKTu2pscrZUDhb3MvG2EmEHsNK9XQRMyX1a4QN9ppbWS0pXiFXqBR9Ssw4iy2
-	DFK3i/F/1P7xlrEXXoNgTXUcnuSjmD17mzVoWfoic1AMtrjuUNL/X/qjxF6T4YV4v9UWX3hgrhf
-	qiwcSq4WnF0SR40jWpjcUW8mbOhbRJsM5nNtpSFCBoD5lhCSCOCGJJlfk/R81SXGir3JaB4PXhe
-	wjqDWiDGlp9+ssfdi/xumDfLHlC9O40ItbDBy3qrCfJe2gJJglfUSD1OnsSnc/SE8UUkZGpkS07
-	sP9Od6RInkQeNlX2zY+T5/AGW90H/ghMORNFWp7DGTOPS0klH5HqE3CzwbKGdKwwSjasm5Ergah
-	wCtsRRj1+j0RnddbDMM7UGYmRaWq2/PP6BLCKxtBercBvj0HU+MTxK6g==
-X-Google-Smtp-Source: AGHT+IHbHcGmc6lMn+EQWcpZEtvrjvUz6htmK3Tb0lxfDS12q7Bh+oS5FfObSwVuTxLhekVSu4CkJg==
-X-Received: by 2002:a17:903:1a6b:b0:2a0:de4f:ca7 with SMTP id d9443c01a7336-2a3ee41516dmr200714135ad.1.1768290371623;
-        Mon, 12 Jan 2026 23:46:11 -0800 (PST)
+        d=1e100.net; s=20230601; t=1768290379; x=1768895179;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fNeknCfa8wEEbV/WEcBxY/dqGiWsyOavd00Bwdi/7Iw=;
+        b=b6IpUBV/LzVbZJe61c+w8m9eERyG0g7gaXV+SOjTVq0BGl+1iTvs6CK6tKM21qlE0Y
+         Ic4amB7gFhMw8FCESIAqQCdOS0dGN9ZYEjMS43b0WxmJYeV0gQWD+zuGO6jLHfHalI9B
+         IcTDeYrfdY/oWe9+sTxKDcuMIUrm8lY6bUe7Sw8o8Fu3n3aeTIXcN1d3/kiGAy/e+tIB
+         jROyqU9Pz1xjZjzU9eL+P2P7dDPw21b06VmktJnllUBeErcuFRPorPVYUJhADakdCW4y
+         g9GYn23agfigV+B/x9pvmMMv/vFwX5r565QJZ1Ackmx+3Sy8pwkl40pmIuAj+aCVm8tv
+         SYrw==
+X-Forwarded-Encrypted: i=1; AJvYcCVa6Nf4XnGjHfNiS6askZKto8qCJH9QWY4+u0ulu/zplB7geVU2MFJM+hkN62Na8lD6KPFlVPk=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy0I4Xf3N+y7uwHX+kuYpmMAz2jWlWg75jGzqpsy81boV3OAEi3
+	RRuUB4Uo5rTFNQhuiF44ffo3RXqLJtDTMh9sBWAZnGBQ0Cppx/ttcTF9v5pMt2gbyf4=
+X-Gm-Gg: AY/fxX5MsIA3BNSNVFPFNYD9SZGj8HzcXJRDOpJYwXOIGvIsAuZO+Y7CYjPG5VzJHys
+	HSGh7ZwH6eJQBCJOhsUwivxXRwwZGNeZixsep7mMTNU8EXBZQwZiQoSaMFROYPHc+D5vYsE53js
+	nL/InUTPekxoAImVq6rXJW5GUq1JvnunmgRQ11GyISOA4Ip6QogGic7T5e+0krtk+a/g30TKxQc
+	6nD/SWRVJMOePcz0g9vxJoFldtpkC8u8gUOIZY4TACmvRvAkcBGft7wugo+lw25lwn8gioD1IIb
+	MdloCnegofTCi781K0Rv6K4a+SeI5UAUQHPgbf7ky8ZtfRc2N4/3V51oc8w4Ne3907qNA4VhdJv
+	3/EmOnIBcwhgahCuO5VJaQkT2/yhTQ0NT/zrAQJnnJfBFO+LREejLKi6PInrxSSyFlDdRGg5F88
+	HvF/bjWk2elroQjvZBBAJL1J1gPPJCkC+O+bbVY8Hqutd3TycxwkHv0poZsWODb2/5
+X-Google-Smtp-Source: AGHT+IGrssuTQycrsW+2hCknhmQdMnpg0esEoKPvLFi/81f/ttHiYeTe2gILmVWkDFy41Vy2Qxe06w==
+X-Received: by 2002:a17:902:f547:b0:295:8a21:155a with SMTP id d9443c01a7336-2a3ee48ff6cmr185468915ad.35.1768290378939;
+        Mon, 12 Jan 2026 23:46:18 -0800 (PST)
 Received: from [127.0.1.1] ([45.8.220.151])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd4bd8sm190956165ad.102.2026.01.12.23.46.04
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a3e3cd4bd8sm190956165ad.102.2026.01.12.23.46.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jan 2026 23:46:11 -0800 (PST)
+        Mon, 12 Jan 2026 23:46:18 -0800 (PST)
 From: Guodong Xu <guodong@riscstar.com>
-Subject: [PATCH 0/2] riscv: dts: Add "b" ISA extension to existing
- devicetrees
-Date: Tue, 13 Jan 2026 15:45:52 +0800
-Message-Id: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
+Date: Tue, 13 Jan 2026 15:45:53 +0800
+Subject: [PATCH 1/2] Documentation: riscv: uabi: Clarify ISA spec version
+ for canonical order
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -70,11 +71,9 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADD4ZWkC/y3NwQ6CMAyA4VchO1uzMRQhxvgehsNgHTaGoeskJ
- oR3d4LHv2m/zoIxELKos1kEnIhp9CnULhPd3fgegWxqkcv8KJXSYKwl30MLNjKBKk6lKg5aO1m
- KdPMM6Oizerdm64Cvd2LjNhQDMpuVrbPzX5Xw0NAapi6pMBUgwRZV7rTR0jlzDcQdRxP23Thcf
- m/SLkKKgWKdefxE2CRZiWZZvrj2++7VAAAA
-X-Change-ID: 20260113-adding-b-dtsi-148714533f07
+Message-Id: <20260113-adding-b-dtsi-v1-1-22d6e55d19df@riscstar.com>
+References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
+In-Reply-To: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
 To: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>, 
  Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
  Alexandre Ghiti <alex@ghiti.fr>, Conor Dooley <conor.dooley@microchip.com>, 
@@ -89,53 +88,36 @@ Cc: Palmer Dabbelt <palmer@rivosinc.com>,
  spacemit@lists.linux.dev, Guodong Xu <guodong@riscstar.com>
 X-Mailer: b4 0.14.2
 
-The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
-much later than its component extensions zba/zbb/zbs (June 2021). Recent
-updates to the device tree bindings [2] enforce that when all three
-component extensions are present, "b" must also be specified. Related
-discussion can also be found in [1].
+Specify that chapter 27 refers to version 20191213 of the RISC-V ISA
+Unprivileged Architecture. The chapter numbering differs across
+specification versions - for example, in version 20250508, the ISA
+Extension Naming Conventions is chapter 36, not chapter 27.
 
-Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
-It is a trivial update, but can help readers reference the correct
-document version.
+Historical versions of the RISC-V specification can be found via Link [1].
 
-Patch 2 adds "b" after "c" in 3 device tree files (anlogic, sophgo and
-spacemit), fixing the related dtbs_check warnings.
-
-This patchset is based on top of linux-next, tag: next-20260109, and
-depends on [2].
-
-Link: https://lore.kernel.org/all/20251230-imprison-sleet-6b5a1e26d34b@spud/ [1]
-Link: https://lore.kernel.org/all/20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com/ [2]
-
+Link: https://riscv.org/specifications/ratified/ [1]
+Fixes: f07b2b3f9d47 ("Documentation: riscv: add a section about ISA string ordering in /proc/cpuinfo")
 Signed-off-by: Guodong Xu <guodong@riscstar.com>
 ---
-Guodong Xu (2):
-      Documentation: riscv: uabi: Clarify ISA spec version for canonical order
-      riscv: dts: Add "b" ISA extension to existing devicetrees
+ Documentation/arch/riscv/uabi.rst | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
- Documentation/arch/riscv/uabi.rst           |   4 +-
- arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
- arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++--------------
- arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
- 4 files changed, 150 insertions(+), 147 deletions(-)
----
-base-commit: 31d167f54de93f14fa8e4bc6cbc4adaf7019fd94
-change-id: 20260113-adding-b-dtsi-148714533f07
-prerequisite-message-id: <20260110-k3-basic-dt-v4-0-d492f3a30ffa@riscstar.com>
-prerequisite-patch-id: 0c859b4d131b3360875c795c6148c6176b55fb91
-prerequisite-patch-id: 2ed98dc1ab0f5ed923cc252415c345dc8caf6f17
-prerequisite-patch-id: 1be1a031763fac029076a768f012af31e455be66
-prerequisite-patch-id: 21bb8387c946e050910440e7a7622305d46d946d
-prerequisite-patch-id: f3bdc2c74b230663710086bd770a755d56cb8b9c
-prerequisite-patch-id: 1f162c02f8bdb5bbc8ce52ead4fcb76258f5c2b9
-prerequisite-patch-id: 76e1ff26c2f1fe4019cfa574942b568000e6ca1f
-prerequisite-patch-id: 77ddc9e5dc85495adc803cdc605bdda2ddc7fa47
-prerequisite-patch-id: a75c798383b46a14d40436357c769c3671184768
-prerequisite-patch-id: 781fc10dcae2c38c84c25bee887ef7474786dd36
-prerequisite-patch-id: 5be5d3e62aa73024bf9e1de6aad155be6d618f40
+diff --git a/Documentation/arch/riscv/uabi.rst b/Documentation/arch/riscv/uabi.rst
+index 243e40062e34ed5057e3e79ad61311f94b7dd404..0c5299e007622a123d64cfd36ac1491b22d4255b 100644
+--- a/Documentation/arch/riscv/uabi.rst
++++ b/Documentation/arch/riscv/uabi.rst
+@@ -7,7 +7,9 @@ ISA string ordering in /proc/cpuinfo
+ ------------------------------------
+ 
+ The canonical order of ISA extension names in the ISA string is defined in
+-chapter 27 of the unprivileged specification.
++Chapter 27 of the RISC-V Instruction Set Manual Volume I Unprivileged ISA
++(Document Version 20191213).
++
+ The specification uses vague wording, such as should, when it comes to ordering,
+ so for our purposes the following rules apply:
+ 
 
-Best regards,
 -- 
-Guodong Xu <guodong@riscstar.com>
+2.43.0
 
