@@ -1,86 +1,87 @@
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D302039C63B
-	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117453A0E98
+	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768404638; cv=none; b=se2VlLugRBQ7cd/7ewZ0iphCG9CnuFgVuEsxz+Us0dCvyrlR5LLIuuUBD0RuxPa+nGY8dyRQmWLeafF+vqtMyHK9BydX4V6kvDFz+3BlvNZ7FNqpB/gE4/I0xcSVFR2xHOsnToU6JWJ43qPU26FYso4nWn9hIUatjDPpx5mAw7k=
+	t=1768404640; cv=none; b=a0AJOLfyjHd6AdHkTQVhoAqga/FMP0ZZdjuruYW2ONqBCB8CqrHJjShYiODxxvWo3gCnWIIpcuRbzHRLTHuL3rIC8TaHZMRY/xh5md1n3wV2HVv9kUt7ACPsHzvxZR0wjOalN8tnXFGe8gG+77lt/GxYvr70pD3CU8t9/FIXKTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768404638; c=relaxed/simple;
-	bh=adtV57CgOwnY60Si6YEP4k65ve4WmCO5x4rzf1ZqeaM=;
+	s=arc-20240116; t=1768404640; c=relaxed/simple;
+	bh=zRGKe5UJ9yNFcA3nCyV2yle+pcJ0o698KmnQ7j+oxLg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hb3PFhRIe87f74RBsL7BX9SOfebD1F+++CS/Yl3PmiKCZMcMCSqAjrAuxrSUvhmZClRd1cqbr9ZTq2R1DH28cXqoCRthVEcscOk3ELJAwvc+IKqLSGrblJ+hgJ5/IiLubynA99hRqTJ6Qoyq0am9XQGTvRQt7xczFy5aoJMAPKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I6kkEHcw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hfbKumc1; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=PoloOHdZ3E1EYTf/1PLtYnlZX//ffuTHemK/nsW9O4HibQRgfwxV3j97DqXllOQSygQXOhyZCNoZepzRNdcB3CT0i4F9wGuhb36U6HxRgmtYpUzruB73rGhN6hDEqyTRLdxCSzbR/JDpT1R7UVbHz8JzR55jBIC8MfvSgkRYQcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kk8JIzgW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PQ7sYWWQ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I6kkEHcw";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hfbKumc1"
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60EB31TG3279777
-	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:35 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kk8JIzgW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PQ7sYWWQ"
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60EFNdVP1943035
+	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VMrQrzLzDincZEvSf3IY0LWe8Yq0vnY3RbOd9IgAleU=; b=I6kkEHcwYHnmLqcC
-	bCog3zsSNQt83q1g15rqSXMAHoCS6ayKBCuK/od57mJZRARRmEKWePBZ++KRDRFf
-	nA/wQ3gmm9OmhEdA75fhn5wCblufkPBQS4FPjA1MLG8XjHUW5rpj3ThuLbR54inW
-	ZC5Wo+bUgahzHKYqqo6mScjg1mnK/iL0PhMHXVhGcvGY9zbAELUEeRa23OKCvh3x
-	urMzRY5AmgIdBLrvSeX0LZzwdcJr7L2+2n1AHSumMEuqSkZsHx4g6FgrUQB+0/FM
-	xIJf0EElVUNgq68df0rWEdMcPXSuVq5wvOXdMLZwdMvExgqGYam5JXWk6HI6mWVO
-	XotTrg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bp9x8rvcm-1
+	ssy8kvmbkidBSVa4bIF/Sg6F1PMs1iwvsiG9/WVtcJY=; b=kk8JIzgWD/bAHEgM
+	0ls96MNXXtEja6QlnGHg+sHWfdxg9wDNaEzJfvyQq5xMnTuFWVseT9s6RLHdO5L9
+	fiiRlWgh/YHepJkNkuC0AnfkwGL0Ld6YutVOHruXFFvt2zdl1KPFXN2Cdk+9raEf
+	zVwyi4HdbYB1Qm3iEm8EXAmNAB5eexz3+aKnzn6LtAne6tKxrKfpmd2Pdf1s2JA6
+	PGnyZKWvZl78FlUvryh6W208cUEVgEwxQtAzboLq6Fvy6bXHKAL+r7R4mbLDWzH6
+	KQ/pTMq+l2VkT7Uu6Vm/oLuuz9ef9Gr2BrJAtjOSQ6YQeOgumZ7CN3XyCY0Zv1ZS
+	hqsjxw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bp7b6sjqw-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:35 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c52af6855fso201594085a.1
-        for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 07:30:35 -0800 (PST)
+	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 15:30:36 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8b2194e266aso812119085a.3
+        for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 07:30:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1768404635; x=1769009435; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1768404636; x=1769009436; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=VMrQrzLzDincZEvSf3IY0LWe8Yq0vnY3RbOd9IgAleU=;
-        b=hfbKumc1m4LN7ukODYC+WKVF0yLOgV7Yi7byYZMVPjoz3y5ZTixBVeQz8GQ3vH7sOs
-         Q/lNaMCBqJbzXPk70/aPAGZoeb/XIC6A3L4yFk01xHz3tNwbe+44yn03SyoJc95QPm0R
-         xsNpacifWR5MTNsOQPvmxuN7n3Q4zeeogQNRNdi0RqtqwYxk74PX7Ij/dFP8puJ2LnhK
-         OvUc7D4pYw5AkqNmSEs+MxsKeOFt7DfI6buNj+kMBEeGwamvncbtR4/5gpvN2LY3GcVD
-         Rdb7ZdVEMqHssCljEPZUlywizEpBriDO2BzOSwkcX6I7PZ/AsPBb2+QesvuDlFP6fikX
-         3T/w==
+        bh=ssy8kvmbkidBSVa4bIF/Sg6F1PMs1iwvsiG9/WVtcJY=;
+        b=PQ7sYWWQ3TBmRoImqPkqE02mbDOGqu0g2xjMNfFIYQKNcglbboKyGfiqS8EUnD14je
+         McXDdUSMTVV8HTC+YLgWf9+TmOOWsDdQruBuG0cPqTD8535L9h2YjpHINENQOGccETyx
+         HZcqDIIcOg/klamJ2ZNs72BQc3K08x3is4qzF62FheaivSxG8+UoohlBLOUCEYTogb+U
+         BHyQLEvcZIOYaWxm2IBRP9Iiq9gXgyqLvCQEHD9ef1lRMEB+/OwJNTJuTvAkKMOGVj1r
+         qigePN1xSyl+L5Ar+GxGBarc32MzmQhZGZ3N+u5018lGD44r4Oc4S3nWC++JIVvHFk95
+         a+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768404635; x=1769009435;
+        d=1e100.net; s=20230601; t=1768404636; x=1769009436;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=VMrQrzLzDincZEvSf3IY0LWe8Yq0vnY3RbOd9IgAleU=;
-        b=BF8W8PfhnmSXzyRAOi6jRKIbeMc0yKEksLWcK2J4k/UFBrV+M3iZ7xQJPlABGBMnnp
-         7RVjtlU8VVjczlvqRY8gwWRxfmk5qwg2dpY4ASefx8/Hlscu1OVewmvOL09P4dzR/7Sk
-         g+ydGcWfV6/4G4u/nkSvYNl79o0X6+JbQidG6O75gyK4BctSRAjfiHWNj0tp/aazUVsL
-         ab/P/KJXmCDt9NEU2I9TKHlhp83GVoJH6gj43G4XZPtUyokokOUySt98syMyPWmVSKVL
-         jNCVqaLBuqEI0IC4ei+iFF8FXXwrczLO1jUcjYdrGuESBqg7OQoL1CifJLxP2DnOTIEf
-         6NpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVfjh/CNVH/plSa8zRO8lmNtPvROyujq1eB0Buhu1aLYMoZXjQUjqJA1R956NFqNh965YwGVkQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxfSPaYNYewcmtgLnC5K8aUU0SNRU0dT76bjyq6PtsSVq+wcEHZ
-	MJBIlToba+zBURhzCyzGvfaJ9+nN9E+JTe7mOEqSsxYYR5+PqGbZAOcuHmpmDerBRKGn02pjI3M
-	TeX8ZPd+2rCJtn/MNweutmAYNJXnGasm/LSc7aiwjJe1S5w0g+j5BWAx61Gs=
-X-Gm-Gg: AY/fxX5NDgMlyWAv/7NcgG1lgxlmX9HaT8YUF5R9HpOknpxBCIdkfS1yo9fDn56eyDW
-	FCi09fg0cB8tqU/d0PUFcXHl1fwf97gwPDHD+PqbIaiQjdJ60bqZKNaQPTt5IIcUdOzYSS90LFa
-	UT0TyXSLrC6bHWxfUeL5IZ7/ci7A0cXEI8mzeUy9JgJqSwwsovvDAnlul4dPtoyXFx3vITczkHe
-	jxUBKHWjOSbA/VQ4xUknr7gzCdFq22Z6B/SG9zLgUClSvJwiEbVuR6zw4YpSl0Dz7R2XIv145sX
-	zZu7Wi0X+5Hpa2aZL00XgFgAF4JroUwFaZm0nJYIEQmsXt/ccoZ+ZrEWSYZ0jy6c07iJ94svHxu
-	L+r7pCcGgOh5sGEgQeNTZFBoMtnF6GZaj0Q==
-X-Received: by 2002:a05:620a:4101:b0:8b2:d56a:f301 with SMTP id af79cd13be357-8c52fb32b67mr343233685a.14.1768404634235;
-        Wed, 14 Jan 2026 07:30:34 -0800 (PST)
-X-Received: by 2002:a05:620a:4101:b0:8b2:d56a:f301 with SMTP id af79cd13be357-8c52fb32b67mr343223385a.14.1768404633459;
-        Wed, 14 Jan 2026 07:30:33 -0800 (PST)
+        bh=ssy8kvmbkidBSVa4bIF/Sg6F1PMs1iwvsiG9/WVtcJY=;
+        b=XZya7yfvxI7JuxgCzuUpoQWbwaY5+pUi3eQWQVBhN4ZNEucCxYO3rdGeqGbgOnb/Ef
+         1jePua3Ak+pR6LFe4X+84mzFPT47sgzXjnu8LqEobyQsMEZjQiYBsQmXm3/4WDwzmgGx
+         ravfdi2/d6/TJgqJn7SUAsQVX7BRV+UawArnSHIHv8ObTHjVbgjapxknYGW7cK8q+jUo
+         yxYUvDw7Gd28/POucR3Wpr2PNLBfCmUeZnzIhUUPReScpjv9l/ab8qIPwTT42YP0pO9M
+         1paOuJrEdghr1AtgSkWw6MUPtZbxLxLZSfMrHQLUAS8Iae+uGoK/6vtakIoJGzdFKQgw
+         8PmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWaXkrLrMuMNwLRMAANCS6WaVDXMnztBM7auTjo+9tkTQaeyvI7J+DJkxstqD5zGA5f98cj3+w=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz4H8wwg8B46vEDIxIuV1mwQZ29kcfvXgV+rCv5XjyxOnvM0Dbb
+	dbGuTSVwyJWegg360XDAO2IcEIjr/YoBsMQp4N2syEaJafGCX8Pv5I9pXM/5m+U/GdZ8coItkCh
+	Gk9AAidrb9UXzwtxq4GQ9vlyZoV3TqDxwxp6ORX0lcvLd0Hw6AHyIQFyzBOI=
+X-Gm-Gg: AY/fxX6SE2AS1B2j9z7Y9RqhRpdWeDKV+pSClYpNLax59DDw1OsGiZidYkf3xgmlDh8
+	sO1Oeh5s9oeWH4THtIcCWu1MQxGGcHkPOwg6WhOvA/0rU1dHWPc74kUap3KVVXsApvDbBaZf7ub
+	GP5P97UDCxCj8DcMk4YzDnGKa6tiEPCQXP8/jrEziZKAT4oV2Th1k8GpB9c1fc/pViG0UUcvWet
+	qHVijSvcAzgeJq2c5DvM60175fH1dC4s5QuOU9EDxwdYMUvRjYeSKvJnATD+tRPStrWUmlUhK2D
+	z4ZGusW1hI/zLmRdq2mx05v4i0okBMGzpswaYbvdjP2DUx5v5FiEN631yJ1GChEWNXIINlI7Vfh
+	kXFuAdj3ErMUnp+UUm6jNMERNQQcv65sMGQ==
+X-Received: by 2002:a05:620a:4549:b0:8b2:db27:4268 with SMTP id af79cd13be357-8c5317f0aaamr303441785a.53.1768404636245;
+        Wed, 14 Jan 2026 07:30:36 -0800 (PST)
+X-Received: by 2002:a05:620a:4549:b0:8b2:db27:4268 with SMTP id af79cd13be357-8c5317f0aaamr303432485a.53.1768404635555;
+        Wed, 14 Jan 2026 07:30:35 -0800 (PST)
 Received: from [127.0.1.1] ([178.197.218.229])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507bf667fcsm22812989a12.29.2026.01.14.07.30.31
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6507bf667fcsm22812989a12.29.2026.01.14.07.30.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jan 2026 07:30:32 -0800 (PST)
+        Wed, 14 Jan 2026 07:30:34 -0800 (PST)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Date: Wed, 14 Jan 2026 16:30:08 +0100
-Subject: [PATCH 07/11] pinctrl: tb10x: Simplify locking with guard()
+Date: Wed, 14 Jan 2026 16:30:09 +0100
+Subject: [PATCH 08/11] pinctrl: tegra-xusb: Return void in padctl
+ enable/disable functions
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -89,7 +90,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260114-pinctrl-cleanup-guard-v1-7-a14572685cd3@oss.qualcomm.com>
+Message-Id: <20260114-pinctrl-cleanup-guard-v1-8-a14572685cd3@oss.qualcomm.com>
 References: <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
 In-Reply-To: <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
 To: Andrew Jeffery <andrew@codeconstruct.com.au>,
@@ -114,124 +115,110 @@ Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
         linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2163;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1889;
  i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
- bh=adtV57CgOwnY60Si6YEP4k65ve4WmCO5x4rzf1ZqeaM=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpZ7aFRdTPwiFL/h2YLFk/n9wL4n9QTdVBj0L6r
- 8aUJ0hOsNiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaWe2hQAKCRDBN2bmhouD
- 15BvD/4sSskWeqqie+QnWNfV5njoEI/Dxm+OQU6hvQfAn6W+mFLEoVNCYY1DYciSU2Abpt2R3nR
- +qvBID4STILG6i8SyHTuaGcand6oW9yUTQpRJAmZLQwTU6t5Txha1TR6xku+5Oy8NyzMaHRuJTv
- +q5GGceQij71KHq+iN7y+f2Kh47ZLjY4bh5UEgUQ2UIoWQOKsKGVqFMR4D+URpgUMijJNLMK1eY
- OiA7jL0EBA0jRXolicdtAQTBVHk5WKJIlq2dKAIVzHYv12gvTtggiJd6gKyNR8t5tX+yOxZqM0D
- Jd4RwOyuhKazwxCfXv+bUlaqLfNnifpec2mksBSbNjseAfzxvkqxCt+VMZHZVoZ9mzpRmAppP30
- i9SP4gbwW16v6PBBhPIiLG0HrWfQ9XJ2JH7MYWKjn2JypFxHEA9Db766OZxcFqNRKVlsMAtIK06
- ZKalbIjY3hmQO2RLFsbhmE9qgNQm5n6vPYCORIFGTSFmcIKyeFghhXkkuZqhqTORTVXwOoPyhnb
- rrCyYVw4Twlq3ASI88CvQgLBkMD2dmqaPlhTZ37MJzVXVgufCKwBDhrq6xhuAlBI1vufryly9SE
- iw2aWK83dO7QfgeR/uYrjPKYMLwUfoTt6nq5Ph8Apc8jGok5zHX7/Xej2gYuXZnBbrTOGD48Hiy
- LRCCfd8e1rw2F9w==
+ bh=zRGKe5UJ9yNFcA3nCyV2yle+pcJ0o698KmnQ7j+oxLg=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpZ7aG1jDmkP4a6PmHCk7jxdg6pIwc6m3a2BsZu
+ jfRoWqEDhyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaWe2hgAKCRDBN2bmhouD
+ 18PUEACGRm9HFTgK/BMYNlKpt3lPmWT9bCXtaAiUNJGcB6ffgJheT+i457oOaT/xTx1LOOiYEau
+ UWjdo7vnfye/rqPz8xYcdQr+go81raUQ3IhBxe+LqfaMunA9y3Q+s3QbktSC3PldiTWJyw6MXBt
+ uq+YFH0Vtnkbp8TC6c1687wMzaJsm5xlKxC6x3Sfmws6HwZXhBuTB4Hi0wT0my3LoS8gJTHQTNq
+ +qkjU0hLXmrpN6ibgVT1FxGuHDuDSNeVSEIHmrFSXVlPBywSQGm5gVuLyiQCtiarsEhPhlP1a06
+ OD9Hmdkv9AZLGDb+Nyi9BewRwnASnSvswYKtqIMj+lA+fj+BdCmRx1CeX2CIRINVcIZXzU4+VMe
+ uKlw9dXawo9KJHktVbqmjTBM/mP3CqYpYoLKJ/Z266veUYfVXw8zFBpEdU0xSOqRlekxTnkGZEN
+ dOEKquxcczR8jUIAagMutrlY6GtaQG8YcU5pIdWXfU7Mmly/s9fuJlOFKiCuv78MnGkL2CIwOxF
+ saww7DthM71jMUAZ8mCReBzVQOz3GSqWUmdqg2hOkdn6kGEQgkbdIeWBCfvFxgKmUJOw6Jx3QkV
+ ceyz1gCkgjID4vnUSP0ziWiUhEXkrHazIzGuYyBPUGmzvaZk1w/COGY+KgPKeu7arJ/qiUw/2Iy
+ P4nTGG0eFE6fjiA==
 X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-X-Proofpoint-GUID: nw9eR8EbbsrDEL4MFJztug0-3IxFy5fH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDEyOSBTYWx0ZWRfX37OS2uGOjyM3
- wSLT1D5yCqO5LV1ur8MknQrYe9Jt8DKySn8p0c3hCMYSMZ6pNSwPO3FkffMoKZaL+5sbgC1mA7B
- P6v9GI2PnWFCK4mqN+E7RleVbfbyN0/KtUJAnCWeiYhMCHyHm/kD3/yujBsDQUAHJHZ5qO2wIwy
- LD63SPLabjNgk13SrGPGJV/lgsmy3rGBmb+EaXs2Dfr0VTw7XzdpIuuYCFm6xiplM707gOMXbmg
- IE+0lfGykoy6jYfpuTKp7OG8PW07jQ35kWpo1Q7Mq5ZdZ7+7ANhx5DQxmPaHlDmVPwTuz3MqERP
- WqqxSYe+yiTnlzj78t62oNeULVDuXbP0gjIzsl37/+HMJke+nF/e5czE8bkREAnWr3XljfCmKB7
- qyWXAICqZVfs8hZofgtklq/K4qYmasazmueWD5YIohSUYkZIboNLkjlDPCFoI7MNatwp0FYBG2q
- OST2Dqd1tCxOAYZDHUw==
-X-Authority-Analysis: v=2.4 cv=HY4ZjyE8 c=1 sm=1 tr=0 ts=6967b69b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
+X-Proofpoint-ORIG-GUID: X3ZnreKTh5jtZVgDhL3P1SSYRJKEkmcK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE0MDEzMCBTYWx0ZWRfX7B0xdk+1EnPm
+ CjSHD+S5vU5rUHm7nkxoYSVbRmobaeTGxdZU59IArtWcTcDhmoo27CJdixW6nVpvbl4m5MK0qW4
+ uV/0TLYX5DnZl6eNeh7MNZspdNNZerkWvnwuMw2P0drvj6a6Co4h6MX3v8/xhDCmXsmhRLJCA8F
+ t1OT8Kdz9BQaGEwp0ud2u0fBVFfJ3tsKqMBtgOfHjNTfsiSHVMlLZHWNTSOIdmdjxEyWe2me1lQ
+ 9qJ9xW2TPA1rhvOgcAQB51BQt0iDe5CBsGUcBEiGaRsUDX+t6FSxvLOxtEv3RzcENShqUA/kzNN
+ i+K4mZ5pnNczr9njI54BktudcrmNTY7Lm/9JY/eS1D/b2xdJ91jm64jZX9KY86WA0V7WFPtfm1s
+ Vhab8DAZVGijGEKBBIdS0xM56dpR4D5K5VmuVIxQO5BdFbFAIw7ISgi+HVoFJrdLH8GfLjBo8iH
+ w+diMTk5lbfKsXGXEHA==
+X-Authority-Analysis: v=2.4 cv=W+w1lBWk c=1 sm=1 tr=0 ts=6967b69c cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=fB2tTgKqvhDdEbG57mcA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: nw9eR8EbbsrDEL4MFJztug0-3IxFy5fH
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=Ed5BEzkqmhObfCaRRI0A:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-GUID: X3ZnreKTh5jtZVgDhL3P1SSYRJKEkmcK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
  definitions=2026-01-14_04,2026-01-14_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 priorityscore=1501
- lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 spamscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0 phishscore=0
  bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
  adjust=0 reason=mlx scancount=1 engine=8.22.0-2512120000
- definitions=main-2601140129
+ definitions=main-2601140130
 
-Simplify error handling (less code in error case) over locks with
-guard().
+Make the padctl functions a bit simpler by returning void instead of
+always '0'.  The callers - phy init/exit - still need to return 0, but
+these are smaller function without if/branching.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
- drivers/pinctrl/pinctrl-tb10x.c | 17 ++++-------------
- 1 file changed, 4 insertions(+), 13 deletions(-)
+ drivers/pinctrl/tegra/pinctrl-tegra-xusb.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-tb10x.c b/drivers/pinctrl/pinctrl-tb10x.c
-index 129fa51d13b1..3f581404a9b9 100644
---- a/drivers/pinctrl/pinctrl-tb10x.c
-+++ b/drivers/pinctrl/pinctrl-tb10x.c
-@@ -607,7 +607,7 @@ static int tb10x_gpio_request_enable(struct pinctrl_dev *pctl,
- 	int muxmode = -1;
- 	int i;
+diff --git a/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c b/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
+index 49c5edeba87f..34a373f7e04d 100644
+--- a/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
++++ b/drivers/pinctrl/tegra/pinctrl-tegra-xusb.c
+@@ -474,7 +474,7 @@ static const struct pinconf_ops tegra_xusb_padctl_pinconf_ops = {
+ #endif
+ };
  
--	mutex_lock(&state->mutex);
-+	guard(mutex)(&state->mutex);
+-static int tegra_xusb_padctl_enable(struct tegra_xusb_padctl *padctl)
++static void tegra_xusb_padctl_enable(struct tegra_xusb_padctl *padctl)
+ {
+ 	u32 value;
  
- 	/*
- 	 * Figure out to which port the requested GPIO belongs and how to
-@@ -642,7 +642,6 @@ static int tb10x_gpio_request_enable(struct pinctrl_dev *pctl,
- 					 * Error: The requested pin is already
- 					 * used for something else.
- 					 */
--					mutex_unlock(&state->mutex);
- 					return -EBUSY;
- 				}
- 				break;
-@@ -667,8 +666,6 @@ static int tb10x_gpio_request_enable(struct pinctrl_dev *pctl,
- 	if (muxport >= 0)
- 		tb10x_pinctrl_set_config(state, muxport, muxmode);
+@@ -501,10 +501,9 @@ static int tegra_xusb_padctl_enable(struct tegra_xusb_padctl *padctl)
  
--	mutex_unlock(&state->mutex);
--
- 	return 0;
+ out:
+ 	mutex_unlock(&padctl->lock);
+-	return 0;
  }
  
-@@ -695,34 +692,28 @@ static int tb10x_pctl_set_mux(struct pinctrl_dev *pctl,
- 	if (grp->port < 0)
- 		return 0;
+-static int tegra_xusb_padctl_disable(struct tegra_xusb_padctl *padctl)
++static void tegra_xusb_padctl_disable(struct tegra_xusb_padctl *padctl)
+ {
+ 	u32 value;
  
--	mutex_lock(&state->mutex);
-+	guard(mutex)(&state->mutex);
+@@ -534,21 +533,24 @@ static int tegra_xusb_padctl_disable(struct tegra_xusb_padctl *padctl)
  
- 	/*
- 	 * Check if the requested function is compatible with previously
- 	 * requested functions.
- 	 */
- 	if (state->ports[grp->port].count
--			&& (state->ports[grp->port].mode != grp->mode)) {
--		mutex_unlock(&state->mutex);
-+			&& (state->ports[grp->port].mode != grp->mode))
- 		return -EBUSY;
--	}
- 
- 	/*
- 	 * Check if the requested function is compatible with previously
- 	 * requested GPIOs.
- 	 */
- 	for (i = 0; i < grp->pincnt; i++)
--		if (test_bit(grp->pins[i], state->gpios)) {
--			mutex_unlock(&state->mutex);
-+		if (test_bit(grp->pins[i], state->gpios))
- 			return -EBUSY;
--		}
- 
- 	tb10x_pinctrl_set_config(state, grp->port, grp->mode);
- 
- 	state->ports[grp->port].count++;
- 
--	mutex_unlock(&state->mutex);
--
- 	return 0;
+ out:
+ 	mutex_unlock(&padctl->lock);
+-	return 0;
  }
  
+ static int tegra_xusb_phy_init(struct phy *phy)
+ {
+ 	struct tegra_xusb_padctl *padctl = phy_get_drvdata(phy);
+ 
+-	return tegra_xusb_padctl_enable(padctl);
++	tegra_xusb_padctl_enable(padctl);
++
++	return 0;
+ }
+ 
+ static int tegra_xusb_phy_exit(struct phy *phy)
+ {
+ 	struct tegra_xusb_padctl *padctl = phy_get_drvdata(phy);
+ 
+-	return tegra_xusb_padctl_disable(padctl);
++	tegra_xusb_padctl_disable(padctl);
++
++	return 0;
+ }
+ 
+ static int pcie_phy_power_on(struct phy *phy)
 
 -- 
 2.51.0
