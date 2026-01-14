@@ -1,130 +1,132 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA6326ED37;
-	Tue, 13 Jan 2026 22:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA932F6179
+	for <sophgo@lists.linux.dev>; Wed, 14 Jan 2026 02:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768342001; cv=none; b=Yju2tlKoAgEIjpMkrK7wx9J2N7IHhj/uOaraFGZgwEmimY9aQMj1UuXNxf4+su5WMW5SRZwroD1tCh7vStge9hBMhiOxDwQsiz+j32zVGTGgWP/CzjvP0adCjlLe+kdqFe779rKf5AwbKYikLrWQm3WiwThUU8eyKgCG028s5UI=
+	t=1768358028; cv=none; b=Wu+6x+qt9qNgvETkjbl4rmm4QS/HckmYGTGjE5nB4qYSCJ2+DULnbUH/yaqrfwxWj5Kv82VU1BB2Z6i38ONGmRqUU77eNa21Fkz6R0LnOI4oY3ASU4d82YQXog8js8mz8AI8yBaDeaqW6zUJceeUCCexkhCvevhEjg6tJe4ujnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768342001; c=relaxed/simple;
-	bh=LsQ80Nt6Qk+bvf75Ia6NSgSazOOzop19Sk4/CGy3YPk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FBGh41ry7BZWQImFUuQa74CNNBF/4OjFTJIWWC7HV08SCBafMvnfmqAlRvw/60/9Ac/+/nJeAokSSZUolN6Ql8arZaKO2e7mZPBp8scRGx1D6ZtdKRoiYgI2TaaOOvwZIZlweWKqLzIN22AR/g7nZOzNg74LWEMEU7P2otBpEuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=kIY8zUy9; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1768358028; c=relaxed/simple;
+	bh=3Y2xwxnB2VY5O7Wn7NdqLZLtOkwceaDGP163hwmg6x8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IyE+zpRGNn7MQS3b8KgYuA6wwlw9Q4QojN1AtCMA42Qw5CqNLqRqjX8cl/JH5Xw85mZ1uRuNzDOiQaBwwxpz8LvuwC/Aj51F6cpgpjxE+r0TBdiLAYO4k303V3ZlCxrKq0+d1VESOqb7AMkNgOlQ6MHJXjdM94DQkiPMQacARZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com; spf=pass smtp.mailfrom=riscstar.com; dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b=F6LYpCb/; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=riscstar.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=riscstar.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="kIY8zUy9"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Transfer-Encoding:Content-Disposition:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:
-	Sender:Reply-To:Subject:Date:Message-ID:To:Cc:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Content-Disposition:
-	In-Reply-To:References; bh=oBM2ZoOF22ddiLW29uUZvDBCanemUcQlDXTvmAcjlq4=; b=kI
-	Y8zUy97+/X5jNowUufRNGBEkL5lckHnRZAeGH2ky7o8DY2gnk+V1zKaO95hqWEgDAg40w523H3J+c
-	+cBn8rp7OJQD/Z+CBIQkEsT1pZZgZ0TM2oaYWUL7T5O8Q6hif/olvCQyS1uUtoDXmW//efHVd6A5l
-	wb+967zbnQezKGU=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1vfmWA-002hQ8-MR; Tue, 13 Jan 2026 23:05:38 +0100
-Date: Tue, 13 Jan 2026 23:05:38 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-	Fu Wei <wefu@redhat.com>,
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Shuang Liang <liangshuang@eswincomputing.com>,
-	Zhi Li <lizhi2@eswincomputing.com>,
-	Shangjuan Wei <weishangjuan@eswincomputing.com>,
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-	Samin Guo <samin.guo@starfivetech.com>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Swathi K S <swathi.ks@samsung.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH RESEND net-next v6 2/7] net: stmmac: qcom-ethqos: use
- generic device properties
-Message-ID: <7865a1fb-91bb-4aec-ab3a-b53050d992e8@lunn.ch>
-References: <20260112-qcom-sa8255p-emac-v6-0-86a3d4b2ad83@oss.qualcomm.com>
- <20260112-qcom-sa8255p-emac-v6-2-86a3d4b2ad83@oss.qualcomm.com>
- <a2a610a3-aead-4e85-8a4c-7b83ccf276dc@lunn.ch>
- <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=riscstar-com.20230601.gappssmtp.com header.i=@riscstar-com.20230601.gappssmtp.com header.b="F6LYpCb/"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7927b1620ddso7635987b3.0
+        for <sophgo@lists.linux.dev>; Tue, 13 Jan 2026 18:33:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=riscstar-com.20230601.gappssmtp.com; s=20230601; t=1768358025; x=1768962825; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QJBLmrBE8O9239tGEOrHnRxNLRDKlAcLOjCyimagURs=;
+        b=F6LYpCb/7Cui0ct3qhFYUWyzAHPYJaxn61C79Cr6/vTRXex43Y6YBiHr+gQ5JOh2U1
+         dA6Wtk5L6VlNTVQP7NAOcSfGo9+bYyTVedOgHc5FQXJwjgl0q9T2JvYhPEslgvpUiKup
+         yl5mWRQANyDqVoLUGgYOmnxvAldL+PAUqUsLEZENFVinlXJXs+48bjhSm5huS8+OhHW+
+         OXD83gcKx+hgRMmCqwy168dZn27GHfZddnTZjtVK/4g+hdNw/caPyBpncvowq7lZLVk2
+         mveutT8Ycy34d0KwQhZPOhDgZiApveXo1PeRPqWW9+EgCmvGuIrAKOO0oAqv1MKmS6Ng
+         zViA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768358025; x=1768962825;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=QJBLmrBE8O9239tGEOrHnRxNLRDKlAcLOjCyimagURs=;
+        b=fxhwIxc//9UFB6u6k5s04Dk15TL08C4+iap7vqmYJxHYGhTmr/fYjJ2+kFxfjvSWhs
+         NHK6kEhqF4VO1NvQ3RwaFKxWdEJfLASB4WcAfzHPd6kJAFNJTNwd9qZ+WCF/09pR+GWN
+         eGSofqfyCJVkUGDkbd+LKkWirfobhm77s01KgdmjqO7XDwoYoZoxo+idJrEm1fZmCdHZ
+         28AuJwE06zf1AXaLHdLVVCbtO2wAH7aAVJoOtFFl9JPyz9op65T0LHJbBc7equUcuVCw
+         tn9MLOrqUdM6ZMYoP9Z52La+uluK+0T6cBgZrp5CjVa3NIW/sakS9zu376deisWLoRpG
+         avgw==
+X-Forwarded-Encrypted: i=1; AJvYcCVdELbY+VHVVQv3tdj/I5GrYotxYAdMb/lLOAAA2ojH1xmW64x8CjJ87Q18XuxGhRdt5Y07+vg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwOt9G8K6LGnNeCrI1xHRkjoWDr3jAGi9J2U5bIcXLcoG/pVX7a
+	S0kejfz5G+YopYAhVvvZqpyFjW6CSV9lvNSSf3R71LVL0WL15Pxj3N7w3nKQLfmsFbF3Lz6rN8V
+	0xlXFeiqBn78SXDy7r4AJGG+Atg79hyo31J6EM+6nhQ==
+X-Gm-Gg: AY/fxX5JMI2XulnRJg8JSQuOvro2d8ST4W4PftDLw5Mq1c4jGYr5Ky7zGuqp6ZqFXgJ
+	ZvW4zvWbYRa6tBpTvGhcMeDZF+U0bplX5BEH7INW1NS0u1oeSiuA9vXtpwKwEuQnlpBrrwXcBgw
+	VKEkd9+EqDOCgEr39czEMVoFaKMY8eny/HRM+yzlT8KTq3DDP+JX57VV5rCuOlNW1rc9eP6nWOi
+	841+fVlrxB+ObvKRFT3xe/wP8F1h6f4wgFM1qlwufemO3/dsoqGfgfYtNIaH5i0+jJc0hjm0Jhu
+	szYx+CGzhKZh23NyD0MH4Hdqul/x2jJqCT2Zaw==
+X-Received: by 2002:a05:690e:d45:b0:63e:1563:4801 with SMTP id
+ 956f58d0204a3-649023ff038mr916948d50.22.1768358025225; Tue, 13 Jan 2026
+ 18:33:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=Mf8TTTcU9A3gc_LQF3Ow6Ww0omVJH6x-DQEnOSPXfaUQw@mail.gmail.com>
+References: <20260113-adding-b-dtsi-v1-0-22d6e55d19df@riscstar.com>
+ <20260113-adding-b-dtsi-v1-2-22d6e55d19df@riscstar.com> <20260113075339-GYA25466@gentoo.org>
+In-Reply-To: <20260113075339-GYA25466@gentoo.org>
+From: Guodong Xu <guodong@riscstar.com>
+Date: Wed, 14 Jan 2026 10:33:34 +0800
+X-Gm-Features: AZwV_QiwlJO3ZADv09NVm7VZL0Pi5fI-J1pRA-OmeKisX5gdDwuQlnWQ0Nwjwhc
+Message-ID: <CAH1PCMarzrZJ072iyAQthB-i-LHFCSJ+tZLx6HcWiVcUrQeafw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] riscv: dts: Add "b" ISA extension to existing devicetrees
+To: Conor Dooley <conor@kernel.org>, Yixun Lan <dlan@gentoo.org>
+Cc: Jonathan Corbet <corbet@lwn.net>, Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Conor Dooley <conor.dooley@microchip.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Junhui Liu <junhui.liu@pigmoral.tech>, 
+	linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, spacemit@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 13, 2026 at 01:36:53PM +0100, Bartosz Golaszewski wrote:
-> On Mon, Jan 12, 2026 at 2:45 PM Andrew Lunn <andrew@lunn.ch> wrote:
-> >
-> > On Mon, Jan 12, 2026 at 11:15:41AM +0100, Bartosz Golaszewski wrote:
-> > > From: Bartosz Golaszewski <brgl@kernel.org>
-> > >
-> > > In order to drop the dependency on CONFIG_OF, convert all device property
-> > > getters from OF-specific to generic device properties and stop pulling
-> > > in any linux/of.h symbols.
-> >
-> > Is the intention to read these properties from ACPI tables?
-> >
-> 
-> No. Other than a couple property getters which can use the fwnode
-> abstraction, there's nothing here that requires the OF dependence.
+Hi, Conor, Yixun
 
-So what is the need for not using OF? Why do you want this patch?
+On Tue, Jan 13, 2026 at 3:53=E2=80=AFPM Yixun Lan <dlan@gentoo.org> wrote:
+>
+> Hi Guodong,
+>
+>
+> On 15:45 Tue 13 Jan     , Guodong Xu wrote:
+> > "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
+> > (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
+> > checking rule is now enforced, which requires that when zba, zbb, and z=
+bs
+> > are all specified, "b" must be added as well. Failing to do this will
+> > cause dtbs_check schema check warnings.
+> >
+> > According to uabi.rst, as a single-letter extension, "b" should be adde=
+d
+> > after "c" in canonical order.
+> >
+> > Update existing devicetree files to conform to this rule. Line balancin=
+g
+> > is performed where needed to improve readability.
+> >
+> > Signed-off-by: Guodong Xu <guodong@riscstar.com>
+> > ---
+> >  arch/riscv/boot/dts/anlogic/dr1v90.dtsi     |   5 +-
+> >  arch/riscv/boot/dts/sophgo/sg2044-cpus.dtsi | 256 ++++++++++++++------=
+--------
+> >  arch/riscv/boot/dts/spacemit/k1.dtsi        |  32 ++--
+> >  3 files changed, 147 insertions(+), 146 deletions(-)
+> please have separated patch for different SoCs, so they can go via
 
-    Andrew
+Understand your concern.
+
+> their own SoC tree.. thanks
+
+Conor, is it possible to take this as one patch instead?
+
+It fixes the same dtbs_check warnings from riscv/extensions.yaml across thr=
+ee
+SoCs. Keeping them together maintains readability and clear tracking, IMHO.
+
+Happy to split if needed, but wanted to check first.
+
+Thanks,
+Guodong
+
+>
+> --
+> Yixun Lan (dlan)
