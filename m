@@ -1,66 +1,66 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94412F1FC2
-	for <sophgo@lists.linux.dev>; Thu, 15 Jan 2026 19:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B677B2FC893
+	for <sophgo@lists.linux.dev>; Thu, 15 Jan 2026 19:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768504704; cv=none; b=ON9uHqjDdUOsVbrj0nnKTg7I0abbItGuRfJuC+65wM1EddtscioRWf4kGVLOIoc8JYeiB5MhLr15hI1U1jN6X5D0un+VfzOl9nQFR8DA72UCcdyya0BUnnMaP4Za/yyTN+zkzbRYAsEoumKXnZbpMUEqSA8DikaJUEPhObodhsQ=
+	t=1768504706; cv=none; b=OuI3qGAaGcGVpQT6bEwvCIN0E7KYthGSh0o0r+gZgTbEciv1uq5m1KtGZHbEiNAcK3HPlO8EZUtYLGloHJbgtjU7+KhF/1rBxjNBAKSDej+nKCjOyZSM/mFd/NfMhXEbFYKaCtVt+dZEGDejO6DMIkSUX+Qa/QcEFpgWBeGbzCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768504704; c=relaxed/simple;
-	bh=KrPmfmoDlhB5aHZakfTJ0DcCmCsvnj5DBdRQf3ocXWI=;
+	s=arc-20240116; t=1768504706; c=relaxed/simple;
+	bh=ZvpnRa7g8hCkE7r1q64LPBBaiWff0x2lLnMd+0VKnb0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g9j5Nx47UsIbcujfdeyF/v3bmHO+/6P1yyfWnaMZujwTGbwb7qrOZfAAwHpNnZNDz1XmHDgteouQ+7g1imtP/mz/A/AXk97hPckmAy0Ad5P5gS0BpYVTIl3F/PJ/qwlaogmXOmXjhUFezS7D0lrcee+YrDucfBPjrE/9XEXS4yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kc/XIG1y; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:To:Cc; b=YsApEjiBgOHe6fvBGa8QD9sOMMD4xaAEfipClRsOJfEkP0GXxk+HAwUSR7CY+9UaAej3dHCqRxspSjXIAelQDys2LNetGF3V38aIIPXxD4/ZbAR7SS+YUtlrzJS09DDJ+Yc5BE6Wa9UP9HH09EznJK4Q7d6f5QWIwhg01Ci123Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ILWgz3If; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kc/XIG1y"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4801d1daf53so5007095e9.2
-        for <sophgo@lists.linux.dev>; Thu, 15 Jan 2026 11:18:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ILWgz3If"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47f5c2283b6so8289005e9.1
+        for <sophgo@lists.linux.dev>; Thu, 15 Jan 2026 11:18:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768504700; x=1769109500; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768504703; x=1769109503; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Xc1juLftWyA1wDHyb+/Z3FwNIJ+75ZFh3R/kOCHvlHU=;
-        b=Kc/XIG1yVYQAUVI5UPudRmBqSpUpwyDqNXruZTGDyHK0yYeN25wi012xz9X1PSgko9
-         kdu7drhDwDWSKJrPgkEGorCLMfQF01tm/SAFR1qBTGx18Rv0EcckoK5CqRJB9sJTc6OT
-         gWzbYZOs+8mKqcqSUef039Kj5i0t13ekcf4dfvkmS5CQqalelzA/dHXuus5RflrCmj6y
-         PjZQnutFngHUFIC5SddZ8z2RMhlRQbmYKqrBGK10J5KezTOXuS7itpaJtjOaD2+hNu6k
-         6RaIZ/scyj8wbtD1wvQqXaU31A7p6CmLiSmJ3HPuH5AC/J5ZRWSLU5Wh7iXStRI3cc5n
-         n1Iw==
+        bh=9bZybh6ajNmTP3emcxjHSZEZGR4b5MsX3LqH44SKh2E=;
+        b=ILWgz3IfZZUvpxnZs2KSiBl52dChJqst080/zwnAKP8LZW7/SBsVFF4UMeXsw794a+
+         EYUUtRTimfI6sTHxDir3QTsd4rAN2Fe8kQrY3mM4e3vPWpQCMAfS83FMkDa2ogCK65xd
+         Ia0n1gVuiCXkEHo0hU1GFR194ihOB3kwYYej/MPlHw3UMW7iMYJg7/L2Pd+wTnyaCcHO
+         KDEvyikM7umKqJMfrZmyajOVVoPCYD74HFQ7/lLxuJAT/w6qyulqYhg++bNfKnOe6dXz
+         +fOY+S9Fveq24P0fr0Nb2P7rIN7SACMj97tX+rzNbL/FJdKGa9sX+OgHv+/k+SgkB4jD
+         Lqmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768504700; x=1769109500;
+        d=1e100.net; s=20230601; t=1768504703; x=1769109503;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=Xc1juLftWyA1wDHyb+/Z3FwNIJ+75ZFh3R/kOCHvlHU=;
-        b=ih4+vBWPAm3ZZUJiO3Nh+/ihpex/4wfwCIyNJbUZkSm7SdmRvs96wnxZqjQlSxIgFa
-         qiVJ4eiKiLacP9mSbKUKp+Q1aZlp8YwvEDN0bAvBNux6Yy56ounpOaee0IvboOTK0EX/
-         dHlvZfvFxAT1zsSnD1sgn4of3XosAh+ULCUvI6+lvbXCIphCpfGTy9vJg3gJfVtUFjHS
-         r+yh3ydWACDjC/52yARjjdvCX/oZvEk9jxmMfrFCSdFG/Hu49NS0JvVPz6FZ2uVQXdO1
-         VFeC7lngiTMPsh/xiXJcnEstbEOFLRavt/1Ax3IlDMy6xMqVskCQJY8u3uc/Puk+ADLg
-         D1dw==
-X-Forwarded-Encrypted: i=1; AJvYcCXiW0vnC4GlqVGF0EqegSXtNJV0vPnn9r3btX2ybZj/oyA+1XAmvKy3HBdGXkTG+z5tuuec4Z0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwZQXPrKdjLk72kdszbYDphF0JY3UAaX7HEFb9Tv5yRrrRl81an
-	4a6/FBrjYcWdsSjmRkVFfeCK+Bj/dvCH5mYr7m8oSTq/vupvzw8CJbNB
-X-Gm-Gg: AY/fxX6lr3E2X3ydeiztJwHI7oVIUq3XD7rzft+uAYksMUi5UG5VsOYtM0ofOoFARny
-	/4Lrb8aeR8I+Efxqjou8kw2lQrFYikk5iSbB3ergdu4gbZ6Z+IilDPvpPQwpyxizpGpZ2WmVUyo
-	ekZuxCCzyXNkW8Xr2nrEIKz0HGzzoprp+3xAlnyqJ6ayZgrk6bWuaNZRZ2MUchHVsft6LUtDh/k
-	ZgRdYkhSOFNH23kl0yBXhWUv0Wq6ZaG1vRh1SPERdR/aRJJvU9rIXm5GKcGTjftS2STXQmJYTR8
-	+9Ut8nIjL/V6feSo3A4cvDsMGzl59CvyR/CK7zoXzMK1fqIOgP+LNbyvQYRqlr5vZYmNUJnCJ0u
-	zEjX+NbrrdVTnIniwmO+hk8C3Y/1vwHndP39kNwqZvTc9sPoTgsobDoBeVayPvAnIbG701QUcjP
-	FDEOk9Pd/u0wF0tx3YN0U3nDoBj0zhJ1ZC5pPSa2UzEsi7bH2Zzzl52qI=
-X-Received: by 2002:a05:6000:4383:b0:431:9dd:2cca with SMTP id ffacd0b85a97d-4356997f0c2mr532115f8f.7.1768504699943;
-        Thu, 15 Jan 2026 11:18:19 -0800 (PST)
+        bh=9bZybh6ajNmTP3emcxjHSZEZGR4b5MsX3LqH44SKh2E=;
+        b=PE1251kXEjti/+GnSVMfBCgv5DDbj8Rk8q+Z4PALtEwue3nYiSS72aaazAVuFaMn2R
+         YqjEOJsD0ALl9IH/6mLBcLE4x1UGb+aL1D/Cbj6eYpWZfuZxdij/JJatf60qqSW60jLq
+         42R8uSw0bVYkhMc/oz4CFZjX9r47wvuiazz4HaUQCFUEJRJ/sZXG0hbdUkXL5zPzVuq+
+         zjZaETnj682PrjHsJsh80wRsDrGFYeqngiTphBoHeN3AhqUHn/JGnfI+1lg8L9W6zpgr
+         nSShoEzAL+090kSbVK+iXMCeKy+GMC6TnpHTpTvy7yOelCct85Tlc1sjc3ZJ2NEwhtAG
+         A/QQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW3hnn0llyuA5D/g/syvSBmCRqNqGO2mbHA/ohXDFQx3DY12GLzL/TYATPYAeWswDGp2e5i8pQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyTrUnal8LgNzm1VZbM0gtSKGNEgfjWeN+WlaVi7g9i8x15cX/S
+	k4ZEjFEe6xowz8YMkre6161ERRjW0OWXIGJPOX/MC+9+SyojY/eYLjtC
+X-Gm-Gg: AY/fxX5Kpr7m4Joyf54Huxhr7wClH2InK4rcF6Eo2N/7CrgaqwODGamKknQwrR5JXsM
+	nBHF/uzmmAE/nk/r7SKFPV0Iw1uZYgqLTDluXBT9npDch4xjIeio2dTy8Z5hqbtPCk/Z6I5suKt
+	wLQSd2ie8i+eDjXyfrFArvC00HVBHiQ5gdLJLFdoFg+pTdrlW+j1+NrdEc9NE5SP8FIkyZU6vxN
+	TOX5HTxK00KCE2lPRLvxDfp1ufrz5u/nfbLx8uiEhnF6JxQxnFASxDGkrI3HEfw/BxZUXZQQCUT
+	e5RHcKkfBMFPLbDd0ggMbx4cYcL3p81ZtH7FktXuAuo6btyg/+u+P3NRMjKfnS+WNNLGwRuQzH0
+	P3/uEE2Ofxm1WB2TYoWjRCVIwyxyiiUmahElazKWqlHaoKA6UdNKN6XkLhdxQEh9JqsWQ/9Gj1M
+	xZ2W0Onxp/1/MFCaNTiB9ItjjvLwXUUyqQcfpms3+Pijke
+X-Received: by 2002:a05:6000:2209:b0:430:f7dc:7e96 with SMTP id ffacd0b85a97d-43569bc59b6mr523652f8f.48.1768504703038;
+        Thu, 15 Jan 2026 11:18:23 -0800 (PST)
 Received: from [127.0.1.1] (bba-94-59-215-181.alshamil.net.ae. [94.59.215.181])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569921dedsm692734f8f.9.2026.01.15.11.18.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43569921dedsm692734f8f.9.2026.01.15.11.18.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jan 2026 11:18:19 -0800 (PST)
+        Thu, 15 Jan 2026 11:18:22 -0800 (PST)
 From: "Anton D. Stavinskii" <stavinsky@gmail.com>
-Date: Thu, 15 Jan 2026 23:17:43 +0400
-Subject: [PATCH 6/8] ASoC: sophgo: add CV1800B internal DAC codec driver
+Date: Thu, 15 Jan 2026 23:17:44 +0400
+Subject: [PATCH 7/8] riscv: dts: sophgo: dts nodes for i2s tdm modules
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260115-cv1800b-i2s-driver-v1-6-e8b22b8578ab@gmail.com>
+Message-Id: <20260115-cv1800b-i2s-driver-v1-7-e8b22b8578ab@gmail.com>
 References: <20260115-cv1800b-i2s-driver-v1-0-e8b22b8578ab@gmail.com>
 In-Reply-To: <20260115-cv1800b-i2s-driver-v1-0-e8b22b8578ab@gmail.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -84,267 +84,152 @@ Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, 
  "Anton D. Stavinskii" <stavinsky@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768504677; l=7294;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768504677; l=4041;
  i=stavinsky@gmail.com; s=20260115; h=from:subject:message-id;
- bh=KrPmfmoDlhB5aHZakfTJ0DcCmCsvnj5DBdRQf3ocXWI=;
- b=4iVlJNPj0IUBoHXVhipUHhAxzzbmClMq/SoiDq3Kf5XuqRc/D9PKwiTGGrS3BrHRfQoKSjKT8
- HMjs7tQ0MBlCjw0HAcwo6edhkYtDhD1Quk2VjVYpIA0XHaza4Tzeetw
+ bh=ZvpnRa7g8hCkE7r1q64LPBBaiWff0x2lLnMd+0VKnb0=;
+ b=vwb7UYqSlXo3rPP9yGKTfWtMY3ZhNyyOZjfBpq/qKetxn106Ow7lZhWEbkNRzwEkQv1jaiQWa
+ 4bJ9F94rEA5BNdFZq1EVeJ1mjB3FJd8ZDKSoSUN8dkyyucDYqKQeG9n
 X-Developer-Key: i=stavinsky@gmail.com; a=ed25519;
  pk=2WxGZ1zd1vQwSPFCSks6zrADqUDBUdtq39lElk4ZE7Q=
 
-Codec DAI endpoint for TXDAC + basic controls.
+New dts nodes for TDMs and readable DMA names
 
 Signed-off-by: Anton D. Stavinskii <stavinsky@gmail.com>
 ---
- sound/soc/sophgo/Kconfig             |  11 +-
- sound/soc/sophgo/Makefile            |   1 +
- sound/soc/sophgo/cv1800b-sound-dac.c | 204 +++++++++++++++++++++++++++++++++++
- 3 files changed, 215 insertions(+), 1 deletion(-)
+ arch/riscv/boot/dts/sophgo/cv180x-dmamux.h | 57 ++++++++++++++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/cv180x.dtsi     | 49 +++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
 
-diff --git a/sound/soc/sophgo/Kconfig b/sound/soc/sophgo/Kconfig
-index 813ab30d6da3..e7c617b44db6 100644
---- a/sound/soc/sophgo/Kconfig
-+++ b/sound/soc/sophgo/Kconfig
-@@ -23,10 +23,19 @@ config SND_SOC_CV1800B_ADC_CODEC
- 	help
- 	  This driver provides an ASoC codec DAI for capture and basic
- 	  control of the RXADC registers.
--
- 	  Say Y or M to build support for the Sophgo CV1800B
- 	  internal analog ADC codec block (RXADC).
- 	  The module will be called cv1800b-sound-adc
- 
-+config SND_SOC_CV1800B_DAC_CODEC
-+	tristate "Sophgo CV1800B/SG2002 internal DAC codec"
-+	depends on SND_SOC
-+	help
-+	  This driver provides an ASoC codec DAI for playback and basic
-+	  control of the TXDAC registers.
-+
-+	  Say Y or M to build support for the Sophgo CV1800B
-+	  internal analog DAC codec block (TXDAC).
-+	  The module will be called cv1800b-sound-dac
- 
- endmenu
-diff --git a/sound/soc/sophgo/Makefile b/sound/soc/sophgo/Makefile
-index c654d6059cbd..ec8dd31efddd 100644
---- a/sound/soc/sophgo/Makefile
-+++ b/sound/soc/sophgo/Makefile
-@@ -2,3 +2,4 @@
- # Sophgo Platform Support
- obj-$(CONFIG_SND_SOC_CV1800B_TDM) += cv1800b-tdm.o
- obj-$(CONFIG_SND_SOC_CV1800B_ADC_CODEC) += cv1800b-sound-adc.o
-+obj-$(CONFIG_SND_SOC_CV1800B_DAC_CODEC) += cv1800b-sound-dac.o
-diff --git a/sound/soc/sophgo/cv1800b-sound-dac.c b/sound/soc/sophgo/cv1800b-sound-dac.c
+diff --git a/arch/riscv/boot/dts/sophgo/cv180x-dmamux.h b/arch/riscv/boot/dts/sophgo/cv180x-dmamux.h
 new file mode 100644
-index 000000000000..ccf386174639
+index 000000000000..6314bf6e9dc8
 --- /dev/null
-+++ b/sound/soc/sophgo/cv1800b-sound-dac.c
-@@ -0,0 +1,204 @@
-+// SPDX-License-Identifier: GPL-2.0
++++ b/arch/riscv/boot/dts/sophgo/cv180x-dmamux.h
+@@ -0,0 +1,57 @@
++/* SPDX-License-Identifier: (GPL-2.0 OR MIT) */
 +/*
-+ * Internal DAC codec for cv1800b based CPUs
++ * Copyright (C) 2025 Inochi Amaoto <inochiama@gmail.com>
 + */
 +
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/bitfield.h>
-+#include <linux/bits.h>
-+#include <sound/soc.h>
-+#include <linux/io.h>
++#ifndef _SOPHGO_CV18XX_DMAMUX
++#define _SOPHGO_CV18XX_DMAMUX
 +
-+#define CV1800B_TXDAC_CTRL0   0x00
-+#define CV1800B_TXDAC_CTRL1   0x04
-+#define CV1800B_TXDAC_STATUS  0x08
-+#define CV1800B_TXDAC_AFE0    0x0c
-+#define CV1800B_TXDAC_AFE1    0x10
-+#define CV1800B_TXDAC_ANA0    0x20
-+#define CV1800B_TXDAC_ANA1    0x24
-+#define CV1800B_TXDAC_ANA2    0x28
++#define DMA_I2S0_RX		0
++#define DMA_I2S0_TX		1
++#define DMA_I2S1_RX		2
++#define DMA_I2S1_TX		3
++#define DMA_I2S2_RX		4
++#define DMA_I2S2_TX		5
++#define DMA_I2S3_RX		6
++#define DMA_I2S3_TX		7
++#define DMA_UART0_RX	8
++#define DMA_UART0_TX	9
++#define DMA_UART1_RX	10
++#define DMA_UART1_TX	11
++#define DMA_UART2_RX	12
++#define DMA_UART2_TX	13
++#define DMA_UART3_RX	14
++#define DMA_UART3_TX	15
++#define DMA_SPI0_RX		16
++#define DMA_SPI0_TX		17
++#define DMA_SPI1_RX		18
++#define DMA_SPI1_TX		19
++#define DMA_SPI2_RX		20
++#define DMA_SPI2_TX		21
++#define DMA_SPI3_RX		22
++#define DMA_SPI3_TX		23
++#define DMA_I2C0_RX		24
++#define DMA_I2C0_TX		25
++#define DMA_I2C1_RX		26
++#define DMA_I2C1_TX		27
++#define DMA_I2C2_RX		28
++#define DMA_I2C2_TX		29
++#define DMA_I2C3_RX		30
++#define DMA_I2C3_TX		31
++#define DMA_I2C4_RX		32
++#define DMA_I2C4_TX		33
++#define DMA_TDM0_RX		34
++#define DMA_TDM0_TX		35
++#define DMA_TDM1_RX		36
++#define DMA_AUDSRC		37
++#define DMA_SPI_NAND	38
++#define DMA_SPI_NOR		39
++#define DMA_UART4_RX	40
++#define DMA_UART4_TX	41
++#define DMA_SPI_NOR1	42
 +
-+/* cv1800b_TXDAC_CTRL0 */
-+#define REG_TXDAC_EN GENMASK(0, 0)
-+#define REG_I2S_RX_EN GENMASK(1, 1)
++#define DMA_CPU_A53		0
++#define DMA_CPU_C906_0	1
++#define DMA_CPU_C906_1	2
 +
-+/* cv1800b_TXDAC_CTRL1 */
-+#define REG_TXDAC_CIC_OPT GENMASK(1, 0)
++#endif // _SOPHGO_CV18XX_DMAMUX
+diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+index 06b0ce5a2db7..9dd93e028ba9 100644
+--- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interrupt-controller/irq.h>
+ #include "cv18xx-reset.h"
++#include "cv180x-dmamux.h"
+ 
+ / {
+ 	#address-cells = <1>;
+@@ -448,6 +449,54 @@ usb: usb@4340000 {
+ 			status = "disabled";
+ 		};
+ 
++		i2s0: i2s@4100000 {
++			compatible = "sophgo,cv1800b-i2s";
++			reg = <0x04100000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_APB_I2S0>, <&clk CLK_SDMA_AUD0>;
++			clock-names = "i2s", "mclk";
++			dmas = <&dmamux DMA_I2S0_RX 1>, <&dmamux DMA_I2S0_TX 1>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
 +
-+/* cv1800b_TXDAC_AFE0 */
-+#define REG_TXDAC_INIT_DLY_CNT GENMASK(5, 0)
++		i2s1: i2s@4110000 {
++			compatible = "sophgo,cv1800b-i2s";
++			reg = <0x04110000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_APB_I2S1>, <&clk CLK_SDMA_AUD1>;
++			clock-names = "i2s", "mclk";
++			dmas = <&dmamux DMA_I2S1_RX 1>, <&dmamux DMA_I2S1_TX 1>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
 +
-+/* cv1800b_TXDAC_ANA2 */
-+#define TXDAC_OW_VAL_L_MASK GENMASK(7, 0)
-+#define TXDAC_OW_VAL_R_MASK GENMASK(15, 8)
-+#define TXDAC_OW_EN_L_MASK GENMASK(16, 16)
-+#define TXDAC_OW_EN_R_MASK GENMASK(17, 17)
++		i2s2: i2s@4120000 {
++			compatible = "sophgo,cv1800b-i2s";
++			reg = <0x04120000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_APB_I2S2>, <&clk CLK_SDMA_AUD2>;
++			clock-names = "i2s", "mclk";
++			dmas = <&dmamux DMA_I2S2_RX 1>, <&dmamux DMA_I2S2_TX 1>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
 +
-+struct cv1800b_priv {
-+	void __iomem *regs;
-+	struct device *dev;
-+};
++		i2s3: i2s@4130000 {
++			compatible = "sophgo,cv1800b-i2s";
++			reg = <0x04130000 0x1000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&clk CLK_APB_I2S3>, <&clk CLK_SDMA_AUD3>;
++			clock-names = "i2s", "mclk";
++			dmas = <&dmamux DMA_I2S3_RX 1>, <&dmamux DMA_I2S3_TX 1>;
++			dma-names = "rx", "tx";
++			status = "disabled";
++		};
 +
-+enum decimation_values {
-+	DECIMATION_64 = 0,
-+	DECIMATION_128,
-+	DECIMATION_256,
-+	DECIMATION_512,
-+};
-+
-+static void cv1800b_dac_enable(struct cv1800b_priv *priv, bool enable)
-+{
-+	u32 val;
-+
-+	val = readl(priv->regs + CV1800B_TXDAC_CTRL0);
-+	val = u32_replace_bits(val, enable, REG_TXDAC_EN);
-+	val = u32_replace_bits(val, enable, REG_I2S_RX_EN);
-+	writel(val, priv->regs + CV1800B_TXDAC_CTRL0);
-+}
-+
-+static void cv1800b_dac_mute(struct cv1800b_priv *priv, bool enable)
-+{
-+	u32 val;
-+
-+	val = readl(priv->regs + CV1800B_TXDAC_ANA2);
-+	val = u32_replace_bits(val, enable, TXDAC_OW_EN_L_MASK);
-+	val = u32_replace_bits(val, enable, TXDAC_OW_EN_R_MASK);
-+	writel(val, priv->regs + CV1800B_TXDAC_ANA2);
-+}
-+
-+static int cv1800b_dac_decimation(struct cv1800b_priv *priv, u8 dec)
-+{
-+	u32 val;
-+
-+	if (dec > 3)
-+		return -EINVAL;
-+
-+	val = readl(priv->regs + CV1800B_TXDAC_CTRL1);
-+	val = u32_replace_bits(val, dec, REG_TXDAC_CIC_OPT);
-+	writel(val, priv->regs + CV1800B_TXDAC_CTRL1);
-+	return 0;
-+}
-+
-+static int cv1800b_dac_dly(struct cv1800b_priv *priv, u32 dly)
-+{
-+	u32 val;
-+
-+	if (dly > 63)
-+		return -EINVAL;
-+
-+	val = readl(priv->regs + CV1800B_TXDAC_AFE0);
-+	val = u32_replace_bits(val, dly, REG_TXDAC_INIT_DLY_CNT);
-+	writel(val, priv->regs + CV1800B_TXDAC_AFE0);
-+	return 0;
-+}
-+
-+static int cv1800b_dac_hw_params(struct snd_pcm_substream *substream,
-+				 struct snd_pcm_hw_params *params,
-+				 struct snd_soc_dai *dai)
-+{
-+	struct cv1800b_priv *priv = snd_soc_dai_get_drvdata(dai);
-+	int ret;
-+	unsigned int rate = params_rate(params);
-+
-+	if (rate != 48000) {
-+		dev_err(priv->dev, "rate %u is not supported\n", rate);
-+		return -EINVAL;
-+	}
-+
-+	cv1800b_dac_mute(priv, false);
-+	/* minimal decimation for 48kHz is 64*/
-+	ret = cv1800b_dac_decimation(priv, DECIMATION_64);
-+	if (ret)
-+		return ret;
-+
-+	/* value is taken from vendors driver 48kHz
-+	 * tested on sg2000 and sg2002.
-+	 */
-+	ret = cv1800b_dac_dly(priv, 0x19);
-+	if (ret)
-+		return ret;
-+
-+	return 0;
-+}
-+
-+static int cv1800b_dac_dai_trigger(struct snd_pcm_substream *substream, int cmd,
-+				   struct snd_soc_dai *dai)
-+{
-+	struct cv1800b_priv *priv = snd_soc_dai_get_drvdata(dai);
-+
-+	switch (cmd) {
-+	case SNDRV_PCM_TRIGGER_START:
-+	case SNDRV_PCM_TRIGGER_RESUME:
-+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		cv1800b_dac_enable(priv, true);
-+		break;
-+	case SNDRV_PCM_TRIGGER_STOP:
-+	case SNDRV_PCM_TRIGGER_SUSPEND:
-+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		cv1800b_dac_enable(priv, false);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct snd_soc_dai_ops cv1800b_dac_dai_ops = {
-+	.hw_params = cv1800b_dac_hw_params,
-+	.trigger = cv1800b_dac_dai_trigger,
-+};
-+
-+static struct snd_soc_dai_driver cv1800b_dac_dai = {
-+	.name = "dac-hifi",
-+	.playback = { .stream_name = "DAC Playback",
-+		      .channels_min = 2,
-+		      .channels_max = 2,
-+		      .rates = SNDRV_PCM_RATE_48000,
-+		      .formats = SNDRV_PCM_FMTBIT_S16_LE },
-+	.ops = &cv1800b_dac_dai_ops,
-+};
-+
-+static const struct snd_soc_component_driver cv1800b_dac_component = {
-+	.name = "cv1800b-dac-codec",
-+};
-+
-+static int cv1800b_dac_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	struct cv1800b_priv *priv;
-+
-+	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
-+	if (!priv)
-+		return -ENOMEM;
-+
-+	priv->dev = dev;
-+	priv->regs = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(priv->regs))
-+		return PTR_ERR(priv->regs);
-+
-+	platform_set_drvdata(pdev, priv);
-+	return devm_snd_soc_register_component(&pdev->dev,
-+					       &cv1800b_dac_component,
-+					       &cv1800b_dac_dai, 1);
-+}
-+
-+static const struct of_device_id cv1800b_dac_of_match[] = {
-+	{ .compatible = "sophgo,cv1800b-sound-dac" },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, cv1800b_dac_of_match);
-+
-+static struct platform_driver cv1800b_dac_driver = {
-+	.probe = cv1800b_dac_probe,
-+	.driver = {
-+		.name = "cv1800b-dac-codec",
-+		.of_match_table = cv1800b_dac_of_match,
-+	},
-+};
-+module_platform_driver(cv1800b_dac_driver);
-+
-+MODULE_DESCRIPTION("DAC codec for CV1800B");
-+MODULE_AUTHOR("Anton D. Stavinskii <stavinsky@gmail.com>");
-+MODULE_LICENSE("GPL");
+ 		rtc@5025000 {
+ 			compatible = "sophgo,cv1800b-rtc", "syscon";
+ 			reg = <0x5025000 0x2000>;
 
 -- 
 2.43.0
