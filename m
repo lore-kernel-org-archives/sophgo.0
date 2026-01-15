@@ -1,88 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gloria.sntech.de (gloria.sntech.de [185.11.138.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD563793DB;
-	Thu, 15 Jan 2026 11:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAA029DB9A;
+	Thu, 15 Jan 2026 16:15:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.11.138.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768476318; cv=none; b=iK8hnZYSkaVNQqdCiODyfX8a7dcuEXyYbX5zWSb591Sca8/YQKQuNoZ015TOCVWtFCN4yO5NvZ2sssRl0NHpcxURP8aToEDOnqtnqRx761aIb0jNwMjhz4h+EvsJ3OBlVg1sH1EXGYyg4uFQjDh2K33/QORiUoaBKaAGq4L39kM=
+	t=1768493724; cv=none; b=NdRZZyXT7OpmtQJ7LcKJDJMjvmxCC8Yv5TFVnD2CP68mur698q3ooyQg5Es0FqMfQWhy4RBkqjvCsUyaAeNFFCIphq0Km9RCsxWAyFbM0N5HlNGhbFLMBW4Q2bWOy2o98v0nGy26VR6vNhOSzIY9Rk23yo1hASM/LfClzIeEk/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768476318; c=relaxed/simple;
-	bh=B7PuUbXLWy7tl2Fur0m21K5Rid4K0ANkn6cmSohDoGg=;
+	s=arc-20240116; t=1768493724; c=relaxed/simple;
+	bh=zjAI4sw5fZWleNcy5E+bpQXvW8kKtlqPBKTICHmyuec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oHn/t6cvVjewrwRiugc3vQnL0aCUQAI5P9w3igyM3XwJ/90C741ID8u+3CrvxZ6p85gPcz+fUYa/neWbu+HMtNYn7OHPioWpj5aU25PZU62yRYLgLb5ne6f3wRZ4ggFvXTF+IG3BtDss1n1rqu5Srzl314MQYFXPbn7GTA5mXRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfVg6P0p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UJMsVWBxL+pbf5csOVC3OOY6/dXFXj39kOnoLbJwCDA2Llh0gXPcZQe9a2SZuBuOf6XZw3V9627cFxA7HH3/NBJ0UJGkuaCTQXxMt9EyDp9E+7iyjVm2KMKoGyvkrPe2LWLgQH055SpW0VW6FqC19/PLdTMhDGG2aE7+R9GT/sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de; spf=pass smtp.mailfrom=sntech.de; dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b=SgdIcZUf; arc=none smtp.client-ip=185.11.138.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sntech.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sntech.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfVg6P0p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7565AC16AAE;
-	Thu, 15 Jan 2026 11:25:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768476318;
-	bh=B7PuUbXLWy7tl2Fur0m21K5Rid4K0ANkn6cmSohDoGg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IfVg6P0plvu0QThEcQfXdt0D50Ofu64z4L2RBMAAv9Wv6AmF+p8KbaqmqiVTCuts9
-	 M5INO265jFD8nMLXeEIp5xA+PerY3+Rjqdl2pkIVhe8z3KGPPcuLRFk1TLqJwQfbiW
-	 lJKcFJ7+kqdTuzsBffFhWdIbfdTbJAlZHRRhPepR0+x5dKYJNRbR54oxHRm6C3otvK
-	 gLmoVvU1QmC0eJAINslSSK/ZWRUmrezlOrcKd06OjJaa7vyA+r2cXhMtYQU9kPlQ7n
-	 KNJi1JmYG9cJ/7EGhRcUO8j4pQx4qI+KPyMB2XHPGjGRnCrsnVPTa9Rx8NejK3u2lt
-	 LmXH+VUkOud7A==
-From: Yixun Lan <dlan@kernel.org>
-To: Jonathan Corbet <corbet@lwn.net>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Conor Dooley <conor@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Guodong Xu <guodong@riscstar.com>
-Cc: Yixun Lan <dlan@kernel.org>,
-	Junhui Liu <junhui.liu@pigmoral.tech>,
-	linux-doc@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	spacemit@lists.linux.dev
-Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: Add "b" ISA extension to existing devicetrees
-Date: Thu, 15 Jan 2026 19:24:51 +0800
-Message-ID: <176847501553.23847.653353060495870563.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
-References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
+	dkim=pass (2048-bit key) header.d=sntech.de header.i=@sntech.de header.b="SgdIcZUf"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=sntech.de;
+	s=gloria202408; h=Content-Type:Content-Transfer-Encoding:MIME-Version:
+	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Reply-To;
+	bh=zjAI4sw5fZWleNcy5E+bpQXvW8kKtlqPBKTICHmyuec=; b=SgdIcZUflo3NqJzUtZoYf3GC3K
+	JoftSOW3X/lY1Pi0hsKuGnEAdP4Xkf5RvordXf9jqy/NXsqZI+Z3rm0864ea3sOV7wd/8n9x7TvtR
+	ARiOH/6XDRwyxFUUZHmrpZt0rTw3cKAEfr/8D2rBa/g7KXdHd4XnhJA71SnSWDqVtE46lIRk+gy1J
+	Q0WOnuPWm0qZF9cm/OdeCNOkNotf4XE+ZUvm31xeAo65yyG78TGmmnh9t5FRX88lrDB46GzObUFAh
+	+/gpCNBZZk3YysdtvJL0VWcu3kTeeVsfbo57gmVuXzvKtkhX3JI40zs0p7BTnQcxIo1BAyB3m1W7H
+	bUiVO0eg==;
+Received: from i53875b85.versanet.de ([83.135.91.133] helo=diego.localnet)
+	by gloria.sntech.de with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <heiko@sntech.de>)
+	id 1vgPzV-002UXc-0C; Thu, 15 Jan 2026 17:14:33 +0100
+From: Heiko =?UTF-8?B?U3TDvGJuZXI=?= <heiko@sntech.de>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>,
+ Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>,
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
+ Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+ Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+ Bartosz Golaszewski <brgl@kernel.org>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>,
+ Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
+ Thierry Reding <thierry.reding@gmail.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject:
+ Re: [PATCH 10/11] pinctrl: rockchip: Simplify locking with scoped_guard()
+Date: Thu, 15 Jan 2026 17:14:32 +0100
+Message-ID: <2415619.22IY78Rhhi@diego>
+In-Reply-To:
+ <20260114-pinctrl-cleanup-guard-v1-10-a14572685cd3@oss.qualcomm.com>
+References:
+ <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
+ <20260114-pinctrl-cleanup-guard-v1-10-a14572685cd3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+
+Am Mittwoch, 14. Januar 2026, 16:30:11 Mitteleurop=C3=A4ische Normalzeit sc=
+hrieb Krzysztof Kozlowski:
+> Simplify error handling by removing two mutex_unlock() calls with
+> scoped_guard().
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
 
 
-On Thu, 15 Jan 2026 07:18:56 +0800, Guodong Xu wrote:
-> The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
-> much later than its component extensions zba/zbb/zbs (June 2021). Recent
-> updates to the device tree bindings [2] enforce that when all three
-> component extensions are present, "b" must also be specified. Related
-> discussion can also be found in [1].
-> 
-> Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
-> It is a trivial update, but can help readers reference the correct
-> document version. Acked-by Paul Walmsley in v1.
-> 
-> [...]
-
-Applied, thanks!
-
-[4/4] riscv: dts: spacemit: k1: Add "b" ISA extension
-      https://github.com/spacemit-com/linux/commit/eb241eb29bad28cd17c5a4b9c355645e96094713
-
-Best regards,
--- 
-Yixun Lan <dlan@kernel.org>
