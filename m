@@ -1,92 +1,88 @@
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A06118EFD1;
-	Thu, 15 Jan 2026 02:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768443959; cv=pass; b=ZO9yCnK8xK1nB6z66rmlOHVuYv4jrbiauWVrL29ljh63Z3lfMR6mFrQcY2QQ9zRe2WOLxXSbf2uBJSu0z0/ods3bwVXknuuEqKK8tn1PzWMlbMRlKlYSBpKKnkJN0incKIEe6YcilGEV4DUGzRNEsQBMrSy2H29RM0dff+UPRYQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768443959; c=relaxed/simple;
-	bh=KjWm5wOna2WpOISnzqb2AoOrQZWydDdpwEHC+FBfdSA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=lzmMZZcM80WDg+StQlsnP3uqX3em32sIydjceTyR4s05wcNJwc58hyvNr0Q9mXJdYjn7asxgXG9JcakZXQ1DcpBMbGpAa5yqfazkFGZyIhckxFmtazzEmMdPDARubweYidqyNbp6y3/EPA/tBcF2XGkL909HfZM0IGBhEWZXyD0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech; spf=pass smtp.mailfrom=pigmoral.tech; dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b=Xa1+brfs; arc=pass smtp.client-ip=136.143.188.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pigmoral.tech
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pigmoral.tech
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD563793DB;
+	Thu, 15 Jan 2026 11:25:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768476318; cv=none; b=iK8hnZYSkaVNQqdCiODyfX8a7dcuEXyYbX5zWSb591Sca8/YQKQuNoZ015TOCVWtFCN4yO5NvZ2sssRl0NHpcxURP8aToEDOnqtnqRx761aIb0jNwMjhz4h+EvsJ3OBlVg1sH1EXGYyg4uFQjDh2K33/QORiUoaBKaAGq4L39kM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768476318; c=relaxed/simple;
+	bh=B7PuUbXLWy7tl2Fur0m21K5Rid4K0ANkn6cmSohDoGg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oHn/t6cvVjewrwRiugc3vQnL0aCUQAI5P9w3igyM3XwJ/90C741ID8u+3CrvxZ6p85gPcz+fUYa/neWbu+HMtNYn7OHPioWpj5aU25PZU62yRYLgLb5ne6f3wRZ4ggFvXTF+IG3BtDss1n1rqu5Srzl314MQYFXPbn7GTA5mXRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IfVg6P0p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pigmoral.tech header.i=junhui.liu@pigmoral.tech header.b="Xa1+brfs"
-ARC-Seal: i=1; a=rsa-sha256; t=1768443924; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=SdLcgS0AKYw1OM2EI9pNozj2r+kFAtlgo6Uqeb5bGJak3M13Xbjtt9GAIv8taXGsvwD9hqRZCQtrJn/kD9n2rLrqUe12OgbcWutH1etf4THXoQyKyh8uLqCDFaqFsRHkEPDjuRfjuZB/uXDXVFMdznjgStlfuEFhlXysJuqFgAc=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1768443924; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=KjWm5wOna2WpOISnzqb2AoOrQZWydDdpwEHC+FBfdSA=; 
-	b=nZRh5JKIGp26Qewfw2ZYTcghWJC1miR80JyBZepVkCLnG+QRvpLmiWLzTik0FxagH7+1O1KUhs6lBVtz2aMdBtwhkCrfwnI+wIx2MYuuPH/zk530wSzSKYNkAn8jT0YiMZk/9NqyVWoZ7ibRmMNwDMYr3Ke120MuabO06E/b+hQ=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=pigmoral.tech;
-	spf=pass  smtp.mailfrom=junhui.liu@pigmoral.tech;
-	dmarc=pass header.from=<junhui.liu@pigmoral.tech>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1768443924;
-	s=zmail; d=pigmoral.tech; i=junhui.liu@pigmoral.tech;
-	h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:Date:Message-Id:Message-Id:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Reply-To;
-	bh=KjWm5wOna2WpOISnzqb2AoOrQZWydDdpwEHC+FBfdSA=;
-	b=Xa1+brfskQG59Bvab67yVX4GtVvPUI0BEyPcgTJ4qigru7KoXIDh5HNrGjnzwZpA
-	O5KGuVymC/ztAQgtajaoGgLs3D+qQiN7PkoiKYuoGZczMbwWmMMwlp5qfmM9MtryEyF
-	/NQdagYfzoJLhUNrTY43Irjd02Q6/ErceX1uUuto=
-Received: by mx.zohomail.com with SMTPS id 1768443921940306.07558282338914;
-	Wed, 14 Jan 2026 18:25:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IfVg6P0p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7565AC16AAE;
+	Thu, 15 Jan 2026 11:25:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1768476318;
+	bh=B7PuUbXLWy7tl2Fur0m21K5Rid4K0ANkn6cmSohDoGg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IfVg6P0plvu0QThEcQfXdt0D50Ofu64z4L2RBMAAv9Wv6AmF+p8KbaqmqiVTCuts9
+	 M5INO265jFD8nMLXeEIp5xA+PerY3+Rjqdl2pkIVhe8z3KGPPcuLRFk1TLqJwQfbiW
+	 lJKcFJ7+kqdTuzsBffFhWdIbfdTbJAlZHRRhPepR0+x5dKYJNRbR54oxHRm6C3otvK
+	 gLmoVvU1QmC0eJAINslSSK/ZWRUmrezlOrcKd06OjJaa7vyA+r2cXhMtYQU9kPlQ7n
+	 KNJi1JmYG9cJ/7EGhRcUO8j4pQx4qI+KPyMB2XHPGjGRnCrsnVPTa9Rx8NejK3u2lt
+	 LmXH+VUkOud7A==
+From: Yixun Lan <dlan@kernel.org>
+To: Jonathan Corbet <corbet@lwn.net>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Guodong Xu <guodong@riscstar.com>
+Cc: Yixun Lan <dlan@kernel.org>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	linux-doc@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	spacemit@lists.linux.dev
+Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: Add "b" ISA extension to existing devicetrees
+Date: Thu, 15 Jan 2026 19:24:51 +0800
+Message-ID: <176847501553.23847.653353060495870563.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
+References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 15 Jan 2026 10:25:09 +0800
-Message-Id: <DFOT1OLHTY6Q.1TKU3R1DDM5SR@pigmoral.tech>
-Subject: Re: [PATCH v2 2/4] riscv: dts: anlogic: dr1v90: Add "b" ISA
- extension
-From: "Junhui Liu" <junhui.liu@pigmoral.tech>
-To: "Guodong Xu" <guodong@riscstar.com>, "Jonathan Corbet" <corbet@lwn.net>,
- "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
- "Conor Dooley" <conor.dooley@microchip.com>, "Conor Dooley"
- <conor@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Chen Wang" <unicorn_wang@outlook.com>, "Inochi
- Amaoto" <inochiama@gmail.com>, "Yixun Lan" <dlan@gentoo.org>, "Conor
- Dooley" <conor+dt@kernel.org>
-Cc: "Junhui Liu" <junhui.liu@pigmoral.tech>, <linux-doc@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <sophgo@lists.linux.dev>,
- <spacemit@lists.linux.dev>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
- <20260115-adding-b-dtsi-v2-2-254dd61cf947@riscstar.com>
-In-Reply-To: <20260115-adding-b-dtsi-v2-2-254dd61cf947@riscstar.com>
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hi Guodong,
 
-On Thu Jan 15, 2026 at 7:18 AM CST, Guodong Xu wrote:
-> "b" is ratified (Apr/2024) much later than its components zba/zbb/zbs
-> (Jun/2021). With "b" added into riscv/extensions.yaml, a dependency
-> checking rule is now enforced, which requires that when zba, zbb, and zbs
-> are all specified, "b" must be added as well. Failing to do this will
-> cause dtbs_check schema check warnings.
->
-> According to uabi.rst, as a single-letter extension, "b" should be added
-> after "c" in canonical order.
->
-> Update dr1v90.dtsi to conform to this rule. Line balancing is performed
-> to improve readability.
->
-> Signed-off-by: Guodong Xu <guodong@riscstar.com>
+On Thu, 15 Jan 2026 07:18:56 +0800, Guodong Xu wrote:
+> The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
+> much later than its component extensions zba/zbb/zbs (June 2021). Recent
+> updates to the device tree bindings [2] enforce that when all three
+> component extensions are present, "b" must also be specified. Related
+> discussion can also be found in [1].
+> 
+> Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
+> It is a trivial update, but can help readers reference the correct
+> document version. Acked-by Paul Walmsley in v1.
+> 
+> [...]
 
-Reviewed-by: Junhui Liu <junhui.liu@pigmoral.tech>
+Applied, thanks!
 
---=20
+[4/4] riscv: dts: spacemit: k1: Add "b" ISA extension
+      https://github.com/spacemit-com/linux/commit/eb241eb29bad28cd17c5a4b9c355645e96094713
+
 Best regards,
-Junhui Liu
-
+-- 
+Yixun Lan <dlan@kernel.org>
