@@ -1,133 +1,191 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from GVXPR05CU001.outbound.protection.outlook.com (mail-swedencentralazon11013009.outbound.protection.outlook.com [52.101.83.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1872045AD
-	for <sophgo@lists.linux.dev>; Fri, 16 Jan 2026 12:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768567865; cv=none; b=tHkax9dv5idWne78gEqC3Vjk7xCeKDXluy/KLt+xwTd2oMc0oit6xT3TBY4UwB6UUCbN/AVTlB24AzfICizAqI8ihEyEGBWdOErQ8HCh13MQGhaAo/TIGXl3Jrzl5PT0NUBUUb/C4XEYFOzX/K7ydTRoH0AiYJWC4+ZZbWdHct4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768567865; c=relaxed/simple;
-	bh=DSALMvzBwB081u4Jt8c9NpYNawx04HscrqIhArOIoek=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BIUG41DFt2IaM0phNCYvVyGVCU6ofWEA5XEV3wDRrimkLu2KGaB+FWjpqHPTsRUjtlhBaD02aX7EqOBfAQCdCDoFxNRaIcKrI3M7IuIGXYjBtozk4o4h9zQbhk9M17SFXHPaWrFb4caaTT9mOklV/+k7gWHOps349jDJRBxcOHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kJY5o8V1; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBEC338916
+	for <sophgo@lists.linux.dev>; Fri, 16 Jan 2026 15:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.83.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1768578190; cv=fail; b=ATzCeRSN3tdesFnPRghwju03ny0pAK0jvpk819urh7zh1vvAoUkrYVSXmeOjYQgOaAsmhpceaW3uC1uWtWjaLppWTUzdGBPfZbi4g/7oz+8ksSmt3tB7B1g/z89PUmSNOdtnsTSStAco6DKJW+XC+SGPHgCHTwVKemelP4k+mcI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1768578190; c=relaxed/simple;
+	bh=mPrqMS90Wcw0EWko7nohIviWzlw/6c3DjGcEcJf8MWE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=CY7um2vQDAywTp7SsJE8sO/wFIrg8qOF09PI8h0QLlQK12vBNU1AXsCy5oiYzJeXkcIbXCvxNQPrpgR4BC8Aj5cXGPPhYhYuzAuXzofUtTEuJEvWf72sb/MfBkk8jPSSTbQy7nf5pCCqCQ13Vfjnv8Q6oF6Nl9cyl0Y5NQC3d0E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Nm1vkJAJ; arc=fail smtp.client-ip=52.101.83.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kJY5o8V1"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-47ee76e8656so23914295e9.0
-        for <sophgo@lists.linux.dev>; Fri, 16 Jan 2026 04:51:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768567862; x=1769172662; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zTkxHu8mh7w4aqi9Nu456ezpUXh108CX0ltHIeT0yH8=;
-        b=kJY5o8V1nj9bkFvFE9D7aPAv3Eg1gMCAlOD0C8TZ+u/qYxjjWrp9XbVg91T86ff5B+
-         TQ3e8AQ4HqqeTVKgMEU2DMUxiNQP0dG5EivehHqUsUKRo1XlZ2aESPDc/XOWa2s/iL58
-         SX9mw+RTrO1CrKOguWByFDIf3dyRjwMPcqUx+5pEpSHtbM4IVxxtWw/3FhTdcgvmROYi
-         Vyt6zzYepVs0cpgnJqqF7mx2g2HdJyBweZ01S1G/ccxOr0rBQVRhe0rQtV9fG701f0LZ
-         SFr3r7lBKoLyBTWL6uS7pPnoc+i/u/5T9PKYPhXTimn6ildNv10WQDiRiX5JF6c98Vf3
-         r4fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768567862; x=1769172662;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zTkxHu8mh7w4aqi9Nu456ezpUXh108CX0ltHIeT0yH8=;
-        b=NUFMOYVRRak/4fBBy73KMWtXi+0RWS4ejpKmVVslElFBsf//nA24/fmpx0jx0SqZUJ
-         KvL8ahyEZBkws9ESyKLFbnKnuN8/r0cZdhQDJ5W3cwKIDCbEzpII/GtrVNlYG7wxY4Ii
-         2UqQeeQN4AZtzOYGuD809M9B6de2vZRB/90kXqt+oFwrl3Xu811/inLOX7zrc/5TYROt
-         y3xk64Pbf6OpMPhyhV4LdUQcRohAfEiG+VIrKzUon3iOkP6GWe8LOuaDFiDI0TNe9TgN
-         TytTYLyzVJlAL3dZDadEJdlDDHSO/+IsHxT768Y8LCDKIGA+dydee8OkZGP8MEQwdxPD
-         ktrg==
-X-Forwarded-Encrypted: i=1; AJvYcCWm0XxplRFy8nKUpErKNSMhnugEB6UbfPHRrxx896ym455iHwSy5j95fCkWJZF7cKEK+KylinI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzfzF+V8wTlptnB5mnd1csxgIyQAcLY2+WoVUAWqLCj42NdGIwc
-	6Qp6SyS1c9VEHrNr7FY0diYubsePb3fdMr88gic0p6XHeJE9b3phR9+k
-X-Gm-Gg: AY/fxX687X8//pKEH6oX1DOY5mVbeSNuDB4p1CW2WwRhcKhEATFxJaitdohUKLqd4lu
-	/8RLUQbZ4Q0+7VDlnVKaYuo/DL+I7ddyuGlNPUCJn9KzIsDXXUDUuhu5BodxTiCL8OJO9uZnGS/
-	Rk3HuAsPvLGLj1Gb4WM4EoW0aZRgYq239YU75U6MnNawoXHp/3hlgu9FjRRn7PcB0RKX1DoFhzB
-	fzU63XvmOtyB7EutRhZ0c/pBI6vFtGQccG3Z3u2AgB0Tnq/DHR+1o1mB41FHj3VcviOvdj8cR72
-	8wyyY2znUMSXfzK6TPoTiXoTvpWQLrBFj9F892rlIyeWGaF0mTog8tuEE/GOIfz80bA735e1UCT
-	EjYk/fSZpRlMjCWE5BpdTBSjW4jFpy6+Rnp3xMhVVNMZLDH3BHej9WahSZLimctzXcsSjKe0OFm
-	sBSp3JAfRjvH3H/p3lndEe7izjXlkYHAQMn7ridTgFmr90YxsmFrBCZRJYsU6l3QqNpi+Bd70uK
-	Q==
-X-Received: by 2002:a05:6000:2004:b0:433:2f55:7cab with SMTP id ffacd0b85a97d-43569bbafd6mr3570766f8f.37.1768567861918;
-        Fri, 16 Jan 2026 04:51:01 -0800 (PST)
-Received: from orome (p200300e41f0ffa00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f0f:fa00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4356997eb0bsm5012584f8f.34.2026.01.16.04.50.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jan 2026 04:51:00 -0800 (PST)
-Date: Fri, 16 Jan 2026 13:50:58 +0100
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Andrew Jeffery <andrew@codeconstruct.com.au>, 
-	Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Hal Feng <hal.feng@starfivetech.com>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>, Shyam Sundar S K <Shyam-sundar.S-k@amd.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
-	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
-	Jonathan Hunter <jonathanh@nvidia.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Patrice Chotard <patrice.chotard@foss.st.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, 
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org
-Subject: Re: [PATCH 08/11] pinctrl: tegra-xusb: Return void in padctl
- enable/disable functions
-Message-ID: <aWo0LESc5bIs1kHi@orome>
-References: <20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com>
- <20260114-pinctrl-cleanup-guard-v1-8-a14572685cd3@oss.qualcomm.com>
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Nm1vkJAJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=UuKXvYzjZu2JtH4nSNfmU9ZpxBOsLY05slrQlT4T/qSTsTbWXKoxqEmp8oXw5dBY/jB8xnceJtHI0MT6TOaH/Ug1/Q1BA8BLpIGBz/U+p0CDP+at8Gdoy/pCLKhLSmSXZ7gAQHb6kyeXJ9P31ERqC/0u65CU+XXSlkp7DO+n9+UBs4IX+hYZQAxo+96qmNKJTy0iUxqyU1FJjuRmRc7CQKMwwpAiVIViQAKm2vxJcKxmkrAAKAUj6YTQWyjGFODiMy0QbiN/rWVVV5PnKkqQOUF60dOkgtrZuTERmp7gO02me7gfwow4YzIxswZ270BhN2c0P3zWmugToIc6Z0A9WQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=TuLYBJ4NXhVskwDDL2M+S5I33n7q/vpYfTCFM5D05ZY=;
+ b=ETE+x8DbhwTCUJpr2vG7Og1howzvmI4Lwgz2lK+lBxIoebPoIfu3lASVxlUseL+LUpHByqc6HWiT8Hl+WvO0gZCTckJi72Xrgc8gbrSnIPRHdL6n17CbDrYWUaLKUtOA7SOM11oJTeCoOV2s4uDYbV8RqRSuNPolp2SJ+9p/HFyQLtXCzU8G3tG9L+629IY/psMbOitBCGpwoSsJO8bm5CN4s36+bHJ8fsHB8mXrkR1x/imz91BW0y9TnRY4UABIGTgrIYvw1XwmmHv2KAkcTLGc3lyJTrxGunlvcCQpsumkB5XX8was2k3/cy6eAZwjMdP1+XJgjsSos3VPJrF4pw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=TuLYBJ4NXhVskwDDL2M+S5I33n7q/vpYfTCFM5D05ZY=;
+ b=Nm1vkJAJdPHNv+WsqpYJeTuUQkvgQVepNP0/UPQhiRV1s3Nn5RrAsNmkW0Ehqj1kDx08MjsyQpRRBys7l5yLazQZiuSOs5ZPmjEv1tqlUD8ce+DbNgDSja77ViOQf2QWZbpqmEEXiT/aZVo4C/CA0I3coTf3ORSR0QOClWrlIHWJWxyNtyRUN8eyfUsy67nT++OFlkYbT8EGNgJNqiW66Z69Aq/bZ179qlVf6wWLWyaFSCWjyKYlHFYHHfIC78kL/O+BwjSCWJUNBWl/MelcHNF/TLR16o7YxLjA3S5AveOnfhZSbPD1KcWl60HqLdfimuBcn0NEOdQ9ieerqTPwxg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from DU2PR04MB8951.eurprd04.prod.outlook.com (2603:10a6:10:2e2::22)
+ by GV1PR04MB10378.eurprd04.prod.outlook.com (2603:10a6:150:1d4::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9520.6; Fri, 16 Jan
+ 2026 15:43:03 +0000
+Received: from DU2PR04MB8951.eurprd04.prod.outlook.com
+ ([fe80::753c:468d:266:196]) by DU2PR04MB8951.eurprd04.prod.outlook.com
+ ([fe80::753c:468d:266:196%4]) with mapi id 15.20.9478.004; Fri, 16 Jan 2026
+ 15:43:03 +0000
+Date: Fri, 16 Jan 2026 10:42:54 -0500
+From: Frank Li <Frank.li@nxp.com>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
+	Longbin Li <looong.bin@gmail.com>, Ze Huang <huangze@whut.edu.cn>,
+	"Anton D . Stavinskii" <stavinsky@gmail.com>,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev, Yixun Lan <dlan@gentoo.org>
+Subject: Re: [PATCH v2 3/3] riscv: dts: sophgo: cv180x: Allow the DMA
+ multiplexer to set channel number for DMA controller
+Message-ID: <aWpcfqHDFaq8Lsv5@lizhi-Precision-Tower-5810>
+References: <20251214224601.598358-1-inochiama@gmail.com>
+ <20251214224601.598358-4-inochiama@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251214224601.598358-4-inochiama@gmail.com>
+X-ClientProxiedBy: PH0PR07CA0043.namprd07.prod.outlook.com
+ (2603:10b6:510:e::18) To DU2PR04MB8951.eurprd04.prod.outlook.com
+ (2603:10a6:10:2e2::22)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bhhiv6s43avuu3l7"
-Content-Disposition: inline
-In-Reply-To: <20260114-pinctrl-cleanup-guard-v1-8-a14572685cd3@oss.qualcomm.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DU2PR04MB8951:EE_|GV1PR04MB10378:EE_
+X-MS-Office365-Filtering-Correlation-Id: bbd746f1-5184-434b-e530-08de5515efb6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|19092799006|1800799024|52116014|376014|7416014|366016|38350700014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?l/eJnA+lYwqOZcDcg48+3DEK+a3pPJRAfi6hHyl1r/r9L5Df/9P1+jAYLpyR?=
+ =?us-ascii?Q?flCe/GH45nJn7EsLAJ9r74jEhz3jKXj5FBbPrgS+p8y9e2wX/YWFxr453IbP?=
+ =?us-ascii?Q?a1J4i9wE2ojJpCOXbrxbVG28vXJC2WfQREIGvjn643Sw65OIne6Jsf6nU7GI?=
+ =?us-ascii?Q?Byb/tKGfetnpToP55g1LC5NtWsAiSvMqFXa4zZfMlMXNwsIkpYma78RRmaGB?=
+ =?us-ascii?Q?QuYzQuLLz2mgn+G/L+d+egeYFTAaCSW/GWQrIYHEltUeaubrK6C9QmQZoDEV?=
+ =?us-ascii?Q?EPFitDBBCvD1XsCnA9kjCZF+YId50xAHU7jETiIqHn6qdcAxuRK9rqYeWB9C?=
+ =?us-ascii?Q?WEc9uqHhOetrulf874fwG1qK9t/eFpkFN59wMIZwv05TccUH1BbQkEL3Zpin?=
+ =?us-ascii?Q?EnUDFeDFeHDZQux12StSLsVM+xYU+yFMl3wxfbwsTfQr2uFFkFBSR19N5spF?=
+ =?us-ascii?Q?rkz6bAd7PMFQ6zSOKzilYxr5RGxUQ3YRZmhQzgrVMYiAzWzABkI8VFuqw5Ul?=
+ =?us-ascii?Q?CEtotEhJglTF1NXSAj5icAy5TR5w3PNEViO3oE8W1b/V3f4u7SDSdSJ8UETJ?=
+ =?us-ascii?Q?JWiMzAeVkM3hpyu9sHcYuQX//oaJCtKvMqNVDNki6yoT5khm53YUOHrGy42O?=
+ =?us-ascii?Q?HdB5mYxVnn+JfyUKap8zlbpIYk0rQtbFDRcUztpjeJhX1AhvyBw0t9EHXW8M?=
+ =?us-ascii?Q?84KzLWTi9rKdFXKTVC2U5mIyCt20c9dksRhrNDi4t0/Jc8tJJBdK33rurlsW?=
+ =?us-ascii?Q?npXthZcjnf7WdqUYhfiOBFz9qlLbagM7j6vVjfD46go3LA8zg6CaZbSi30m4?=
+ =?us-ascii?Q?HBwCZxiwwik38ADRoHjIz2F54rdqvlWwEPNmJUlG2zOkUXMjixulEHJcGflt?=
+ =?us-ascii?Q?Jeb08y85ipjVQyaPzMZF5CX5O/n7GxpF1b3qGrJkaVIzEwIbI09rvJNoljGv?=
+ =?us-ascii?Q?v+aXYzwJqfIluJcAhRdwVxkwjvsXIcw/krizIf0BY1PY3DV+MrYtdu3b0Qcg?=
+ =?us-ascii?Q?gCOEo8t1/SwCpdabMeIt/XSroy0TG3Uwq01uH+9IWK7HItXIdrAgK7vgw8ld?=
+ =?us-ascii?Q?SgRTn9H6SaYsbNb+TAFc1elEPHNr6DntoULJE/GZxrar7Wz2WjXHIW+CnCEF?=
+ =?us-ascii?Q?hc1amXT0kAr8tprd7pXDvm3Zh8J9EoxfUsuvy6Akd5N48vBRdy76ImLwovir?=
+ =?us-ascii?Q?l7JwIeY2KzaQuLL6xj7SnpbXsi771XTmF6ea8NDizQERj4HBqIe69A8xUgBX?=
+ =?us-ascii?Q?Bbe2ST/G6/YSbDyMIss40MJy+pCoigxbZ2pwy2e9rfI9cv+j+zG+9ZlaCV6f?=
+ =?us-ascii?Q?TXEySCW+Ipg52P0yNLdXtK52pEdI7ldBxJIfOVVclsB51//R8BrLWloughlX?=
+ =?us-ascii?Q?Uw1c4JKTbZ5uATrLYeNh4LWM/EEmQpTzHYxXl86o0HIWLbSDKjW9rMh8Sf9s?=
+ =?us-ascii?Q?Xr+HU7+06d2b2Q2uRUOhp2hIq2ol5W2F56HaMGcHXWJiEo/1Bu5mhwW9EXzb?=
+ =?us-ascii?Q?u1FgOJhmiLnTnq6dDlR+OnshOXsBrUqmYm70mdEcj6lDVEtx0yPmnmOsc2vq?=
+ =?us-ascii?Q?K9KXhgW4rKZ3csd0r2Y8DVKqYgTcYieIcOjrESdVNcP82vh7YEIL4FLWo1ve?=
+ =?us-ascii?Q?HHlWs+DCva/JLFUAzjdb54c=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DU2PR04MB8951.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(19092799006)(1800799024)(52116014)(376014)(7416014)(366016)(38350700014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?J0EwBKHgkbf3wLUDSOENmWJKYHPoEM1KGtrw2+Ium6YiXebyyizkNdCzLHf3?=
+ =?us-ascii?Q?m6g6UgVs29qW0epXnH6InwcwfSYmnpX+mVmd1yAA0wnc3Rrb55javQ7Qk3f5?=
+ =?us-ascii?Q?8sBDuB43UcTAUQIVQGbKvwmAEY3pWjN0o+0hs1Nu78NcsNmTBhlqlRz+tW1z?=
+ =?us-ascii?Q?w2TrTxZzTLNHl9RaIDwQz7/XhNcbMi5ehcKHHlfTgf7GCI3xsaT0+sXlsOEt?=
+ =?us-ascii?Q?kHEfKufSqj2mToH8BbfVMnyMULNS7zodm84550sEWqclyIP7+j9gso2fSh4H?=
+ =?us-ascii?Q?qm7sZzo6PVpTEpYiMGfGcP8KbjFwp7HrkSoWGXShLlE3fUdjkh1sQ9/Tmgl0?=
+ =?us-ascii?Q?wqolpLL1XIjs8JBqDoJPkRS2X3A9Trlou/MvcbKw0xDOQjfqwHnbZAiMDmS2?=
+ =?us-ascii?Q?vT7xGNLCJOiUwoKZxnq1DE3qpz/8yjmVBcnuq4ZwIQfAbiU9jJXWImhuzb91?=
+ =?us-ascii?Q?fviDAoIkBlpUVmvqka/UOf2EdLfqNfz5aak13mVDWy+A7gENFrRc4pJT877+?=
+ =?us-ascii?Q?GZ2AFXUcXjC03EtHzU/1jiXaeDtngOXUrjjAtMs6FUGygHDZTdlWA83VsjRc?=
+ =?us-ascii?Q?wsjE/CkZ26yLE89zWIuV1j23vi2pOx+VsIirHeq4m3LuxQVJiq+R1rjPatYf?=
+ =?us-ascii?Q?BNRQ9bitsFkd9L9cl0Xq9PCyoqX5ueT25CD3Rp5/B6leK099P1y8acgnfap0?=
+ =?us-ascii?Q?/gfFsiVEY4p1/qNlIv5NB0XOfdXwzeJxK1y2msnYoTqhyLxEG1TBOzyxIBMv?=
+ =?us-ascii?Q?u4bA8HC0+nnPBgUDSGzyNmQTQ78PyZ4Ug7yzMA3ENbVEPuztVcrgfJaLswS0?=
+ =?us-ascii?Q?rj/1r6og1H6ZAzqOoG18gSRABEHp1lYqi1ogx5vGPRDy8ECfaLP1cn/l1VvA?=
+ =?us-ascii?Q?qkCWGyCa6DyvQUNkdRfhdEqk8Ki+VswuwfgALibh4MO8wXZtBJdXlVRTf0ZE?=
+ =?us-ascii?Q?UJ+gyuEyy/7KtBsoiAqMf1UWOq2NGmynl/ktyPMPFA+0u/SQ8ho29EAuGbSt?=
+ =?us-ascii?Q?0hi7Tv3bwh1O0IVlf2eO4vZsdP0bStCBOBoXjpvzMzjXcUDfd/QTSj2Jiq2s?=
+ =?us-ascii?Q?+PddN7tXHnzS4FPHSNspqgz0qmjMAIClyI9CsyDtJ95JgedSIN3S4f+ZVWzw?=
+ =?us-ascii?Q?vF+XKoNR5M5vkBNBhCB6HJEM0pko9oNguFIJypscaCtsLemmNuwSzH9UE7WO?=
+ =?us-ascii?Q?A+qZehfmBKqjFG+rvYN0dnH5Gvrx+z95VI4vn2xF6AGkj4DNR29nYd6MlzAp?=
+ =?us-ascii?Q?mg7XRCDqybrsxq4fCR80l5yYMrEkZq4ZHd7OnjmvCmRS4rNhNbGaXfDMJVms?=
+ =?us-ascii?Q?w6vpmQaBK6pEmxgYsrwnUQiDeiUVnupFcQ0i7hM5cnxQVcIdipH8IKxtb/2c?=
+ =?us-ascii?Q?uuNzxH7KfBqj43HMdfPfze4J9B6sMDuohg/KBjkmDgbnJnl00KdzZQP4qtKR?=
+ =?us-ascii?Q?abL4EP5LhtYtJlA7N29/NoIxaL2VWHUycziYqNvOQth86Q8WDKa9SkRMsg3S?=
+ =?us-ascii?Q?rUZT7IALAJHuei6UCKLpxl1TRFqRsmHthVVBivO1XMj0nqKK+ooyL+c4CIsb?=
+ =?us-ascii?Q?e4Pp6O3DPgaDfXYykGs3jY5emYAxe8C6eZ1WV3xyCj26Pipshmq1qDKR1h6j?=
+ =?us-ascii?Q?+oB+3VZQId+/+xmQCucojeBNXcQfP4R1PinXkhtdvXq455+S5ZqQN85aAzLs?=
+ =?us-ascii?Q?3b2g21yrKbnPrJ2q9PaO9yGUcaNc84Z2DKZbTukxnHID3upvZitT/cOaNGYR?=
+ =?us-ascii?Q?ivoYl9An8g=3D=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bbd746f1-5184-434b-e530-08de5515efb6
+X-MS-Exchange-CrossTenant-AuthSource: DU2PR04MB8951.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jan 2026 15:43:03.8940
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: KmHnHOomJySm6hiE85tOJSpzUi/f4G+aMO6wLE85pkKLoNUgLms/RI5tCkmickg3cGIzQcDzRY7DppG+YhYFvQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR04MB10378
+
+On Mon, Dec 15, 2025 at 06:46:00AM +0800, Inochi Amaoto wrote:
+> Change the DMA controller compatible to the sophgo,cv1800b-axi-dma,
+> which supports setting DMA channel number in DMA phandle args.
 
 
---bhhiv6s43avuu3l7
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 08/11] pinctrl: tegra-xusb: Return void in padctl
- enable/disable functions
-MIME-Version: 1.0
+Does it need update DMA comsumer?
 
-On Wed, Jan 14, 2026 at 04:30:09PM +0100, Krzysztof Kozlowski wrote:
-> Make the padctl functions a bit simpler by returning void instead of
-> always '0'.  The callers - phy init/exit - still need to return 0, but
-> these are smaller function without if/branching.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Frank
+>
+> Fixes: 514951a81a5e ("riscv: dts: sophgo: cv18xx: add DMA controller")
+> Reported-by: Anton D. Stavinskii <stavinsky@gmail.com>
+> Closes: https://github.com/sophgo/linux/issues/9
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 > ---
->  drivers/pinctrl/tegra/pinctrl-tegra-xusb.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
-
-Acked-by: Thierry Reding <treding@nvidia.com>
-
---bhhiv6s43avuu3l7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmlqNDIACgkQ3SOs138+
-s6HKVA//WbWB3AVvEbOYpT8fr129RiWvQ5lRtQceA8fb/1Ep4k0qX0M5cVujq72g
-OFie2IcJyCzuci1ZmKEf7fTaR/cjlzExIrXvmox2TLmtKm5kBAFTu2UcHzvAbRcs
-VbasfUeQ/Wi7dlT6+I6JeNLYaXbstuH2RQV3NQ2BC3zPUsJk27p7DARdqBLUSNTJ
-7jX2sBu0xKu5n0hrBhesTMi/zBLMI3pZvqmMlhGzTU01GSlmPz72GMI5J6YmeeF0
-Midhy4ZCbs40l7nJPghjxdtQoKLhUPG6z+NzTyp9Hfelr7q/cYZ1avlAGkJ/39fI
-ugJEOfjl0ed/HMarlvwrRPSTjF6f2BUKH1Ub2xGxErbhGaGvOsKGJizbjsK0CGzl
-jdVsdFUF/wmzPeX27RIel8DxTdTYnhpUyZoylg7l9thjdhYGceKGJHeHb1DaOOZ+
-OhsSUZlejccTbalvk7OeBxtnujGfE56nEXsSByA0C6kaDRxPZmsH9WWtp4mwIzXg
-rvw2hOERLedWoFTjFynl0+3hazgw2hh21iH/uE+uOEiVwHNhPiEXeb+lJMGQbH/9
-Bm2mL/1gvDYA3KxeFZbTTyNwEiGkZyPFLvwZ4hpapk8AvhFdEu/60sMZWsTRlSgx
-H7CJIWp6MSs4e2ErCXbhjjucu3eJo1lFTm/bGVBosixPjjSZ720=
-=VB+5
------END PGP SIGNATURE-----
-
---bhhiv6s43avuu3l7--
+>  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> index 1b2b1969a648..e1b515b46466 100644
+> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+> @@ -417,7 +417,7 @@ sdhci1: mmc@4320000 {
+>  		};
+>
+>  		dmac: dma-controller@4330000 {
+> -			compatible = "snps,axi-dma-1.01a";
+> +			compatible = "sophgo,cv1800b-axi-dma";
+>  			reg = <0x04330000 0x1000>;
+>  			interrupts = <SOC_PERIPHERAL_IRQ(13) IRQ_TYPE_LEVEL_HIGH>;
+>  			clocks = <&clk CLK_SDMA_AXI>, <&clk CLK_SDMA_AXI>;
+> --
+> 2.52.0
+>
