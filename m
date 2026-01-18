@@ -1,137 +1,207 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19872FD7D5
-	for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 17:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B65C21323C
+	for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 18:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768758962; cv=none; b=q4wnJLikEgHY9esDxOp8po1OCe2Xnyc5LePIR8B8BxX0rUBHPJ1ha8svE0Dr19lUSwmTOEhNZFuKvoqRBL/LTVNMG0vZ7Jv7ra5R1YhiHZFDR8qvKV4tQKao+C2klX5kpbUv7D0NgTu6a4spb5kcoTA3Xlmb/HdKhS/d94aR77A=
+	t=1768759806; cv=none; b=E2llJAMCjOEubfohbKFnhnOuVhn0eE6+BnYFNoiB13nNEBR1zI10cYMpaHAzUM396d8v9iziuUabNakZWhzI05kTR4sGiLCWBPslJV8E3+PygC7LKkvLGFaGDARepH/jHwmmPXSXzQABBFi6EwrMt7KmbM39wMZuBZBu9nfsdRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768758962; c=relaxed/simple;
-	bh=Cc02viVpEJM5zY+cD0JHltfguubiCXPcNGv6tOSGjus=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KhyEY1vf/jRmTRQERc/qdgaP3I1+h4I9HNb5x42EeFaXz7fIkonQwA1w4/u6oVzHEJl1gTJ5IFyoFccKf9LPeZKd/Sb5GLKUTbic7P3Te/2Qz9F6TAZU9QWbj0Q0Udy15UJ3gpVvG8oeKbMX1MiBFBBCZaE/UMniRaTFIAN7dSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIkzF4O4; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1768759806; c=relaxed/simple;
+	bh=dKxtqE6F8oVTPGmj41LTMmFmCHa0XUBAz9pzJ7TKy6A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QG5fC2aTPpAabF9JF5ClsATLoD+s84t/u86wfGPqCP2QnrDVPksmw8CuczxbCYPn5mp9J/HBeWdkeRVbWhcVZYUZiDgBm8UyMbcMujJ/jhZ6qYPexeSs83vg/0L6PKBECQkfz8M3I+/om12S+giMObt4C+s/aOhAwj8NmOL4S/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ln8b4JIB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Kq+AySZX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIkzF4O4"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-47ee937ecf2so25513815e9.0
-        for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 09:56:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ln8b4JIB";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Kq+AySZX"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60I7dMw11772667
+	for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 18:10:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=e91dx2Lt0A/p1SGAlZ5HpZ
+	8yspCC620dBzh1TkoZPcU=; b=ln8b4JIBtx2p2ndYbdcg7hBkEyb8pP5Fi+t9R2
+	NB1P7oS6+ntgck1paeRGEG8rADyKM5ndWs1zZ+0RDq5mVA20ILOZTncnS3WdLapj
+	TMk3+Ewh2PB2rVic9DZcHeU5jFpYMoABdSAjGNbAWlZrcyA/s+7t0xc6gaVA8eX7
+	8QSsd2x7S2YKQWVdl5sEJHTqIKs7GeR4L5HbZLzL/s61kBoysGTYHvJpvKSiyKVE
+	VbErM39U3kx54UlqVR1FsyaYP+c683FhscWbonpJQ1M5STzco0LUqT54xVB3qcmS
+	JyVCbC0XT7qfVkbZCwUOfTtI86DXgn86xnEgU6+1vgUHGC8g==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4br3q9amvu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 18:10:04 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c6a5bc8c43so755651185a.2
+        for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 10:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768758959; x=1769363759; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JmufyVTFi2Nm8r9yuM1MA+Nz0GRNSPj6jIbhD8ad9xY=;
-        b=CIkzF4O4+Q642QQrSU08JmsOVDSyhSXlVrnAPddCT+Dx0pyUJXSc+IR3I6k444zrhW
-         IiSUP4OnvRQanQFyLGGsHCrbHXdsAEnyrXnIli5W09WN+RLaBqfsXFGvLya2vUy+M53V
-         Sf2c1FplGYsVXP+AT33mTgHOPeXgxAMt9V1J/Hy8m77rl8mI3f9PvXPpY4AvuyvLWLN+
-         jMiFSE4ws7lIE9CrhZ9GAuiTSUOpaYoWvsLDcN3o9k8cUfs4k8mwzkVDKGMZ5YBjomci
-         I/pTOSAlLfJDTIq7sjlof3PfWMn2/u7pmCJnI2zcLc+9us/z5M0M8QaxUK/UrBaSFoFl
-         Y3zQ==
+        d=oss.qualcomm.com; s=google; t=1768759803; x=1769364603; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=e91dx2Lt0A/p1SGAlZ5HpZ8yspCC620dBzh1TkoZPcU=;
+        b=Kq+AySZXtDvy2dW9IEIPdg5XFA4kAzgzGkMw0eLkjmqfqv5VwTc7PIl4JjFJ0lb9/y
+         wX1onFOGJKw438fA2T3zt+a/jMFHWH40F/fJ+2wfkhIwnJ6TkQ+eT9UZGdjXD+0kmT8Y
+         fv6dlorfmX/cTndVISJMWUlJ/K24iVxkuKv0c7jfLLXexHAq9jJHFpagGiUr+KEVrAvx
+         YFsHRZ6GptL7emxm2GNunenCkGd1q7Mll/0SEZf17YFwxSKik29VqoemdkGdk/0C27l1
+         eXT/3HykTdHWWpmFn8vHOuS8rppAVIDmCJFT0rtFkLmSPu462+5pa6lSReLDuswRM34u
+         34/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768758959; x=1769363759;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JmufyVTFi2Nm8r9yuM1MA+Nz0GRNSPj6jIbhD8ad9xY=;
-        b=YuYTiPwW4si9YB7J3OzV3l5KQlA4OL4cackJR+KpF7Nec6HniEAP1BAN8WzX+m0ksE
-         R9QSvqZQzlRPLyAT57Z/yoNeWY/1ZWdB4my5UZK5K3mzwjbXMU4xuc62D5YiIeqiZpLY
-         ZT+nTN5BjIyIsj7w5IcG33Xj78T7mN2owPNJvDHSkM/REpEt6ZmDp+C0K2sOKqWMubUY
-         QkzPW21Nnb5tW1erIdp2yjhW7fNJ7ysxs7gHZ4WGOVVHlWwY5vFz/Xr+o9aoFxX2vygA
-         X6RteOYYhAmiO5OYouf9ysOURuxLi/Ep1jgO+mL5cKhgYRdO3YQHvVRQP+ZvEG5AMxvQ
-         jvkg==
-X-Forwarded-Encrypted: i=1; AJvYcCU3irf7nsV0CTw5Io8giURleRqyz0pVOMVoyGd2G4/3i2ZdC+qTOQAbKSu+iIqIhcc8qq6udOA=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJY/ZYgf/voZUyxaQVdlPPxzltQl8Rj5aIhTTKnPRo5G5Xgxi2
-	2CtyMVsoM4WHWkRP6P8oC3L3iAxma5T9TbaaBmQQ0Tdby4k9gEmAnItE
-X-Gm-Gg: AY/fxX7xB4Nb+hbk+4vkDBI/tD3XbSO0Wo9uADkp1D4J6rpAdac2WFr0DQg1b/DocxD
-	e3ZYVXYa9Ae/b0l6TFKt8dM++hKmecmSZbfRYvnZT/q6wLAoIXLxQZsUY6dKnrKBc5gLcAwDqvv
-	5MZgd9OEP5agz0qx5600KZk1Bo44BB58j/Tu5ZL+uqGC+Kl3LX1aJQSNbvFCnHoZuyr1U5PUJd8
-	h+5SQrlSIB+gYZ6JGPUsAa7qft4RFEUXmCKGRlTxOC/q83lBIJsrLxfKLy2pNJ7Gg2N1JyozyI3
-	C8+r1sSpSFGozk4jeKL+tFffFffHm/vQ9Z+bXqKPR5fHZ1vN2G+Hr4G5K6MCy0+VlpTfOCJkcTO
-	50pSqmRjjVAaWBITa36DTLNFPTk4FJXYIORnkGG1k5UHMNUXLHA7pSF5crlUpyMQML6ooRAos5f
-	JnVMKu75ZX0Lk0AREouZoQYhD1mADFaLD5Z1osPiuADPY=
-X-Received: by 2002:a05:600c:1c24:b0:47e:e2b8:66e6 with SMTP id 5b1f17b1804b1-4802590e305mr97146725e9.14.1768758958917;
-        Sun, 18 Jan 2026 09:55:58 -0800 (PST)
-Received: from anton.local (vps-58d0fbce.vps.ovh.net. [51.178.29.162])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e8d90b3sm154086955e9.15.2026.01.18.09.55.55
+        d=1e100.net; s=20230601; t=1768759803; x=1769364603;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=e91dx2Lt0A/p1SGAlZ5HpZ8yspCC620dBzh1TkoZPcU=;
+        b=Vyt4kxMvsXc2sSK8wYyUDAN70Yuf6D5kpGs+2zFmqVCKk8kXWl9jcijMpthlAyv52Q
+         buU/36rbyKpdYaf6XTIT8NABjZYTJDeS74XRHcMO64cnNWQVa1FeLPh52gWzqscsHOkj
+         3p7xb5Pk0CqCYu1P6aHOI0oXXNxWRFMjscOPlFIgIl7EIVbvY41t4URjgxUmZsoc5UUG
+         VXGWAvHvUyoF/V30Omywy32EncVxaHcNIyADR0iXU+8EkG13LmEmwfyx3GgLC5X0k+h8
+         f0J313zKO5EU9lX4uAbYiaq4icXES+1a6CwQSuuwxfxlmh98LLQgPR9wv6/+mBe9urek
+         ESUA==
+X-Forwarded-Encrypted: i=1; AJvYcCW944p4L5mEtO6qYUQ1aJh+gKlqwaWes3jSm4h5xUpEbPoWGIgIAq9bTpc5WSx0UkZiphHzmcI=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzzYe5hQdcgdek3sQHvMXuS4Efu/utiN265tgUPbN4G4lYM9/jl
+	zml0u3fFyz8JUjGWXe/aQIBOYdvt+kW9fh4EK0uZVlqHrJ9CWuW1a4N63Pq2xD/YE0S4NZHHotS
+	fgum5o1RWTeIcrBmyTqKVCwyPgiDjQRvUWA/o3UoUbNdWG5AYsnVDWKwBOKs=
+X-Gm-Gg: AY/fxX4AYoIwvofLHIB0zsROfSAxufz+OlVA5Z8IdUYrx67otCKOEW4J7NkvZW6zWkL
+	FfXMixjTUWlBGWtYac1mRKeSSCMvju+kkyM63zULItGldN2dnAtuTDLc46sRCMtUS/aTvamihX8
+	Ncu92l37I/1ka2nNIDIWpiJpFjUajqQQZ4+Xfnd/q+mtlGbwSKFYbzy74JYBL2XXj1AGOMW68IO
+	3B1s7Qv9QNcSlPIFuvXOuJBxyHrbXm363mZXG7jNUv9fmQBmi2lwdmSMTJ2vFq8Kw1hMtthqkSf
+	VHDETdwLgAthphEPcAXihe9DSMFfXOhL07cE2HdJ2blrOq4Hf2VV3H14AZ/53h23FaaqyqgsTtw
+	82aGonXAXow35fh2DMaQwoVm8Y6h4pgebxg==
+X-Received: by 2002:a05:620a:19a9:b0:8a6:e2b4:ba73 with SMTP id af79cd13be357-8c6a676deefmr1375657985a.51.1768759803188;
+        Sun, 18 Jan 2026 10:10:03 -0800 (PST)
+X-Received: by 2002:a05:620a:19a9:b0:8a6:e2b4:ba73 with SMTP id af79cd13be357-8c6a676deefmr1375653585a.51.1768759802656;
+        Sun, 18 Jan 2026 10:10:02 -0800 (PST)
+Received: from [127.0.1.1] ([178.197.218.229])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe44b37sm62162085e9.12.2026.01.18.10.10.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Jan 2026 09:55:58 -0800 (PST)
-Date: Sun, 18 Jan 2026 21:55:53 +0400
-From: "Anton D. Stavinskii" <stavinsky@gmail.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
-	Inochi Amaoto <inochiama@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v2 1/7] dt-bindings: sound: sophgo: add CV1800B I2S/TDM
- controller binding
-Message-ID: <aW0a9e8Lyv1tu-mZ@anton.local>
-Mail-Followup-To: Krzysztof Kozlowski <krzk@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260118-cv1800b-i2s-driver-v2-0-d10055f68368@gmail.com>
- <20260118-cv1800b-i2s-driver-v2-1-d10055f68368@gmail.com>
- <20260118-famous-magnificent-peccary-474ba8@quoll>
- <aW0SikDtd0HIrT4v@anton.local>
- <37bbd795-a0b1-462b-bf0a-2713f79ef2b8@kernel.org>
+        Sun, 18 Jan 2026 10:10:02 -0800 (PST)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: [PATCH v2 00/11] pinctrl: Some code cleanup including guards
+Date: Sun, 18 Jan 2026 19:09:23 +0100
+Message-Id: <20260118-pinctrl-cleanup-guard-v2-0-bd36f681bdc0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37bbd795-a0b1-462b-bf0a-2713f79ef2b8@kernel.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANMhbWkC/4WNQQ6DIBREr2L+ut8IotWueo/GBQLVnyhYUNLGe
+ PdSL9DNJG+SebNDMJ5MgFu2gzeRAjmbgF8yUKO0g0HSiYEXvC4YE7iQVaufUE1G2m3BYZNeo27
+ athdt2fS8hrRdvHnS+/Q+usQjhdX5z3kT2a/9Z4wMC5RMVFdeN5XS5d2FkL82OSk3z3kK6I7j+
+ AIC5y64wQAAAA==
+X-Change-ID: 20260114-pinctrl-cleanup-guard-d899b4938b26
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+        Linus Walleij <linusw@kernel.org>, Joel Stanley <joel@jms.id.au>,
+        Emil Renner Berthing <kernel@esmil.dk>,
+        Hal Feng <hal.feng@starfivetech.com>,
+        Chen Wang <unicorn_wang@outlook.com>,
+        Inochi Amaoto <inochiama@gmail.com>,
+        Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+        Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Steen Hegelund <Steen.Hegelund@microchip.com>,
+        Daniel Machon <daniel.machon@microchip.com>,
+        UNGLinuxDriver@microchip.com,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Patrice Chotard <patrice.chotard@foss.st.com>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
+        linux-tegra@vger.kernel.org, linux-rockchip@lists.infradead.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Thierry Reding <treding@nvidia.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2196;
+ i=krzysztof.kozlowski@oss.qualcomm.com; h=from:subject:message-id;
+ bh=dKxtqE6F8oVTPGmj41LTMmFmCHa0XUBAz9pzJ7TKy6A=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBpbSHgS/sC9MoC46kLct9nO207FP02f+ZKWuWF4
+ x/5aXRVPPqJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaW0h4AAKCRDBN2bmhouD
+ 14R3D/4jKkbCQoTMPrMXhhxCHhrjeKIra3ZsTo8nPBiXx1ID7N9lPwzEIYwEZO8B49U/Q01dq5+
+ fUCazLvlHLe2RVwJypxPbjPXDZEh3HAfgP6uvjK+JegThArZiW7Msp/3kWgL7JRn2WAZr4FJOVE
+ MhnYZ0KcknqqK3deee26SYH9o7TYNQpnT5HC5fu4m8bFgWNDfZ4f8EMv1rKquIp/HWdPb437xjK
+ gdyrQCSvr2uGwRe7V3JHT13jrs8B1if8tfgU1U64WlPSQlcIvvft1IJX+mbe8rzvpggj4Uu7hem
+ +pTVezsrkvRW5z+WRI7I7opzoBaGi0qFTUibXhzbG42KeuGaJCCvY3r6Kf+mgf6aaRfPhvR22Yv
+ EfcagSijmlL2S5tZv8KR2yes9TEOLqDFKf/P6IrD/+WnGPgNf74qHRpqPnmIPVcACbbA1PgkREr
+ zT5pT2C8Thpf7dvRv6PzP4FJs5pDS1EfusuHXjRKP740bHrWrLOFVFvVau9MYu7Ft064VpIS5KN
+ BHE9uwTEtyCczL+C7z2TbfRGHmW2/mQqt9z/bk9EJJLp7iGmOsat40UDsozN9a/2VAKC2S8GziS
+ HzceKkh1lcWCJVgmwBcKgtQnMHvwF0PT/ni39xYB4PY+aRw8ESy90SUN8GoKJ4qvhbAiSolNd8w
+ X8uqy5r2f8iL1YA==
+X-Developer-Key: i=krzysztof.kozlowski@oss.qualcomm.com; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTE4MDE1OSBTYWx0ZWRfX5AQfs9YtaLK1
+ JKoXIAyaMjKUh482I66EE4jN4JPdmu8Rx6M1Dl4q1E5CL+w71JgXnigO+YSvekW82GBXPTvexa1
+ 30X2LWoh4qhArQR52Xidwx8JM8nNI0mRg1yYWlHkDq7bWFka5BMxVL4mjBqIW5g/lNybzmgNVY3
+ XeUZN/xnqoLhFiHK9Fc/8THsLoWNNIDd5aMgB5g4lMPmO6G/MNZ/4aZYYWvuFyB6yQrAxAkQwmE
+ PYCSpVnBMBjYuHL4VTvL5sJoOlMSK9WBaUpDx8BvIR4GSAlONgs5BfbkcuheXPLXVHL0Cm0su5C
+ ZoQ8/KbvttG1nDOHjiXFAZkNjJDykw3zStOF/RfwHasOKdjucDyPv5MQvQyJMtM+vER1p+HgpLp
+ UecUoPs79noB5P5G3GQRj3MhejxS5d0em3JxTWtsP17CtHVQH6iizSkUlPLdlVLHq3DacYqJSNq
+ f8jvQwK3eK07S7TjwKw==
+X-Proofpoint-ORIG-GUID: YH-Z81J3QCDjHLTWx57qmbd1cReSyaab
+X-Proofpoint-GUID: YH-Z81J3QCDjHLTWx57qmbd1cReSyaab
+X-Authority-Analysis: v=2.4 cv=dPurWeZb c=1 sm=1 tr=0 ts=696d21fc cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=Eb9f15NH/cHKzfGOmZSO4Q==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8
+ a=SAbWReso6WKF-fSag6gA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=FO4_E8m0qiDe52t0p3_H:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.9,FMLib:17.12.100.49
+ definitions=2026-01-17_03,2026-01-15_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601180159
 
-On Sun, Jan 18, 2026 at 06:32:24PM +0400, Krzysztof Kozlowski wrote:
-> On 18/01/2026 18:07, Anton D. Stavinskii wrote:
-> > On Sun, Jan 18, 2026 at 11:14:34AM +0400, Krzysztof Kozlowski wrote:
-> >>
-> >> Please use subject prefixes matching the subsystem. You can get them for
-> >> example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
-> >> your patch is touching. For bindings, the preferred subjects are
-> >> explained here:
-> >> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-> > 
-> > dt-bindings: sound: sophgo,cv1800b: add I2S/TDM controller
-> 
-> No. Read again, I even gave you DIRECT doc link!
-> 
-> > 
-> > Is this anyhow better? Also in the documentation directory should go
-> > first but I didn't find such examples in git follow. 
-> 
-> Huh? How so? Where are you looking? 99% of commits have correct prefix.
-> Where do you see sound:
-> 
-> b7d53fe53cb5 ASoC: dt-bindings: rtq9128: Add rtq9154 backward compatible
-> 35bffbe49dfd ASoC: dt-bindings: Convert realtek,rt5651 to DT schema
-> 70d95c5d2081 ASoC: dt-bindings: rockchip-spdif: Allow "port" node
-> f66e7da2a6b1 ASoC: dt-bindings: realtek,rt5640: Allow 7 for
-> 101b982654ac ASoC: dt-bindings: realtek,rt5640: Add missing properties/
-> b540b4e157c4 ASoC: dt-bindings: realtek,rt5640: Document port node
-> 25b858474497 ASoC: dt-bindings: realtek,rt5640: Update jack-detect
-> 66b47b9c069f ASoC: dt-bindings: realtek,rt5640: Document mclk
+Changes in v2:
+- Patch #9 (pinctrl: tegra-xusb) - Drop stale mutex_unlock (Jon)
+- Add tags
+- Link to v1: https://patch.msgid.link/20260114-pinctrl-cleanup-guard-v1-0-a14572685cd3@oss.qualcomm.com
 
-Sorry I'm new to this and learning. For some reason I thought that "binding dir" 
-in "<binding dir>: dt-bindings: ..." is actual directory of introduced
-file. That is why I said  couldn't find any example because I didn't
-find anything with "sound:". Thank you for clarification. 
+Few cleanups - from unused headers - or code simplifyings, including
+usage of guards when beneficial.  I did not conver cases where guards
+would be mixed with gotos, because this is discouraged practice.
 
-Got it now(I hope so). Removing sound, adding ASoC. 
-Also the word binding removed as you told me
+Best regards,
+Krzysztof
 
-ASoC: dt-bindings: sophgo,cv1800b: add I2S/TDM controller
+---
+Krzysztof Kozlowski (11):
+      pinctrl: aspeed: Cleanup header includes
+      pinctrl: starfive: jh7110-sys: Cleanup header includes
+      pinctrl: sophgo: Cleanup header includes
+      pinctrl: amd: Cleanup header includes
+      pinctrl: aw9523: Simplify locking with guard()
+      pinctrl: microchip-sgpio: Simplify locking with guard()
+      pinctrl: tb10x: Simplify locking with guard()
+      pinctrl: tegra-xusb: Return void in padctl enable/disable functions
+      pinctrl: tegra-xusb: Simplify locking with guard()
+      pinctrl: rockchip: Simplify locking with scoped_guard()
+      pinctrl: st: Annotate st_pinconf_dbg_show() as holding mutex
+
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c         |  4 +-
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c         |  3 +-
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c         |  5 +-
+ drivers/pinctrl/pinctrl-amd.c                      |  2 -
+ drivers/pinctrl/pinctrl-aw9523.c                   | 53 ++++++++++------------
+ drivers/pinctrl/pinctrl-microchip-sgpio.c          |  6 +--
+ drivers/pinctrl/pinctrl-rockchip.c                 | 19 ++++----
+ drivers/pinctrl/pinctrl-st.c                       |  1 +
+ drivers/pinctrl/pinctrl-tb10x.c                    | 17 ++-----
+ drivers/pinctrl/sophgo/pinctrl-cv18xx.h            |  4 --
+ drivers/pinctrl/sophgo/pinctrl-sg2042.h            |  6 ---
+ .../pinctrl/starfive/pinctrl-starfive-jh7110-sys.c |  3 --
+ drivers/pinctrl/tegra/pinctrl-tegra-xusb.c         | 30 ++++++------
+ 13 files changed, 55 insertions(+), 98 deletions(-)
+---
+base-commit: ba124fc31bca9f5158f9bc00ac5ce38154b57007
+change-id: 20260114-pinctrl-cleanup-guard-d899b4938b26
+
+Best regards,
+-- 
+Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
