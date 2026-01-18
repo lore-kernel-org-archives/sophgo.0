@@ -1,127 +1,110 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632EA2222D2;
-	Sun, 18 Jan 2026 16:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30EE921019E
+	for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 17:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768752850; cv=none; b=hoN0bW2wW03FmRvKMJTtLjVzjJXkpIaKY+6nANdfZd4jKew6xGh7XBUoEahXXI0OkOq3g6U5Q9TGRc1BkWn/RqwoWP6e5n/N//lDB/Zu/RLsIjpAGCyQmQpzZEc1f6UdCPRRgCRSLS7b5mdagdnzc3rEMriZ6LkR/zo7GzX0Ezg=
+	t=1768756079; cv=none; b=Cw24GUUxH0spqLtTn9bGXUJRntp6Khxd1svSkHwMXQcyDo0+7WNHz7NeIvTjR6SvojUx6g8NQW+XAI+Bm4KroR6q6j5ztE+gWjgZ/zgLTXP096DkzuQE5Lu/kd4isKFruAU/hTLC9au3JZ9Z1tW2JgPPOoPMuNzW2d7Pl/bn0i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768752850; c=relaxed/simple;
-	bh=Zy4RwdRBecSYNBHVAUsvMYNacGxjiMO3O0gqSFdG42Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=p1AgOfe6KtJ45hDYugXlbwYMA9wqkIP4OBzomL/BKZDXy9lDB2NlTNAdVtHBTn2iwY6QJInC2V2qnWQjS4AuSLuYh8mHhLWiYW/ed2297ALQWQk/LNPD6U1L9K+e4XI9SAvkql43Fckgf3u5CUuyOHNGfCTKYIloJr8C6s5FVNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JHUaDfsS; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768756079; c=relaxed/simple;
+	bh=wqJVTf+gmqQxz2b5iZXHl+d4EPQymaMDdRoZo/w/TXg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nBLaSEUlZRj78MrHJIhu5+YK/ypcoNYEeR9OTBxES3y2LED6ZQG5Qs82+KvwTDfP2XbkCw2JTWlxHgmwVVJBN6IW65nFsXIYeJatWG6w8ZCtewAEErn4HDomEmDqoJxWmbiO5g7hvlbssX2AYDtt7dtW5z4V+OAf79tiW1wy/k0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nYCLn/ki; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JHUaDfsS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BB08C116D0;
-	Sun, 18 Jan 2026 16:14:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768752850;
-	bh=Zy4RwdRBecSYNBHVAUsvMYNacGxjiMO3O0gqSFdG42Q=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=JHUaDfsSYoMMRKf6F/idu6Lffq1gx1UqksMFoa7krShplmF9nZwDgoEiDt5aRJnfe
-	 qrqZhcEPyOt1YTMGmNDlWIxwW5xoKYKtpP+1QJCkpgPE4SY50DOQ2R3fXcsE6KMCS8
-	 lnhePfol/gPNEGEybTpokW/dfUYIHOknSE97b/RoIeQwlOQnrt80YxEwL/Ubaou6kj
-	 Mm+JXjQx0+H7LbgbQGV8jqccpBBLt8wNtBB5Ms+/yG8w1ZbSWP9toCsZ+p8YsbYAo0
-	 dSgAIbz+5xVK31ZS7ArmE4jfG0gWVRWYonOnYiSp12dgB/tow8LN3H30nYRmZAnTiZ
-	 aqk0inMjh6nBg==
-Message-ID: <5248fe03-7e77-4c5d-ad05-e182b3068e66@kernel.org>
-Date: Sun, 18 Jan 2026 17:14:04 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nYCLn/ki"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47ee76e8656so40861585e9.0
+        for <sophgo@lists.linux.dev>; Sun, 18 Jan 2026 09:07:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768756077; x=1769360877; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LzZkrvjzl8CZXzuYp4FhKjj0g1M3FRzGDlc7LV5XfLI=;
+        b=nYCLn/kiShLmny4KdambLwLm80gAPCiWNMBroO5Aak0kfK7IDyWdudiSrcBAV1MwA8
+         ZDEoRerccy69Eg2I8s5n4hRdPy1azKFjL58S7S8ND9w7eDl6z6/Gbz387Wjq/Bg/8WNM
+         eLaWSmgpsghJ0LUT8AVwDreWj+LCz7yO+7R1BmADHUDbrYVOo/NpL1QKxyMPJmCwfMuW
+         a1U+QbIhPNPaRqFnt2SxMULJvHjMYDBO+xLM5NIEltFk+We0QcxA+jJtpVrnS8+9ZaB9
+         N6YdMUsodEnIijeggTNwZRFlV1SeltXIuLh4IFMekey0RQQIFXn+fLmVeGYWdfxV3bnQ
+         QTBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768756077; x=1769360877;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LzZkrvjzl8CZXzuYp4FhKjj0g1M3FRzGDlc7LV5XfLI=;
+        b=PcYxKpLXgG7mdQ9JoDdFMjZgQs/xTf4wyY0DCgUgeulkpBbn597/gClkqyFrNCEgqs
+         GUdBZtR46ZhA7zyiIb7bVFQqLEi4ZKgMGvIOTjh+EJwm4Q/6dh3hyIqmO5gvvYs78mLL
+         GXnWmHuSXuEJleHMLG58UcIl7KTaDspZXZXRqgquPeARJqH2yt85E9lK2FKfq0nrSBUi
+         gPjEoaAr+Ru0KAuhs3RxCGRvaJG8NaUADyW9nCayn1XHRz1XOczltkznQnyVOjUtSh9X
+         +o6PlV/MWYT6MwTJBy2qHdEX6SW9cQkXjP35ytzmzmYvIuQ5KVVbda0l1SEs0RcDO8yI
+         BJNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdH96a1YCJAomRaHP5KMng3GKBOgqRtCTn2i2RT2IvuV/vu6EYp91he5v68AzSQkUHhcQOZ38=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZ88ErR1LENATODrcC8s80ITJESzWuFGUJfOPzHkUSMYI6hZCY
+	UVzrnnPlz0l+K5rC15cAnyVqomHqAPAxpmgMCEqpVioMXw64qxmaniLt
+X-Gm-Gg: AY/fxX5ugxsz5cZnZ8yROYRADBZ4YGloR1TZjDrPmvs3tg4Z5SrzGKaae6vYTR01/Rx
+	ieW0lAljZd/CGXzXzMuzBknVBbArvWj0K2ZM1dlY878tZg0rILD/93tGaxwP9QpGil4tnKw3Md3
+	JUeMzzYdYAKF0yPa6goJTSjxrJeYt8jNB4H+jPLcyIG1S8flcHbeTU/5Nkw1i7S6JcI3apocqtB
+	FHRSkIc8DFcoE15EQOCXGhiGBItktGHsBbECjEOiZMItHfW7M/gn7j0KOW9hqnopkufM5ODSOY8
+	ozuwDLnKUC2d7WoJeCz3piX5OWffuZc1kc93NmfXVMHh99XbYlcmJar+xieAYztLLpOvrU89Mh5
+	Fta+HT7biXZ2atBEaMTuWZUOBqJBRVfwnNHuG+ek+k+0tYO7VKqg9mv1nId/KWdgptNz6dryGA3
+	SzbQhRNH5EQS7b2uO4omkGWbOzn6uugf2V9xopGb6DCUI=
+X-Received: by 2002:a05:600c:4e93:b0:46e:6d5f:f68 with SMTP id 5b1f17b1804b1-4801e30b737mr113177375e9.12.1768756076408;
+        Sun, 18 Jan 2026 09:07:56 -0800 (PST)
+Received: from anton.local (vps-58d0fbce.vps.ovh.net. [51.178.29.162])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801fe03b56sm66590995e9.4.2026.01.18.09.07.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Jan 2026 09:07:56 -0800 (PST)
+Date: Sun, 18 Jan 2026 21:07:51 +0400
+From: "Anton D. Stavinskii" <stavinsky@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v2 1/7] dt-bindings: sound: sophgo: add CV1800B I2S/TDM
+ controller binding
+Message-ID: <aW0SikDtd0HIrT4v@anton.local>
+Mail-Followup-To: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+References: <20260118-cv1800b-i2s-driver-v2-0-d10055f68368@gmail.com>
+ <20260118-cv1800b-i2s-driver-v2-1-d10055f68368@gmail.com>
+ <20260118-famous-magnificent-peccary-474ba8@quoll>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/7] dt-bindings: sound: sophgo: add CV1800B I2S/TDM
- controller binding
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260118-cv1800b-i2s-driver-v2-0-d10055f68368@gmail.com>
- <20260118-cv1800b-i2s-driver-v2-1-d10055f68368@gmail.com>
- <20260118-famous-magnificent-peccary-474ba8@quoll>
- <aWzMvqzh-QXWRTWP@anton.local>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aWzMvqzh-QXWRTWP@anton.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260118-famous-magnificent-peccary-474ba8@quoll>
 
-On 18/01/2026 13:18, Anton D. Stavinskii wrote:
->>
->> Again, messed constraints.
->>
->>> +    items:
->>> +      enum: [rx, tx]
->>
->> No, it has to be a specific/fixed list.
+On Sun, Jan 18, 2026 at 11:14:34AM +0400, Krzysztof Kozlowski wrote:
 > 
-> Here is the question. Can you please help to understand how to describe
-> this properly. The idea is that TDM module is usable even without
-> specified dmas. Each TDM can work as clock source, only rx only tx or
-> both. I can force to use both channels but the user probably will want 
-> to not consume all the channels for if it is not needed. DMA can provide
-> channels for something else like SPI/I2C/UART etc. I'm asking because
-> I'm afraid I will do some mess again here.
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
+> your patch is touching. For bindings, the preferred subjects are
+> explained here:
+> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
 
-If any combination is valid in hardware, then:
+dt-bindings: sound: sophgo,cv1800b: add I2S/TDM controller
 
-minItems: 1
-items:
-  - enum: [rx, tx]
-  - const: tx
+Is this anyhow better? Also in the documentation directory should go
+first but I didn't find such examples in git follow. 
 
-Best regards,
-Krzysztof
+Thanks. 
+
