@@ -1,66 +1,66 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F893C00B1
-	for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 16:31:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC33C1FEB
+	for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 16:31:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768840264; cv=none; b=oT4+UN16JlcgbshXm3ddYHDB74M3700gF6wSfF3VAhIGhXDYoIpO6Mv9AO4iCV9trh6hQiE5OdkSIq/BSljD+7QdZqnn0xwek/qPOj3+C31GpJ1XcVOHZbE/rZI68e1Rf3oYsm0mRkoYLOwZkom7iRgVw5QaC9A2wf8GVWewrow=
+	t=1768840267; cv=none; b=sXTq5uqgdy7F1jEwua9HNIrKtVo7zch9c7J2nqaQgiaK/5abAQvLl2+PK0ar9EKEwlGgkKvaoJx3BrS+XgM9FX3yieHGpJDKjo1uKcrcPKWfjlDJ2HYhp+YSeU0O/FCR0+0AwnkiSNlNhTi3D//pFzp4lzc+pCmOErl37vc9UUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768840264; c=relaxed/simple;
-	bh=FhxRnJeE+n492blGdhTMJDOvXT2t5M+yRqAueV+wnBE=;
+	s=arc-20240116; t=1768840267; c=relaxed/simple;
+	bh=8E5W83s8zZhlgtflURC3mkpser20n9zf1XMNgYJpTwc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cL6qJuN89Qedqm1rcRyRuoTnIb5DQCK3ISprVKTeB5f9CUo4eo0SdEq8+qxiM2TYcg9nDWskDVmowSzqmMDVJWGzaR4rrcaoo1/n8lpBJR0cWRJTDQpR9jhUqXT7WFN9cmjEP8DzTWH7T1Djowp+aOGqBHHGEO3bHBjs94hPrb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QAr+rzM5; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:To:Cc; b=WLzq9H3YZ0KqWwo7ZvW31bpkz0RK3/ah5O4ZkSVA5BMZhtzjIizi26tGQq7nhdpRvjF1NmIaouFVkSJPMJjlYF7xM7uSNfzAEPO0eSSV46UodAfUq4aaiOk6bTQ0BNfKkbHt39vvdkfhLDNbyVFK4t+dRXRKTseqiE+neOnRdSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RzUulMXO; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QAr+rzM5"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47edd9024b1so27453135e9.3
-        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 08:31:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RzUulMXO"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-47d6a1f08bbso15079595e9.2
+        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 08:31:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768840260; x=1769445060; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768840263; x=1769445063; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=67n3hQj7YZy5SOWtPvVJYLwDNXmEE9p7Iv/fRjacYhE=;
-        b=QAr+rzM5pbQTLaHw8MTMCkVPOXphNePGOQEPcWFAaCOWpdAPlHz7gycKn4PWLhAILm
-         rxKY+IqhWtaWVklI3pP+8cVZAfC9e+h92SX7uBwiIK8Zkx6pZArHrirASbzwG4gYBc94
-         Y3S3Yg1E58tn+Cm/jHVXrK7fSdv4tTvpSKr3uxNCzwoB0za1YDEWwTMSDyEgWU3IAnTx
-         zrfeNURVH91qXn8URnhyP0uWjcXZ1mjH2b1M5x3OBcVaIi9eZ1USKP+IFi3EP0FUuS7v
-         y/jb6Zf0W1yCjS0VrjvCjynhKFZ9KMC1tJsSAyOqIEml93pbv1KJoPgD/F/RxNsZUAh+
-         NY/w==
+        bh=CTZeNoXj7ciqJdUwytCB4biiCQ0vzYC8/NabwXP8eYU=;
+        b=RzUulMXOYGqXrwE8I78yWr4LpAULh5zbYpcZZHv8/+2SNZI2FM6N/6xJxj9lwkcB/8
+         MbplnSpV8O7uqGruLa2wjc9nzVuTP/MFcBGTcsIGv5LL+rgoRdqKNFdV76Qvk95QxZVL
+         r3C0YgnTYINSoUPj6aLLTwpmY5j59l8yuyweDKFYZFG0DBWZMxSGAhhiC1Z2eVRlIsCd
+         zufDfSESz/5GXtIvu+MQ0W4/rK3gtmHrjNgM8dASfXJl3QSY5fzBKuWRMRA1t9eOgeuL
+         d/hB4+lWsLwiXSJfDYNr0DwsWYh6cn3rIsbL8iaH44eqrVdJn80Zejxs/1NLmW+EQnpZ
+         TheQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768840260; x=1769445060;
+        d=1e100.net; s=20230601; t=1768840263; x=1769445063;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=67n3hQj7YZy5SOWtPvVJYLwDNXmEE9p7Iv/fRjacYhE=;
-        b=ea4XZBTTm7qr32zPbaDtf4ooA8E2qzu+eAdgZwg2fNs06gAwUKIkkVGA52QXNlQasO
-         PH5S5C2hSQhB9nT9AwKHKk/UYcXwzVtzTscxhoEIR1F6CnjnWlsx5puAhSjWhOYXMTGZ
-         H8xYBy79n+0CDIaAY6IbYsDQZcxSQNcB9Qpf9f0wHIgMJF0BPtwQuY1WQMJAkLokR4jT
-         iBLdH2ac8Jl4RQejlE4e+AuL5hygt/RU+t9F9qiqklmuKwlL7WpzYuXYm5pk0kv+Ot3N
-         QKSdeDbssqnE6sBA/Q4SbK019NQXo8TnRPlYLPCsa5ROModpYJrxjkFBjfItGfbQkrmL
-         ELOA==
-X-Forwarded-Encrypted: i=1; AJvYcCWC+bOgnwcWVm67oFjwcjgqxagPDBNHV0CobO2T/0eCpTJ8aIbJvCRFVcpAPWw1qBgro34e4HE=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwHqFPRZtg0Q2RC0iM48jEVvcmJIFN3t8CuxSPkn07MBdiP+EZz
-	eG8C1LLd8JgAht/9GyMPerhbjScfTw3tbQCQG7GBwaTHGoH7d3MQrmaH
-X-Gm-Gg: AY/fxX6w2rMy7igTUgjfceiTGbS/fP1rzQ+6U4Wb88ZvntarUUpTH1PE8uukWeJ+KcJ
-	sO7tthS2f+S0prf7S9l0+P47P4nFAARy+b21CmY4zbqNeXbBasEA7AegaI72jjCjAnK79S0X6a2
-	fVe2AG3ngIYUNYrBSZrqFbKrmFCvJyviF2eAFZMTIwrSOmCb5zxljpq3pvvU9vynJWRMIXdZX2D
-	azzqEqtk8Ec1+QkbFNUV90qOmNG/6BRM7e6+KQsvIH98ilYKmQ//ZSWNaa8gnpZ5JEh1goNOojm
-	uxOQBoPIpxgK53veQm4DTKqGTL33NW6ShoMvdVhKhJefUEQK7J3QFeW/h6lE4auRqkmLCz90cLL
-	I9E2mxRWyVnvqrD3LnR+arPX63KmLAvbTNgqZ9O4qMY88UujLsfW0850WHVc5QcJeY/iYvJ5InJ
-	mUPY8FguYm/ziBNK+yE4xVA3sMZN1FP4mAg/N2RM6N8kfo
-X-Received: by 2002:a05:600c:870c:b0:47d:25ac:3a94 with SMTP id 5b1f17b1804b1-4801eb092demr155865715e9.17.1768840260071;
-        Mon, 19 Jan 2026 08:31:00 -0800 (PST)
+        bh=CTZeNoXj7ciqJdUwytCB4biiCQ0vzYC8/NabwXP8eYU=;
+        b=D8SVayjO/1x95RjidCx6Alt/UoS5bp9+RRQmO4HDGDC/QKpXnxSb+M2EH9g+3UcInb
+         cMD0KVTwYGNisY6b+cnf7ANvf4KLybeP2gyAF53DfS055encwVfJZ/YujMUmkoLV2sg2
+         Hk+qDmaBCYexXmfRDEIbOM4RlkpGiGlYeOzqXCUlP1SUr94ToI8kDgfhfMVKOdMprJj4
+         +2nKyDuULmVEe0m0X3clbxXAIoVqb9V8A7KQCKRfDXl94YL+LRXlnJ8FUnEZnfGgKPH1
+         K5JmhNuZZhFDbic0YLWqgyrV7ZsVFKZdWnVq0L27J9TsBrWYKClhobxijgqiFOyAJLKd
+         FU4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV6Weuaxj+mAyu9Ltb5q56m3+vyhAFg+GGK5Yjer1irhAujtAKaW6z5DJMCIuwi9XXD4WfXTwA=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxIhGvuRQq2s2IzASXjahpscYjPc7rCxqaYzA0AMiHtim/ZuOgh
+	PhVW2GunODNbUQ9S+UcEflHqfjNKsShq1rbolpm5GPwh/pUOQPqYYP8D
+X-Gm-Gg: AY/fxX7839TePTzCmNNHwrvKt1rdk8qp8HO5QVvG6mMhd1ePj2yyUsdcEu1GmIJHKns
+	TrS7PnfxhrbZnRQwGPfY4DYDN8wqEeLNWw22CbNvnLD4QlOMZeoCgc0Qz8N2lBVXNcDBhjvfcww
+	IdvOz4QXfBaVD0VxBI8PELnD2PnwDB8m1jzaJi1mO6mNV1uNLxAskqlF/H+iXH5oaGamlphmRHP
+	xPNTEREmnNJh1vdyXv0z/Cr776UTa2sOQh/mEvRKABwsHNgWN8PNywJPI9VJNFBVR8jO/g3dG85
+	xG7hAnfnaUA7kkRE1kKNJUcvtl9ye3/cNaXqol7AIGUgO4fF55PRApQZuYUPC5elQJpcdAXI3IL
+	9+lbWF38BA2KaGOjYsA6mCnw2KZLdTJK3Qi6liB2cYl67I1XUhIkhL07FJHtha1ZL7mjBSzfYEb
+	fqpocWU9jCOE8DJBlfp2vYqXSeOdbfKX8ZrG3Kqm/JFqPd
+X-Received: by 2002:a05:600c:4e43:b0:47e:e71a:e13a with SMTP id 5b1f17b1804b1-4801eb0f5a5mr139735345e9.32.1768840263387;
+        Mon, 19 Jan 2026 08:31:03 -0800 (PST)
 Received: from [127.0.1.1] (bba-94-59-215-181.alshamil.net.ae. [94.59.215.181])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e879537sm201666795e9.5.2026.01.19.08.30.56
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4801e879537sm201666795e9.5.2026.01.19.08.31.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 08:30:59 -0800 (PST)
+        Mon, 19 Jan 2026 08:31:02 -0800 (PST)
 From: "Anton D. Stavinskii" <stavinsky@gmail.com>
-Date: Mon, 19 Jan 2026 20:30:45 +0400
-Subject: [PATCH v3 4/6] ASoC: sophgo: add CV1800B internal ADC codec driver
+Date: Mon, 19 Jan 2026 20:30:46 +0400
+Subject: [PATCH v3 5/6] ASoC: sophgo: add CV1800B internal DAC codec driver
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260119-cv1800b-i2s-driver-v3-4-04006f4111d7@gmail.com>
+Message-Id: <20260119-cv1800b-i2s-driver-v3-5-04006f4111d7@gmail.com>
 References: <20260119-cv1800b-i2s-driver-v3-0-04006f4111d7@gmail.com>
 In-Reply-To: <20260119-cv1800b-i2s-driver-v3-0-04006f4111d7@gmail.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -84,119 +84,108 @@ Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  linux-riscv@lists.infradead.org, 
  "Anton D. Stavinskii" <stavinsky@gmail.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1768840243; l=11247;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768840243; l=7443;
  i=stavinsky@gmail.com; s=20260115; h=from:subject:message-id;
- bh=FhxRnJeE+n492blGdhTMJDOvXT2t5M+yRqAueV+wnBE=;
- b=rlorVl7lp7truTnHwuiw4wwPmmRrcQE2E0O+s4VLbfASsmz+Mfa7saIE+5+n/QJlcZYkEa30m
- ZAif8FFntDhAw/YdmBcPole/fQUWmn/P7dmiUWahPxLHWApVc6lpYGT
+ bh=8E5W83s8zZhlgtflURC3mkpser20n9zf1XMNgYJpTwc=;
+ b=Wu1ap/xyL3Ul7FWJWDzATIxrVtNW+/wGStrTiaPfmlEIBuIED2hoiwTu4GfIU2l/4WGTLwPz2
+ /c8/mRIfHPvCDFr24oeiGsgm8dl6CBr9jeHAVAeUZp0/e5n3PLm6NpN
 X-Developer-Key: i=stavinsky@gmail.com; a=ed25519;
  pk=2WxGZ1zd1vQwSPFCSks6zrADqUDBUdtq39lElk4ZE7Q=
 
-Codec DAI endpoint for RXADC + basic controls.
-THe codec have basic volume control. Which is
-imlemented by lookup table for simplicity.
-The codec expects set_sysclk callback to
-adjust internal mclk divider.
+Codec DAI endpoint for TXDAC. The codec does only a few things
+- set up decimation
+- enable codec and I2S output
+- ensures the driver doesn't have dac overwrite enabled. (unmute the
+  output)
 
 Signed-off-by: Anton D. Stavinskii <stavinsky@gmail.com>
 ---
- sound/soc/sophgo/Kconfig             |  12 ++
+ sound/soc/sophgo/Kconfig             |  11 +-
  sound/soc/sophgo/Makefile            |   1 +
- sound/soc/sophgo/cv1800b-sound-adc.c | 322 +++++++++++++++++++++++++++++++++++
- 3 files changed, 335 insertions(+)
+ sound/soc/sophgo/cv1800b-sound-dac.c | 204 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 215 insertions(+), 1 deletion(-)
 
 diff --git a/sound/soc/sophgo/Kconfig b/sound/soc/sophgo/Kconfig
-index 9495ab49f042..12d1a57ea308 100644
+index 12d1a57ea308..e4786f087589 100644
 --- a/sound/soc/sophgo/Kconfig
 +++ b/sound/soc/sophgo/Kconfig
-@@ -22,4 +22,16 @@ config SND_SOC_CV1800B_TDM
- 	  To compile the driver as a module, choose M here: the module will
- 	  be called cv1800b_tdm.
+@@ -28,10 +28,19 @@ config SND_SOC_CV1800B_ADC_CODEC
+ 	help
+ 	  This driver provides an ASoC codec DAI for capture and basic
+ 	  control of the RXADC registers.
+-
+ 	  Say Y or M to build support for the Sophgo CV1800B
+ 	  internal analog ADC codec block (RXADC).
+ 	  The module will be called cv1800b-sound-adc
  
-+config SND_SOC_CV1800B_ADC_CODEC
-+	tristate "Sophgo CV1800B/SG2002 internal ADC codec"
++config SND_SOC_CV1800B_DAC_CODEC
++	tristate "Sophgo CV1800B/SG2002 internal DAC codec"
 +	depends on SND_SOC
 +	help
-+	  This driver provides an ASoC codec DAI for capture and basic
-+	  control of the RXADC registers.
++	  This driver provides an ASoC codec DAI for playback and basic
++	  control of the TXDAC registers.
 +
 +	  Say Y or M to build support for the Sophgo CV1800B
-+	  internal analog ADC codec block (RXADC).
-+	  The module will be called cv1800b-sound-adc
-+
-+
++	  internal analog DAC codec block (TXDAC).
++	  The module will be called cv1800b-sound-dac
+ 
  endmenu
 diff --git a/sound/soc/sophgo/Makefile b/sound/soc/sophgo/Makefile
-index 3f9f1d07227a..c654d6059cbd 100644
+index c654d6059cbd..ec8dd31efddd 100644
 --- a/sound/soc/sophgo/Makefile
 +++ b/sound/soc/sophgo/Makefile
-@@ -1,3 +1,4 @@
- # SPDX-License-Identifier: GPL-2.0
+@@ -2,3 +2,4 @@
  # Sophgo Platform Support
  obj-$(CONFIG_SND_SOC_CV1800B_TDM) += cv1800b-tdm.o
-+obj-$(CONFIG_SND_SOC_CV1800B_ADC_CODEC) += cv1800b-sound-adc.o
-diff --git a/sound/soc/sophgo/cv1800b-sound-adc.c b/sound/soc/sophgo/cv1800b-sound-adc.c
+ obj-$(CONFIG_SND_SOC_CV1800B_ADC_CODEC) += cv1800b-sound-adc.o
++obj-$(CONFIG_SND_SOC_CV1800B_DAC_CODEC) += cv1800b-sound-dac.o
+diff --git a/sound/soc/sophgo/cv1800b-sound-dac.c b/sound/soc/sophgo/cv1800b-sound-dac.c
 new file mode 100644
-index 000000000000..794030b713e9
+index 000000000000..ccf386174639
 --- /dev/null
-+++ b/sound/soc/sophgo/cv1800b-sound-adc.c
-@@ -0,0 +1,322 @@
++++ b/sound/soc/sophgo/cv1800b-sound-dac.c
+@@ -0,0 +1,204 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
-+ * Internal adc codec for cv1800b compatible SoC
-+ *
++ * Internal DAC codec for cv1800b based CPUs
 + */
++
 +#include <linux/module.h>
 +#include <linux/platform_device.h>
-+#include <sound/soc.h>
 +#include <linux/bitfield.h>
 +#include <linux/bits.h>
-+#include <sound/tlv.h>
-+#include <sound/soc-component.h>
-+#include <sound/control.h>
++#include <sound/soc.h>
 +#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/bitops.h>
 +
-+#define CV1800B_RXADC_WORD_LEN 16
-+#define CV1800B_RXADC_CHANNELS 2
++#define CV1800B_TXDAC_CTRL0   0x00
++#define CV1800B_TXDAC_CTRL1   0x04
++#define CV1800B_TXDAC_STATUS  0x08
++#define CV1800B_TXDAC_AFE0    0x0c
++#define CV1800B_TXDAC_AFE1    0x10
++#define CV1800B_TXDAC_ANA0    0x20
++#define CV1800B_TXDAC_ANA1    0x24
++#define CV1800B_TXDAC_ANA2    0x28
 +
-+#define CV1800B_RXADC_CTRL0    0x00
-+#define CV1800B_RXADCC_CTRL1   0x04
-+#define CV1800B_RXADC_STATUS   0x08
-+#define CV1800B_RXADC_CLK      0x0c
-+#define CV1800B_RXADC_ANA0     0x10
-+#define CV1800B_RXADC_ANA1     0x14
-+#define CV1800B_RXADC_ANA2     0x18
-+#define CV1800B_RXADC_ANA3     0x1c
-+#define CV1800B_RXADC_ANA4     0x20
++/* cv1800b_TXDAC_CTRL0 */
++#define REG_TXDAC_EN GENMASK(0, 0)
++#define REG_I2S_RX_EN GENMASK(1, 1)
 +
-+/* CV1800B_RXADC_CTRL0 */
-+#define REG_RXADC_EN                   GENMASK(0, 0)
-+#define REG_I2S_TX_EN                  GENMASK(1, 1)
++/* cv1800b_TXDAC_CTRL1 */
++#define REG_TXDAC_CIC_OPT GENMASK(1, 0)
 +
-+/* CV1800B_RXADCC_CTRL1 */
-+#define REG_RXADC_CIC_OPT              GENMASK(1, 0)
-+#define REG_RXADC_IGR_INIT             GENMASK(8, 8)
++/* cv1800b_TXDAC_AFE0 */
++#define REG_TXDAC_INIT_DLY_CNT GENMASK(5, 0)
 +
-+/* CV1800B_RXADC_ANA0 */
-+#define REG_GSTEPL_RXPGA               GENMASK(12, 0)
-+#define REG_G6DBL_RXPGA                GENMASK(13, 13)
-+#define REG_GAINL_RXADC                GENMASK(15, 14)
-+#define REG_GSTEPR_RXPGA               GENMASK(28, 16)
-+#define REG_G6DBR_RXPGA                GENMASK(29, 29)
-+#define REG_GAINR_RXADC                GENMASK(31, 30)
-+#define REG_COMB_LEFT_VOLUME           GENMASK(15, 0)
-+#define REG_COMB_RIGHT_VOLUME          GENMASK(31, 16)
++/* cv1800b_TXDAC_ANA2 */
++#define TXDAC_OW_VAL_L_MASK GENMASK(7, 0)
++#define TXDAC_OW_VAL_R_MASK GENMASK(15, 8)
++#define TXDAC_OW_EN_L_MASK GENMASK(16, 16)
++#define TXDAC_OW_EN_R_MASK GENMASK(17, 17)
 +
-+/* CV1800B_RXADC_ANA2 */
-+#define REG_MUTEL_RXPGA                GENMASK(0, 0)
-+#define REG_MUTER_RXPGA                GENMASK(1, 1)
-+
-+/* CV1800B_RXADC_CLK */
-+#define REG_RXADC_CLK_INV              GENMASK(0, 0)
-+#define REG_RXADC_SCK_DIV              GENMASK(15, 8)
-+#define REG_RXADC_DLYEN                GENMASK(23, 16)
++struct cv1800b_priv {
++	void __iomem *regs;
++	struct device *dev;
++};
 +
 +enum decimation_values {
 +	DECIMATION_64 = 0,
@@ -205,127 +194,82 @@ index 000000000000..794030b713e9
 +	DECIMATION_512,
 +};
 +
-+static const u32 cv1800b_gains[] = {
-+	0x0001, /* 0dB */
-+	0x0002, /* 2dB */
-+	0x0004, /* 4dB */
-+	0x0008, /* 6dB */
-+	0x0010, /* 8dB */
-+	0x0020, /* 10dB */
-+	0x0040, /* 12dB */
-+	0x0080, /* 14dB */
-+	0x0100, /* 16dB */
-+	0x0200, /* 18dB */
-+	0x0400, /* 20dB */
-+	0x0800, /* 22dB */
-+	0x1000, /* 24dB */
-+	0x2400, /* 26dB */
-+	0x2800, /* 28dB */
-+	0x3000, /* 30dB */
-+	0x6400, /* 32dB */
-+	0x6800, /* 34dB */
-+	0x7000, /* 36dB */
-+	0xA400, /* 38dB */
-+	0xA800, /* 40dB */
-+	0xB000, /* 42dB */
-+	0xE400, /* 44dB */
-+	0xE800, /* 46dB */
-+	0xF000, /* 48dB */
-+};
-+
-+struct cv1800b_priv {
-+	void __iomem *regs;
-+	struct device *dev;
-+	unsigned int mclk_rate;
-+};
-+
-+static int cv1800b_adc_setbclk_div(struct cv1800b_priv *priv, unsigned int rate)
++static void cv1800b_dac_enable(struct cv1800b_priv *priv, bool enable)
 +{
 +	u32 val;
-+	u32 bclk_div;
-+	u64 tmp;
 +
-+	if (!priv->mclk_rate || !rate)
++	val = readl(priv->regs + CV1800B_TXDAC_CTRL0);
++	val = u32_replace_bits(val, enable, REG_TXDAC_EN);
++	val = u32_replace_bits(val, enable, REG_I2S_RX_EN);
++	writel(val, priv->regs + CV1800B_TXDAC_CTRL0);
++}
++
++static void cv1800b_dac_mute(struct cv1800b_priv *priv, bool enable)
++{
++	u32 val;
++
++	val = readl(priv->regs + CV1800B_TXDAC_ANA2);
++	val = u32_replace_bits(val, enable, TXDAC_OW_EN_L_MASK);
++	val = u32_replace_bits(val, enable, TXDAC_OW_EN_R_MASK);
++	writel(val, priv->regs + CV1800B_TXDAC_ANA2);
++}
++
++static int cv1800b_dac_decimation(struct cv1800b_priv *priv, u8 dec)
++{
++	u32 val;
++
++	if (dec > 3)
 +		return -EINVAL;
 +
-+	tmp = priv->mclk_rate;
-+	tmp /= CV1800B_RXADC_WORD_LEN;
-+	tmp /= CV1800B_RXADC_CHANNELS;
-+	tmp /= rate;
-+	tmp /= 2;
-+
-+	if (!tmp) {
-+		dev_err(priv->dev, "computed BCLK divider is zero\n");
-+		return -EINVAL;
-+	}
-+
-+	if (tmp > 256) {
-+		dev_err(priv->dev, "BCLK divider %llu out of range\n", tmp);
-+		return -EINVAL;
-+	}
-+
-+	bclk_div = tmp - 1;
-+	val = readl(priv->regs + CV1800B_RXADC_CLK);
-+	val = u32_replace_bits(val, bclk_div, REG_RXADC_SCK_DIV);
-+	/* Vendor value for 48kHz, tested on SG2000/SG2002 */
-+	val = u32_replace_bits(val, 0x19, REG_RXADC_DLYEN);
-+	writel(val, priv->regs + CV1800B_RXADC_CLK);
-+
++	val = readl(priv->regs + CV1800B_TXDAC_CTRL1);
++	val = u32_replace_bits(val, dec, REG_TXDAC_CIC_OPT);
++	writel(val, priv->regs + CV1800B_TXDAC_CTRL1);
 +	return 0;
 +}
 +
-+static void cv1800b_adc_enable(struct cv1800b_priv *priv, bool enable)
++static int cv1800b_dac_dly(struct cv1800b_priv *priv, u32 dly)
 +{
 +	u32 val;
 +
-+	val = readl(priv->regs + CV1800B_RXADC_CTRL0);
-+	val = u32_replace_bits(val, enable, REG_RXADC_EN);
-+	val = u32_replace_bits(val, enable, REG_I2S_TX_EN);
-+	writel(val, priv->regs + CV1800B_RXADC_CTRL0);
++	if (dly > 63)
++		return -EINVAL;
++
++	val = readl(priv->regs + CV1800B_TXDAC_AFE0);
++	val = u32_replace_bits(val, dly, REG_TXDAC_INIT_DLY_CNT);
++	writel(val, priv->regs + CV1800B_TXDAC_AFE0);
++	return 0;
 +}
 +
-+static unsigned int cv1800b_adc_calc_db(u32 ana0, bool right)
-+{
-+	u32 step_mask = right ? FIELD_GET(REG_GSTEPR_RXPGA, ana0) :
-+				FIELD_GET(REG_GSTEPL_RXPGA, ana0);
-+	u32 coarse = right ? FIELD_GET(REG_GAINR_RXADC, ana0) :
-+			     FIELD_GET(REG_GAINL_RXADC, ana0);
-+	bool g6db = right ? FIELD_GET(REG_G6DBR_RXPGA, ana0) :
-+			    FIELD_GET(REG_G6DBL_RXPGA, ana0);
-+
-+	u32 step = step_mask ? __ffs(step_mask) : 0;
-+
-+	step = min(step, 12U);
-+	coarse = min(coarse, 3U);
-+
-+	return 2 * step + 6 * coarse + (g6db ? 6 : 0);
-+}
-+
-+static int cv1800b_adc_hw_params(struct snd_pcm_substream *substream,
++static int cv1800b_dac_hw_params(struct snd_pcm_substream *substream,
 +				 struct snd_pcm_hw_params *params,
 +				 struct snd_soc_dai *dai)
 +{
 +	struct cv1800b_priv *priv = snd_soc_dai_get_drvdata(dai);
-+	unsigned int rate = params_rate(params);
-+	u32 val;
 +	int ret;
++	unsigned int rate = params_rate(params);
 +
-+	ret = cv1800b_adc_setbclk_div(priv, rate);
-+	if (ret) {
-+		dev_err(priv->dev,
-+			"could not set rate, check DT node for fixed clock\n");
-+		return ret;
++	if (rate != 48000) {
++		dev_err(priv->dev, "rate %u is not supported\n", rate);
++		return -EINVAL;
 +	}
 +
-+	/* init adc */
-+	val = readl(priv->regs + CV1800B_RXADCC_CTRL1);
-+	val = u32_replace_bits(val, 1, REG_RXADC_IGR_INIT);
-+	val = u32_replace_bits(val, DECIMATION_64, REG_RXADC_CIC_OPT);
-+	writel(val, priv->regs + CV1800B_RXADCC_CTRL1);
++	cv1800b_dac_mute(priv, false);
++	/* minimal decimation for 48kHz is 64*/
++	ret = cv1800b_dac_decimation(priv, DECIMATION_64);
++	if (ret)
++		return ret;
++
++	/* value is taken from vendors driver 48kHz
++	 * tested on sg2000 and sg2002.
++	 */
++	ret = cv1800b_dac_dly(priv, 0x19);
++	if (ret)
++		return ret;
++
 +	return 0;
 +}
 +
-+static int cv1800b_adc_dai_trigger(struct snd_pcm_substream *substream, int cmd,
++static int cv1800b_dac_dai_trigger(struct snd_pcm_substream *substream, int cmd,
 +				   struct snd_soc_dai *dai)
 +{
 +	struct cv1800b_priv *priv = snd_soc_dai_get_drvdata(dai);
@@ -334,12 +278,12 @@ index 000000000000..794030b713e9
 +	case SNDRV_PCM_TRIGGER_START:
 +	case SNDRV_PCM_TRIGGER_RESUME:
 +	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
-+		cv1800b_adc_enable(priv, true);
++		cv1800b_dac_enable(priv, true);
 +		break;
 +	case SNDRV_PCM_TRIGGER_STOP:
 +	case SNDRV_PCM_TRIGGER_SUSPEND:
 +	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
-+		cv1800b_adc_enable(priv, false);
++		cv1800b_dac_enable(priv, false);
 +		break;
 +	default:
 +		return -EINVAL;
@@ -348,82 +292,26 @@ index 000000000000..794030b713e9
 +	return 0;
 +}
 +
-+static int cv1800b_adc_dai_set_sysclk(struct snd_soc_dai *dai, int clk_id,
-+				      unsigned int freq, int dir)
-+{
-+	struct cv1800b_priv *priv = snd_soc_dai_get_drvdata(dai);
-+
-+	priv->mclk_rate = freq;
-+	dev_dbg(priv->dev, "mclk is set to %u\n", freq);
-+	return 0;
-+}
-+
-+static const struct snd_soc_dai_ops cv1800b_adc_dai_ops = {
-+	.hw_params = cv1800b_adc_hw_params,
-+	.set_sysclk = cv1800b_adc_dai_set_sysclk,
-+	.trigger = cv1800b_adc_dai_trigger,
++static const struct snd_soc_dai_ops cv1800b_dac_dai_ops = {
++	.hw_params = cv1800b_dac_hw_params,
++	.trigger = cv1800b_dac_dai_trigger,
 +};
 +
-+static struct snd_soc_dai_driver cv1800b_adc_dai = {
-+	.name = "adc-hifi",
-+	.capture = { .stream_name = "ADC Capture",
-+		     .channels_min = 1,
-+		     .channels_max = 2,
-+		     .rates = SNDRV_PCM_RATE_48000,
-+		     .formats = SNDRV_PCM_FMTBIT_S16_LE },
-+	.ops = &cv1800b_adc_dai_ops,
++static struct snd_soc_dai_driver cv1800b_dac_dai = {
++	.name = "dac-hifi",
++	.playback = { .stream_name = "DAC Playback",
++		      .channels_min = 2,
++		      .channels_max = 2,
++		      .rates = SNDRV_PCM_RATE_48000,
++		      .formats = SNDRV_PCM_FMTBIT_S16_LE },
++	.ops = &cv1800b_dac_dai_ops,
 +};
 +
-+static int cv1800b_adc_volume_get(struct snd_kcontrol *kcontrol,
-+				  struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
-+	struct cv1800b_priv *priv = snd_soc_component_get_drvdata(component);
-+	u32 ana0 = readl(priv->regs + CV1800B_RXADC_ANA0);
-+
-+	unsigned int left = cv1800b_adc_calc_db(ana0, false);
-+	unsigned int right = cv1800b_adc_calc_db(ana0, true);
-+
-+	ucontrol->value.integer.value[0] = min(left / 2, 24U);
-+	ucontrol->value.integer.value[1] = min(right / 2, 24U);
-+	return 0;
-+}
-+
-+static int cv1800b_adc_volume_set(struct snd_kcontrol *kcontrol,
-+				  struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
-+	struct cv1800b_priv *priv = snd_soc_component_get_drvdata(component);
-+
-+	u32 v_left = clamp_t(u32, ucontrol->value.integer.value[0], 0, 24);
-+	u32 v_right = clamp_t(u32, ucontrol->value.integer.value[1], 0, 24);
-+	u32 val;
-+
-+	val = readl(priv->regs + CV1800B_RXADC_ANA0);
-+	val = u32_replace_bits(val, cv1800b_gains[v_left],
-+			       REG_COMB_LEFT_VOLUME);
-+	val = u32_replace_bits(val, cv1800b_gains[v_right],
-+			       REG_COMB_RIGHT_VOLUME);
-+	writel(val, priv->regs + CV1800B_RXADC_ANA0);
-+
-+	return 0;
-+}
-+
-+static DECLARE_TLV_DB_SCALE(cv1800b_volume_tlv, 0, 200, 0);
-+
-+static const struct snd_kcontrol_new cv1800b_adc_controls[] = {
-+	SOC_DOUBLE_EXT_TLV("Internal I2S Capture Volume", SND_SOC_NOPM, 0, 16, 24, false,
-+			   cv1800b_adc_volume_get, cv1800b_adc_volume_set,
-+			   cv1800b_volume_tlv),
++static const struct snd_soc_component_driver cv1800b_dac_component = {
++	.name = "cv1800b-dac-codec",
 +};
 +
-+static const struct snd_soc_component_driver cv1800b_adc_component = {
-+	.name = "cv1800b-adc-codec",
-+	.controls = cv1800b_adc_controls,
-+	.num_controls = ARRAY_SIZE(cv1800b_adc_controls),
-+};
-+
-+static int cv1800b_adc_probe(struct platform_device *pdev)
++static int cv1800b_dac_probe(struct platform_device *pdev)
 +{
 +	struct device *dev = &pdev->dev;
 +	struct cv1800b_priv *priv;
@@ -439,28 +327,26 @@ index 000000000000..794030b713e9
 +
 +	platform_set_drvdata(pdev, priv);
 +	return devm_snd_soc_register_component(&pdev->dev,
-+					       &cv1800b_adc_component,
-+					       &cv1800b_adc_dai, 1);
++					       &cv1800b_dac_component,
++					       &cv1800b_dac_dai, 1);
 +}
 +
-+static const struct of_device_id cv1800b_adc_of_match[] = {
-+	{ .compatible = "sophgo,cv1800b-sound-adc" },
++static const struct of_device_id cv1800b_dac_of_match[] = {
++	{ .compatible = "sophgo,cv1800b-sound-dac" },
 +	{ /* sentinel */ }
 +};
++MODULE_DEVICE_TABLE(of, cv1800b_dac_of_match);
 +
-+MODULE_DEVICE_TABLE(of, cv1800b_adc_of_match);
-+
-+static struct platform_driver cv1800b_adc_driver = {
-+	.probe = cv1800b_adc_probe,
++static struct platform_driver cv1800b_dac_driver = {
++	.probe = cv1800b_dac_probe,
 +	.driver = {
-+		.name = "cv1800b-sound-adc",
-+		.of_match_table = cv1800b_adc_of_match,
++		.name = "cv1800b-dac-codec",
++		.of_match_table = cv1800b_dac_of_match,
 +	},
 +};
++module_platform_driver(cv1800b_dac_driver);
 +
-+module_platform_driver(cv1800b_adc_driver);
-+
-+MODULE_DESCRIPTION("ADC codec for CV1800B");
++MODULE_DESCRIPTION("DAC codec for CV1800B");
 +MODULE_AUTHOR("Anton D. Stavinskii <stavinsky@gmail.com>");
 +MODULE_LICENSE("GPL");
 
