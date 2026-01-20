@@ -1,187 +1,118 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7942472A2
-	for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 01:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7B213635E
+	for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 02:56:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768873046; cv=none; b=ji7of2R2vJSWr8sphdHha1SdMhjlPoboTrqGDGGYOA2trzPkqNWOisEJMXj2CQz9NNuu8yndEcNqoPtAzNHdG7qV2ZlT6M9CD7T+EYewf3a4lKM76ymsG7p4L41bc3hJ1c0Te9joxSkM4xKFnhvi1LMgW0BIv1Qgma2oiPrA7lU=
+	t=1768877778; cv=none; b=N1PbnXYSA2RgWdk/CmkHGrOPHuh62YpBPCZEKuxHC0OrSAvAwPlJsckLNBOq8cL/9/1LNodxeRlmCguF+auHHGm/UvxgOYXZtXBQwVAAFB5QSbK2xZ8vTvjQNeBD0rez3neJd68Og6tHWvzGrV49fJsFeBlj9zbDSP4qXF7Mc6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768873046; c=relaxed/simple;
-	bh=m30+RpDNnkg8xHt7cNwbdu7n3SlrHrGfQYim0hkdS3o=;
+	s=arc-20240116; t=1768877778; c=relaxed/simple;
+	bh=n5A0OXSyk7lo7f3jHURyz0bX/5X3lYhpTO7Z9MO/Uec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OnWk19Be5r6rG0in6JKeTFumDBoB/HJ2oTuoclPeZfzBhGqRbgfWOLk65P76I3D54kxqkb1960ZTN09bEBvhiOis0d86s/06+YlM5BIGR2HBG42csnSwXdogw/gIbi43h5BgB+MVtih2Jt1AP88HBf3LEJx8ky6+skJT2gC4BIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O0H635oI; arc=none smtp.client-ip=74.125.82.174
+	 MIME-Version:Content-Type; b=e2bljYG2Fmts4wfFZw9INcy1mSctqeqfqHltgwBs/lxIPjUVLassIpnBHmRDwepDMX9in38ke4qckbQrjCG4Oj9NGxzzNDR4GLIOtZWWBftkYvUnWbdL58knf9PXD0xJ8oipOM4TFs5OZjIdyK81DvxJaq1C/0br5ueB6JzAdZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OvmFikoP; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O0H635oI"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2ae5af476e1so2317143eec.1
-        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 17:37:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OvmFikoP"
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8c52f15c5b3so570365385a.3
+        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 18:56:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768873044; x=1769477844; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768877776; x=1769482576; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gH82B8wM8CiGczLPrX3tBjZxmPDBBF0WQaYSUsGab4s=;
-        b=O0H635oIRkbv51yP3lN4qpTGQyxUSRDTxYRu7NbkXFSCMHWQFu+r7yVV4utMRiuTGe
-         Zi/VcAbfzaXdE2mb5f57FcotQh5qQyP58G9mA49+CPkSPJ9vSzMcfQoyaVRD8esPtJWK
-         D9yXXrK6Sy+ZYIyBJ2SJ1QP8mhHuUFROy5ZO1fLSXrrj+Bd3LEbJgLrqBS9QQyGb1Y9I
-         x68jCPq+6poMcnzJMCcK7yBWRpYIKU14psifu9ccH/zrdepAgMzOtBkkIv6s5p5JzCsd
-         2BPfSaOEkbpSPjiLLCvMo51jxyJ8GMs20lSB6po8dsyFw2gBemyhCTNDmMHWbJPoodO0
-         u43g==
+        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
+        b=OvmFikoPBUHSRdk6/Kr/lDcXUeCJthjarBZKnx5sieRyhxZ8f9f6YJKqbNRBpvOZco
+         TSPbsJWfdLFaWAjTfnH23VZM+yseGdwDCZPXWk1bEPWAnDgIzkoRtdFCjHTNMh/nu5vw
+         M25r/roppL6INEtd6ucmkGusbdsDlUfik8Nx1vku6LgHe56/5WWccwGvKVeMZ10Inn8R
+         Uto77XorrMhdUxkbph50LGr591v991JPZE5iZlE2hSH3pl0Z0J0bDjM/jae/nPHmjXCC
+         aC9GkCC3Cr65auNhgSLwkDUmH3FrYxTWMHgc4UuB090PUP4Ms6u/YNsgYReV6iAa8Mzg
+         TrWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768873044; x=1769477844;
+        d=1e100.net; s=20230601; t=1768877776; x=1769482576;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gH82B8wM8CiGczLPrX3tBjZxmPDBBF0WQaYSUsGab4s=;
-        b=Xm3wVj2exQC7oHAXe+1gdQ84YBIp8PVKfztxZtXKaB2p5WMV9NS4ApE89cxWZ5hgJX
-         zMijAJ5A3yiSC8aajguTj7wRsk9N7iA6kPcEgorBnlDWyx+oRKrn3V62wEViZZrVo/ce
-         yvwGZEF8aJTbGtrLmIrfK/Sct2ZSGvV1yv+6TRBlnMRNbKkCrhwOMWe0Sy/LrlbL/4x3
-         VynELBYINfsNr7cPuGeHFBBOsZF7pB07zkmq2+t66nUgIli7mZkxIC98ZFUZ2bLaL7qr
-         HvYoB7Wj2zcBu7arBdEjSLpBFdPbPDI8VpcOsfCWRbgva1G99pZoPwpR2RO+FJVFNBkn
-         vfyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXANBQuDg26j15SXEpNDQP9kzy2asdYoqFxD8bE0ZoRJt9chgNmPutsBZ0RVZTMR9iEWD5BIws=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyRnnM+HsRIAtfZflORnULxMt1grc4Clly9CneC9wahWkvxhahR
-	KHSoEhwG6Uw6w69COZtQMMD0RrSll4dhXg+LuLM9j62XMKfbLg69pWj0
-X-Gm-Gg: AZuq6aIrzcNTNAfh0zUIIa3VzUDj506+7z7RmO51U9iTqbDp8Eiku6Bn85NgKT5AQiw
-	6ATFc/vlTpqbHgiGdWUmmMTex7isjsk+Iw4Y9hLH81+jWqFB8ac3AXUuBHfsJJoG6JmN0vFP6eW
-	+t7o9we3x7m+BdbE9MhBwaynED91PpLJl5tz+LZXR16Tm68tC6MDk6V9wHVCJAHbSTr083+dFwh
-	azqHGSqUIr9pfFG2XEc/dMRpVf/lneSqe49Jy9c4FbWL3IvHz+c3eQi3v/LxA83NVcKgqE7EDva
-	NrxMLZ7rHd1YfeeJ9kJwgMsQF3lLVLcgTt/6+dyRjpkpMSFDHPbJ69mZwitgIJ8c67xcEGulHDa
-	K6kHyoxR+ENXmDhIc8U9zxON4Gpu07GsXUQ5t7DaKgHc1JXT5mcCGDdI8kWXAZPA/wsa3j4VuRS
-	Mq3WhTHUwqBQ==
-X-Received: by 2002:a05:693c:6097:b0:2b6:b9c2:7b48 with SMTP id 5a478bee46e88-2b6b9c27beemr9582735eec.20.1768873042756;
-        Mon, 19 Jan 2026 17:37:22 -0800 (PST)
+        bh=i2Ldiltg0ilm3GITC1FlZ3jygue5ViLbnCHXlSmV/Sg=;
+        b=D+NcmrJmu/DfdMm15viOSbRt0S5FKjAufnBUhKBdWVTRc6DhcWf3B+jVE9x51hC3kd
+         UGS5oF/n4QjZYiWvQc51ehktB706JowI+7gsoc5iV1MQa5mBYH5wVwKmjVitJlN/4Lu6
+         P/GJ0IWRRkywXVMYpNRDOm0bVtab0uiNK7WoaSJN5AjPM9qYjdobEhumzPj/eiocWkx5
+         UufYtmU6EQSW3Wp3q7WYiMMEJpNvM/55dPVMUWiQc0NKHRPG9yxVvnvsCDDQCQMoTlsg
+         nv+4T8R2BzuOD0nfn4JTc5Ire6mGH+JBNyCGou6NcQCuV+I0MqIpcHqLAn9Nhqh/12Gb
+         6rkA==
+X-Forwarded-Encrypted: i=1; AJvYcCUHLm6hhxZZeqSVJXLfuiFbRRcYceKF7nJaPDCedmFMNbheJAkw4DCirfKkXMbr9hLXbh5IjUQ=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwZl34ymXpiziTkUQr5QbQiitCWTfElWa4PEAfMzDlS4mlE/66X
+	gWYcQGUEVLQQxVnehWJ9J75upUZFb/idoqFFMmd+vTqmm1jDPXqnHtGh8HVFVGyQ
+X-Gm-Gg: AY/fxX5GsoHt927/Cw4agEe4lTZeOPAIC/Xd6KMhT/kecscdRwLJuh9LMZ3DBqLrvkS
+	n8O+yG6OhLnKIRYj10Yv3/ferERlodcweuedKA3l4no79pzrQ3gVxF5IWMCCWdCGVUEHcnoGhry
+	0nftYM5tZqL3mWXRIlm08FMfvMpBSWOSeR7gjdIw2F47Tvv+AK7N+1o/O+kE8fryxQj+jZ/ZiNZ
+	xlNTFS5rf0ieSU5FVS82wR+B57CRJpy8aKRiWy2NgvKys7Q+Sq10+x+76COGePiK6SvxpH8daym
+	bz6aQVQCiJbdP3i3yYWvg74k4l1VCGDMSmdD1vnYMiEmkpZU/1gRsx/d4XTK4Kn+DDdxhJIIRpZ
+	Q/asrfDIXyRsCY2VaMIuyQiXrrKsthufTbh3ePbImWS8MIGapv3Z1c5btS51c/zodwBAktr9lpt
+	XLyPXI/R76lQ==
+X-Received: by 2002:a05:7022:6288:b0:11b:7824:5c97 with SMTP id a92af1059eb24-1244a769feemr12788374c88.40.1768871785704;
+        Mon, 19 Jan 2026 17:16:25 -0800 (PST)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b3502d22sm15297558eec.10.2026.01.19.17.37.21
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6fba43c3dsm747540eec.0.2026.01.19.17.16.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 17:37:22 -0800 (PST)
+        Mon, 19 Jan 2026 17:16:25 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
+To: Jonathan Corbet <corbet@lwn.net>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>,
-	Ze Huang <huangze@whut.edu.cn>
-Cc: dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Conor Dooley <conor@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Guodong Xu <guodong@riscstar.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	Junhui Liu <junhui.liu@pigmoral.tech>,
+	linux-doc@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	Yixun Lan <dlan@gentoo.org>
-Subject: [PATCH v3 2/3] dmaengine: dw-axi-dmac: Add support for CV1800B DMA
-Date: Tue, 20 Jan 2026 09:37:04 +0800
-Message-ID: <20260120013706.436742-3-inochiama@gmail.com>
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	spacemit@lists.linux.dev
+Subject: Re: (subset) [PATCH v2 0/4] riscv: dts: Add "b" ISA extension to existing devicetrees
+Date: Tue, 20 Jan 2026 09:16:14 +0800
+Message-ID: <176887176536.427065.4468747981087466363.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120013706.436742-1-inochiama@gmail.com>
-References: <20260120013706.436742-1-inochiama@gmail.com>
+In-Reply-To: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
+References: <20260115-adding-b-dtsi-v2-0-254dd61cf947@riscstar.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
-the SoC provides a dma multiplexer to reuse the DMA channel. However,
-the dma multiplexer also controls the DMA interrupt multiplexer, which
-means that the dma multiplexer needs to know the channel number.
+On Thu, 15 Jan 2026 07:18:56 +0800, Guodong Xu wrote:
+> The RISC-V "b" (Bit-manipulation) extension was ratified in April 2024,
+> much later than its component extensions zba/zbb/zbs (June 2021). Recent
+> updates to the device tree bindings [2] enforce that when all three
+> component extensions are present, "b" must also be specified. Related
+> discussion can also be found in [1].
+> 
+> Patch 1 clarifies the ISA spec version for canonical ordering in uabi.rst.
+> It is a trivial update, but can help readers reference the correct
+> document version. Acked-by Paul Walmsley in v1.
+> 
+> [...]
 
-Allow the driver to use DMA phandle args as the channel number, so the
-DMA multiplexer can route the DMA interrupt correctly.
+Applied to dt/riscv, thanks!
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 25 ++++++++++++++++---
- drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
- 2 files changed, 22 insertions(+), 4 deletions(-)
+[3/4] riscv: dts: sophgo: sg2044: Add "b" ISA extension
+      https://github.com/sophgo/linux/commit/f16ae81b80ca4e721f4c4ed1f28390115f7721eb
 
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-index b23536645ff7..89ded0207832 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
-@@ -50,6 +50,7 @@
- #define AXI_DMA_FLAG_HAS_APB_REGS	BIT(0)
- #define AXI_DMA_FLAG_HAS_RESETS		BIT(1)
- #define AXI_DMA_FLAG_USE_CFG2		BIT(2)
-+#define AXI_DMA_FLAG_ARG0_AS_CHAN	BIT(3)
- 
- static inline void
- axi_dma_iowrite32(struct axi_dma_chip *chip, u32 reg, u32 val)
-@@ -1360,16 +1361,27 @@ static int __maybe_unused axi_dma_runtime_resume(struct device *dev)
- static struct dma_chan *dw_axi_dma_of_xlate(struct of_phandle_args *dma_spec,
- 					    struct of_dma *ofdma)
- {
-+	unsigned int handshake = dma_spec->args[0];
- 	struct dw_axi_dma *dw = ofdma->of_dma_data;
--	struct axi_dma_chan *chan;
-+	struct axi_dma_chan *chan = NULL;
- 	struct dma_chan *dchan;
- 
--	dchan = dma_get_any_slave_channel(&dw->dma);
-+	if (dw->hdata->use_handshake_as_channel_number) {
-+		if (handshake >= dw->hdata->nr_channels)
-+			return NULL;
-+
-+		chan = &dw->chan[handshake];
-+		dchan = dma_get_slave_channel(&chan->vc.chan);
-+	} else {
-+		dchan = dma_get_any_slave_channel(&dw->dma);
-+	}
-+
- 	if (!dchan)
- 		return NULL;
- 
--	chan = dchan_to_axi_dma_chan(dchan);
--	chan->hw_handshake_num = dma_spec->args[0];
-+	if (!chan)
-+		chan = dchan_to_axi_dma_chan(dchan);
-+	chan->hw_handshake_num = handshake;
- 	return dchan;
- }
- 
-@@ -1508,6 +1520,8 @@ static int dw_probe(struct platform_device *pdev)
- 			return ret;
- 	}
- 
-+	chip->dw->hdata->use_handshake_as_channel_number = !!(flags & AXI_DMA_FLAG_ARG0_AS_CHAN);
-+
- 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
- 
- 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
-@@ -1663,6 +1677,9 @@ static const struct of_device_id dw_dma_of_id_table[] = {
- 	}, {
- 		.compatible = "intel,kmb-axi-dma",
- 		.data = (void *)AXI_DMA_FLAG_HAS_APB_REGS,
-+	}, {
-+		.compatible = "sophgo,cv1800b-axi-dma",
-+		.data = (void *)AXI_DMA_FLAG_ARG0_AS_CHAN,
- 	}, {
- 		.compatible = "starfive,jh7110-axi-dma",
- 		.data = (void *)(AXI_DMA_FLAG_HAS_RESETS | AXI_DMA_FLAG_USE_CFG2),
-diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-index b842e6a8d90d..67cc199e24d1 100644
---- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-+++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
-@@ -34,6 +34,7 @@ struct dw_axi_dma_hcfg {
- 	bool	reg_map_8_channels;
- 	bool	restrict_axi_burst_len;
- 	bool	use_cfg2;
-+	bool	use_handshake_as_channel_number;
- };
- 
- struct axi_dma_chan {
--- 
-2.52.0
+Thanks,
+Inochi
 
