@@ -1,124 +1,114 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A048330652
-	for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 03:32:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F4D352F89
+	for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 04:38:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768879969; cv=none; b=QwMwAHfLDQyGyEy/NHfP3VF/FXp645n0+xfJ4bUS0zkHXV3s4r3zCv6DYbNNY5uEziFZEa+AeUd9KVdoZDwyGNOzVbO6GhrYFRWIA9F9UzV9n3SbAjkFdOqDSorrnkVXr+Mt1l61TycrDxldEKVOGndyNMMHrOewAtkdShgWN+Y=
+	t=1768883934; cv=none; b=rNF/EunCu2sWi9gLo+YQBUlfuXcfQ6OQckEjBrae0U2+bzOPZ383iGEsiWg6IajGiQ82x+SBplDVO9fP1D7Gux/tLDFkc3PKOiayk4H6YlX3VrupQuSSfIjRsb5PIfFPkreY0DBw0mkhOFDD3yDLJLg9QJOYuOdEGPsbWVCTSX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768879969; c=relaxed/simple;
-	bh=TnrWvLiHpwdAR1oIsgz5dmEGTJ7Pw1ADVefNWrpsJwk=;
+	s=arc-20240116; t=1768883934; c=relaxed/simple;
+	bh=su3uEXlT84BJihz2o9XFbF/J8Fa9DMBq2JoIbnsewPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3eJVn+i/slhJ72WapuSQAnQ8xN5D8w34wRq9+6H/2AWhl8Z4f+yLlQcMGwaDhnnE3K42yYl8U9tns/iAXoBXnPTQ9xVDnyt9tu6JB9dJroobqkU2IsLei9dxoDzAQ6aIdOz7b+ZrK3oUnadA21y222Sa3df8dhWmNOQxk88Vtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nhr1UFXn; arc=none smtp.client-ip=209.85.160.177
+	 MIME-Version:Content-Type; b=XFU49ztwl/hFWZmvrSfbDYx2BPOVwOAfP4j5tqMxTzJ2AoIv90Cmg790HvFtvcaRhiDhIuL057f2YvTB6GjCxZbc+IhgU8EYNxW6sOuVHqlfZeKs+7Uao78yfMuFUMI6BDHs0SxUUIjy8I9THb246iO8Z0v6LrydF2lYYX7Sl5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NriPNokF; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nhr1UFXn"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-5014e8b1615so50858031cf.3
-        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 19:32:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NriPNokF"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8c6cbeeb2f2so32409285a.2
+        for <sophgo@lists.linux.dev>; Mon, 19 Jan 2026 20:38:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1768879966; x=1769484766; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1768883929; x=1769488729; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hlh3awqwpSDVfosrs2ZgXu5CLF0C481abnvSQYVV+dg=;
-        b=Nhr1UFXneO3YWJBWvKEjxOhb8anMPZ9+yF7f3rk/dvxg8wKi6hrYp87X90AKxTrLU8
-         h3O3pOXLbV358615xvUbbdexyTBbf4h79ZWZIkSpkyZNijCGgiY3p6O3EDTmy225XK/i
-         0qWzgzVqP3uWVjEx4ZXhn6YsC5KwoiwU+eE5w8MI3vmVKaL/dzmkcK0agNIRSNt0Kybu
-         5DU/NSf+Pki83MNsZiSR6/SmX/c/sLN1ePltYP6y+2V9yfcLTNZCuoR/v9hYLwEBRoZs
-         XgYkrrUIDORzRwSilv15cCSEbIsn7RqonFNxobxyUrKcO48m4CzBijueiV1LV3HMkEmJ
-         Z2Jw==
+        bh=Gv5G6VMcszifsvErGVwkIh6g0xPeD3R1+Dyj40SWmEo=;
+        b=NriPNokF8SDU1TASVW8J1yztoLV1rk0WvKQ3wtu9BLXgPVE19gKx8FNsFm48glfUJV
+         s86uvilfu/xoGFXzgbp/qurDM6BLP+ejdP6pi3RcWFBbktK173QTgfpSMU3YJw1edCCq
+         KuEjbFY1fBlREmi5hF5fJzYRwZzqRKYh2Xwf4cyHHrT1gC0Wwt5+Pd9CFKcMfeIPMULi
+         ENeXO/amQIhR9ftlpex/UKtL7B7bQjgdFQAMOUCcYuad77mGvUlqwMQx4HL7fE6+Cbvq
+         s8pwY7sg6fCGzJ2iWvr34uLcLZnPNBfAwko97RWrjp7XWwfmvqw2D7dgwRx8fziSmMiV
+         Xc+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1768879966; x=1769484766;
+        d=1e100.net; s=20230601; t=1768883929; x=1769488729;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hlh3awqwpSDVfosrs2ZgXu5CLF0C481abnvSQYVV+dg=;
-        b=A6vjQ4QCZeQoPzI92jS1N54H9/Ryf3DBpTzcqJ0D0Fx5/XZW7NbiZZ3Jv7fTXilJFn
-         dD7zDXLN6mOg5htNqf5ZL2dLqmU8RS1/Svnj0VgMcqVVbKQq9rdPK4IgSZGlmH4d/xpp
-         jdVFA3ekpuXI0vxQG7Dxx2vwjD55uBZt0VzN6hGm2z/bSbKXbcdd1ONyb6uIGAtbFKVO
-         CNnyZ1p4XYKwxn5kG3aajsOLi4WWVKxiPO74M8C7wzw+AMiYPaEg+1aRB/Jkhct7ol13
-         bsnJGiQj2pV+8geIZywEm9dmm/XSqZFAg42UgCA8KJi7c2DySFpGZkNZFSdv4JYweyy+
-         cW3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXPLlj5PYFpqdjbS7DH0g+rCsjMW5aWXFHZFSgOGLXFgTFUUAsUQWVDxhE+Wy+FEWjbygWBcbI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyUoaGMlmYjjgJeDmqNpDBwxpjZMiunfKZJyhefz463hLOGuwMJ
-	lFs4JPG9XwNo0qQ1E28RrLr4yl2+U/7qLqZEfZvNcg3A+XoMrcWaxRVU
-X-Gm-Gg: AY/fxX6KNOjNAAlDw+PFcZ+r1noqqzxW0OycloUwbkmzaUxElojp/gkyP4A4aQuoIpm
-	7Wk9I03Dbh4xZq3Q8ZU/I1AVEcUeyCXGHtLfBkAEPTFo6sjO9di+DpAFaxlngyugLvs1t1/EBlm
-	nEzEQfLTjN4wxOBUgbAEb/Ib9427mcPT0MM+L+kVO+145Qs8/hkOLXG760WZmWH4635bJLJLWIc
-	xdT7QGa36/s85O4RD83Ike6s4J71qj9eI5ptNtrS8+5j58NS4ik8wpkxa7QWtsaCZ8rEFfWeSRO
-	FGElFodXU0zio4ffbbOWusUdom/X6UzzF7Oi+lkVP9XXsWym7Y39dKFTD5GyymORxsIQ/wYv3gc
-	uGpk0s1q2e6ryvEp7i1kIRhWmVdM2gs72zv5ro6cl//6z3GZTjq/ZlibYCfWkgEgf/pU2nSoGEn
-	nUyMEU9hEpcg==
-X-Received: by 2002:a05:7300:6c89:b0:2ae:4f61:892e with SMTP id 5a478bee46e88-2b6b4eaddf6mr9178898eec.36.1768873045971;
-        Mon, 19 Jan 2026 17:37:25 -0800 (PST)
+        bh=Gv5G6VMcszifsvErGVwkIh6g0xPeD3R1+Dyj40SWmEo=;
+        b=IoLrARGkBYyDjQN0QyAZVelkU4nuSg7vBvuYt+IdCdf9JKqFTUcORC1izPJI0PpjwS
+         Y89GdWo3N0hX7rDrWX0z/a2ysS3UxJOMniHVkCzgK5b/cBRMpf1J63Gz1/Tuj4E3B0m1
+         DbrXSvcJDo6o18q28lBU3Zy4Wbzt2pgVQuWEnFVg7qeUlM+Sya6xxrNBH9uM22kSSCup
+         PIj6ogRQlmNWmp0N3m3blMn9ao3KrbtFMD6ZTFgPufONADFfP957euxPtGWs2FA3rQbH
+         Frp6FX8kooojMrfQDkSJD8kxCM8cduOu/8w+7nK0NbgJWd2h0VDhCG6gCVH5JOHPmvSY
+         oSeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXqBvwGibSueVZK5o/95gxhZ0KFSVTnNNWXC8/WdZ5qA39J3ygalZBPElZQEWwS3Ndbc3l0ZOU=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwPhjeiBHuZxpl7Kvu3tPZCJ+tsgSFolAL9T70zmffJBsNmtpFT
+	wGfC6L/HYsF3zaZ0NZyggx23gPhKeNxdTMPLpRGAN3XRmZVvNvXG8wsR
+X-Gm-Gg: AY/fxX7GSk4yPt52jnMw/YTL03T7KdnGA/SvIy6qGRHOUsv41v1agCJRP4NIbVCMhhb
+	nth05q5PDUewoVRVLH+3YGJST7MGZc6JBuIqlWr7lIiYazcV1mGtOxJ6PI6BmmcIih0VL8t6i4t
+	Is/DdfrQnQup8ES38hyRQH/eAjXsgfcutTKvgAei3qWEZPCmkhTttAkZShbuMjFoERi+qP/aALN
+	+wJrm4TPy1kPpa3XpHhyR0KjFEN51+QeVss6MPAPrqzJ4hilgdJ38KHGoKnbGqSqsxKoHIRSy9H
+	yJ8ZtkYJlpqwbHkbQh9mRcSdi0CT0XrKwDvy5uvxVM2wWI5SrUH5I57OPof2CpnMAhO+KDm2Nvp
+	cUxj6Vwyv4pkgU1CHL92Yig9YZa/fr/ktp5Y7G/bmNFFBxmITmHSgszovjZLBA3DM1TcUziV+et
+	cS2Oy4S4TiYw==
+X-Received: by 2002:a05:7300:8189:b0:2ac:2e71:90d with SMTP id 5a478bee46e88-2b6fd5d8192mr302967eec.6.1768877334281;
+        Mon, 19 Jan 2026 18:48:54 -0800 (PST)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b36550dfsm15337344eec.25.2026.01.19.17.37.25
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2b6b34c0e22sm14967921eec.6.2026.01.19.18.48.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jan 2026 17:37:25 -0800 (PST)
+        Mon, 19 Jan 2026 18:48:53 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
 	Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>,
-	Ze Huang <huangze@whut.edu.cn>
-Cc: dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Han Gao <rabenda.cn@gmail.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Zixian Zeng <sycamoremoon376@gmail.com>,
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>,
-	"Anton D. Stavinskii" <stavinsky@gmail.com>
-Subject: [PATCH v3 3/3] riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel number for DMA controller
-Date: Tue, 20 Jan 2026 09:37:05 +0800
-Message-ID: <20260120013706.436742-4-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH 1/2] riscv: dts: sophgo: Move PLIC and CLINT node into CPU dtsi
+Date: Tue, 20 Jan 2026 10:48:41 +0800
+Message-ID: <176887176535.427065.12899087990982068409.b4-ty@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260120013706.436742-1-inochiama@gmail.com>
-References: <20260120013706.436742-1-inochiama@gmail.com>
+In-Reply-To: <20260113023828.790136-1-inochiama@gmail.com>
+References: <20260113023828.790136-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260120024841.nVM44EobFOM2m91gMNA5NgWiMek8Gz4GPrX9TuQ3h-8@z>
 
-Change the DMA controller compatible to the sophgo,cv1800b-axi-dma,
-which supports setting DMA channel number in DMA phandle args.
+On Tue, 13 Jan 2026 10:38:26 +0800, Inochi Amaoto wrote:
+> As we have a separate CPU dtsi file, move the PLIC and CLINT
+> node to the CPU dtsi file. This will make the sg2042.dtsi force
+> peripheral devices, and make the CPU dtsi force CPU related
+> devices.
+> 
+> 
 
-Fixes: 514951a81a5e ("riscv: dts: sophgo: cv18xx: add DMA controller")
-Reported-by: Anton D. Stavinskii <stavinsky@gmail.com>
-Closes: https://github.com/sophgo/linux/issues/9
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: Anton D. Stavinskii <stavinsky@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Applied to dt/riscv, thanks!
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index 1b2b1969a648..e1b515b46466 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -417,7 +417,7 @@ sdhci1: mmc@4320000 {
- 		};
- 
- 		dmac: dma-controller@4330000 {
--			compatible = "snps,axi-dma-1.01a";
-+			compatible = "sophgo,cv1800b-axi-dma";
- 			reg = <0x04330000 0x1000>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(13) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_SDMA_AXI>, <&clk CLK_SDMA_AXI>;
--- 
-2.52.0
+[1/2] riscv: dts: sophgo: Move PLIC and CLINT node into CPU dtsi
+      https://github.com/sophgo/linux/commit/5e6836e735f9c9c5e8e1d1dce02dfed5fe566e8f
+[2/2] riscv: dts: sophgo: fix the node order of SG2042 peripheral
+      https://github.com/sophgo/linux/commit/ebb87dd74c34a76e1e93041e9329cf9269be35ed
+
+Thanks,
+Inochi
 
