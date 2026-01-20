@@ -1,134 +1,181 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B7F28980F;
-	Tue, 20 Jan 2026 15:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F222346AEE2
+	for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 19:06:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1768923323; cv=none; b=qfGzAPNsOxQLPyllPycQU0IPTl+qhGo6EOn+u2FPlBtGROx0AdkwaA/+dcJG9yhEHZAqkKb+HoqqJQX9LWJUaBf2PpQLC6sL+nKVX73q2dmDhnvESESJQ8G0PWpwfIfCLQkoIaf4l2EPmbNKAP7dn/YdDk+icqMhbgxZqR/LzvA=
+	t=1768935975; cv=none; b=pKNhg+koqtkHRCXcca8ZV1S6qvE8Q6TDUEh+Cr60JS2Mr3pHRu08YiyIivWe3x8jUlcS4PCmzTHYgQd2NFHTO3/hUWzkZBIs2hV1w5lFX4MhYPrTbBDu22Qk/Wwfe4+ccUG/cyiS9Cd+oKRf3uT8HLMBy+qtEw8txkqLXv04IP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1768923323; c=relaxed/simple;
-	bh=E9X/NwAwpL5e4SotcAQ3L1FmKYtN5bvXHCCs462lAQU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=unU1TNmv1nByftiIMDEwKHbo/04OcoHoFnz43678yBpv2PAvA3jHWnOEsFXcgqguP87e4IdUljQgsYLslaSQJtw9Vt2919RZQBK0wFKJScEKVtCtusO+It4uW8McqCwrEyzymYc667koOAd6tW/mS+lQxic5SF9QlrjD4/H+QN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aQTLsJwH; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1768935975; c=relaxed/simple;
+	bh=/i53vqMAIdZNSQKjWuPjGV+34T+Veokykl4U0XdsoqE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pMPxs4KLEg9tMyF4vor5nRe2J76U0Z8kJerDpoJW3INyvVUtBJyAcols3MEitoHnUCAVpLCvaO+fVFtCzvBRaXyNY7ct5nkHH+FK30PuRv+Dpf5SI1BNgZTu7kA/e0+66SOm0QWIctjBabkC/WkmSogDwxzI4XdHXfjMb9J/xJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+oe7FzK; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aQTLsJwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1E1C16AAE;
-	Tue, 20 Jan 2026 15:35:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1768923322;
-	bh=E9X/NwAwpL5e4SotcAQ3L1FmKYtN5bvXHCCs462lAQU=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=aQTLsJwHIjAURFdhD3VeCvdxXVVXuaTtkrJRH16/YX5EpxJ+hcP7jDRFAg+gd5Ixy
-	 9BBW70slboZCiRt34y2FDGYOXu+dJ05B8hOTGx1lxOBtoJKUlX7N3FEzAJnRf9AUOn
-	 d5NDWapiXOJ6e4CyFRA2yc71Ha3LUjoLIgOumnjvs24A1IFzNX6QHGyADDi/pO4aw5
-	 DXRLS455jesaFtmMMEN/BLKDq+97K7Wb7BYvIP//oJnjdtQUkTF7ZbPmS44h12vCcf
-	 Y75cG2J3pBCo5MfL4J2WsZNNrmh+Ox54lvhvkVG3O9tHDglCNWCVHHWLPqm3lFn8Mh
-	 nrK8Vd1QmWNkA==
-Message-ID: <84b053b9-d62f-4ab6-b1e7-879bac9a05f7@kernel.org>
-Date: Tue, 20 Jan 2026 16:35:16 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+oe7FzK"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4801c1ad878so46141715e9.1
+        for <sophgo@lists.linux.dev>; Tue, 20 Jan 2026 11:06:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1768935970; x=1769540770; darn=lists.linux.dev;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7Ef5XZssjPJck2vo2ZHF3UBv8KXbka0JYdX8WDR+tf8=;
+        b=S+oe7FzK0qnkK66e9wR5fB32BoBnNgCYJMCvX8CYNu8pMNezuusOGa8SD8U1uyBHFH
+         fdF7ZL+2x/CxMLHv5bAf3IZemSzDXrNbph/d4qEY3GKZeKzs7/lN9gB93/QFGni5My/B
+         C9ln0+thuW57EvponOD+cRIW4CcYNY1JAGb8F1M1KlB+iG4IzPzZU/sftBpKeO8uG69E
+         qoPt8DFOA8FkgI4NE/xR4kIy+25ckamAviLd+py0A2WX7nIk1ZjMeJ962L5oW8g4lfAp
+         ubCF7O66ApXkYS3aRoJPOVjWUmBBB/R67yfkip/MtQD7RNRkjaFUWWnypfmp0sHdTq39
+         natw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1768935970; x=1769540770;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7Ef5XZssjPJck2vo2ZHF3UBv8KXbka0JYdX8WDR+tf8=;
+        b=jYRqvx1Bf5cNUlr4hdpcnzqwYNATy1WiVgvUKZZq/NVZJ5Yn+JyJTRL6uF4EljlqD0
+         JXR8g7PAoDpx2AjkRouh6NFGHAV2YHV6QOGpzUVgei53waD3wwvEGjdPHF8z8f2iJT/I
+         Hol1C7Ec9lpWjpRTE/HZlAyUyUkq79B5tlyNMvRo69/zgXg/4JeLJ2jDNNqt3e5sfZyv
+         VRF0i2v47cZKLFNKJhp2HYpIq/l4Pm6R3kvvCS3l7+DnIHz9DSwAIOQennBMzl02yPNJ
+         LRYVj2WFY7mLq4fsGXMVyVkDxlGo5b4fAtOZEVtEbPNTIiajPDruXNoxauDvUqXKIsvd
+         2Lhw==
+X-Forwarded-Encrypted: i=1; AJvYcCVvF3Tzv9aTfdpePg/8wC2mBHgMhf3jPbL6OxKgcL0NqI2BUdO7vMmpdMEjyd2hFkcBkgoGlpE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyX7gFLkuZilyYMBPufYX1y2lt6gRSDr+1Qbtm+IPsKST2nnGkN
+	/052ILxSLZRtKed3vioFuM7e6A9gXZE/WXQkYpaWTo2EbrkR0gu7zodh
+X-Gm-Gg: AY/fxX5asnnHe7VmmzxE0AoBQ3PAtqDUVNp701qr9/Fs1mr5ZnqbK5BS5kNuvc0R/SC
+	oBn2GtCUmnXzvhZeuA+Uq5nblUh8v24E+mrsStqKd5GBkANwJQK1O6uYuZwY7ba/vlhWT9iiR+9
+	0urzmmlC5OiYYgaljOmfMlmHkRTnQDn7ndZe5JDB5QnUnkOd6/HbWuA+scTkGLA7bnNUozHLJrL
+	zYqmDlHPNgnYU7RaSGVnMBNvICSdJ4us6OQ+yzEg2pmeN3+p7rYLOgoBfm9Cc28vyCzd8fbps30
+	7kL9zfG42S0Q8r7z5cWrjM1XaAKvAS/hXTxJu2mucSPuYsJk5UvlPAKI2XYYcX21YkCssRgSSyo
+	ceDSzt1GnOW2x2D3Yy5Z+IH9mT9OAY3LzFKCyLQMUM/mRzGBbuIT6IwtfGpehiVq+lgv+rXHfqf
+	yX67i5zck4DM77lBgW6QRP9L8tvYHLFAb6EGDseWFmHbSA
+X-Received: by 2002:a05:600c:3b90:b0:477:7991:5d1e with SMTP id 5b1f17b1804b1-4803e7f184amr42521595e9.25.1768935969900;
+        Tue, 20 Jan 2026 11:06:09 -0800 (PST)
+Received: from [127.0.1.1] (bba-94-59-215-181.alshamil.net.ae. [94.59.215.181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4804244c6cesm2005735e9.0.2026.01.20.11.06.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Jan 2026 11:06:09 -0800 (PST)
+From: "Anton D. Stavinskii" <stavinsky@gmail.com>
+Subject: [PATCH v4 0/6] ASoC: sophgo: add CV1800 I2S controllers support
+Date: Tue, 20 Jan 2026 23:06:02 +0400
+Message-Id: <20260120-cv1800b-i2s-driver-v4-0-6ef787dc6426@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] dt-bindings: codecs: sophgo,cv1800b: codecs: add
- ADC/DAC
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
- Inochi Amaoto <inochiama@gmail.com>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260119-cv1800b-i2s-driver-v3-0-04006f4111d7@gmail.com>
- <20260119-cv1800b-i2s-driver-v3-3-04006f4111d7@gmail.com>
- <20260120-rapid-turaco-of-discourse-fe3fe6@quoll>
- <aW-TRX8Bv60Aq-W-@anton.local>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aW-TRX8Bv60Aq-W-@anton.local>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABvSb2kC/33OwQ6CMAyA4VchOzvTDjamJ9/DeGBsgyYiZjOLh
+ vDuDk7EEI9/k37txKIL5CI7FxMLLlGk8ZGjOhSs7ZtH5zjZ3EyAUIAoeZtQAxhOInIbKLnAK4+
+ 1LpV1rVQsLz6D8/Re0estd0/xNYbPeiPhMv3LJeTAnTZCGC1r3ZhLNzR0P7bjwBYuiS2hdwmRC
+ YsAUnqVX9O/RLklTrtEmQmoAJSvENHWW2Ke5y/oNJfUOgEAAA==
+X-Change-ID: 20260115-cv1800b-i2s-driver-4f17836dec56
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+ Inochi Amaoto <inochiama@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, 
+ "Anton D. Stavinskii" <stavinsky@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1768935966; l=3943;
+ i=stavinsky@gmail.com; s=20260115; h=from:subject:message-id;
+ bh=/i53vqMAIdZNSQKjWuPjGV+34T+Veokykl4U0XdsoqE=;
+ b=ujF7DVpfDFcIqiJ+hFjkIaX7+EUYOaYF0ozWAVYPkNGd1jyRyVhNuGdrz0jshI7mm1Kg9d0Qb
+ sJKZFL2jBg6DCRGo2djEfdHrar5RiLYCQUyiZ/fUOmy3va0Uf+jz6cn
+X-Developer-Key: i=stavinsky@gmail.com; a=ed25519;
+ pk=2WxGZ1zd1vQwSPFCSks6zrADqUDBUdtq39lElk4ZE7Q=
 
-On 20/01/2026 15:43, Anton D. Stavinskii wrote:
-> On Tue, Jan 20, 2026 at 11:12:23AM +0400, Krzysztof Kozlowski wrote:
->> On Mon, Jan 19, 2026 at 08:30:44PM +0400, Anton D. Stavinskii wrote:
->>> Document the internal ADC and DAC audio codecs integrated
->>> in the Sophgo CV1800B SoC.
->>>
->>> Signed-off-by: Anton D. Stavinskii <stavinsky@gmail.com>
->>> ---
->>>  .../bindings/sound/sophgo,cv1800b-sound-adc.yaml   | 43 ++++++++++++++++++++++
->>>  .../bindings/sound/sophgo,cv1800b-sound-dac.yaml   | 43 ++++++++++++++++++++++
->>
->> This is not what I asked. I did not say squash patches. I asked to
->> squash into the binding. COMBINE the bindings. We do not need multiple
->> documents.
-> 
-> Oh that makes much more sense. Thanks. Will do. You mean single file for
-> both codecs. Combined description and "compatible" like this?
-> properties:
->   compatible:
->     enum:
->       - sophgo,cv1800b-sound-adc
->       - sophgo,cv1800b-sound-dac
-> everything else seems to be identical. 
+This patch series adds basic audio support for Sophgo CV1800B,
+as used on boards such as the Milk-V Duo.
+The series introduces the I2S controller driver,
+the DAC and ADC codec drivers, corresponding DT bindings,
+and DTS updates to wire the components together.
 
-Yes.
+The implementation is based on vendor documentation
+and testing on real hardware.  This series relies on
+recent fixes in the DesignWare AXI DMA support;
+in particular, correct operation depends on
+the DMA changes discussed at:
+https://lore.kernel.org/all/20251214224601.598358-1-inochiama@gmail.com/
+The current driver implementation supports a fixed audio configuration
+of 48 kHz sample rate and only I2S protocol which is used in codecs.
+The series has been tested on the Milk-V Duo 256M board using
+the Sophgo SG2002 SoC. The implementation is expected to also work on
+Milk-V Duo and Milk-V Module boards based on the SG2000 SoC,
+as the audio and DMA blocks are closely related.
 
-> 
-> Can I keep single commit for this?
+Known hardware limitation:
+On CV1800B / SG2002, the I2S2 output pins cannot be enabled via 
+pinctrl alone.  Due to SoC design constraints, the output path becomes 
+functional only after additional vendor-specific register programming.
+This series makes the limitation explicit and does not attempt 
+to work around it implicitly via pinctrl or undocumented behavior.
 
-Yes, single commit adding one binding file for these two devices.
+Signed-off-by: Anton D. Stavinskii <stavinsky@gmail.com>
+---
+Changes in v4:
+- fix issues with i2s bindings
+- rename commit for codecs bindings
+- make single bindings file for both adc and dac 
+- Link to v3: https://lore.kernel.org/r/20260119-cv1800b-i2s-driver-v3-0-04006f4111d7@gmail.com
+
+Changes in v3:
+- Kconfig: add SPDX.
+- sound/soc/sophgo/cv1800b-tdm.c: add const to cv1800b_i2s_dai_template
+- sound/soc/sophgo/cv1800b-tdm.c: drop unneeded debug message 
+- sophgo,cv1800b-i2s.yaml: removed address-cells
+- sophgo,cv1800b-i2s.yaml: reword for commit message and header
+- sophgo,cv1800b-i2s.yaml: fixed dma-names node
+- sophgo,cv1800b-i2s.yaml: clocks min-items fixed 
+- codecs bindings: squash
+- codecs bindings: unevaluatedProperties: false, dropped redundant
+  description 
+- fixed build error revealed by test_bot 
+- cv180x.dtsi: removed address-cells in i2s nodes
+- Link to v2: https://lore.kernel.org/r/20260118-cv1800b-i2s-driver-v2-0-d10055f68368@gmail.com
+
+Changes in v2:
+- Updated cover letter.
+- codec nodes moved to cv1800x.dtsi with status=disabled
+- the commit with dts example for 256M board was removed
+- added details in commit messages
+
+- Link to v1: https://lore.kernel.org/r/20260115-cv1800b-i2s-driver-v1-0-e8b22b8578ab@gmail.com
+
+---
+Anton D. Stavinskii (6):
+      ASoC: dt-bindings: sophgo,cv1800b: add I2S/TDM controller
+      ASoC: sophgo: add CV1800B I2S/TDM controller driver
+      ASoC: dt-bindings: sophgo,cv1800b: add ADC/DAC codec
+      ASoC: sophgo: add CV1800B internal ADC codec driver
+      ASoC: sophgo: add CV1800B internal DAC codec driver
+      riscv: dts: sophgo: dts nodes for i2s tdm modules
+
+ .../bindings/sound/sophgo,cv1800b-codecs.yaml      |  46 ++
+ .../bindings/sound/sophgo,cv1800b-i2s.yaml         |  67 ++
+ arch/riscv/boot/dts/sophgo/cv180x-dmamux.h         |  57 ++
+ arch/riscv/boot/dts/sophgo/cv180x.dtsi             |  55 ++
+ sound/soc/Kconfig                                  |   1 +
+ sound/soc/Makefile                                 |   1 +
+ sound/soc/sophgo/Kconfig                           |  46 ++
+ sound/soc/sophgo/Makefile                          |   5 +
+ sound/soc/sophgo/cv1800b-sound-adc.c               | 322 +++++++++
+ sound/soc/sophgo/cv1800b-sound-dac.c               | 204 ++++++
+ sound/soc/sophgo/cv1800b-tdm.c                     | 716 +++++++++++++++++++++
+ 11 files changed, 1520 insertions(+)
+---
+base-commit: 7a52965b6976c936f413eebeee3f78c6faf09012
+change-id: 20260115-cv1800b-i2s-driver-4f17836dec56
 
 Best regards,
-Krzysztof
+-- 
+Anton D. Stavinskii <stavinsky@gmail.com>
+
