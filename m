@@ -1,106 +1,141 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A1F48BD37
-	for <sophgo@lists.linux.dev>; Wed, 21 Jan 2026 16:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65DC3E8C5F
+	for <sophgo@lists.linux.dev>; Wed, 21 Jan 2026 22:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769014329; cv=none; b=pWDZQ/P8z0Bae8OiZXkHSeCDq7TfkGtx+6spbQtKPotVxliaHX3njPzL0KovQK6+oh9iT+w9DJ4ZbGD4WfAGOPt5pak46Ud4MO7yx9lEuN1PFHKd29vx2Bo3DKMDhiLK6CLziF+83Dx/Uv70RdeRw0Tb1eA1Tkb25C4hlIVEWGo=
+	t=1769036043; cv=none; b=NPQ+it+SfD0yYtCuKBZK51XV1OofZelrEaQvVoMK7eqLlRToMc7Uq75b8Izikk/jnsQLVVI2nfRqDkmsWSn4y44Z5VDKgA7FgiDdJ5tAgQz2RrfnT17QXqXEHho8WFZQr8Df0owdOgRpKq1lxSR33/msjMWjpzj4Q10fs7PGDX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769014329; c=relaxed/simple;
-	bh=4HRBjG7A0xNa2ZgGS4Ah4wBKvv4emyEssJAWSX3yqrQ=;
+	s=arc-20240116; t=1769036043; c=relaxed/simple;
+	bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d6ZLrlGnTesXG5RflXPu41ROVc+kyG6JOTUSNKxWL/NQAvqZvu2tDE7a0Lf5ylUciqE/IyFE89QcrfD1V4YcjQwTMn5G4vRMpOP1J9iFfMvtdMVVdu2dgEFewhAOTmFH/upM80m+p5hDh+nBNcx6hNHw1lg/TwwiKb2H/CYqH3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b7gbEORF; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 In-Reply-To:Content-Type:Content-Disposition; b=oC5TXHcHhco0ZRv5cPQWj+LiNO5MLzkJken1LOM+8IHqcBmanEXncjPbhPDlvnak//UzAfnoMicw7zPRPuXH6KX8xu45mjSEeTl96qCwhEn8ny2JQPhklSm7RyVVUdqnG1P+1gg8iOT6lkCMF6TRZCKIxq0NcOuS2dkxqijhyYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=HRnIqR3t; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b7gbEORF"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-435903c4040so14559f8f.3
-        for <sophgo@lists.linux.dev>; Wed, 21 Jan 2026 08:52:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769014325; x=1769619125; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ihhUfgSz7A2yaxp14lt5kXBlvsJX0TtPumRcsY55W6Y=;
-        b=b7gbEORFEHQ0K92uJv77vjAZ+27xcAgLryiiZyLYGrPseiQPvrLILHdcUvMsuOZDca
-         +C2m6XOaoFk9tK015hGr7phn3ndRgr+7S7DYdLOQmZa721wSDKYq38YW8n6/aL2vhlCG
-         egUR29w41A010riQnkJhG8i+qOZzkEOqjiwLy0W0PVJ+Bk5BOXuz4MIJlOwS8GhW7lkq
-         0/2fK483zgYzOTG3zQVRAsGegW5wubqATwYX35xxaZDc2xd5Kz3yWEMUCgtwWsfdxux1
-         afRIafUADizRC2DD3NQAIQ7FJeTkPl/ELNF6CECshyUsTfIMOLhIW0suiXyZe55RY1CB
-         Tatw==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="HRnIqR3t"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1769036034;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+	b=HRnIqR3t3Rkd7ysV+hJ0eEgVek9bLr0i3uuVycuVcWvN+TPcQmBYxfQAkZi8FrtoLlarEl
+	pQOcKXvJz5oPql7klxMX6v1SsKarP8QvmQXVbAl0uS/o0iE9bU8VO4jzI4l8FYJJoXsRq7
+	LR84vGtKQTT+t2bdY1nd/iV7psbjeVQ=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-671-IY7gtCdsP7-7EaPxmRZ_dQ-1; Wed, 21 Jan 2026 17:53:51 -0500
+X-MC-Unique: IY7gtCdsP7-7EaPxmRZ_dQ-1
+X-Mimecast-MFC-AGG-ID: IY7gtCdsP7-7EaPxmRZ_dQ_1769036031
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-502aaf2d18bso12606401cf.0
+        for <sophgo@lists.linux.dev>; Wed, 21 Jan 2026 14:53:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769014325; x=1769619125;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ihhUfgSz7A2yaxp14lt5kXBlvsJX0TtPumRcsY55W6Y=;
-        b=aewG09x/skySDYHFlZfEfkSEroPU8JcL4xY9TzhgjfqWp+ieLTOTu0T8pENQMyx26I
-         sPX3q3YfwnJAUkunTobXaf09IVz0r5QZ2I19Wtuyh/5it5GNhuWtrIjPfEHOsuF542ZU
-         9E/ATvD/rJppQOJ5RpOrBv+vBfkvaiQrv2xiDAkQ8tV9xrT+swpgwun2ZJ2bPX42e5xA
-         ssZ56SGCZhjA1lXeV5qHDEkdKbxuUETFlPb1HHtb6xbUrOy5FYJ4KVtR/eIEsohnjtLS
-         XCmItmvycm/BTjGwVWbJe//1LEoU5DyHOwRZaEn2TNuQlPPZXPh8XnKpSh+AyGzxyh/0
-         DsAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV+BUGP+HOkeSdLM78fPpMIAI4/Pe2eXkopVFszj2vgiLYxX80CMzhTelZoA+HbfBmDSXigCJQ=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz32l2aIXruVL9fpEpPxdtIbi9nqahF0ENvDenx+wPrncm5o8+E
-	u9FysOotf3eazd7EbhDB6HKixnGpYIywPlbzF9vluJ47QVaggX+KUIHt
-X-Gm-Gg: AZuq6aItfxnyWnN+/6yU1ThrZexw75iRyM3rdMdt/1Of8J6hAPsVvhT2qYLGcQY+LD/
-	5RI6yWyT0tZvlTmZXfwy6dOyaOVmIL1g/VXnWf26Ix8QmQSkbw3LUx9OmcZCQhMzl00ecqjx8Un
-	i6v9ifE2PzGRptLPM+sq1yODD8BmIUnDnHvdNfbpxLe/fC6A2RrJAGn7jXNTYUrODQWrCrIa4N4
-	L2Na1/yzzJXLR57SNtnDClQGhzRO3g0lVMuXPEnnVfmIwEnt2YpMXTPD4WxvD5CeTW+rrAAVb/z
-	8ZB39vJmU841y+3SdtB6Jv4D3Rtxtcdz5hYUWDj/TevVITSWitwXdmDVk5bihqhgGDPnqlT5/+m
-	b2GqKQNB+PI1tyC9YzsPa8jSE4OKaWcp6Q1DKVWJ0ZEMBHU5OVJYpv6WeTm9SRAN24XnJZ8E2yY
-	oWdx4LPP1gqGbC3KTooMA9MMIRhtJXIXIpMSejmc/tjFca32cPaoEGpaY=
-X-Received: by 2002:a5d:4a88:0:b0:431:764:c25d with SMTP id ffacd0b85a97d-4356a053cc5mr22591618f8f.35.1769014324966;
-        Wed, 21 Jan 2026 08:52:04 -0800 (PST)
-Received: from anton.local (bba-94-59-215-181.alshamil.net.ae. [94.59.215.181])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435924ae723sm11119706f8f.41.2026.01.21.08.52.01
+        d=1e100.net; s=20230601; t=1769036031; x=1769640831;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=UiEPj0ZcSawildEgR+9wJ/AtCxMbPbzcmfyb7UYIQ4E=;
+        b=j5ToLi+n6ItliYFoD34lfmksDj1dMoRhqL/3JegLffN1ki3O19LRmp1PORP8dW7i72
+         kTCszNNNDpVGd+H6oXqUbB8u6KlfauI/u9aqFvY/fKz0lCkJvUUUwj4gCY6rsECE4Bn6
+         JxwG2jaH1Mwl3KQGW6ptSxZEnAPTNH1aNu7ZssxKSK17bEQdsjWYukC4Yd3hbXtDfCtJ
+         HUDLAkqev6vmCYU5hxtXZw86EgZTjMNI8DVUafmvDedoOWiEt1u3EKwDRTv7GZrEF3VR
+         co6vivhIans+SCWB6MdjbElT7g9OWnOEPaW+sPSLcztLtqi2JbCK6DELAOZOQfqKqv8n
+         61JA==
+X-Forwarded-Encrypted: i=1; AJvYcCWk6dhyFgM2/0Yz3nxqgRQo+7riPXot7lhqXSVuwcmDeQAiXIYdcVqbfGcZOiAridd+jsRBbb8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxLtTENDxDRPYpVdhHC4riLOvSSUfa+L3PCwBVNPO39PER7TCzi
+	tdyKH8/X5ajxmHNEKjr7JzHMuB8taIrVw3iIDniWS5UXZ14ALBtX83YqOT5x7C2ogzCiuZskwfC
+	W3ZsREv2XnunRUbRbLCIJrQo7RiUuAX7zb5fHPpMZlltvIh+btg/EfLgQVg==
+X-Gm-Gg: AZuq6aJPonWwWx0aT3imhXl1i10iaefxNp26AzDMbwjnX+4s0NJELUl6HcjrUCqyLg0
+	CoJwEk3SNaq5PeCbBmd/lDoCPdFlIXSk96xZEAOQ9Pt3bMhsYdGED76WgKKEJ6oFGk+76vf5sxG
+	4MxHRHa6zNKPFwOMMRhQmub0Jeuvwr7sP/6AJJUV42nE6ahtJmkDzxqrKzg1kQQuLLaHcLOkthL
+	Vpt9nV0wRnyVK6SIcKHVU2obhbo/nPoZiSh6EyogVhj9lyZRghS6E7RJrp64m27TN1D+b9EBiAz
+	rQG1JlVP4xc0vsDGeLKq0r0yqz3AR9KAMDrtFeDp+RF/dlf+3C8ywti3+xHyo/8wI4KjdQKSTej
+	2Ipyp6lSN
+X-Received: by 2002:ac8:5fca:0:b0:4e7:2210:295f with SMTP id d75a77b69052e-502d84b0ca5mr87957091cf.13.1769036030779;
+        Wed, 21 Jan 2026 14:53:50 -0800 (PST)
+X-Received: by 2002:ac8:5fca:0:b0:4e7:2210:295f with SMTP id d75a77b69052e-502d84b0ca5mr87956771cf.13.1769036030338;
+        Wed, 21 Jan 2026 14:53:50 -0800 (PST)
+Received: from redhat.com ([2600:382:8125:73a8:e201:8ac3:bd7d:6acd])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-502a1f1abb9sm117138811cf.30.2026.01.21.14.53.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jan 2026 08:52:04 -0800 (PST)
-Date: Wed, 21 Jan 2026 20:52:00 +0400
-From: "Anton D. Stavinskii" <stavinsky@gmail.com>
-To: Rob Herring <robh@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 1/8] dt-bindings: sound: sophgo: add CV1800B I2S/TDM
- controller binding
-Message-ID: <aXEC1f0gy64FY_Pl@anton.local>
-Mail-Followup-To: Rob Herring <robh@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260115-cv1800b-i2s-driver-v1-0-e8b22b8578ab@gmail.com>
- <20260115-cv1800b-i2s-driver-v1-1-e8b22b8578ab@gmail.com>
- <20260121163213.GA3413426-robh@kernel.org>
+        Wed, 21 Jan 2026 14:53:49 -0800 (PST)
+Date: Wed, 21 Jan 2026 17:53:44 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev,
+	Chen-Yu Tsai <wens@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-rtc@vger.kernel.org,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	linux-actions@lists.infradead.org,
+	Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	linux-arm-msm@vger.kernel.org, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Michal Simek <michal.simek@amd.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH 00/27] clk: remove deprecated API divider_round_rate()
+ and friends
+Message-ID: <aXFY-FxqeBv4BsHd@redhat.com>
+References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: c_DLIDtQKH0thYxhNlFid1iDGdC7ZCeWPQ40MhNeejU_1769036031
+X-Mimecast-Originator: redhat.com
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260121163213.GA3413426-robh@kernel.org>
 
-On Wed, Jan 21, 2026 at 10:32:13AM +0400, Rob Herring wrote:
-> On Thu, Jan 15, 2026 at 11:17:38PM +0400, Anton D. Stavinskii wrote:
-> > Purpose: introduce DT schema for the CPU driver
-> 
-> Please write a better commit msg. Use complete sentences for starters.
+Hi Stephen,
 
-Thank you for the review. But I'm afraid this is initial version of the
-file. The current version 4 is here
-https://lore.kernel.org/all/20260120-cv1800b-i2s-driver-v4-1-6ef787dc6426@gmail.com/
-Hope everything from what you said is already fixed. Big thanks to
-Krzysztof for reviewing, help and patience.
+On Thu, Jan 08, 2026 at 04:16:18PM -0500, Brian Masney wrote:
+> Here's a series that gets rid of the deprecated APIs
+> divider_round_rate(), divider_round_rate_parent(), and
+> divider_ro_round_rate_parent() since these functions are just wrappers
+> for the determine_rate variant.
+
+I sent you a GIT PULL for what can go to Linus for the upcoming merge
+window from this series:
+
+https://lore.kernel.org/linux-clk/aXFYU324yQ6uBmk0@redhat.com/T/#u
+
+Thanks,
+
+Brian
 
