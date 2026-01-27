@@ -1,66 +1,66 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB20036404E
-	for <sophgo@lists.linux.dev>; Tue, 27 Jan 2026 18:48:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3B11DE3A4
+	for <sophgo@lists.linux.dev>; Tue, 27 Jan 2026 18:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769539726; cv=none; b=sXVo+F80z/+AhIzDm9xtfkSHvyokkizfvS8HAa/q6e1rBEHSiSGS2ouXGTqp7ZRmSk09Az81f5IjQV4hDF4j7Fvl6xF/XAx27psqHuMw8AE6Ue+3+WS7yuWfBdkTkNgKOJyKHkLrfusuSJIx9GZKCp6PZ9OJuu5ViE08MIuNgIs=
+	t=1769539746; cv=none; b=EPg6ucCpfp585e+/y8ap0bQq2vAlDX6pum590v6WTluqKtNUIPaf8LLM6nbRgPcRGLtcCBsslyci7EBNXryDMGAeAOXTjy1ZIPya62+2b6g1K1uyoYBTzaFLvyVEkfwcNWEvD3aX63QOeowoIOGaOy/6mZ7UnM1syeqekUDuBRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769539726; c=relaxed/simple;
-	bh=H84erZxT2MlAaY5J3iUKm8PxILlu1jOlSTZ53NjhBCY=;
+	s=arc-20240116; t=1769539746; c=relaxed/simple;
+	bh=AAbdYSDBi4nid+vR4fUUeQUqMN1ByaToFMJu3nLnoTA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rxKJI4DAsCw5v3Gi+F/sS3Iq1UmiDjCX/m0iS6bC/FaYVm2/9jNSfi8cXh0LofYjJhrTiAoLcZTesLel0cZp1oIr6j0m5F1AC6VX9SuLeqXfLmcQcsucZ3oasfM5nFR0T5+CrmgNvCK4qFeMrbiuROCuYS+ElUn0nZFg8mSKkLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZvJNUM5j; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:To:Cc; b=MxdYhrrsNdOOzD7HfgCBKowEd0KicLzUf7dHHiMX0Tsg/bTs3k/YOz0nQt5wQG5FgAYOk/bxCPT65cCeqPx+kmYCqS65smoFlp3e8Zn+Z8XlfFgyCrC+oRbi1Qw4vix7qJ1ghA2AIirZyO+V29cwH/gVmMRSzZML54HMWZCwiPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mcuz1tcp; arc=none smtp.client-ip=209.85.128.65
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZvJNUM5j"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-47ff94b46afso1077155e9.1
-        for <sophgo@lists.linux.dev>; Tue, 27 Jan 2026 10:48:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mcuz1tcp"
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-4806dffc64cso305e9.1
+        for <sophgo@lists.linux.dev>; Tue, 27 Jan 2026 10:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769539723; x=1770144523; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1769539720; x=1770144520; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j6l444t6jpG+w7dlEITp6QEjvTc4ukc4CjhdbSiVZ9s=;
-        b=ZvJNUM5jt72tP09O33Uvfmr/ev9FamUg0lS0BSSnv6pNPbklb3Tp/Q/toi7dVeLqIA
-         OhH3GpbjzHcY+i6QrLriZqqJoSveiibCGlhshbKJnJEPOrCQdPpq95mD54MgCevAXQRA
-         XAcXuPQZ0S91ge86/A2wtLXlFaPDTSN0DZNCwyVlwPbr1eKB7tmrWh6ryFfrJ1IC8oL5
-         8PYvjTBU50hD9TAdZDNMOs+BzIN/QEW2C9b/Bbwim/UpzeX4oShSSvHkNdVUObeOZIrm
-         xPWqIKDDDbvqS91s8fyeXHkURR06iI/pahEPwRUKlYXQzJ+fy+E85s70UPB7kXDqQw/f
-         BHSw==
+        bh=z/IAsIdZyjkDQ3l7ZZkRFYkPArXV5TiBiIvdC8qWxZo=;
+        b=mcuz1tcpqCunStfEiWulOmKE+WLNZnRwTACOXvBX8pAgE4ff+LRqFiOSC2k1UmM1Qf
+         FQ7gn9AW+w3ljcuVbz3Ysey95Zcirj67i18Yoj01H7qWc+BlUFtdLpRtWAh6dH3Ks01L
+         KARBZ6yVyAEcTGbYA+r2WETQlh1HtpNoXju1Ze4ttRbYN+0P2hImDh0KiRE6FnhA+mYZ
+         l1CkKdeZjKyjyFY+3GTlQ0zE12UATtVDf0W2tq0G5S1dxs3AYlIIqJBRhG61m7zKkTZp
+         iW8Xf1MCx9DWo7+tiPmx771szmXC+BHMNBHoaX6uTb1kcmlXetWuxJ0Xw6AzBMUY2l+Y
+         7tRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769539723; x=1770144523;
+        d=1e100.net; s=20230601; t=1769539720; x=1770144520;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=j6l444t6jpG+w7dlEITp6QEjvTc4ukc4CjhdbSiVZ9s=;
-        b=hcm6ZXOuYjIdz1JYqk3R0/6C8pHruyfk715zfGJdwgQxdpP/OzrafSE9mTr8DztFmS
-         LQSL52pFqhpOxs1zthqDXm6QiXn2IVHQUC49lGZc3PJPcbsfXWy4JkUMKhWRk8g2faaU
-         GV5tM6pKMB3j+ZA+BmXxfAgI1G+94dffpHxB5mHMvXOIEfzpQNLvyR5+qVxyDNr2J8eX
-         PbAWgwdqX52K7GKihBduko/FQNwAK6CqDXHOi8DCnBhjAfVnrb5JiizAcb/5Qm8Oehu3
-         2LSNGmjIUQVsCOmgKGRFN0xX/DP3GOnJVvN/uDMNGxWVj6c1HKl9DhhCi9Qq5vqkfHxa
-         jPDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXN0Lb7s72VJS0NcowjG89MHhKUAfSxKlQ6BDu6jLwJ/MDx6nQoMg5/l+RwUtd7vEN6T+0HeLM=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxj6807CFaV+5H4oSOlni8iA/yUCuhuG7xjN2vdPXkVMBDrPM3/
-	fuTEH0x/THy/bWsTL2UvhJRmkeVGpiAAVW8O6gpOZuhzNjLhmyy/2fay
-X-Gm-Gg: AZuq6aJbJk7Nk5TwQW6JwnIBDOhRZK759HgicP7bSDQ3/hGpOMhxA+O1Uy4FscDDnMy
-	AzklU35UH1RjEBIVj2aX6c7xVsYQbyuvBDmkzJs9IvMwPHOfWOcKaik1ou+mPwWpoqKuM2nabyu
-	ZdyLoWkQLnL+dAejJp5oE+OR5kBWsHVfFkWG8gvMxSuQ2/8OA/Jdc+Xds5vn+pqDxPOvzI5+LFM
-	3GXu1QeMkcnNc6RFX4F9ezJXacHqGPaaiIMdC63cHDNM3qlpIIbydSsLXazibDXsSCQKLPDKvxp
-	U6WCr7IXHHQ9Q+hjmT5OIMHC4rz8OibGEoHwhiAYKLbUnjaz/7ZCOoyzyBbAj3825G7l+wjdjo5
-	kBaKJKBBEd+S9cej1AWjw3k+UzWo7QAy6VPd4bZUS0pmckaq9qu6zCzrCRQtClajRjtwt9nL5GS
-	uH2wffJZfGD8tIRNT70ZmIYXBxN+eV3S2OEqXRfSTeUg/r
-X-Received: by 2002:a05:600c:4448:b0:47d:6c36:a125 with SMTP id 5b1f17b1804b1-48069e9b5dbmr38558875e9.17.1769539723087;
-        Tue, 27 Jan 2026 10:48:43 -0800 (PST)
+        bh=z/IAsIdZyjkDQ3l7ZZkRFYkPArXV5TiBiIvdC8qWxZo=;
+        b=PoAeV3fMLm0KMoDf9G6BM/LHBu0V1Ab3Mp+ja2WwFSZWpoz0x0PtTSftYmMytVZQDa
+         O1ioAro9eDsmlp78lE1/iJIV65lJ0b6vEt8tWRz0nToPW93tFyqa/cGFJ0Yhp3exXXoz
+         F+oPGlgC7IKmX9xRyhSbcV+ZUQUAbtwFSo+Sz0I52dQtfKqAdniG5j1zFZEtsGWDh2Vs
+         6QiUuCIpssyz6LyoG7QQNCWZssNBBGoiiL2CIudKiAfA+PAg4iS2DrwJtRD3wUQ6vADa
+         2cYG0ooPxyE1RLNBmKDUqpOseu91tmCWR0LjNlOnIaGnWY5JTlU2eHnQTLhFoDcJer73
+         JY+g==
+X-Forwarded-Encrypted: i=1; AJvYcCU4evrhh1bAsycYDdfU8rtybJctjQ+1/Eul18nkHzkuZlBYtZ1JG2BnTrtdD9h1o/mI8M8R9/8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyO8HLY2Rj/viuTRwFqElOa/kZ7YRznL4PDN8454t4/6TVmUgKi
+	DSrx3PFsdPX3idX4bzU9VbLZw7Vk4ek/abUhztCXsWil5a3MpLszF6vW
+X-Gm-Gg: AZuq6aJDi+oZqYaEuHMcX9Lluoy56wsXGnK3Qf6+4ZsMTxO9BIIbcXb8C0bKZg7UX72
+	DapClBxAKenvtw3X0CkW/btEmzFpQbnjyfVks6nPd5wTxCpjOkmME2OeQ/KQWmitzpi29TXgMLj
+	VWVvRMLmchq289rEP22AJhGplK+Q/XIuNBu/iwBfqBwJXIdWEaWCeSvNJdSzEOR/bLYUZtzXM0J
+	pvqR/JknAJvSZ/1T1UBijka0HpUPThQsdGMlfy8YOAfrHJ2Brd/CzYyedNYir91jGQtJgbEeh/U
+	bEt7hUqOcNSWl93BjwqboxElbQk0XL7Q7NY3Pj2twKj4wMK+AFvvoxwxUcWVFHi0F0x55psrfcW
+	SpfcGR3u4Xh/6iAdiJ4L4oMVFrxbJ/ozuD9lVK+3yqiiibk28KlTr9PW1fvcD5dW+7rp6jXa9Ga
+	dXhVzUqD/UQbOxVIvnhLRfb8NEu1bKjYlyXIM/4CdrEHpxXQwd99JVl4M=
+X-Received: by 2002:a05:6000:2689:b0:435:a501:359 with SMTP id ffacd0b85a97d-435dd0a3549mr3707922f8f.41.1769539719907;
+        Tue, 27 Jan 2026 10:48:39 -0800 (PST)
 Received: from [127.0.1.1] (bba-94-59-215-181.alshamil.net.ae. [94.59.215.181])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10ee057sm903100f8f.15.2026.01.27.10.48.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10ee057sm903100f8f.15.2026.01.27.10.48.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 10:48:42 -0800 (PST)
+        Tue, 27 Jan 2026 10:48:39 -0800 (PST)
 From: "Anton D. Stavinskii" <stavinsky@gmail.com>
-Date: Tue, 27 Jan 2026 22:48:08 +0400
-Subject: [PATCH 2/2] ASoC: sophgo: cv1800b: tidy Kconfig spacing
+Date: Tue, 27 Jan 2026 22:48:07 +0400
+Subject: [PATCH 1/2] ASoC: sophgo: cv1800b: document DAC overwrite handling
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -69,7 +69,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260127-incremental-for-i2s-dvier-v1-2-431b809c632d@gmail.com>
+Message-Id: <20260127-incremental-for-i2s-dvier-v1-1-431b809c632d@gmail.com>
 References: <20260127-incremental-for-i2s-dvier-v1-0-431b809c632d@gmail.com>
 In-Reply-To: <20260127-incremental-for-i2s-dvier-v1-0-431b809c632d@gmail.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -84,33 +84,44 @@ Cc: linux-sound@vger.kernel.org, sophgo@lists.linux.dev,
  linux-riscv@lists.infradead.org, 
  "Anton D. Stavinskii" <stavinsky@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769539713; l=698;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769539713; l=1227;
  i=stavinsky@gmail.com; s=20260115; h=from:subject:message-id;
- bh=H84erZxT2MlAaY5J3iUKm8PxILlu1jOlSTZ53NjhBCY=;
- b=N5uJIXd1MfaMnAMCepcgyt3gC9Xj7DoHIF9W3uU+gs94PPz93VNI4wEbeV3fdbL7ZL/vEo6tZ
- kH+9BQDgcF5Bj2ECBnA1a+a29Tr89ihFUjfl7+ue7ClXiU6Yb9Xs6wS
+ bh=AAbdYSDBi4nid+vR4fUUeQUqMN1ByaToFMJu3nLnoTA=;
+ b=EBjERO/do4uI4s6LDi0EEae7uhFRf1KBOOxPbimgtsnly9GdSGLKz0u7DPv20vrXS76n0vTk4
+ V30AAY1GAInD44pnZDm7KhGkPBKJzms0Rgw1lZyPo47NIssrrNme8x6
 X-Developer-Key: i=stavinsky@gmail.com; a=ed25519;
  pk=2WxGZ1zd1vQwSPFCSks6zrADqUDBUdtq39lElk4ZE7Q=
 
-Restore the empty line that was accidentally removed earlier
-
-Signed-off-by: Anton D. Stavinskii <stavinsky@gmail.com>
+Add comments to cv1800b_dac_mute() and its caller to explain how the
+overwrite mechanism works and why we force it off before playback.
 ---
- sound/soc/sophgo/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/sophgo/cv1800b-sound-dac.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sophgo/Kconfig b/sound/soc/sophgo/Kconfig
-index e4786f087589..9b454261bcfd 100644
---- a/sound/soc/sophgo/Kconfig
-+++ b/sound/soc/sophgo/Kconfig
-@@ -28,6 +28,7 @@ config SND_SOC_CV1800B_ADC_CODEC
- 	help
- 	  This driver provides an ASoC codec DAI for capture and basic
- 	  control of the RXADC registers.
-+
- 	  Say Y or M to build support for the Sophgo CV1800B
- 	  internal analog ADC codec block (RXADC).
- 	  The module will be called cv1800b-sound-adc
+diff --git a/sound/soc/sophgo/cv1800b-sound-dac.c b/sound/soc/sophgo/cv1800b-sound-dac.c
+index ccf386174639..135322bcf6ad 100644
+--- a/sound/soc/sophgo/cv1800b-sound-dac.c
++++ b/sound/soc/sophgo/cv1800b-sound-dac.c
+@@ -57,6 +57,10 @@ static void cv1800b_dac_enable(struct cv1800b_priv *priv, bool enable)
+ 	writel(val, priv->regs + CV1800B_TXDAC_CTRL0);
+ }
+ 
++/*
++ * Control the DAC overwrite bits. When enabled, the DAC outputs the fixed
++ * overwrite value instead of samples from the I2S input.
++ */
+ static void cv1800b_dac_mute(struct cv1800b_priv *priv, bool enable)
+ {
+ 	u32 val;
+@@ -105,7 +109,7 @@ static int cv1800b_dac_hw_params(struct snd_pcm_substream *substream,
+ 		dev_err(priv->dev, "rate %u is not supported\n", rate);
+ 		return -EINVAL;
+ 	}
+-
++	/* Clear DAC overwrite so playback uses I2S data. */
+ 	cv1800b_dac_mute(priv, false);
+ 	/* minimal decimation for 48kHz is 64*/
+ 	ret = cv1800b_dac_decimation(priv, DECIMATION_64);
 
 -- 
 2.43.0
