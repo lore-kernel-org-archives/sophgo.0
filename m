@@ -1,85 +1,135 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D77219E8D
-	for <sophgo@lists.linux.dev>; Wed, 28 Jan 2026 03:40:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CF5311963
+	for <sophgo@lists.linux.dev>; Wed, 28 Jan 2026 16:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769571615; cv=none; b=ESVoa+Iv7IylWOiIDNnCZHgAVxchfKiDg3jCisddJ2KO8ZaDwywzdND6nXrdU7xLpz/lWNA93z9hFjLis8ITxqBFmLX7Z9UvfOYG3Aa4pd621VFxnqij6Deph7u16gWJ8rN9IESIjzUeg02vtDXOKPKQRz4dPoIyfIpJ2KG7A+I=
+	t=1769619371; cv=none; b=hy0iw0UUxu0hR+bOyc6zX5jb2UxVNxI29xFJJW5TB6J2AVHB2xfAwzzNHeaz1SD1v8CF9QBb9obaEyAWz+uzUJ2XxHyWAXYlJcAG5Apf+Hw96w69rlU0OvL1OlT6IE+CZfiD7SDiTnJ1bS2Zeis85hMDoUEABlZ7PCyjJMEY7lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769571615; c=relaxed/simple;
-	bh=zqCXqmNXUJ7W1NhgHlgGJdn677YyT7F7XqW9V1liAgo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nM7pP0fRqwB5B6FxO/tGTv1r+MrzHpIc3oK8W4+T1K/PgI++OFrukmqNZ6FqyD0t6z199+05CvK158WEfWRgyJUDv2FKBqAPAMuRFcifKAqwIwazjOgayStqEZ6LJ5gO1CjfVTB70HBztow5Ye/JGtsP/VsQVmkjOfrXFbXjnLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [192.168.0.109] (unknown [123.118.222.47])
-	by APP-01 (Coremail) with SMTP id qwCowADHcW0DhXlpfl6GBg--.10567S2;
-	Wed, 28 Jan 2026 11:39:47 +0800 (CST)
-Message-ID: <91bf33e2-4588-419f-aedc-1f1b4e99fc56@iscas.ac.cn>
-Date: Wed, 28 Jan 2026 11:39:47 +0800
+	s=arc-20240116; t=1769619371; c=relaxed/simple;
+	bh=DFPbjUQCBuZxVY7EbLcJ1SV0eDTIkwQEvOof+ATB3fU=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GG4poh4kl7KDulCxcEKkxs5DiHonGi4LTP+VmpDHM4AOLR7MQEC89TYEGW4cO+XLzuC1A0I2a+TjXtLAsSLE60oq7lBMYqCL0ED7AcqHxfWU3Uj3qx5jCVRfATNZFT1iNkB8dAthcwOlW3I2DxILujfiTYhvb8xua9tncDaLizk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=HM95gJQA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TZYWcJac; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="HM95gJQA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TZYWcJac"
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6F9267A0178;
+	Wed, 28 Jan 2026 11:56:08 -0500 (EST)
+Received: from phl-imap-02 ([10.202.2.81])
+  by phl-compute-04.internal (MEProxy); Wed, 28 Jan 2026 11:56:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1769619368;
+	 x=1769705768; bh=kAoIuZ76fLX272MIHa0oK8kZGDIBNtwKi6fK+0P7sn4=; b=
+	HM95gJQANENw47jSQmkrML24cc3LGnoiEMBwB52bjZE+894R6OadMW25fPUha70u
+	rbfs0T4Gw/VSP1qG5//raxQwuCqYYLSHq7P8utIzHHVSK1UBPcCJVXlu9Aypn9GT
+	yTPYED0BvawHxdmPeOXiNPbNowMvtVmCapEu0pOAEnB2RxxY+/ykYoPGr/hSomka
+	a7qo2XifbhsMmjdOdOrjjBPhtyvac/tvvbuM2ybSvwMZo1Bdwhnm7jKholTpbs73
+	T5g1IIpKnBuN/7Vwg1e+dv8fPeRnUt45yNGd4yFtVkcd+dzKkJE7aBNJAABB0vuH
+	4tSxZe9G76QSwWFbLqv7ow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1769619368; x=
+	1769705768; bh=kAoIuZ76fLX272MIHa0oK8kZGDIBNtwKi6fK+0P7sn4=; b=T
+	ZYWcJac03Vm3VRGnq/HwAVKQsl+DmWw/W0ci3+LJG582H9q/1Gv1otzc/A7bFV6a
+	7T6LY5lUG2PMV5n+NFvjzZqyhq7DuJfN/0fmE+sak5d5wdN904Tj09AEAJWjxfPV
+	o4vNpGlwBjuZoKStIFEyIfTk1m63AmEtxw09DryANGShJY3llHOz0SCmQSpRYoSY
+	q925ZWk2hWHC/rC9310E+YdGVnKvUdRY6UglHigYd9GpDYciSuK4g8q2qbW9XHq2
+	sSv7zlrrlv04Awdd+rO8maKawN033WmWs5+NJILtrq07mYbIG8rQfTQuhtg91qxH
+	t7w4EUcEMwEkSmCQfSM9g==
+X-ME-Sender: <xms:qD96acyFM1TnuB98-t35jTIaudF5a1RqSHwa6wdAgTa9VgQAe9KDMw>
+    <xme:qD96abETxD91J1mU6boT0IDzSIcJp5kJrpZ4GA3a_0tFuH0v3BAQ3PvG3sbdDRhjH
+    i8-iCwt8ra0X6Vw6zgM_8SNdKcaatpCzBBfe3RbagR8DpQ_jcrzNQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdduieefkeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedftehrnhgu
+    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
+    hrnhepkeehjedtjedtledtteegvdeiudduhefggfegudehfeekheduueehjefggedtuefg
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhdpghhithgvvgdrtghomhdpvddtvdegtd
+    eivdefqdhhohifthhoqdhmrghinhhtrghinhgvrhdqlhhinhhugidrmhgupdhkvghrnhgv
+    lhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegrrhhnugesrghrnhgusgdruggvpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehinhhotghhihgrmhgrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepshhtrghvihhnshhkhiesghhmrghilhdrtghomhdprhgtphhtthhopegtohhn
+    ohhrodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhotgeskhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepshhophhhghhosehlihhsthhsrdhlihhnuhigrdguvghvpdhr
+    tghpthhtohepmhhitghhrggvlhesohhrlhhithiikhihrdgtohhmpdhrtghpthhtohepuh
+    hnihgtohhrnhgpfigrnhhgsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepghhuohgu
+    ohhnghesrhhishgtshhtrghrrdgtohhm
+X-ME-Proxy: <xmx:qD96abH5DB1SlvWkOWF7kZU9YSxmJJ9kRGxIq0KEfcycp6vRR4nacA>
+    <xmx:qD96aSV08ChQutP0raDVpJ1CCGZQiVhXd0tRQzoD-mojHXk2jmT8xQ>
+    <xmx:qD96aTxAFceFID1lYbkYw82sE9yACItEepI5lWgSsjnBZpvipcng5Q>
+    <xmx:qD96aXQ_yvuCsQ25x9qY1lyD3tO9q82iEgpt3tA8ruGzvAyBIvYfiw>
+    <xmx:qD96aS1gMtcWw4v3vlzvFzUpZrr6kqSzb4OAtFCov76jzl0Tsw_iAuvG>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F04EB700065; Wed, 28 Jan 2026 11:56:07 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] PCI/MSI: Check msi_addr_mask in
- msi_verify_entries()
-To: Thomas Gleixner <tglx@kernel.org>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- "Creeley, Brett" <bcreeley@amd.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: Han Gao <gaohan@iscas.ac.cn>, linuxppc-dev@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, netdev@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-sound@vger.kernel.org,
- linux-riscv@lists.infradead.org, sophgo@lists.linux.dev
-References: <20260123-pci-msi-addr-mask-v3-0-9f9baa048524@iscas.ac.cn>
- <20260123-pci-msi-addr-mask-v3-2-9f9baa048524@iscas.ac.cn>
- <87jyx3be1t.ffs@tglx>
-Content-Language: en-US
-From: Vivian Wang <wangruikang@iscas.ac.cn>
-In-Reply-To: <87jyx3be1t.ffs@tglx>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:qwCowADHcW0DhXlpfl6GBg--.10567S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYk7AC8VAFwI0_Wr0E3s1l1xkIjI8I6I8E
-	6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28Cjx
-	kF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8I
-	cVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2js
-	IEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE
-	5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeV
-	CFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lFIxG
-	xcIEc7CjxVA2Y2ka0xkIwI1l42xK82IYc2Ij64vIr41l4c8EcI0Ec7CjxVAaw2AFwI0_GF
-	v_Wryl4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8G
-	jcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2I
-	x0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK
-	8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I
-	0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUojjgUUUUU
-X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
+X-ThreadId: A1tBEhR27o0V
+Date: Wed, 28 Jan 2026 17:55:31 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Chen Wang" <unicorn_wang@outlook.com>, soc@kernel.org
+Cc: "Conor Dooley" <conor+dt@kernel.org>,
+ "Inochi Amaoto" <inochiama@gmail.com>,
+ "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
+ "Guodong Xu" <guodong@riscstar.com>,
+ "Michael Orlitzky" <michael@orlitzky.com>,
+ "Anton Stavinsky" <stavinsky@gmail.com>
+Message-Id: <22023b9a-2a5b-4552-8d9f-3f15a7cc2ba8@app.fastmail.com>
+In-Reply-To: 
+ <MA5PR01MB12500D99CB14A37FBA543DD36FE96A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+References: 
+ <MA5PR01MB12500D99CB14A37FBA543DD36FE96A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v6.20
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi Thomas,
+On Wed, Jan 21, 2026, at 01:46, Chen Wang wrote:
 
-On 1/27/26 17:27, Thomas Gleixner wrote:
-> [...]
+> are available in the Git repository at:
 >
-> Other than those nits:
+>  =C2=A0 https://github.com/sophgo/linux.git tags/riscv-sophgo-dt-for-v=
+6.20
 >
-> Reviewed-by: Thomas Gleixner <tglx@kernel.org>
+> for you to fetch changes up to f16ae81b80ca4e721f4c4ed1f28390115f7721e=
+b:
+>
+>  =C2=A0 riscv: dts: sophgo: sg2044: Add "b" ISA extension (2026-01-20=20
+> 09:03:37 +0800)
+>
+> ----------------------------------------------------------------
+> RISC-V Devicetrees for v6.20
 
-I will fix these and patch 1 as well in v4. Thanks for your review.
+Hi Chen,
 
-Vivian "dramforever" Wang
+I noticed that you are using a new gpg key. Like your old one, it
+does not seem to be on the kernel.org keyring, but I actually
+found the keyid in a blog post you wrote at
 
+https://gitee.com/unicornx/tblog/blob/master/articles/20240623-howto-mai=
+ntainer-linux.md#%E5%AE%89%E8%A3%85-gpg
+
+so I successfully imported that key and verified the signature.
+
+If you have the chance, it would be great if you could get other
+developers to sign your key and upload it publicly, ideally on
+the kernel.org keyring according to
+https://korg.docs.kernel.org/pgpkeys.html
+
+    Arnd
