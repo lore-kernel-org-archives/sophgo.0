@@ -1,101 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5BF423A76;
-	Wed,  4 Feb 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064572F83AC;
+	Fri, 20 Feb 2026 04:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219872; cv=none; b=PDd8r+Cc08M11Gz0XWzJP5zBH519oMpUgWYdC+dJyaPPTp1KpvHVMn9Ighp1zfU5aYpiDhejsd6Y5zIxzWN0FOqi8JVW6u1yd4NPlUecJWOnFGRTUDb3Hr1kWer5H6NB6iSIi00T59Q20oftLQ83/zWVI5+L6JS0D/iuksVAgrQ=
+	t=1771560633; cv=none; b=QcZlK6PBOSer24S8XbHqCZxfownSzRmNixAyAU6NdJ0uIzbTYZjAvmN+7wudakYBMoz2110dqM8UmQ4IzqKzfDBs/xvR46MS/IXKJwPa/tnOg4jLaYjnCuX+GVBUh4xzhgF2Dm5ZcaezZM4A6Z8cqzR+urjtO8z8QRC2j/hjvAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219872; c=relaxed/simple;
-	bh=+SiVY+/yNC7rLAU4MsNDlaFmt/l6M3hSIaCT9ls3sWA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=m72uba23pl4WjvM98glI9P4rnREvAsy0VgAg9S2Kc0bfyPHOT7zG+uGX3MsKh+yq9PLwtnN4UZ6XpEjCuow0dOyn6PVZ5K5XuuGCw3fAJ84N7r7CgeY94MdZDpbkrJ00Oi18puXxHqzpDyn6UPB7+gWWz6MhOL++U3ZvwkG1saY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChyBoGK2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1771560633; c=relaxed/simple;
+	bh=72mBwftCl+P66JkWk2D3tPM6F5W5fqiLlxhFDPCaeZk=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=NNeWTOBXwd7qsFGH7SJzqHnjwAiFoqrm6aMNxoRWYOeWSEGyH/H/G06mB3c1pI+OwhEGtn3guQdheEjBwMCBlZ8c6+0N95ZAeq4EGkZncuR31YqVPprk5rjoBB2dD0Y+8+nijOAWSS2w8yf6HwJjAUiXvS7luMgLf54CZISMKb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bAm4gV2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChyBoGK2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86463C4AF09;
-	Wed,  4 Feb 2026 15:44:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bAm4gV2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A05E8C2BC9E;
+	Fri, 20 Feb 2026 04:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770219872;
-	bh=+SiVY+/yNC7rLAU4MsNDlaFmt/l6M3hSIaCT9ls3sWA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ChyBoGK2yE6SGuM1Drf5M172SdoJACKZFUrrNsUyxs9tGn1I7qqhqJE3n0SdMuKH8
-	 WBsiwmPVq8rOQ6GO0hIm6TfZIkR7fNFOFSnqJ6Wdc5I/3L23nQxD+pLZgfso/lsmdU
-	 N1ft/ntOh+AHs/UCG+Km7aago4ldSONLc+3r2AOXwQZfUcNSU1niG9vFP8cVLMaEBv
-	 VG4YKOSwN1dDXgyUhW0x6meOz/fA8+ehA5Aie8KkSz3fTjfCixIQW19ESOaqSx9ox7
-	 M5PMr/5rexa0xvN6NnkgCdEKKhyKZgRD5vul5MiJBcLirTLb81zxgj6ptueMw8TKGG
-	 fD9D5P7F7CkxQ==
-From: Vinod Koul <vkoul@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- sophgo@lists.linux.dev, Chen-Yu Tsai <wens@kernel.org>, 
- Maxime Ripard <mripard@kernel.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- linux-rtc@vger.kernel.org, 
- =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
- Manivannan Sadhasivam <mani@kernel.org>, linux-actions@lists.infradead.org, 
- Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org, 
- Taichi Sugaya <sugaya.taichi@socionext.com>, 
- Takao Orito <orito.takao@socionext.com>, Jacky Huang <ychuang3@nuvoton.com>, 
- Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- linux-stm32@st-md-mailman.stormreply.com, 
- Michal Simek <michal.simek@amd.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- Neil Armstrong <neil.armstrong@linaro.org>, linux-phy@lists.infradead.org
-In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-Subject: Re: (subset) [PATCH 00/27] clk: remove deprecated API
- divider_round_rate() and friends
-Message-Id: <177021986017.133434.7084660742419779164.b4-ty@kernel.org>
-Date: Wed, 04 Feb 2026 21:14:20 +0530
+	s=k20201202; t=1771560632;
+	bh=72mBwftCl+P66JkWk2D3tPM6F5W5fqiLlxhFDPCaeZk=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=bAm4gV2cKvjN5GuYeDqOqnWaOQJnwWiubm5cPxzG0b1Sls51+3jb0M5jPJ1+SGZTp
+	 BNMGuKF+rHUZyZkSemcZ7VP/pg7JHj2ZcfuVFKpEER40qLLDnHc+EVOwAimnPx17DQ
+	 /jDJhzaTZP/JOxp36YKfDTewflsvr8lV3YbUHfUAOw4uyWsvqfoKgWsWEaQXJWPeS0
+	 7yQWORIx1F33RSW37fCo4RiS84fyL5mrOB1bDmofqalUb0Xx4bXIumnN+Z2lzvlWAZ
+	 8a+Io+IXkFA3DZOs/NEEJxN4KV44owP83FsMWAyt+2OmNLolEZfWlAR2gjA0OmJimN
+	 kkoQWYIwgr7TQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 3FD913809A88;
+	Fri, 20 Feb 2026 04:10:42 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v4 0/4] PCI/MSI: Generalize no_64bit_msi into
+ msi_addr_mask
+From: patchwork-bot+linux-riscv@kernel.org
+Message-Id: 
+ <177156064078.189817.10457864568127488431.git-patchwork-notify@kernel.org>
+Date: Fri, 20 Feb 2026 04:10:40 +0000
+References: <20260129-pci-msi-addr-mask-v4-0-70da998f2750@iscas.ac.cn>
+In-Reply-To: <20260129-pci-msi-addr-mask-v4-0-70da998f2750@iscas.ac.cn>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: linux-riscv@lists.infradead.org, maddy@linux.ibm.com, mpe@ellerman.id.au,
+ npiggin@gmail.com, chleroy@kernel.org, alexander.deucher@amd.com,
+ christian.koenig@amd.com, airlied@gmail.com, simona@ffwll.ch,
+ andrew+netdev@lunn.ch, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, bhelgaas@google.com, perex@perex.cz,
+ tiwai@suse.com, brett.creeley@amd.com, gaohan@iscas.ac.cn, tglx@kernel.org,
+ linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ netdev@vger.kernel.org, linux-pci@vger.kernel.org,
+ linux-sound@vger.kernel.org, sophgo@lists.linux.dev, tiwai@suse.de
 
+Hello:
 
-On Thu, 08 Jan 2026 16:16:18 -0500, Brian Masney wrote:
-> Here's a series that gets rid of the deprecated APIs
-> divider_round_rate(), divider_round_rate_parent(), and
-> divider_ro_round_rate_parent() since these functions are just wrappers
-> for the determine_rate variant.
+This series was applied to riscv/linux.git (fixes)
+by Thomas Gleixner <tglx@kernel.org>:
+
+On Thu, 29 Jan 2026 09:56:05 +0800 you wrote:
+> The Sophgo SG2042 is a cursed machine in more ways than one.
 > 
-> Note that when I converted some of these drivers from round_rate to
-> determine_rate, this was mistakenly converted to the following in some
-> cases:
+> The one way relevant to this patch series is that its PCIe controller
+> has neither INTx nor a low-address MSI doorbell wired up. Instead, the
+> only usable MSI doorbell is a SoC one at 0x7030010300, which is above
+> the 32-bit limit.
 > 
 > [...]
 
-Applied, thanks!
+Here is the summary with links:
+  - [v4,1/4] PCI/MSI: Conservatively generalize no_64bit_msi into msi_addr_mask
+    https://git.kernel.org/riscv/c/386ced19e9a3
+  - [v4,2/4] PCI/MSI: Check msi_addr_mask in msi_verify_entries()
+    https://git.kernel.org/riscv/c/52f0d862f595
+  - [v4,3/4] drm/radeon: Raise msi_addr_mask to dma_bits
+    https://git.kernel.org/riscv/c/617562bbe12d
+  - [v4,4/4] ALSA: hda/intel: Raise msi_addr_mask to dma_bits
+    https://git.kernel.org/riscv/c/cb9b6f9d2be6
 
-[25/27] phy: ti: phy-j721e-wiz: convert from divider_round_rate() to divider_determine_rate()
-        commit: dbeea86fecef7cf2b93aded4525d74f6277376ef
-
-Best regards,
+You are awesome, thank you!
 -- 
-~Vinod
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
