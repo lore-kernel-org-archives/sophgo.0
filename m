@@ -1,63 +1,63 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378D93939AA
-	for <sophgo@lists.linux.dev>; Wed, 25 Feb 2026 10:41:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A6B392C5F
+	for <sophgo@lists.linux.dev>; Wed, 25 Feb 2026 10:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772016072; cv=none; b=Qf5NTeRqh+isgCHmte94OGMITEzVuRuNMkE3y52U9z59zvjUx04jRGaGrxBF963S08+MKNBGM4lLbfV4HEKW9QnLC9dEdBXq+Iv4quwOt925KC38ulmaWHJDzz+8Jwgk9SPUELRkYF+I2wibX4bzQjkLDlH3RzAzUsptiGQgLUo=
+	t=1772016075; cv=none; b=JpRTzgtFeiroYhU4MI6AvqhTtxBGuH176gGtAs3SaX+5SbDzU0somit+OFBRobQrWm0rVLBQYRgl+oztA9roBOx5y8gantCYgKUMzV3lg/eRLYKL6NgETjrIrNVflDnTp1zOgYM1eNYeaKZbq9TxUikVAykVJ7WTBDZ/2fql/uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772016072; c=relaxed/simple;
-	bh=yxOj5sToPmLzSh77Wy6Gl4G8jBqGXLhwxbTtGlE3Q7U=;
+	s=arc-20240116; t=1772016075; c=relaxed/simple;
+	bh=p0pJb4wR6PRU+wXa5zMbGWI2UmzpUtuLQnTO26ezUMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hRwgz+oucc/qLvrlJAEZSqXi1X6snU6ytW+R8Iz5C95veO2VUQEZ5zo8i49K034/GUEKG4lEMVR1vY+6wENYnO4OTqJv52YPaPg/ukKk++867arXPL+kMC8uHXuntWlXgMZyFpo310AUw0gt3WHH4YZUyk01oI8JHRIaqoHNHyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MJ6myZYu; arc=none smtp.client-ip=209.85.214.181
+	 MIME-Version; b=n9Ke2ixF4MIqnF2v+16H92aLaSypdvGBjczATAQUvVBsrisomtYTbeXr9jjBrPoE7aCaydl5uCE2cX/BfFZwhQUYayrlgCOF3a+9uBY/xWWStxsjkXeXIx7w2+8tb1N8KE9d5trRvCFBTaTkC5E0AqGYNNmiFFamcKnw6Uces2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gH/Gs0xZ; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MJ6myZYu"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2aaed195901so30887365ad.0
-        for <sophgo@lists.linux.dev>; Wed, 25 Feb 2026 02:41:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gH/Gs0xZ"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2a962230847so62713075ad.3
+        for <sophgo@lists.linux.dev>; Wed, 25 Feb 2026 02:41:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772016070; x=1772620870; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1772016074; x=1772620874; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y5JusZ8CeTeNO4qDCoYo5++ntNew4s+UIqyoBHnZ8bM=;
-        b=MJ6myZYulSguS0vFzgTUYQrDpc8rPIHDG3Nre7mHGZF7AZx/Cy4kUvgJ8DKqcQkllx
-         93i4nnsLKLzJ0+1MpVanD3Xx/gBX2CV1HVCp2/bZp8lrUxL8v7d0myq4NN4QpgcwTCDx
-         WteEGC/XqovBe663cly0+ilQrLmpSUFS3vurDfW2LDUSMCruDFvw321wijZ4NH/IL1yM
-         emdGRLihTkWukPjXkT/1VNzUvKej24lRuO8R2KMzl7nruU0zBvq3NE6CELd+qE1z082F
-         khotnP13W8XSaUPUn1n7KVgXKp0qVxPJe2GYh3NzGkvYdIRG2HJX+W/wmzR9emTwAAm9
-         GRqg==
+        bh=b5peVG9Q2XYh9oaZWaeVmzNFFF3WeNUswB5+Or4VvBI=;
+        b=gH/Gs0xZ+UH2wWcq1qCY71CQ2N5EW2/uCJe8JhD6YTCp2y0/RCSx4aFDQWAfjcElRh
+         aoj0OOWzXsf4hoc41qmWowN/RPramdJQXAYVWbtXUV6szrsJtkbK5iURkXzrg59jdwQH
+         JVkU3M0MaWUt5vKt2TEmf9utqzuiYViigCVo95aQjhq/Igrbd/f252W1xFVBQjvcn11r
+         b4QdgqChvaecszDBRs+B8iJBEKl/o50EDQUuHA9ur6vNWiXeFet0t5n6mKNvebPdqjhE
+         T6pjH5dEOI7r/LtxWshPw8UFLEO467ZLwNtrmP6ErFyvG1BjmtZlwDZ2WAoeaylEHFAG
+         Wypw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772016070; x=1772620870;
+        d=1e100.net; s=20230601; t=1772016074; x=1772620874;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=y5JusZ8CeTeNO4qDCoYo5++ntNew4s+UIqyoBHnZ8bM=;
-        b=BhFh4DHoTDAb0I7y0lKUgZK2F+das7FxvgaEuFMK1yig1w4i0a3EfRfjNrpGlOux2c
-         wDHUL4z3QNuZzbFc4yP9/Fck53X4aw1QhDaiyve5/1eZSa/YzYjuRytqbE589QMkZjw/
-         gW4wOOyq2xd8dRJgvVo02JFvzPsS0dCkYKxbX1qbZdCZFBhJBaAeQKkvuUZUWsrwM7x5
-         gvYlnSLe8QvYPB42aOmRLUXYiWBhbjrevGUhEQ1lMYnR4USNluN1f7B91MNxQ0ucXAaA
-         0/gEWzjvgfRn3pbPnGzt6vh6zvLX7FonrmchT+6HS7k2OSC3CEjVzozJghmYo/kS57v/
-         X0yA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkjWZGjVqjwo7Cu3WOH6ZOwAX7KTDgXAfeA+p3uX3GKeSgtGo8lb7QK7yNQa1ZeyR9eGot4dU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzkYbGIRyTLmOHEFur+IPmgSluPRoJXNMUMRrJ01l2L308JJt96
-	maOl2NOZlGrNNkXGuFGjooNXcFjW8Nj6o1VuozIVGn1mc6w9/hSmef6t
-X-Gm-Gg: ATEYQzzs/17Q6tJwl9VRDo2M6VLlf9LjAYfkBQW1VH86py9MGKF+9FJ5mBS3O3DwXws
-	ULSdw2IAw7CtY5X3PtOKU4CBAvS5dYPOtV6b5uT4VTG+M4J/tq1jHCTfsQUKbH1OZmIYgBK+K+j
-	IO4kWrkSANNN9QQFYQhqfCvAJ2rF46OjsGsU+qtZu6fSwLR8/smj8ojHk34dSHjHF3RsIiIC8HW
-	5IDeqSyt8BXDHrLwa4zcuItIRRMKYwu2xhOwQt23L05yeSaSfM0qVMAaAKk4Yft1y1bgLF08Wak
-	QLx7U5JXUIvD05vgARdIPtgN1tAcp1oVvRKmfSflfqApg11B2V7yWshl+aKDhpqt1Z0NnjfePtG
-	bgqDG3PTdt9kVzdtShWaiLAMvPYbgMqtcIBgLY2qyKhQCYCpWOxpBrFAkFgft5nKKPA5Lg03IrD
-	/4acIftZLPlYEus7loKL2qFDGf1uxFO+ds
-X-Received: by 2002:a17:902:e787:b0:29e:9407:a8cb with SMTP id d9443c01a7336-2ad74548a87mr147819225ad.40.1772016070549;
-        Wed, 25 Feb 2026 02:41:10 -0800 (PST)
+        bh=b5peVG9Q2XYh9oaZWaeVmzNFFF3WeNUswB5+Or4VvBI=;
+        b=dcrgUNfrOuWfNTl8DaNpuzl6vxjikSoptjicm3l34nmDI4/N+pknII3cLtL/8v8Frh
+         Zk31FVKzz+0dY3tZzNO8TtvOjyFgFbPdvO+kxrBSTphbNSblyjwcUvTW800KS4ONJ9vv
+         4oqEV5zdi7GMdhjLtG/HmowaWX92pdugzOZ047d6dPKBKmBbiMGcU8sRQgSDjCeXCumo
+         Ok4Tvx0PSolSo0l4mBMCpKwWTWbruy/8bb21mvBPk0i3MbDqwGPp1rye0JmTk8MFnuD6
+         JmKpk1NSZw4DeEwjyeZqpqKFL3jMvoEA9471916PtXyPeFHZ3RhqXsnAjjGI0j5ihfF8
+         8ZLA==
+X-Forwarded-Encrypted: i=1; AJvYcCVqkYDRYp6OTg6o/5FKyDLcxX12384RmQWN7Wd1NnWHZpmQbd9yYlyd0/biZUW4MnjQDwcNF18=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwjE00SYiYLUwwlL3YtnbQTDZjR4/v9+ksuf+Lq2MQ5+Us3/sPX
+	f5OdjUMooaEKfQGYgHN+PZOdcVFjY7gt+laEYxIEVdnn/cM6gnycYZsZ
+X-Gm-Gg: ATEYQzwMefa5kfUv/32vySKjlv4SEvonyAUP0Quc0YA1pTudjMNCMOBrGM7HI+Ad73k
+	oTFN7/LWqknAEmCX9UPgP//wtMx9xLHE7Th1wFEZ/trmAg505887y7VmtgHTUxRy5Dh3mxDXlKk
+	nWGUfcKsNAvHHzpA5ObR0JOSlLceN223pbG6ACRiFtpIMPqAumCez2mkhdHDAbjbx+46as9O4hp
+	VAU6+6xt5tFFTBrgHs2wzwagAwD8htlLqzDQF9L0JRTayzuDKG3FPhdN63KhHIJlDQNTerYQ+lR
+	4wY25Q/2U+YjN/DebtDK8QUiBhElWcWryUKEBn/8+LvhflLkeWk2vLUykZRlsdVYPkkU5nAdM30
+	LrtYGKCMsB1IuoE6ldQ3fEuKNDOUAdRgkbXdoIkJCmHD6KiQQ/N0+fJFD8VnIOFJ+sUAFxShd+0
+	HLbP3Kjyyi2xJRHt84sGYgNQ==
+X-Received: by 2002:a17:903:1aa8:b0:2aa:d1e1:29d5 with SMTP id d9443c01a7336-2ad74556f97mr158162195ad.50.1772016073682;
+        Wed, 25 Feb 2026 02:41:13 -0800 (PST)
 Received: from localhost ([2001:19f0:ac00:4eb8:5400:5ff:fe30:7df3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adb1bd6b05sm41625085ad.79.2026.02.25.02.41.09
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ad74f5dba7sm133070865ad.26.2026.02.25.02.41.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 02:41:10 -0800 (PST)
+        Wed, 25 Feb 2026 02:41:13 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
 	Vinod Koul <vkoul@kernel.org>,
@@ -82,10 +82,10 @@ Cc: dmaengine@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
-	Conor Dooley <conor.dooley@microchip.com>
-Subject: [PATCH v4 1/3] dt-bindings: dma: snps,dw-axi-dmac: Add CV1800B compatible
-Date: Wed, 25 Feb 2026 18:40:39 +0800
-Message-ID: <20260225104042.1138901-2-inochiama@gmail.com>
+	Frank Li <Frank.Li@nxp.com>
+Subject: [PATCH v4 2/3] dmaengine: dw-axi-dmac: Add support for CV1800B DMA
+Date: Wed, 25 Feb 2026 18:40:40 +0800
+Message-ID: <20260225104042.1138901-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260225104042.1138901-1-inochiama@gmail.com>
 References: <20260225104042.1138901-1-inochiama@gmail.com>
@@ -97,28 +97,96 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The DMA controller on CV1800B needs to use the DMA phandle args
-as the channel number instead of hardware handshake number, so
-add a new compatible for the DMA controller on CV1800B.
+As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
+the SoC provides a dma multiplexer to reuse the DMA channel. However,
+the dma multiplexer also controls the DMA interrupt multiplexer, which
+means that the dma multiplexer needs to know the channel number.
+
+Allow the driver to use DMA phandle args as the channel number, so the
+DMA multiplexer can route the DMA interrupt correctly.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
- Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ .../dma/dw-axi-dmac/dw-axi-dmac-platform.c    | 25 ++++++++++++++++---
+ drivers/dma/dw-axi-dmac/dw-axi-dmac.h         |  1 +
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-index 216cda21c538..96b0233d9b1b 100644
---- a/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-+++ b/Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml
-@@ -21,6 +21,7 @@ properties:
-       - enum:
-           - snps,axi-dma-1.01a
-           - intel,kmb-axi-dma
-+          - sophgo,cv1800b-axi-dma
-           - starfive,jh7110-axi-dma
-           - starfive,jh8100-axi-dma
-       - items:
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+index 5d74bc29cf89..ada6dfc9b673 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -50,6 +50,7 @@
+ #define AXI_DMA_FLAG_HAS_APB_REGS	BIT(0)
+ #define AXI_DMA_FLAG_HAS_RESETS		BIT(1)
+ #define AXI_DMA_FLAG_USE_CFG2		BIT(2)
++#define AXI_DMA_FLAG_ARG0_AS_CHAN	BIT(3)
+ 
+ static inline void
+ axi_dma_iowrite32(struct axi_dma_chip *chip, u32 reg, u32 val)
+@@ -1358,16 +1359,27 @@ static int __maybe_unused axi_dma_runtime_resume(struct device *dev)
+ static struct dma_chan *dw_axi_dma_of_xlate(struct of_phandle_args *dma_spec,
+ 					    struct of_dma *ofdma)
+ {
++	unsigned int handshake = dma_spec->args[0];
+ 	struct dw_axi_dma *dw = ofdma->of_dma_data;
+-	struct axi_dma_chan *chan;
++	struct axi_dma_chan *chan = NULL;
+ 	struct dma_chan *dchan;
+ 
+-	dchan = dma_get_any_slave_channel(&dw->dma);
++	if (dw->hdata->use_handshake_as_channel_number) {
++		if (handshake >= dw->hdata->nr_channels)
++			return NULL;
++
++		chan = &dw->chan[handshake];
++		dchan = dma_get_slave_channel(&chan->vc.chan);
++	} else {
++		dchan = dma_get_any_slave_channel(&dw->dma);
++	}
++
+ 	if (!dchan)
+ 		return NULL;
+ 
+-	chan = dchan_to_axi_dma_chan(dchan);
+-	chan->hw_handshake_num = dma_spec->args[0];
++	if (!chan)
++		chan = dchan_to_axi_dma_chan(dchan);
++	chan->hw_handshake_num = handshake;
+ 	return dchan;
+ }
+ 
+@@ -1506,6 +1518,8 @@ static int dw_probe(struct platform_device *pdev)
+ 			return ret;
+ 	}
+ 
++	chip->dw->hdata->use_handshake_as_channel_number = !!(flags & AXI_DMA_FLAG_ARG0_AS_CHAN);
++
+ 	chip->dw->hdata->use_cfg2 = !!(flags & AXI_DMA_FLAG_USE_CFG2);
+ 
+ 	chip->core_clk = devm_clk_get(chip->dev, "core-clk");
+@@ -1661,6 +1675,9 @@ static const struct of_device_id dw_dma_of_id_table[] = {
+ 	}, {
+ 		.compatible = "intel,kmb-axi-dma",
+ 		.data = (void *)AXI_DMA_FLAG_HAS_APB_REGS,
++	}, {
++		.compatible = "sophgo,cv1800b-axi-dma",
++		.data = (void *)AXI_DMA_FLAG_ARG0_AS_CHAN,
+ 	}, {
+ 		.compatible = "starfive,jh7110-axi-dma",
+ 		.data = (void *)(AXI_DMA_FLAG_HAS_RESETS | AXI_DMA_FLAG_USE_CFG2),
+diff --git a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+index b842e6a8d90d..67cc199e24d1 100644
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac.h
+@@ -34,6 +34,7 @@ struct dw_axi_dma_hcfg {
+ 	bool	reg_map_8_channels;
+ 	bool	restrict_axi_burst_len;
+ 	bool	use_cfg2;
++	bool	use_handshake_as_channel_number;
+ };
+ 
+ struct axi_dma_chan {
 -- 
 2.53.0
 
