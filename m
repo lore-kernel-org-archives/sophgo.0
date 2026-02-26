@@ -1,117 +1,94 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E488C8632A
-	for <sophgo@lists.linux.dev>; Thu, 26 Feb 2026 00:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700FE2DEA74;
+	Thu, 26 Feb 2026 07:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772064946; cv=none; b=STKk6Bi58P6xhCc54lWmVdOzmJwa9VWbL/yLqbm7LlJ/OTu4SMPtd8Bz28BMQ6XeN3J/GDDABfqUik+bCPKsalXVIWGkQhp6KMoH6j/glF8igzh8sr9s6JcVd53UAEGdwSEApt0aoST2OvtjirJku28VXNENj2GDEUDJzQdG/xY=
+	t=1772089554; cv=none; b=E63OTjZR0WQVVmAiu++p/egwprugRi82t/AnVj4Kf9JjhLhvSnYz/5XTj6YNgKQCi6REuK0RS6QgmMOXqU3XH5iS9lO63YwL7tBBheKn15p8cjD0vYX8Bc86WzEi0F4Wez92E1wlVme7TKyNfXDBqO62kuiRqO1Ev4jqRuegYJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772064946; c=relaxed/simple;
-	bh=bPNWxJ0PsKswuNugUux6ENRUt7NN3n0Zwy2e/5d8BA4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mu3aIKXmirSlAEZHyKcHATKEbPMmZ0QhOUDL5Z3PG8tY0PnxZ2qRLN3FseA74ZHPODnnHd+muDPQhDt7bRGjqXlx/ERwtn0a3RIn9z7RmUaulJW6nqgkzP1LsY9U9ZLV5PFLhPMHHCynEs/Y1v+2+p+dQKqh1RokTCu2oDpjt7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dk7DjX3X; arc=none smtp.client-ip=209.85.222.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772089554; c=relaxed/simple;
+	bh=r8kkku+RUrykKo8TzZsoSH0+1fI5bqsKXvST33G+y+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ME+fH82b5cgMnW7ms2W2oPe2e7aNNOMHh7dLENGeTtfpeUrTm1KIKfofY1cH7+J8PM9nMvgd0QMk+oS9GMU/uOBWrVOsdhm5NVnosQyKoWLDM6k+i/kYQM2/dykHTUvxAkvWViNC0R2l9yTj6+kyZO7SgDrrVxzcL+MiDBc/SG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVOUerUr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dk7DjX3X"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-94ac3958788so121105241.0
-        for <sophgo@lists.linux.dev>; Wed, 25 Feb 2026 16:15:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772064944; x=1772669744; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+vrInnbX0KCc1ynABnNky7B7FYswXUG4HFiI8RLfvys=;
-        b=Dk7DjX3XkrEc52K0A4tyR29jXX24os80WeahiQIbpnYftE5bC13uwFaD4EwssZYVd8
-         yz2x1zikgkXsrW15oDsrSCklyeTvA2b0Q7zG0XX1+cpZe0S2mF6MhUbj3Tpg5HcG3SOc
-         7dV9oJydIFmOAsHHA+JTbPHbPeOPw1U4+98X5O2rQbyWnOlUX0/JBE3xh9Ethir2UHeN
-         QwCL77fteMs4p4/YKVsAprnjdr0+u5f/tDhsomFozQrUEchi5UWg/6MauP2bORNtDjO6
-         OjYkeM3deVjUtPyzD8Gnn0/QIpyMxWxufwQH49Ix+dMWONW2U/y0oceVbNRqYlnXZGmH
-         O0Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772064944; x=1772669744;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+vrInnbX0KCc1ynABnNky7B7FYswXUG4HFiI8RLfvys=;
-        b=qpApBgy5Rksw03iANtvGk4QwVEXxiVIgCufiVJsCQSBYO3RAwj6yyMvmQeOuMvSUCh
-         Wk5DJtkbiC86wS9jMro6/F2vjeHsEhDS+fNl583owpW7qn+WxfjNytl9sY+bYCCfV0bT
-         7XLTyYiShgpt05xL/mH+zI/4t4u3GlV4AYNyUOpXpmIh5QkMF5faLoS4cQ7LD1/dkjiF
-         D1tq06b5ESg7akEZnEdwClr29do9x3qpX5ywWoWE88EkLSQXSZA+oYFtmdixG/u71tUB
-         xn3FLoNHppSaIW5jbyrRpFy3f3i4pDZSTXaJWFPm3/oTVbStDxL1mBExlV8Jl+KjNq4+
-         073g==
-X-Forwarded-Encrypted: i=1; AJvYcCUB2k35ipvL1BMp0smaVaQAVrZUcC7bTm38u9CY/7MJO55qYQcV88+agrP0hkAdPmyKgvu1304=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwBoQVFV4FzZ2A3oY3pPvwK0bL/cs4BUg4JJQWZDYdCvrlW2aNe
-	V8+ewmg4beGXfKbrrEf6j5dD2/Xm81DcLC49bpov7Wq6irCUtNX3s+evP1NQBrQ3
-X-Gm-Gg: ATEYQzwF4v53ANFE7ZjLLbLCyWCV7uRVWgD7qqFbxx1DCmFwqzjbl9UyJhoam3i5li7
-	jgBSywxuNoziuB6irnb4+eb1VJ3fbVL1+oRQSOzBlUw/lGOZY7o7Bmdm4CmlRvtm2m8JUMCqbxl
-	wTGvODE/QU7nNnXL/Bv3zRk5nI+X0BhG8/9C/gEHHp+JBVd5j4V9J4F9EBl3BYy1ECYwql+aPHI
-	iyx8d9P7f4y6SdzLGY99Ho+PURpnm4RQg+i0iOTfduFTTmBy76hmPahA9jRlLD0A/CVbK0CB77X
-	CS9VJ+lKkQw8v0O0LbDiyNiLNMLIzMvZB1+MxT+cxqFsAQwysKgrsB9mcHekwrIfizqOP/xRLG/
-	TSfvoBMeRKsbmFjE/JpAqRWHGfZigchpazHys/wVMaei5WbSY+QpAuhXEIGoNi6oCC1uyIIEIz1
-	U=
-X-Received: by 2002:a05:6a00:2d1d:b0:824:3ef6:a815 with SMTP id d2e1a72fcca58-82739767b3emr516796b3a.8.1772058091345;
-        Wed, 25 Feb 2026 14:21:31 -0800 (PST)
-Received: from localhost ([2001:da8:7001:11::cb])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82739d544ffsm290363b3a.12.2026.02.25.14.21.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Feb 2026 14:21:31 -0800 (PST)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVOUerUr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61791C19425;
+	Thu, 26 Feb 2026 07:05:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772089554;
+	bh=r8kkku+RUrykKo8TzZsoSH0+1fI5bqsKXvST33G+y+Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fVOUerUrp1sd8OJYr/FayxxGSv+keS2OvEIftB8YxZm/B44KcMB+dWGzHdh+iJtgO
+	 Edo8ini3/qBAM2bn5TmdJj1j1rKeleWMYfuWf9rV6KV+pb0cmS/SmKMS6eW/uit2lo
+	 HqJI9P4wGKuDz+rWyZxJUIMD3I6LQ9Dy0rw2afNEhI5apJgSZerdALhTDfs2N+bl/C
+	 UwLL1W9rU91dKI3UICn0T4lNP4Etpj+B/RJ7YFjHXr+iwSmFk3j4+mroZ/61Hpc2uu
+	 hPfPqiMDaJxOAqPFA3jdRN/Njbu7Q8AemmGO4mMTjtWKanxil+gsr5tJHfWYOSs4Cw
+	 gURkzrb31HbDQ==
+Date: Thu, 26 Feb 2026 12:35:50 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Chen Wang <unicorn_wang@outlook.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
 	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
-	Ze Huang <huangze@whut.edu.cn>,
-	"Anton D. Stavinskii" <stavinsky@gmail.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org
-Subject: Re: (subset) [PATCH v4 0/3] riscv: sophgo: allow DMA multiplexer set channel number for DMA controller
-Date: Thu, 26 Feb 2026 06:21:07 +0800
-Message-ID: <177205806122.119215.17895713731232514155.b4-ty@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260225104042.1138901-1-inochiama@gmail.com>
-References: <20260225104042.1138901-1-inochiama@gmail.com>
+	Longbin Li <looong.bin@gmail.com>, Ze Huang <huangze@whut.edu.cn>,
+	dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org, Yixun Lan <dlan@kernel.org>
+Subject: Re: (subset) [PATCH v3 0/3] riscv: sophgo: allow DMA multiplexer set
+ channel number for DMA controller
+Message-ID: <aZ_wziVgEPGOSAd3@vaman>
+References: <20260120013706.436742-1-inochiama@gmail.com>
+ <177201865381.93331.6104381063514168222.b4-ty@kernel.org>
+ <aZ9z0gV8ZrfpL2JG@inochi.infowork>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aZ9z0gV8ZrfpL2JG@inochi.infowork>
 
-On Wed, 25 Feb 2026 18:40:38 +0800, Inochi Amaoto wrote:
-> As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
-> the SoC provides a dma multiplexer to reuse the DMA channel. However,
-> the dma multiplexer also controlls the DMA interrupt multiplexer, which
-> means that the dma multiplexer needs to know the channel number.
+On 26-02-26, 06:13, Inochi Amaoto wrote:
+> On Wed, Feb 25, 2026 at 04:54:13PM +0530, Vinod Koul wrote:
+> > 
+> > On Tue, 20 Jan 2026 09:37:02 +0800, Inochi Amaoto wrote:
+> > > As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
+> > > the SoC provides a dma multiplexer to reuse the DMA channel. However,
+> > > the dma multiplexer also controlls the DMA interrupt multiplexer, which
+> > > means that the dma multiplexer needs to know the channel number.
+> > > 
+> > > Change the DMA phandle args parsing logic so it can use handshake
+> > > number as channel number if necessary.
+> > > 
+> > > [...]
+> > 
+> > Applied, thanks!
+> > 
+> > [1/3] dt-bindings: dma: snps,dw-axi-dmac: Add CV1800B compatible
+> >       commit: 5eda5f42d2fee87127b568206a9fcc07a2f6eab6
+> > [2/3] dmaengine: dw-axi-dmac: Add support for CV1800B DMA
+> >       commit: 02a380ea7ed2d737a42693d7957ec8c33a92d9fd
+> > 
+> > Best regards,
+> > -- 
+> > ~Vinod
+> > 
+> > 
 > 
-> Change the DMA phandle args parsing logic so it can use handshake
-> number as channel number if necessary.
+> Hi, Vinod
 > 
-> [...]
+> I guess you applied the version 4, but replied to the version 3?
 
-Applied to dt/riscv, thanks!
+Nope, I had already picked 3. so reply went on that.
 
-[3/3] riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel number for DMA controller
-      https://github.com/sophgo/linux/commit/7b159ed9c81cf7e0d0b75666e6548ceface2e1b5
-
-Thanks,
-Inochi
-
+-- 
+~Vinod
