@@ -1,87 +1,87 @@
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9793ECBED
-	for <sophgo@lists.linux.dev>; Fri,  6 Mar 2026 15:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B64C3ECBDA
+	for <sophgo@lists.linux.dev>; Fri,  6 Mar 2026 15:47:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772812040; cv=none; b=aWeMgyaRKnAUl94PPmlujfg1qFEpnb5JKsSKRQm9G/36qLO+RbLYBSV/lzd9jz99vL7nzF78iQ7wykRqo4hnayPnEVQSVUudNUDsBMkLWaYT/1EkDlEuUnqNUYw1QvKKPBMXZk2Ze7Uhs8JwSqPvJA8+BlyvRAZmfLJ/lc53eoI=
+	t=1772812043; cv=none; b=P69k74Mt8Uni1JHomxi1bmNcRDcyYtPzIOLwq66uU2v9l1si0TYy4Fsshc5/63uj46V1ihZgvEo7N7rGxf9qEvCm1/NpKiZhx/xA3sNzRo94siJr+nkSxuj/+gg67x2Fx1an5KKY6FDyRVhyy9MQWXoiHGH+PeOfQAymV2KYsJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772812040; c=relaxed/simple;
-	bh=bEabACDPIWR1GkBjG8FezvRhDRIaJO/5uKLvE5tByvA=;
+	s=arc-20240116; t=1772812043; c=relaxed/simple;
+	bh=3uOuOeJbdrcS+lJ7aDmnJN+i6CRN23XQXoVBHlpPKpI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IQQ6GEFPCdcV4pSgMEPBdmcxyLVxLvQnj9g0eKgQsW96oaBc7h3xlTqWzaz0YzKjot8hvyTHoivxp+HIGUYMP3eMdNhSm1Ayt1tdrPTR0+VJczPCaXPQ3+O0Aduwv1ChMjwE3UUvsokhQoghJmGONx+R5yUXxLUtx1Aw8jtgS0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=blZWVVFd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MzehTCmh; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=KrPzYqMSCFw3eWnb1ctv6KlxqBhttRLUxoTKvDGpxJTgwZRFIqiIS/B7ht9VX2B7IeZ3c1JSz+ODBuDmVRJy+24z/VUucskLQ2pR/HJlvTr7/FHI2aBcO4scVel0S/crKOdicEvCbZEPnX1Wl79Fqn6m7R15XJLHYTLMtXJNqrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UTTNVO4C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Bfe/m9Sa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="blZWVVFd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MzehTCmh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UTTNVO4C";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Bfe/m9Sa"
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626FTE1j3748529
-	for <sophgo@lists.linux.dev>; Fri, 6 Mar 2026 15:47:14 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626FT2jl3748299
+	for <sophgo@lists.linux.dev>; Fri, 6 Mar 2026 15:47:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2NRYH8lzJWLHa5JUwCNp14+Y3Xn6J7jBFL10EVR15BE=; b=blZWVVFdJm5pq2s4
-	PO1IoTK0oZUWN8RBadFnYGbAlc3m2nYxCCAZJoeyN8dZ2GzS0bjFpB/+/WRbRyOp
-	cZpzJbPQfn7+onkLGvTUQeviugYAqHOq/E6UEdZyavJbNRK4yvXe+mYUOU7QPYb7
-	d0JbnJ8/vwP1drmZ8bqjvxRL3p2PFud7Af9xu0yJEOdXGhYQ882xIq3BJHerJ0ya
-	OQ6T2xzkQsIWvvryi6uV2qq00vNQNaUvC9TLAdVdndnGw3EonILWJcNmO7I7ippn
-	jt1rdjFiMLsOW7gxeD34OZKDaDvhyZit9ACXtl7PpgHj6PU82Ath2n/2lmPJW0Xg
-	hjUYFQ==
+	XmLtfnfEU442apLkQZEiJc7Yi7ztievqViAzTb+cZV8=; b=UTTNVO4CaNDJi/JS
+	L878uYw4+Pjqakz504j6ghi3XiYjIPgE0YiL7yGzPZUtduxaUoBVJSQOVjfW2Fn4
+	Ete0Hww61VIDr5A2UKQkagbqClJowXCX8bzidyoBs7IQQXPg0y+2IVWI5ctvHTla
+	zDdYcQkd8G7YrFUCNj4/tbI+MwCZ+ClxYHW/kk6njvmJCcwHbopBTVAYXWlR7LhW
+	n5FoCib5dK4p2WxTI0XmVWC+3TW9nMYxT/VgDaKxRXl5iokQBn/4e1Fau4o0Yu+3
+	HKLHPKIKoVuZ2RD+NNNUCbHD1b6x6siXLDgdbFDlKusf9M/gaNZ/0F5VCwjacKS3
+	5JDvzA==
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqg09up7a-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqg09up7p-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sophgo@lists.linux.dev>; Fri, 06 Mar 2026 15:47:13 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c71156fe09so5196517985a.0
-        for <sophgo@lists.linux.dev>; Fri, 06 Mar 2026 07:47:13 -0800 (PST)
+	for <sophgo@lists.linux.dev>; Fri, 06 Mar 2026 15:47:18 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c71304beb4so1535971885a.3
+        for <sophgo@lists.linux.dev>; Fri, 06 Mar 2026 07:47:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772812033; x=1773416833; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1772812037; x=1773416837; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2NRYH8lzJWLHa5JUwCNp14+Y3Xn6J7jBFL10EVR15BE=;
-        b=MzehTCmhCO4ekeaOG8Xf3XbTXO6NciP9k3TkkboWSnzEbjLoVXpgtpzWVEZd0L8SDa
-         H2cYGcuAw/wkQGxtcNauG0Ong1SspveDbFsO4dNzbM+Gqoyy9pdocTLoiyIFl1cbfWtV
-         1Ydfu2K0yCE4R2QJn5lhBq2KuRDGKv2reKT1T4JxGr9C5V2+KOJ3PbDA0v6O1kNeP+dS
-         ErgBnftnvLfHnDIIy06pZlD0xloewZlRjOcqWuEHPu/EZE5+y1xmOm/ap0/xvc1BMb67
-         6KlqnHY6hlvi1cI5j4xh+X2zTg0NLbRclu9lyxIwnV8VpshpFP+ZvVFEInHH74OwKPkh
-         TUgQ==
+        bh=XmLtfnfEU442apLkQZEiJc7Yi7ztievqViAzTb+cZV8=;
+        b=Bfe/m9SayOC8GpaZ0UePZ7JX9QfJBjBTSn5m0PDJX8SFMIoWwS2OmHFdiQTAqDh5+Z
+         u9+Ng8blI8c0UShntpviA7rWKbvbwXgMcwUqmT6Saq6W62ejoxa07PLnLKg259sSlMkk
+         91ufnrVV5bCk354J8TpNtIvQ4ELwTlUL9fmmCAYy8Relw+VxP7kw9Hal4VMzzk0vZ3Qq
+         BwQqX2AgoruHV2ZUqTk5OtVG3aLzkdSo2o77AdS4zTnOyANLlsqxQwnD80J86MbLPa+C
+         h0rCrgNkenk3woXF2jg5pH3VRo7hu9F22eMtgJWJU6DhqeBupHYNSvE3zMgN8WwKqf64
+         OoAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772812033; x=1773416833;
+        d=1e100.net; s=20230601; t=1772812037; x=1773416837;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=2NRYH8lzJWLHa5JUwCNp14+Y3Xn6J7jBFL10EVR15BE=;
-        b=t2EnSwCt5NaTnjBNKmorvNeI853ihs+h4w1E7kTV8H83X989sI/dp19GL+tFD5m909
-         cTbxMbp9FTbkrG5o6v2SnFEpl5VQF4eYbO9bVrgV/V7rWYuqMKI9q20+kllaOU5+cCZb
-         t8a6t1tuAkZECUJSDv83BuZUxYEHQtO+EIaDyAuWRU4fE8FhGv9HrRUGY4Y1YxWQBMhO
-         kcjBq0eHfVD4+ZDyfiPoIpAe9xrn7F2iwTF4Q0XDA1oyKq4fL3LK3DnP5LoYcZMzGwqI
-         vmDE3MnhZnKfMvBdT2FxUozfqtmwUhPCZAiqQVRmyE3gTkQd1QdZfRMAqZwQf3WsCl5u
-         KD8A==
-X-Forwarded-Encrypted: i=1; AJvYcCU+PfiqtdwW0Gpqi5b5SeBsA8v6ErOLmeloSgSoYuO3lUcD3WsnfvPooJB0KjGIq15LqCJVqB0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzdEr/w121INKnmgp29/4pbYz/Ycy9Xqf0ILfXxIxZNO0cTqtKm
-	cyf+lkM2DrfASpWBc6Sfubjm1VHTxduzpq6wl8hnyfSwBG5uKkAgKwkosLw2Ll8uuD8+WduvswQ
-	V4wPSQPliJGp7dIcbu5Vc55dBYNtkCOE6vqCL1RJlAk8TZN8CHYuCYUJNaKo=
-X-Gm-Gg: ATEYQzzYj2keLQtk33k2I3v9xpvcx06OEfKwod30LaQZYLDTzln3nFt8d81iuoTrJ7A
-	aieRBAp2COZ0uNStJMFp+c4EDhnNYwlGD+qnWbhaOuKv3dR5x6L/HYzjeqDHTaEDNvYXJoYdkNM
-	D9Bnggrf0FrfWnqpeM4myxAZDkyKJBoDaC64GnTXIn/iSDUObM6R8BdXstQA742rczM2OxbA/aQ
-	xkwMRLQY2d2rTSn/M8P67+BICZbP2AvxiEdw1hr/bUIhIpPPRJ4wwCiGrBDSn03iSx9FdrpKsI4
-	eCrQtB2KKVKgs7GIVNkrIhxr9HGC9HfvDZSilHFZdT8ggb6zs4sAlLApPFdRDnTZcVoC3uYhTUa
-	venZxo7fCQcBKv3wbwj6dORIbB9pSymk7v4Zu7uBv1R7JJ5ZIOXws
-X-Received: by 2002:a05:620a:4481:b0:8b2:7777:f662 with SMTP id af79cd13be357-8cd6d52ca78mr307269985a.64.1772812032595;
-        Fri, 06 Mar 2026 07:47:12 -0800 (PST)
-X-Received: by 2002:a05:620a:4481:b0:8b2:7777:f662 with SMTP id af79cd13be357-8cd6d52ca78mr307261085a.64.1772812031898;
-        Fri, 06 Mar 2026 07:47:11 -0800 (PST)
+        bh=XmLtfnfEU442apLkQZEiJc7Yi7ztievqViAzTb+cZV8=;
+        b=vkXMJinODa8+Wq/231LNmrF8ANG5Pf1L/0zZ6g87vwI/3luL/ASdNQ508oBLPHuFfh
+         2k7i2nxZ+NIORUsp0fPfg2Y18QWeZnzI9Gi0GJwfjIlozOSv+U/mKVyDY2hnqasfAuuG
+         6a8LOLHdjpO3E/T/FeqfvZ6goQ1na/fpMIPJdrJkbJs+gbm0QcT03yKc2Ml6hGQZCZwG
+         Ghpp68pdTkOikqDKYnLvkHbhbmTlkl5dHnceIQFvQ5iMpHnSgp/x2envy6bquA7rCjuU
+         Sbf5c9UaON7ETOBvyo3qS4l9v8QWn7KfXC9hMMn7xpCVvtwgVJA2Pn74NdV5vAs3NC0G
+         Uj1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWQgi0yThi2TvVy1aaAAE7aexUjUgujwOjaAdpxBoahCZhvOZSIqYvt70rPWsILQ4dKmDloSl8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxX1lP0X/nRrOAnnYw4jIqEBQPwf9+61Xujhz/BM0I0sSTuKiNB
+	q9juKY47M0bti42yQxRisLrsijxvzUc2y1Uv8UpyMyAi7B8A8mfx39j8BV0R/KY6yfOvBDvSqb+
+	+IH4foBYNKqzFiScajAvh4pEjaAP2vy01Eltcfwm6DZs1exjczM3joErcBvI=
+X-Gm-Gg: ATEYQzw/VceYgLxfX1MFepGd4eHeHUhIbCreHMaOQkknXFo7n+8dKum74PK98sGgH/i
+	MrAoyBWKZ432vXjCfpHJC9h4yrTzjg9Aczn1zvm1DXFsBzSQa7xukCdvEV4RgG2Q4n3ijorN4gV
+	FMyHOZHhZuyE2lgXXBebObXnuE6fSN7Cq83neTnS8R9DHX0Kk6IifsTn9OKs4+USSP26aVKWAFv
+	wpDLMXPTacCRkqocC/rnEmJqRz4GqXg7A7G7WwcArlxOoDbB1X9rTcG4g/n5YQPGtrmb7UyenEi
+	ErzJ7w2yRFsmSLMchjbFdf0uCUS/FviUZYKilgPJaqXIsH83lNKeIEwwcgEIwefcapETYzOBvF9
+	Z2ZUVku/AveddHhRnCccxT1/RDjnLHRZ9Ro0gRth6jxdbwtVtIdpQ
+X-Received: by 2002:a05:620a:1a9d:b0:8c6:ff02:d825 with SMTP id af79cd13be357-8cd6d4419a6mr323527385a.48.1772812037006;
+        Fri, 06 Mar 2026 07:47:17 -0800 (PST)
+X-Received: by 2002:a05:620a:1a9d:b0:8c6:ff02:d825 with SMTP id af79cd13be357-8cd6d4419a6mr323514485a.48.1772812036228;
+        Fri, 06 Mar 2026 07:47:16 -0800 (PST)
 Received: from brgl-qcom.local ([2a01:cb1d:dc:7e00:6d2b:ebde:c946:11eb])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dae35cf7sm5122767f8f.26.2026.03.06.07.47.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439dae35cf7sm5122767f8f.26.2026.03.06.07.47.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 07:47:11 -0800 (PST)
+        Fri, 06 Mar 2026 07:47:15 -0800 (PST)
 From: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Date: Fri, 06 Mar 2026 16:46:40 +0100
-Subject: [PATCH net-next v7 2/7] net: stmmac: qcom-ethqos: use generic
- device properties
+Date: Fri, 06 Mar 2026 16:46:41 +0100
+Subject: [PATCH net-next v7 3/7] net: stmmac: qcom-ethqos: wrap emac driver
+ data in additional structure
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -90,7 +90,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260306-qcom-sa8255p-emac-v7-2-d6a3013094b7@oss.qualcomm.com>
+Message-Id: <20260306-qcom-sa8255p-emac-v7-3-d6a3013094b7@oss.qualcomm.com>
 References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
 In-Reply-To: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -152,41 +152,42 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
         linux-riscv@lists.infradead.org, brgl@kernel.org,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+        Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3034;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5789;
  i=bartosz.golaszewski@oss.qualcomm.com; h=from:subject:message-id;
- bh=u8u/iXjZq36K7RYc1MNw8bxCkqJ95fEzxfvBCtp9cjI=;
- b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpqvbryaTIb50mRpj4hrxdrase97KkN9iHxwUJp
- BlJuvI37VWJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaar26wAKCRAFnS7L/zaE
- wzclD/0ZZh4K959JYxRQjHxVfznc7OkBZWgPBrYs8wAo/K3hokNK0WiKMHJZLzn2SMWtqWzVB0C
- lG0CmntJphIJ1AWgN+rXR93gl3L/sk5A6pAGK7SSpHgcKQlf8M1jF5SOdkc3uDgiPPbHCwxhOPV
- jfsOa3iwvidAeWEMmqummdnOf24q3RxuNLVYxiwqK9KQtEssdTXJFhs3HX4WSDrjs/zBKmKvWfn
- JfxMeHdfG7t91xJMf/P5Wp3DVHk5JKSvM5Lw9DE7CpH8hsz4OoZX1BZ9pxQwOeWcTQiPXheDP4H
- 2uoOJ4gBkGRVCondWFER/PJsd0MdsXH5KOFfGoxuqaGdgK1Y3qqZ8vVFIxGTJSNkT4w0iZf3V+q
- w534YqTJUi3ZcbICEFTeWEJ0szhN2f2NEjKDqoPq8mJ8/FfC3bW+4fJQEhhxdpdhQWFeAW3sIC1
- Qc4NbVsTYrLkgRdSzSscY2UwVbUcqY2gpTkANq+PSasQaATRxTxNvKS0sINBmqyjUJmZB9tPw0D
- fB7ST1Lzwr8JkoDBdXDhAT3DM0FM3lJs+m8ywJMoOhaQf0+AsZ5IDwxI61znd6YAwLIw8bOQAQg
- Auc4hPSxQt6V6qfOaIm93wh6MAaEr6z5BfcPqlyr68NN61ugGkB2/8dMWzloVwETVtM1dMCmmwV
- DKcCepzLPjDweIw==
+ bh=wjuY+nOeBuf7mJQjJak4IPNUsbeUnM9wcneFMYKnYnc=;
+ b=owEBbQKS/ZANAwAKAQWdLsv/NoTDAcsmYgBpqvbs0hciUhqJotPp9cNlrSb8egHKq2Du+9zv6
+ 7JyZbENsVOJAjMEAAEKAB0WIQSR5RMt5bVGHXuiZfwFnS7L/zaEwwUCaar27AAKCRAFnS7L/zaE
+ w9OND/9OfvQ3mT6kO2oe78LPFKJXd1gPD9CBX9zYbKWOqGtvyZhcFn5M9wNuCCwZKf4/muZb5LM
+ 6XrndpRCIqmfqjVkKKzaJd1b7hQ4ndEzuwUuUTajxWki+r2VmRiiWfmoAcDH2ddy2ZyPEaHHmlH
+ z3OXaI8elMDsUivSMJ7mbD0sedazpwANeUQsodb1uiY7CJ3LKfMRfYqBbofivgrKDWMRBX7or/J
+ hKlBzx/BCt2uxb/qC+wxcjB9iWlq8bo3mFxONcWS0gM2DcfrNJlo8QvaQixQ019WvW+OMJKC+i/
+ BMtRKsHA0Zwq3JbRNurH4bl7yHh1hJ8rSunrcZOiIjLCmV3qLv3E3S+JJJF2tBR2ECaaS3VaWS8
+ o0cR8ag8AJRjBex4YrD9XYT2BItD7mx6ZYDn0iHhaln0cs8BrJkfm6Lkh9/MxtnZkDgLJfKuzZ+
+ YiIAVABIZq8WhFD/pero9PYeqXKpD5+9MLk/eu3WLm8aqfWSLkHmNJocpRJNN9Zx3jT2f1gtSGd
+ 1zaeNRNiE+Hx4drnVD6LIu7g073v8zNCeJErJlW7pGvhHlisQI9A+IESfzH8aFEjOTmGPLNWl+1
+ noOxzcb1BV+olTlJV0PiVuVQq+T5Y6WEplqqhJgNBO1UjGn6a7eKHrc5HlQpFUCzantNeV3pICx
+ U/m/FhecQPQ5R5g==
 X-Developer-Key: i=bartosz.golaszewski@oss.qualcomm.com; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
-X-Proofpoint-ORIG-GUID: MojfBr37xNXwfolUJqX9t4_KavaE_Gik
-X-Authority-Analysis: v=2.4 cv=b/u/I9Gx c=1 sm=1 tr=0 ts=69aaf701 cx=c_pps
+X-Proofpoint-ORIG-GUID: sR6KL4OWtGXPNQCOinuf4yxkGI_5zia1
+X-Authority-Analysis: v=2.4 cv=b/u/I9Gx c=1 sm=1 tr=0 ts=69aaf706 cx=c_pps
  a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=AGkLNbZTeN-MX8W9OO4A:9 a=QEXdDO2ut3YA:10
+ a=EUspDBNiAAAA:8 a=fYgtqwV50X64hY7jBhMA:9 a=QEXdDO2ut3YA:10
  a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: MojfBr37xNXwfolUJqX9t4_KavaE_Gik
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE0NiBTYWx0ZWRfX39odsRae9dsi
- 0Iu6Uxq3NQ5JxpZYZAIvXbgFP9yYgQBt4PcZq9zhl2D24vZvGTxCEFCxzzdPc9+pkzuzEBy8VPq
- 7MU1SvSACeyk36Pw11DTRg87CxdzRYhu+KkXqNkEL2TM5sscKxuWFSmFZdIyC3LKMd5OxWxo5y1
- 7vB5E+a7BFMrLZt9m06kfEx5JmsYoHFS/p7RvD1CtIAFJAGetqIFkeCtAPpSRPqU9SIKOWq66ec
- bAz7s/VfT9QPAOp9dXEcg/o4M73uewblGBbl6kEJeIVzrWQRf7+rw+BZ7l1cKp/FLMVO0NorpYz
- GzTuKFq44Can6OIDibYQQalN789qVDhnX8ghsFcQpFFr+/SUdQkzdqh96eOi4ayc3iRULg4Iy67
- VSYgX9wm/5LgaPjWRQC+PbUWTLlbAQtKydJrmtPmF94a69NDV4c0BRWmW9bUPg2VpxDXfWnA0Jp
- v6LJ7jKqscSIsIwr1CA==
+X-Proofpoint-GUID: sR6KL4OWtGXPNQCOinuf4yxkGI_5zia1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDE0NiBTYWx0ZWRfXxDOjrLLuMB8Y
+ IcQvE8atmcngftMfawuuFwX7q7yqHBis+okw9MLUF2fEgIMHoEPzBTv5yb+nNHrKN+w4OD8WK6g
+ vl3K8DEkrHt/a9N5bOTq3zbdORNz1qYts6LuDV4WKBOMj3fwN5tMgpSFxLDAkykC83O/bAlfuMQ
+ aNHhxFC/O0lCx91cJUqiEcva8HUKRPosRjKX8u5ZRmls/4IJlFi7QdsfMRE4w203Eaq+GU/WwGS
+ RE5aeuE4Y22g9BjNLDE2o7cwt54/h0u9QaqXAfbFAGpbTsgRHJ4cJO3Jf8cqedBSGNO0Wt4eXsC
+ CPpdRgRf6h67kdQUB+PM6tJ9XPM7VDEUZAcDGgDkNrNLjPPt+IhT4iCzS/TUBBkY8cVdkKqJlml
+ qBJGb1i7uv9qpMzyP5ysRntUGt262t7AY4N/ZpkK15Iqmk7gHkxO2yUF9CwYIr52JBO1nx9C4Vc
+ VIAvPRWUKP+snXRpUIQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
@@ -198,73 +199,142 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-In order to drop the dependency on CONFIG_OF, convert all device property
-getters from OF-specific to generic device properties and stop pulling
-in any linux/of.h symbols.
+As the first step in enabling power domain support in the driver, we'll
+split the device match data and runtime data structures into their
+general and power-management-specific parts. To allow that: first wrap
+the emac driver data in another layer which will later be expanded.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 ---
- drivers/net/ethernet/stmicro/stmmac/Kconfig             | 2 +-
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 9 ++++-----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 51 ++++++++++++++++------
+ 1 file changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-index 07088d03dbab5bd1abf66e9460613b839c1d565e..e2af4fdd654340d618477ed87d3889dbb9aab456 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
-+++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-@@ -135,7 +135,7 @@ config DWMAC_MESON
- config DWMAC_QCOM_ETHQOS
- 	tristate "Qualcomm ETHQOS support"
- 	default ARCH_QCOM
--	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-+	depends on ARCH_QCOM || COMPILE_TEST
- 	help
- 	  Support for the Qualcomm ETHQOS core.
- 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index af8204c0e188ca8eaa9f31abeddda607f273b4a3..219ea36fe01e6d41299649defe569de034859288 100644
+index 219ea36fe01e6d41299649defe569de034859288..ae7e088b122753fefa24fd2ca715151fd56e6376 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -1,8 +1,8 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2018-19, Linaro Limited
+@@ -97,6 +97,10 @@ struct ethqos_emac_driver_data {
+ 	bool needs_sgmii_loopback;
+ };
  
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
--#include <linux/of.h>
- #include <linux/of_net.h>
- #include <linux/platform_device.h>
- #include <linux/phy.h>
-@@ -730,7 +730,6 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
++struct ethqos_emac_match_data {
++	const struct ethqos_emac_driver_data *drv_data;
++};
++
+ struct qcom_ethqos {
+ 	struct platform_device *pdev;
+ 	void __iomem *rgmii_base;
+@@ -224,6 +228,10 @@ static const struct ethqos_emac_driver_data emac_v2_3_0_data = {
+ 	.has_emac_ge_3 = false,
+ };
+ 
++static const struct ethqos_emac_match_data emac_qcs404_data = {
++	.drv_data = &emac_v2_3_0_data,
++};
++
+ static const struct ethqos_emac_por emac_v2_1_0_por[] = {
+ 	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x40C01343 },
+ 	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642C },
+@@ -240,6 +248,10 @@ static const struct ethqos_emac_driver_data emac_v2_1_0_data = {
+ 	.has_emac_ge_3 = false,
+ };
+ 
++static const struct ethqos_emac_match_data emac_sm8150_data = {
++	.drv_data = &emac_v2_1_0_data,
++};
++
+ static const struct ethqos_emac_por emac_v3_0_0_por[] = {
+ 	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x40c01343 },
+ 	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642c },
+@@ -272,6 +284,10 @@ static const struct ethqos_emac_driver_data emac_v3_0_0_data = {
+ 	},
+ };
+ 
++static const struct ethqos_emac_match_data emac_sc8280xp_data = {
++	.drv_data = &emac_v3_0_0_data,
++};
++
+ static const struct ethqos_emac_por emac_v4_0_0_por[] = {
+ 	{ .offset = RGMII_IO_MACRO_CONFIG,	.value = 0x40c01343 },
+ 	{ .offset = SDCC_HC_REG_DLL_CONFIG,	.value = 0x2004642c },
+@@ -307,6 +323,10 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	},
+ };
+ 
++static const struct ethqos_emac_match_data emac_sa8775p_data = {
++	.drv_data = &emac_v4_0_0_data,
++};
++
+ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+ {
+ 	struct device *dev = &ethqos->pdev->dev;
+@@ -730,7 +750,8 @@ static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
  
  static int qcom_ethqos_probe(struct platform_device *pdev)
  {
--	struct device_node *np = pdev->dev.of_node;
- 	const struct ethqos_emac_driver_data *data;
+-	const struct ethqos_emac_driver_data *data;
++	const struct ethqos_emac_driver_data *drv_data;
++	const struct ethqos_emac_match_data *data;
  	struct plat_stmmacenet_data *plat_dat;
  	struct stmmac_resources stmmac_res;
-@@ -779,7 +778,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(ethqos->rgmii_base),
+ 	struct device *dev = &pdev->dev;
+@@ -779,13 +800,15 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
  				     "Failed to map rgmii resource\n");
  
--	data = of_device_get_match_data(dev);
-+	data = device_get_match_data(dev);
- 	ethqos->por = data->por;
- 	ethqos->num_por = data->num_por;
- 	ethqos->rgmii_config_loopback_en = data->rgmii_config_loopback_en;
-@@ -816,9 +815,9 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	data = device_get_match_data(dev);
+-	ethqos->por = data->por;
+-	ethqos->num_por = data->num_por;
+-	ethqos->rgmii_config_loopback_en = data->rgmii_config_loopback_en;
+-	ethqos->has_emac_ge_3 = data->has_emac_ge_3;
+-	ethqos->needs_sgmii_loopback = data->needs_sgmii_loopback;
++	drv_data = data->drv_data;
++
++	ethqos->por = drv_data->por;
++	ethqos->num_por = drv_data->num_por;
++	ethqos->rgmii_config_loopback_en = drv_data->rgmii_config_loopback_en;
++	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
++	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
+ 
+-	ethqos->link_clk = devm_clk_get(dev, data->link_clk_name ?: "rgmii");
++	ethqos->link_clk = devm_clk_get(dev, drv_data->link_clk_name ?: "rgmii");
+ 	if (IS_ERR(ethqos->link_clk))
+ 		return dev_err_probe(dev, PTR_ERR(ethqos->link_clk),
+ 				     "Failed to get link_clk\n");
+@@ -813,14 +836,14 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
+ 	plat_dat->core_type = DWMAC_CORE_GMAC4;
  	if (ethqos->has_emac_ge_3)
- 		plat_dat->dwmac4_addrs = &data->dwmac4_addrs;
+-		plat_dat->dwmac4_addrs = &data->dwmac4_addrs;
++		plat_dat->dwmac4_addrs = &drv_data->dwmac4_addrs;
  	plat_dat->pmt = 1;
--	if (of_property_read_bool(np, "snps,tso"))
-+	if (device_property_present(dev, "snps,tso"))
+ 	if (device_property_present(dev, "snps,tso"))
  		plat_dat->flags |= STMMAC_FLAG_TSO_EN;
--	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-+	if (device_is_compatible(dev, "qcom,qcs404-ethqos"))
+ 	if (device_is_compatible(dev, "qcom,qcs404-ethqos"))
  		plat_dat->flags |= STMMAC_FLAG_RX_CLK_RUNS_IN_LPI;
- 	if (data->dma_addr_width)
- 		plat_dat->host_dma_width = data->dma_addr_width;
+-	if (data->dma_addr_width)
+-		plat_dat->host_dma_width = data->dma_addr_width;
++	if (drv_data->dma_addr_width)
++		plat_dat->host_dma_width = drv_data->dma_addr_width;
+ 
+ 	if (ethqos->serdes_phy) {
+ 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+@@ -835,10 +858,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ }
+ 
+ static const struct of_device_id qcom_ethqos_match[] = {
+-	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_v2_3_0_data},
+-	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_v4_0_0_data},
+-	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_v3_0_0_data},
+-	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_v2_1_0_data},
++	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
++	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_sa8775p_data},
++	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_sc8280xp_data},
++	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_sm8150_data},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, qcom_ethqos_match);
 
 -- 
 2.47.3
