@@ -1,26 +1,26 @@
 Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A736396B91
-	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 11:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A56F395D86
+	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 11:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773054592; cv=none; b=ow/ycBcThwE+gnCdu/HL8SZVfmckWtB3/v0F3kJJnFAo3UpkYeALeuCsBuH+tBpsGRAvq5Bbyx2pEI+NsLcijWixDTpejmc0xi+SNjMmhbuA6n1BHHXq89LWo9M6ZYYKxjJ7MPNCUVrOvGniWzZPVO7ENlYGa/TaPsDXbl2wXPk=
+	t=1773054592; cv=none; b=kki7sGgC2uB2B1c4UCqC2yt/quPbDkwfk5gShCeTfJznAtG8Yq6THvgitX4sezOjqui+o2rR3MqOVZYl3MDAdfZe2Iqk5CNJXOtZPPKdjcsxKUrUQ8PKyGD2kX2zvNH5ebLyPYaNYnxoHRMiSl0+WnjeKxHuP2liEbbEwCu3gIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773054592; c=relaxed/simple;
-	bh=7drjKsfIEqTxqROoMU5+YC1Ry4jf+AcpQKsMwn77lG0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Lz8VTveu1GjEXvy0RCnOZhhFw1NqLBmySPRzG8uJFTXDyDkc3TSE2JfN75C+Kht9Ft3ejp427byP1NBiOYAdJ4a3OwgH9TU0JOc1eDdSNT7nQbSripEzNjSlWkI8aZLfd63ntnEP0LLvMqqiY03QFEm42vci2ZdXGKl1bcGolZ4=
+	bh=RE5i6Wa6vLmmVax26peZP8+QXDuVBIGc++kdVM8fqpI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=bHl6aWigJSSG4wBCyio5B/Xw4cZm+uoSlWo0LgmZmnqdR/BNxid02Zx1mUFMwlvzpSFe0shMjLO7VAHujyB58ZnZX74QWUGulbUhG5t3PdG6+f0YzO6IFWaW4bqgF8LduGxxpUzs2nP3+Wf5hZtF3WMXrbqyTyVME/oUgbD1P+I=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from [127.0.0.2] (unknown [210.73.43.101])
-	by APP-03 (Coremail) with SMTP id rQCowAAHItlzqq5pnpElCg--.46862S2;
+	by APP-03 (Coremail) with SMTP id rQCowAAHItlzqq5pnpElCg--.46862S3;
 	Mon, 09 Mar 2026 19:09:41 +0800 (CST)
 From: Vivian Wang <wangruikang@iscas.ac.cn>
-Subject: [PATCH 0/2] riscv: mm: Define DIRECT_MAP_PHYSMEM_END, fix
- ZONE_DEVICE
-Date: Mon, 09 Mar 2026 19:09:36 +0800
-Message-Id: <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
+Date: Mon, 09 Mar 2026 19:09:37 +0800
+Subject: [PATCH 1/2] riscv: mm: WARN_ON() for bad addresses in
+ vmemmap_populate()
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -29,116 +29,56 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHCqrmkC/x2NQQqAMAzAviI9W5g6FP2KeBjaacHpaGUI4t8dX
- gK5JA8oCZPCUDwglFj5PLJUZQHz5o6VkJfsUJu6NY3pUVjnhBqdKAUKmDKCi7hz4EvRdo31lW8
- 7a3vIkSjk+f4H4/S+H30e/7xwAAAA
-X-Change-ID: 20260309-riscv-sparsemem-vmemmap-limits-4734f1f67449
+Message-Id: <20260309-riscv-sparsemem-vmemmap-limits-v1-1-f40efe18e3cd@iscas.ac.cn>
+References: <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
+In-Reply-To: <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
 To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
  Alexandre Ghiti <alex@ghiti.fr>
 Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- sophgo@lists.linux.dev, Vivian Wang <wangruikang@iscas.ac.cn>, 
- stable@vger.kernel.org, Han Gao <gaohan@iscas.ac.cn>
+ sophgo@lists.linux.dev, Vivian Wang <wangruikang@iscas.ac.cn>
 X-Mailer: b4 0.14.3
-X-CM-TRANSID:rQCowAAHItlzqq5pnpElCg--.46862S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxWr48JFW7AF1fJFyUZr4DXFb_yoW7JrWfpr
-	y5Xr1UCr40yr4DJrWIyry5Zr93GFW2kay7GFyxJw1Yv3WDCr1Utr18JFW3Kr9rJr45JFy7
-	Grs8tr48KryUtw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
-	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
-	6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
-	0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
-	0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
-	WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
-	IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU52NtDUUUU
+X-CM-TRANSID:rQCowAAHItlzqq5pnpElCg--.46862S3
+X-Coremail-Antispam: 1UD129KBjvdXoW7Jr4DJw13Zw1kXFyxCw45Wrg_yoWfJFX_G3
+	say3y8uryru3Z2v3ZF9rn5GryYyws09FnrXF92qwn8G3s8uF1fXrZak3Z7Xr1UWaySvrZa
+	kasrXry0k3WI9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbhkFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGwA2048vs2IY02
+	0Ec7CjxVAFwI0_JFI_Gr1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
+	wVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4
+	x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwVC2z280aVCY1x0267AKxVW0oVCq3wAS0I0E
+	0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67
+	AKxVWUJVWUGwAv7VC2z280aVAFwI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48I
+	cxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwCY1x0262kKe7AKxVWUAVWUtwCF04
+	k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18
+	MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr4
+	1lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1l
+	IxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4
+	A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JU2FAJUUUUU=
 X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-With HSA_AMD_SVM=y, RISC-V runs into the same problem as arm64 at one
-point did [1], where it tries to use a struct page that is outside of
-vmemmap. See log near the end.
+Similarly to the same check in arch/arm64/mm/mmu.c, in
+vmemmap_populate(), add a warning for start and end being outside of the
+range of vmemmap.
 
-On RISC-V, the actual mappable range of physical addresses is dependent
-on the current MMU mode i.e. satp_mode. Define DIRECT_MAP_PHYSMEM_END to
-expose this information to get_free_mem_region().
-
-See also commit eeb8fdfcf090 ("arm64: Expose the end of the linear map
-in PHYSMEM_END") which fixed the same issue on arm64, although the
-situation there is much less complicated.
-
-Patch 1 copies a check in vmemmap_populate() over from arm64, which I
-have done to debug this problem. Patch 2 is the actual fix.
-
-[1] https://lore.kernel.org/all/20240903164532.3874988-1-scott@os.amperecomputing.com
-
-Crash log:
-
-[   19.228335] Oops [#1]
-[   19.230607] Modules linked in: amdgpu(+) [ ... many more modules omitted ... ]
-[   19.309895] CPU: 2 UID: 0 PID: 844 Comm: (udev-worker) Not tainted 6.19.3-ztest #3 PREEMPTLAZY
-[   19.318587] Hardware name: Sophgo SG2044 SRD3-10 (DT)
-[   19.323632] epc : __init_single_page+0x16/0x78
-[   19.328079]  ra : __init_zone_device_page.constprop.0+0x28/0xd0
-[   19.333997] epc : ffffffff802ff1be ra : ffffffff80d10de8 sp : ffff8f8002ef3450
-[   19.341210]  gp : ffffffff82290cc8 tp : ffffaf808f526c80 t0 : ffffffff800231a8
-[   19.348423]  t1 : 0000100000000000 t2 : 0000000000000002 s0 : ffff8f8002ef3460
-[   19.355636]  s1 : 00038d7fe6000000 a0 : 00038d7fe6000000 a1 : 00000fffffa00000
-[   19.362848]  a2 : 3000000000000000 a3 : 0000000000000000 a4 : 0000200000000000
-[   19.370060]  a5 : 0000000000600000 a6 : ffffffff82305608 a7 : 0000000000000001
-[   19.377273]  s2 : 00000fffffa00000 s3 : ffffaf8091258028 s4 : 0000000000000000
-[   19.384485]  s5 : 0000100000000000 s6 : 0000000000000001 s7 : 00000fffffa00000
-[   19.391697]  s8 : ffffffff81708b78 s9 : ffffffff81708b38 s10: 0000000000000001
-[   19.398909]  s11: ffffaf8091258028 t3 : ffffffff822b43c0 t4 : 000000000207ffff
-[   19.406121]  t5 : ffffffffffffffff t6 : 0000000000000000
-[   19.411425] status: 0000000200000120 badaddr: 00038d7fe6000030 cause: 000000000000000f
-[   19.419331] [<ffffffff802ff1be>] __init_single_page+0x16/0x78
-[   19.425071] [<ffffffff80d10de8>] __init_zone_device_page.constprop.0+0x28/0xd0
-[   19.432285] [<ffffffff80d11140>] memmap_init_zone_device+0x108/0x278
-[   19.438632] [<ffffffff803f6a7a>] memremap_pages+0x262/0x6b0
-[   19.444201] [<ffffffff803f6ef0>] devm_memremap_pages+0x28/0x78
-[   19.450029] [<ffffffff053f9370>] kgd2kfd_init_zone_device+0xe0/0x1e0 [amdgpu]
-[   19.483691] [<ffffffff059a6df0>] amdgpu_device_ip_init+0xa68/0xad0 [amdgpu]
-[   19.517108] [<ffffffff05120f6e>] amdgpu_device_init+0x1a5e/0x21e0 [amdgpu]
-[   19.550497] [<ffffffff05122e50>] amdgpu_driver_load_kms+0x20/0xc8 [amdgpu]
-[   19.583900] [<ffffffff05116dd6>] amdgpu_pci_probe+0x236/0x6c8 [amdgpu]
-[   19.616947] [<ffffffff807b2c10>] local_pci_probe+0x40/0x98
-[   19.622439] [<ffffffff807b393c>] pci_device_probe+0xcc/0x280
-[   19.628091] [<ffffffff8093527c>] really_probe+0xa4/0x3c0
-[   19.633397] [<ffffffff80935614>] __driver_probe_device+0x7c/0x158
-[   19.639483] [<ffffffff809357d8>] driver_probe_device+0x38/0xd0
-[   19.645308] [<ffffffff80935a3a>] __driver_attach+0xaa/0x200
-[   19.650873] [<ffffffff8093297e>] bus_for_each_dev+0x6e/0xc8
-[   19.656443] [<ffffffff80934996>] driver_attach+0x26/0x38
-[   19.661750] [<ffffffff809340e4>] bus_add_driver+0x11c/0x248
-[   19.667317] [<ffffffff80936d1c>] driver_register+0x54/0x100
-[   19.672884] [<ffffffff807b1f4c>] __pci_register_driver+0x54/0x68
-[   19.678889] [<ffffffff0430e0a8>] amdgpu_init+0xa0/0xff8 [amdgpu]
-[   19.711387] [<ffffffff80013a02>] do_one_initcall+0x62/0x2c8
-[   19.716960] [<ffffffff80127ad6>] do_init_module+0x5e/0x260
-[   19.722445] [<ffffffff80129d1e>] load_module+0x1bd6/0x2388
-[   19.727925] [<ffffffff8012a730>] init_module_from_file+0xc8/0x128
-[   19.734012] [<ffffffff8012a9d0>] __riscv_sys_finit_module+0x1e0/0x338
-[   19.740447] [<ffffffff80d0d62a>] do_trap_ecall_u+0x102/0x3f8
-[   19.746101] [<ffffffff80d1dbb4>] handle_exception+0x154/0x160
-[   19.751852] Code: ffd2 0013 0000 1141 e022 e406 0800 8a0d 16fa 1672 (3823) 0205
-[   19.759334] ---[ end trace 0000000000000000 ]---
-
+Signed-off-by: Vivian Wang <wangruikang@iscas.ac.cn>
 ---
-Vivian Wang (2):
-      riscv: mm: WARN_ON() for bad addresses in vmemmap_populate()
-      riscv: mm: Define DIRECT_MAP_PHYSMEM_END
+ arch/riscv/mm/init.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
- arch/riscv/include/asm/pgtable.h | 10 ++++++++++
- arch/riscv/mm/init.c             |  2 ++
- 2 files changed, 12 insertions(+)
----
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-change-id: 20260309-riscv-sparsemem-vmemmap-limits-4734f1f67449
+diff --git a/arch/riscv/mm/init.c b/arch/riscv/mm/init.c
+index 811e03786c56..c12590ab3d0e 100644
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -1453,6 +1453,8 @@ int __meminit vmemmap_check_pmd(pmd_t *pmdp, int node,
+ int __meminit vmemmap_populate(unsigned long start, unsigned long end, int node,
+ 			       struct vmem_altmap *altmap)
+ {
++	WARN_ON((start < VMEMMAP_START) || (end > VMEMMAP_END));
++
+ 	/*
+ 	 * Note that SPARSEMEM_VMEMMAP is only selected for rv64 and that we
+ 	 * can't use hugepage mappings for 2-level page table because in case of
 
-Best regards,
 -- 
-Vivian "dramforever" Wang
+2.53.0
 
