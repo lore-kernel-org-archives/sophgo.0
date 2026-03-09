@@ -1,37 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBD0336892;
-	Sat,  7 Mar 2026 10:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD8130CD89
+	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 08:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772879158; cv=none; b=eIqvG7XgdOaMvOoLt0j5ezgWsDwIp2EdZbEjHua3zv1ZGV8MIatPEM/8be0gw/kgzHaB6pcNZE8zsL1murKQrivOr9T90nUl4WxujxO/l/pJsujAC38GS+7v1NmVCg0vwsRWnep4ll1m3sPNRuSRckxAzGoi8+XEOx+XMOvaElg=
+	t=1773045565; cv=none; b=j8ErZw7RS1SgXTkiWBNgcOa59/Y/N4/ccv1HzqKrAwu11vazxPMSXDkMWhegza8JxJg3l63ptMMbUWvJQ2DTn4CVKIUvAJn1JwnjHjlp1cb7+0kNqHkoVKngSKg2Ua/rh/WfFrYz4s2R81IS2SR2HobHZ1qFFiu7GYJJej8GKjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772879158; c=relaxed/simple;
-	bh=gK0pRUM/Slfh1oiPmyu3lYsDR18Y7TIzAYUu4D4ldj0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aE/+tWDxXPBEy/HjsmJhOeR0aJCPyYO3Sc/GSuaYEQnAsFf4kB72xMMzVV1lzmZ7gIoD1iKTHNw3uV5Yu3z6VNj9YwkpeqJWgxX7ntKLYBBulUatj4K62oCVinEWrq1xcklAGx/K5Ypdk30fwnHSrTBHNfvJgF5J68KJpWzTc+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j0Cac6S7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773045565; c=relaxed/simple;
+	bh=lmhRRii9BO7pCks+UXBWncpJDHHvOFHDr/1FU5tS2Dc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cWxwGUJJdMfH7W/lovw5KZgImeKfw85xcHHJ/c7nvkQe/wklsZjVhURvDWqdwSolT8X0Grq1xMfsGuzyCp5q6jYqe2JpYSc3eWD5AuGWT4Jr5yS18zBlekS+e4IBhifWbNn2ILvp4ME/zuFQWDwmA22W3EDygbvkNJTehwvbTwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WdSRqv1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j0Cac6S7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DAFC19422;
-	Sat,  7 Mar 2026 10:25:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WdSRqv1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CEE6C2BCC9
+	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 08:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772879158;
-	bh=gK0pRUM/Slfh1oiPmyu3lYsDR18Y7TIzAYUu4D4ldj0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=j0Cac6S7TyQb+E6Y2hSbXhG5N5uDfVrssvtttU324wBvcszTcCtHvLTTG6vhZAYq7
-	 wskyH5zr18JuTUiOMKGCzxZJNC30mVQa9uzgNH+81iLrwuTOS7AF+F1rg+Qcw90+J4
-	 Hup3d6KGjEoFHVj4LT2aRD+9kmz3xe5CPxlWzaTUcLe+k82X84Bj76ifbo8W1lksUv
-	 nSTMoq1tSEPXIuSTcFIfIHv5bK2Xol6mUMEI2LMojWPdFCTWxH27UDeFaF40KZilXu
-	 Et7B4BVoQTlXRPP6S6sInBPHaCZQhjZcsKbaAYTa3jYkRERSa3gTQIQbkmerjXe7ml
-	 UpoHRIhMOPjCw==
-Date: Sat, 7 Mar 2026 11:25:56 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	s=k20201202; t=1773045565;
+	bh=lmhRRii9BO7pCks+UXBWncpJDHHvOFHDr/1FU5tS2Dc=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=WdSRqv1l9cnLKSFLHhILKBputV3GcYJKALfpBY1JSeYsV8M2DTVAhXvGnFdMIUBoZ
+	 u1TTqUSFnSchtsJAGRsbe75vRgVGaAhmdhg9HvU74esJIPW2495NanSULupwyeW7PT
+	 YaCc04FUEFJ+TnyCI7vwqSgqNgUE6uYG7kXhpWsNzBlH62LL0sdi5KV24INW7HWTMS
+	 DaLkZNI+2flGr4fHuiuuvSJz9dW2rJ7bAYkCMV+MUG0PEE3Cta9uzSWVAyA4AxTN5y
+	 +F2ndD2lKnvgeVQlJCtt8r0Do8bYMPx5sz1Wz+M9150u6O8SAJpB7oeuzYGd3EgwS/
+	 7SEvsU49k0Ckw==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-38a2544b52bso64659851fa.3
+        for <sophgo@lists.linux.dev>; Mon, 09 Mar 2026 01:39:25 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXXTn3n/NbWa1oKiPtbWp1R5k4Wc1e9dnaK0iyk+0hY+5jUKCrJF9Wx/hjSTKyWdPxRIzA5oQY=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz93piHamM+S3hT1m0GcwuFA/ZyNTdC7X32H+zSsYHvMUWg6EjB
+	eBy09fgDm4Ps6Dd6ou8oc4wsr6ReDTAxwaWBOmn12t0QIhH85gghOWoS49qNDnZxecpIdLrtaNP
+	H45Hlt7FYQvi8KLMAlrfsdpy5LlmGvoLCKQqEpBbXTQ==
+X-Received: by 2002:a05:651c:892:b0:38a:b18:f41e with SMTP id
+ 38308e7fff4ca-38a40b4bca5mr35053151fa.6.1773045562416; Mon, 09 Mar 2026
+ 01:39:22 -0700 (PDT)
+Precedence: bulk
+X-Mailing-List: sophgo@lists.linux.dev
+List-Id: <sophgo.lists.linux.dev>
+List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
+List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
+ <20260306-qcom-sa8255p-emac-v7-1-d6a3013094b7@oss.qualcomm.com> <20260307-boisterous-tuscan-rat-1eb9bb@quoll>
+In-Reply-To: <20260307-boisterous-tuscan-rat-1eb9bb@quoll>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Mon, 9 Mar 2026 09:39:10 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MeeHP_ZjhOHu5NNLCU6Cg59EAWQAS0JngEHDQkmcDH3HQ@mail.gmail.com>
+X-Gm-Features: AaiRm50wcU1Efh35HOluVCqu3-5afwUUXiIKPiOPr6mPL4PpMSQ1J-X9POGllS8
+Message-ID: <CAMRc=MeeHP_ZjhOHu5NNLCU6Cg59EAWQAS0JngEHDQkmcDH3HQ@mail.gmail.com>
+Subject: Re: [PATCH net-next v7 1/7] dt-bindings: net: qcom: document the
+ ethqos device for SCMI-based systems
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
 	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
 	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
@@ -41,67 +64,73 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
 	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
 	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, Keguang Zhang <keguang.zhang@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, Romain Gantois <romain.gantois@bootlin.com>, 
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
+	Romain Gantois <romain.gantois@bootlin.com>, 
 	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
 	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
 	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
 	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
-	Shuang Liang <liangshuang@eswincomputing.com>, Zhi Li <lizhi2@eswincomputing.com>, 
-	Shangjuan Wei <weishangjuan@eswincomputing.com>, "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, 
-	Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, 
-	David Wu <david.wu@rock-chips.com>, Samin Guo <samin.guo@starfivetech.com>, 
+	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
+	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
+	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
+	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
+	Samin Guo <samin.guo@starfivetech.com>, 
 	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
 	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org, 
-	imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: [PATCH net-next v7 1/7] dt-bindings: net: qcom: document the
- ethqos device for SCMI-based systems
-Message-ID: <20260307-boisterous-tuscan-rat-1eb9bb@quoll>
-References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
- <20260306-qcom-sa8255p-emac-v7-1-d6a3013094b7@oss.qualcomm.com>
-Precedence: bulk
-X-Mailing-List: sophgo@lists.linux.dev
-List-Id: <sophgo.lists.linux.dev>
-List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
-List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260306-qcom-sa8255p-emac-v7-1-d6a3013094b7@oss.qualcomm.com>
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Mar 06, 2026 at 04:46:39PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Describe the firmware-managed variant of the QCom DesignWare MAC. As the
-> properties here differ a lot from the HLOS-managed variant, lets put it
-> in a separate file. Since we need to update the maximum number of power
-> domains, let's update existing bindings referencing the top-level
-> snps,dwmac.yaml and limit their maxItems for power-domains to 1.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Romain Gantois <romain.gantois@bootlin.com> # For RZ/N1
+On Sat, Mar 7, 2026 at 11:25=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
+g> wrote:
+>
+> On Fri, Mar 06, 2026 at 04:46:39PM +0100, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Describe the firmware-managed variant of the QCom DesignWare MAC. As th=
+e
+> > properties here differ a lot from the HLOS-managed variant, lets put it
+> > in a separate file. Since we need to update the maximum number of power
+> > domains, let's update existing bindings referencing the top-level
+> > snps,dwmac.yaml and limit their maxItems for power-domains to 1.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > Reviewed-by: Romain Gantois <romain.gantois@bootlin.com> # For RZ/N1
+>
+> Can we drop half-baked reviews? Reviewing only that piece is not even
+> possible, because it makes no sense outside of main change context. IOW,
+> it's pointless review of nothing, if you do not actually review the main
+> change impacting RZ/N1.
+>
 
-Can we drop half-baked reviews? Reviewing only that piece is not even
-possible, because it makes no sense outside of main change context. IOW,
-it's pointless review of nothing, if you do not actually review the main
-change impacting RZ/N1.
+This is the first time I'm hearing we can't review individual parts of
+changesets? I see your point about this particular patch and the fact
+it only makes sense as a whole but is this the official policy for
+parts of larger DTS patches?
 
-Also submitting patches do not really allow to apply reviewer's
-statement of oversight to inly part of the patch.
+Bart
 
-It's called Ack then. Use proper tags if one does not actually review
-the patch.
+> Also submitting patches do not really allow to apply reviewer's
+> statement of oversight to inly part of the patch.
+>
+> It's called Ack then. Use proper tags if one does not actually review
+> the patch.
+>
 
-Best regards,
-Krzysztof
+I need to resend anyway so I'll drop it. I may also drop the two
+hundred addresses from Cc b4 added. :)
 
+Bart
