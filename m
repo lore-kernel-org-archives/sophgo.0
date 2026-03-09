@@ -1,301 +1,144 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8086636BCE2
-	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 09:50:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A736396B91
+	for <sophgo@lists.linux.dev>; Mon,  9 Mar 2026 11:09:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773049803; cv=none; b=IwhbRmx9C/aZLIxm031TKi2eSnhyFzx5OSckKhMNVhj2NU26+Q9bfOyuL9oBQDmiLcfrjvF5wYmQvX3KedQ0U6PEB2JC5rU3kEC3gSXvXZKi+Oqm1O1bbFBYwxLUmES8L5PSRLqsrkHmJXkH+urCcyadHBrmhqdnV6gXZ5qLs5A=
+	t=1773054592; cv=none; b=ow/ycBcThwE+gnCdu/HL8SZVfmckWtB3/v0F3kJJnFAo3UpkYeALeuCsBuH+tBpsGRAvq5Bbyx2pEI+NsLcijWixDTpejmc0xi+SNjMmhbuA6n1BHHXq89LWo9M6ZYYKxjJ7MPNCUVrOvGniWzZPVO7ENlYGa/TaPsDXbl2wXPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773049803; c=relaxed/simple;
-	bh=uOtCARhSePA3YS0iVPprhrCJJMKvZLLOo9ES2BD8tNs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bWSnK6g2N8Igq1g7P8TlSbw0stJHimD5qwfk+LqWmWWsv6WrllMKWOktjU1grNEGpHYMo9qCQpMQk7+vkuvWF1ReIVOj0xZ6KtPWJIlCzsRylqWuNLpTZ+S/lyNVwhvgAG2uC5FgJp6MIp9+9vXjnE6l6hA4MmLkC1xeoX7FPII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lhq0/5i+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CYAXcXq6; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lhq0/5i+";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CYAXcXq6"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6298R4ii2660360
-	for <sophgo@lists.linux.dev>; Mon, 9 Mar 2026 09:50:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZY1KMDG5mEhmybM9QUi64JQp3OjXLAuIqQxIS+L8bEE=; b=lhq0/5i+W9qNegQH
-	4iZ2TDv+OYhkmoRgfhmxvPmWSlkpXEIuh5MZQgwo4AM3Ynv3hoJj/umUgQuspVVD
-	tJNZB5kVcAKcswPNFCXiLK/XNzXJ6OQ01jnzIGffo+5jm0FuBezCFMl7vQ1REBci
-	vtUsoJox3RcSzTnlFKMvPzBjnQX0elu+qzW3D0n+D/pjoeym9h1ZpLfUHM2r4mIc
-	RgFO1UtlTnMC8hAPCyX8DNvS3m9eHukz0wUSD1RjkW6kWOUoS2dFLAPpsgq0xU9O
-	biw8oZyeI+PGjkxkYiVbuyegRStV5PXmlXJIL/f7rskHcht0q+m+s4i4TrCa+wfe
-	fPZ+4w==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cr9cpn4wf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sophgo@lists.linux.dev>; Mon, 09 Mar 2026 09:50:00 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cd7774be64so1065147985a.0
-        for <sophgo@lists.linux.dev>; Mon, 09 Mar 2026 02:50:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773049800; x=1773654600; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZY1KMDG5mEhmybM9QUi64JQp3OjXLAuIqQxIS+L8bEE=;
-        b=CYAXcXq6i3SIMv2CUyi46BwxUyQGVzUZV8/Los2qCxpL92lSfv8GFJQGYu1McLKNXi
-         xRd7oO9dH7lu6Z9jOS0hFEGGqtSy9vXrMl2fahiIhk7Hp9OGQJ1Kg1jKEP5+6tLRZzFs
-         Pspu1LGh7NkLYWmcMgNpRpr19bfkZ6T5qT9bTexK+DlJjCDucj9dQ4cZdHuXdwnCpJNZ
-         JLmEw8uU4qc88UwtAe72qyc+gtqXMTMxbCKcEzKA6RzBAAF3CRNDcpowrtlS4uYeyE7P
-         7Ut8/TZZ0z9oiND40zqsY/6HQNgj+HL8uPrP8FqIz/QUIlDdC3mRxXO1OXKJXEdsT2Zg
-         vUzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773049800; x=1773654600;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZY1KMDG5mEhmybM9QUi64JQp3OjXLAuIqQxIS+L8bEE=;
-        b=llyOH3i11bzLKYLA503PnImLy+a77YHfKpvNmtomgX+7WfZx0BPe4fBRoS8W8dGQlF
-         TvEaJrlEUrzC684m7bB3lhUQTjFSwR/tDg58wgyWf0D/BJersq9ags3ihnMj59qBt1A4
-         DEYAMHcLUOn8Y8ij5BkSEyJ4o5Tr+5LLPfZEAuZvOrYPMf8GKqzsUK425xV/DnoFaDlF
-         1AriHYtcEweiDBV3JDkMSJbAfv33vlm42YplxzuVu3KsQ4Owi/uGJD7LfsDdGT/bkXOW
-         8THXMTgoisfb5f8TMifYVAwbDrJuAZLgMVr/l7SYIscPjKQAsqieF88/tVin1ya1PgpB
-         D96A==
-X-Forwarded-Encrypted: i=1; AJvYcCWJqVpN2MHSO48PYV4EBDG6nvoEkF+qCuPUPmL8HJhLHluBTQ2+mLNtm/F3/yIS14WfXjAbfeA=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yyi0pZhGS3wP4Xu9NRrSZakVRxxiQcIzaIgZ+A/DpFIvUuT+IWM
-	JKbMe8um0ttLrDH8bGYCvC1cTbMjKFCud/gz3hGciNnpeFgkxHxQOXeR58aP0bls+YQsTpoXlVb
-	PZTxaH997rBIejfep+yEBw5uc0V/AGUKF+03w17IQuBHUquYGK84DOz8rCH8=
-X-Gm-Gg: ATEYQzwJZLe6nk3BPNTSg9wJyhBhXNlx3TM6rzEiqu2Bto7ZBpB1eROCKcRTHSJIegf
-	J/0fLKg3SZV7FwX2CYkqFGqFuhvwBTdnuGXBWxL+yXO8q9mAxLPd72oMbcrTMcm8xBVwPUyoeji
-	ZqqyZaOWBiEfkfOWKWEIBEHZ0ANEb8Z3JItYuOYaXAuhQFek0Kr4qZOyas2nGjH3auacWGraxzQ
-	vBQkB2YxzGThZVVyMpy5pAFffIAUx92+O7/Ys10VQe1WuwAw6QhCZDugbN4ZnfwihCKWzySP7C4
-	vl9v45qoRvVB9bjC5z7CWUGVrYqb2ZSRyXI026u2FmMO0BE9hQCYkoKw/OCKwmyXuRwexOYe4Jb
-	1mEqsLndTbigrPKoxVHkyARhk2rgdblZ/bcBJzC+uNB92yI4F
-X-Received: by 2002:a05:620a:470d:b0:8ca:d5cb:6841 with SMTP id af79cd13be357-8cd6d4a51a7mr1312877685a.49.1773049799870;
-        Mon, 09 Mar 2026 02:49:59 -0700 (PDT)
-X-Received: by 2002:a05:620a:470d:b0:8ca:d5cb:6841 with SMTP id af79cd13be357-8cd6d4a51a7mr1312873785a.49.1773049799331;
-        Mon, 09 Mar 2026 02:49:59 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.219.94])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4852f1964edsm58099595e9.13.2026.03.09.02.49.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2026 02:49:58 -0700 (PDT)
-Message-ID: <3d78694a-6a20-4197-95bb-717ec74c0433@oss.qualcomm.com>
-Date: Mon, 9 Mar 2026 10:49:52 +0100
+	s=arc-20240116; t=1773054592; c=relaxed/simple;
+	bh=7drjKsfIEqTxqROoMU5+YC1Ry4jf+AcpQKsMwn77lG0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Lz8VTveu1GjEXvy0RCnOZhhFw1NqLBmySPRzG8uJFTXDyDkc3TSE2JfN75C+Kht9Ft3ejp427byP1NBiOYAdJ4a3OwgH9TU0JOc1eDdSNT7nQbSripEzNjSlWkI8aZLfd63ntnEP0LLvMqqiY03QFEm42vci2ZdXGKl1bcGolZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [127.0.0.2] (unknown [210.73.43.101])
+	by APP-03 (Coremail) with SMTP id rQCowAAHItlzqq5pnpElCg--.46862S2;
+	Mon, 09 Mar 2026 19:09:41 +0800 (CST)
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Subject: [PATCH 0/2] riscv: mm: Define DIRECT_MAP_PHYSMEM_END, fix
+ ZONE_DEVICE
+Date: Mon, 09 Mar 2026 19:09:36 +0800
+Message-Id: <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v7 1/7] dt-bindings: net: qcom: document the
- ethqos device for SCMI-based systems
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller"
- <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Matthew Gerlach <matthew.gerlach@altera.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Keguang Zhang <keguang.zhang@gmail.com>,
-        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-        Romain Gantois <romain.gantois@bootlin.com>,
-        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-        Heiko Stuebner <heiko@sntech.de>, Chen Wang <unicorn_wang@outlook.com>,
-        Inochi Amaoto <inochiama@gmail.com>,
-        Emil Renner Berthing <kernel@esmil.dk>,
-        Minda Chen <minda.chen@starfivetech.com>,
-        Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>,
-        Fu Wei <wefu@redhat.com>,
-        Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Shuang Liang <liangshuang@eswincomputing.com>,
-        Zhi Li <lizhi2@eswincomputing.com>,
-        Shangjuan Wei <weishangjuan@eswincomputing.com>,
-        "G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>,
-        Clark Wang <xiaoning.wang@nxp.com>, Linux Team <linux-imx@nxp.com>,
-        Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>,
-        Samin Guo <samin.guo@starfivetech.com>,
-        Christophe Roullier <christophe.roullier@foss.st.com>,
-        Swathi K S <swathi.ks@samsung.com>,
-        Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        linux-arm-kernel@lists.infradead.org,
-        Drew Fustini
- <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
-        linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
-        imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-        linux-riscv@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
- <20260306-qcom-sa8255p-emac-v7-1-d6a3013094b7@oss.qualcomm.com>
- <20260307-boisterous-tuscan-rat-1eb9bb@quoll>
- <CAMRc=MeeHP_ZjhOHu5NNLCU6Cg59EAWQAS0JngEHDQkmcDH3HQ@mail.gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@oss.qualcomm.com; keydata=
- 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
- cwzYbmi/Et7T2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <CAMRc=MeeHP_ZjhOHu5NNLCU6Cg59EAWQAS0JngEHDQkmcDH3HQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA5MCBTYWx0ZWRfX6VcEEkp/FmZk
- k5wEjKa1gWCxOMo4HyZVU7ulgjMEbJ9n9T7+WQ4lmTJ6GUnKdxOqeSfoHOBR7BaASWfAWkowG9U
- Cg70drLVcPG/82a36LZAIYHZ8HLIoCoJeihTXMDJwi4oZTr1mRxrufKxbc/8F4riuw4qe0xdYdY
- IwxtbZYwk6S7H1qojqRIc9uQrCXA+l4y8wJSxwciWbh4Oa15UEZ+ALW2tgaSa9qbIae/BPUwb/C
- QCHJvK2OIYo8LU8xUx3+YGxMvg8+Oy7i4KiKA/UVCJmepaqWR5UbS0IO+ZcwZ4dn3ZZP4sqhCM6
- n33udsKxJnNN3vML7AcUgOSxI7AgNfsW2IGI7yWWpU1ukkdwY6Gs850lNrVINF5vMlEfNkebXat
- pJReTZe6vshjjiyQN2Fi5kcY7HNBL/V/OEPWBxmYWTSMSwDGmx/xsrggaHfngPsbbUVKHr8r999
- hoJyYDmRlXEYi1UDSaA==
-X-Proofpoint-ORIG-GUID: cOQ-VSbmTQ07Y0OeXoW22eKRpae_34at
-X-Proofpoint-GUID: cOQ-VSbmTQ07Y0OeXoW22eKRpae_34at
-X-Authority-Analysis: v=2.4 cv=e7sLiKp/ c=1 sm=1 tr=0 ts=69ae97c8 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=gOEeR9iKwsj33Yj5oN/cWg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=P-IC7800AAAA:8 a=hmWrw1lzc97rlj7zVzYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=cvBusfyB2V15izCimMoJ:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_03,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- suspectscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603090090
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHCqrmkC/x2NQQqAMAzAviI9W5g6FP2KeBjaacHpaGUI4t8dX
+ gK5JA8oCZPCUDwglFj5PLJUZQHz5o6VkJfsUJu6NY3pUVjnhBqdKAUKmDKCi7hz4EvRdo31lW8
+ 7a3vIkSjk+f4H4/S+H30e/7xwAAAA
+X-Change-ID: 20260309-riscv-sparsemem-vmemmap-limits-4734f1f67449
+To: Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alexandre Ghiti <alex@ghiti.fr>
+Cc: linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ sophgo@lists.linux.dev, Vivian Wang <wangruikang@iscas.ac.cn>, 
+ stable@vger.kernel.org, Han Gao <gaohan@iscas.ac.cn>
+X-Mailer: b4 0.14.3
+X-CM-TRANSID:rQCowAAHItlzqq5pnpElCg--.46862S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxWr48JFW7AF1fJFyUZr4DXFb_yoW7JrWfpr
+	y5Xr1UCr40yr4DJrWIyry5Zr93GFW2kay7GFyxJw1Yv3WDCr1Utr18JFW3Kr9rJr45JFy7
+	Grs8tr48KryUtw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUkm14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s
+	0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxkF7I0En4kS14v26r1q
+	6r43MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI
+	0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y
+	0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxV
+	WUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1l
+	IxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfU52NtDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On 09/03/2026 09:39, Bartosz Golaszewski wrote:
-> On Sat, Mar 7, 2026 at 11:25 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On Fri, Mar 06, 2026 at 04:46:39PM +0100, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> Describe the firmware-managed variant of the QCom DesignWare MAC. As the
->>> properties here differ a lot from the HLOS-managed variant, lets put it
->>> in a separate file. Since we need to update the maximum number of power
->>> domains, let's update existing bindings referencing the top-level
->>> snps,dwmac.yaml and limit their maxItems for power-domains to 1.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> Reviewed-by: Romain Gantois <romain.gantois@bootlin.com> # For RZ/N1
->>
->> Can we drop half-baked reviews? Reviewing only that piece is not even
->> possible, because it makes no sense outside of main change context. IOW,
->> it's pointless review of nothing, if you do not actually review the main
->> change impacting RZ/N1.
->>
-> 
-> This is the first time I'm hearing we can't review individual parts of
-> changesets? I see your point about this particular patch and the fact
+With HSA_AMD_SVM=y, RISC-V runs into the same problem as arm64 at one
+point did [1], where it tries to use a struct page that is outside of
+vmemmap. See log near the end.
 
-Of course you can review. And that will be Ack, not reviewer's statement
-of oversight.
+On RISC-V, the actual mappable range of physical addresses is dependent
+on the current MMU mode i.e. satp_mode. Define DIRECT_MAP_PHYSMEM_END to
+expose this information to get_free_mem_region().
 
-> it only makes sense as a whole but is this the official policy for
-> parts of larger DTS patches?
+See also commit eeb8fdfcf090 ("arm64: Expose the end of the linear map
+in PHYSMEM_END") which fixed the same issue on arm64, although the
+situation there is much less complicated.
 
+Patch 1 copies a check in vmemmap_populate() over from arm64, which I
+have done to debug this problem. Patch 2 is the actual fix.
 
-"Acked-by.... user may not have carried out a technical review of the
-patch,yet they may be satisfied ..."
+[1] https://lore.kernel.org/all/20240903164532.3874988-1-scott@os.amperecomputing.com
 
-"Reviewed-by:, instead, indicates that the patch has been reviewed and
-found acceptable according to the Reviewer's Statement:"
+Crash log:
 
-Above important: "THE PATCH"
+[   19.228335] Oops [#1]
+[   19.230607] Modules linked in: amdgpu(+) [ ... many more modules omitted ... ]
+[   19.309895] CPU: 2 UID: 0 PID: 844 Comm: (udev-worker) Not tainted 6.19.3-ztest #3 PREEMPTLAZY
+[   19.318587] Hardware name: Sophgo SG2044 SRD3-10 (DT)
+[   19.323632] epc : __init_single_page+0x16/0x78
+[   19.328079]  ra : __init_zone_device_page.constprop.0+0x28/0xd0
+[   19.333997] epc : ffffffff802ff1be ra : ffffffff80d10de8 sp : ffff8f8002ef3450
+[   19.341210]  gp : ffffffff82290cc8 tp : ffffaf808f526c80 t0 : ffffffff800231a8
+[   19.348423]  t1 : 0000100000000000 t2 : 0000000000000002 s0 : ffff8f8002ef3460
+[   19.355636]  s1 : 00038d7fe6000000 a0 : 00038d7fe6000000 a1 : 00000fffffa00000
+[   19.362848]  a2 : 3000000000000000 a3 : 0000000000000000 a4 : 0000200000000000
+[   19.370060]  a5 : 0000000000600000 a6 : ffffffff82305608 a7 : 0000000000000001
+[   19.377273]  s2 : 00000fffffa00000 s3 : ffffaf8091258028 s4 : 0000000000000000
+[   19.384485]  s5 : 0000100000000000 s6 : 0000000000000001 s7 : 00000fffffa00000
+[   19.391697]  s8 : ffffffff81708b78 s9 : ffffffff81708b38 s10: 0000000000000001
+[   19.398909]  s11: ffffaf8091258028 t3 : ffffffff822b43c0 t4 : 000000000207ffff
+[   19.406121]  t5 : ffffffffffffffff t6 : 0000000000000000
+[   19.411425] status: 0000000200000120 badaddr: 00038d7fe6000030 cause: 000000000000000f
+[   19.419331] [<ffffffff802ff1be>] __init_single_page+0x16/0x78
+[   19.425071] [<ffffffff80d10de8>] __init_zone_device_page.constprop.0+0x28/0xd0
+[   19.432285] [<ffffffff80d11140>] memmap_init_zone_device+0x108/0x278
+[   19.438632] [<ffffffff803f6a7a>] memremap_pages+0x262/0x6b0
+[   19.444201] [<ffffffff803f6ef0>] devm_memremap_pages+0x28/0x78
+[   19.450029] [<ffffffff053f9370>] kgd2kfd_init_zone_device+0xe0/0x1e0 [amdgpu]
+[   19.483691] [<ffffffff059a6df0>] amdgpu_device_ip_init+0xa68/0xad0 [amdgpu]
+[   19.517108] [<ffffffff05120f6e>] amdgpu_device_init+0x1a5e/0x21e0 [amdgpu]
+[   19.550497] [<ffffffff05122e50>] amdgpu_driver_load_kms+0x20/0xc8 [amdgpu]
+[   19.583900] [<ffffffff05116dd6>] amdgpu_pci_probe+0x236/0x6c8 [amdgpu]
+[   19.616947] [<ffffffff807b2c10>] local_pci_probe+0x40/0x98
+[   19.622439] [<ffffffff807b393c>] pci_device_probe+0xcc/0x280
+[   19.628091] [<ffffffff8093527c>] really_probe+0xa4/0x3c0
+[   19.633397] [<ffffffff80935614>] __driver_probe_device+0x7c/0x158
+[   19.639483] [<ffffffff809357d8>] driver_probe_device+0x38/0xd0
+[   19.645308] [<ffffffff80935a3a>] __driver_attach+0xaa/0x200
+[   19.650873] [<ffffffff8093297e>] bus_for_each_dev+0x6e/0xc8
+[   19.656443] [<ffffffff80934996>] driver_attach+0x26/0x38
+[   19.661750] [<ffffffff809340e4>] bus_add_driver+0x11c/0x248
+[   19.667317] [<ffffffff80936d1c>] driver_register+0x54/0x100
+[   19.672884] [<ffffffff807b1f4c>] __pci_register_driver+0x54/0x68
+[   19.678889] [<ffffffff0430e0a8>] amdgpu_init+0xa0/0xff8 [amdgpu]
+[   19.711387] [<ffffffff80013a02>] do_one_initcall+0x62/0x2c8
+[   19.716960] [<ffffffff80127ad6>] do_init_module+0x5e/0x260
+[   19.722445] [<ffffffff80129d1e>] load_module+0x1bd6/0x2388
+[   19.727925] [<ffffffff8012a730>] init_module_from_file+0xc8/0x128
+[   19.734012] [<ffffffff8012a9d0>] __riscv_sys_finit_module+0x1e0/0x338
+[   19.740447] [<ffffffff80d0d62a>] do_trap_ecall_u+0x102/0x3f8
+[   19.746101] [<ffffffff80d1dbb4>] handle_exception+0x154/0x160
+[   19.751852] Code: ffd2 0013 0000 1141 e022 e406 0800 8a0d 16fa 1672 (3823) 0205
+[   19.759334] ---[ end trace 0000000000000000 ]---
 
-It is not "the patch or its parts"
+---
+Vivian Wang (2):
+      riscv: mm: WARN_ON() for bad addresses in vmemmap_populate()
+      riscv: mm: Define DIRECT_MAP_PHYSMEM_END
 
-Further:
-
-"I state that:
-(a) I have carried out a technical review of *this* patch to evaluate
-its appropriateness and readiness for inclusion into  the mainline kernel."
-
-And further:
-
-"A Reviewed-by tag is a statement of opinion that *the patch* is an"
-
-And really, really reviewing only Renesas part in this patch is NOT a
-review. It caries zero meaning whether this patch is correct. It caries
-only acknowledgment that Renesas part seems fine, but if main binding is
-wrong by mistake (because it was unreviewed), then Renesas part is not
-fine either.
-
-IOW, I believe, you cannot give a correct, *meaningful* review of this
-binding patch without reviewing the referenced schema.
-
-That's not a official position, that's my interpretation of submitting
-patches document and my feeling of logic behind performing any review.
+ arch/riscv/include/asm/pgtable.h | 10 ++++++++++
+ arch/riscv/mm/init.c             |  2 ++
+ 2 files changed, 12 insertions(+)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260309-riscv-sparsemem-vmemmap-limits-4734f1f67449
 
 Best regards,
-Krzysztof
+-- 
+Vivian "dramforever" Wang
+
