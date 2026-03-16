@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA229C339;
-	Mon, 16 Mar 2026 12:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654113CEBBA;
+	Mon, 16 Mar 2026 17:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773665690; cv=none; b=BUNPx5kKGk+Ya4+lWddFvtP8RI06OzDTOTKyTjizpEVTTqPPdDF2DYXYz1rG89/qrLbw9dmKgsYRqjbBIq9wQm1nofP9zvpuJKg6lWMgdWyiw4HxJzsZPjhixPfV/LgLODjz5ND2/x1mA4mvZ79xUe5g4DMJptkrsZ2GT7SYPXQ=
+	t=1773682179; cv=none; b=LCmI36OfbxmwBREnfER0vtSvUKNMItv2T5OgqArhMgjrN7Uzwz7GTHqWJN+Cn3IiwxRwlPb7dPwCf3kWwATX3BhTNrFQOEuxziy0RUSMSv8xuOIudySvkVJHx62lXacdf4GObb0Z3bCd9A1ZQkIwLcGFi7lU0NqOWuGDktkusYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773665690; c=relaxed/simple;
-	bh=UNB1RnCZDPT7ijqBf+iayFTOBeH8hyt/wD7XG9y9pno=;
+	s=arc-20240116; t=1773682179; c=relaxed/simple;
+	bh=Ysd3eBupfSljhrNmOpuGPKVMPzOcnIp/9ypCnnttjrY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bHupB5dHvZkCwCGmft8a1qEUrgxrfFNNRy+QYBgcuw9ImLc1f387yeVJWuBBf44wcsvMO5IsjTnfJQE6O8Vj6PriU3lMbbSTHqjOPtK0G8dAIPAYB8KYlB+E/Wv7xiOJlJJGfLHBUH+7VqPeaurkGEQUKeOhcBBryBszDuVDsmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0uLWtXF; arc=none smtp.client-ip=10.30.226.201
+	 In-Reply-To:Content-Type; b=gO8u7FmVtjzYSA+F/HQHi7I2z2LbiCl2Pts2wpagVfgIfgPnN99na+WstfE4h7cmCyfhPwlWTTCm7siCf7yBM7QEvRv+7xH+urRgyDgK0kLGBR4jj4ZFh3WjDRPdn0sVvU/EV+BZfqPNVPtHkz2GUR/CvE2ZUEgS0Nme0E+I/Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SeG1bDmb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0uLWtXF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D544C19421;
-	Mon, 16 Mar 2026 12:54:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SeG1bDmb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5089EC2BC87;
+	Mon, 16 Mar 2026 17:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773665689;
-	bh=UNB1RnCZDPT7ijqBf+iayFTOBeH8hyt/wD7XG9y9pno=;
+	s=k20201202; t=1773682178;
+	bh=Ysd3eBupfSljhrNmOpuGPKVMPzOcnIp/9ypCnnttjrY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L0uLWtXFEswEICk+GBeSz232H9pGStGYJmAEqcFbJQJ7wEFJxhLTNH5mISGscXua/
-	 uETRZ71NoloeXRnaerZn8Xmohhzfd25ao23eXlyjopt+iOop+ieGtQ5OG3TfmIt7HG
-	 vaqAbvDJKLnp8dND3CqSj4OSJek4dAKTw5/EhsjQJ6c6agQfYWHOJqAtYlFlD+eqUp
-	 IHZOixQbDIPSoKC2m/tQm0xinNBrrCVJnLSnOpCziPiJ0vCJiCc4KTq7JswkHxZ3vx
-	 xL8WhQgAWvv5kaHW7XgTGMQW2wSoVUsztp5n1xxIWLSSeuh4PQ7hyLF8iRhTolz9Dr
-	 YsyHoUqi8q+JA==
-Message-ID: <a0b15cde-02a2-44dc-8b2e-3706d4794577@kernel.org>
-Date: Mon, 16 Mar 2026 13:54:43 +0100
+	b=SeG1bDmb2FosihW0Q0vHpHDd6Vq9zHI/km9LM9pVc+W9ySVDXWNuYswxphJ768iy+
+	 rRTo4LFSUsqxFYgG+8R5d0PCs94v7ggs1ZV94QtxtKZemNboI/SB6zraswF7lRv/V0
+	 4dRzPiYhaMGMP5SoiQOyyHwGQgu4ORDieCfhRvo7rhFoRx8WGR5BN5Zduj9HcYol5y
+	 xigRuamu6mn78C8lcPsh5eNPMZw4UmXPzfzEmZKk8UyxEMqKXHMUVbtQQdAJZBIRKO
+	 fqFw06ytMbWL1ifvXu8nl9a+xt365ou5fLzGd/1kCY837nZwvVw1ifY2Dp/xBaICkO
+	 C+r3Fk7Yn1mQQ==
+Message-ID: <846c077d-f1ca-45bc-b3d4-52ba71c34909@kernel.org>
+Date: Mon, 16 Mar 2026 18:29:27 +0100
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -35,20 +35,44 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/5] dt-bindings: soc: sophgo: add Milk-V Duo S board
- compatibles
-To: Joshua Milas <josh.milas@gmail.com>
-Cc: tglx@linutronix.de, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, unicorn_wang@outlook.com, inochiama@gmail.com,
- paul.walmsley@sifive.com, samuel.holland@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, alexander.sverdlin@gmail.com,
- rabenda.cn@gmail.com, thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
- liujingqi@lanxincomputing.com, devicetree@vger.kernel.org,
- sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-References: <20251029001052.36774-1-josh.milas@gmail.com>
- <20251029001052.36774-2-josh.milas@gmail.com>
- <20251029-nebulous-doberman-of-wholeness-0fd3a5@kuoka>
- <abf5fw5wdsfdNV8G@sleek>
+Subject: Re: [PATCH net-next v9 1/6] dt-bindings: net: qcom: document the
+ ethqos device for SCMI-based systems
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+ Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
+ Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+ Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>,
+ Christophe Roullier <christophe.roullier@foss.st.com>,
+ Bartosz Golaszewski <brgl@kernel.org>, Radu Rendec <rrendec@redhat.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, Drew Fustini
+ <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+ linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+ linux-riscv@lists.infradead.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
+ <20260316-qcom-sa8255p-emac-v9-1-c58934e76ff2@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -94,25 +118,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <abf5fw5wdsfdNV8G@sleek>
+In-Reply-To: <20260316-qcom-sa8255p-emac-v9-1-c58934e76ff2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 16/03/2026 13:37, Joshua Milas wrote:
-> Hi Krzysztof,
-> 
-> Apologies for missing the change, I got ahead of myself.
-> I updated my changelog for an upcoming v4 patch.
-> 
->> How did you resolve previous comments on bindings? Nothing mentioned
->> here.
-> 
-> Which issues specifically? i2c issues were resolved by updating the 
-> .config for drivers. I have yet to resolve the spi issues.
+On 16/03/2026 13:05, Bartosz Golaszewski wrote:
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    ethernet: ethernet@7a80000 {
 
-Each issue you received comment on. You received review and asking now
-to repeat is basically asking us to do same work twice which wastes our
-time.
+Wrong unit address.
+
+> +        compatible = "qcom,sa8255p-ethqos";
+> +        reg = <0x23040000 0x10000>,
+> +              <0x23056000 0x100>;
+
 
 Best regards,
 Krzysztof
