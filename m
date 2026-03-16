@@ -1,101 +1,118 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EACD386569
-	for <sophgo@lists.linux.dev>; Mon, 16 Mar 2026 12:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCA229C339;
+	Mon, 16 Mar 2026 12:54:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773664725; cv=none; b=f8CdJpiQzso1fkTZLXIa36i3OQ8js4oKogrwy6G7QZgF1sInLLgeX9gBNkDoLdALrIUUX5F1XaygR05cwDmEPfSxNQF09wh1zB00fdnfe+ObUHPKW9tGfbOA3STr/Ip6/FncdDzSBiXCF64pLDVnLPZgnCQpHCVuFpw0axMZv2E=
+	t=1773665690; cv=none; b=BUNPx5kKGk+Ya4+lWddFvtP8RI06OzDTOTKyTjizpEVTTqPPdDF2DYXYz1rG89/qrLbw9dmKgsYRqjbBIq9wQm1nofP9zvpuJKg6lWMgdWyiw4HxJzsZPjhixPfV/LgLODjz5ND2/x1mA4mvZ79xUe5g4DMJptkrsZ2GT7SYPXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773664725; c=relaxed/simple;
-	bh=pBvUzLH0uz26jQRAjkurWhWn8KmiumiD3Cbz8sGkBMI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y0rmOFP8hzz3MOQ5eJo9u8YWII3IUWrkZgoNYIfw/DyehbYXrEKCUmGEdsJtV6Fz7Dtefqsd2ZsVbbUL4/x0ArXkolxiX2FUOsN4im3DmC8PcHC+MccyzTu0+fSsaLLv5Gv5/MyVdvZM+Zog0k1b11ctejQ9pjJsq7KWIdtMCuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kRrA3CQn; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1773665690; c=relaxed/simple;
+	bh=UNB1RnCZDPT7ijqBf+iayFTOBeH8hyt/wD7XG9y9pno=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bHupB5dHvZkCwCGmft8a1qEUrgxrfFNNRy+QYBgcuw9ImLc1f387yeVJWuBBf44wcsvMO5IsjTnfJQE6O8Vj6PriU3lMbbSTHqjOPtK0G8dAIPAYB8KYlB+E/Wv7xiOJlJJGfLHBUH+7VqPeaurkGEQUKeOhcBBryBszDuVDsmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L0uLWtXF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kRrA3CQn"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-899e87b04d8so61739626d6.3
-        for <sophgo@lists.linux.dev>; Mon, 16 Mar 2026 05:38:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773664723; x=1774269523; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pBvUzLH0uz26jQRAjkurWhWn8KmiumiD3Cbz8sGkBMI=;
-        b=kRrA3CQnxTa4OVcdyUCkFfv9CcyzuQA/JghiR7pcJS6ixayFX8YEeRxCLbmXc9wnMJ
-         Tk8uhYbznHgJeCwLK8C2zRKAFK4uXdU07odyay1DWE6d/96A1FNYwEUW2iPbaWAsonfX
-         y7OjVZgJyr0nrsvJkbe2EgLRDjGXj8fGSEPllq/DkTi1FwJL5ZIgOa8yYvVvjcOMxZIr
-         dXlDNIdnCKCTL963B8x59pAU65BeGEX2KRgUEb3F2Cc1qEIs4NQ7RJN/oEePuaxQkVTF
-         ZTtxrUqTHSk8WD8qhN10AY39Y8d/Zxi+S8PjohLUO8fdpZZMFni0jsr2zSLXu7p/teMo
-         sQlQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773664723; x=1774269523;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pBvUzLH0uz26jQRAjkurWhWn8KmiumiD3Cbz8sGkBMI=;
-        b=QahHZOCds93BqgYg+dWsr7AluPbY9U8S8P6IzIxIhjV7VLAjIZiurYCC+hRhPdI3uB
-         PxEh0GrkbXjY9H6a+DauUAGrJ22Eo5B6XXhflPqxOiaUjzUpdqhyyFG62CIexh61CTm9
-         fvdMDcRSShPMCY+HhJTU6SZV8RHFQ0ne6zjtgitLBSO8ZVFiKlUZ8atF2+NVBIyaDVnE
-         e3VjZj0cmPFaO033/1VYCkwAokErA15I/1wqMUsN30Y+EDuilOOwZmts8cNwlqVyx1s1
-         mGGea/EqXLZu8lPGrTN2IcDmBO/uyKI/fksVFA/gpnuIwx1dhtBdtjVqjhV/1+a5JnDK
-         ccqA==
-X-Forwarded-Encrypted: i=1; AJvYcCX/SyIlC2jbL48ZZkmZerbmx9F1FNAaB1ADp8y4EWYQWEWLQgjYUKXq6xfG0cwQ18Gtj2w4rQ0=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxQJ6vcxTujW/0lmYtiQuKBJY9a1XMp01RCT9dIN1h4u5ndAdpA
-	CGoWGl/7YZehzR3wmpqy3YKippm2iD/p0z/XWhry/CYPLsk1NBLG4Hq3
-X-Gm-Gg: ATEYQzx9p//GSw5xJbrvBn7onDgp4XIqGiwiPMYWw8d1UJu+oxP+wecE+KGizHa/lEg
-	QwURxEBfqMP9eYYvGXzS0J5GRMxoUHO+TzdK/1vqcBUYjll5g5MfMuC7iRe0/KMXp2yV5hkgcrx
-	TLWUMh5m8OYAVHo1iPXV8rBMFp/LzC2Qr7xMRCvNWYZwqkdhru+3R4kXTE2RNCNPz3oUkQhCvgs
-	YMVOnJsIRLASAN996biWlTd/Gr+DDolTKzdLHJxEF9TZXrGpuIwxCYsPofORu+2JkN50lh/Fwkg
-	e79GuAbLlYcygo7Lg+ZZfKG0ImuqMLq8sVwuyM3hpuPgSphzCSxOfxwaos11dbZtSyfmZaYjMcL
-	BgtXlmqYJgFi2mwAG2hyET6OkJB1dbNK25M3wN6z2/PmmGVUzm1VfL2aChR9ZK7HMl6S0j47Utx
-	e1LyXirELNTqQ+fD0SMqjuxVsSm4BCENxuFUtW7u/LBPLH8SfehVPxww0g
-X-Received: by 2002:a05:6214:300f:b0:89a:1bd:233 with SMTP id 6a1803df08f44-89a81d4518fmr193199906d6.1.1773664723207;
-        Mon, 16 Mar 2026 05:38:43 -0700 (PDT)
-Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a65d0a7b6sm121853296d6.44.2026.03.16.05.38.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 05:38:42 -0700 (PDT)
-Date: Mon, 16 Mar 2026 08:38:40 -0400
-From: Joshua Milas <josh.milas@gmail.com>
-To: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-Cc: tglx@linutronix.de, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, unicorn_wang@outlook.com, inochiama@gmail.com,
-	paul.walmsley@sifive.com, samuel.holland@sifive.com,
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
-	alexander.sverdlin@gmail.com, rabenda.cn@gmail.com,
-	thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
-	liujingqi@lanxincomputing.com, devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
-Subject: Re: [PATCH v3 2/5] arm64: dts: sophgo: add initial Milk-V Duo S
- board support
-Message-ID: <abf50DaYQCmrx_BG@sleek>
-References: <20251029001052.36774-1-josh.milas@gmail.com>
- <20251029001052.36774-3-josh.milas@gmail.com>
- <4b1b2580-63ce-4ce8-b4a9-1763d3d3a253@rootcommit.com>
- <6e4bf564-07e9-44a3-a18f-69bc716ca575@rootcommit.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L0uLWtXF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D544C19421;
+	Mon, 16 Mar 2026 12:54:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773665689;
+	bh=UNB1RnCZDPT7ijqBf+iayFTOBeH8hyt/wD7XG9y9pno=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=L0uLWtXFEswEICk+GBeSz232H9pGStGYJmAEqcFbJQJ7wEFJxhLTNH5mISGscXua/
+	 uETRZ71NoloeXRnaerZn8Xmohhzfd25ao23eXlyjopt+iOop+ieGtQ5OG3TfmIt7HG
+	 vaqAbvDJKLnp8dND3CqSj4OSJek4dAKTw5/EhsjQJ6c6agQfYWHOJqAtYlFlD+eqUp
+	 IHZOixQbDIPSoKC2m/tQm0xinNBrrCVJnLSnOpCziPiJ0vCJiCc4KTq7JswkHxZ3vx
+	 xL8WhQgAWvv5kaHW7XgTGMQW2wSoVUsztp5n1xxIWLSSeuh4PQ7hyLF8iRhTolz9Dr
+	 YsyHoUqi8q+JA==
+Message-ID: <a0b15cde-02a2-44dc-8b2e-3706d4794577@kernel.org>
+Date: Mon, 16 Mar 2026 13:54:43 +0100
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e4bf564-07e9-44a3-a18f-69bc716ca575@rootcommit.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/5] dt-bindings: soc: sophgo: add Milk-V Duo S board
+ compatibles
+To: Joshua Milas <josh.milas@gmail.com>
+Cc: tglx@linutronix.de, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, unicorn_wang@outlook.com, inochiama@gmail.com,
+ paul.walmsley@sifive.com, samuel.holland@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, alex@ghiti.fr, alexander.sverdlin@gmail.com,
+ rabenda.cn@gmail.com, thomas.bonnefille@bootlin.com, chao.wei@sophgo.com,
+ liujingqi@lanxincomputing.com, devicetree@vger.kernel.org,
+ sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+References: <20251029001052.36774-1-josh.milas@gmail.com>
+ <20251029001052.36774-2-josh.milas@gmail.com>
+ <20251029-nebulous-doberman-of-wholeness-0fd3a5@kuoka>
+ <abf5fw5wdsfdNV8G@sleek>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <abf5fw5wdsfdNV8G@sleek>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Michael,
+On 16/03/2026 13:37, Joshua Milas wrote:
+> Hi Krzysztof,
+> 
+> Apologies for missing the change, I got ahead of myself.
+> I updated my changelog for an upcoming v4 patch.
+> 
+>> How did you resolve previous comments on bindings? Nothing mentioned
+>> here.
+> 
+> Which issues specifically? i2c issues were resolved by updating the 
+> .config for drivers. I have yet to resolve the spi issues.
 
-Not sure what is going on with your eth or i2c as I donyt see those errors,
-let me try testing the riscv side as I have been running most of my tests
-on the arm64 side and have not run the riscv tests in a bit.
+Each issue you received comment on. You received review and asking now
+to repeat is basically asking us to do same work twice which wastes our
+time.
 
-I used pins 3/5 for i2c4 using `i2cdetect -y -a -r 4`. It seems the docs
-might have SDA and SCL reversed, unless my i2c test device has it
-backwards I have SCL connected to pin 3 and SDA connected to pin 5.
-
-I am using an SD card variant and have not touched emmc myself.
-
-Take care,
-- Joshua Milas
+Best regards,
+Krzysztof
