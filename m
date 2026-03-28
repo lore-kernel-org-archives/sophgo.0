@@ -1,150 +1,157 @@
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 553DE2F6565;
-	Thu, 26 Mar 2026 01:08:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B5D34A3D0
+	for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 17:37:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774487329; cv=none; b=Xu5ixHmGqsn203IT4tIoTaKN4vE/KxJCYHO7B/obcPvaGp0/YxlxRThmum5ELWSUmTxLIzFzoktrpHFtqpxuPASz/8TqsXluduA95sliV6+5eNa2RJlSWGmZwOsDEAgEWp+RjYPvqFe1G+/xf3f9eeu9Y82+ebx3LN7e5LBUdw4=
+	t=1774719467; cv=none; b=hDdci5S7dpSv7duvn4KV6taQrwriyftwgvmmWbYeLSiJuv+6RYnLNNawBZJnWS0QpuMlROX+G0+k+PtTVMAF2VBSBEsUJ6ncUb8XJk2VwW4Qi7gXYYvPGD6hL3tk8vme2eBYzy8FyPWSvXgxhexnsfH3oQB/3NB4mKGY0EfbKLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774487329; c=relaxed/simple;
-	bh=4uecKRHDBhbz6GMEPeOcd+SqBF5xnJKMd0h9nwTDfzc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BWJgV14UBUG0dy8VgshPnNDlcBBLIOX3jlOGml4zxUZJn7VIGUWpm8YvGOwYpeMCuZeuC0sH/vb4SHlpi83fx5+xFqwEh3Jm863+LfCyi1HRbRyTUC+bejz9qXO7dQ/IwpHAXwpEO79TZ3m87sdomsHxmTqUpbl9BpGSFasM7u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=3k+TjSE4; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+	s=arc-20240116; t=1774719467; c=relaxed/simple;
+	bh=parGt3tZhlgkG7Tyg0zyRirZEztjPzzRxqDmCM7EM5g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uk7NvB7e9K3S2IdA56MS4xeMThEwR7VZEr9I4BXFPY8hn8Xrad+3pQRRRKfP+sypWO+7oTHvZrVf4gLqH/y26zQu6kffxCOfqHQ16VGCUHGFTcJhsaAsb9zgsRavGcnteiUBNAP8s/w32riietZYdq7Mniq2oAxZCIPtWngeN08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kSdfl+Yj; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="3k+TjSE4"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=HZk9cX6zPb++VDwxFCjztWsZ6cPWXsFQhOd6PIpC+jg=; b=3k+TjSE4T5siYJvmjf+q67z7Bo
-	blgq/01N77awBnx7m8dxKS+XWCjvcdDITItvnD/oPHPgdpnl/fYTwqn9SZnLpumvD+4pQ9MuXPyJz
-	LLcgWn8WmSKGBEQCaDnMeONlaYVoPwlRLHNuJiDEDQk8r41BKPWSIExdHBN5qyXIf2iA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1w5ZD0-00DNsG-6i; Thu, 26 Mar 2026 02:08:26 +0100
-Date: Thu, 26 Mar 2026 02:08:26 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kSdfl+Yj"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-506a6cf8242so29781251cf.1
+        for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 10:37:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774719465; x=1775324265; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FO8lTdaN+rEnKBFSO7tgtF4+ghONTKCteN9CF0ffLO4=;
+        b=kSdfl+YjsMNYkZcfO/HG4IABpAHJuGEuQRO4xDZ2XFc81ZXkK/d7qa5qnw5a66Alg1
+         uRjxVWvj85KTiRe61n537gsvCpuafzd2KKdkR7T9inrTpVm2FiYzjp56UkjENwpBkMUZ
+         7x/JFknCElErZn8TuaE+iM85qaINsidbT+IYTm3DzC39XLizWzlieIOpJtAp9SFJzOln
+         CsBb4bffqYoSKzx9E40QRmrmfmtCFTjbbOHac5c8oq5ml94IR/B/CkOKPPos36ZZkVmt
+         d57ap80qaT6sIwGZpwZzIcTfYPxaP4EwFjOHU6DhM/Z6z3zc1DxSlwnwmyhF5i82sRI5
+         OXhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774719465; x=1775324265;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FO8lTdaN+rEnKBFSO7tgtF4+ghONTKCteN9CF0ffLO4=;
+        b=ToIoOdVfNbdDpeWYxddeFCg8QeOv6X2nLzd6I1sMpGCxixO849MNbj0aiooHuu+ndr
+         Mx7eNanCjeTol7X1uCRRPsrwGVNwIgHIpLIozOiiefYKlu+7rUk0qoBsaKxySL3Rs5m7
+         OGR2yTbAZO+yh65fHSEuuXFJAStQpx2M3C79/hKx5QqqdAJpsO3gFoIsmr278ywY3gTI
+         bSlGzlr/lOoYCXwPPI1Ye+YuNm0e6aje+NavpS27K2Hiw3//dbvFfXx3FpNYuBiLL+Bg
+         TPq5QE7VPYtvdTO76+ouDCwEf7j1ahDeDrfre9IITCQ7hVkWRTysdZwTXU5u+Ymvz/vy
+         bMyw==
+X-Forwarded-Encrypted: i=1; AJvYcCWIlAy2hZNsFedLYIUDslpU9fh4b/4MqSxoYNPshk80fCtRg2DdDF1JP8UcHJmaNrtxwmro/+g=@lists.linux.dev
+X-Gm-Message-State: AOJu0YywknD2IH1BFXvqPAU7HQ8xYyBZg+MHhrmszJf+sEqN9me367Xu
+	RzRU6EZTfi1X0iJrZLRWoC+fRuzC/m1+r342Fvs9Q6c9ny+ej5r7Mnbz
+X-Gm-Gg: ATEYQzwExKdbi1xLrotTmaulY0W8LAdQjhRNsxcCS/OCdkjbVbRcLgPiDcQvYk/fvck
+	7J1Rs0kWefLL1TUeb6pcuQoJ9QEgLw71Kra8bQJNQy0PeruwY7bgZSSO3Z/MgfM2ObUAT91PLUa
+	aPl6/axV6vEu3C4hqAcbg7hN0Gk6t2jWdcxmx7Dwxd4b9DPYA0B/Ue6bnKttoGmx1Pt6Q3EqGwh
+	VpRTCNCvBOO+7z6AmEGAPjAUWCqQfZ1InvsCvFtMfcGKE+8EXGu2zQSEHSL1Z6SGPgKDjUYOMYK
+	XPK+BkPztarsqpSbo4h+mxA9ZDrF01WJIePhapwi84p7PWpQ2tECcNjtym8T9Hbmhv7x1VCLmYm
+	ycKG3QIyJDIkgdXVgL4zU28oX1udFT/75lKcxsKPbAeGiANMEcGwymFnX0bxCKti4VQDYRMMDre
+	tsSY76dtdAFnISgzERjwep2iQudsopG+VdP+fkAIIbIfZNBuX/S++Y6/ywtXFSRTSCY2M=
+X-Received: by 2002:a05:622a:4807:b0:50b:3a6d:db5f with SMTP id d75a77b69052e-50ba39bae92mr89481621cf.64.1774719464707;
+        Sat, 28 Mar 2026 10:37:44 -0700 (PDT)
+Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2c9c93asm26629641cf.7.2026.03.28.10.37.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Mar 2026 10:37:44 -0700 (PDT)
+From: Joshua Milas <josh.milas@gmail.com>
+To: tglx@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	pjw@kernel.org,
+	samuel.holland@sifive.com,
+	unicorn_wang@outlook.com,
+	inochiama@gmail.com,
+	daniel.lezcano@linaro.org,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	liujingqi@lanxincomputing.com,
+	alexander.sverdlin@gmail.com,
+	rabenda.cn@gmail.com,
+	dlan@kernel.org,
+	chao.wei@sophgo.com,
+	anup@brainfault.org
+Cc: josh.milas@gmail.com,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next v9 2/6] net: stmmac: qcom-ethqos: use generic
- device properties
-Message-ID: <409265d8-532a-44d4-abc6-02ac5a19d286@lunn.ch>
-References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
- <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
+	sophgo@lists.linux.dev,
+	hanguidong02@gmail.com,
+	michael.opdenacker@rootcommit.com
+Subject: [PATCH v4 0/5] Add initial Milk-V Duo S board support
+Date: Sat, 28 Mar 2026 13:34:45 -0400
+Message-ID: <20260328173450.219664-1-josh.milas@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 16, 2026 at 01:05:07PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> In order to drop the dependency on CONFIG_OF, convert all device property
-> getters from OF-specific to generic device properties and stop pulling
-> in any linux/of.h symbols.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> ---
->  drivers/net/ethernet/stmicro/stmmac/Kconfig             | 2 +-
->  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 9 ++++-----
->  2 files changed, 5 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/Kconfig b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-> index 07088d03dbab5bd1abf66e9460613b839c1d565e..e2af4fdd654340d618477ed87d3889dbb9aab456 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/Kconfig
-> +++ b/drivers/net/ethernet/stmicro/stmmac/Kconfig
-> @@ -135,7 +135,7 @@ config DWMAC_MESON
->  config DWMAC_QCOM_ETHQOS
->  	tristate "Qualcomm ETHQOS support"
->  	default ARCH_QCOM
-> -	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> +	depends on ARCH_QCOM || COMPILE_TEST
->  	help
->  	  Support for the Qualcomm ETHQOS core.
+This adds an initial device tree for the Milk-V Duo S board
+with support for reading from the SD card and network over
+Ethernet. This is continued work from Michael Opdenacker's
+v6 series [1] on the ARM64 and RISCV side. It has been tested
+with ARM64 and RISCV64 to boot from an SD card, have networking,
+and read I2C slave devices over i2c4.
 
-Are you sure you want to do that?
+---
 
-static int qcom_ethqos_probe(struct platform_device *pdev)
-{
-	struct device_node *np = pdev->dev.of_node;
-	const struct ethqos_emac_driver_data *data;
-	struct plat_stmmacenet_data *plat_dat;
-	struct stmmac_resources stmmac_res;
-	struct device *dev = &pdev->dev;
-	struct qcom_ethqos *ethqos;
-	int ret, i;
+v4
+- Rebased to latest sophogo/for-next
+- Added usb node to arm64 and riscv DTS
+- Removed sg200x link in commit messages
+- Added missing change to v3 and removed link from v2
 
-	ret = stmmac_get_platform_resources(pdev, &stmmac_res);
-	if (ret)
-		return dev_err_probe(dev, ret,
-				     "Failed to get platform resources\n");
+v3: https://lore.kernel.org/sophgo/20251029001052.36774-1-josh.milas@gmail.com/
+- Added sg2000 interrupt controller and timer to documentation
+- Added sg2000.dtsi for RISCV and moved DTS over to use it
+- remove devices from DTS's to match what is available in the
+  default pinmux config. spi0-2, i2c0-3, uart1-4
+- Added i2c4 and spi3 aliases
+- Removed milkv,duo-s from sophgo,cv1812h in documentation
 
-	plat_dat = devm_stmmac_probe_config_dt(pdev, stmmac_res.mac);
-	if (IS_ERR(plat_dat)) {
-		return dev_err_probe(dev, PTR_ERR(plat_dat),
-				     "dt configuration failed\n");
-	}
+v2: https://lore.kernel.org/sophgo/20251011014811.28521-1-josh.milas@gmail.com/
+- Made new entry in docs to avoid DTC error
+- "Milk-V DuoS" -> "Milk-V Duo S"
+- Sorting of aliases
+- Added uart*, emmc, mdio, gmac0, i2c*, spi*, dmac, saradc
+  to device tree matching what is available on the pinout
+- Removal of 'no-mmc' and 'no-sdio' for sdhci0 as it works without
+- Added riscv device tree
 
-https://elixir.bootlin.com/linux/v6.19.9/source/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c#L684
+v1: https://lore.kernel.org/sophgo/20250927173619.89768-1-josh.milas@gmail.com/
+
+Link: https://lore.kernel.org/linux-riscv/20240421055710.143617-1-michael.opdenacker@bootlin.com/ [1]
+
+Joshua Milas (5):
+  dt-bindings: soc: sophgo: add Milk-V Duo S board compatibles
+  arm64: dts: sophgo: add initial Milk-V Duo S board support
+  dt-bindings: soc: sophgo: add sg2000 plic and clint documentation
+  riscv64: dts: sophgo: add SG2000 dtsi
+  riscv64: dts: sophgo: add initial Milk-V Duo S board support
+
+ .../sifive,plic-1.0.0.yaml                    |  1 +
+ .../bindings/soc/sophgo/sophgo.yaml           |  4 +
+ .../bindings/timer/sifive,clint.yaml          |  1 +
+ arch/arm64/boot/dts/sophgo/Makefile           |  1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/Makefile           |  1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
+ arch/riscv/boot/dts/sophgo/sg2000.dtsi        | 53 ++++++++++++
+ 8 files changed, 231 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+ create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+ create mode 100644 arch/riscv/boot/dts/sophgo/sg2000.dtsi
 
 
-#else
-struct plat_stmmacenet_data *
-devm_stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
-{
-	return ERR_PTR(-EINVAL);
-}
-#endif /* CONFIG_OF */
+base-commit: 9aa6068586a9b4cd34cf04f8dee72a7283ab4ae4
+-- 
+2.53.0
 
-It seems like this is just going to result in the probe failing with
--EINVAL.
-
-	Andrew
