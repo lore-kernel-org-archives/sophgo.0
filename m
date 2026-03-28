@@ -1,63 +1,63 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF773A5E70
-	for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 17:37:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B3B3A63F7
+	for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 17:37:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774719470; cv=none; b=ayO1/xyEarkv2w4QnDEh6UjnHGzSFRfWKVV1GAhjZF/qqySwXR/4NggPph2VdlmdmaxYpcXCN0Q2aH+u3sdk8HKE9N6+i4Uc14lZnXhl0BgJp/G6YOhzxgSGiBL9ZOy4bWpLN5rFBmBu//XxnBOfPgG8Xn9nloYlEi8eBA/C8EU=
+	t=1774719473; cv=none; b=RWNE46x3WfvHhblafEE7848XTFFJmkNDCXAkNlnhCKq5X0DZHtHR6UKqnmiWbmFXFHm5moxRr5Sunidf1AuId6+x4Feczi5WOUg9uxgIEACStq/XbF1xkyg3zv8f4ou0WAi9gcuUp6CNcq6M3XHQdOb4kM2v+jK/PRrnefUBNNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774719470; c=relaxed/simple;
-	bh=/iKoxf3LOftVvnFst+ry8upkECO2m/4sz8OzKStj6vY=;
+	s=arc-20240116; t=1774719473; c=relaxed/simple;
+	bh=vrfhOM3+ysvF/Ll57Tf/JoWnf8bZUNDlRILzcG8aTAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K9wCyHgqlkJWcula0W6WlV96ZfqttWaW2d8JgJBZGhNT9xif3rTzAMjby6tc5xaO4Y+vt4yBYMjAgNfc7BKflbcgbhqMMiGDNzLjvAEWua5RctjVS2pnHh6Wk2bsy2/3Mk9x0ttPrJGX+KKDpqUndLysJsQ8nAPjR+hyPemiKSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=qd7/4Z8c; arc=none smtp.client-ip=209.85.160.179
+	 MIME-Version; b=U1kjG5/q7EnovBColiBmfA1zmZzEphSa+U9AehsSC/QZ6jIdwZxs2zBSmEsYqbRAv5iZ+o9Jp+zoyt/jJJFZxuSTtwd7ETxxVeMOpRx+rXIEZOpZtW06VSAkYzBPYl8jG804pHB4c1MLDX2mxXZzA5hYPUDtYIR9TJSyCJXppQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHZoEGvB; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="qd7/4Z8c"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-509061dab77so27723371cf.2
-        for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 10:37:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHZoEGvB"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-50b69bf5638so35344161cf.1
+        for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 10:37:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774719468; x=1775324268; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1774719470; x=1775324270; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UFgcVH5XOq5/mrXaXDYrCpNPEGJCtaK+pfMk8iob1+k=;
-        b=qd7/4Z8cKDNO+TIKJ25PqsagEsXEhXlZld94QryI/0hi4TzI9+FR10ecqEZFIf1h89
-         kKIxMK/Y0lQQ2HjyRRYZR6AEgRulEoy9PRdaVAZzVINE6ZHf43CwGf5fPlnICO1pdj3O
-         LoNyvLZ2cMlfYegUiuOfEZvbFL4UsbzYnR2oEFlGK7PCdHVNTLeyESZTmFto/mL9ss40
-         qlqW49rYRyHvZk6PINEilV/dB8/RpQAa52BHi+jDDDLN0tMNimnRlArHWuaBoUoSL5QK
-         z5y+g6Fs1fHgF62mBQqv9gt5e7UHa9iO+XEE8oYoECBB5XoLt8+UziJqVbSNOEu1P+vJ
-         mGWw==
+        bh=/8SWLbh0z3f3RIAwmimt4X3yZVlmYvxXaXaOJWp14ng=;
+        b=LHZoEGvBppu3yO8dpHIyUkCLtLfEGphDjDjKWD8x1+SsssOmgwFU2Yn+wOdqi2Duzs
+         kgyy2LpPl0NnkjH+I5GV4XUQMWnCpTOp5sFDohsNniaCC8w5GoM6/2S9zjtxDmVQHmfY
+         ynpbNCBDuWUr+89tH5VyYy1XZA65gi8nAPFcEmVWv1iL+NEGuzb4yVb9v0OewAVf9e0U
+         cO0yBAxEB0iVkOoUUg+BMgjQK3pnFu51F2ZaecKwflewf9IoT6jQ0RjxZJfYqlLZhH6P
+         qnXa8oqZXaji31qSCttPDk3mpAHNMWETqoQ4EAoRFTTgQ8/DBp3uXR7AGfUIULLY1dlm
+         gjTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774719468; x=1775324268;
+        d=1e100.net; s=20251104; t=1774719470; x=1775324270;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=UFgcVH5XOq5/mrXaXDYrCpNPEGJCtaK+pfMk8iob1+k=;
-        b=ZEnafd0BBn9lKo0/neGJX8BcxPiyUlRBGcB2hkIejajADZp01ZJxTnm1alS7sVjYSS
-         S5WdWJbrcgDUjrQ/Z9hPLBjlqQazSMxBhQF7ecDO+A0dOrCaUbQzrvKLKdfPm6fL4scu
-         nC8g1F3ODvjPmmqK3Cco4NaAdrr67pgtg+toGtYC/NWEbzvbBwb58J8c2sAMSTbuTiQc
-         B+8t0DNvTR1+FotXB8mM9Vn9+ejLJNx0Ob+1PGDN6S6HpK8KF7m+hG/2lQHagSooMT2o
-         nJayKZ8lsrbmVJFHj/f1mwJPADU+feS9yf7W2nj19UKSgj54BBIzdOZrkyBrRPuOI5iX
-         Npew==
-X-Forwarded-Encrypted: i=1; AJvYcCUN7abYXiMninYec1SMBmWEdN8u+6eUzyjshx/WjmhKEuwwdLh9NndPuQ/LAMkkTeGROsyERl4=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw6a62S4Io02Pxb/bA2TqnOp+dst1eFYKwl2hcQXyaLRM55GRKd
-	AWOx2ddqEc4MSCykDNg0BTewuy3LJz3iN9Q7cKRVZZH7NfFUG0UFi/TB
-X-Gm-Gg: ATEYQzw0DvjE9pGSqlby1ud0cSxt2BgAX8hNLlLu7fLVgPQq13jVEJ3P0MlaV2vkvvC
-	X8R3E+jSivx13zujZMlMuNIoOA+vDtrfO62vHh6Mw/KuL9N+dVeXXhOZNgPX8goqcrHw1M3RVGi
-	2H66jt6RsBx7+/0LNzivywj2/RIam1c9Ru3eN+S9S9BAIYN49vlkDaXNYwC5XFlQMUEZsH2q580
-	H18uKawx5yp79bAhevQkh5X1FgMC2MdPCmMOhBAAaDcSgMmXNZFS3QUY4qRDhB6R5QDHaBqO0W4
-	fHKEjQaXYRn8/FNPw6YbCbLM9mS5Kdq7+Gy/OSBqc38+uN9JB52NnqEzxeFgi7uex6xAbBDQiIV
-	mykjj7UXF9ydQXcZKXFTGxXnlRb7paxWXsI7feN7rHpclAYyFJD2UKKm7+KPdpyDO1yp50q4Atd
-	W68xWksTva50g65s1cn5L82x2nqbXS/WFEaUSVQCf+FymS/wbZIsM0AsE4
-X-Received: by 2002:ac8:7f0d:0:b0:50b:3be7:afd with SMTP id d75a77b69052e-50ba39fffe4mr97544421cf.65.1774719468311;
-        Sat, 28 Mar 2026 10:37:48 -0700 (PDT)
+        bh=/8SWLbh0z3f3RIAwmimt4X3yZVlmYvxXaXaOJWp14ng=;
+        b=mDc61tz8bTTqckf7vWmUOot/nUoDBKddzobbVFHm0NdrjUriXDF3rPqaIHrnELxo2P
+         dHtQCi7qVLC79wGUtLOSNE1AAWJfwiNFa6WzWon/RMqhdXpm38xXwoCA2zxU2AvxR9vj
+         gjRsAIjX+25/zk45yT4S+rMoyKUJuawC9ZmYQAYkOqClNTJcej5GUWqIoYj1SvVXzt7h
+         Y8AuBQ33bMPrtXnquFZCCcvIxHgthat7n+h1YtRK+NJys2dXIgcVyJNDn0/hFySRc4Ks
+         qf4+dYD27Lnt8CYh2J4+05n7uySXdGYPD9ycIu//LMGNuTTTG9manpF7JeM3e9uqkErZ
+         Xsxw==
+X-Forwarded-Encrypted: i=1; AJvYcCXToKLQxgKtM6DzBjEahrOD4oUTuZd4rCeTytXkzXhnVsf+VW3soLB3lzdXKAftVPhsB8cBU/A=@lists.linux.dev
+X-Gm-Message-State: AOJu0YzITTP1JK63UVC+VedYcnl3lvX5xUn04VUK6aHHO/syUU/7sASo
+	e0yNlnVB2a2XzuiKKTszJ9dww7vspMfJhIz0FsQNJFf9it/FfBoLRVHT
+X-Gm-Gg: ATEYQzxes5X9XoHKLQK/0RekK4c0yhFAEWv/y0I1XGlf+h59/veCTWhmOa2WewbW85B
+	MH0+Uh3w35oa9UojkTgh7Wku+CjyDBj2JFEsiFY0C+gd352nzoEWvm5tf1VVzRcrbC89m0zJxcG
+	HMAsF77v4V86wf1lhY7JeZsBUUSO8ttgXkZYe/8GE64LQ+GFoYMvlnDJcZrgg5VZPLE674XPSfQ
+	VgL82U2v3SzyMPCbmP4wKfehFpEpA5anAKZWLvN31LdCTLs2MQgv17YVi50UAwxrHTFIEKMoAWu
+	ywuL54b34LtI6ww3u6al3khPOsABr6R/WZ0H/UeY7UEttlOqKmUX9oGpJtKCQ3Hji1CZ5883hn4
+	uBKZtDc67f+j8B1QFOgbGDG2RvZBY51lkN6Lbn0sTx3B/Vri5QU+CwFphVZlyqjiUPbf6k5LcIe
+	dwiepr7zV+6ClFDz3Ses2V8rkBtZLRzRrKH1o/K73byTsv3ctyadwMl6B+WbUiInEl2rE=
+X-Received: by 2002:a05:622a:1e1a:b0:50b:37d5:67a4 with SMTP id d75a77b69052e-50ba385b769mr93585621cf.27.1774719470058;
+        Sat, 28 Mar 2026 10:37:50 -0700 (PDT)
 Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2c9c93asm26629641cf.7.2026.03.28.10.37.47
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2c9c93asm26629641cf.7.2026.03.28.10.37.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 10:37:48 -0700 (PDT)
+        Sat, 28 Mar 2026 10:37:49 -0700 (PDT)
 From: Joshua Milas <josh.milas@gmail.com>
 To: tglx@kernel.org,
 	robh@kernel.org,
@@ -84,9 +84,9 @@ Cc: josh.milas@gmail.com,
 	sophgo@lists.linux.dev,
 	hanguidong02@gmail.com,
 	michael.opdenacker@rootcommit.com
-Subject: [PATCH v4 1/5] dt-bindings: soc: sophgo: add Milk-V Duo S board compatibles
-Date: Sat, 28 Mar 2026 13:34:46 -0400
-Message-ID: <20260328173450.219664-2-josh.milas@gmail.com>
+Subject: [PATCH v4 2/5] arm64: dts: sophgo: add initial Milk-V Duo S board support
+Date: Sat, 28 Mar 2026 13:34:47 -0400
+Message-ID: <20260328173450.219664-3-josh.milas@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260328173450.219664-1-josh.milas@gmail.com>
 References: <20260328173450.219664-1-josh.milas@gmail.com>
@@ -98,31 +98,117 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the compatible strings for the Milk-V Duo S board [1]
-which uses the SOPHGO SG2000 SoC.
+Adds initial arm64 support for the Milk-V Duo S board
+[1] making it possible to boot Linux to the command line.
 
 Link: https://milkv.io/duo-s [1]
 
 Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 ---
- Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/sophgo/Makefile           |  1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
+ 2 files changed, 86 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 
-diff --git a/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml b/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
-index 1c502618de51f..0b6fbab48b743 100644
---- a/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
-+++ b/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
-@@ -31,6 +31,10 @@ properties:
-               - milkv,duo-module-01-evb
-           - const: milkv,duo-module-01
-           - const: sophgo,sg2000
-+      - items:
-+          - enum:
-+              - milkv,duo-s
-+          - const: sophgo,sg2000
-       - items:
-           - enum:
-               - sipeed,licheerv-nano-b
+diff --git a/arch/arm64/boot/dts/sophgo/Makefile b/arch/arm64/boot/dts/sophgo/Makefile
+index 94f52cd7d994b..68aace728223a 100644
+--- a/arch/arm64/boot/dts/sophgo/Makefile
++++ b/arch/arm64/boot/dts/sophgo/Makefile
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-module-01-evb.dtb
++dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
+diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+new file mode 100644
+index 0000000000000..4ae44b40f9edb
+--- /dev/null
++++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+@@ -0,0 +1,85 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++
++/dts-v1/;
++
++#include "sg2000.dtsi"
++
++/ {
++	model = "Milk-V Duo S";
++	compatible = "milkv,duo-s", "sophgo,sg2000";
++
++	aliases {
++		i2c4 = &i2c4;
++		mmc0 = &sdhci0;
++		serial0 = &uart0;
++		spi3 = &spi3;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++};
++
++&osc {
++	clock-frequency = <25000000>;
++};
++
++&dmac {
++	status = "okay";
++};
++
++&emmc {
++	bus-width = <4>;
++	no-1-8-v;
++	cap-mmc-hw-reset;
++	no-sd;
++	no-sdio;
++	non-removable;
++	status = "okay";
++};
++
++&gmac0 {
++	status = "okay";
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&mdio {
++	status = "okay";
++};
++
++&saradc {
++	status = "okay";
++};
++
++&sdhci0 {
++	bus-width = <4>;
++	no-1-8-v;
++	disable-wp;
++	status = "okay";
++};
++
++&sdhci1 {
++	bus-width = <4>;
++	cap-sdio-irq;
++	no-mmc;
++	no-sd;
++	non-removable;
++	status = "okay";
++};
++
++&spi3 {
++	status = "okay";
++};
++
++&uart0 {
++	status = "okay";
++};
++
++&usb {
++       dr_mode = "host";
++       status = "okay";
++};
++
 -- 
 2.53.0
 
