@@ -1,218 +1,160 @@
-Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from black.elm.relay.mailchannels.net (black.elm.relay.mailchannels.net [23.83.212.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA673A63FB
-	for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 17:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774719480; cv=none; b=BMvlryskaARkwu8YbECNqVGfM3ZP6mzG3zzH1jw437EyGig3YSHfIyAoLh+LvFEh90rdNt3xb9b/mdLnhcLf3gaSkxbfDguNfIsi6+3+FM24jNsI9OW1wcV6ro/UxJB4VUTcg+Ap6WgSL7ksrGscLswt0ng/9ASofR5tN64slto=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774719480; c=relaxed/simple;
-	bh=iKIxZqfsu+EMIToJywvJpH4PHUmMH3CHONIBEcDeehU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Khda7HvG6WPX7TQ0Yvb3XVuFOydYI7YFRmS/U+ZjvFTbNrwXJdUuYDEOhgT3zlgqnUxp/Rt1396azGQMQXX/X3CCdMKJKcBBCGHqx4NEUKkylXmQKxUCANzrRdfJP0ibAeqIlLpjVulgheDS8Bn9/XNZP+0rBYniXSeu4wyeAio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FC1PG5HI; arc=none smtp.client-ip=209.85.160.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9866C279DB6
+	for <sophgo@lists.linux.dev>; Sun, 29 Mar 2026 20:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774815707; cv=pass; b=D4ZtAeJVZNF2O2bmnMtYwwV3wf6a6UsNmUFBRC9HcKU6HQx6RqW1yIGhagjsAjDzyEG9+QcXtu0KbBuRt9nnbZZu3dEye6hrD81hzV05m0iyqFz5jhr+Jq5moG/ycsVz4C+xqrCrL/yUaMBV7tsVGjcsF6qBMa1f0+7le55cmIk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774815707; c=relaxed/simple;
+	bh=a2KlTregbBCeGLpcEz7X+asDE9hwzE6/fbTCXrJVpkQ=;
+	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
+	 Content-Type:Date; b=SxZXXCzpkqqIka6CyDI9Sge36HIvWhsKmXZOg7Ml68N4e8YaSSmgWopjXhluK8PUG1CQM4zteiphyrjCLNqBNERcfVsw+PWFK4h4MTZSpqQSPRGuy3oS9gXonVsp2Nfslt4nQryY3ikQ9c7IkVPe9nPKKdoFGe2ZTktk+mtbe74=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=Oo38zP0i; arc=pass smtp.client-ip=23.83.212.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FC1PG5HI"
-Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-50b35f3e489so40174211cf.0
-        for <sophgo@lists.linux.dev>; Sat, 28 Mar 2026 10:37:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774719478; x=1775324278; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=agtwMzvvo2u0f9LDYXhcZeX3VFLC8FECckVchUC5F9Y=;
-        b=FC1PG5HIbPz/+qlBp5AU4df/LhrQ3xjXg3+yTiMqMrOUrhqLZ+XE4PKG+4u9+s9atI
-         JrIFpUY3lk9UK/QRCBwf0kfRsc03C+6GlvSiXSX5YDHNgZkspRbvnl53LOXZYSa9am4Q
-         ++4itnxnSesul92cOcuv/BeFdTAfhFpetHKRbZbA+2t+gwud7iL6bNKQcuabYLmlmvQv
-         nBFYHSWNFNEYxLaKzjWD9FTJflxmEjxyB4i74SPeR87+ixGOIWvGsNF6624gq9VE13ho
-         iMtBIgcLM6ZejOTu2JmII5ZbsQMbonBEfnoI5HDzUwKMvSdKYuj3rdXN43qQATssRcG4
-         FZjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774719478; x=1775324278;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=agtwMzvvo2u0f9LDYXhcZeX3VFLC8FECckVchUC5F9Y=;
-        b=NLLkoH7qRZ5AMlMAjR2MFZydoDCovm7kG3FCFazYHw3IyXYx/EsxQaZw4MlQOVR/t/
-         5jea37EHNL3Nw+ArgHiueE8c0jjNMeised7m8nZHD7KvO7XV5WBrYWrvt8ZVQZy//e3D
-         hvbHNFWr2k3v9O7wK13rmyzr+v+kcjCI4/6qZnUQE+3iV+U8vErInX/HU9p+8tM0zqLo
-         JwiuOjfd3P9SfZksDx/u/Q6kXCFt5JnR9GHO/sZT7QBbvG3JEk4rOcyas8Q7855n8vmd
-         zRqsxZcWxHaRYVwhf6O3/MkKPalfjOko42jGbR5qqxfNJ3jnrHOIjGVQlvK/KWlAjM3R
-         92/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUV089BFhGb2o3eWm3GGkTszkb4wy3rRNVkmo+ETSv50teI+QHq2AgWEwvEW0kSYF9VF7Derlk=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yx0192QD6H5/oQGL55BP5aOjEHUEkDbrAcO5b5B4AEdoPMNrC6I
-	fEBSnpUZOsQYnxl/tQMwy9bk96ezx984dyMHqDMKTOHADShJk/k6ac4L
-X-Gm-Gg: ATEYQzz9nM5S80RGhf6+rhrKkvrEtPWxMxnFPMJOVk8+A8PKOg7xwhllWZG6oHxZ2NV
-	xHStScO08kI33ODDJ4bhajXTDX8hWBnJGCUp29Q8Xe7zfXTwA6s6RpTqve86/+9TJM5xHvoE309
-	MQUIhh5bkGgEQVTPdOX9NLp2S8w1vRSHATz+7d86HDSQZZbLg7zUkPz+pWNcsQWIZaTvzw+XHO8
-	SX5GEj/CCuwIhRQxLWf3VrdxakOdd+mbaX7RZQg7Z87bsaxSD/Ss4PQU81m7lBKLJuyzBc9zbDe
-	vPAkv9w9Fm+m9uxmQjlBWI2jSChLfcY+2W7Zv9hIUotEVk7Kk0RYgZOIXtVnrJJN+Poo0XTMO37
-	UDOA8jW7XQzTbP+V/bqNOYk/pSPiO5YjFcFbaciu/c7WtYpnG8RcesN55T6cAupBnDVeU71sM9a
-	HY5cyc8pXMQg7De97uIjvHxuuGiEqGWqoi4SP5tV4qgnUN3KcisgVTCe7H
-X-Received: by 2002:ac8:5e06:0:b0:50b:292d:94e3 with SMTP id d75a77b69052e-50b995b5a1fmr123076451cf.42.1774719478554;
-        Sat, 28 Mar 2026 10:37:58 -0700 (PDT)
-Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2c9c93asm26629641cf.7.2026.03.28.10.37.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 10:37:58 -0700 (PDT)
-From: Joshua Milas <josh.milas@gmail.com>
-To: tglx@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	samuel.holland@sifive.com,
-	unicorn_wang@outlook.com,
-	inochiama@gmail.com,
-	daniel.lezcano@linaro.org,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	liujingqi@lanxincomputing.com,
-	alexander.sverdlin@gmail.com,
-	rabenda.cn@gmail.com,
-	dlan@kernel.org,
-	chao.wei@sophgo.com,
-	anup@brainfault.org
-Cc: josh.milas@gmail.com,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	hanguidong02@gmail.com,
-	michael.opdenacker@rootcommit.com
-Subject: [PATCH v4 5/5] riscv64: dts: sophgo: add initial Milk-V Duo S board support
-Date: Sat, 28 Mar 2026 13:34:50 -0400
-Message-ID: <20260328173450.219664-6-josh.milas@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260328173450.219664-1-josh.milas@gmail.com>
-References: <20260328173450.219664-1-josh.milas@gmail.com>
+	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="Oo38zP0i"
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 065928C1A10;
+	Sun, 29 Mar 2026 20:21:38 +0000 (UTC)
+Received: from de-fra-smtpout7.hostinger.io (trex-green-9.trex.outbound.svc.cluster.local [100.96.234.227])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 754D38C1D5F;
+	Sun, 29 Mar 2026 20:21:33 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1774815697;
+	b=VMwkMmkWwvO97AmeG9NVxJBewLhiskg4s9qLfbfnRnktpeFK6/M9binOCm/z6c/Oc8x0ZF
+	6sMCkHe7OHs5sAQiQ9+PZHJ2T3fD09UwJWm9T6PM1o7q4/rNB6zHU8wLE2kzbVh7JUF8fd
+	JXdADRqPtp7MTQWN64bOuG4kT3j+xriapFf2iKuLGQko7JDTr2cKlqrcCuvhrtTJY3gEY0
+	12hQFKcPRBT950aaPTQgAhGraaRArVuc9OZ/czTcvc2GBYwY8fCqJ3hArPHURV9GbaPVYu
+	z45z3+oAmEiEv6/1qUtmYCASjzfIJi+uB/Ew4ejZNg9TWT6y3tvdG8Uh9RoLeg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1774815697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=GTT+0C4RGESjWdKuh5Sp+1h0pCrJm+O+8LsKG2eiHy4=;
+	b=KpuRlvu+G+z/ihkV1vZgHlu6F1G3PIUNMIlGt820WImTuA8Y4LSfSG/zYk3InMacfM6x14
+	2+KemZ1CjJmSLXBeE6oRsAq3yXVXO6ZrmMsZo53a+f36cn+ilSmzfysxPIFq3mSSbW97Gj
+	wGS7WSGQpudUEOZxjzjwLAREvi9rTncOeIf5Ju8AOPSpHJt9EWquCkxq2OC5HFXudzXFdr
+	rmyQNbAsW9ip2ekK1gVIKgyNNigX1Y+lh8FQbCE+p1do+EGCDXcgSyUuzwlD7YsoIx8bqT
+	nZQNstLlr1wL/W4LhO8CfFyeENT9FAVEHqQJRtWf1wCT8/n7STlJm5DXdcLk3w==
+ARC-Authentication-Results: i=1;
+	rspamd-db964497c-ftdgs;
+	auth=pass smtp.auth=hostingeremail
+ smtp.mailfrom=michael.opdenacker@rootcommit.com
+X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId:
+ hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Reign-Grain: 41a1945735c5026e_1774815697815_1963226876
+X-MC-Loop-Signature: 1774815697815:123364582
+X-MC-Ingress-Time: 1774815697814
+Received: from de-fra-smtpout7.hostinger.io (de-fra-smtpout7.hostinger.io
+ [148.222.55.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.234.227 (trex/7.1.5);
+	Sun, 29 Mar 2026 20:21:37 +0000
+Received: from [IPV6:2001:861:4450:d360:ead3:9cb3:74f3:aa3d] (unknown [IPv6:2001:861:4450:d360:ead3:9cb3:74f3:aa3d])
+	(Authenticated sender: michael.opdenacker@rootcommit.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fkQky3w0Qz3wln;
+	Sun, 29 Mar 2026 20:21:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=hostingermail-a; t=1774815691;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=GTT+0C4RGESjWdKuh5Sp+1h0pCrJm+O+8LsKG2eiHy4=;
+	b=Oo38zP0iAM3Jre4Kk3fV5VwfSRkA3r4MhpQ9v3gvp+hdPPmyTGMvqRbXRo/yJkDjzYFpEG
+	G+ABbKrfDok8JBvtmX3AUjUMD/W/AmJxpg90iC/aZktENTfFSnzrQ3FD9Mb28ljC3cQy/f
+	HZURBmSnKx7ailhnJdzswpsBihGMrj7LLCmEDuxOAu6BS4VPvDf3Jv6syAXvX2XzV3hOV9
+	uLsnj4SX39O7o/1aSO4zElVE6MUmP+HqcV2QNgu15wX9jTbWvHHLStb50/8ly9x64SfVPq
+	o62iKP/M61QECvnBFlQYd4NcngkPGMI08bOW7kAL5QcPtvnrmW8S6fmj92+hLQ==
+Message-ID: <11e7fcc9-c8dd-4bf5-a600-3d130407bb82@rootcommit.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Cc: michael.opdenacker@rootcommit.com, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, hanguidong02@gmail.com
+Subject: Re: [PATCH v4 2/5] arm64: dts: sophgo: add initial Milk-V Duo S board
+ support
+To: Joshua Milas <josh.milas@gmail.com>, tglx@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org,
+ samuel.holland@sifive.com, unicorn_wang@outlook.com, inochiama@gmail.com,
+ daniel.lezcano@linaro.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, liujingqi@lanxincomputing.com, alexander.sverdlin@gmail.com,
+ rabenda.cn@gmail.com, dlan@kernel.org, chao.wei@sophgo.com,
+ anup@brainfault.org
+References: <20260328173450.219664-1-josh.milas@gmail.com>
+ <20260328173450.219664-3-josh.milas@gmail.com>
+Content-Language: en-US
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+In-Reply-To: <20260328173450.219664-3-josh.milas@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Date: Sun, 29 Mar 2026 20:21:30 +0000 (UTC)
+X-CM-Envelope: MS4xfGWBeS4HaIIbYUVeHIpwUThPv/HDm18miWCY/sSEUY2R6jsqziGdG8060qerCh1EaXbzH+5FvijtrYgH93cSQOJiT8QF/edNygNivc587K3POZOMLZe5 Jo4jDnr8ELIErEZAhKsQgMZmLt9YcA1Du9ncDaCihPLvqLwU/9ikhGRxd3BLp1sfmo5pourlDWH2W1RQcd5H3wtb2LM8lhxF/IX2ncRk4gDUO/8LmYDOZ+8z ZXwLIudLGFY8NWcC9Siq7uigjOoUxpodbbka6r1XDqWbpDPDHgaDL2gvr6tpVS56uv6HxjSoUBz4Rljww8zJNI4cCnnUb5w4O/B4dq0s5GMixgov+ZaksS6t YEAHOUSSyAz0fwD/TJuuozxrE6UmrCW7ID3kx/tfw0iJsL9A0FQ8NdhXxzRM8u1lAIS19lznWkBHGYBp4FC3dwQwzWRyWpnjbB3wie/Uup0d+inPmBIPvlh2 NIebAlrVSkotvjjWE6HuItwmkNaYiuI+1ofZMk2YYTRR8Aoi6UnXu2u+FtwjWBfj4Pg8DAvyLgwEhjKayKFHKknOg+UFGeD5FOiKJg3MdtcBl7SMVuoZ02Bz b+k/9eYWhmZfa9t7r6fvGKcTGuw4lWz8+xmkka3must0aQJAjxQS5xEvMfUO89TvmwAk3qo4rnH0zX2KHV40kriZd9Oz/VhgYj5R8MkMuUNGiFnjnQ2U4jP1 8zamUfqnhawddvFCDSAbA3DYTIUW+D4KbRr6BoH3Jy+WyAl2Y3jRmU0t7tQxiie3DdVPJr8qjPNQMalFM4T1Lf+GG6sVG8x7w2s3l1VTsq+LnZxEAUipGfjG I/2zjfwP4exSP4F6ISbnHNeysMGWD3FKtSPb4mIUxWM7G/1p21knhYMpsLU5vdsTDooXHdbHWIedYZ2xcdNTujn30Pu5dWO/+WlSrmNAdqUlZUtlNSPxwrCY b3rDFghcXj9wCqh
+ Ov+Kg7SJWr1n7G6AocPbpdMwAu7BQbJzJ0LkCUBTAhLEc6UWN3/dDsO07LWHrH9CuAvyrbloNmS5O8LCscj/3wCIwzoyOVr/FRZ1010tw FbeOBfof1DnDRuI1M/okZhV+kyA6llCO8bHiGJmew3/vIADKZPqklb/A
+X-CM-Analysis: v=2.4 cv=etGNzZpX c=1 sm=1 tr=0 ts=69c989cb a=FriOl7xEJMI/2lIB2BrE0g==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=YzZgpwwcAAAA:8 a=d70CFdQeAAAA:8 a=pGLkceISAAAA:8 a=-n5Tolqylb7eT0ueGtgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=diELbSsDbaqdzccPbx55:22 a=NcxpMcIZDGm-g932nG_k:22
+X-AuthUser: michael.opdenacker@rootcommit.com
 
-This adds initial riscv support for the Milk-V Duo S board
-[1] making it possible to boot Linux to the command line.
+Hi Joshua
 
-Link: https://milkv.io/duo-s [1]
+Thanks a lot for this new update!
 
-Signed-off-by: Joshua Milas <josh.milas@gmail.com>
----
- arch/riscv/boot/dts/sophgo/Makefile           |  1 +
- .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
- 2 files changed, 86 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+On 3/28/26 6:34 PM, Joshua Milas wrote:
+> Adds initial arm64 support for the Milk-V Duo S board
+> [1] making it possible to boot Linux to the command line.
+>
+> Link: https://milkv.io/duo-s [1]
+>
+> Signed-off-by: Joshua Milas <josh.milas@gmail.com>
+...
+> diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+> new file mode 100644
+> index 0000000000000..4ae44b40f9edb
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+...
+> +
+> +&usb {
+> +       dr_mode = "host";
+> +       status = "okay";
+> +};
 
-diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-index 6f65526d4193b..58cc6b70d8de4 100644
---- a/arch/riscv/boot/dts/sophgo/Makefile
-+++ b/arch/riscv/boot/dts/sophgo/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
-diff --git a/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-new file mode 100644
-index 0000000000000..4ae44b40f9edb
---- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-@@ -0,0 +1,85 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+
-+/dts-v1/;
-+
-+#include "sg2000.dtsi"
-+
-+/ {
-+	model = "Milk-V Duo S";
-+	compatible = "milkv,duo-s", "sophgo,sg2000";
-+
-+	aliases {
-+		i2c4 = &i2c4;
-+		mmc0 = &sdhci0;
-+		serial0 = &uart0;
-+		spi3 = &spi3;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&osc {
-+	clock-frequency = <25000000>;
-+};
-+
-+&dmac {
-+	status = "okay";
-+};
-+
-+&emmc {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	cap-mmc-hw-reset;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
-+	status = "okay";
-+};
-+
-+&gmac0 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+};
-+
-+&saradc {
-+	status = "okay";
-+};
-+
-+&sdhci0 {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	disable-wp;
-+	status = "okay";
-+};
-+
-+&sdhci1 {
-+	bus-width = <4>;
-+	cap-sdio-irq;
-+	no-mmc;
-+	no-sd;
-+	non-removable;
-+	status = "okay";
-+};
-+
-+&spi3 {
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	status = "okay";
-+};
-+
-+&usb {
-+       dr_mode = "host";
-+       status = "okay";
-+};
-+
+
+You have a small checkpatch.pl issue here:
+
+./scripts/checkpatch.pl *.patch
+...
+WARNING: please, no spaces at the start of a line
+#120: FILE: arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts:82:
++       dr_mode = "host";$
+
+WARNING: please, no spaces at the start of a line
+#121: FILE: arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts:83:
++       status = "okay";$
+
+Replace the spaces by a tab as in the other entries in the DTS and you 
+should be fine.
+Thanks again
+Cheers
+Michael.
+
 -- 
-2.53.0
+Root Commit
+Embedded Linux Training and Consulting
+https://rootcommit.com
 
