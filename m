@@ -1,138 +1,85 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mailout1.hostsharing.net (mailout1.hostsharing.net [83.223.95.204])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9211448D5;
-	Tue, 31 Mar 2026 17:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36937317158
+	for <sophgo@lists.linux.dev>; Tue, 31 Mar 2026 18:58:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.95.204
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774979863; cv=none; b=QwTYj52ZkvZ3pHarR3z9mp6ucR8Yes2Yf1SqpcTYRrEANXLt8Uopg/5nkJTWAPHVTnbciQMNJb2jVnsLmnM0sYifiOD2fY6jGGccabEcp/lkH5D298b/kiAbtpTnWe4H+IOMVK5CF/zuNNLJcQb8sYzDwcWsGH8g6dqlWIMi2bQ=
+	t=1774983494; cv=none; b=ZwyD9RUSYEibj/rjAgD2Q9ryMbWlOwDGwzRUqnf+E4zezY6YGZ2IDlKyjJySAbt5c+poM03MZe28kI1/uniTKILpN8IbAB+M7KJHeBeKUrlBSmNnOAiPwnXVLTVeLT0NeT+93JLxo7ulmswKcuyAODXWQW0ptVDUV3cYUmZngWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774979863; c=relaxed/simple;
-	bh=jRshRvrfE1K59jC2hI9BuHoXj8it76oESI+BdTN4Kgc=;
+	s=arc-20240116; t=1774983494; c=relaxed/simple;
+	bh=R9tENQJj5RpB7yiX+vDr+ilXcYesSJp5Vks3izvT3Hw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OqIUjx+Qii8JXHm4KmXSVhP7Yd5i/B6lP0R4NZqWPRhEJF98tow2tczNiPzzRXkkh4IuhY1MDRoeYeKvWraoHniig6I96nZiX6lTX4CRb4MMJNXfphmiveirigyE0I08d+45+B4TqbZOgiF7tlJGFMXA2N4XDBZoQCPXuxoZvZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pRSW3mjQ; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pRSW3mjQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3D1C19423;
-	Tue, 31 Mar 2026 17:57:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774979863;
-	bh=jRshRvrfE1K59jC2hI9BuHoXj8it76oESI+BdTN4Kgc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pRSW3mjQ48Dt/YlOJZnRKmYJu7Y2M4fgwblouezDaGCDM0um5+fik1vNIg59W0cXj
-	 0cZvXUClUM4+UNePXX4WB0SJFTDN8iEHo9f56aJmOlDiOql3qGRKcRcMvN/mAiQOBZ
-	 VaeXT05O0+C63Whi7bzNO0ZHVmRr2euuM7MUrrStZPJd64SaT0OxUec/z+YugZWkVA
-	 77YgXyRYuSHmOf3M/WdQjfZG3fc0voAk9b1MBaMWAHYYMx8EFUO+P7800CuoUx7bkj
-	 JJ7anQ/lJlIEO6+6J8f9y9IQfLGjiF7jGcUDogoN0t6y8G+pDwaohQ0l7Xw8PAiFt6
-	 LvER2PUbeI4ug==
-Date: Tue, 31 Mar 2026 18:57:37 +0100
-From: Conor Dooley <conor@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ki7BnU05Dl0m9uKsHxAxhNaVs2DK01DmcME9oRlM5cc+MKtPj6yFCieX6Prxb/GlsoWR1umrwPaPJREPx9VZpELdQ64PtUbVewjRaiTQkkONfEC69lqMQ1JS8iK3UzsgnCYcCyui/FPy8bPA6vT9FGQtrBONWk29q81RLw8s4xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=pass smtp.mailfrom=wunner.de; arc=none smtp.client-ip=83.223.95.204
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
+Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
+	 client-signature ECDSA (secp384r1) client-digest SHA384)
+	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
+	by mailout1.hostsharing.net (Postfix) with ESMTPS id 28B51361;
+	Tue, 31 Mar 2026 20:58:03 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 16AC560293F2; Tue, 31 Mar 2026 20:58:03 +0200 (CEST)
+Date: Tue, 31 Mar 2026 20:58:03 +0200
+From: Lukas Wunner <lukas@wunner.de>
 To: Han Gao <gaohan@iscas.ac.cn>
 Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
-	Zixian Zeng <sycamoremoon376@gmail.com>, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	Han Gao <rabenda.cn@gmail.com>, stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] riscv: dts: sophgo: Add dma-coherent to SG2042 PCIe
- controllers
-Message-ID: <20260331-outlet-molehill-939c0daacd06@spud>
-References: <20260331171248.973014-1-gaohan@iscas.ac.cn>
- <20260331171248.973014-3-gaohan@iscas.ac.cn>
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kees Cook <kees@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
+	Manivannan Sadhasivam <mani@kernel.org>, linux-pci@vger.kernel.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org, Han Gao <rabenda.cn@gmail.com>,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH 0/2] PCI: Allow disabling port services on broken root
+ ports
+Message-ID: <acwZOxbEJoAJrvGb@wunner.de>
+References: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="m8oXAjQqyBqcuv3C"
-Content-Disposition: inline
-In-Reply-To: <20260331171248.973014-3-gaohan@iscas.ac.cn>
-
-
---m8oXAjQqyBqcuv3C
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
 
-On Wed, Apr 01, 2026 at 01:12:48AM +0800, Han Gao wrote:
-> SG2042's PCIe root complexes are cache-coherent with the CPU. Mark all
-> four PCIe controller nodes (pcie_rc0 through pcie_rc3) as dma-coherent
-> so the kernel uses coherent DMA mappings instead of non-coherent bounce
-> buffering.
+On Wed, Apr 01, 2026 at 01:56:56AM +0800, Han Gao wrote:
+> SG2042's PCIe root ports only support MSI, not MSI-X. The MSI
+> controller provides only 32 vectors shared across all devices behind
+> each root port. When native port services claim vectors from this
+> limited pool, downstream devices are starved of interrupts, resulting
+> in zero interrupts delivered and driver timeouts (e.g. amdgpu fence
+> fallback timer expired on all rings).
 
-Worth pointing out I guess that this property is needed, despite riscv
-being coherent by default, because the whole bus is marked
-dma-noncoherent.
+Have you considered setting the pci_dev::no_msi flag on the Root Ports
+to force them to use INTx interrupts instead of MSI?  That would seem
+like a cleaner solution.  There are already several devices for which
+the flag is set in drivers/pci/quirks.c, see quirk_no_msi().
 
->=20
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
-> ---
->  arch/riscv/boot/dts/sophgo/sg2042.dtsi | 4 ++++
->  1 file changed, 4 insertions(+)
->=20
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts=
-/sophgo/sg2042.dtsi
-> index 9fddf3f0b3b9..3af770549742 100644
-> --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> @@ -417,6 +417,7 @@ pcie_rc0: pcie@7060000000 {
->  			vendor-id =3D <0x1f1c>;
->  			device-id =3D <0x2042>;
->  			cdns,no-bar-match-nbits =3D <48>;
-> +			dma-coherent;
->  			msi-parent =3D <&msi>;
->  			status =3D "disabled";
->  		};
-> @@ -439,6 +440,7 @@ pcie_rc1: pcie@7060800000 {
->  			vendor-id =3D <0x1f1c>;
->  			device-id =3D <0x2042>;
->  			cdns,no-bar-match-nbits =3D <48>;
-> +			dma-coherent;
->  			msi-parent =3D <&msi>;
->  			status =3D "disabled";
->  		};
-> @@ -461,6 +463,7 @@ pcie_rc2: pcie@7062000000 {
->  			vendor-id =3D <0x1f1c>;
->  			device-id =3D <0x2042>;
->  			cdns,no-bar-match-nbits =3D <48>;
-> +			dma-coherent;
->  			msi-parent =3D <&msi>;
->  			status =3D "disabled";
->  		};
-> @@ -483,6 +486,7 @@ pcie_rc3: pcie@7062800000 {
->  			vendor-id =3D <0x1f1c>;
->  			device-id =3D <0x2042>;
->  			cdns,no-bar-match-nbits =3D <48>;
-> +			dma-coherent;
->  			msi-parent =3D <&msi>;
->  			status =3D "disabled";
->  		};
-> --=20
-> 2.47.3
->=20
+> Some PCIe root ports break MSI delivery to downstream devices when
+> native port services (AER, PME, bwctrl, etc.) are active. The existing
+> pcie_ports=compat kernel parameter works around this globally, but
+> affects all ports on the system.
+> 
+> This series adds a per-device mechanism to skip port service probing:
+>   1. Introduce PCI_DEV_FLAGS_NO_PORT_SERVICES flag and wire it into
+>      the PCIe port driver
+>   2. Apply it via quirk to Sophgo SG2042 root ports [1f1c:2042], which
+>      fail to deliver MSI interrupts when port services are enabled
 
---m8oXAjQqyBqcuv3C
-Content-Type: application/pgp-signature; name="signature.asc"
+I think we should try to minimize such workarounds or at least make them
+as non-intrusive as possible, so please try the no_msi approach instead.
 
------BEGIN PGP SIGNATURE-----
+I also don't see why the stable designation is needed TBH.
 
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCacwLDgAKCRB4tDGHoIJi
-0rArAP4jBTmKxYWxfFJLKueDpo+mSl4SPqf6k8s8stuypnj0hgD+KEB3KaSC2+G8
-0eWLoouJWr9QngLJgCKU1PJoXs9bvA8=
-=eHvS
------END PGP SIGNATURE-----
+Thanks,
 
---m8oXAjQqyBqcuv3C--
+Lukas
