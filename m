@@ -1,142 +1,106 @@
-Received: from sienna.cherry.relay.mailchannels.net (sienna.cherry.relay.mailchannels.net [23.83.223.165])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88040277CA4
-	for <sophgo@lists.linux.dev>; Sun, 29 Mar 2026 21:23:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.165
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774819391; cv=pass; b=RKQUsajVyubI5S3fTJhlQjQT+dGOz+tzRSN4ldzkDXjekzjFPKNZcorTlI+urHEtiIzHi9HuFHnoJ2heqX4TJUyyopguSLDeamI+AXoDLWv512o0YZ8pVxRPrajFwnXb4FMejhXcyQxt3GFKrWzn0HNFyPwrL+06V3iQaVfDPoU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774819391; c=relaxed/simple;
-	bh=MDG4cFtsxlmAjgKEt5ALjJ5lerZgdpeHxsV/4CxwXaE=;
-	h=Message-ID:MIME-Version:Cc:Subject:To:References:From:In-Reply-To:
-	 Content-Type:Date; b=XfRyWXDnS+r7i2DnVxel10aRMuA1mkDqSoXLiQl5hE268K4JHdII2GzH+0stnYtcE5hmAtsspK/lQlQkYCSYr/LP94PWSSGmC4B9wBR0NuFNC3OFgmiGrg94Tr7je//qAqyeb+p4S6d0lv3/2+tHwejSmaZKjaJUAAxuYIKpyyI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=MIvHivuf; arc=pass smtp.client-ip=23.83.223.165
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="MIvHivuf"
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id F31EA782031;
-	Sun, 29 Mar 2026 21:14:12 +0000 (UTC)
-Received: from fr-int-smtpout28.hostinger.io (100-115-142-207.trex-nlb.outbound.svc.cluster.local [100.115.142.207])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 42666781D73;
-	Sun, 29 Mar 2026 21:14:08 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1774818852;
-	b=qnCrhcIGC8Lw81es3X+Wo+kvDxv2wQfsdScN7joLVtPMURpTVd4w+JTuYfy0cUo/OsIJq4
-	I1Uvat/CgzppGnpkKbDkmbSBefardULMLWzIO5oa5MVYksCnLZrYOXh08CEiGJkgmEHfN7
-	uPXKmIXuiwbcPFyR6Z8juDQicr5PO0SWD/gKbFBb/doqDTwbu9DqD1QFQXGIcrSugm+0qD
-	F2OnM2mf36va2SU7qOFKGKH77Py7VHOV0T9ESHFkZIWgXW84/tL/IXYIlzEmjIYs8EMqf7
-	O9r/uTbURlwJWEqF+IieFc1xv5imApyv/4njfuz9QlOOTWbGHzv1DwdY76NGcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1774818852;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=GPwev3K04le/fHrBvu2yHCNEOwAhRmNyY8V1pFhjEoo=;
-	b=ygZByoOuzD5iRzC4DFC0PxG0HF52mMxfISsaPS+AQIHF61Nq38tw8hSrlYFiiRwi/Bbs4J
-	ZXYYrRGn6ako9BO+E+4Af8ZXB5GeDUfkmgw7LO6ApHFkLj/44m82B/trYROXX2ul9Gx06k
-	fh1KT5nQwUk4H9Po65DGoHOwHJlDJJR8u56XM/R+V38J2WV38Qloi1pgZVA07e+MzJFQB5
-	Vi/QEtzxU7AFx2Der9uOeWhCIg8nhKKUsjSrJ6nphAmJBhYutTPssKFGUtZ+ayLoS8hGAz
-	w8qPvr4QYVD4ZanfrrQ/bFTeJCT458gVbT8aPSDZlMlPXtllB1Dn+FXel4EQcQ==
-ARC-Authentication-Results: i=1;
-	rspamd-7f98bb5847-x7clm;
-	auth=pass smtp.auth=hostingeremail
- smtp.mailfrom=michael.opdenacker@rootcommit.com
-X-Sender-Id: hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId:
- hostingeremail|x-authuser|michael.opdenacker@rootcommit.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Tangy-Name: 5fc9a91b1ddbd4a3_1774818852818_3566261675
-X-MC-Loop-Signature: 1774818852818:96200595
-X-MC-Ingress-Time: 1774818852817
-Received: from fr-int-smtpout28.hostinger.io (fr-int-smtpout28.hostinger.io
- [148.222.54.10])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.115.142.207 (trex/7.1.5);
-	Sun, 29 Mar 2026 21:14:12 +0000
-Received: from [IPV6:2001:861:4450:d360:ead3:9cb3:74f3:aa3d] (unknown [IPv6:2001:861:4450:d360:ead3:9cb3:74f3:aa3d])
-	(Authenticated sender: michael.opdenacker@rootcommit.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fkRvc2bSzz31wB;
-	Sun, 29 Mar 2026 21:14:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
-	s=hostingermail-a; t=1774818846;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GPwev3K04le/fHrBvu2yHCNEOwAhRmNyY8V1pFhjEoo=;
-	b=MIvHivufLuO/Idc+f58AgoELDrebw2pLnpMxVkjtlioz1P1MEpgFvWZc8OrvD6hWHo17fC
-	CvedMmz9sedDWDtknApc9OVGHytX+/jGzd+vVTlTeykX4q8+T/qNUuMo7VyPavnUxU+m7B
-	cWw0jiKZHIzlMrcJOlCnfHX+hsDsprFtTpzZIZ6rnSMw7lnRYizpFV/cuAczwixCGOZWEn
-	2h3FkuAnyTIbvxiAvdgq68x6WVkVaLbWUujACT2CI2cbz9rbO1HSHfpI0Jjazc9tVypGFD
-	zdk2SmOEAb5ldERy3HwYS4Tn2ldWo0qj75Lcy6frAhsEcVh0x47y02f081u2Ew==
-Message-ID: <88400fa8-4545-49eb-af04-d82b94a89757@rootcommit.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16783168FB
+	for <sophgo@lists.linux.dev>; Tue, 31 Mar 2026 17:13:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774977182; cv=none; b=QYRfcQ64DXnawWDcnfXdJJcm2T0n6viDVUU60CHlYiImKjxXvAWqAEdjuDuBvUl6lWJ3Thc/1C5+eSe/R79Hmk6kT8aGJyuO5LvxpHyKOA1v75dQhodLxsw3qqwtdXEBEK6ZabwGxwQxy0qXV6vqqTx2QTIvbgxa7u252Mt+IVs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774977182; c=relaxed/simple;
+	bh=0pCEVgH7hlMCDs8dFYJ4JjgPyGAP2s1IYvC/6S6vRnw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=pHg6y/QXD8GZNK10PZLlwSXrDS4ed1veNCIDDcVq/F7t6cSqlAQvZ+y1KqCAVnYo7s1sTiiN27aRKzESutWWMlFTSxNOzJSJD6UJN0SfYg3CuoJ07EnD7VL9ZTi9WVT82RgfXuABazMi0pfGtWHpFJ2NtnJQ7PkKgpmivv9xc/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [223.166.95.230])
+	by APP-03 (Coremail) with SMTP id rQCowABnhdyRAMxpydRzDA--.42156S3;
+	Wed, 01 Apr 2026 01:12:51 +0800 (CST)
+From: Han Gao <gaohan@iscas.ac.cn>
+To: Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Han Gao <gaohan@iscas.ac.cn>,
+	Zixian Zeng <sycamoremoon376@gmail.com>
+Cc: linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	Han Gao <rabenda.cn@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: pci: sophgo: Add dma-coherent property for SG2042
+Date: Wed,  1 Apr 2026 01:12:47 +0800
+Message-ID: <20260331171248.973014-2-gaohan@iscas.ac.cn>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260331171248.973014-1-gaohan@iscas.ac.cn>
+References: <20260331171248.973014-1-gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: michael.opdenacker@rootcommit.com, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
- sophgo@lists.linux.dev, hanguidong02@gmail.com
-Subject: Re: [PATCH v4 0/5] Add initial Milk-V Duo S board support
-To: Joshua Milas <josh.milas@gmail.com>, tglx@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org,
- samuel.holland@sifive.com, unicorn_wang@outlook.com, inochiama@gmail.com,
- daniel.lezcano@linaro.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
- alex@ghiti.fr, liujingqi@lanxincomputing.com, alexander.sverdlin@gmail.com,
- rabenda.cn@gmail.com, dlan@kernel.org, chao.wei@sophgo.com,
- anup@brainfault.org
-References: <20260328173450.219664-1-josh.milas@gmail.com>
-Content-Language: en-US
-From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
-In-Reply-To: <20260328173450.219664-1-josh.milas@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Date: Sun, 29 Mar 2026 21:14:04 +0000 (UTC)
-X-CM-Envelope: MS4xfL+Wo5DZjOaBh49EOaUutWGaQu0lfXl+Z/8jRHf+IPP3+63ghIrH7OqQdC2VYsijHziR+tcK+Fi1VVOgC0vCsbzGP0mMgWaUBlCjsRkEgdRDbugXMH97 e0NaTIN+ek9iOxYqUpxFz6fvHUE5pzFz0XSLc5BD+8uUWPLJZv8+0N+rlVwIKbU/HCoJpV07VrDOh4xnmjuMGxpgTjx26GUHQ92gYmzhJwO7/i1y3wcKXcen 1p8kAkbK42lU+pWFwE9vUZX88P3QW4EcgIjAUY4BuGyVzJTkS7zIMJ/2WtOtqhol31soyggtrpuJ3ksvhbzLpBKveuL0tHUXwD9B1541L3MMZrYX7ikQkTVm 7Vfmxd8nM11a0BidocThOXEIBR5XjrNOJ45TaGFWur42KoQyjo+MNXK82azp2se9UC5sqwoLp/Y84syPMXjcO2CTQlSVyUDlthsf3E3L8q0OGC6T3pFX9KKp iOokDHJ49XRKdryBioFP0n+VL1Co9JwLCcoyVw+LsniIKxXq3Yw+vARHuIuiPNimxQSLUCKdFLoQxXfyY6GkLRVn1KXUxpzTwUV1MAlm8V18YoXNBRAr0K1L WjuloXGE/xaXCgqwMvyvD9CfbhU40VRaZL1oVMtx0NgJ3X9xFJ0GSPzSVuucfxZ0Lnc/R71BHxN+GqyZ0YJAyixE1fICBJw7oa8ul8cdHkoFd2idI8ZgNjtq CmvHW4chMrzUeJED+K6ku1YJ3tdhbkEBW6SGR/XgHyPOrgYenIIks035wTVRBXtEPB1DqL98Pwa/qIH9A6k5qqocym9aKWPXDHCZOclRYMyGAsv7M6ij7t0m wlrG3jdarmBFxQmPfkv8+y6ZBz3nYxVVV2yBR/8NMC7XNKuHJIyDVc7J4oFCEtKvddop5KMHVEsUsvuUlyYJIP8BcXVLHMs2OHvMgkwGA9vji5X+9c0jQooj p6GfC+d5BUYuqkf
- TAaMtDpTmvuw+rFA2yLFOWCVVzr9XiVBkYuAGk8ye988dsSCbcnxk5D+E4lBn98mmYyqDJyBPOXo2TxS06AgJX/yL1hCwDKBU0h6am5lK qyNnSVw3TOtpDE/V/suLaPkP2brrmu8qs9ATKNB5+IGAsgJZ/KVT3Ztb
-X-CM-Analysis: v=2.4 cv=UN2PHzfy c=1 sm=1 tr=0 ts=69c9961e a=FriOl7xEJMI/2lIB2BrE0g==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=d70CFdQeAAAA:8 a=8WpGhjpvk0lN6TuUIIYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=NcxpMcIZDGm-g932nG_k:22
-X-AuthUser: michael.opdenacker@rootcommit.com
+X-CM-TRANSID:rQCowABnhdyRAMxpydRzDA--.42156S3
+X-Coremail-Antispam: 1UD129KBjvdXoWrKr17Wr17XFW8Gw1UJr1rtFb_yoWfKwb_W3
+	WfAF4kZrs8ArWYgrn0yw48GFW5Zw42vryDCw15Ka1F934IqrWDKa4kJas8AF17Grs8uFyf
+	uwn3ZrykuwsrWjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUbQAFF20E14v26rWj6s0DM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28IrcIa0xkI8VA2jI8067AKxVWUGwA2048vs2IY02
+	0Ec7CjxVAFwI0_Xr0E3s1l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xv
+	wVC0I7IYx2IY67AKxVWUCVW8JwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwA2z4
+	x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr1j6F4UJwAS
+	0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2
+	IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0
+	Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628vn2kIc2
+	xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCF54CYxVCY1x0262kKe7AK
+	xVW8ZVWrXwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I
+	0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAI
+	cVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcV
+	CF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIE
+	c7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjTRMfOzDUUUU
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBg0DDGnL4ih7xQABsT
 
-Hi Joshua
+Add dma-coherent as an allowed property in the SG2042 PCIe host
+controller binding. SG2042's PCIe root complexes are cache-coherent
+with the CPU.
 
-On 3/28/26 6:34 PM, Joshua Milas wrote:
-> This adds an initial device tree for the Milk-V Duo S board
-> with support for reading from the SD card and network over
-> Ethernet. This is continued work from Michael Opdenacker's
-> v6 series [1] on the ARM64 and RISCV side. It has been tested
-> with ARM64 and RISCV64 to boot from an SD card, have networking,
-> and read I2C slave devices over i2c4.
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+ .../devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml       | 3 +++
+ 1 file changed, 3 insertions(+)
 
-I could test successfully on RISC-V, booting from MMC on a command line 
-shell, and testing i2c4. However, I have an issue with Ethernet. When I 
-add "ip=172.24.0.2" (for example) to the kernel command line, I'm 
-getting this:
-
-[    2.586984] stmmaceth 4070000.ethernet eth0: Register 
-MEM_TYPE_PAGE_POOL RxQ-0
-[    2.596428] stmmaceth 4070000.ethernet eth0: cannot attach to PHY 
-(error: -ENODEV)
-[    2.627351] IP-Config: Failed to open eth0
-[    2.631859] IP-Config: No network devices available
-
-However, "eth0" appears in the list of networking devices.
-Does this work on your side?
-Cheers
-Michael.
-
+diff --git a/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml b/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
+index f8b7ca57fff1..ab482488b047 100644
+--- a/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
++++ b/Documentation/devicetree/bindings/pci/sophgo,sg2042-pcie-host.yaml
+@@ -30,6 +30,8 @@ properties:
+   device-id:
+     const: 0x2042
+ 
++  dma-coherent: true
++
+   msi-parent: true
+ 
+ allOf:
+@@ -60,5 +62,6 @@ examples:
+       vendor-id = <0x1f1c>;
+       device-id = <0x2042>;
+       cdns,no-bar-match-nbits = <48>;
++      dma-coherent;
+       msi-parent = <&msi>;
+     };
 -- 
-Root Commit
-Embedded Linux Training and Consulting
-https://rootcommit.com
+2.47.3
 
