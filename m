@@ -1,51 +1,44 @@
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
 	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BBD31B80E
-	for <sophgo@lists.linux.dev>; Tue, 31 Mar 2026 17:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA491448D5
+	for <sophgo@lists.linux.dev>; Tue, 31 Mar 2026 17:57:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774977183; cv=none; b=dGKJFQLW8pJv2P4mpEweED949izhtPWTkZjJYgtOSC1AhpJWl0gp1Jc1kjjngik4Cy8WZlQEgVNDqwZqgcij9ZSi+pUmKFwRohFeC7OUF8ezmG7PygYD2HnBBamvxqbSrCd4TMmudeahwph6/BpIF3FPsEyOxXRJbL7RQxGiIEs=
+	t=1774979838; cv=none; b=MPBJc3LHHBUKNqC/sB4v5+DbLXfg1aXqW0OoObDLc183G7kgIQPfEOcJi7NnTsKV2RTVAIGOLZTNb+SmcSMTEEd5lRaxsWwNMh4B4/ywYUDXUHIU6WOJeeHJUOd2gUBtuZjIOyLJlw310YGU1nMtkcpvcxMZWpQ116F6LbuImhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774977183; c=relaxed/simple;
-	bh=LjAqqBgNW2sWmyeSHjj7o/HH2Z1LXM/vDtlzhXMFot8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fl5EfLK6+5WVUawJs4O0Nvl0yfVMhX/rjEWrun2QlHKIAfL+VFUtRfxC8Lh2xEp3UxJ2PuvNh5K+F1ytA1Iq/zqqCvx7PGMN1VCQ+VecEtyTyzUkGtDbAV3DYOFZguZQszxkce0rYhs8VniNUkQidjNk22WCS+FosvZNsVj5J94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
+	s=arc-20240116; t=1774979838; c=relaxed/simple;
+	bh=zOv/9RphY8o5rG3kxKtLeEGTPsN0fRlOfNUMTN4h4F8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Q76UILTD3Y9TNqWE0I7JAtnbhHF5PwQzUEsDCRYrqPblZio+r+EdkiuOvGocjGN/nZrsCXHims1M9GRVuGQx7B3bnZYBPGek/P8k8zwgAlj7EnY1u7AoO6/oV0pjeJIJApqxLEesvsVQGOssJHGaPZBKJYa2eWjucl1nEdXsxk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
 Received: from localhost.localdomain (unknown [223.166.95.230])
-	by APP-03 (Coremail) with SMTP id rQCowABnhdyRAMxpydRzDA--.42156S4;
-	Wed, 01 Apr 2026 01:12:52 +0800 (CST)
+	by APP-01 (Coremail) with SMTP id qwCowABH8GvrCsxpCP3GCw--.20050S2;
+	Wed, 01 Apr 2026 01:57:00 +0800 (CST)
 From: Han Gao <gaohan@iscas.ac.cn>
 To: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Kees Cook <kees@kernel.org>,
 	Han Gao <gaohan@iscas.ac.cn>,
-	Zixian Zeng <sycamoremoon376@gmail.com>
+	Chen Wang <unicorn_wang@outlook.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
 Cc: linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Han Gao <rabenda.cn@gmail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH 2/2] riscv: dts: sophgo: Add dma-coherent to SG2042 PCIe controllers
-Date: Wed,  1 Apr 2026 01:12:48 +0800
-Message-ID: <20260331171248.973014-3-gaohan@iscas.ac.cn>
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Vivian Wang <wangruikang@iscas.ac.cn>,
+	Yao Zi <me@ziyao.cc>
+Subject: [PATCH 0/2] PCI: Allow disabling port services on broken root ports
+Date: Wed,  1 Apr 2026 01:56:56 +0800
+Message-ID: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260331171248.973014-1-gaohan@iscas.ac.cn>
-References: <20260331171248.973014-1-gaohan@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -53,73 +46,53 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowABnhdyRAMxpydRzDA--.42156S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7WrWrJFyxZFWkXry7tFyftFb_yoW8Gw45pr
-	srCF45KFyxXrZYv3W7GFy0gr43JFZYkasxKrnYk3W8W3yYvryUXrn3Aw1Ig3WDGr4jq343
-	WFs8tFyrKF1qy3DanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUQC14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
-	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
-	Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
-	8EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr0_Cr1U
-	M2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjx
-	v20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1l
-	F7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxan2
-	IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxAqzxv26xkF7I0En4kS
-	14v26r4a6rW5MxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2
-	IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI
-	42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIx
-	AIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2
-	jsIEc7CjxVAFwI0_Gr1j6F4UJbIYCTnIWIevJa73UjIFyTuYvjTRNiSHDUUUU
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBg0DDGnL4ih7zAAAsb
+X-CM-TRANSID:qwCowABH8GvrCsxpCP3GCw--.20050S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7JryxXF1ktFykZF18tF4DCFg_yoW8JryfpF
+	WrWF9YyrWfKryUKwsrX3WUCFy3WF4kAryrC34DGw47urW3AryrXF9rtF93tFsrGr4xAa4Y
+	vr95C3W5uFyDZFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9214x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AKxVW8Jr
+	0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj
+	6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr
+	0_Gr1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E
+	8cxan2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFV
+	Cjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWl
+	x4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r
+	1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_
+	JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8Jr0_Cr1UYx
+	BIdaVFxhVjvjDU0xZFpf9x0pRHUDLUUUUU=
+X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiBwkDDGnL4t55SwABss
 
-SG2042's PCIe root complexes are cache-coherent with the CPU. Mark all
-four PCIe controller nodes (pcie_rc0 through pcie_rc3) as dma-coherent
-so the kernel uses coherent DMA mappings instead of non-coherent bounce
-buffering.
+Some PCIe root ports break MSI delivery to downstream devices when
+native port services (AER, PME, bwctrl, etc.) are active. The existing
+pcie_ports=compat kernel parameter works around this globally, but
+affects all ports on the system.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- arch/riscv/boot/dts/sophgo/sg2042.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+This series adds a per-device mechanism to skip port service probing:
+  1. Introduce PCI_DEV_FLAGS_NO_PORT_SERVICES flag and wire it into
+     the PCIe port driver
+  2. Apply it via quirk to Sophgo SG2042 root ports [1f1c:2042], which
+     fail to deliver MSI interrupts when port services are enabled
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index 9fddf3f0b3b9..3af770549742 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-@@ -417,6 +417,7 @@ pcie_rc0: pcie@7060000000 {
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -439,6 +440,7 @@ pcie_rc1: pcie@7060800000 {
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -461,6 +463,7 @@ pcie_rc2: pcie@7062000000 {
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
-@@ -483,6 +486,7 @@ pcie_rc3: pcie@7062800000 {
- 			vendor-id = <0x1f1c>;
- 			device-id = <0x2042>;
- 			cdns,no-bar-match-nbits = <48>;
-+			dma-coherent;
- 			msi-parent = <&msi>;
- 			status = "disabled";
- 		};
+SG2042's PCIe root ports only support MSI, not MSI-X. The MSI
+controller provides only 32 vectors shared across all devices behind
+each root port. When native port services claim vectors from this
+limited pool, downstream devices are starved of interrupts, resulting
+in zero interrupts delivered and driver timeouts (e.g. amdgpu fence
+fallback timer expired on all rings).
+
+Han Gao (2):
+  PCI: Add per-device flag to disable native PCIe port services
+  PCI: Add quirk to disable PCIe port services on Sophgo SG2042
+
+ drivers/pci/pcie/portdrv.c |  3 +++
+ drivers/pci/quirks.c       | 12 ++++++++++++
+ include/linux/pci.h        |  2 ++
+ include/linux/pci_ids.h    |  2 ++
+ 4 files changed, 19 insertions(+)
+
 -- 
 2.47.3
 
