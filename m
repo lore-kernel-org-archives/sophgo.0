@@ -1,106 +1,174 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010008.outbound.protection.outlook.com [52.103.67.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E451E0B9C
-	for <sophgo@lists.linux.dev>; Wed,  1 Apr 2026 00:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775003787; cv=none; b=NB5uXtC71odUbmAiR9QnNfpOEG+Eb3ZJk55ZhuyB2X/4O0ceVrKy7jZmHNIA7IckoTQSwmkvGLcrIvIP/rG7vgY7jbREL4VqxYy0NouGo3a2LuapRvHDIS/0X/RdtfY3VOlnhM7aPPBXzkksiCloyk8teFcjJJDPxU9eQBiae7M=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775003787; c=relaxed/simple;
-	bh=9+803OXsW4RpYm11ZzkRV2bmZBdLytudY3nvjZ2Dlo0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTo4S3t81gxq/IP+mZRdcstBQ49GMiW6MsCFSYN36KrSmx2ecCMF+QK5pP8jrM1ixYcvDSIFe+yqahbFAeVQ1+H1vavIJPA2qRndvgdQrcLV5WD0pDos6bnPNH7kxzpBGSfKlWH9GclG/WD+khIEraO3j16NW6BWIt63zL7molA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F1utyX8t; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13F3526C3BD
+	for <sophgo@lists.linux.dev>; Wed,  1 Apr 2026 02:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.8
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775011251; cv=fail; b=Ir/BQK+tIjfwLfCFEzZ9OnRPc5It5fdBWvpYb3Sq9daY5h9eH4vgH3lOmEI6rPT718N5gNf90NPnosOrxsEa+77VyfzOWynmUbYJu4DgJbBGv1tB+5RIEaeXJxEq5c02lWrP8gQg4Cqno5C6Nx9huSa/zzPzhHnq4S7+A6Rla2A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775011251; c=relaxed/simple;
+	bh=CZjvGdK719YtyScpL7bHW/p9vv0CPz1w0JIoe5ucxA4=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=MbApOBkL5DQ4L97Sg1DWJM9R/YNkDxwABWNwbDBwFFzo9K4YFUiXcFRbKMf3+7hzBynAbdDIcb1iyDeWqvPDr4LtJ+4nNqqhgxfF78WFhK09kaxqvyjIFKNHJZj1KwEG3P0Bu0WjvGVOsY2kS5ron57AaGbos+IGeuqLYpChO7E=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=B3BekXRk; arc=fail smtp.client-ip=52.103.67.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F1utyX8t"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-82cd6614a90so774730b3a.3
-        for <sophgo@lists.linux.dev>; Tue, 31 Mar 2026 17:36:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775003786; x=1775608586; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1EwQDh831V9DcLgoz9eTKc5QM2T8aLiYTdwb2OH1M5U=;
-        b=F1utyX8tkXDkPK07w1Y+HMp8xzq816G5E82Mt73PhftH6J4m191mCFtkZVwY1wwkw2
-         7hYeQ95oTfVf2tB1WT0a4zMhkTMAL3S4piz0se9XgRJBTKVbftTZBs7jOoLScVg06BZP
-         aKpajrLo7KFbz+Yi6QGTDL5quM5oDTElcf/PnAl6i2Jgw7pAdSeEzGvJKTMrr+uZ/uCL
-         nPdjSBSjr6B3ZhLHcCQchV8yY56Z7EnVgojyVjBc07HSlbS1J/9J/quHSPtzVBhwYy9+
-         6LE+RPW6R/6F3JZJLRYaljFgGuAVhx7BIISyFyh1M+S7pM5liwl9sj+l1LPsgxiuN4y7
-         Kqxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775003786; x=1775608586;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=1EwQDh831V9DcLgoz9eTKc5QM2T8aLiYTdwb2OH1M5U=;
-        b=tF10GotSveY4ZHgY4X+OTkDFJkLxhzbu97AHoY9ccEDndvjd3F1etCmU6HBrM6c4Lz
-         kRfCKkorkQXysPmxR8oHoKdoPrEPhmg8luubqekOLV/JfLcLHUE0CNmLjgwzUYDw1Ojf
-         9MnylZJsgUB+vncEgAu1C7Ojf1RBillY2vANo1lgEK8sjRNGMCjujclvaVppi+sAhIbA
-         OsPyi2QGDZFtNvDbOdL19OAcO3oFyQAck2JinzVbTLdkii26wks27EdfMZqR3drSVl0+
-         9cfZQwdfgynMNNxd9M8HvkHkMUanpCgHG3uSOLZ0ydizamXQZ4r+gnyRyJSP2LygDTgw
-         7Gxg==
-X-Forwarded-Encrypted: i=1; AJvYcCVm5Tye8eC5LFMsS865EGHG//Tf/uXb0JyUtx6axCoczgx6pXIp9wLCg2fje7SjJySH3NHfbMs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy73B2bbTo32MHrJR9IUki1nGY7YZ3kRnOiXWTToDJz5c8hF9E9
-	sJuvzhgFjZxj3K9GDeeEarLRhNp/rkNumVM5hdRS79jTABFWCtL1ar/q
-X-Gm-Gg: ATEYQzzWm/Tc86MeUI1Y4R9NvlZjN9a6vogpXLStsD9HL3yxt18ZVtFf5aI9HxeeqmI
-	M5Xx1GuxiQgHlZgAitq+lKxESfWtsdQhqKO1JUYMAI/7rK/TuHLXd91bDrelG0gGi5Zi9OE6YJd
-	cdNbfYvyqO+3is8wwbCetsNk8zwh+eHl2QOyjp3gBmwnPcW0bPICDgIe3MJEqBGR9RrXxcKMTZm
-	lVEmNGtZX+IkdYcaVHLzH85rMbFGTnBJaYcxjOwgKl6z6MZdyOqrz6G9PBxYkg36HLoJAm4hpxj
-	n0ZllGlsmNiU86iTvEb2DCcW1pU1AS0wg0201ffOQtpUy3WlnNReFhurr0kRc9uT2K13/mAEdts
-	n7Uq6OY6/8WYmF18T0Qew2KYdjHzpcvzjxoIHxfTdOe1gz07h0VBY+S2SLE1KSMVqMFqRo301eA
-	8kYAZO0usBzmxcOlLGSqxQyhDyS3fBryQcFA==
-X-Received: by 2002:a05:6a00:a21d:b0:82c:e0d7:2681 with SMTP id d2e1a72fcca58-82ce8982762mr1602910b3a.16.1775003785933;
-        Tue, 31 Mar 2026 17:36:25 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82ca860b125sm11554549b3a.50.2026.03.31.17.36.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 17:36:25 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Linus Walleij <linusw@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: linux-gpio@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 2/2] pinctrl: sophgo: pinctrl-sg2044: Fix wrong module description
-Date: Wed,  1 Apr 2026 08:35:50 +0800
-Message-ID: <20260401003552.363205-3-inochiama@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260401003552.363205-1-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="B3BekXRk"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AGd3xvvufqs60KtHV3bWrftPxaMXtj6TNdds4a20/sLh8uPHy9mXlLUmnUsdEXbDupWmeNNWwwXBTZ3IO8fLY+Zkxo0ZsmLJYNIY8SVQo9gUKXLK19dAYzurU7ukvVxvm+Ejh8hMQz57PoVLDpn3bTKJc03TtrhiQRn03KHxg4I3bHQ+8x95P2Z9+zzGTH/MJKL0KdqyahB8bas1COos0UjbUsfSSGyUS9ObkxCSmNgX9+UrYQAQAe+8qI9oTP/Z/Wz5JOU5xAA+9e31bfKsz9jwIwPRgGeiE4udnFTJj3iNr5/pT1lJfLBBVzwCaN9oudik4DdCuOZy8TscjI4vWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=G1p6YJJ2bptTXxKMJPMg/PXesOxPsuaSb3IQvCJwPNc=;
+ b=ebv2GlJlmCh+daxxTcoSac/3noLRN8CT/1M9kUB1MAEGti7QUeu1qHAL007HUhUOC48TZE0kF0GDwuNfi98WwIeeIV/9vYH1xLHgKQDkF/fBCrQ9oza05hRJtnnDQ2rNtk4cM7ig6BZl5V4s1iZeacpiWnLhHAHZq0lr6gDfNlUsoZ7+TE7IX1B7PzDph2kPEFUpYEYaozBiFR6cpnxN5vckrtMC98U4mEKDiS/6pUAbZOcTx3gUZvP67Ldr1Qy80buwX2ystl2kkuOZL2L72l9XJ8mbNDNET+alLqvh0a80+IupyzE96FAwiuYFmozRKnY4C6A+zLqwAAZAPr6N1w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=G1p6YJJ2bptTXxKMJPMg/PXesOxPsuaSb3IQvCJwPNc=;
+ b=B3BekXRkSFVXZ1KeYezf5hUcvFZqyKv338jZ56nvbbafmvrtfrZIK4+qj2Mq67giYUt38pmSb1Q1z5KabQwOK4pDwU/b3MwKvZHKeqsCP93nfA3xYFYsdX8RyFVHG3+62qvWvaJIBXeqoxmDirTlcjAjILzJELCES5HWvWZip4QD3qDPiLmMd/SkmCMM5SfGCsTg0TET+ShrZOpkAKJtjZprS+yKFZmSWF5HUP448RyMJPR1Hsg0reAocuNtTCSpwea7r5ml81ZZHvtzp29sff6bwWRj8qilc+xCfPIQEjZRZFA+n1qJcFMrXM1wC5LcDAuXpzAo/VGnaPNXrpAcJA==
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18) by PN3PR01MB9806.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:150::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.17; Wed, 1 Apr
+ 2026 02:40:29 +0000
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4]) by MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4%6]) with mapi id 15.20.9745.027; Wed, 1 Apr 2026
+ 02:40:29 +0000
+Message-ID:
+ <MA5PR01MB1250006189A2D016D47D9DB80FE50A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 1 Apr 2026 10:40:28 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] pinctrl: sophgo: pinctrl-sg2042: Fix wrong module
+ description
+To: Inochi Amaoto <inochiama@gmail.com>, Linus Walleij <linusw@kernel.org>
+Cc: linux-gpio@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-kernel@vger.kernel.org, Yixun Lan <dlan@gentoo.org>,
+ Longbin Li <looong.bin@gmail.com>
 References: <20260401003552.363205-1-inochiama@gmail.com>
+ <20260401003552.363205-2-inochiama@gmail.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <20260401003552.363205-2-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SEWP216CA0136.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:2c0::11) To MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18)
+X-Microsoft-Original-Message-ID:
+ <e31c0a91-33b7-4194-aa51-52588696ea60@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MA5PR01MB12500:EE_|PN3PR01MB9806:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2fb1e407-5dff-4eab-7a41-08de8f980989
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|22091999003|24121999003|19110799012|25031999004|6090799003|5072599009|461199028|8060799015|23021999003|15080799012|26121999003|3412199025|440099028|52005399003|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?dmxVazRhajNabHk1bm1OdnkwMUhEMy9xZlFTcVNodkRwQkhaOXRpcTk4aGtT?=
+ =?utf-8?B?M1laaE04RkZNY01DR0ptZGJKSjRmc3hVNjkvbVpjWWRFUzZock12T2plUE5q?=
+ =?utf-8?B?d2I2U3NMVEVXL2pON0tacGR1TEVYOWJWTHVOR2Y5WXJ2dnA1dUl5bC9MQi9u?=
+ =?utf-8?B?ZHFnYTE5RWNUcTNhZFBqQ3p3SnRiZXpSeGY1VzFTU3o2RWFWckIzaE0zc055?=
+ =?utf-8?B?MmdpY1V2dUxqUHJaMktLMEZjVzdVVWxrU2J2MlNZQXpTZjlNaVJhby9QWmgz?=
+ =?utf-8?B?UC9SMStMQnVnZEtBM0h2ZDl2OXlWeUw2blU4NVNXQ09HcmZ3cG9DS2VqeWN4?=
+ =?utf-8?B?M3VBOURkWnh4OFpmaWs5OVJjdGZOYWlWejQvZlFCbUg5YmpkVkhwSjRHR3dj?=
+ =?utf-8?B?YWRTeEVTV0pIWEF2YUZSZXI1MDUzVkxsdm0rbi9MRDFPKzNoTDVjV1Zvb1cv?=
+ =?utf-8?B?cHZqeGxuMDBvWTV3bjlLT1pUL1dCd0ora2Z3RFpXQ2gzZmxpTG93STIwMkps?=
+ =?utf-8?B?bndVRTE4aHpEa0ZoYmhBVE9oak9vQm1xbVB6M0hGaHE3UkphSld0MVNsTk92?=
+ =?utf-8?B?ZGw3M3Z3cU9PSlRkSWpRTVIwaVRZNCtQNExYQXdSTXJPN0gzOCt3TnF5dnJL?=
+ =?utf-8?B?SmttZmtQamN1WkM0R1NIUC95QU82RjA1OHNDMHBQWklpaG1CdnhBai8yN2hn?=
+ =?utf-8?B?UjVRRkIxenNLM1dDSHNaVjhaNWtsZFI3UGZscFA5cjlHcUE4a0t5Vk5ZRjkx?=
+ =?utf-8?B?NHpQK2JmTjM4R2hpQVhKaFcyQWpoRXd5YWVJK3dvUUp2bmxSRmVWYXNPL2Zq?=
+ =?utf-8?B?MWZoOEU0MkpUdlZGeVdBeW5zQ09VekRUNFNpaGRoUGRud2xLanRlb0lFd1Ba?=
+ =?utf-8?B?N0RucmVuOGxuM25qem95bmJsV2R2Qy9TdnNMTGowQ3NacFZMRmRObmJ6RW1W?=
+ =?utf-8?B?UnVwaGJudmRhd1JlRmlMZ3B4SmNwTitidG12OWZpcU81QnRBSHdLRjMvRlpn?=
+ =?utf-8?B?RDgzQ0gvYzQ2VVpFczl6M3Y5akduQzFNUkVTeDRPRGFySUUrSytBKy9RN1NC?=
+ =?utf-8?B?QTNDZlJTRW1KMVlKSWN6cDhCSE1LNC9oakNheGNmdTZOV3krQnZMa2crZExp?=
+ =?utf-8?B?cGFFYkpPS2pHNVQ4Tms4U2wvNXpPWDk5SHlYU2xhM0VILzgzYXVtazRlRGVv?=
+ =?utf-8?B?UFVQRHBIUHVqYkZEdHVIRzF5dEViZE1aMVJwVlZKVWRXL2JvVkZBS3d1QnhM?=
+ =?utf-8?B?WW9lbU4ralo5d2xlaW5wMUZqWTVmblR6VjFkOUtNcTFNcHVZMm5yU2pJSSt6?=
+ =?utf-8?B?WnZpOHZBdTJMakZUSm1MNklxVy9wQzhKWmlkMkZTUTdrMWRqYkU4VnRjNldS?=
+ =?utf-8?B?WmhkZG1TcWRYeDViSm8vWXFTd3FLN0JZbVRsZWhWS2VQUnFmR3hpQy9XR3VK?=
+ =?utf-8?Q?8rQEByYR?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?dFFHc1lJM2NDVVptZ1Z4U3hjUExSWGRocy9NeFdmTnZ5NGF5Z1E5U2ZVVytM?=
+ =?utf-8?B?R1llc2x2bzFPeWRUQTRQTmVDd3g3Z2loek9xUlhNRG0yQjQxR0VLaVI5VkJj?=
+ =?utf-8?B?ZHpPb2xHRnMvck0yMUtkNmZZdHdSak9sVmpoZ045YnhvaTFJWTBhQnJYY2o4?=
+ =?utf-8?B?UFpBblhKOVpncUg3ZlZ0b2xRRnJ1dysrdmNOWUcxY3BHYXhLWkdWZmpRY3dX?=
+ =?utf-8?B?WFk0SGNIN2FjYWE4V1RFTXhIQUJyd2gvYi9uZnduL1A4eDVobDhpKzNoODZS?=
+ =?utf-8?B?Y09SeDZRNnN1UmlrTi9zSWRZUFBnUzF3RGxQV3JYL1Y0SXUrT2VtODd2YVo5?=
+ =?utf-8?B?blYvK3dManN0U0xWQ2ZtY0YvYWVQUHpUbUJKWWcvSk1uU3FvS0E2Sk4yMkhE?=
+ =?utf-8?B?Y0FVdW51T2xTTmV4QWVTYTFaRHZXOGNudHRZVkQrVVJRS1JGUTJxL3VLbk9j?=
+ =?utf-8?B?KzI4TWRpMkNDVEJSOENNWnZ4bWJzc0NRTjgvWFhMYmo5Y1VHUXBFZjB5MWtU?=
+ =?utf-8?B?c0I1ZHlVUFJvSjJQMWplNjJ6WTlLRHFGenYwcUVFZEJDZUZtamFKYTE5UWNa?=
+ =?utf-8?B?aUJNMG9jbzlxdEkrOFU0RUhncVd2bEtqcmhtZERlN2lLSnJOclF4TWI5enIv?=
+ =?utf-8?B?emFyMXBlU1dnNXRFbnUvTnhqODI0L1pwR2FGWms1YmJTM2FESU5BKzNpNEp6?=
+ =?utf-8?B?bjRndDZFcWNiOUpCcTFsa1hEdEd0eEl1bDFaTkppTExiM3d1YWhQY3JhcmY1?=
+ =?utf-8?B?dWlqaG1keHUyQVZqbWFLNjl6QzZiWEt6VGs4Vmo4Yzd6TXNjWU1JbWV5bWxG?=
+ =?utf-8?B?RDBaYUp2V1Fvdy83WU9YOHRpWmtvR2xaSEg3Um80elROUGJNa2RRMU9CbzFs?=
+ =?utf-8?B?aGp6YXdsYUVDL0Y5UHNnQXJxQ1dQVHpybmErb2ZnOEtRb1YxSUV0L2cxTlJH?=
+ =?utf-8?B?NkNSY0FjUWsrNGRRL3VxRXhqWGtMSm9BVTIzVlVhclozN29lTzdZZFdxTFBI?=
+ =?utf-8?B?KzEvZ0pIWWhOaDdWL1daQXFKaXlzOHluY3pIZHVkWHQ0ZDl0UkZxVWFsMDZw?=
+ =?utf-8?B?SWZDaWlEOXF3Z0RLNzBtOFBzRmh6RjBIVnZ5bVJZbGJsWldGQTJXMVFkaXRH?=
+ =?utf-8?B?YnJYTm44amsvQWR6VmxjMkNqdXlvbWhCdmNrYzhGTXBTMTU3NkY5NjE5czVi?=
+ =?utf-8?B?U2V5cU1oZjUweHdjaUcvcHRreHVrR056VVExQjNZWGtJNU9OWnZEanlCdG9Y?=
+ =?utf-8?B?K0NIZnAzT3QvMmhBaEladWZYOG5sTFZQdllvTXhsNnBKSjJDWmF3a1lVaVRX?=
+ =?utf-8?B?ZXVTQmxzQmN0QVliOHFkWldoK2pGLysrTmtzSG9LRmw4U1YyZW5NSktjREQv?=
+ =?utf-8?B?dUNBL2xOVk9UZFRTZm45RUN6V1FYNURHUm81aUwyOUU2MGRWNmZ2S3BsZ2Na?=
+ =?utf-8?B?MmNjTy9KM2d2VGYxeTNkTXk4KzRURGlEMEoxMnBxWC92K1JVYjA5aExUcG1V?=
+ =?utf-8?B?WmYrRXNrMVdTQWtBTmpkQ0NYbmpQaW9CNGxvdzNVYUcvQjRMczhGa2s2TGpn?=
+ =?utf-8?B?WVZjUGRZbjdyeURiamd5NjBGYjhtZkRBeWRscjg4S2Qya1daWERwTVhzcklC?=
+ =?utf-8?B?aXNlOEQ0K2VvaUd0YkYwWXpxanovekV4Mk1hT0ZtS05uZkRnelhmcTF1aVdq?=
+ =?utf-8?B?RjgrV2ZkaGtUbkh4SVJkZjRyVm1vQjljcGVlc0tNc0pZcXFoRFNqSHN6R1E1?=
+ =?utf-8?B?WURqcDNnR2w5YlFSclJJNWR3bUpEVUNmYzJBKzVtb0hiYnFoWE9hTkh2djVO?=
+ =?utf-8?B?YWtjWHcvcEV3RmIyYzRSU3phWXRXcHgrVHU2ajRVa3lPdmdCSzd3d0c4MXhB?=
+ =?utf-8?B?MGwwWkFtYTZPRHFpWDVQVC9rWk9RZ2dieXZMZXZIV3YyaGNEK1RkM2F6TFhn?=
+ =?utf-8?Q?4gRyjjFArBO0ay6Qlt0SarGuj0l17kDc?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2fb1e407-5dff-4eab-7a41-08de8f980989
+X-MS-Exchange-CrossTenant-AuthSource: MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Apr 2026 02:40:29.4849
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB9806
 
-Fix the SoC model in module description string, it should be
-sg2044 instead of sg2002.
 
-Fixes: 614a54cb5ac3 ("pinctrl: sophgo: add support for SG2044 SoC")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
- drivers/pinctrl/sophgo/pinctrl-sg2044.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On 4/1/2026 8:35 AM, Inochi Amaoto wrote:
+> Fix the SoC model in module description string, it should be
+> sg2042 instead of sg2002.
+>
+> Fixes: 1e67465d3b74 ("pinctrl: sophgo: add support for SG2042 SoC")
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>   drivers/pinctrl/sophgo/pinctrl-sg2042.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/pinctrl/sophgo/pinctrl-sg2042.c b/drivers/pinctrl/sophgo/pinctrl-sg2042.c
+> index 185305ac897d..8dba12e122a4 100644
+> --- a/drivers/pinctrl/sophgo/pinctrl-sg2042.c
+> +++ b/drivers/pinctrl/sophgo/pinctrl-sg2042.c
+> @@ -651,5 +651,5 @@ static struct platform_driver sg2042_pinctrl_driver = {
+>   };
+>   module_platform_driver(sg2042_pinctrl_driver);
+>   
+> -MODULE_DESCRIPTION("Pinctrl driver for the SG2002 series SoC");
+> +MODULE_DESCRIPTION("Pinctrl driver for the SG2042 series SoC");
+>   MODULE_LICENSE("GPL");
 
-diff --git a/drivers/pinctrl/sophgo/pinctrl-sg2044.c b/drivers/pinctrl/sophgo/pinctrl-sg2044.c
-index b0c46d8954ca..cf0b674c038f 100644
---- a/drivers/pinctrl/sophgo/pinctrl-sg2044.c
-+++ b/drivers/pinctrl/sophgo/pinctrl-sg2044.c
-@@ -714,5 +714,5 @@ static struct platform_driver sg2044_pinctrl_driver = {
- };
- module_platform_driver(sg2044_pinctrl_driver);
- 
--MODULE_DESCRIPTION("Pinctrl driver for the SG2002 series SoC");
-+MODULE_DESCRIPTION("Pinctrl driver for the SG2044 series SoC");
- MODULE_LICENSE("GPL");
--- 
-2.53.0
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
+
+
 
