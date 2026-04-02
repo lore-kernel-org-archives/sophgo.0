@@ -1,119 +1,114 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4578F3932E9
-	for <sophgo@lists.linux.dev>; Thu,  2 Apr 2026 21:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D263237BE6D
+	for <sophgo@lists.linux.dev>; Thu,  2 Apr 2026 22:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775166247; cv=none; b=DwU5jrYSHNSVcr7ktipL3K0qXqozLmfOJVmF70lnRsH/HX3maqydDMGroPblM12n9c4bxSaX47LLCbuSmO2LRwjKKSHZGBo+W6dYiUbmG7X4huaXRjx6tLM9zM7sBAEe6SEJGCy7clRKd/+2eptwRnXghlgLUjbwBrcjhph8Jy0=
+	t=1775168759; cv=none; b=srixlDwl3BEjnuf3/fVbs2gl1l2bYD78LX72nQX84su4iw9zdbwTqczxRfxvXY9EwK7F1mX1LTLXf2C+YBHhLzH1QlOLSyljwg6mpbWR37NHYlmk+zoKCXLbBn7hmjkZUkHYdqcRbE5kjctxNjFsZVVAX713+WEtJ0oIXkGfnuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775166247; c=relaxed/simple;
-	bh=c2REoGnOpaEdqvIeKx5TQKxbNjOmJJih8Ma0AIt4Vrc=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=EwpgPhwGv3/jrYVdB9lLrh1pZByQ/07B1xvCTT/sNwqpPiAKexg9IDGhmBaTFohHytCdG5Y9ULwjZpQzhwZjAO21+thCpS34uo8mclwiuJrhJxlatxi8q4N8Novkfw7o63pdYrB4ju+dwCUwBApKvRvNVQcLY5hdulz3JjCFYk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de; spf=pass smtp.mailfrom=arndb.de; dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b=DMmqEN9L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FrOjsqKr; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arndb.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arndb.de
+	s=arc-20240116; t=1775168759; c=relaxed/simple;
+	bh=gZ93mT8V+cAjYiB9BrP3gKMHvgP6imQkqZzt4qDVlkU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VeIxrCJJfIiSdDDPrLUvjb1bDXEyTlltL/O8S81gqX29Pm2xPOFimlvqPxklDaNRY9mVFWQc2suoZ6aFwRGAuEkquMkaqwXfBEoQ4mkXNhzrNgROdS8PEAw1Lr/7WZLm0bi1WNXdZ5f6JxkUivrpYilS1PyRJ/9Km/WNObRPdFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cx02Vc6l; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=arndb.de header.i=@arndb.de header.b="DMmqEN9L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FrOjsqKr"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 420E77A017D;
-	Thu,  2 Apr 2026 17:44:04 -0400 (EDT)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-04.internal (MEProxy); Thu, 02 Apr 2026 17:44:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1775166244;
-	 x=1775252644; bh=OYQnpeSzoHqE/ynjfzXJ1D5WN7qoO0KuXUY/6t2eV9s=; b=
-	DMmqEN9LJwU6m6OMVajvyXqoA3+xsORQyUIMf1jEF/XgxjoQr7xmV6LsP55wzMKg
-	yiqXSJ7yC/jbS0IHzxcCr5fJbaJZcam0P7E5sdGhwDwAoRlN8BLIBTzYX0XgX18P
-	8Z7bYLwV0pPOSuCy9z+IeNGMbrNvHXNsMEtDw09lI7m0bwCCZQeNcSTQjCBVKK2g
-	i3QOW9ic1D7DzWIpTQ0L1mV/AabBdnm3+QCv13iIjie04U1NaCNZvQGhRlzL8Jhk
-	0Nrt86Q/eE5Q5B8ypHpPVpoOxqShkupPqWv2k9vAsElj2JViUCuaylDjaSZS8ywz
-	CKkzM9hqu43O2rji/P2Bgw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1775166244; x=
-	1775252644; bh=OYQnpeSzoHqE/ynjfzXJ1D5WN7qoO0KuXUY/6t2eV9s=; b=F
-	rOjsqKrBxfhkRT7+s77dBlRZ16gLlgO5KU83UuqcB14SPqMewIhADV5z13LAQT+e
-	olwj9uiLpJW8Txll/Mx3j2zHOWhMWegsM2tly2syVOJtC4t3K0DvvLQkxlyK0J4B
-	STu1xvsq7Ya+pMrAJhQFmWSr3dufd3kOUPVXNKYQFpPJyRTiWPdqLxBCAxcjmGHI
-	Ou6iu/cuNhRA5hrz7acIwZtPxTbaOb8aNSdtA8aLiNuPN0OxKnMoTNNJCtyeGlfj
-	JeOo2Qkb0oFj/flIuOO4tBwQyiLk3tphh+xmOPxna/79bPi1GOKM3L98/7jR5X91
-	7UHLXXVKIVFiCxiob0dlg==
-X-ME-Sender: <xms:I-POabSNu7d0vgRDjY5BYmF2CVb2Jwy5PaBcpLObJ8Z2j7fU_MZVkQ>
-    <xme:I-POaXnhqVHgwuD_8hQdcLueuP99dG_5gVy9rufuttHh4jWn4RE4KdkoUysEJBphK
-    Db8aYsmI3Lg0rHWXu1G51wz-mtmUS28w4MWjHDdSF6EnXO4uY0v4lB6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdejudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epofggfffhvfevkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedftehrnhguuceu
-    vghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvghrnh
-    ephfdthfdvtdefhedukeetgefggffhjeeggeetfefggfevudegudevledvkefhvdeinecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhguse
-    grrhhnuggsrdguvgdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepihhnohgthhhirghmrgesghhmrghilhdrtghomhdprhgtphhtthhopegtoh
-    hnohhrodgutheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhotgeskhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtoheplhhinhhugidqrhhishgtvheslhhishhtshdrihhnfhhrrg
-    guvggrugdrohhrghdprhgtphhtthhopehsohhphhhgoheslhhishhtshdrlhhinhhugidr
-    uggvvhdprhgtphhtthhopehunhhitghorhhnpgifrghnghesohhuthhlohhokhdrtghomh
-X-ME-Proxy: <xmx:I-POabT2NWajPAxYA0xneUgLH1zNW2z1dwNxUIAwfxHpIRoRGz5xTw>
-    <xmx:I-POaXvhvxUoERQJMG5qRDvr_UnpPaxPORkuhtxeCFYNtzGuRRmuaQ>
-    <xmx:I-POaf35szzbGLpLGzavim2sRFYZwO1afPzc-_FjJuK_IjtJLtOgXg>
-    <xmx:I-POaQXDRGXbjEGsqk-uJkQDraDsX7vu68GkcbZx5FF4Sn6TNfId2Q>
-    <xmx:JOPOaS0CBzvUmAUN_voBkRA9zXVJ9Amt5SNQH-kmmbvCAXokWzD_Wxo1>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id B3EE7700065; Thu,  2 Apr 2026 17:44:03 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cx02Vc6l"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-82ce0a9b41aso545575b3a.0
+        for <sophgo@lists.linux.dev>; Thu, 02 Apr 2026 15:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775168757; x=1775773557; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bp+NWFpOjfpa5u8dRL+RGQx2iEFp/EihhG2Z7hUjzS4=;
+        b=cx02Vc6lYL+7e9thn08NcWiWbx7GR45bRJV98nk6yE/EzCEczIAoz5qRp/fQaE+FT+
+         2VXKRi6MYBRhhbm5KBHUetg/35GDHs41gfjuO51tGIoh1xTXUwXvNl8jEP0zvsVntmoy
+         Pf4HScaipBhp7C3x5HdYs1C16m2i+j4otnhCQtVxo7hp+rdwNqEpeDRTOUFa0b4tcU1S
+         UL0xZUv9Ei+2xbXN3FzlvKKG9VQQgHC3Qw0CP28WEgowiJKFM0XGg4WiUJgvxAnq+Fc4
+         44QNYA+99vOmFlJZd+WOIW3kAvqBZtOCkNw5FyTQ6oIDavn0B5yF5p0q0FdQt57irV+k
+         s2wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775168757; x=1775773557;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bp+NWFpOjfpa5u8dRL+RGQx2iEFp/EihhG2Z7hUjzS4=;
+        b=bIlQkQxi+vEYrwaS0U4u88iWhTnCv2vLGodaFHtGGICIZ2KK2rhkKgicIw3rPbW0yy
+         mdR9xaXjPdl1ahTC1EulBjXp0ZnCpWkS4q0fIvzbXno3HU0s5i0zFBNlmDBG4UME8GxD
+         zMz/yFPUzaLHJrY757BvRJeFTDaVfIJVQSZNV4I0rCeDL4ClW6JnQn1BD3pFl3BT11Sh
+         b8nDfsihdj4OBM0r1JXUWGeqcg3vLr0x+Ny9v+TcBVxu6tACIowRPnRquBgdo6415Na5
+         sLUuOX8yUeu1UwwkTM6gAptvmgBaMR8wN4c/OUGzFK2lEZXVUdWRD6mZziZGIHBcGswp
+         NQsw==
+X-Forwarded-Encrypted: i=1; AJvYcCUNVBw6YFOIMCpmvjPRRIn5laOhgXbaQ2+8BQe0fdDXakv6gPgraK2xs673v1EhWSw0IfGI3CY=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw6g5QmbbotWfmI5pV25U/OTNFoIygBDPNIeRy4yIwjO7n/izOJ
+	DMZz4o6mshUhJ3ZOD4vWZmw87OaTWDYDDqPJHggVWGmIMwVBm9VBJgnZ
+X-Gm-Gg: ATEYQzxNGpTfzcg6yIHvutkZEfPBh4IMJpHSWeFrwJ5tr4lqgK/9wQJjChSUJ28ebVF
+	e0S/TX2x2KUh3OXOxVmOcy7/ucHRRRwsZXbubx7R7i9bIpxLOY72Iaqnj/6kvq3/3L1z6qbk+Gj
+	SN0aYKVAISZdCTn5/OIA4PQYnJJfa1WIXzqjr9omUhJVfaT5KSRJXSO8q1DtUJ6fNGr9/3T/53I
+	GHJH328Y0oHyWae/SZZroi7Pj2r7dUUfV6VENeWqGvo1xqUMKQRFs8PgJC0vjESwIAl6xdDBV+f
+	PgVHgB/Utzs+javYTSEzmfsAhZnjJp//CwD7wfe/uybnwRwTfafvMXIX/GiG8ggzNWPjTUrs/5g
+	fQqaziX5I+Sa0vIoJ7dqgj4M+g280Pywu5fSbiT23CLFeSyI/HXxYyY+S8g+G7NVS5FoAmDx9sT
+	RqaACdxwDrU38DCXIAzTBlI/oKZFGj2TwYrw==
+X-Received: by 2002:a05:6a00:a0b:b0:81f:852b:a925 with SMTP id d2e1a72fcca58-82d0da4594cmr742546b3a.1.1775168757075;
+        Thu, 02 Apr 2026 15:25:57 -0700 (PDT)
+Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9c6ad8asm4338596b3a.40.2026.04.02.15.25.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Apr 2026 15:25:56 -0700 (PDT)
+Date: Fri, 3 Apr 2026 06:25:32 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>, 
+	soc@kernel.org
+Cc: Conor Dooley <conor+dt@kernel.org>, 
+	Inochi Amaoto <inochiama@gmail.com>, "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>, 
+	linux-riscv <linux-riscv@lists.infradead.org>
+Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
+Message-ID: <ac7rV0xGGVmxT-V4@inochi.infowork>
+References: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+ <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-ThreadId: AaZlO9rjbYwJ
-Date: Thu, 02 Apr 2026 23:43:43 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Chen Wang" <unicorn_wang@outlook.com>, soc@kernel.org
-Cc: "Conor Dooley" <conor+dt@kernel.org>,
- "Inochi Amaoto" <inochiama@gmail.com>,
- "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
- linux-riscv <linux-riscv@lists.infradead.org>
-Message-Id: <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
-In-Reply-To: 
- <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
-References: 
- <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
-Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
 
-On Thu, Apr 2, 2026, at 04:39, Chen Wang wrote:
-> For CV18xx serials:
-> Just a minor patch to replace the compatible for
-> dma-controller to allow setting DMA channel number.
-> New bindings and driver part change are picked by
-> DMA subsytem and this patch handles the left dts
-> part change.
->
-> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
->
-> ----------------------------------------------------------------
-> Inochi Amaoto (1):
->        riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set 
-> channel number for DMA controller
+On Thu, Apr 02, 2026 at 11:43:43PM +0200, Arnd Bergmann wrote:
+> On Thu, Apr 2, 2026, at 04:39, Chen Wang wrote:
+> > For CV18xx serials:
+> > Just a minor patch to replace the compatible for
+> > dma-controller to allow setting DMA channel number.
+> > New bindings and driver part change are picked by
+> > DMA subsytem and this patch handles the left dts
+> > part change.
+> >
+> > Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+> >
+> > ----------------------------------------------------------------
+> > Inochi Amaoto (1):
+> >        riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set 
+> > channel number for DMA controller
+> 
+> Doesn't this change break backwards compatibility with
+> all existing kernels?
+> 
 
-Doesn't this change break backwards compatibility with
-all existing kernels?
+It will break if a old kernel with the new dtb. But I
+think this will break nothing since the DMA device is not
+used by any devices in the old DTB. And if a user force
+the some device with DMA in the old version, it is just
+not functional and lead to a broken system.
 
-I did not take this one for now, need clarification, or
-a new patch that keeps the old compatible string along
-with the new one, if that is possible.
+> I did not take this one for now, need clarification, or
+> a new patch that keeps the old compatible string along
+> with the new one, if that is possible.
+> 
+>        Arnd
 
-       Arnd
+Regards,
+Inochi
