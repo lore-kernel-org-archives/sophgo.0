@@ -1,114 +1,128 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D263237BE6D
-	for <sophgo@lists.linux.dev>; Thu,  2 Apr 2026 22:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680583806DA
+	for <sophgo@lists.linux.dev>; Fri,  3 Apr 2026 10:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775168759; cv=none; b=srixlDwl3BEjnuf3/fVbs2gl1l2bYD78LX72nQX84su4iw9zdbwTqczxRfxvXY9EwK7F1mX1LTLXf2C+YBHhLzH1QlOLSyljwg6mpbWR37NHYlmk+zoKCXLbBn7hmjkZUkHYdqcRbE5kjctxNjFsZVVAX713+WEtJ0oIXkGfnuU=
+	t=1775210794; cv=none; b=ovu7GppgqxHRVrQ6WNZb0JiYqO2D6Rhn7194UZ2OBoWiFzkAFlEYP9m8+LSX9mWqRF/yX90WlGLrbAG3uN4FSlHnfYeHAvgk6PdF8cn4kegR3p+Y4cXrCNDSj442RukmvEGo3vGVWLkJAcBVxBlxWcsx+wBmZaCX4oN1A+u1z2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775168759; c=relaxed/simple;
-	bh=gZ93mT8V+cAjYiB9BrP3gKMHvgP6imQkqZzt4qDVlkU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VeIxrCJJfIiSdDDPrLUvjb1bDXEyTlltL/O8S81gqX29Pm2xPOFimlvqPxklDaNRY9mVFWQc2suoZ6aFwRGAuEkquMkaqwXfBEoQ4mkXNhzrNgROdS8PEAw1Lr/7WZLm0bi1WNXdZ5f6JxkUivrpYilS1PyRJ/9Km/WNObRPdFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cx02Vc6l; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cx02Vc6l"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-82ce0a9b41aso545575b3a.0
-        for <sophgo@lists.linux.dev>; Thu, 02 Apr 2026 15:25:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775168757; x=1775773557; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bp+NWFpOjfpa5u8dRL+RGQx2iEFp/EihhG2Z7hUjzS4=;
-        b=cx02Vc6lYL+7e9thn08NcWiWbx7GR45bRJV98nk6yE/EzCEczIAoz5qRp/fQaE+FT+
-         2VXKRi6MYBRhhbm5KBHUetg/35GDHs41gfjuO51tGIoh1xTXUwXvNl8jEP0zvsVntmoy
-         Pf4HScaipBhp7C3x5HdYs1C16m2i+j4otnhCQtVxo7hp+rdwNqEpeDRTOUFa0b4tcU1S
-         UL0xZUv9Ei+2xbXN3FzlvKKG9VQQgHC3Qw0CP28WEgowiJKFM0XGg4WiUJgvxAnq+Fc4
-         44QNYA+99vOmFlJZd+WOIW3kAvqBZtOCkNw5FyTQ6oIDavn0B5yF5p0q0FdQt57irV+k
-         s2wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775168757; x=1775773557;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bp+NWFpOjfpa5u8dRL+RGQx2iEFp/EihhG2Z7hUjzS4=;
-        b=bIlQkQxi+vEYrwaS0U4u88iWhTnCv2vLGodaFHtGGICIZ2KK2rhkKgicIw3rPbW0yy
-         mdR9xaXjPdl1ahTC1EulBjXp0ZnCpWkS4q0fIvzbXno3HU0s5i0zFBNlmDBG4UME8GxD
-         zMz/yFPUzaLHJrY757BvRJeFTDaVfIJVQSZNV4I0rCeDL4ClW6JnQn1BD3pFl3BT11Sh
-         b8nDfsihdj4OBM0r1JXUWGeqcg3vLr0x+Ny9v+TcBVxu6tACIowRPnRquBgdo6415Na5
-         sLUuOX8yUeu1UwwkTM6gAptvmgBaMR8wN4c/OUGzFK2lEZXVUdWRD6mZziZGIHBcGswp
-         NQsw==
-X-Forwarded-Encrypted: i=1; AJvYcCUNVBw6YFOIMCpmvjPRRIn5laOhgXbaQ2+8BQe0fdDXakv6gPgraK2xs673v1EhWSw0IfGI3CY=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw6g5QmbbotWfmI5pV25U/OTNFoIygBDPNIeRy4yIwjO7n/izOJ
-	DMZz4o6mshUhJ3ZOD4vWZmw87OaTWDYDDqPJHggVWGmIMwVBm9VBJgnZ
-X-Gm-Gg: ATEYQzxNGpTfzcg6yIHvutkZEfPBh4IMJpHSWeFrwJ5tr4lqgK/9wQJjChSUJ28ebVF
-	e0S/TX2x2KUh3OXOxVmOcy7/ucHRRRwsZXbubx7R7i9bIpxLOY72Iaqnj/6kvq3/3L1z6qbk+Gj
-	SN0aYKVAISZdCTn5/OIA4PQYnJJfa1WIXzqjr9omUhJVfaT5KSRJXSO8q1DtUJ6fNGr9/3T/53I
-	GHJH328Y0oHyWae/SZZroi7Pj2r7dUUfV6VENeWqGvo1xqUMKQRFs8PgJC0vjESwIAl6xdDBV+f
-	PgVHgB/Utzs+javYTSEzmfsAhZnjJp//CwD7wfe/uybnwRwTfafvMXIX/GiG8ggzNWPjTUrs/5g
-	fQqaziX5I+Sa0vIoJ7dqgj4M+g280Pywu5fSbiT23CLFeSyI/HXxYyY+S8g+G7NVS5FoAmDx9sT
-	RqaACdxwDrU38DCXIAzTBlI/oKZFGj2TwYrw==
-X-Received: by 2002:a05:6a00:a0b:b0:81f:852b:a925 with SMTP id d2e1a72fcca58-82d0da4594cmr742546b3a.1.1775168757075;
-        Thu, 02 Apr 2026 15:25:57 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9c6ad8asm4338596b3a.40.2026.04.02.15.25.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Apr 2026 15:25:56 -0700 (PDT)
-Date: Fri, 3 Apr 2026 06:25:32 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>, 
-	soc@kernel.org
-Cc: Conor Dooley <conor+dt@kernel.org>, 
-	Inochi Amaoto <inochiama@gmail.com>, "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>, 
-	linux-riscv <linux-riscv@lists.infradead.org>
-Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
-Message-ID: <ac7rV0xGGVmxT-V4@inochi.infowork>
-References: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
- <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
+	s=arc-20240116; t=1775210794; c=relaxed/simple;
+	bh=duPJZJsVgshUx0ZSuYbiYZ3biXpP3xFSjGnb4lTfNtg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:Content-Type; b=bI38/nkblWctDaxlJppaYzeQvpqB4D39KQznd5we2Iv2AJOXuKUgsnIzhLy6od/20eA8Y1/kxcs4eDYJAK5dLfeMqqeIdhEgHyAFWfBnsdd7GCRz3llqlO8Ce/+2Ok1cJIy8np4H3Y44uBajeVV1FBu/wCusGvsbgxchSzuyATM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from [10.213.19.33] (unknown [210.73.43.101])
+	by APP-01 (Coremail) with SMTP id qwCowACHLGgZkc9pk38PDA--.5212S2;
+	Fri, 03 Apr 2026 18:06:18 +0800 (CST)
+Message-ID: <00ddad5a-02f5-474e-af9c-11ce7716ddfc@iscas.ac.cn>
+Date: Fri, 3 Apr 2026 18:06:17 +0800
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
+User-Agent: Mozilla Thunderbird
+From: Vivian Wang <wangruikang@iscas.ac.cn>
+Subject: Devicetree spec: Specifying /cpus/cpu@* unit address format?
+To: devicetree-spec@vger.kernel.org
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Alexandre Ghiti <alex@ghiti.fr>,
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-CM-TRANSID:qwCowACHLGgZkc9pk38PDA--.5212S2
+X-Coremail-Antispam: 1UD129KBjvJXoW7CrWUAF15WF18Cr4kJFWUurg_yoW5JrWrpr
+	s7uFyUtryqyF48Jw42q3WUX3y3AFWkWw4UtF95J34kAFZ8WFykZFna9wn0gFyUCF1xXa45
+	Zws09a4UC3ZrZaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9Ib7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26r4j6ryUM7CY07I2
+	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
+	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
+	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
+	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
+	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v26r4j6F4UMc
+	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
+	1x0262kKe7AKxVWUtVW8ZwCY02Avz4vE14v_Gw1l42xK82IYc2Ij64vIr41l4I8I3I0E4I
+	kC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWU
+	WwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr
+	0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWU
+	JVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJb
+	IYCTnIWIevJa73UjIFyTuYvjxUgvJmDUUUU
+X-CM-SenderInfo: pzdqw2pxlnt03j6l2u1dvotugofq/
 
-On Thu, Apr 02, 2026 at 11:43:43PM +0200, Arnd Bergmann wrote:
-> On Thu, Apr 2, 2026, at 04:39, Chen Wang wrote:
-> > For CV18xx serials:
-> > Just a minor patch to replace the compatible for
-> > dma-controller to allow setting DMA channel number.
-> > New bindings and driver part change are picked by
-> > DMA subsytem and this patch handles the left dts
-> > part change.
-> >
-> > Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-> >
-> > ----------------------------------------------------------------
-> > Inochi Amaoto (1):
-> >        riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set 
-> > channel number for DMA controller
-> 
-> Doesn't this change break backwards compatibility with
-> all existing kernels?
-> 
+(Also posted at: https://github.com/devicetree-org/devicetree-specificati=
+on/issues/86 )
 
-It will break if a old kernel with the new dtb. But I
-think this will break nothing since the DMA device is not
-used by any devices in the old DTB. And if a user force
-the some device with DMA in the old version, it is just
-not functional and lead to a broken system.
+Hi all,
 
-> I did not take this one for now, need clarification, or
-> a new patch that keeps the old compatible string along
-> with the new one, if that is possible.
-> 
->        Arnd
+Presently, there seems to be some confusion in the community about the
+format of unit addresses for "/cpus/cpu@*" nodes for a CPU with ID > 9, e=
+=2Eg.
 
-Regards,
-Inochi
+=C2=A0 =C2=A0 cpu@??? {
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 reg =3D <10>;
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* reg =3D <0xa>; */ /* This should be equiva=
+lent */
+=C2=A0 =C2=A0 }
+
+
+Should this be a decimal "cpu@10", or hexadecimal "cpu@a"? I can't find
+any explicit specification.
+
+  * Most other nodes specify a hex unit address
+  * I could not find anything specifying this generically
+      o AFAICT, there's no /cpus in IEEE 1275
+      o ePAPR doesn't say anything about this
+      o Presently, DTSpec doesn't say anything about this.
+  * dt-schema says it's ^cpu@[0-9a-f]+$, seemingly intending to use
+    hexadecimal, but not forbidding decimal. [1]
+  * Of the `/cpus` schemas in Linux
+    (Documentation/devicetree/bindings/{arm,mips,riscv,loongarch}/cpus.ya=
+ml),
+    none mention the node unit address
+
+As of current usage:
+
+  * Of all the DTS files in (mainline) Linux, most either use hex, or
+    have reg < 9 for all CPUs.
+      o AFAICT from grepping, arm and arm64 consistently uses hex.
+      o Most riscv SoCs have <=3D 9 CPUs. The two that don't use decimal:=
+
+        arch/riscv/boot/dts/sophgo/{sg2042,sg2044}-cpus.dtsi
+      o No other arch has in-tree DTS with CPU reg > 9
+  * Of all the dt-bindings examples in Linux, only one uses decimal, but
+    it seems to be unintentional:
+    Documentation/devicetree/bindings/opp/opp-v2.yaml
+  * QEMU generates decimal for multiple archs in e.g.
+    `hw/{arm,riscv}/virt.c` and other places (grep -R "cpu@")
+  * Spike (RISC-V emulator) generates decimal [3]
+
+It could be a good idea to have this standardized, like all other unit
+addresses.
+
+DTSpec says:
+
+=C2=A0 The binding for a particular bus may specify additional, more spec=
+ific
+requirements for the format of reg and the unit-address.
+
+Since /cpus and /cpus/cpu@* are generically defined in DTSpec and
+specialized for various architectures, I believe this is the right place
+to start standardizing this. Even if arch-specific definitions are
+required, at least DTSpec can give a recommendation on whether to use
+decimal or hexadecimal.
+
+Thanks,
+Vivian "dramforever" Wang
+
+[1]: https://github.com/devicetree-org/dt-schema/blob/v2025.12/dtschema/s=
+chemas/cpus.yaml#L52-L54
+[2]: https://github.com/riscv-software-src/riscv-isa-sim/blob/5eeeb91efa9=
+66936ef7b980f5e8dd00ffbe70786/riscv/dts.cc#L61
+
