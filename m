@@ -1,82 +1,67 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E77633C19E;
-	Fri,  3 Apr 2026 18:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570B13A4537;
+	Sat,  4 Apr 2026 08:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775241043; cv=none; b=BjBsTHDOXMncWvSN2tEJ7W50m+vr2od76S7S5NIxM/haaPJbOqDw2uyBTWXbRXOFDIHMXzOSdDz9XYscVlXkqWR4tjzpn7rWMytP3CQHST643BA3bltnvlKUykZLIotUBioHFrzsvoeD3qdiBFbx2lzWsE0ZscQcNOga0duyYhk=
+	t=1775289916; cv=none; b=NwvVFZ9Kc1p5zpfGpijWlQqdGVd61zYy4o6K16UHYi0yjoPVwry46Ws+CxvYMGR2SrPeW10I0NCy5Pch0zuUpmkApmoS5Fy2ND/IgqYya9NYLnHUlIdc8/D9q5ohxogHemGldr+6vkk7Ue0pvj12nvHScutTs8bizENDjl6TsLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775241043; c=relaxed/simple;
-	bh=seumy+Ex/xkdEGqEG0CGT2kkxLikn6nOTs522DJNckg=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=JF4kPrx056WeKhLn3hz5W3o9BZt1xTa40fCGeB7O9xso7PhxibazbGi9IuXC/LmCuZVpzWr8G2G8+7cuINqVLFfgUwKqIv1gxnCB5T3wsxCF+qU7x/bsjFUZNjgygU0FDz6KTn+rmoA7oG04jcAfEeoOcJYAZdMaB6ynsL8ihLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5Y3EZmA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1775289916; c=relaxed/simple;
+	bh=+ZsFuW9tk4hpboN25ffYwk5fs+8ZFTtpTy5hNNCs0rg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f+ogYboZCaGR2ylrJ1kRcV375+Adk1WQULlEzwKQuU+tj1N23jXhmboM9sVFiSl03tJpVLwc/O5SrAit4FRsgV3WEnsBBKLXxtlASfOOjnWZ6Gf/2zNdD/FPQbWelRQ5tv39SIXdlLX5S07QJvaE0QD45I0FeHLUpif8xmHoZgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Msh7SXqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5Y3EZmA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87E6C2BCB0;
-	Fri,  3 Apr 2026 18:30:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Msh7SXqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A49E9C19423;
+	Sat,  4 Apr 2026 08:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775241040;
-	bh=seumy+Ex/xkdEGqEG0CGT2kkxLikn6nOTs522DJNckg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=c5Y3EZmAaJfU0qvwu6OtHikdYU9/ckZeC7ffNJeF4CR+o7CPSTAXhIKj618lgIzLb
-	 DS905l5kvPGhtzYxSXSKs5pZxrlUfAFO2Nam0nWpsAa35jhhF0oSlpJToajlEt0n/U
-	 cqR6fyHzYpaX/j4ELCh1JV6OMLRBBDwOKuBNfgCuDhb+p5wGk6YB05wVFbcoEhNLsX
-	 YHTTKaKCgOx2guDFkfZ6rPXMR2x2yfOYfrffjb//RHSeIHXdyKGJBu/Z0U2NoVyLBf
-	 oGufvZSFp8St9ACmCknWEgLZJ5Z4F0kMZiwXW+YQ8g3UTGqICNnR62NgsOl9O987pO
-	 CW5sjiBwSpmcA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id B9F933809A14;
-	Fri,  3 Apr 2026 18:30:23 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1775289916;
+	bh=+ZsFuW9tk4hpboN25ffYwk5fs+8ZFTtpTy5hNNCs0rg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Msh7SXqaYc4dEhC0eWoa9RuY3A/5Y3lbGZPolVZMuBeFMLMTY++zEal6AaERDxIyp
+	 EbLrx+23Td8iphI2FqP+xkP2Wbj1DHHB8EA6suyDLv7rhbzueRrPER9cvRDhW3Vrp0
+	 GwIb/iOCbqns2to1L8MU5ERT1XUJKGitfRdNGZ0sQ2BU2YreXzafQ/Mu5Bvc/rKYDF
+	 1bQaLHrPSETEN8+Yu3pWtueuiwlL+ladx+2fKkZgfhLueyRrdr86ROtvZ4K2OGJ/ML
+	 f1LtmVDt1t2NSV5C51QF1XLAAbJsuJNxtLQ/S2O60GBbz8VE1gHvGZFwZvxNTONS7R
+	 X42sBlLXLMelA==
+Date: Sat, 4 Apr 2026 10:05:13 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Joshua Milas <josh.milas@gmail.com>
+Cc: tglx@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, pjw@kernel.org, samuel.holland@sifive.com, 
+	unicorn_wang@outlook.com, inochiama@gmail.com, daniel.lezcano@linaro.org, 
+	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
+	liujingqi@lanxincomputing.com, alexander.sverdlin@gmail.com, rabenda.cn@gmail.com, 
+	dlan@kernel.org, chao.wei@sophgo.com, anup@brainfault.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	sophgo@lists.linux.dev, hanguidong02@gmail.com, michael.opdenacker@rootcommit.com
+Subject: Re: [PATCH v5 1/5] dt-bindings: soc: sophgo: add Milk-V Duo S board
+ compatibles
+Message-ID: <20260404-polite-parrot-of-progress-401d4e@quoll>
+References: <20260403111516.379795-1-josh.milas@gmail.com>
+ <20260403111516.379795-2-josh.milas@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 0/2] riscv: mm: Define DIRECT_MAP_PHYSMEM_END, fix
- ZONE_DEVICE
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <177524102228.1406513.593562525700646994.git-patchwork-notify@kernel.org>
-Date: Fri, 03 Apr 2026 18:30:22 +0000
-References: 
- <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
-In-Reply-To: 
- <20260309-riscv-sparsemem-vmemmap-limits-v1-0-f40efe18e3cd@iscas.ac.cn>
-To: Vivian Wang <wangruikang@iscas.ac.cn>
-Cc: linux-riscv@lists.infradead.org, pjw@kernel.org, palmer@dabbelt.com,
- alex@ghiti.fr, linux-kernel@vger.kernel.org, sophgo@lists.linux.dev,
- stable@vger.kernel.org, gaohan@iscas.ac.cn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260403111516.379795-2-josh.milas@gmail.com>
 
-Hello:
-
-This series was applied to riscv/linux.git (for-next)
-by Paul Walmsley <pjw@kernel.org>:
-
-On Mon, 09 Mar 2026 19:09:36 +0800 you wrote:
-> With HSA_AMD_SVM=y, RISC-V runs into the same problem as arm64 at one
-> point did [1], where it tries to use a struct page that is outside of
-> vmemmap. See log near the end.
+On Fri, Apr 03, 2026 at 07:15:12AM -0400, Joshua Milas wrote:
+> Document the compatible strings for the Milk-V Duo S board [1]
+> which uses the SOPHGO SG2000 SoC.
 > 
-> On RISC-V, the actual mappable range of physical addresses is dependent
-> on the current MMU mode i.e. satp_mode. Define DIRECT_MAP_PHYSMEM_END to
-> expose this information to get_free_mem_region().
+> Link: https://milkv.io/duo-s [1]
 > 
-> [...]
+> Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 
-Here is the summary with links:
-  - [1/2] riscv: mm: WARN_ON() for bad addresses in vmemmap_populate()
-    https://git.kernel.org/riscv/c/49a5cb2dc86c
-  - [2/2] riscv: mm: Define DIRECT_MAP_PHYSMEM_END
-    (no matching commit)
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Best regards,
+Krzysztof
 
