@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8AC3A4525;
-	Sat,  4 Apr 2026 08:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC1D277026
+	for <sophgo@lists.linux.dev>; Sat,  4 Apr 2026 15:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775290214; cv=none; b=bNgTUgcWsZHoTk1PG1vN+Vs5k/jnmJzstNfx/wcAzOouDGHvRsvIfyQ9XnSPceEfhzig5qx0gkAdHnVKx0RS28dV5vO1lzA1rf5MZWWPKXqmqFRNmFldT349ch3m1egPYR59/NYcgwWLovQBAc2eIbPW2u3D1vy+Q0yZZ0ThQME=
+	t=1775315914; cv=none; b=LhpRYbLMT1vkDiQ9qYofd6AauO9FA7IahwVm/xzJgr630ZklsxhQgRAU+fbG0bbO/QRMj0Hh3AbZ7RKlOeVFC6NNjujRpq/y+VLomNL6+xRlFGQwNOHP0t+SCeSM+1w7Icz40vr/bvwy9OPazPaqoVJOw/5Hbarzd6Lo6NvSjzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775290214; c=relaxed/simple;
-	bh=0GCu5nkM0KBp8/WXOLonVDg5m0C5kdhGNfwrss8y85U=;
+	s=arc-20240116; t=1775315914; c=relaxed/simple;
+	bh=sfics3gcx6ewjjKwTOJ2rCkuCBEKr9GefJzlW0cJEQE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ly9dWnFv4/NOxVHVpK95cbPq/8ug7wG2lQX29iX6T16GCoyFUuh/myZTsGYTGhnyl9tMPbkyKTF638Q++qssh2dhGjKcRKUeFDOhRqvtoANqnhLx809zMfI6zxVoLbHEMMNRjJkureUoKDj12cZJ5Q3gWTcDOew+fq5cFu9VJD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZ0FcM3f; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=I0hRNWZe9Mh6/7loao36NNAl7i3zOvDHKJaVLux2/95CiJ6oUo88R+cW3Sn5Oo4TG9IszkhMM1hsJ0xrkzGDJc14ZmGnUT99+g7pshuQf+QlqDrDIs10OEv8DjXMJZhAc5lVB4HhGtxCRGKzkHgfN39dexv1D3GblqXQLvoGPUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m34AcMyJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZ0FcM3f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB96AC19423;
-	Sat,  4 Apr 2026 08:10:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m34AcMyJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3592C19421;
+	Sat,  4 Apr 2026 15:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775290214;
-	bh=0GCu5nkM0KBp8/WXOLonVDg5m0C5kdhGNfwrss8y85U=;
+	s=k20201202; t=1775315914;
+	bh=sfics3gcx6ewjjKwTOJ2rCkuCBEKr9GefJzlW0cJEQE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tZ0FcM3fy6etdxKm2j9/6E0S+sOmVswILZRMTN0kE2Y6tv8SFCJnZ7HxLHQ7HwFnZ
-	 GSYyGO8QDhkn+Xt4PTmqdeDi7Qhgib7KEoO/EKjm3biBCBWhlO8rhiuA2MZ2zdL7m0
-	 7v7oZmnKzI0hoLCHKQ3P5W0YqKS5UKrR/CZi+X3pSOIqB5OTg8WfZoa0PK27Nw4TnS
-	 jZymhR9dX1P7HX/B9RHNFo7DB9+hqva8ge1/9bTkiIm7VhOxiniA2vfz3bld+d4K6w
-	 weg1O1sbRNiPztXCikFw5eIdEnJxpXqtbWIF1Fg7nhOeOxGnKbt8Q8QUGx7wSiKkLu
-	 oxXGCKtgov5eQ==
-Date: Sat, 4 Apr 2026 10:10:11 +0200
+	b=m34AcMyJ0jEtOTzP9OesH/iBIpXGqfXSA/nU28tl7SZvejC4IJTQxodPPy85sJM2K
+	 5mkufD9/tjy81w+oPkSd19B+bTst5z/HuMblhTpsU3HNe5O2ri3d2o835npA7iv56V
+	 LlRqy4KUcuxhunxaV2kB1FHvfKPiV1BX2NM4Rtf1BHCT3rnjASMxIzEr6fP8ZdDblS
+	 XQC0XA8lgBY3QpLBZFRYox5yW4xbf54uaK80waqlB3gSRw40junHAm3YaYqMaP2NIF
+	 OqF1ULpuGhSgV/zZZZYLwcDk8I02zgVjvqMZbit3kwoD6ixOx+Kby/t/G66xN5Yxo1
+	 YNZ7GdOdttt+Q==
+Date: Sat, 4 Apr 2026 17:18:31 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Joshua Milas <josh.milas@gmail.com>
-Cc: tglx@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, pjw@kernel.org, samuel.holland@sifive.com, 
-	unicorn_wang@outlook.com, inochiama@gmail.com, daniel.lezcano@linaro.org, 
-	palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr, 
-	liujingqi@lanxincomputing.com, alexander.sverdlin@gmail.com, rabenda.cn@gmail.com, 
-	dlan@kernel.org, chao.wei@sophgo.com, anup@brainfault.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	sophgo@lists.linux.dev, hanguidong02@gmail.com, michael.opdenacker@rootcommit.com
-Subject: Re: [PATCH v5 3/5] dt-bindings: soc: sophgo: add sg2000 plic and
- clint documentation
-Message-ID: <20260404-rustling-shapeless-ocelot-b2df71@quoll>
-References: <20260403111516.379795-1-josh.milas@gmail.com>
- <20260403111516.379795-4-josh.milas@gmail.com>
+To: Chen Wang <unicorn_wang@outlook.com>
+Cc: soc@kernel.org, Arnd Bergmann <arnd@arndb.de>, 
+	Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>, 
+	"sophgo@lists.linux.dev" <sophgo@lists.linux.dev>, linux-riscv <linux-riscv@lists.infradead.org>
+Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
+Message-ID: <20260404-humongous-mayfly-of-fortitude-5f087f@quoll>
+References: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -50,19 +43,53 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260403111516.379795-4-josh.milas@gmail.com>
+In-Reply-To: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
 
-On Fri, Apr 03, 2026 at 07:15:14AM -0400, Joshua Milas wrote:
-> Document the compatible strings for the sg2000 interrupt
-> controller and timer.
+On Thu, Apr 02, 2026 at 10:39:51AM +0800, Chen Wang wrote:
+> Hey Arnd,
 > 
-> Signed-off-by: Joshua Milas <josh.milas@gmail.com>
-> ---
->  .../bindings/interrupt-controller/sifive,plic-1.0.0.yaml         | 1 +
->  Documentation/devicetree/bindings/timer/sifive,clint.yaml        | 1 +
->  2 files changed, 2 insertions(+)
+> Please pull this dt changes for RISC-V/Sophgo.
+> 
+> BTW: I'm still waiting for my key to be added into the pgpkeys.git and
+> hoping this will not block my PR.
+> 
+> Thanks,
+> 
+> Chen
+> 
+> The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
+> 
+>   Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
+> 
+> are available in the Git repository at:
+> 
+>   https://github.com/sophgo/linux.git tags/riscv-sophgo-dt-for-v7.1
+> 
+> for you to fetch changes up to 7b159ed9c81cf7e0d0b75666e6548ceface2e1b5:
+> 
+>   riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel
+> number for DMA controller (2026-02-26 06:12:22 +0800)
+> 
+> ----------------------------------------------------------------
+> RISC-V Devicetrees for v7.1
+> 
+> Sophgo:
+> 
+> For CV18xx serials:
+> Just a minor patch to replace the compatible for
+> dma-controller to allow setting DMA channel number.
+> New bindings and driver part change are picked by
+> DMA subsytem and this patch handles the left dts
+> part change.
+> 
+> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+> 
+> ----------------------------------------------------------------
+> Inochi Amaoto (1):
+>       riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel
+> number for DMA controller
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Commit has messed DCO chain. I suggest using b4 to handle patches.
 
 Best regards,
 Krzysztof
