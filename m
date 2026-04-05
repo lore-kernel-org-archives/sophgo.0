@@ -1,83 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F6228BAB9
-	for <sophgo@lists.linux.dev>; Sat,  4 Apr 2026 15:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588261EEA3C
+	for <sophgo@lists.linux.dev>; Sun,  5 Apr 2026 04:43:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775315992; cv=none; b=pkcGQHOLWv90JIC5UF4z3GIOkCLmodpygoE82WMr46I/kBle/nBEx8HsUJJT+wyd5Ne7SFH2rgKJLszMGRuwynclCL5mARPFDIU478GdwaEKwi+Ut8T32M1JuL+VaniTxOielBRh6bgsG/FNU/iX6cWkB689jd4SoW2JWkz9dVM=
+	t=1775364237; cv=none; b=QQlsDiZzeDzOnmYk0W/ky5KNl/uiDECzLQWwCyTOWq/D/jc/EkG5KmJq1yPqZkH2Hd7N7Yf6mQVf5X6zy+kGKzeXcFo4hYjGbFKQkUdDaShdkOVzK6WFU3zQPb/5+Ue3KfUG8oJYSx/d8np+VyY/q+AoyuSKkuOD9j/xU0Mx12M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775315992; c=relaxed/simple;
-	bh=RZpBy1W8ddbDfVqW4Yh7lVZzo1IIk9BJk40f7jgPCMo=;
+	s=arc-20240116; t=1775364237; c=relaxed/simple;
+	bh=xYWWsOBq/IkUyYw0rCAR2gU4/9JzimFlNsdSfiYKC7I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wn46nZt8sAXbu1fx4xy2uPq8MG1PPBmbE+FzAVx9wWGmw/05sE0q8HlzlPZYcRsxPmNkSAt+2zzc9Ant5tuG1W/oQNCUxkKYV3vtI+chyMR15sjA8G1lvv4HqxPb/jW7s98a/2RAYlqB8QtOMXtWRLwH7BgpnQQrdaw2XeyUwa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9rT3Mys; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=qZIo3YVwl9p9FeUk4qQPcYI9leq94CstN6U/zvxVuhp4AkPylsCgth3GoH/QrYfwma6kCOanzCHSYa/5uGjqOWgXdqomaH6/BCuVnDBhm924NNdHOuZaG3gglrL6ELjzll7SPoKt8ADHfa0mQaE9954Q4erwHgJth5GLrzhY64Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gibson.dropbear.id.au; spf=pass smtp.mailfrom=gandalf.ozlabs.org; dkim=pass (2048-bit key) header.d=gibson.dropbear.id.au header.i=@gibson.dropbear.id.au header.b=CkxUvMHE; arc=none smtp.client-ip=150.107.74.76
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gibson.dropbear.id.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gandalf.ozlabs.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9rT3Mys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232EDC19421;
-	Sat,  4 Apr 2026 15:19:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775315991;
-	bh=RZpBy1W8ddbDfVqW4Yh7lVZzo1IIk9BJk40f7jgPCMo=;
+	dkim=pass (2048-bit key) header.d=gibson.dropbear.id.au header.i=@gibson.dropbear.id.au header.b="CkxUvMHE"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=gibson.dropbear.id.au; s=202602; t=1775364227;
+	bh=y7CXeBOuYe7WW5GdJ5bUQa9x8GPB//iu+ag7v6WwImM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u9rT3Mys8dnrL+UZLBgvvxKaSDo6+VTgrt2wP6IMdYbxMIHrXDgBBuqBOrb16jcqo
-	 HA+SZ3HfSbkE1ISXvLb2AClsOMa/yD8FZ7yrs74vrW2tfHti/B0Y6k32QBjnj8RzsF
-	 1Bkx2WMdqSyZrn9ggWUgVJxg0yXodaYaxsB8+OznHYzgj9mI4F3yopcrfNkxKvSWI7
-	 bQ4ah0r7jiPcpsxrwRQr0LuOf9+MdLzPJtrNgsSKPRem6mQKiiiPqEGqiY4vy6BvEN
-	 5BsDVRNtuNmJtqY486oFJJLq19b8lNbJ+/fDsPYgZ/BQCbR/zoq1NeU6wmhkKW5ZCq
-	 uEGFdFHBtWYXw==
-Date: Sat, 4 Apr 2026 17:19:49 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Chen Wang <unicorn_wang@outlook.com>, 
-	soc@kernel.org, Conor Dooley <conor+dt@kernel.org>, 
-	"sophgo@lists.linux.dev" <sophgo@lists.linux.dev>, linux-riscv <linux-riscv@lists.infradead.org>
-Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
-Message-ID: <20260404-accomplished-rainbow-dragon-fce194@quoll>
-References: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
- <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
- <ac7rV0xGGVmxT-V4@inochi.infowork>
+	b=CkxUvMHERx8K+4quCntCV8tA+ksMqAuXA21UMHBASyuWyc7WPF5uaLSY6HVtiLsa7
+	 FLNsPC//21tEB44uSbO6/Ck0ilqvcf4IJEhpfd6iWx+ba+5S18NN1qK8rcJhQq/lMW
+	 vPzM63K2ytFabUDmmpMekBOzl7AzK4NexdULEn62xyBE2V9kFimoGMRWgNgClwttEY
+	 RXGgIOkx/EZAQNz/atdVrcVkKHK/qoz/EWWtCkkjdket3471Bl8qmumi8kuFn3Ifvq
+	 R8Kl0kxeLbikpbCJQVylOzi/As5z3hzFeQawv59/d2uDfLa4hJOp86wcXp16qWEijY
+	 WxHlmQGnBBIjw==
+Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
+	id 4fpKbl6rR1z4wHv; Sun, 05 Apr 2026 14:43:47 +1000 (AEST)
+Date: Sun, 5 Apr 2026 14:43:41 +1000
+From: David Gibson <david@gibson.dropbear.id.au>
+To: Vivian Wang <wangruikang@iscas.ac.cn>
+Cc: devicetree-spec@vger.kernel.org, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>, devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org, sophgo@lists.linux.dev
+Subject: Re: Devicetree spec: Specifying /cpus/cpu@* unit address format?
+Message-ID: <adHofcKAr7C5YCSA@zatzit>
+References: <00ddad5a-02f5-474e-af9c-11ce7716ddfc@iscas.ac.cn>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="F/G3fJTJhrM6n45B"
 Content-Disposition: inline
-In-Reply-To: <ac7rV0xGGVmxT-V4@inochi.infowork>
+In-Reply-To: <00ddad5a-02f5-474e-af9c-11ce7716ddfc@iscas.ac.cn>
 
-On Fri, Apr 03, 2026 at 06:25:32AM +0800, Inochi Amaoto wrote:
-> On Thu, Apr 02, 2026 at 11:43:43PM +0200, Arnd Bergmann wrote:
-> > On Thu, Apr 2, 2026, at 04:39, Chen Wang wrote:
-> > > For CV18xx serials:
-> > > Just a minor patch to replace the compatible for
-> > > dma-controller to allow setting DMA channel number.
-> > > New bindings and driver part change are picked by
-> > > DMA subsytem and this patch handles the left dts
-> > > part change.
-> > >
-> > > Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-> > >
-> > > ----------------------------------------------------------------
-> > > Inochi Amaoto (1):
-> > >        riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set 
-> > > channel number for DMA controller
-> > 
-> > Doesn't this change break backwards compatibility with
-> > all existing kernels?
-> > 
-> 
-> It will break if a old kernel with the new dtb. But I
-> think this will break nothing since the DMA device is not
-> used by any devices in the old DTB. And if a user force
-> the some device with DMA in the old version, it is just
-> not functional and lead to a broken system.
 
-Then commit msg should explain that old compatible just never worked.
+--F/G3fJTJhrM6n45B
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Please update the commit msg and fix the DCO.
+On Fri, Apr 03, 2026 at 06:06:17PM +0800, Vivian Wang wrote:
+> (Also posted at: https://github.com/devicetree-org/devicetree-specificati=
+on/issues/86 )
+>=20
+> Hi all,
+>=20
+> Presently, there seems to be some confusion in the community about the
+> format of unit addresses for "/cpus/cpu@*" nodes for a CPU with ID > 9, e=
+=2Eg.
+>=20
+> =A0 =A0 cpu@??? {
+> =A0 =A0 =A0 =A0 reg =3D <10>;
+> =A0 =A0 =A0 =A0 /* reg =3D <0xa>; */ /* This should be equivalent */
+> =A0 =A0 }
+>=20
+>=20
+> Should this be a decimal "cpu@10", or hexadecimal "cpu@a"? I can't find
+> any explicit specification.
 
-Best regards,
-Krzysztof
+It should be hex.  That's a general convention for unit addresses.
+Before flattened trees, OF essentially never used decimal
+representations of things.
 
+--=20
+David Gibson (he or they)	| I'll have my music baroque, and my code
+david AT gibson.dropbear.id.au	| minimalist, thank you, not the other way
+				| around.
+http://www.ozlabs.org/~dgibson
+
+--F/G3fJTJhrM6n45B
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmnR6G4ACgkQzQJF27ox
+2GfawxAAniXNBqMHwatrWhZhfnBwYG+zYbBqBPr3X8wjwwpBWhglY0IXR8XkdoUk
+Zn0gfxCLzh1cKBLzSlDvXte2b1FFcgIPu6V8jEV9kdYkQrClCknZA7KRjmZlDni7
+xpUXHgLW2SZDHT2d9Ao3Rg/MWqrS+DAUPfzwElR1ZLIHXM0FRkREpnJfWFja9m/0
+aH1JgDwHz+FUGUieeh9RrdnyWVjl5rdlO8DAogTFNOgrn239rsv7El/fm/7aZSvc
+iX+XKowv2EW2xIk6/UzaoHFXQ4FQN00NIZPZnfaxO7txWzpyyqH+NNoKYw9257zC
+83/hPTWsIzYQ2jSsXKbRG3WQomA+gpkQ28XW7fPHOCNWLLnleSIYhHAK4iWCwlwH
+41VhtpLiB/zn7NiS+t/rto0aGC72AW139lcCoJTtS9BsvOoOVt9PG3Bje23v1NRs
+/MsLFAtesDSRj/xNMGQzRag2NK9yRd/yh/Wm2PdmT7LmDHUrukmjHlwGLz85/Ck7
+s+2pzKzVRYsiMbqv7m3SPWtWTl6y16tin3KHcBZx+V4eh+oT9ZI6dDTfC1YqvNuk
+ywT5aHxWfDeFvPPklQC8TzrTwK55twcgL3SJ3g5RcmORt1T8+nNRI4zkXZmFzn2/
+aJ6HgJFHo7XBCRGBtuAcI3A7RXAJieqItx8g+O5ER2SfzPBi8FA=
+=Fs1W
+-----END PGP SIGNATURE-----
+
+--F/G3fJTJhrM6n45B--
