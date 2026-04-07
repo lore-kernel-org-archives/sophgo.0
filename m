@@ -1,97 +1,89 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E48639EF38
-	for <sophgo@lists.linux.dev>; Tue,  7 Apr 2026 16:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9266633BBB1;
+	Tue,  7 Apr 2026 16:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775577726; cv=none; b=otdpK0mG1k4kxeW1rAUMbsxlXmz0bg8T/loZK1QvmqDcu3OMKka0NSLOP4VDNZ2MWsxLP+8JdO8ujh9/aq6y6bUQECh85LgfohIC+pmtiVh1c+DOSOUmm4Qvei8hquDRVdXwQkkvMBEoQ+jDN5T/Od25ZxP8FIFjNbip0WEGlFo=
+	t=1775579477; cv=none; b=aaqYCRxVFvYr6h0ApB3A4kkkRSFrWtEpnreqd4/4CyxG8UaBRzpcAbevcjmpIjYlIpL45qBhxBnX/EN1WKin2dmU4rs5hXWujMToIgjnz5PifoIh4CZdsCEYovAFpOeEjhp1jX1+yfqHwjRSG1jnNW9fhl0k2cbJ3fMrAb8qo0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775577726; c=relaxed/simple;
-	bh=Nr4k76+J1u6CJEEdYYHDVJMf0Tw9s5qO6XDeJjFJGKA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DXmtoIK1iYp6M//gs20FDfnStYebVA1Kht3j7hucPhRb8NVwBXGAwBcZBNCnu42zZGuXlCfNI3wVZfGJDg3CMLbq1AsSRBQz3FZNQYSnApyU7jGiWtffU1dQCCqhEQSlDVndJOeMoyzxQN5KH7Ot//1lqD2GhI7zh/T8oSxVNjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from edelgard.fodlan.icenowy.me (unknown [112.94.102.43])
-	by APP-01 (Coremail) with SMTP id qwCowAAHsGtrKtVpwzeIDA--.50509S2;
-	Wed, 08 Apr 2026 00:01:49 +0800 (CST)
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-To: Thomas Gleixner <tglx@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	s=arc-20240116; t=1775579477; c=relaxed/simple;
+	bh=G2MiPboFG46RndYOGANWaYMGw9V2r1sIVseGNfWf7K0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L7oFtr+3Bj0q+pamwome26kZP55zn9Poto+JEmPAbfgO0xaDt9zUrdjXHB9Vjjllhc6CsSPxdcSYrLKbL26bG4WMz7OS/MNxO3N2iEdxc+nsnWB2dsUUzjjE9mqvzRbBpfz4tvsp87nahrkqOYGwkPAV8W+PRgJIpCRXw334prE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k431tsz3; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k431tsz3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC821C116C6;
+	Tue,  7 Apr 2026 16:31:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775579477;
+	bh=G2MiPboFG46RndYOGANWaYMGw9V2r1sIVseGNfWf7K0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=k431tsz3kY0MZ2I8gQAXrhxLGDcuwVqRCjo69LTQxtbKr4sp0EBiD3lmKe2yAorif
+	 1UvUSvba3pfX9xf4McPDbK5Bnr0QFL0r7EumXNWtERJPbhYcMldZ91McbkugyqCmII
+	 RD9uyMzGQHvxSsYZWUWQCQBSNSZhCNdotG4+TAJ5J5Fp7P+jgX1iZRAflFdJ39Fe42
+	 jiRNDIzFRIsY289+kvB4vOdirbJ5m/wmp0exOasV8y4QqBakrLvfcLB48SeZeAjTFp
+	 ALDGAPQIyu2MF+/0Aupe60NeayHQcLrqZ034iljzVmcqNSPKCpFGRhG8nrlTgevz/8
+	 xG7VnKsCqg4/g==
+Date: Tue, 7 Apr 2026 17:31:11 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>
-Cc: Han Gao <rabenda.cn@gmail.com>,
-	Zixian Zeng <sycamoremoon376@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Subject: [PATCH] riscv: dts: sophgo: reduce SG2042 MSI count to 16
-Date: Wed,  8 Apr 2026 00:01:43 +0800
-Message-ID: <20260407160143.1182430-1-zhengxingda@iscas.ac.cn>
-X-Mailer: git-send-email 2.52.0
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Han Gao <rabenda.cn@gmail.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Guodong Xu <guodong@riscstar.com>, Guo Ren <guoren@kernel.org>,
+	Xiaoguang Xing <xiaoguang.xing@sophgo.com>,
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+Subject: Re: [PATCH 2/2] riscv: dts: sophgo: sg2042: use hex for CPU unit
+ address
+Message-ID: <20260407-shine-distrust-0546884c2535@spud>
+References: <20260406232655.144043-1-inochiama@gmail.com>
+ <20260406232655.144043-3-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:qwCowAAHsGtrKtVpwzeIDA--.50509S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7GFW3WFWrWryrtr1fGF4fuFg_yoWkGFb_Cw
-	1fCa4I9FZ8Ga92kF1kZrs5CFyUZw4FywnYy3s7Gr15Ka4Fvr1UWFWqqw4jv3WYkrWYgryx
-	WrZxtFW8Cw17ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb3xFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
-	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
-	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
-	Cr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
-	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
-	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
-	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
-	n2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
-	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
-	17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
-	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
-	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
-	C2KfnxnUUI43ZEXa7sRidbbtUUUUU==
-X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="kL4vNa0dNHftN6QI"
+Content-Disposition: inline
+In-Reply-To: <20260406232655.144043-3-inochiama@gmail.com>
 
-The SG2042 MSI controller has one 32-bit doorbell register, and each bit
-corresponds to an interrupt. At a glance, it seems that the MSI
-controller can support 32 interrupts; however the PCI MSI capability
-only supports 16-bit messages, which makes the high 16 interrupts
-unusable in such way.
 
-Reduce the MSI count to 16 to prevent producing MSI message values that
-cannot fit 16-bit integers.
+--kL4vNa0dNHftN6QI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
----
- arch/riscv/boot/dts/sophgo/sg2042.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Apr 07, 2026 at 07:26:55AM +0800, Inochi Amaoto wrote:
+> Previous the CPU unit address cpu of sg2042 use decimal, it is
+> not following the general convention for unit addresses of the
+> OF. Convent the unit address to hex to resolve this problem.
+>=20
+> The introduces a small ABI break for the CPU id, but it should
+> affect nothing since there is no direct full-path reference to
+> these CPU nodes.
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-index 9fddf3f0b3b99..9f1820a7b5a9f 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-@@ -234,7 +234,7 @@ msi: msi-controller@7030010304 {
- 			reg-names = "clr", "doorbell";
- 			msi-controller;
- 			#msi-cells = <0>;
--			msi-ranges = <&intc 64 IRQ_TYPE_EDGE_RISING 32>;
-+			msi-ranges = <&intc 64 IRQ_TYPE_EDGE_RISING 16>;
- 		};
- 
- 		rpgate: clock-controller@7030010368 {
--- 
-2.52.0
+I don't think node names are abi anyway.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
+--kL4vNa0dNHftN6QI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCadUxTwAKCRB4tDGHoIJi
+0mnXAP4p4InN8dLHh+QucYIvwi/E45p5xHJJmMUsXLdUAW647wD/Uclt3M0D4j9S
+6kGsoO6Dy+s6jyv7qUmuspi85sTUPQk=
+=hnz/
+-----END PGP SIGNATURE-----
+
+--kL4vNa0dNHftN6QI--
