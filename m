@@ -1,1179 +1,194 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010013.outbound.protection.outlook.com [52.103.67.13])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B893A168D
-	for <sophgo@lists.linux.dev>; Mon,  6 Apr 2026 23:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775518059; cv=none; b=CGzqfnHtImeb+LkcB2m5IVmWlOF2rVrFa18cbuZ++oKCnGMIAUOzkxSOQRtJufwqueg1XrOd5lVw1R+cI4jPlKdbYAB+gsQB1VkP+NTaUcc+qRxbzSu8Nm472R8vh7nezl2fCN7mk9ObSbDqZ9hnpz6cuoZoMFYozSdox8p37V4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775518059; c=relaxed/simple;
-	bh=nT7Zud/EpjKKscS4250p8JOx/E7RDu7ue1mCTK1lf44=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbetvyuXWhFQzAF5uGXYe7Hosd8LJjND5qT6+FF90+JkWR6HLVD3JW1Kxzy36ICSi25zzRlanHkL8V6eJcByAU3GcQ1Nc9BsdS5S6/IW7kJVytGLDhO/iYTb6eRKeSP2scV5na1BlXlcUkWxKewS8+CtneU32zdRsv8s7XVITHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZzvNbQob; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1436E3BB4A
+	for <sophgo@lists.linux.dev>; Tue,  7 Apr 2026 00:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.13
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775521140; cv=fail; b=gQ4PEC0jxVdqJT3Zl1rJkwRp0185fjtBJ/dbTZ2qX6xNZsVmXTdEBtsQ+l7qN/B9zkY9KKJlOr+k/sEu2WaRpvTi6iawU5IboL1cV0maukISQj/9Q/eX3OzhUVAtMcZZPCAj5Fcn2s6+mGSVLfS0EIRKTKGG8H/MZCmParH1wIU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775521140; c=relaxed/simple;
+	bh=Tsduc9xXB+3dBLoaLxtVmCMXzramrKWgRxpUM9Dq/qw=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=DTXPITrHRufVCvUuIV1rMGll+OXqmOaTruG89n3A8jwZe3pEGzhQcHBUiYQu7oGaMRdKQP4TeSUgcBL1sfLswKX5pQnLwOwA77QJAqp+svFH26eHaPHqsvnOq49R6j7PMGsqdPxYuHkioQaIwllVC+PdzI/2EI3gO+Xwdx6otyg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=b6lWay2e; arc=fail smtp.client-ip=52.103.67.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZzvNbQob"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-82ce0a9b41aso1605604b3a.0
-        for <sophgo@lists.linux.dev>; Mon, 06 Apr 2026 16:27:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1775518056; x=1776122856; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x3f3IvEQ/A9qTbWUIWDgWrz/5NgJrAUfWtzoVKgbG7I=;
-        b=ZzvNbQobUJAeoREBtu6U7d+jpHxhSvQYwlXWKzgz16/aZzXbwi0B+goPOqz+PN+cnc
-         477H98VY96LAgl21wecHxbf6MoqE7YB+WEpsr0duIyjrBf/pXQSzDiaR3LzsDuezqS8h
-         a2iuykYgia3NQ0OwvKHRHp95lDjIvdNvAh0rgnb6DwO8PRg1sQvz9m1sNYc0yqeps88u
-         UTvimA4lMwSxe9uXvxtrEGpCaPpJJDAvmDzvjGb2JSreD+uIerQ8Ud+UN4RBcjjlhtf+
-         M/NagHkjNVGUoTif2oausGMHHGGoG95pnUASfw9SNPVgPFoF3FUv0Uq6yOaeLsTF6woD
-         LrWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775518056; x=1776122856;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=x3f3IvEQ/A9qTbWUIWDgWrz/5NgJrAUfWtzoVKgbG7I=;
-        b=Eyn9cTfB4yFNa/L4eedlnKtWPGN9sQBjMAj6xMRSA3uP5m9/rJ/FSVtewGiDBSZ232
-         zBUbVfsc/6A9gsy1LY7R55NZOrXfrrmkKptt04WYwa4T1Ms9Gf3u99Wmort53UrVYQ/p
-         I1mcIyOCDXz/l3Ngi6RU6AhXtj++ZFFoUh+5BKGa6B/pi+J2jIEA7UKs6cI7EPgyuLTX
-         tCweiqQalKu417vjr8FwF67OsZZrn4h5Okvr/+8XYLd7le858mxjgI+ecbI6RELaMLmH
-         9t25YBD28AvDDUC09It3LzmPrGxu4kpi1KmS1DnQd6lDnqO6s0eaagIMOzyImb7c2XyD
-         CImw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZTltnE7ELmqTpNABs0bIYfVm457zbSPitXk+cWE8XSfhW3ZG2TE0SKewkh9VyNJzNaP017fc=@lists.linux.dev
-X-Gm-Message-State: AOJu0YynZ40mYH1utqV6sefKdm5izZpwv32np7DVm6nQcPfad057dM37
-	+tvSO+rN+ri/xyfiRdLM0CdNfYy4hxxJael8WYYIdM/2H3rpgvU2j+d7
-X-Gm-Gg: AeBDievA4pA2feDNwdxcuVN765rBupi+6paSSx9YrpZzfc4cpYq+9lTcOEPVt4ERkwC
-	mVdnaoP7I+yqNGd/5S69YTClSW4q5G4WzWvKPyVETWipM8flMAdr5C8WqeouL/RUiqkFbBiwasZ
-	pS6OOR+KmtgrXQdQZKmuLJxl/GgltNTrSXbTAHZZAC1ApOjUvJizXe6P4vn5qlFKhp5q8bs+f0F
-	jvVPSncr6O4nhVbQ4GWpoy3Q6Z9rE7MHp3pxorxQgZ+ZV9yIXS7LV/IJc3rE/Ftuw2FrmDkCNdI
-	s6QA6Y5ZN5KHCOFwk785KS7oPdtk2GnAlES51kvqeioflIyz8nzzfNpl8VVn/VP+O/licR2gZv1
-	a5aLNZG536cv6jg8P63+JEPT4307azgUjzMMVsm9ewiFQmieduCs5gqOECvZYdfj108t5rr2nVF
-	BQhEaz9Ca2dvylUuP8ABKZ+Vc=
-X-Received: by 2002:a05:6a00:848:b0:82a:7471:eb90 with SMTP id d2e1a72fcca58-82d0db71c03mr16714569b3a.30.1775518055889;
-        Mon, 06 Apr 2026 16:27:35 -0700 (PDT)
-Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82cf9c706f7sm15159628b3a.47.2026.04.06.16.27.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Apr 2026 16:27:35 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Han Gao <rabenda.cn@gmail.com>,
-	Nutty Liu <liujingqi@lanxincomputing.com>,
-	Guodong Xu <guodong@riscstar.com>,
-	Guo Ren <guoren@kernel.org>,
-	Xiaoguang Xing <xiaoguang.xing@sophgo.com>
-Cc: devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Yixun Lan <dlan@gentoo.org>,
-	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 2/2] riscv: dts: sophgo: sg2042: use hex for CPU unit address
-Date: Tue,  7 Apr 2026 07:26:55 +0800
-Message-ID: <20260406232655.144043-3-inochiama@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260406232655.144043-1-inochiama@gmail.com>
-References: <20260406232655.144043-1-inochiama@gmail.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="b6lWay2e"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OHUmb7lgMaKnHvxL4H4tD/n/WSTEEuBBs/qPrVwZ6F2ZnJSaXitqUj6S+QRqMabaR09hPBUs4LA4SbsmcoOlp6j61ZH67I9m4kNwMPMUjFbgYbiv4H6cJeLtVFgBMT+hC+04TCP4yDNysHrPUP6UCvdbZ7WCq76mk4JUymlTS2Hivd0MdSEmAiuIcBNbJcq8GTYM/inEqBn59IK/XbgekFAlZsbVlHCJH1pBBgnIgRRnrLwaLj+8B+g9rH/0W0clWPDNM0gvoz1ieUeeCmEG1GDEWPnA5ZEDbj59/F5aCkHdQxb/TAyMUCt0hV+rRTbitCz6lymd+BoKZWPZOz/rqQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s/N2Eomt0vbmQ1jneRWKV1BTYqPHHkykDsLczmMHp5w=;
+ b=Ddcmi1Vc1boxyXuI7UQJJuS7QIcabxDM+l2LHlFEBXc+F66svfpMkvj3kl5SE+XkZ9EQLWizMakEvvpVPRFYei2z9kKZYa0JwmKDk3l+KQJSBtSAutH5CRodRRmZAJjgxB36CfpwqHr7LjgqXc6h5xjnmrCBT//7dofQ6Utd1QkZRmiWvLFEd2XNBOvjNi4f9I8gYLnNeAOqLDM8pYLvSqnv/Y3LQq+sLmUKKX1W0riSd3K8KnFVC9quJWrezqKrj9dYQ40XlqIkR+8GYlXmkgQEiJa4vY2TAyQZh3FrKzcntSYZAKFHgxTSwVATXjpLnJucXnhKR4WaKpdMW3kGCw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s/N2Eomt0vbmQ1jneRWKV1BTYqPHHkykDsLczmMHp5w=;
+ b=b6lWay2e/2YeXGyQXFo58RXaJ1CO3aY1NZfWbnP6sFu1T6VXWo8hXeP7SBESY1h2Gh8ODucEK/9xLJMwTsvTZYyX4ImTrekkiuXM5zFN+f9pNNUv4kOnClq+HgpZGiNfAJc/C/Zw2cJK9qexqa1bYeVxtcdZNZ9amiY25L70RlJjG6DK+UC1wWH88EUgNGk7NfmeBez0SalVaJDD3MuuGcqohftkQv8rtBkg06MoQYez1/saOzMm5IUpKxO6pVdm2XUawo3d5MdVJW2rKdkjyyoHCuGrZ9fhT0B9rk2673Wao1nwgcRm8RLAGTC8rmFPULvVaPC3/nYOq8D9p6UFqQ==
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18) by MA5PR01MB12608.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e6::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.18; Tue, 7 Apr
+ 2026 00:18:53 +0000
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4]) by MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4%6]) with mapi id 15.20.9769.016; Tue, 7 Apr 2026
+ 00:18:53 +0000
+Message-ID:
+ <MA5PR01MB12500000EAB10E45069C847C1FE5AA@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 7 Apr 2026 08:18:50 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.1
+To: Inochi Amaoto <inochiama@gmail.com>, Arnd Bergmann <arnd@arndb.de>,
+ soc@kernel.org
+Cc: Conor Dooley <conor+dt@kernel.org>,
+ "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
+ linux-riscv <linux-riscv@lists.infradead.org>,
+ Krzysztof Kozlowski <krzk@kernel.org>
+References: <MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+ <f99471c2-4b7e-4475-af71-5c0ac4c92809@app.fastmail.com>
+ <ac7rV0xGGVmxT-V4@inochi.infowork>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <ac7rV0xGGVmxT-V4@inochi.infowork>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SEWP216CA0021.KORP216.PROD.OUTLOOK.COM
+ (2603:1096:101:2b6::8) To MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18)
+X-Microsoft-Original-Message-ID:
+ <18b518c7-77b9-462c-b7c2-3c21a5a56ae7@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MA5PR01MB12500:EE_|MA5PR01MB12608:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3db10496-9089-4877-b8f2-08de943b4001
+X-MS-Exchange-SLBlob-MailProps:
+	YfhX3sd/0TXC3SDMOKasxb1Truxn0Xe/hbp7ET8AkIzB6ZLCCZZxQtPCdRRwHdpPwwTygVhrTFJIwMaJfMPvkh6sZ3qWuZRUinsQ0l7AoKQJjsXSLOfR94cLWlsodkaGz89s2AS1YOemqplTct23b1XOGXIvgo9jNKVGCY5BaQAfhgbazY/46k3qHP/ZGy7/dWOplS0QVMlIC4OKdk4lI4slpuailuj2PjBO0Rm5XlMWsM81aM+9wBJLlQSGIodIXHqd6aXVt2oV4ZDBA9hIIGVaOj6KBzibyTPcwOA3Fg9eew79Ll2GDAx9GKUfhAtKn4h0DILfX5p4gDhDzlCofjDeZ0autW2oFQcIcNJkSyAB/l290IHS5JrjCqY/0WDZkzm8ZXeg09AWNUzgrdoHVicR1ewWE7zisq2YB2fvwdxbLNEmf9iwCmcYLI4ZS8pWeFfiSNCnSOrPlaZdYzdOIxuGWtanJhuJK8q+wZ6dMTDm45o+Z1vKotZ0t9KziKk6e49K+uC7Sv86Jgp8oOAZXJgAH5kudCqz8ZS4ntVT5teMIyCWN5OXFfo8Bc3LtR9qK37xrZ7RDQ86U5jMKOuC6Rhh2EloNMHz00+Btwm+IqvAHUHTlwMBqGW796O9lXydqZ7pTNd/W+28zFI5/AvkTJBQ6s/oxpAc18I89gHCgZHCp24LMCJMz8mnM5ZLal1cGuJhVg5EGkjRwBYvWsjFT5KLM0ZA68pZLnpDVqDKb8aUMbkQOJRg3bayKP4qx6BekQCu9pzSVhNnC6BUn0ZabSrjotC/tVJSYuI986eVCVU=
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|8060799015|23021999003|19110799012|25031999004|24121999003|22091999003|6090799003|5072599009|15080799012|52005399003|40105399003|3412199025|440099028|26121999003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?aUNKVS9TMGdXYmdTdFJwdGxCcUtyc3krYVRPUWgvQi9PajJhdDNNRDFuc2h4?=
+ =?utf-8?B?YUdsclB6UFlCZmJ6ZVgvVGdVVVpZbStvWU40bVRMVEtZTmVnQkZYbkYxQThP?=
+ =?utf-8?B?MHhWR1E0MGN1L3p4eHE2cG4wdXB0Q1RoYWUwemZHWG9QUlJQbkVNWTFuUmZx?=
+ =?utf-8?B?TGFnekgrRjVXV0p1QUExYzI5RVNIclozSG8zQmh1UWN1Sk5qaHNLTnMxdDRs?=
+ =?utf-8?B?NDNEVGZjamRSNkVJaHkzdlpqcWprdDFSMGdzOGpORHZLN3RIdnFDL2dRa1VV?=
+ =?utf-8?B?VXBTZHk5Z0ZNbjd3cExVSWRJSUUyaTkyajk0M013ZTNMckVtN1oyak5OS2Ja?=
+ =?utf-8?B?eTJ1MzVKTk8xQXY4S1gyb3h2bjEvN0theDh5cDhTa1Zlb2k0UWUwTHpwSVFt?=
+ =?utf-8?B?TnZWYjdZcFhZMnQyMnlGanp0Z2w1eXdkdnRpZ0NJbkZTTnhMWEJ0L05UUjBX?=
+ =?utf-8?B?MTRHQ0JtVGhjZVBkSlI5bGcvSmMwb012YXhSQXFZbXZiMlpFRmxodkNlQWts?=
+ =?utf-8?B?YWVWTTVodmpjZms1MGN2OXNuVXpnZjN1TTB6ZUg1REk4VFRtYUhycGsrbHhC?=
+ =?utf-8?B?Z2ZPbjB6cDliZjhSeEl4T1VLN0VkTDQ1cmRmVTc2L0FPaXNNaFYvS1ZpLzRL?=
+ =?utf-8?B?S01NZ0M3RkE0czNOQ050a2xHK25OVEFHcmxidnlRK296Vm8relIrVjd2KzdH?=
+ =?utf-8?B?RWtCelRDbElKSmZCUmVta2EvT0xXcGNTcytUbFI2MzZpM1Y0Mlp0TzlvR0hq?=
+ =?utf-8?B?Y3VUbktvUzJFOHdFUmljeHdEU0IxVjRENm1TekhkQTdrNEpHR1FqL3hQOVlQ?=
+ =?utf-8?B?S1JJMWUwSUQ2d2NGd3VDQzcxRmFiZjdOSU0zRUlFYWVzZVFQaWNIVFUxdUNN?=
+ =?utf-8?B?WEZCOU1vMjIzTGFjdUEwWXlMN3NhR29FTjNnbmVtOFl2QnlTMXk3MGd0dG1M?=
+ =?utf-8?B?SHNFYU1NQ0g3RHFFaXpsbW1TV2ZmblpOUEdPdXFKWFRVdGRlSjluaXphbDhU?=
+ =?utf-8?B?Z2V3Y0xIYTJ5azBYZURqcWhiNDcwWXBaOFpiblpLYUU5bzZBZGtMclEvb1ps?=
+ =?utf-8?B?WXNUM0FtMjZzWXFwTW9sRTR5aXJ0N0tRSnRMQlQ3bVUxT25KWll5WVYyR2FB?=
+ =?utf-8?B?dGNlNFY0UmhvZjBMQ0s4NkUvUFlGamtPQU5INGhLRDV0NzZha2VTRGUyWFRi?=
+ =?utf-8?B?NFRScGtGSVhxOEp0QStOdWMzeGxEeGROcnBKa1cvQ1ZKUGM1bSswQisvZDRn?=
+ =?utf-8?B?aEpPTXFYZ1RHdzF0RWtMYlgrTmZCU3ltRkRGc25ub1lvTUd2VGZEa1g2Z09S?=
+ =?utf-8?B?d01MdVovZWZHaFNjd09oMVNETUNjU0lLT1J3UkdpQzBXSWNBUW5idmV6S0J6?=
+ =?utf-8?B?ZHdaU281RzFyNWc2SWpaV21BeGN6aCtQbnFLQVhGS1p3c0FlYzQwdUJubytW?=
+ =?utf-8?Q?yVkWAbsM?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?cWxTNm5PdEwxdm9rL1RwWDBtcjFzYTkvRUczOGNuamovZkRXb21aVHJpRFlF?=
+ =?utf-8?B?MXdUM1F4QkpWazJPQk9KQmV3cVhmZEpRTTFHNjRZbWgzUmVaWjlUbC96YUpQ?=
+ =?utf-8?B?YmNkcUx4czNobkZpK0lkTi9mUmM1NXE4dUFJVFFzMGwxWkZIQUgxNTEwUkxa?=
+ =?utf-8?B?b3BEWFlzcGY1ZFREUnNGREpaTEs5ZmpsV3o2N3hQbjR2c1NxbGRvZ1lSc2Mv?=
+ =?utf-8?B?RkMzNXljQnl1MDh1VnRXUVVPUXI5NFcwZ3BtbFZXeEcxekV4WW1iRGVSVS9W?=
+ =?utf-8?B?amZFd3Z3dCtiQWU2THZnK3Q0dFBBUi9QRGIyLzBRQlZCUXFyc3B3UWZwYkVj?=
+ =?utf-8?B?VGRYVk8yZFF3Y2JnUzdvS0RJNGIrREF5dGRYM3NyN01mb01UVTdvZDE4cFNP?=
+ =?utf-8?B?elhHNlYyd0E1TUZ0VHlwSVRtbTUvbjR4RENRU0JZVDJ4alI5NnlpN3Ayd1hp?=
+ =?utf-8?B?ZmxFeGR4dnc1bWNWVDJaeGkwcUk1OHJmVEFKOVFQaS9wUVFXTkV4eU1tcStp?=
+ =?utf-8?B?aDZxUE9FandlUUE3T2QrMC9SN09kMEg5dDhDbjhXNFpxdkNtNkNtRlhyUVV5?=
+ =?utf-8?B?Um5HWCtiWWNVQVVOZE1jOVZNTE0rdGlTbzhLaisxNjQ1clFUak1jTGFSTkF6?=
+ =?utf-8?B?TzNZM2R1ZUpPYmZEZHYra0VHTHcwTlRadVF2WjgvWWUxNGlFU0U5cFdwUVBZ?=
+ =?utf-8?B?YU1Rb0l1Q3dsYVB0MGpEc0FBaEVmWHJmZXV4N0lxbnM2TmpPM1Q5UGk4NzFL?=
+ =?utf-8?B?eEJQWDd6WW5rZEREdmRoZ25aM1pGaVM5bDJFdnorKzFQb04yaU5sTWhsVzFV?=
+ =?utf-8?B?MmhtcDRNUFBiK1B6dDd4bDJTSHV3S1dyWnpTbHdycDdYdWhVbzRoaUVUTVZr?=
+ =?utf-8?B?VWxaT3YrWHUzZzBTQmJwRXBoaGM0TkNEMUE3WHBQcThORkxYR1FORThnTDZI?=
+ =?utf-8?B?OXRyb0VnWUFqaG5nSlo3UHExNzlUSyt3QW5ETk9HQlNULy9aemJua3NVRndE?=
+ =?utf-8?B?MHdEM21ld1VERFlMb29WZE9VcnhUdUs4QWxiZHRwcmVKYWFWTzlUems3emwr?=
+ =?utf-8?B?WjlBZ3YzSXN6cmNpeWJKbVprSjFKb1lJbmZZMk16NUZBNmMrSUlJRkxIbnRy?=
+ =?utf-8?B?OVZ0a01EaHFrTXVjTUhSMXBlRFc0Z2VDTmo2aUpXUHJDemNub2lxUjdudHhy?=
+ =?utf-8?B?YmpPbEhiRVJTNjdEQnVQQnVGY29uNFNrNjN5Um95dTBmNnkwdHQzM3QzY3NG?=
+ =?utf-8?B?S1RIejUzR241UkUxSmI4WlB3MHZ1YjB3MjVGa0srRW9EYzE3Qml0MW1jWmxv?=
+ =?utf-8?B?TFE1YkZvZ21RYm16Rk05aVlxQndRM21ZczdYWjlFdjBhblZYQjdRa0xMVWhB?=
+ =?utf-8?B?aHIxUWI3VVpEclRXeGI2VFREV3FPWE9MOXo0bkxGdHBmdkQzYjJlY09mZ09G?=
+ =?utf-8?B?ZlpOVlRNVDJMb0FseWZuNGVQTEFUaXNHcWd6MkdRM2pPaTc0d3BjZmtxN05t?=
+ =?utf-8?B?Ri95dnNWTFZVVi9ndGNKSXdEWDJLVGdueXhzY2UwY1JJa1psNCtoTmpzWTVn?=
+ =?utf-8?B?QytPVlV0a3pzaE9pSnhsNVlGOFpCbjJRYURZMHF2RFJ3L3RJeXE3bFVMWGdY?=
+ =?utf-8?B?NWdxcWNHemJsWSt6SWRScWpYbzhJUWQ2K2NkcFBuYzZySVNPV3NqVDc4ZjhF?=
+ =?utf-8?B?enQzZk9yMjVIZDErOXIxQkRTbEw0bDg2dDJOTStFZDZHRkxFWVI1UXQ3MXFW?=
+ =?utf-8?B?SCs5WHZWNmFISzBXblZ5RXpWYnExZmhSZUNvWmFjejdXdTVQWTY4UDdzS2Nx?=
+ =?utf-8?B?Smx4b1ZzVVhwaUIzRmVRUDYrOEEvdFBtOTg3TkFJUWdwTExVYkxrN2s0Y3Vx?=
+ =?utf-8?B?MTVZZTlXTWdjRnhYZXJPT2JEaEwzM0xSYStoQ0JhZkZDVm9GNTNlRklRd0tH?=
+ =?utf-8?Q?8r2rviQTjW6kdRJ6P3nm7mGuiHlXdPOO?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3db10496-9089-4877-b8f2-08de943b4001
+X-MS-Exchange-CrossTenant-AuthSource: MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Apr 2026 00:18:53.3524
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA5PR01MB12608
 
-Previous the CPU unit address cpu of sg2042 use decimal, it is
-not following the general convention for unit addresses of the
-OF. Convent the unit address to hex to resolve this problem.
+Hi， Arnd,
 
-The introduces a small ABI break for the CPU id, but it should
-affect nothing since there is no direct full-path reference to
-these CPU nodes.
+On 4/3/2026 6:25 AM, Inochi Amaoto wrote:
+> On Thu, Apr 02, 2026 at 11:43:43PM +0200, Arnd Bergmann wrote:
+>> On Thu, Apr 2, 2026, at 04:39, Chen Wang wrote:
+>>> For CV18xx serials:
+>>> Just a minor patch to replace the compatible for
+>>> dma-controller to allow setting DMA channel number.
+>>> New bindings and driver part change are picked by
+>>> DMA subsytem and this patch handles the left dts
+>>> part change.
+>>>
+>>> Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+>>>
+>>> ----------------------------------------------------------------
+>>> Inochi Amaoto (1):
+>>>         riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set
+>>> channel number for DMA controller
+>> Doesn't this change break backwards compatibility with
+>> all existing kernels?
+>>
+> It will break if a old kernel with the new dtb. But I
+> think this will break nothing since the DMA device is not
+> used by any devices in the old DTB. And if a user force
+> the some device with DMA in the old version, it is just
+> not functional and lead to a broken system.
+>
+>> I did not take this one for now, need clarification, or
+>> a new patch that keeps the old compatible string along
+>> with the new one, if that is possible.
+>>
+>>         Arnd
+> Regards,
+> Inochi
 
-Fixes: ae5bac370ed4 ("riscv: dts: sophgo: Add initial device tree of Sophgo SRD3-10")
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Link: https://lore.kernel.org/devicetree-spec/00ddad5a-02f5-474e-af9c-11ce7716ddfc@iscas.ac.cn/
----
- arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi | 236 ++++++++++----------
- 1 file changed, 118 insertions(+), 118 deletions(-)
+Please ignore this PR. We will have some more change on this patch and 
+submit it in next cycle.
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi b/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
-index 509488eee432..fd8906b313d2 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-cpus.dtsi
-@@ -263,7 +263,7 @@ cpu0: cpu@0 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <0>;
-+			reg = <0x0>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -291,7 +291,7 @@ cpu1: cpu@1 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <1>;
-+			reg = <0x1>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -319,7 +319,7 @@ cpu2: cpu@2 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <2>;
-+			reg = <0x2>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -347,7 +347,7 @@ cpu3: cpu@3 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <3>;
-+			reg = <0x3>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -375,7 +375,7 @@ cpu4: cpu@4 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <4>;
-+			reg = <0x4>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -403,7 +403,7 @@ cpu5: cpu@5 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <5>;
-+			reg = <0x5>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -431,7 +431,7 @@ cpu6: cpu@6 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <6>;
-+			reg = <0x6>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -459,7 +459,7 @@ cpu7: cpu@7 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <7>;
-+			reg = <0x7>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -487,7 +487,7 @@ cpu8: cpu@8 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <8>;
-+			reg = <0x8>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -515,7 +515,7 @@ cpu9: cpu@9 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <9>;
-+			reg = <0x9>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -533,7 +533,7 @@ cpu9_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu10: cpu@10 {
-+		cpu10: cpu@a {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -543,7 +543,7 @@ cpu10: cpu@10 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <10>;
-+			reg = <0xa>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -561,7 +561,7 @@ cpu10_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu11: cpu@11 {
-+		cpu11: cpu@b {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -571,7 +571,7 @@ cpu11: cpu@11 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <11>;
-+			reg = <0xb>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -589,7 +589,7 @@ cpu11_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu12: cpu@12 {
-+		cpu12: cpu@c {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -599,7 +599,7 @@ cpu12: cpu@12 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <12>;
-+			reg = <0xc>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -617,7 +617,7 @@ cpu12_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu13: cpu@13 {
-+		cpu13: cpu@d {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -627,7 +627,7 @@ cpu13: cpu@13 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <13>;
-+			reg = <0xd>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -645,7 +645,7 @@ cpu13_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu14: cpu@14 {
-+		cpu14: cpu@e {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -655,7 +655,7 @@ cpu14: cpu@14 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <14>;
-+			reg = <0xe>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -673,7 +673,7 @@ cpu14_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu15: cpu@15 {
-+		cpu15: cpu@f {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -683,7 +683,7 @@ cpu15: cpu@15 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <15>;
-+			reg = <0xf>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -701,7 +701,7 @@ cpu15_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu16: cpu@16 {
-+		cpu16: cpu@10 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -711,7 +711,7 @@ cpu16: cpu@16 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <16>;
-+			reg = <0x10>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -729,7 +729,7 @@ cpu16_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu17: cpu@17 {
-+		cpu17: cpu@11 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -739,7 +739,7 @@ cpu17: cpu@17 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <17>;
-+			reg = <0x11>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -757,7 +757,7 @@ cpu17_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu18: cpu@18 {
-+		cpu18: cpu@12 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -767,7 +767,7 @@ cpu18: cpu@18 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <18>;
-+			reg = <0x12>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -785,7 +785,7 @@ cpu18_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu19: cpu@19 {
-+		cpu19: cpu@13 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -795,7 +795,7 @@ cpu19: cpu@19 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <19>;
-+			reg = <0x13>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -813,7 +813,7 @@ cpu19_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu20: cpu@20 {
-+		cpu20: cpu@14 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -823,7 +823,7 @@ cpu20: cpu@20 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <20>;
-+			reg = <0x14>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -841,7 +841,7 @@ cpu20_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu21: cpu@21 {
-+		cpu21: cpu@15 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -851,7 +851,7 @@ cpu21: cpu@21 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <21>;
-+			reg = <0x15>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -869,7 +869,7 @@ cpu21_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu22: cpu@22 {
-+		cpu22: cpu@16 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -879,7 +879,7 @@ cpu22: cpu@22 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <22>;
-+			reg = <0x16>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -897,7 +897,7 @@ cpu22_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu23: cpu@23 {
-+		cpu23: cpu@17 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -907,7 +907,7 @@ cpu23: cpu@23 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <23>;
-+			reg = <0x17>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -925,7 +925,7 @@ cpu23_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu24: cpu@24 {
-+		cpu24: cpu@18 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -935,7 +935,7 @@ cpu24: cpu@24 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <24>;
-+			reg = <0x18>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -953,7 +953,7 @@ cpu24_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu25: cpu@25 {
-+		cpu25: cpu@19 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -963,7 +963,7 @@ cpu25: cpu@25 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <25>;
-+			reg = <0x19>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -981,7 +981,7 @@ cpu25_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu26: cpu@26 {
-+		cpu26: cpu@1a {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -991,7 +991,7 @@ cpu26: cpu@26 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <26>;
-+			reg = <0x1a>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1009,7 +1009,7 @@ cpu26_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu27: cpu@27 {
-+		cpu27: cpu@1b {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1019,7 +1019,7 @@ cpu27: cpu@27 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <27>;
-+			reg = <0x1b>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1037,7 +1037,7 @@ cpu27_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu28: cpu@28 {
-+		cpu28: cpu@1c {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1047,7 +1047,7 @@ cpu28: cpu@28 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <28>;
-+			reg = <0x1c>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1065,7 +1065,7 @@ cpu28_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu29: cpu@29 {
-+		cpu29: cpu@1d {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1075,7 +1075,7 @@ cpu29: cpu@29 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <29>;
-+			reg = <0x1d>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1093,7 +1093,7 @@ cpu29_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu30: cpu@30 {
-+		cpu30: cpu@1e {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1103,7 +1103,7 @@ cpu30: cpu@30 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <30>;
-+			reg = <0x1e>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1121,7 +1121,7 @@ cpu30_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu31: cpu@31 {
-+		cpu31: cpu@1f {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1131,7 +1131,7 @@ cpu31: cpu@31 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <31>;
-+			reg = <0x1f>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1149,7 +1149,7 @@ cpu31_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu32: cpu@32 {
-+		cpu32: cpu@20 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1159,7 +1159,7 @@ cpu32: cpu@32 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <32>;
-+			reg = <0x20>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1177,7 +1177,7 @@ cpu32_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu33: cpu@33 {
-+		cpu33: cpu@21 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1187,7 +1187,7 @@ cpu33: cpu@33 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <33>;
-+			reg = <0x21>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1205,7 +1205,7 @@ cpu33_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu34: cpu@34 {
-+		cpu34: cpu@22 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1215,7 +1215,7 @@ cpu34: cpu@34 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <34>;
-+			reg = <0x22>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1233,7 +1233,7 @@ cpu34_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu35: cpu@35 {
-+		cpu35: cpu@23 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1243,7 +1243,7 @@ cpu35: cpu@35 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <35>;
-+			reg = <0x23>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1261,7 +1261,7 @@ cpu35_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu36: cpu@36 {
-+		cpu36: cpu@24 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1271,7 +1271,7 @@ cpu36: cpu@36 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <36>;
-+			reg = <0x24>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1289,7 +1289,7 @@ cpu36_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu37: cpu@37 {
-+		cpu37: cpu@25 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1299,7 +1299,7 @@ cpu37: cpu@37 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <37>;
-+			reg = <0x25>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1317,7 +1317,7 @@ cpu37_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu38: cpu@38 {
-+		cpu38: cpu@26 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1327,7 +1327,7 @@ cpu38: cpu@38 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <38>;
-+			reg = <0x26>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1345,7 +1345,7 @@ cpu38_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu39: cpu@39 {
-+		cpu39: cpu@27 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1355,7 +1355,7 @@ cpu39: cpu@39 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <39>;
-+			reg = <0x27>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1373,7 +1373,7 @@ cpu39_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu40: cpu@40 {
-+		cpu40: cpu@28 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1383,7 +1383,7 @@ cpu40: cpu@40 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <40>;
-+			reg = <0x28>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1401,7 +1401,7 @@ cpu40_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu41: cpu@41 {
-+		cpu41: cpu@29 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1411,7 +1411,7 @@ cpu41: cpu@41 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <41>;
-+			reg = <0x29>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1429,7 +1429,7 @@ cpu41_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu42: cpu@42 {
-+		cpu42: cpu@2a {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1439,7 +1439,7 @@ cpu42: cpu@42 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <42>;
-+			reg = <0x2a>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1457,7 +1457,7 @@ cpu42_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu43: cpu@43 {
-+		cpu43: cpu@2b {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1467,7 +1467,7 @@ cpu43: cpu@43 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <43>;
-+			reg = <0x2b>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1485,7 +1485,7 @@ cpu43_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu44: cpu@44 {
-+		cpu44: cpu@2c {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1495,7 +1495,7 @@ cpu44: cpu@44 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <44>;
-+			reg = <0x2c>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1513,7 +1513,7 @@ cpu44_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu45: cpu@45 {
-+		cpu45: cpu@2d {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1523,7 +1523,7 @@ cpu45: cpu@45 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <45>;
-+			reg = <0x2d>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1541,7 +1541,7 @@ cpu45_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu46: cpu@46 {
-+		cpu46: cpu@2e {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1551,7 +1551,7 @@ cpu46: cpu@46 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <46>;
-+			reg = <0x2e>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1569,7 +1569,7 @@ cpu46_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu47: cpu@47 {
-+		cpu47: cpu@2f {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1579,7 +1579,7 @@ cpu47: cpu@47 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <47>;
-+			reg = <0x2f>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1597,7 +1597,7 @@ cpu47_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu48: cpu@48 {
-+		cpu48: cpu@30 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1607,7 +1607,7 @@ cpu48: cpu@48 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <48>;
-+			reg = <0x30>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1625,7 +1625,7 @@ cpu48_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu49: cpu@49 {
-+		cpu49: cpu@31 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1635,7 +1635,7 @@ cpu49: cpu@49 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <49>;
-+			reg = <0x31>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1653,7 +1653,7 @@ cpu49_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu50: cpu@50 {
-+		cpu50: cpu@32 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1663,7 +1663,7 @@ cpu50: cpu@50 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <50>;
-+			reg = <0x32>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1681,7 +1681,7 @@ cpu50_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu51: cpu@51 {
-+		cpu51: cpu@33 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1691,7 +1691,7 @@ cpu51: cpu@51 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <51>;
-+			reg = <0x33>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1709,7 +1709,7 @@ cpu51_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu52: cpu@52 {
-+		cpu52: cpu@34 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1719,7 +1719,7 @@ cpu52: cpu@52 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <52>;
-+			reg = <0x34>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1737,7 +1737,7 @@ cpu52_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu53: cpu@53 {
-+		cpu53: cpu@35 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1747,7 +1747,7 @@ cpu53: cpu@53 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <53>;
-+			reg = <0x35>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1765,7 +1765,7 @@ cpu53_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu54: cpu@54 {
-+		cpu54: cpu@36 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1775,7 +1775,7 @@ cpu54: cpu@54 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <54>;
-+			reg = <0x36>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1793,7 +1793,7 @@ cpu54_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu55: cpu@55 {
-+		cpu55: cpu@37 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1803,7 +1803,7 @@ cpu55: cpu@55 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <55>;
-+			reg = <0x37>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1821,7 +1821,7 @@ cpu55_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu56: cpu@56 {
-+		cpu56: cpu@38 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1831,7 +1831,7 @@ cpu56: cpu@56 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <56>;
-+			reg = <0x38>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1849,7 +1849,7 @@ cpu56_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu57: cpu@57 {
-+		cpu57: cpu@39 {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1859,7 +1859,7 @@ cpu57: cpu@57 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <57>;
-+			reg = <0x39>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1877,7 +1877,7 @@ cpu57_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu58: cpu@58 {
-+		cpu58: cpu@3a {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1887,7 +1887,7 @@ cpu58: cpu@58 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <58>;
-+			reg = <0x3a>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1905,7 +1905,7 @@ cpu58_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu59: cpu@59 {
-+		cpu59: cpu@3b {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1915,7 +1915,7 @@ cpu59: cpu@59 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <59>;
-+			reg = <0x3b>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1933,7 +1933,7 @@ cpu59_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu60: cpu@60 {
-+		cpu60: cpu@3c {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1943,7 +1943,7 @@ cpu60: cpu@60 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <60>;
-+			reg = <0x3c>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1961,7 +1961,7 @@ cpu60_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu61: cpu@61 {
-+		cpu61: cpu@3d {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1971,7 +1971,7 @@ cpu61: cpu@61 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <61>;
-+			reg = <0x3d>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -1989,7 +1989,7 @@ cpu61_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu62: cpu@62 {
-+		cpu62: cpu@3e {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -1999,7 +1999,7 @@ cpu62: cpu@62 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <62>;
-+			reg = <0x3e>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
-@@ -2017,7 +2017,7 @@ cpu62_intc: interrupt-controller {
- 			};
- 		};
- 
--		cpu63: cpu@63 {
-+		cpu63: cpu@3f {
- 			compatible = "thead,c920", "riscv";
- 			device_type = "cpu";
- 			riscv,isa = "rv64imafdc";
-@@ -2027,7 +2027,7 @@ cpu63: cpu@63 {
- 					       "zifencei", "zihpm", "zfh",
- 					       "xtheadvector";
- 			thead,vlenb = <16>;
--			reg = <63>;
-+			reg = <0x3f>;
- 			i-cache-block-size = <64>;
- 			i-cache-size = <65536>;
- 			i-cache-sets = <512>;
--- 
-2.53.0
+Regards,
+
+Chen
+
 
