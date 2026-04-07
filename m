@@ -1,73 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D75139B96E
-	for <sophgo@lists.linux.dev>; Tue,  7 Apr 2026 09:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E48639EF38
+	for <sophgo@lists.linux.dev>; Tue,  7 Apr 2026 16:01:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775554113; cv=none; b=nhl/yey72U65CUIp2v+tTXrWpL0M3MIVX7eOsi0zDHzmpdiYBVuurFY9rjJobMF3ICjeYB2nkoA5ey4tTT9kH77I/XvEaxoDlwnDk1mDHYBdMz+LtwX3x5LyDt3IjBUftuXU/C2ha+f06L9LNm5Hm4Hiz0wk1m78W8zblyhCy/k=
+	t=1775577726; cv=none; b=otdpK0mG1k4kxeW1rAUMbsxlXmz0bg8T/loZK1QvmqDcu3OMKka0NSLOP4VDNZ2MWsxLP+8JdO8ujh9/aq6y6bUQECh85LgfohIC+pmtiVh1c+DOSOUmm4Qvei8hquDRVdXwQkkvMBEoQ+jDN5T/Od25ZxP8FIFjNbip0WEGlFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775554113; c=relaxed/simple;
-	bh=KHMnmQbt0lZxtHZIgo76pMcCGA1YYdllDCarycWPQYc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CmUviWhLk3gn8B0GigGyPecijl4X3D9t6zX9A20wNhEvh7ND8YgLFu+SUV7NLAxxx0GYAR/AJfoutnmC46/a+dhrJFSefKFgsK/3JxojsYVnZ/4lfwmYapg6zRAWobIXRGIkB0gLolpI3xaiW2OTuZyZN4YuC0Fqv1k/YWAYRcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UDiVy3Xh; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UDiVy3Xh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E32F4C2BCB0
-	for <sophgo@lists.linux.dev>; Tue,  7 Apr 2026 09:28:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775554112;
-	bh=KHMnmQbt0lZxtHZIgo76pMcCGA1YYdllDCarycWPQYc=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=UDiVy3Xh5C0WSHybz0A2cGnbWGsJZUOXA4o22XsCCT/JjCs4sL+l1YO7u72nwopGs
-	 G59xt9qa2mVWa0P3RNNLVQloW7pWr6kSPtetDExRhNGMKXO0rXiw25ud0va9+X4HnR
-	 kbGjdudFqzSsAdJ/8vqKMnlPqoqhXY9ELOXTUshLvBDFxXQycAsN1E6tyLiQ/bJghk
-	 YEfB9hyMUtHKI7gQtL5Vakh8YatgLwMvrcvofh45oIimtAVe687PhOQpS4Tpze2+ti
-	 OUrOWUOPf42rgvDi5MQJGCnKlHxnwzw1keouFieydWg0cLM/GBZyXzHIMYmR/OWqvF
-	 Rh7oVBTzBRLHw==
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-7947cf097c1so43566587b3.2
-        for <sophgo@lists.linux.dev>; Tue, 07 Apr 2026 02:28:32 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXV6M/O8+6Cni5u+52jOKRB4bBHabK8jdA5zdrdKYthyU+5watvJBtSADD+9CUBN6oZ/Oiu+Tg=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVsIlvHGiZUxB01CUfNJg4rP9zd/5oXt2AulaReoiwo8u6ORrM
-	aYxXjJYIXygqzGE36Qruy/AJPA0y9ypxktAEs/GOoKaP2T8EQ5AhkSIYwQbrpqNvcXiXJhJ5EAm
-	0fxnXCQ1UXAsFyR99VIYMqz3OsJWS1io=
-X-Received: by 2002:a05:690c:e3ee:b0:79a:c7f8:d992 with SMTP id
- 00721157ae682-7a4d547139cmr152458047b3.27.1775554112362; Tue, 07 Apr 2026
- 02:28:32 -0700 (PDT)
+	s=arc-20240116; t=1775577726; c=relaxed/simple;
+	bh=Nr4k76+J1u6CJEEdYYHDVJMf0Tw9s5qO6XDeJjFJGKA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DXmtoIK1iYp6M//gs20FDfnStYebVA1Kht3j7hucPhRb8NVwBXGAwBcZBNCnu42zZGuXlCfNI3wVZfGJDg3CMLbq1AsSRBQz3FZNQYSnApyU7jGiWtffU1dQCCqhEQSlDVndJOeMoyzxQN5KH7Ot//1lqD2GhI7zh/T8oSxVNjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from edelgard.fodlan.icenowy.me (unknown [112.94.102.43])
+	by APP-01 (Coremail) with SMTP id qwCowAAHsGtrKtVpwzeIDA--.50509S2;
+	Wed, 08 Apr 2026 00:01:49 +0800 (CST)
+From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+To: Thomas Gleixner <tglx@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>
+Cc: Han Gao <rabenda.cn@gmail.com>,
+	Zixian Zeng <sycamoremoon376@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Subject: [PATCH] riscv: dts: sophgo: reduce SG2042 MSI count to 16
+Date: Wed,  8 Apr 2026 00:01:43 +0800
+Message-ID: <20260407160143.1182430-1-zhengxingda@iscas.ac.cn>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260401003552.363205-1-inochiama@gmail.com>
-In-Reply-To: <20260401003552.363205-1-inochiama@gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Tue, 7 Apr 2026 11:28:20 +0200
-X-Gmail-Original-Message-ID: <CAD++jLm-Zm_68oPXfQa8SLpHjshDVb42gGoO3gtdc7ffFa50FA@mail.gmail.com>
-X-Gm-Features: AQROBzAF5HcTwzXIbBLiovkClRCUSF2YpBWcAp1u3m9JbTreP2LfdulA0gTQnhc
-Message-ID: <CAD++jLm-Zm_68oPXfQa8SLpHjshDVb42gGoO3gtdc7ffFa50FA@mail.gmail.com>
-Subject: Re: [PATCH 0/2] pinctrl: sophgo: Fix SoC module in the module
- description string
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: Chen Wang <unicorn_wang@outlook.com>, linux-gpio@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID:qwCowAAHsGtrKtVpwzeIDA--.50509S2
+X-Coremail-Antispam: 1UD129KBjvdXoW7GFW3WFWrWryrtr1fGF4fuFg_yoWkGFb_Cw
+	1fCa4I9FZ8Ga92kF1kZrs5CFyUZw4FywnYy3s7Gr15Ka4Fvr1UWFWqqw4jv3WYkrWYgryx
+	WrZxtFW8Cw17ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUIcSsGvfJTRUUUb3xFF20E14v26ryj6rWUM7CY07I20VC2zVCF04k26cxKx2IYs7xG
+	6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8w
+	A2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Gr0_
+	Cr1l84ACjcxK6I8E87Iv67AKxVWUJVW8JwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr0_Gr
+	1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xII
+	jxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr
+	1lF7xvr2IYc2Ij64vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7M4IIrI8v6xkF7I0E8cxa
+	n2IY04v7MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4
+	AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE
+	17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMI
+	IF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4l
+	IxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvf
+	C2KfnxnUUI43ZEXa7sRidbbtUUUUU==
+X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
 
-On Wed, Apr 1, 2026 at 2:36=E2=80=AFAM Inochi Amaoto <inochiama@gmail.com> =
-wrote:
+The SG2042 MSI controller has one 32-bit doorbell register, and each bit
+corresponds to an interrupt. At a glance, it seems that the MSI
+controller can support 32 interrupts; however the PCI MSI capability
+only supports 16-bit messages, which makes the high 16 interrupts
+unusable in such way.
 
-> The SoC module in module description string is not correct in
-> pinctrl-sg2042.c and pinctrl-sg2044.c. Fix them
->
-> Inochi Amaoto (2):
->   pinctrl: sophgo: pinctrl-sg2042: Fix wrong module description
->   pinctrl: sophgo: pinctrl-sg2044: Fix wrong module description
+Reduce the MSI count to 16 to prevent producing MSI message values that
+cannot fit 16-bit integers.
 
-Patches applied!
+Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
+---
+ arch/riscv/boot/dts/sophgo/sg2042.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yours,
-Linus Walleij
+diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+index 9fddf3f0b3b99..9f1820a7b5a9f 100644
+--- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
++++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
+@@ -234,7 +234,7 @@ msi: msi-controller@7030010304 {
+ 			reg-names = "clr", "doorbell";
+ 			msi-controller;
+ 			#msi-cells = <0>;
+-			msi-ranges = <&intc 64 IRQ_TYPE_EDGE_RISING 32>;
++			msi-ranges = <&intc 64 IRQ_TYPE_EDGE_RISING 16>;
+ 		};
+ 
+ 		rpgate: clock-controller@7030010368 {
+-- 
+2.52.0
+
