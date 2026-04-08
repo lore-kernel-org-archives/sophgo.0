@@ -1,130 +1,181 @@
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011038.outbound.protection.outlook.com [52.103.67.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB4C383C66
-	for <sophgo@lists.linux.dev>; Wed,  8 Apr 2026 07:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775633754; cv=none; b=Eqql4arvOBLW6ASicK0PoSMJFyUjY0ve0hfkNcw/NvNi8Efu7NbS/1Q/8Rbscm1bU34L5fdHraQnMtzaCqxr3GpcC3XnzQNvAffrKlIvgrnJjEzsMtO/W0Ll9HFz04kfBUWAw29wIOYx4jj+ZoSLfi3Cxy4PwDMGYcd2uTueJUI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775633754; c=relaxed/simple;
-	bh=XZV8qm7BHRHuL3w93A5yoY4tQ3JkrcvAVxVZHbS+Bic=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=amKeMPdH8/CyvUOKF6pz2mYSmUlqV105PqBSGpNgk7r5f/ujuvIrj9b9ObbkRPqAOpM+hQ4R62FpImQ4oSHIsk0qt/cKN1iUVPOrjvAhxtM9sewZA9L9yxsCbRMHP4MJqLlTBfYvJ880JmtlZ+LODrUUxX572PzCZjApB5d6Bsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from edelgard.fodlan.icenowy.me (unknown [112.94.102.43])
-	by APP-05 (Coremail) with SMTP id zQCowABn9glFBdZp48XqDA--.42033S2;
-	Wed, 08 Apr 2026 15:35:34 +0800 (CST)
-Message-ID: <414231dccf62dba2a9275f0867874621f4922b6a.camel@iscas.ac.cn>
-Subject: Re: [PATCH] riscv: dts: sophgo: reduce SG2042 MSI count to 16
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-To: Chen Wang <unicorn_wang@outlook.com>, Thomas Gleixner <tglx@kernel.org>,
-  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,  Inochi Amaoto <inochiama@gmail.com>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>
-Cc: Han Gao <rabenda.cn@gmail.com>, Zixian Zeng <sycamoremoon376@gmail.com>,
-  Manivannan Sadhasivam	 <mani@kernel.org>, devicetree@vger.kernel.org,
- sophgo@lists.linux.dev, 	linux-riscv@lists.infradead.org,
- linux-kernel@vger.kernel.org
-Date: Wed, 08 Apr 2026 15:35:33 +0800
-In-Reply-To: <MA5PR01MB1250025586EE7A236CAC536B1FE5BA@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
-References: <20260407160143.1182430-1-zhengxingda@iscas.ac.cn>
-	 <MA5PR01MB1250025586EE7A236CAC536B1FE5BA@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009803AD522
+	for <sophgo@lists.linux.dev>; Wed,  8 Apr 2026 09:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.38
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775639300; cv=fail; b=HtF1yFXo22majmSBO5uHr1cAJ8DyCqsLx4VFbFpXcofd7McAsiRbk2OC82vPO+FAUylAgj+eHAC1C/FFMR9kYJ0IvDrpB6Vi6TyQ8CwxcQmdd5w3W1PZeiHvZF+oO4QBkte1D+olH201Rua6wjEmK/SEfBsNVM0vhLOGU0F7H4c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775639300; c=relaxed/simple;
+	bh=rB4wgOJREAxtyL8IhYvJ0e36GJaueghjx39dPMVHuj8=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=oA407fnnQdJHqUCz9RC0mkbQTlYOGVW6o3iQXj8TdUTl9UdbELTsP1gMWVeWokgtM+lag+Z85rxSyd00cRZmtGNwXZ4FdcxpABm5EDsILpO2wnG5SNzWDb2nDQd4ra7n5gGhefrKzP0bXoEdPu5dM/faq9Q6gY4MkD10c3o1BX0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=Z31+zt/L; arc=fail smtp.client-ip=52.103.67.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="Z31+zt/L"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=w4blZipHOEnM2R/B5vT8AkI6ezj03k5sxewt5kqHAD+Y0AxV9t0FipmS8cl7BfJ/PiHbGj4VlQIatWQwvhN0kiiAIJpghtB1WZSe69JyA0oia8+5A250I/6+DrHiI9b7Lb5xgMXeeXAgfK5HHiuveBEngyOv3z5RASFoCjE/q3l3vhtfdkOUTqbZqRLAHeMa1W2ffm1tI5LTXMnMcP51g7MK/GzaKG2YKURAnrQs2MZDjXiD3JRFZ0f/cxJDyBJ6uw7KsaFpx8j/j1tEei/ly3/bUcVJDA1JwFlIBiOBDBiLdqx/cw6mYICHqo2WJ8XZ3jsqsgvUoipcKoruaBzXXQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rB4wgOJREAxtyL8IhYvJ0e36GJaueghjx39dPMVHuj8=;
+ b=NXf8cQK+yTVpcOvDk36OBOiMfgXhlCS4FowcX7b5XauXraGUzORNiMEhx6/qmDMxkJnk91vOtFaqoZUCMhZseEn6cfus+qriphX6aT5h8UOxTj4G90KLaZubuT78E5y4xdAFWezDBZZkmg+HHAKS6OrfM3TswuBuCRd6mpZ3GqDkiuU6m7eX9oslkpTDYT5H0/d0Rv+VghiAQmil3ptMu6wyxFLqnHni3BUefpOucwKFfgSuTUT9PlUQbL6IdJVOck4WexF9I+b6sJKU9xRUSrZAi6FTtTTDoLh9WHZdgOOpzDOo0M0f3kJ+s74L+mEFo05DHsakrxZEmwJaLcVxzQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rB4wgOJREAxtyL8IhYvJ0e36GJaueghjx39dPMVHuj8=;
+ b=Z31+zt/LLZYSWiSqeFzkH9d+kla8KWiM21v44J7BtD5Bg8rXCpTn/VI1WtFL0Zv06AAmOuxF/olNBnSD8T1165U+A+MenKJpbdIMEkD/slzskSTSn61fUDdl0n3iWDkehApKnAIqfB7/Y7auT2x4diL59eSKYfy2RXQhLPtY+hzKuRyu2ADSO5Qvu+eAd4yXa9ZwuMvzpuPLjZcJfbEighaUuq4N//dKqUsNwOE9jJByzJF3z0DS/Wt47xHZqHT4rSaSJjT2DE0OOvhfTd3qIrLaoNGsmf5k9vcQe/Cd59Mts2JCEmVxqIx+w7LhOwHEI6K5SnOtj2UE0qC87ehP8A==
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18) by MA5PR01MB11209.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:16b::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.19; Wed, 8 Apr
+ 2026 09:08:09 +0000
+Received: from MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4]) by MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::8a6b:3853:1bc:67e4%6]) with mapi id 15.20.9769.016; Wed, 8 Apr 2026
+ 09:08:09 +0000
+Message-ID:
+ <MA5PR01MB12500407E24D8E355D0B3D392FE5BA@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 8 Apr 2026 17:08:03 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] riscv: dts: sophgo: sg2044: use hex for CPU unit
+ address
+To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+ Alexandre Ghiti <alex@ghiti.fr>, Han Gao <rabenda.cn@gmail.com>,
+ Nutty Liu <liujingqi@lanxincomputing.com>, Guodong Xu
+ <guodong@riscstar.com>, Guo Ren <guoren@kernel.org>,
+ Xiaoguang Xing <xiaoguang.xing@sophgo.com>
+Cc: devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Yixun Lan <dlan@gentoo.org>, Longbin Li <looong.bin@gmail.com>
+References: <20260406232655.144043-1-inochiama@gmail.com>
+ <20260406232655.144043-2-inochiama@gmail.com>
+From: Chen Wang <unicorn_wang@outlook.com>
+In-Reply-To: <20260406232655.144043-2-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TP0P295CA0038.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:910:4::11) To MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:1e9::18)
+X-Microsoft-Original-Message-ID:
+ <4ff624cd-4780-4c7a-8a23-9dd8d85e2d30@outlook.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-CM-TRANSID:zQCowABn9glFBdZp48XqDA--.42033S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Kr4UCr43Aw4rJw1xWF15urg_yoW8Cry5pa
-	1DuFsIkaya9rs7Ca17KFWjgr4xArZ3Ww4DKrn8G34jqrZxXa4UJr43tr95G3ZrXr4rXw45
-	AF1Uuw1fCFn8XFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvmb7Iv0xC_tr1lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwV
-	C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC
-	0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr
-	1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JM4IIrI8v6xkF7I0E8cxan2IY04v7
-	MxkF7I0En4kS14v26r4a6rW5MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r
-	4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF
-	67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2I
-	x0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2
-	z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnU
-	UI43ZEXa7IUnj-e5UUUUU==
-X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MA5PR01MB12500:EE_|MA5PR01MB11209:EE_
+X-MS-Office365-Filtering-Correlation-Id: e2ea08e0-9f48-4a00-7e5b-08de954e5a79
+X-MS-Exchange-SLBlob-MailProps:
+	iS5pQZgsAQDoZe0MsFsUcxnezMxcSwn2G8Wp220eeYoQeBfpi1MSbZQ8iExEgCcHZA9u6sByRHD8DR+eRGxBaAQTdhrAlBtKzyeeUhJ1umCP5XnRXhJBukxkj9EUuXUKghUV4z1DgiT3SQUmkhReE3yawMa15R5odWDkQZ98pLhLnMsAivVdRQAjU2H3IF17KSbIUa646mDBd1ATLx+ULa2tcA40egbgTq+0vThebLfutDOzRRRwDXsu7+gQWfbAsnC7koD4DVAGAbPltXXS4TMkI/60ZCSCBFsP9e7xWusxG5YIE2eexKqKBsrv1zIEPxy8o0sFX083KzVQavdmVMLYS/IbBZwGe9Edfo1XZSy/uJooOwZooOoTa/lOfm81o9Tq6qYfH7poNtyb98zW/miy/ivmq1HLIM57/V4j71//tOpXFER1gM8fBe6Z/TxQb176476Vbaos4h2/WTyjgDY0xpqLEWEaY0RSNAwD4BPbwxe9C+FEMZUyKqb36HmHcvVNpqwkuCMylw/TbhyUXsYdJSeU0XRcnzphIP9Y5JRD3OnTi0ZtppE3PjHFWukuNR/7SLe13T55zrJFIiYBGOEy19F3i3+NXDAgDGqqvqmVqAMpq12pCVPzrEIjMh9nYpPHc/9oHL3PsirWSgUEiPbYO1MNK80HgUnoZbulw1DiUbGrP5/dwI0rqtoAGxo1Dau/yKmB/wQNCyccBNIZ+6JKidB2ehB5SI3JiG5XWQgkn34yTvQzIfCZLy831sh8eEYmdkMUnRZTlVvX94dimwbqXd+k/uZ11WmNcWCAs0JBOTvKx7p8Os/K0zjaZgyr
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|23021999003|41001999006|15080799012|461199028|8060799015|6090799003|19110799012|24121999003|22091999003|25031999004|10035399007|4302099013|440099028|3412199025|26121999003|13041999003|1602099012|40105399003|53005399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?WkZOQys3ZHRmNFFPTGZVekMrZUxxSjVzNStIUW9GeUFZRTVkMmRNUUdNckw5?=
+ =?utf-8?B?bEJmN21zeS84bnRaRXlvcjNsanhMVGZEZ1gyNGNyR0tnMzF6aEtqZVFSaFp0?=
+ =?utf-8?B?S3pJL0ljZEQwM09abTQvdFgvUE14bnN6TUxtVzVFK2JKcG5xZTBrdUkyMWNy?=
+ =?utf-8?B?RzRDM3puYzIwOWxaNHBySnVoNFpFNWZnNGhhZ0I5c3ZJcnRTdTRhLzhBZDJV?=
+ =?utf-8?B?ZE94REpHaXhtdnRwNGdSSkRNbkVtZTF0a1h3ZnFSZ0NJY1ZtR2JVSmcyd1d2?=
+ =?utf-8?B?aXU1TmZCVE91NHdXb1pNT3BSMS8xUjd6eVNRK3ZoSGtCby9PWGRiZGNYRTk3?=
+ =?utf-8?B?WTV1TFFrczJCZlpNb2I2MlBZa1g1SUZhNHcrTVl6TVVlcERNR2E5Z0hmaE8z?=
+ =?utf-8?B?bWNnUVNKa0NEVzg3RzQ5SWdOK0dBbTl2VUFiOGFISVdDVUdBVmg5N2l4U3FK?=
+ =?utf-8?B?bTh6dThxbXdWRFZGYWdjL2JONldobWhWQ1VzZ1dpSjJiclVhMHprWmpWNjk2?=
+ =?utf-8?B?U3A3ZzJidmNEdHdZMlVsMkNtYXJITkFYSytyOVJ3aUFaNnRZd0srSzk3N0lo?=
+ =?utf-8?B?VFRmUXBneU1nQUtLUDlPVk1HL1E1a043QmNqNEFTQ2FwM1p2R0Vra2Zpc3FB?=
+ =?utf-8?B?SVQzZ2UrN2lPeEFTSldoQjZXbG8vVmw3UFN1VklFUmFvTDJzVnM5Ui9waGM0?=
+ =?utf-8?B?VlVpVFdLaEl6ciszQUNDU0licUM5S0J6T1JqUWhOdTlFNkhzNGQ5VW1TVjd5?=
+ =?utf-8?B?UDVBVk15cFRWc21aZFNnTDBJRHZIbEZoclJxK0pQQ1o2N0hsa0Q0dG5XVDdK?=
+ =?utf-8?B?M290c0pZMTgzcFRWNUg2K3ErclZiS3pwVVJOT3p3d2FJaDhtNlBnMFp0VnRs?=
+ =?utf-8?B?Z2pYMWx6TS92KzBRaGpmMHdPbm90aVlUMHJRdkNndlRRT1krV0d6clc5STls?=
+ =?utf-8?B?NjVEWng3aVo1SnIyVWFjOVdOUDRDRVNIMDlEeGRYNjhhQ2lvUmplbVFVS3Jh?=
+ =?utf-8?B?RVJsR09wWnpIdXJIR1ZqaFpzRHdyMzN1VktWV1FQZlFrblZyRzFGWkYrMGRV?=
+ =?utf-8?B?VU1QV2dtMkhZZElMbWVjWUJ1WnhOQVNibFpJRjBacXQzQUM4cHh0N2xMMFBO?=
+ =?utf-8?B?L0VXRXN4UTBiUlB1aFdLRWU1VCt1cTZxeUVzc1NIVU4vV1QzMGRqdUUyNEVO?=
+ =?utf-8?B?RUxhclFHOFphODFzNld4ZC9JSG9EL2M5ZzU1NjVKcmR2SXVYbEZkZ1dSaHRQ?=
+ =?utf-8?B?QjlwdVkwWXFvUmFtR3F3TnBpbjFhdXQyVC9USTRrOFVvTXgzanF4dDBoc1VK?=
+ =?utf-8?B?OHc4UWtoRXZ0SGxISE1SUHRWb2NmZU1xWXZzcjRWRnNjeHl0MFdKTUtnMjNB?=
+ =?utf-8?B?NE83VjgwZmcvNmJudVluMzdYTzZVSHdGYUtEYVVDbXFiT0ROdTlEWlEwYVh4?=
+ =?utf-8?B?Mncvc3FRREZ5WDkzdWptWmR2RkYyYUpMWXR2Sk1kcERwKzFWRjdlRFc5aTVt?=
+ =?utf-8?B?ZkVPTXk5OGNUUDhWeTl4VWRHOWxRMk1yUjhOa3FaMUdPMWVyVXI1eWxUMVdi?=
+ =?utf-8?Q?JSh+yPb2DHoUNMWBRggff2ysrFDr5JkBDS1ZCPB4d8ZRD1?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SC9lUU80TnhyUnFIV2JZOTh3alc4cnB2U2ljTHdIQTczLzZtNUVwUWViNTNh?=
+ =?utf-8?B?bURoUnF6UnlyQWZGNk0rL0w0czBIMHNsQ3dLaVZRZ3NLcFJuQ2N6SkMrMlpJ?=
+ =?utf-8?B?dllMSVdwWDdEUEdIcnB4c1JQRk13YWg2MHhjZXFBbDJJOFZDMGJNMXpXZTJj?=
+ =?utf-8?B?MXpXNGVFa3VEd0FGR2NzUHVtcUlKblMza2hNbGpvVGNLSmVTck5HT01BZFRF?=
+ =?utf-8?B?VlF5UXdkb0paVjJLU0JQQmlLVUIrZmhoYmdDTE9MMGg1azFGOEh0c0lUQ3JX?=
+ =?utf-8?B?ZU5KZjh4emx6Y2t0TTRsQmFRUWVkdEFUY216Zm1GMmsxK3FWZXMvQlNMY3da?=
+ =?utf-8?B?MDJLbzV2YUlLWDJXdzlNUjlQWjJERFhaRGc1SVZOc2JjYndzakJ4WTlCVnRh?=
+ =?utf-8?B?MFN1N0VCQnVDWTBnTW1oWmU0UUR1WkxiclBHTy9zNHptQnN0cWw1cTBTQjUv?=
+ =?utf-8?B?N3g2QnYvUWE4bVRZVS9aRllDL1FQMTlPZUtuYlYyOVhXR05nTDU1ZlVrMXYz?=
+ =?utf-8?B?NTZrUHZOMnRqQmVSS000MjUzUzVyR1NzSWo0RFF5Mllxd3RLa3hmVFpETEF0?=
+ =?utf-8?B?Zm5lQzk3NjRaS0lRZEFUSVhiUUQxMXlNVDlNSUlRWkVsbExGVkoyZkh5cHJE?=
+ =?utf-8?B?QXNPNDJTN0M0dkwrT1huRXdvWk1oWTNCaGtIbVFubmZ4SENNcUxobEZRSlVU?=
+ =?utf-8?B?ZG1EYVhhSVpnaU1XNTRYazVCTGNVaGhteW8yMzJpMURSaVBNMGR0TzNUSkVh?=
+ =?utf-8?B?bU5YZ3FMb3B5TnlZS0RpQWpvSnVuYVVtT3JGM093c2RYd2tlSUYrcGJxOUdU?=
+ =?utf-8?B?SW9ZS3dPU1JDUUkzMzMwMTlyZkxqMXA2U1JNQU9HV3ZHYURod3ZOT1pUaFJs?=
+ =?utf-8?B?VTVKQm5QdDA1T0Jpd0ZzdVRvMExxdEJDT2l5YUwrdE8xMU1CUEJudDlTaXZK?=
+ =?utf-8?B?eWJkRGdtQ2c3NTF2c2lya1JGcWZBQWp6SkNsRWxpeS9RQVlweHVuSkx5ell2?=
+ =?utf-8?B?WjBmb1h4VUtpc0t4cVVobjg3dnJ3UXlCUXZhZWl6MFBzbFM2NkJLdGhRV3J6?=
+ =?utf-8?B?SFNjMGJXY29pM0FCaC80MjdSczBwQlBXVFN0SWcyTyswVmJpK3kxZG9HMC9X?=
+ =?utf-8?B?TWZhU1lham9sU2kyRk9qSFoyQ1ByWWd2VnJuQW9qb1ZZZ2t0TVFrZ3lLRFMr?=
+ =?utf-8?B?MXpNNVhxK2dWcTZrUnZCUEpKOGlxS3ZiRk0wcnp4STA3eEZrMWFMU2tMZVhE?=
+ =?utf-8?B?RzVSR01jejdQclZQU3dIM1NrRDNLNlloQXFsNnNHemREb01IcTBIU2xFeFZw?=
+ =?utf-8?B?QXlHdWZwZng0aXpRL2Ewai9rVTFqbjIrd0JDOGRrcDdzRW5qZTY4eGsyK3dW?=
+ =?utf-8?B?cmMzam9vSVZETzM5U3UxMXlXcSsrbEliTTJiSDRRZkdhbFl3Vkl1WUlsTm5T?=
+ =?utf-8?B?M1p2c05POEdwdElSZDJuNlkyV3A1ck9uZjdOT1dPbEFYSDhtSjEvOGc2cjhG?=
+ =?utf-8?B?SVNaaUtCR0dKSElrNVNPNklheHZyYlQwTm5yb3lDd0MxOHVVQlZMU2gwOUdv?=
+ =?utf-8?B?MnNrV1dqRHRITDMrZFV1Q1NlZkdSeDdJOFFaOUtPaFpBdDlJbWd4V0xFdHh1?=
+ =?utf-8?B?aHlYL3hQZnhFc1VjTWlBWkIyRXRKcm9GNXJ5a2NibEFUZVpMYTl6eWFQeTFM?=
+ =?utf-8?B?OVhlQldmVkMxMHBDbXhvdlpZWFdDQ2xhUDVXQllKUlFmRXZIc2tUVnJTWGFV?=
+ =?utf-8?B?Z25odVNYZS9pV0RSSXBhQ3hhZTc4S0VIOEQvaFE1a1pkNUNGTzZ3dGd4Q3FY?=
+ =?utf-8?B?MmZma1FSNTFPRUordUZPdUgyYTVYaVY0RndPYW5TcnNnZnI5Sm9hbUJ6R2Ra?=
+ =?utf-8?B?QXRrZ0lsWU92cjQvK2l6TmppdmtPdEhVSFViZXJsR3RGTkhBSTd3WjF3WFVF?=
+ =?utf-8?Q?1JTnCX2kEtMoE69jbI2pV/Dvw7YSBIgE?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e2ea08e0-9f48-4a00-7e5b-08de954e5a79
+X-MS-Exchange-CrossTenant-AuthSource: MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Apr 2026 09:08:09.3750
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA5PR01MB11209
 
-=E5=9C=A8 2026-04-08=E4=B8=89=E7=9A=84 15:04 +0800=EF=BC=8CChen Wang=E5=86=
-=99=E9=81=93=EF=BC=9A
->=20
-> On 4/8/2026 12:01 AM, Icenowy Zheng wrote:
-> > The SG2042 MSI controller has one 32-bit doorbell register, and
-> > each bit
-> > corresponds to an interrupt. At a glance, it seems that the MSI
-> > controller can support 32 interrupts; however the PCI MSI
-> > capability
-> > only supports 16-bit messages, which makes the high 16 interrupts
-> > unusable in such way.
-> >=20
-> > Reduce the MSI count to 16 to prevent producing MSI message values
-> > that
-> > cannot fit 16-bit integers.
-> >=20
-> > Signed-off-by: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-> > ---
-> > =C2=A0 arch/riscv/boot/dts/sophgo/sg2042.dtsi | 2 +-
-> > =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > index 9fddf3f0b3b99..9f1820a7b5a9f 100644
-> > --- a/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > +++ b/arch/riscv/boot/dts/sophgo/sg2042.dtsi
-> > @@ -234,7 +234,7 @@ msi: msi-controller@7030010304 {
-> > =C2=A0=C2=A0			reg-names =3D "clr", "doorbell";
-> > =C2=A0=C2=A0			msi-controller;
-> > =C2=A0=C2=A0			#msi-cells =3D <0>;
-> > -			msi-ranges =3D <&intc 64
-> > IRQ_TYPE_EDGE_RISING 32>;
-> > +			msi-ranges =3D <&intc 64
-> > IRQ_TYPE_EDGE_RISING 16>;
-> > =C2=A0=C2=A0		};
-> > =C2=A0=20
-> > =C2=A0=C2=A0		rpgate: clock-controller@7030010368 {
->=20
-> LGTM.
->=20
-> Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
->=20
-> Tested-by: Chen Wang <unicorn_wang@outlook.com> on Pioneerbox.
->=20
-> Thanks,
->=20
-> Chen
->=20
->=20
-> Hi, Han,
->=20
-> Will you please run some quick test on EVB boards, I have no such=20
-> hardware in hand, thanks.
 
-I tested on EVB v1, but I have no access to EVB v2 either.
+On 4/7/2026 7:26 AM, Inochi Amaoto wrote:
+> Previous the CPU unit address cpu of sg2044 use decimal, it is
+> not following the general convention for unit addresses of the
+> OF. Convent the unit address to hex to resolve this problem.
+>
+> The introduces a small ABI break for the CPU id, but it should
+> affect nothing since there is no direct full-path reference to
+> these CPU nodes.
+>
+> Fixes: 967a94a92aaa ("riscv: dts: add initial Sophgo SG2042 SoC device tree")
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> Link: https://lore.kernel.org/devicetree-spec/00ddad5a-02f5-474e-af9c-11ce7716ddfc@iscas.ac.cn/
 
-Thanks,
-Icenowy
+Reviewed-by: Chen Wang <unicorn_wang@outlook.com>
 
->=20
->=20
->=20
-> _______________________________________________
-> linux-riscv mailing list
-> linux-riscv@lists.infradead.org
-> http://lists.infradead.org/mailman/listinfo/linux-riscv
+Thanks for your quick action.
+
+Chen
+
+[......]
+
 
