@@ -1,267 +1,185 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1211A6828;
-	Tue, 21 Apr 2026 14:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1776781980; cv=none; b=N+KMOoS14XrALwRj+0ek6b5ZQK+rAQhScjz3EQU0HX/2LunS9G72cTWqnzCLTa+gcfES/EmfV25gu1a7Gvm9ao3F8P14YxCVOkEx8h62g9GPW/xQPVbmngjrslEcuDuT96ElaB2VQnmRuVBlpFZT0cQVacHwF5vhvZmsEOFGivY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1776781980; c=relaxed/simple;
-	bh=q+/OSwNFmzUerRAiQV6WWVBVlt7S/h6k3KfMcobnMnY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=abvB8wd1ZTUjHGt2TtZ8j0eumXIZQpsyTrUT8sutzSDm2mWPDFwBHfV9sSI6fiHUJGak6C43RVAtfgL2DkbA3CDjgjTuXIThWODNf3Yt4WsNtNO2+adbZ4fmP3kM49FameEB7stmkeJOJMWZgzh404yModMbuIJlFWtJYI954zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=us9GcUqi; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5942A36215B
+	for <sophgo@lists.linux.dev>; Tue, 21 Apr 2026 16:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.178
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1776787891; cv=pass; b=oiTTnOJYDclc/saqo/qziZ0e/3DjdeXyyxQoHB5MOKVsndVlv4AYjII5BMcgQsc2mOBa5r5LJWNfmIALBQ0rfBtLY69NGmRCmOmWAIBZSXjWT5i2DsiTaAxcq56bbGFO5fCYlb5qdoS6L3gUxHenOB1ZEIN8jilrpH5AsL4YiSs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1776787891; c=relaxed/simple;
+	bh=23fmHe/a2B9RZiflbb2UW/w++uvf3lhAjUE/+MLJ2OY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BSjx90srPP4jdv42Yy7ODAIb0Yg2SynoOHYj10K63e/uniYhJPVbkwQ/wPF3mfR23/oHa0PskGFcHT5J0jc7/KJjJ/K8irPuqiNKOHS+b0fK8e5dJP3ZtEZ5VwEVP8OkiD+Aany4zoUZZS7nR/dnlZIeL3g0pWM3w9FP21vJr0w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bZ2LGv25; arc=pass smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="us9GcUqi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F22C2BCB0;
-	Tue, 21 Apr 2026 14:32:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1776781980;
-	bh=q+/OSwNFmzUerRAiQV6WWVBVlt7S/h6k3KfMcobnMnY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=us9GcUqiGIax1QEAar9SHbhfPAR/IYayiHUwzBiTI8FaaNkxq0vzFhL7DkJrwFR5D
-	 VSA7l9OQfncs5P5nv63F0AecP2feLlsGlEqSIji9eUBqbVH4xyWJFrzj+IQBEOfwrp
-	 ncyKtXpnQSP/sn+a0KqzxUWhPSOJC5xPJAJS0jjwzFzX9v1/I/jX94HQ20zqGJOKbS
-	 6xZgIXggRcqrmRsgkQwZPUHSzEEPl53JpAbG1TDqjGDrdCoZ6YgIa7A+z+XcF6syQ4
-	 7Cc1oiSHGbLExNGSwMDw985px6pl2P/ZPZu2DSkWtNdnT42n7LXvyFkNTjGRXZiu9L
-	 MlXU8aFali59w==
-From: guoren@kernel.org
-To: Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Leonardo Bras <leobras@redhat.com>,
-	"Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>,
-	Raj Vishwanathan4 <rvishwanathan@mips.com>,
-	Djordje Todorovic <djordje.todorovic@htecgroup.com>
-Cc: Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Han Gao <gaohan@iscas.ac.cn>,
-	Yao Zi <me@ziyao.cc>,
-	Xiaoguang Xing <xiaoguang.xing@sophgo.com>,
-	Aleksandar Rikalo <arikalo@gmail.com>,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-arch@vger.kernel.org,
-	sophgo@lists.linux.dev
-Subject: [PATCH V5] riscv: errata: Add ERRATA_THEAD_WRITE_ONCE fixup
-Date: Tue, 21 Apr 2026 10:31:40 -0400
-Message-Id: <20260421143154.1590156-1-guoren@kernel.org>
-X-Mailer: git-send-email 2.40.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bZ2LGv25"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-466ec4c6846so1387914b6e.3
+        for <sophgo@lists.linux.dev>; Tue, 21 Apr 2026 09:11:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1776787889; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Mhs3EdVDAO1JNmCCrR69/QxjV/akLLDiIWE50xxBrB8CAt2QbqYMQbk9PZ3Uy95Ifb
+         TtXnfpQzE7TnaRQXh4ypuo1D9PQeBpfHRCHHptaeNrnLJ1CYdpQrLDqcrXbT7HAvyFKl
+         vI8Z8oqe4wxl4hoN9OcFTBRXbluVo6ri0enS1Vk/jFE9eoUGt66pl1Rtfe9cw5KwPzuw
+         Sq077y5AJTI8lczWBWX6304gAzjr6A01r6PP7mG3pfddOnft/OJ0k/JWkmX1BbqzYGlg
+         WRD4T6MRoaYbSrpucZTlKuqykOy2hSKRWHZbqtOuUEoElsj7+41C+Zr5KCnyaZzZ8gtA
+         w72g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=jInUirkrCYPP8V5B2fobD/SlWrNOrVioJ83jqBg/g2U=;
+        fh=4R2yOSO2L6NEC6YLBqZCHrU9LyO+lLOKkmdp0afHYhw=;
+        b=NXRokDvTIxsMdAUx6iUfoDVKHBJ9RgM1UHV6NQSFuSZYBF/7b4hQuJNaMiQsP0Ql3G
+         oK1DyZZKn7zCu1aw6Jl4CMFeWem16UeDxu/emXHTeQGHTtmNklhDXqCdx/Svgd0yeZkM
+         t6HE1XcMPDlgnITthP3NR12ouW0df4Cp5tsW6yYtASkIUFIx764DEM9AQ8NeNrLiSXKp
+         q3nawPr45x+EEzwAnIoYX4r7Z49nxWxBpRapw3dcuaa08taO2QaZsSMXNLFAQPxm5H67
+         uVXpKoi8hYkvmhKGNd+LIVTDKk/CYk1ncFqhKlZ7nx2+aD9Htaq20SH6P2E2lHuyVtKy
+         Bvzw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1776787889; x=1777392689; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jInUirkrCYPP8V5B2fobD/SlWrNOrVioJ83jqBg/g2U=;
+        b=bZ2LGv252gpV8bA/gWO7OxeV0gwgG67tjRMnXgpoW8jCCpmtag0lhOy4sNNhSjZZsd
+         ddKMNh/TmXS5rxqTNKeQJvjIw7u1iZJlefR2VvcFFwQvLTtgJYKo0T7fdKrg3e2j7/3C
+         1Cjo5ZcsjS08rkDggY4EYvcbAMkmHXmAOHNvK2in91XVgG/MCT4I+VGroRuPCAxBrleh
+         m7UxGDJ2DyGQ2lbOD1Kk/Ff6m4vmvDM+xxdEQXifngLNEcwrFK9HoW1sQiXbuH0LAqj8
+         TaLU18O7WtdAilux98Aqimq9gaV0GyRyZ49fNzuk4wc/FrVmExn+MQCmoHCKVidfXg2q
+         HN7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1776787889; x=1777392689;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=jInUirkrCYPP8V5B2fobD/SlWrNOrVioJ83jqBg/g2U=;
+        b=X0EFapntiQ4/2xcNj2YiqzURtNAwwq5RWpRgLETA5DYU0G6Tt8qLNhPYn3QxnarfR7
+         m2B01JJkVJPBT4XsH5dHQxg+ppqcfkeiYc2JKF5ugJFbngs1MJgCEqnsadXWr8Bs06T3
+         AFpN0EotHh470SXQMIDXNBQJsM6Leolq+nfc8oBocUTPjozi3LQvYIoTUzp4ES7UWs+C
+         5pt8+9CMP1XFXappvg8C4LEGo+H7b7NjGxB87Qg/sGaff3zfAp1iRRaDJTUhHensTIgY
+         BY/axSiHpCktsK/+lFLDittbpfU/GlAQcD0yezsFn9nH54TnZIWuoW7JFgxSaz7Vpeui
+         ghtQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+6QWSFc7xu+cw+tBB1dUPsXAPUPWSJmySdRHYeL3Wbh+P3NUqVWYR18Rc0Jec4Eg6ewadC7cw=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyc5iFSUKrbmA+cIcmMaPEnbZy8WPqLmdHbKqpEMQjLTFe9xLva
+	b3BbVuG+MGLPtyXtmikBwJTlUv+690dNAQLpfYl+sg2lBpAFlgkb0Afa52ACp7hSwQmuFlsuSth
+	1zn0xK3lyEF57jug6NH6HtYbtIrBTOvI=
+X-Gm-Gg: AeBDiet47v2r95gQkkZsKCm44GaqawDRLfU9gsRyfYM0RGMwIa/PFWAuNPIvMPbs2Wt
+	q5wUpsQ5F9+WPuBc+J/6G2zqPzSgRqjZ+EmbdNkp66k0q95RQorUHToUe8nv5sAVhmz5GVpihwd
+	FmXa316xN7dMdU+We+lZEyfvnc4zZ7mNhk8Su7PUqHU/87ms9RG3tBykV1A+qpg32jy7kYAcnOZ
+	vP8TvtwgK91vTdZ+fSpUukfQFRXxVz3LOLr1yYcxRCrz6hZyNsfdh1AYhtmOHUf93s0/GZsRnC2
+	VvFnw58ePXG0r35RJbSfGKTML0gwYz1mSyV0VPsKWw+pyc/47vrhRQk04e7qOw5/rUIyiwUlXqY
+	dr93QfuTghEYkA18S4TEXiTniZ4Vskoot7KQx2Jzz
+X-Received: by 2002:a05:6808:198c:b0:45f:481c:e258 with SMTP id
+ 5614622812f47-4799c97f030mr7889576b6e.16.1776787889137; Tue, 21 Apr 2026
+ 09:11:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260403111516.379795-1-josh.milas@gmail.com> <20260403111516.379795-5-josh.milas@gmail.com>
+In-Reply-To: <20260403111516.379795-5-josh.milas@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
+Date: Wed, 22 Apr 2026 00:11:17 +0800
+X-Gm-Features: AQROBzBlh98NyBlEmbYmzw7vICUUUiwt5WFp1mPUvyil0G8EdaRkcbgAdW60Bs0
+Message-ID: <CALbr=Lau_7eRDP5HCh5dQ5aXumvGKkNS4fX68d2CJp9ZjNxzDA@mail.gmail.com>
+Subject: Re: [PATCH v5 4/5] riscv64: dts: sophgo: add SG2000 dtsi
+To: Joshua Milas <josh.milas@gmail.com>
+Cc: tglx@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	pjw@kernel.org, samuel.holland@sifive.com, unicorn_wang@outlook.com, 
+	inochiama@gmail.com, daniel.lezcano@linaro.org, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, liujingqi@lanxincomputing.com, 
+	alexander.sverdlin@gmail.com, rabenda.cn@gmail.com, dlan@kernel.org, 
+	chao.wei@sophgo.com, anup@brainfault.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	sophgo@lists.linux.dev, michael.opdenacker@rootcommit.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
+On Fri, Apr 3, 2026 at 7:16=E2=80=AFPM Joshua Milas <josh.milas@gmail.com> =
+wrote:
+>
+> Adds sg2000.dtsi on the RISCV side.
+>
+> Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 
-The early version of XuanTie C910 core has a store merge buffer
-delay problem. The store merge buffer could improve the store queue
-performance by merging multi-store requests, but when there are not
-continued store requests, the prior single store request would be
-waiting in the store queue for a long time. That would cause
-significant problems for communication between multi-cores. This
-problem was found on sg2042 & th1520 platforms with the qspinlock
-lock torture test.
+Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
 
-So appending a fence w.o could immediately flush the store merge
-buffer and let other cores see the write result.
-
-This will apply the WRITE_ONCE errata to handle the non-standard
-behavior via appending a fence w.o instruction for WRITE_ONCE().
-
-This problem is only observed on the sg2042 hardware platform by
-running the lock_torture test program for half an hour. The problem
-was not found in the user space application, because interrupt can
-break the livelock.
-
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Leonardo Bras <leobras@redhat.com>
-Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: Han Gao <gaohan@iscas.ac.cn>
-Tested-by: Yao Zi <me@ziyao.cc>
-Cc: Chen Wang <unicorn_wang@outlook.com>
-Cc: Xiaoguang Xing <xiaoguang.xing@sophgo.com>
-Cc: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
----
-Changelog
-
-v5:
- - Add Acked-by: Arnd Bergmann <arnd@arndb.de> for asm/generic
- - Add Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
- - Rebase on v7.0
-
-v4:
-https://lore.kernel.org/linux-riscv/20260412143116.1445893-1-guoren@kernel.org/
- - Add Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-   (https://lore.kernel.org/linux-riscv/1cfdf6c1-a384-43ad-9588-284335d073f7@ghiti.fr/)
- - Add Tested-by: Yao Zi <me@ziyao.cc>
- - Rebase on v7.0-rc7
-
-v3:
-https://lore.kernel.org/linux-riscv/20260125063941.443777-1-guoren@kernel.org/
- - Rebase on 6.19-rc6.
- - Remove errata_list_vendors patch which has been merged.
- - Add Tested-by tag.
-
-v2:
-https://lore.kernel.org/linux-riscv/20250713155321.2064856-1-guoren@kernel.org/
- - Add new header file for errata_list_vendors.
- - Rebase newest kernel version.
-
-v1:
-https://lore.kernel.org/all/20241214143039.4139398-1-guoren@kernel.org/
----
- arch/riscv/Kconfig.errata                    | 17 ++++++++++
- arch/riscv/errata/thead/errata.c             | 20 ++++++++++++
- arch/riscv/include/asm/errata_list_vendors.h |  3 +-
- arch/riscv/include/asm/rwonce.h              | 34 ++++++++++++++++++++
- include/asm-generic/rwonce.h                 |  2 ++
- 5 files changed, 75 insertions(+), 1 deletion(-)
- create mode 100644 arch/riscv/include/asm/rwonce.h
-
-diff --git a/arch/riscv/Kconfig.errata b/arch/riscv/Kconfig.errata
-index 3c945d086c7d..4d3f13522da6 100644
---- a/arch/riscv/Kconfig.errata
-+++ b/arch/riscv/Kconfig.errata
-@@ -154,4 +154,21 @@ config ERRATA_THEAD_GHOSTWRITE
- 
- 	  If you don't know what to do here, say "Y".
- 
-+config ERRATA_THEAD_WRITE_ONCE
-+	bool "Apply T-Head WRITE_ONCE errata"
-+	depends on ERRATA_THEAD
-+	default y
-+	help
-+	  The early version of T-Head C9xx cores of sg2042 & th1520 have a store
-+	  merge buffer delay problem. The store merge buffer could improve the
-+	  store queue performance by merging multi-store requests, but when there
-+	  are no continued store requests, the prior single store request would be
-+	  waiting in the store queue for a long time. That would cause signifi-
-+	  cant problems for communication between multi-cores. Appending a
-+	  fence w.o could immediately flush the store merge buffer and let other
-+	  cores see the write result.
-+
-+	  This will apply the WRITE_ONCE errata to handle the non-standard beh-
-+	  avior via appending a fence w.o instruction for WRITE_ONCE().
-+
- endmenu # "CPU errata selection"
-diff --git a/arch/riscv/errata/thead/errata.c b/arch/riscv/errata/thead/errata.c
-index 0b942183f708..fbe46f2fa8fb 100644
---- a/arch/riscv/errata/thead/errata.c
-+++ b/arch/riscv/errata/thead/errata.c
-@@ -168,6 +168,23 @@ static bool errata_probe_ghostwrite(unsigned int stage,
- 	return true;
- }
- 
-+static bool errata_probe_write_once(unsigned int stage,
-+				    unsigned long arch_id, unsigned long impid)
-+{
-+	if (!IS_ENABLED(CONFIG_ERRATA_THEAD_WRITE_ONCE))
-+		return false;
-+
-+	/* target-c9xx cores report arch_id and impid as 0 */
-+	if (arch_id != 0 || impid != 0)
-+		return false;
-+
-+	if (stage == RISCV_ALTERNATIVES_BOOT ||
-+	    stage == RISCV_ALTERNATIVES_MODULE)
-+		return true;
-+
-+	return false;
-+}
-+
- static u32 thead_errata_probe(unsigned int stage,
- 			      unsigned long archid, unsigned long impid)
- {
-@@ -183,6 +200,9 @@ static u32 thead_errata_probe(unsigned int stage,
- 
- 	errata_probe_ghostwrite(stage, archid, impid);
- 
-+	if (errata_probe_write_once(stage, archid, impid))
-+		cpu_req_errata |= BIT(ERRATA_THEAD_WRITE_ONCE);
-+
- 	return cpu_req_errata;
- }
- 
-diff --git a/arch/riscv/include/asm/errata_list_vendors.h b/arch/riscv/include/asm/errata_list_vendors.h
-index ec7eba373437..8fd7c36307e2 100644
---- a/arch/riscv/include/asm/errata_list_vendors.h
-+++ b/arch/riscv/include/asm/errata_list_vendors.h
-@@ -18,7 +18,8 @@
- #define	ERRATA_THEAD_MAE 0
- #define	ERRATA_THEAD_PMU 1
- #define	ERRATA_THEAD_GHOSTWRITE 2
--#define	ERRATA_THEAD_NUMBER 3
-+#define	ERRATA_THEAD_WRITE_ONCE 3
-+#define	ERRATA_THEAD_NUMBER 4
- #endif
- 
- #ifdef CONFIG_ERRATA_MIPS
-diff --git a/arch/riscv/include/asm/rwonce.h b/arch/riscv/include/asm/rwonce.h
-new file mode 100644
-index 000000000000..081793d4d772
---- /dev/null
-+++ b/arch/riscv/include/asm/rwonce.h
-@@ -0,0 +1,34 @@
-+/* SPDX-License-Identifier: GPL-2.0 */
-+
-+#ifndef __ASM_RWONCE_H
-+#define __ASM_RWONCE_H
-+
-+#include <linux/compiler_types.h>
-+#include <asm/alternative-macros.h>
-+#include <asm/vendorid_list.h>
-+#include <asm/errata_list_vendors.h>
-+
-+#if defined(CONFIG_ERRATA_THEAD_WRITE_ONCE) && !defined(NO_ALTERNATIVE)
-+
-+#define write_once_fence()				\
-+do {							\
-+	asm volatile(ALTERNATIVE(			\
-+		"nop",					\
-+		"fence w, o",				\
-+		THEAD_VENDOR_ID,			\
-+		ERRATA_THEAD_WRITE_ONCE,		\
-+		CONFIG_ERRATA_THEAD_WRITE_ONCE)		\
-+		: : : "memory");			\
-+} while (0)
-+
-+#define __WRITE_ONCE(x, val)				\
-+do {							\
-+	*(volatile typeof(x) *)&(x) = (val);		\
-+	write_once_fence();				\
-+} while (0)
-+
-+#endif /* defined(CONFIG_ERRATA_THEAD_WRITE_ONCE) && !defined(NO_ALTERNATIVE) */
-+
-+#include <asm-generic/rwonce.h>
-+
-+#endif	/* __ASM_RWONCE_H */
-diff --git a/include/asm-generic/rwonce.h b/include/asm-generic/rwonce.h
-index 52b969c7cef9..4e2d941f15a1 100644
---- a/include/asm-generic/rwonce.h
-+++ b/include/asm-generic/rwonce.h
-@@ -50,10 +50,12 @@
- 	__READ_ONCE(x);							\
- })
- 
-+#ifndef __WRITE_ONCE
- #define __WRITE_ONCE(x, val)						\
- do {									\
- 	*(volatile typeof(x) *)&(x) = (val);				\
- } while (0)
-+#endif
- 
- #define WRITE_ONCE(x, val)						\
- do {									\
--- 
-2.40.1
-
+> ---
+>  arch/riscv/boot/dts/sophgo/sg2000.dtsi | 53 ++++++++++++++++++++++++++
+>  1 file changed, 53 insertions(+)
+>  create mode 100644 arch/riscv/boot/dts/sophgo/sg2000.dtsi
+>
+> diff --git a/arch/riscv/boot/dts/sophgo/sg2000.dtsi b/arch/riscv/boot/dts=
+/sophgo/sg2000.dtsi
+> new file mode 100644
+> index 0000000000000..412adacc00576
+> --- /dev/null
+> +++ b/arch/riscv/boot/dts/sophgo/sg2000.dtsi
+> @@ -0,0 +1,53 @@
+> +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> +
+> +#define SOC_PERIPHERAL_IRQ(nr) ((nr) + 16)
+> +
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
+> +#include "cv180x-cpus.dtsi"
+> +#include "cv180x.dtsi"
+> +#include "cv181x.dtsi"
+> +
+> +/ {
+> +       compatible =3D "sophgo,sg2000";
+> +
+> +       memory@80000000 {
+> +               device_type =3D "memory";
+> +               reg =3D <0x80000000 0x10000000>;
+> +       };
+> +
+> +       soc {
+> +               interrupt-parent =3D <&plic>;
+> +               dma-noncoherent;
+> +
+> +               pinctrl: pinctrl@3001000 {
+> +                       compatible =3D "sophgo,sg2000-pinctrl";
+> +                       reg =3D <0x03001000 0x1000>,
+> +                             <0x05027000 0x1000>;
+> +                       reg-names =3D "sys", "rtc";
+> +               };
+> +
+> +               clk: clock-controller@3002000 {
+> +                       compatible =3D "sophgo,sg2000-clk";
+> +                       reg =3D <0x03002000 0x1000>;
+> +                       clocks =3D <&osc>;
+> +                       #clock-cells =3D <1>;
+> +               };
+> +
+> +               plic: interrupt-controller@70000000 {
+> +                       compatible =3D "sophgo,sg2000-plic", "thead,c900-=
+plic";
+> +                       reg =3D <0x70000000 0x4000000>;
+> +                       interrupts-extended =3D <&cpu0_intc 11>, <&cpu0_i=
+ntc 9>;
+> +                       interrupt-controller;
+> +                       #address-cells =3D <0>;
+> +                       #interrupt-cells =3D <2>;
+> +                       riscv,ndev =3D <101>;
+> +               };
+> +
+> +               clint: timer@74000000 {
+> +                       compatible =3D "sophgo,sg2000-clint", "thead,c900=
+-clint";
+> +                       reg =3D <0x74000000 0x10000>;
+> +                       interrupts-extended =3D <&cpu0_intc 3>, <&cpu0_in=
+tc 7>;
+> +               };
+> +       };
+> +};
+> --
+> 2.53.0
+>
