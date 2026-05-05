@@ -1,101 +1,109 @@
-Received: from mailout2.hostsharing.net (mailout2.hostsharing.net [83.223.78.233])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2754E1A0728
-	for <sophgo@lists.linux.dev>; Sun,  3 May 2026 08:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.223.78.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76A338E5C8
+	for <sophgo@lists.linux.dev>; Tue,  5 May 2026 12:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1777798338; cv=none; b=R6zB8ApN8t4tXi0Rz2mN4U2SZyHEpHcyZdkzwgy6MgL+67jGaVGxvlyPJ7COjSGBttBswzHWVQLaNpayJtCf2ulOGVUtX/F4svhgHUtdhICO0lJbvjbG4SlWmCS49BxO5P1+dXvKobbQQvUlxEC2Yl7Bihw8FHgzxq0W/yzOU+8=
+	t=1777982940; cv=none; b=CvhOT84hAnRuKtS4a1iZ4nPZK9Bg9ujAyz0qBCRqbF2o40TnDxJc6K4t7a8NCpSxA+7LeT/w6OQkFVZziPlkREcfLMN+d729gAcDjMvKazaNP/kp5tVtNcjDI8lzHo/yW5Q+xljuvVFF/z7cTGajKX75AznHWwO+yLY78kQJVs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1777798338; c=relaxed/simple;
-	bh=ukg3P5tO/AfXZ1GP9HxF4bAlhimrzz6SSRbG/iYZB/Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mv5rEDi14UDUq6OHxGUIPWsJXpkCfjyXsAIna4E6n4dxh9BTp4XWjMLqWTJE+9gZHWnGqxxkI0UJ6wfFwoVwT+q7SFFQfN2jAlgt64OhAF3CAmm+pLsnbqlkSvY4DNIOuUbfaJb+NJvfCyVr90JH3IIYR9CAnn6/BDFuHwFLobs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=pass smtp.mailfrom=wunner.de; arc=none smtp.client-ip=83.223.78.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wunner.de
-Received: from h08.hostsharing.net (h08.hostsharing.net [IPv6:2a01:37:1000::53df:5f1c:0])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature ECDSA (secp384r1) client-digest SHA384)
-	(Client CN "*.hostsharing.net", Issuer "GlobalSign GCC R6 AlphaSSL CA 2025" (verified OK))
-	by mailout2.hostsharing.net (Postfix) with ESMTPS id 4E9B41058A;
-	Sun, 03 May 2026 10:52:06 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 38258600D2F5; Sun,  3 May 2026 10:52:06 +0200 (CEST)
-Date: Sun, 3 May 2026 10:52:06 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Han Gao <gaohan@iscas.ac.cn>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Kees Cook <kees@kernel.org>, Chen Wang <unicorn_wang@outlook.com>,
-	linux-pci@vger.kernel.org, sophgo@lists.linux.dev,
-	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org,
-	Han Gao <rabenda.cn@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
-	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <me@ziyao.cc>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] PCI: Add quirk to disable PCIe port services on
- Sophgo SG2042
-Message-ID: <afcMtlBJYeuxSqZr@wunner.de>
-References: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
- <20260331175658.1015829-3-gaohan@iscas.ac.cn>
- <q6wmn67lzk5c2pgmgkoezcvy3xj3yqecg675gx7xyrw3amjwpi@5pjla6j3krbv>
- <0f42afefd9322779af5463b696c55b08d2296ea8.camel@iscas.ac.cn>
- <afZUxYhkCQ0wG0Uu@wunner.de>
- <68d4a49bf1df785ae906fbc2dd16e64b667ca5f0.camel@iscas.ac.cn>
+	s=arc-20240116; t=1777982940; c=relaxed/simple;
+	bh=w+WRCZqU8kokq2AXExK/588X3QQVWVSPSVOh/11hPGA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SdgFuR+r+Wly5rxCPt26uu/p072xSfaWokX27WTwY74LsmJmT3Ybp6S1D5y6x36fZGQql0TrEInzKZVagsTZTuFn1J0Mi/1S0ik/l49ZN5U/ji/Q9ayNtcj/4ClyRDQQbPpMwSXqfBq0oLoQkGZJsZPJPN2WUqErzTKEgTpCLC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3B+Pwnj; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3B+Pwnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69442C2BCC9
+	for <sophgo@lists.linux.dev>; Tue,  5 May 2026 12:09:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1777982940;
+	bh=w+WRCZqU8kokq2AXExK/588X3QQVWVSPSVOh/11hPGA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=b3B+PwnjLg4F92fOf2RhMpitepo+xrov8Zv3b2ypMbJj/qgHo5iWQyMJZpxQGBMQw
+	 SF9LEetMBzyrftAYw0aWkcoGtxv7mPHzv1KIiFYOXwrquhz0bIziich4OtyclbmSv8
+	 mDMHVBq5+GieIruK6BjtFRiVqwMefB2uvINNnLkHSKfQ71JuArB9+KyPFzzSEcRIrG
+	 mJGGU1UCwWvboaiqLu+rNH027uzU9l8HdQulvFTG4Hkw0kA57Ov/ao5O1HtYYicdFq
+	 3EMdDJm/p2IuIIpXbxztxz3Z64YoLCIQV65pirnH/ipQzctA7HmK9dLg4ZJA4sHknW
+	 Y+WK2xUUOp1FQ==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5a884815606so212613e87.0
+        for <sophgo@lists.linux.dev>; Tue, 05 May 2026 05:09:00 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AFNElJ+IflrQJ8GHCW5gjBpEVn5o8cwbhT99DBKB38Si52etYDBSwdQ4XYHXXW0rdDrN4V1oW5VAbks=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwYWzqEtl8FovK+EgzlghJvvrxpPdFSnav0JxgTk5/u38WSuIW1
+	8xZWyZ9epso9Cckhfk6TRWqjVZnHa2IssF5b33CFbwafpydnwx0iQ9ymaGqDjDBxazQ/HB40r8o
+	ng2+yRlTZWIz65BwYqKvh/tU6daFHzH4=
+X-Received: by 2002:ac2:5287:0:b0:5a8:64c4:38cd with SMTP id
+ 2adb3069b0e04-5a864c43a8amr3843936e87.21.1777982938915; Tue, 05 May 2026
+ 05:08:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <68d4a49bf1df785ae906fbc2dd16e64b667ca5f0.camel@iscas.ac.cn>
+References: <20260430220409.74885-1-rosenp@gmail.com>
+In-Reply-To: <20260430220409.74885-1-rosenp@gmail.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Tue, 5 May 2026 14:08:46 +0200
+X-Gmail-Original-Message-ID: <CAD++jLk10PN8854hqQbdy0A57UWiT2Pvmw3ew+vSVb5WBZZBxg@mail.gmail.com>
+X-Gm-Features: AVHnY4ISJ-qRQ6ihp4NmbHNATxkVPj9rgXjSk2ExZ5KttDPUUPe2UT7Wx7DXr10
+Message-ID: <CAD++jLk10PN8854hqQbdy0A57UWiT2Pvmw3ew+vSVb5WBZZBxg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: sophgo: allocate power_cfg with priv
+To: Rosen Penev <rosenp@gmail.com>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, Kees Cook <kees@kernel.org>
+Cc: linux-gpio@vger.kernel.org, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, 
+	"open list:SOPHGO DEVICETREES and DRIVERS" <sophgo@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, May 03, 2026 at 03:10:58PM +0800, Icenowy Zheng wrote:
-> It's used in multiple products, but only one of them (EVBv1, which is
-> just an early EVB available for a few people including me) lacks an
-> onboard switch, because SG2042 is short on on-chip peripherals. All
-> other devices (including two mainlined ones, EVBv2 and Milk-V Pioneer,
-> and unmainlined dual socket rack servers; Milk-V Pioneer should be the
-> most popular device because it was on shelf) have an onboard switch to
-> mitigate the lack of on-chip peripherals in SG2042.
+Hi Rosen,
 
-Who knows, maybe someone will design a product which doesn't attach
-a PCIe switch to the SoC, maybe the lack of peripherals isn't a
-problem for them.
+thanks for your patch!
 
-It seems reasonable to accommodate such non-switch use cases as well,
-so I think you definitely do not want to quirk all products using that
-SoC but only those that need it, regardless whether it's the majority.
+On Fri, May 1, 2026 at 12:04=E2=80=AFAM Rosen Penev <rosenp@gmail.com> wrot=
+e:
 
-> > My point is, you want to constrain this to a specific product, not to
-> > the SoC.  Can you maybe solve this by not specifying interrupts in
-> > the devicetree for the PCIe switch?
-> 
-> The PCIe switches are not described in the device tree at all, because
-> they're all just discoverable; can we describe them in the DT and
-> redirect their interrupts to void?
+> Use a flexible array member to combine allocations and simplify code
+> slightly.
+>
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
 
-Yes, somebody did a writeup how to represent switches and endpoints
-in the devicetree:
+I have applied the patch with the following augmentation:
 
-https://farlepet.github.io/linux/2024/02/20/using-linux-device-tree-with-pcie-devices.html
+iff --git a/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
+b/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
+index 154ba9a4f08c..59318a42690f 100644
+--- a/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
++++ b/drivers/pinctrl/sophgo/pinctrl-cv18xx.c
+@@ -27,8 +27,9 @@
+ #include "pinctrl-cv18xx.h"
 
-And then I would try providing an empty "interrupts" property for
-those switch ports for which you want to avoid port services being
-instantiated.
+ struct cv1800_priv {
+-       void __iomem                            *regs[2];
+-       u32                                     power_cfg[];
++       void __iomem    *regs[2];
++       unsigned int    num_power_cfg;
++       u32             power_cfg[] __counted_by(num_power_cfg);
+ };
 
-That way you could selectively *enable* port services for specific
-ports where it's useful.  Let's say you need DPC on a specific port
-to contain errors of an attached NVMe drive.  Just assign a single
-MSI for that port and assign no MSIs for all the others.  Much more
-flexible than globally disabling port services.
+ static unsigned int cv1800_dt_get_pin_mux(u32 value)
+@@ -421,6 +422,7 @@ static int cv1800_pinctrl_init(struct platform_device *=
+pdev,
+                        GFP_KERNEL);
+        if (!priv)
+                return -ENOMEM;
++       priv->num_power_cfg =3D pctrl_data->npds;
 
-Thanks,
+        priv->regs[0] =3D devm_platform_ioremap_resource_byname(pdev, "sys"=
+);
+        if (IS_ERR(priv->regs[0]))
 
-Lukas
+I think this has been mentioned before?
+
+Including a counter for dynamic arrays makes it possible for the
+compiler to insert runtime checks akin to those that are used for
+Pascal or Rust arrays making it harder for the arrays to be indexed
+out of range.
+
+Yours,
+Linus Walleij
