@@ -1,70 +1,98 @@
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23CD221DB3
-	for <sophgo@lists.linux.dev>; Thu,  7 May 2026 02:21:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9057340A6A;
+	Thu,  7 May 2026 08:52:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778120476; cv=none; b=ZK1DG2qTFqyUm5aVWdA9LsXbN7MAfimyHg8FskCUcMHOPfPB+vI4IhI44IwxBtNChKzCzqUHcnqOEGJzQLPXYsb40rA+qF1KGHCcLCdbZG+Psa5NlycCPQYaaSqHdTSnBQ0MbkFwfDfpcOPsn/KgAI11scS6Vg6a8wubXyTVa5w=
+	t=1778143958; cv=none; b=g6ioqgGlE0Lm5FRCYddTzbu6cgETLyqs3ntsp0d26+REkFvfxl3X7AeJHxQ/F7mJkEzLpodMHvuSnFD9VGGm9rECMVtfoOVRwpr/ulwuo9n0lom9TwuYMehwKbYRHv3PyALIK5Gr6EhrJl1Ptas4G30L+IzLAZ389T+zwfBT30k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778120476; c=relaxed/simple;
-	bh=j4/UvI9qZTcXngFzaeXmkSq3+ttKof0/O9p/KrcSJ6Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Jp6BENDKWtDLf7EmpcSHb1DSEPi08fTL02HqEr1rj7Y2i8h6RyPj3LFhGFVBdA+9ccUbhW6kvHZgWQbTfubsk4SmHBAjoZozmgWaAimki2vVSFd+Pe8va4BhhEAXmVVraSpqHZIE6+aDu/J2HP78cSwTnUQJp71zUCjskC9+mps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pEFbxCKy; arc=none smtp.client-ip=95.215.58.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1778143958; c=relaxed/simple;
+	bh=e2KUBzxwA3gtOemcz+CllnnM9kBcLQ+NeToRBmvqxJw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E5SsBd0SPwnWj5Ipe2Y0OkrGZM9v4rd0O4F29GX94cd7wZ+V48ZCqYo08g+vv8gdvNfQp3fs1bL9zEUUCyP7b7GTGAKjTBrCmZVPC4yiHEZ5y39Ry+iv6Gi7L5h6ji6zDG/Z61d6okps5xaqW9StSeWJildFPfuGqCCfqHN0GY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DyfjQvl0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pEFbxCKy"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1778120473;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=dzVPzgzA4ra7vreCThYD/sn11wwurMjNfg4HXpJ/9UM=;
-	b=pEFbxCKyrFICapRkwtKeKoKom6skQzx33uErQZe9FffDvAdqDBCkQNhgv6QrdSsJHXKQYD
-	1P1nour0iti1qtq8TDAtE6amnfOPRq9uSE6xm6O4GBF7X4Mgk+gVwfOHOR1M584JKEBWMO
-	x9ANErlGztUBf5UEgbbcinPiHiBSH1U=
-From: Chen Wang <chen.wang@linux.dev>
-To: linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	inochiama@gmail.com
-Cc: Chen Wang <chen.wang@linux.dev>
-Subject: [PATCH] MAINTAINERS: update Chen Wang's email address
-Date: Thu,  7 May 2026 10:20:58 +0800
-Message-ID: <20260507022058.3913-1-chen.wang@linux.dev>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DyfjQvl0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D18C2BCB2;
+	Thu,  7 May 2026 08:52:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1778143958;
+	bh=e2KUBzxwA3gtOemcz+CllnnM9kBcLQ+NeToRBmvqxJw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DyfjQvl0OFDtLsJMtcOX4gRAOKpz3gYKE1lcWfQuti3f0wwiRd+58C4XXmi4yKJYY
+	 8xySrStcmoAWhSiITh0Nc8J8JHW+KK98c5c+1rbZHLu3TpLwjIwvuPDXRThNBg8lbU
+	 tKo75ABwT0P8No3ghKUFJ8WzyTUhwc2uSX1W76n2krgEfyLpvCdupG1G9Nmg6Q9EX4
+	 F7PYiM8qW+lzXIVlsN6WIjICPsbxmvbICo6Lakhzoz/WP0USd6MsWdx/1YSVmOOwdZ
+	 C8Dz67PhQ4UGsG6jGyI9xtGSMVCHi2lo3sLlpHYKDv8Wc/1pZl5r7sgdfrUb9cNx2n
+	 o/Sfi306SjVEw==
+Date: Thu, 7 May 2026 14:22:25 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: Lukas Wunner <lukas@wunner.de>, 
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>, Han Gao <gaohan@iscas.ac.cn>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jonathan Cameron <jonathan.cameron@huawei.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Kees Cook <kees@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, linux-pci@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	Han Gao <rabenda.cn@gmail.com>, Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <me@ziyao.cc>, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH 2/2] PCI: Add quirk to disable PCIe port services on
+ Sophgo SG2042
+Message-ID: <wy4voivjmaekmevp6upwo2roooskfd7kughnxir7opzv3px4jx@h42kmtsjsoex>
+References: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
+ <20260331175658.1015829-3-gaohan@iscas.ac.cn>
+ <q6wmn67lzk5c2pgmgkoezcvy3xj3yqecg675gx7xyrw3amjwpi@5pjla6j3krbv>
+ <0f42afefd9322779af5463b696c55b08d2296ea8.camel@iscas.ac.cn>
+ <afZUxYhkCQ0wG0Uu@wunner.de>
+ <68d4a49bf1df785ae906fbc2dd16e64b667ca5f0.camel@iscas.ac.cn>
+ <afcMtlBJYeuxSqZr@wunner.de>
+ <afveQQI-CsQ2L1-N@inochi.infowork>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+In-Reply-To: <afveQQI-CsQ2L1-N@inochi.infowork>
 
-Update my email address as my original email provider may
-block emails in kernel development.
+On Thu, May 07, 2026 at 08:41:23AM +0800, Inochi Amaoto wrote:
+> On Sun, May 03, 2026 at 10:52:06AM +0200, Lukas Wunner wrote:
+> > On Sun, May 03, 2026 at 03:10:58PM +0800, Icenowy Zheng wrote:
+> > > It's used in multiple products, but only one of them (EVBv1, which is
+> > > just an early EVB available for a few people including me) lacks an
+> > > onboard switch, because SG2042 is short on on-chip peripherals. All
+> > > other devices (including two mainlined ones, EVBv2 and Milk-V Pioneer,
+> > > and unmainlined dual socket rack servers; Milk-V Pioneer should be the
+> > > most popular device because it was on shelf) have an onboard switch to
+> > > mitigate the lack of on-chip peripherals in SG2042.
+> > 
+> > Who knows, maybe someone will design a product which doesn't attach
+> > a PCIe switch to the SoC, maybe the lack of peripherals isn't a
+> > problem for them.
+> > 
+> > It seems reasonable to accommodate such non-switch use cases as well,
+> > so I think you definitely do not want to quirk all products using that
+> > SoC but only those that need it, regardless whether it's the majority.
+> > 
+> 
+> I think it is possible to quirk all the SG2042 products, because the
+> typical usage already shows MSI shortage (And this is why SG2044 has
+> 512 MSIs). Although it may left some MSIs in the test case, MSI shortage
+> is a common issue in a real scenario. And the Sophgo already maintains
+> a whitelist to limit the MSI usage of most devices in their vendor
+> kernel. So I think it is fine to quirk all the products that use SG2042.
+> 
 
-Signed-off-by: Chen Wang <chen.wang@linux.dev>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'm not too sure about quirk. We usually add quirks to workaround the hardware
+issues. But what you are seeing is a platform limitation, which is a common
+scenario. So adding a cmdline param would help other platforms as well (without
+any more code changes).
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 882214b0e7db..e02030d212d7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -24966,7 +24966,7 @@ F:	drivers/char/sonypi.c
- F:	drivers/platform/x86/sony-laptop.c
- 
- SOPHGO DEVICETREES and DRIVERS
--M:	Chen Wang <unicorn_wang@outlook.com>
-+M:	Chen Wang <chen.wang@linux.dev>
- M:	Inochi Amaoto <inochiama@gmail.com>
- L:	sophgo@lists.linux.dev
- W:	https://github.com/sophgo/linux/wiki
+- Mani
 
-base-commit: 7fd2df204f342fc17d1a0bfcd474b24232fb0f32
 -- 
-2.43.0
-
+மணிவண்ணன் சதாசிவம்
