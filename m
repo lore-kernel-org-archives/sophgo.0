@@ -1,165 +1,145 @@
-Received: from cstnet.cn (smtp25.cstnet.cn [159.226.251.25])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3B3453497
-	for <sophgo@lists.linux.dev>; Wed,  6 May 2026 14:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F363F9D9
+	for <sophgo@lists.linux.dev>; Thu,  7 May 2026 00:41:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778077387; cv=none; b=gCjKZCKWT23tnhcKAkNvTFL2tRGNfAOTDx+xqTGXrFXU0EtXCXnBpJNWkoOqAb8nJN/pVfrUV3PTGwUwRMUqtzdyF0YX59duK5b5FRZnvkmWu2kzyHBzMKJRZk7yUqcZxuSD2PzCvipXPUJUXNtFMlMkxhEy/tUF6bYqjK9ceIU=
+	t=1778114503; cv=none; b=rAdTtJYPplkZ+FFRBZVjwdi8UB/2fkxzqMxkFRc2Cc2K1t0fHChMTL60xQ2VNF8vI0BsrVaWvjsZ/oEtgfV6eoUiORp77AEoLYgwqHbdk+NZ5Hmbw6DhFtmlj3cqQGrzcpo8o+bEeTCcWnuN5KcSUBC+zwTLc0l7AmGPJqqFIPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778077387; c=relaxed/simple;
-	bh=YhT+L9gfUolQQ/67uHtY8wxjDfQEf4qc6b1yQM1L3Pw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=UQOTSmDLlje6YwqcdB70dODRnEYLuWltXrHEkgNWC+ktpkt4DtCG9fi9KUNMut7a/KMRLC15s48hHWUjJMWUPcqUo9JPSMPI3E3uSLgGi1pIPW/JGzehLtJ8iVyTR7wsTWyYkdRimnGRwXjYyPJQWZzobLJecCdlDGr3E7WfMDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from edelgard.fodlan.icenowy.me (unknown [112.94.100.82])
-	by APP-05 (Coremail) with SMTP id zQCowAAHmQy7TvtptBGODw--.6857S2;
-	Wed, 06 May 2026 22:22:52 +0800 (CST)
-Message-ID: <2415c7a9e33912ac4b87176b07f6cf4db21fa57c.camel@iscas.ac.cn>
+	s=arc-20240116; t=1778114503; c=relaxed/simple;
+	bh=hozVGdurQuHkwbTkTMzyhB1vqcbTrdKhKFTpfvINR2E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iELijSr2XpDIFzrzytWXhWpKyvLjHVPXzUEOIZbmJrBp/q1VIDEWQ4JrDRBjjQaJr5Ly2Dxc/X4doP7BG9dp2jVqQuhaQhbL8WLsRbbXMnnlzfsaTf8GAiz6fPtyjfyLnpbC5rqKP7+fGqCao2lQrtGrR/toJakXuo3sZRA6Bso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=loWSLryk; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="loWSLryk"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-c80148ae949so89248a12.2
+        for <sophgo@lists.linux.dev>; Wed, 06 May 2026 17:41:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1778114502; x=1778719302; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hZ5LFFAZbhjlqv4fN6kLXFN2tALXchu13wJuFe3wZrI=;
+        b=loWSLrykieuvR5a8MTUpWXBLTUdOz3ms0wbDfLsJj0ZNG02xhXQUfw5AN6saqInC2n
+         4TTEuUTEAcTPQo19qYNaWuhWCOewNbjrQacm0ep+7m7SdMTQIRvcRS2zum6pdKZQzKNY
+         eXpC/kD3uw2NNnBYMbaOLe+RhBciZQQk1TCw56Tq4gIYKOoRZb7ae95I1FCkt5ohEn+8
+         JIMyzIYK+wtkxWpV3TMPURprYgKkcyANprKZeqSzqFPhp8JbHrl+r7uWlaTKBCa5RhGf
+         r7tj9Z5IIXTKqdRVEUUU3JIAN8d9smbgZxXHHkguFaJb2+4Ew3CNict+e0i3HsRbokSp
+         O2mA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1778114502; x=1778719302;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hZ5LFFAZbhjlqv4fN6kLXFN2tALXchu13wJuFe3wZrI=;
+        b=oQoCAnnGVq+X+zPjx8nHMG53GmU4ISpn3eqb0vRoa5yOvgVIKMGGMBveKqxI2WWtTp
+         8cvTKOEYMbIAa6abPQxU22tP80CjXf+ij/Gc5wfC5SWq0F428aZWokR2cK1JpkAeYF+t
+         xoHGtL1tPKNB6xiv5rG9mh2dUCDoy39RWeTxyT0+oYNCgSDT3gRmUkDyyUCnpTTTl4HM
+         24iEforHtoQXYp5RhAYYBikFvPrr2GJSFuBI1wvX830tJBXQ+FIH4y0gIrRlLREST15v
+         T+CgT4NLmdmW6XpUUoBmtxmDRCdqaYQgl4PXDcLNogU7OZoRlzlLHfJf6ygg3TC88XI9
+         2saA==
+X-Forwarded-Encrypted: i=1; AFNElJ/geeXpgyt8/jYzPSDpoY4cxvJtXnKndtct9sbBNeKadnrRyM4nylqE6GYibG5ICiqnjYk808k=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwJXpQvra8d5xu9ZoUCgv8Lsh9OsTzSbdWgd5y+BcEIYrTp04qw
+	0lp4CF4e2n/GSVeL5gPhvA/65tMYbnVp1YNNtHfe4lmf5SSg6RBVCYSZ
+X-Gm-Gg: AeBDievAcgs5fYMW/EboYIKzQKPfIP4Z92KbXnfIcoP+/fKdmPHdIrDo8nk6eN2Dsqc
+	A2KBq2s65SaJ3QvkVfcUtWcWN9aJirzSt8LkOZJ7Z2Xa4m2aHi0Z6WUJXmzY441ykvcY9wFHmzs
+	UggLgUR6t8AbuWwtoQ24gkqfHmJtBnqS++HgnmjbVNSMlAwVmAnuUydZRfFecfOUxjMordVkbbS
+	huXPzwd1/9sVJNhlucQoP99ex93xalh2gesT369/gvQ/fQp44x7WwHgDCaEStuPVUGuEb9p+Pfy
+	sKX3cZw099eTWrrfUwK98ObxV9iLqlVH/GP3d2oZF7g+0ERGnJlorrrM5EvInERDufPxQ/cH8Cx
+	CA3vqCsjGiQIB/15nP8FT2t/95tLzf6gEwQs2W9M6W7Rabuq2n1y1/BFxcEIYW4sjs17g+Wbpc5
+	e/JBrkOQ7hTfLQ8h2kWQKWnBvxQ6wW2K4eiA==
+X-Received: by 2002:a05:6a20:431e:b0:3a8:284c:fa3b with SMTP id adf61e73a8af0-3aa5ac98bc1mr5493704637.48.1778114501965;
+        Wed, 06 May 2026 17:41:41 -0700 (PDT)
+Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8253582a60sm370848a12.1.2026.05.06.17.41.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 May 2026 17:41:41 -0700 (PDT)
+Date: Thu, 7 May 2026 08:41:23 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Lukas Wunner <lukas@wunner.de>, 
+	Icenowy Zheng <zhengxingda@iscas.ac.cn>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Han Gao <gaohan@iscas.ac.cn>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Jonathan Cameron <jonathan.cameron@huawei.com>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Kees Cook <kees@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, linux-pci@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org, 
+	Han Gao <rabenda.cn@gmail.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Vivian Wang <wangruikang@iscas.ac.cn>, Yao Zi <me@ziyao.cc>, stable@vger.kernel.org
 Subject: Re: [PATCH 2/2] PCI: Add quirk to disable PCIe port services on
  Sophgo SG2042
-From: Icenowy Zheng <zhengxingda@iscas.ac.cn>
-To: Manivannan Sadhasivam <mani@kernel.org>, Lukas Wunner <lukas@wunner.de>
-Cc: Han Gao <gaohan@iscas.ac.cn>, Bjorn Helgaas <bhelgaas@google.com>, Uwe
- =?ISO-8859-1?Q?Kleine-K=F6nig?=	 <u.kleine-koenig@baylibre.com>, Jonathan
- Cameron <jonathan.cameron@huawei.com>,  Ilpo =?ISO-8859-1?Q?J=E4rvinen?=	
- <ilpo.jarvinen@linux.intel.com>, Kees Cook <kees@kernel.org>, Chen Wang	
- <unicorn_wang@outlook.com>, linux-pci@vger.kernel.org,
- sophgo@lists.linux.dev, 	linux-kernel@vger.kernel.org,
- linux-riscv@lists.infradead.org, Han Gao	 <rabenda.cn@gmail.com>, Inochi
- Amaoto <inochiama@gmail.com>, Vivian Wang	 <wangruikang@iscas.ac.cn>, Yao
- Zi <me@ziyao.cc>, stable@vger.kernel.org
-Date: Wed, 06 May 2026 22:22:51 +0800
-In-Reply-To: <2se24qgfmwumdpdjdcszz7l3m5rbucnp22hbidvhz6xc3p6j4i@fkb4u4hg6ha2>
+Message-ID: <afveQQI-CsQ2L1-N@inochi.infowork>
 References: <20260331175658.1015829-1-gaohan@iscas.ac.cn>
-	 <20260331175658.1015829-3-gaohan@iscas.ac.cn>
-	 <q6wmn67lzk5c2pgmgkoezcvy3xj3yqecg675gx7xyrw3amjwpi@5pjla6j3krbv>
-	 <0f42afefd9322779af5463b696c55b08d2296ea8.camel@iscas.ac.cn>
-	 <afZUxYhkCQ0wG0Uu@wunner.de>
-	 <68d4a49bf1df785ae906fbc2dd16e64b667ca5f0.camel@iscas.ac.cn>
-	 <afcMtlBJYeuxSqZr@wunner.de>
-	 <2se24qgfmwumdpdjdcszz7l3m5rbucnp22hbidvhz6xc3p6j4i@fkb4u4hg6ha2>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+ <20260331175658.1015829-3-gaohan@iscas.ac.cn>
+ <q6wmn67lzk5c2pgmgkoezcvy3xj3yqecg675gx7xyrw3amjwpi@5pjla6j3krbv>
+ <0f42afefd9322779af5463b696c55b08d2296ea8.camel@iscas.ac.cn>
+ <afZUxYhkCQ0wG0Uu@wunner.de>
+ <68d4a49bf1df785ae906fbc2dd16e64b667ca5f0.camel@iscas.ac.cn>
+ <afcMtlBJYeuxSqZr@wunner.de>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-CM-TRANSID:zQCowAAHmQy7TvtptBGODw--.6857S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxAry8urW3WF15KrykKr4fAFb_yoW5uF4kpF
-	W7Kay8tFs8JF4Iy3ZrKw10qFyayF4DJw15C3s5GrWjvrs8WryrZryxtFyDZasrCr1xAw1a
-	vrZYq348u3yDXaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUvqb7Iv0xC_Kw4lb4IE77IF4wAFF20E14v26ryj6rWUM7CY07I2
-	0VC2zVCF04k26cxKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rw
-	A2F7IY1VAKz4vEj48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xII
-	jxv20xvEc7CjxVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4
-	A2jsIEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IE
-	w4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMc
-	vjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwACI402YVCY1x02628vn2kIc2xKxwCY
-	1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8Jw
-	C20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAF
-	wI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjx
-	v20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2
-	jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0x
-	ZFpf9x07b4oGdUUUUU=
-X-CM-SenderInfo: x2kh0wp0lqwv3d6l2u1dvotugofq/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <afcMtlBJYeuxSqZr@wunner.de>
 
-=E5=9C=A8 2026-05-06=E4=B8=89=E7=9A=84 19:09 +0530=EF=BC=8CManivannan Sadha=
-sivam=E5=86=99=E9=81=93=EF=BC=9A
-> On Sun, May 03, 2026 at 10:52:06AM +0200, Lukas Wunner wrote:
-> > On Sun, May 03, 2026 at 03:10:58PM +0800, Icenowy Zheng wrote:
-> > > It's used in multiple products, but only one of them (EVBv1,
-> > > which is
-> > > just an early EVB available for a few people including me) lacks
-> > > an
-> > > onboard switch, because SG2042 is short on on-chip peripherals.
-> > > All
-> > > other devices (including two mainlined ones, EVBv2 and Milk-V
-> > > Pioneer,
-> > > and unmainlined dual socket rack servers; Milk-V Pioneer should
-> > > be the
-> > > most popular device because it was on shelf) have an onboard
-> > > switch to
-> > > mitigate the lack of on-chip peripherals in SG2042.
-> >=20
-> > Who knows, maybe someone will design a product which doesn't attach
-> > a PCIe switch to the SoC, maybe the lack of peripherals isn't a
-> > problem for them.
-> >=20
-> > It seems reasonable to accommodate such non-switch use cases as
-> > well,
-> > so I think you definitely do not want to quirk all products using
-> > that
-> > SoC but only those that need it, regardless whether it's the
-> > majority.
-> >=20
-> > > > My point is, you want to constrain this to a specific product,
-> > > > not to
-> > > > the SoC.=C2=A0 Can you maybe solve this by not specifying interrupt=
-s
-> > > > in
-> > > > the devicetree for the PCIe switch?
-> > >=20
-> > > The PCIe switches are not described in the device tree at all,
-> > > because
-> > > they're all just discoverable; can we describe them in the DT and
-> > > redirect their interrupts to void?
-> >=20
-> > Yes, somebody did a writeup how to represent switches and endpoints
-> > in the devicetree:
-> >=20
-> > https://farlepet.github.io/linux/2024/02/20/using-linux-device-tree-wit=
-h-pcie-devices.html
-> >=20
->=20
-> I wouldn't recommend going this far... We do have some switches
-> described in DT,
-> but they have some resource requirements like regulator, i2c...
->=20
-> > And then I would try providing an empty "interrupts" property for
-> > those switch ports for which you want to avoid port services being
-> > instantiated.
-> >=20
->=20
-> There is no 'interrupts' property in DT binding for PCI bridge nodes.
-> There is
-> 'interrupt-map', but that's used for mapping INTx with platform
-> interrupt
-> controller.
->=20
-> Moreover, DT should just describe the hardware topology/resource, not
-> platform constraints.
->=20
-> I'd recommend introducing a new cmdline param to the portdrv driver
-> to disable
-> using MSIs for services. But the platform limitation would hit one
+On Sun, May 03, 2026 at 10:52:06AM +0200, Lukas Wunner wrote:
+> On Sun, May 03, 2026 at 03:10:58PM +0800, Icenowy Zheng wrote:
+> > It's used in multiple products, but only one of them (EVBv1, which is
+> > just an early EVB available for a few people including me) lacks an
+> > onboard switch, because SG2042 is short on on-chip peripherals. All
+> > other devices (including two mainlined ones, EVBv2 and Milk-V Pioneer,
+> > and unmainlined dual socket rack servers; Milk-V Pioneer should be the
+> > most popular device because it was on shelf) have an onboard switch to
+> > mitigate the lack of on-chip peripherals in SG2042.
+> 
+> Who knows, maybe someone will design a product which doesn't attach
+> a PCIe switch to the SoC, maybe the lack of peripherals isn't a
+> problem for them.
+> 
+> It seems reasonable to accommodate such non-switch use cases as well,
+> so I think you definitely do not want to quirk all products using that
+> SoC but only those that need it, regardless whether it's the majority.
+> 
 
-Currently `pcie_ports=3Dcompat` command line parameter is used to
-workaround the current situation, and this patch is designed to
-integrate such workaround into the kernel.
+I think it is possible to quirk all the SG2042 products, because the
+typical usage already shows MSI shortage (And this is why SG2044 has
+512 MSIs). Although it may left some MSIs in the test case, MSI shortage
+is a common issue in a real scenario. And the Sophgo already maintains
+a whitelist to limit the MSI usage of most devices in their vendor
+kernel. So I think it is fine to quirk all the products that use SG2042.
 
-> way or the
-> other if one of the endpoints consume all MSIs...
+Regards,
+Inochi
 
-I think one EP claiming multiple MSI (not MSI-X) is an extended
-capability of the MSI controller controlled by MSI_FLAG_MULTI_PCI_MSI
-flag, which isn't supported for the SG2042 MSI controller driver.
-
-In fact the SG2042 MSI controller isn't originally designed for PCIe
-MSIs -- one bit in its doorbell register corresponds to one interrupt.
-It's why there's only 16 MSIs available (only one doorbell register is
-available and the PCI MSI restricts to 16-bit message data), and also
-why multiple PCI MSI isn't supported (multiple PCI MSIs must have
-consecutive data values, which isn't possible in such case).
-
-Thanks,
-Icenowy
-
->=20
-> - Mani
-
+> > > My point is, you want to constrain this to a specific product, not to
+> > > the SoC.  Can you maybe solve this by not specifying interrupts in
+> > > the devicetree for the PCIe switch?
+> > 
+> > The PCIe switches are not described in the device tree at all, because
+> > they're all just discoverable; can we describe them in the DT and
+> > redirect their interrupts to void?
+> 
+> Yes, somebody did a writeup how to represent switches and endpoints
+> in the devicetree:
+> 
+> https://farlepet.github.io/linux/2024/02/20/using-linux-device-tree-with-pcie-devices.html
+> 
+> And then I would try providing an empty "interrupts" property for
+> those switch ports for which you want to avoid port services being
+> instantiated.
+> 
+> That way you could selectively *enable* port services for specific
+> ports where it's useful.  Let's say you need DPC on a specific port
+> to contain errors of an attached NVMe drive.  Just assign a single
+> MSI for that port and assign no MSIs for all the others.  Much more
+> flexible than globally disabling port services.
+> 
+> Thanks,
+> 
+> Lukas
