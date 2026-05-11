@@ -1,128 +1,146 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705AF35E94E
-	for <sophgo@lists.linux.dev>; Mon, 11 May 2026 06:38:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9672DA765
+	for <sophgo@lists.linux.dev>; Mon, 11 May 2026 06:40:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1778481529; cv=none; b=H/NVI1GiUgeUmfImPSFVmJ/LGmS0ghzenhAm1T9UR1GuOdpnVWWC/e/6JanqkAg6u6dPdyflxgEMNXNSueE8Sm5D5Inck8g/XQTZ5H42Jf0TJ3kq/5cfIfDunig+z89bzUwHOvuFvzWom7oBGTKXXjpFfnKaxYAO+nQXt5qI5Q4=
+	t=1778481637; cv=none; b=hEZjnWygM3OL7cTdpl3VgA/M8DP5RZfcIcteltnozEtXtbMflkyqy98UMZNmeYyMiU3b/VpheN1flT0rs9RB/78eyYkfYoXBCzBUoVPjPRI3dBOhzEo5b8HVQzmBQqQ5aBlHk/qqkQykXqvEx12P/Y304rlPrPg9y0fe6Jr4XZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1778481529; c=relaxed/simple;
-	bh=yXB7EIPk6XevVObOY5j0Sj39ejci5f5ONxRs5/PDOYE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BztCVdXE3LzAVnXeZJ48hXvimoP7z20WJyZUtYscb3AP5pALZvZxwrc8NST/+sgcJlqGgr+szwFuUMlvATG1YLbKZ9XeaiY6R92uO9u41kEURPnlQRML4cKNzbXIhmTjUSAe7yzk4tWKUAHOsnpyctnDNRx+sfZ0RVWSif60V0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QEGQqtDA; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1778481637; c=relaxed/simple;
+	bh=NmkPyrRTIjWyClkVXUQzYwO7m/ITRKRWvNzOoU9dgQo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DABalNwpXADHlcqlpxVV2691/Z7FVwsLOGI+D6qJDkcsJ7qolPTwMLCmNISG01Ah5x+y7wWSp2zYEMT7phffFm7J0eCqKSiaoiUYgAtjTFT2Zxg97BLFtKA0hIfXDk4JhzUWciCz1CjsOB65GXdYXh492D+ytfxTTLaLeCpT7mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ojeXWXMh; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QEGQqtDA"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-82fbf5d4dc2so2768883b3a.1
-        for <sophgo@lists.linux.dev>; Sun, 10 May 2026 23:38:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ojeXWXMh"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c795f441ff7so2910532a12.2
+        for <sophgo@lists.linux.dev>; Sun, 10 May 2026 23:40:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1778481528; x=1779086328; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WfmcfX7gTqR/wtswsezRGGU6Mv16ceub/2XE21DxlUE=;
-        b=QEGQqtDAE1LiEkLebvPG1E3K28LUoTNyK/m+xTZwpYxCr6obYdrAUoncKB8FpHa6WR
-         dKV2+15dBGE/dHcd+TB+nbbqyx+aiHXvi2YYihvTxffI/hjUxiD5N45BHhovTIYmNAzy
-         75QfnpTclGx6Nrx/+AJJ3kSyJiMMwVUzotgHWUB5fH/x/eEjdKSRWkGRTBTvBUzDsiCa
-         IrPbCC67a2+jGt7+we8cRdEXC+MDXxddfVnfSswgi/LMk4MFQ7BlMg5UfYK9/hbM73D0
-         pdMjtUXvvnlLD0PWXNt+MYGM5flqo7Oo7On3CNtUbmvp5R1ayrdMcc2osqKa7Iaa1uiZ
-         mw2g==
+        d=gmail.com; s=20251104; t=1778481636; x=1779086436; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bp1SzHVVQniSVO1ea05q69qwUsggmYx1Vtvah/rM9Og=;
+        b=ojeXWXMhg3LqpF/N1R/GV2vPf7B5zQuvQK8SGsAXnwgkagVulumVTtBhMrM1uEpx6V
+         9jm+hATzJEplCod9hgrOFb/85RUIhUOPwEzE16D26xQCwII7BI3dDI98lWCrV8h5j/Xc
+         nmsloZzz8xDWEyK//yfIvYHnkEPMZ03grZVyAdVgpAkMa8Dkf/05JirJZ0nl9Y3pBL5b
+         u+JCHlJF5LLEdwCtvVOuJQumeIasBmmAWKfY9+u8jjBH4vhxDzXNT/DHW9CvL+axoQoe
+         uGOPnjygCbDLQE4NtwT39PKVNtPZIIxnadhhfac5VC97tIFKJZfC+nsYqSoD5q7ug+2Q
+         aQ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1778481528; x=1779086328;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WfmcfX7gTqR/wtswsezRGGU6Mv16ceub/2XE21DxlUE=;
-        b=Tx/vSNo/k1keDtoKl5kMqqU6JOVEDiXMf5LrOkV9LhSHlO1spmMQ9boonjkGNqAwYI
-         vOGEMNM7PBi14ibQQdePvU6NzWdyGKtKgqc3bf3/eJpb9B78OSoW+w4Y54swa4mOaApM
-         kdmvnLuOVfMeYiHeZjI3R8Ag+2hq639esAQtguPcSLpEWmbnWpdlb9w90PjkpN/+Uqa8
-         a8VitV0ajzOb+d0e6+JO4huyB4jlQLfdkjR3XMcqiXK8FbAgo53huU/t9Z2ouDeCiYY7
-         6Wvu8xMLAVIqW30Q6cudkI+h2fZwSEXS2/4WvKyFEvZ8viOutIApHTJzfLv7SGOR4fDA
-         VGMg==
-X-Forwarded-Encrypted: i=1; AFNElJ8QAKj6cto5oyxT8jJziUfgTg1YMyod8MywFsRObyei6vq1/LQ8BKW+62NeX3H4/Tb7BukhnjI=@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywnl9VHKBXycB2xMuz6aAu/a+0jY2xDFslsPKFy1bUFD5F2cRoL
-	YGuVRaFKePFffDwJ/BvE4DZfSkk5zpx+shqu821zdyms3EiFR7bwkko7
-X-Gm-Gg: Acq92OHVxMS4d+yMXOmES+hbcZ5F0B+fQFAW+UndZQLjL22CucADGCavBiQrlJfKpIZ
-	yMPP41hlST1PWBSgP0whFbZqi+zcyBSFj2tp76TU+tkGKYoGGlwE4NCE3HfmiDGBbiLpBq6hFJQ
-	VYVF6+dPwXdmN1YjCC3rCBCF0nDBVzwe9kaW3JhW1bySW658mgzaqxVvA+H7XwNXVDJ2DERJmyT
-	yKeTXvZlSire263/6xhcusN82Frq9xdt7GjUT91+WDLWC+kPzurGzMwhKLqJ9zprh0veb/Udpoy
-	ajUe/4IC818sd1QGosg94kZw2+aGiycc5BmlvmCO/JI1jhwUK5gR7vO0Qx0/CiNGBy75u9vp9ou
-	heM/m9TludrvJUnk8WHkXzmSgys3/pch2BQKVg7Och+BVTMNK+lB2N0uBhWXig6D3Zaul/zq74R
-	L5eHGu8uY4EVMCrUQVTUAhlyk=
-X-Received: by 2002:aa7:9a51:0:b0:83d:446c:498f with SMTP id d2e1a72fcca58-83d446c4c89mr8198132b3a.32.1778481527848;
-        Sun, 10 May 2026 23:38:47 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1778481636; x=1779086436;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Bp1SzHVVQniSVO1ea05q69qwUsggmYx1Vtvah/rM9Og=;
+        b=INfi+AyT006wI0NwOqBAYQuhECp5+QQcdxC2ORWIrMKtHGrCjMc0Gp6JxLDWizp8dh
+         A9qYfV9DBEyHoMK1m4j4rICPTqEY/CbR7mb2E+oNihrInBKMnnDd9FkaTM3JRAvhZ3Le
+         XkMZ8UFgDZ48R23yEcg/XRIHNR8N7M6Zk0c1CE5e0m5ZXXwMnVQ4e2tbdyLD6QMHMazI
+         y0LJuWFG4715WapidiYHEvKQ+zjpkPGJmiSjmDf0NH8CxFHnSumcTBdK4pbj2oTsuuhk
+         19VkAGM0jQWMIQIlW4U3plb65yn4OBUty2Pg668GaitVgctZewpYoXNQ/afjbGh/LpEq
+         ujWA==
+X-Forwarded-Encrypted: i=1; AFNElJ+ncFYyq81+ZOBv+oV/tfLkGBW9PnjwMpkgwFgdR1E9bXMevzwPPJLVMokhJbOaGMmp+zfIbM4=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy6ewuAOIHwFmImQd32oo8BstA0LnDS/NmDiWsAP4JxXaz1Kaqt
+	VEyUi9xeHAaY/c/F6kddLWnZkFcxnNlPYKdJhLzrETjSCxkdxBpzGheG
+X-Gm-Gg: Acq92OHehj1MSj/1/uYOHPsudas21Ze6Le9d18G0ZOwYaFO257iZkg9LvP+voMq0QL/
+	kURz4SPJ2VzW+5299/fKeQ2yEFkTcqvT5ZG3k0XOglqG/6Hl7eGUxjbUwxtiPeLAfaRUEjag2jI
+	f9ed/C3PGZUhYiSL3Jy/pQ2PcwJXwrnTOJ5dYWMkdnnITtIBEfcdnsStcEdKcwhp3wsw4mRGJwV
+	FMfdOzKXAYoRxB5LzRTG+rKhtphICd6NSdgvE6SlTXREN/JosSJD8Y013GybzYPOcjrnLEM+fQy
+	y9QMbUC4QsfYmSu1zCtrxOjP5lY6q3IC9D2b14WTIm5jD2T13U9pU5dk1+0X61Cs7XmfEs0sNvR
+	TX4pvZqdi6IHTY1DoPKox+04PiK1+XRtwsqtXmEV083It4sEC9nU0DmtQUkK4psm/cua4iM/4cT
+	MODDMdDYnedXpaUDpXWRPW0JY=
+X-Received: by 2002:a05:6a20:1582:b0:3a3:a6fd:7fc1 with SMTP id adf61e73a8af0-3aa5a8fc80dmr25500333637.14.1778481635951;
+        Sun, 10 May 2026 23:40:35 -0700 (PDT)
 Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8396563f381sm23328475b3a.6.2026.05.10.23.38.47
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c8267689d76sm7967107a12.11.2026.05.10.23.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 10 May 2026 23:38:47 -0700 (PDT)
+        Sun, 10 May 2026 23:40:35 -0700 (PDT)
+Date: Mon, 11 May 2026 14:40:12 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
-To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Frank Li <Frank.Li@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>,
-	Longbin Li <looong.bin@gmail.com>,
-	Yixun Lan <dlan@kernel.org>,
+To: Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, 
+	Vinod Koul <vkoul@kernel.org>, Frank Li <Frank.Li@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, Longbin Li <looong.bin@gmail.com>, 
 	"Anton D. Stavinskii" <stavinsky@gmail.com>
-Cc: dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
+Cc: dmaengine@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
 	Yixun Lan <dlan@gentoo.org>
-Subject: [PATCH v6 2/2] riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel number for DMA controller
-Date: Mon, 11 May 2026 14:38:17 +0800
-Message-ID: <20260511063818.463877-3-inochiama@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260511063818.463877-1-inochiama@gmail.com>
-References: <20260511063818.463877-1-inochiama@gmail.com>
+Subject: Re: [PATCH 0/2] riscv: sophgo: allow DMA multiplexer set channel
+ number for DMA controller
+Message-ID: <agF5dRASi8ombhFM@inochi.infowork>
+References: <20260511063719.460049-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260511063719.460049-1-inochiama@gmail.com>
 
-Change the DMA controller compatible to the sophgo,cv1800b-axi-dma,
-which supports setting DMA channel number in DMA phandle args.
+On Mon, May 11, 2026 at 02:37:16PM +0800, Inochi Amaoto wrote:
+> As the DMA controller on Sophgo CV1800 series SoC only has 8 channels,
+> the SoC provides a dma multiplexer to reuse the DMA channel. However,
+> the dma multiplexer also controlls the DMA interrupt multiplexer, which
+> means that the dma multiplexer needs to know the channel number.
+> 
+> Change the DMA phandle args parsing logic so it can use handshake
+> number as channel number if necessary.
+> 
+> This patch series add fallback compatiable according to the disscussion.
+> 
+> Link: https://lore.kernel.org/all/MA5PR01MB1250079A8884D4F6245B955B9FE51A@MA5PR01MB12500.INDPRD01.PROD.OUTLOOK.COM
+> 
+> Change from v5:
+> - https://lore.kernel.org/all/20260426012921.673953-1-inochiama@gmail.com
+> 1. Add dt-bindings patch for fallback compatiable
+> 2. patch 2: Adapt the binding change.
+> 
+> Change from v4:
+> - https://lore.kernel.org/all/20260225104042.1138901-1-inochiama@gmail.com/
+> 1. drop patch 1 and patch 2 as they are merged
+> 2. Add ABI break statement and clarification for this patch.
+> 
+> Change from v3:
+> - https://lore.kernel.org/all/20260120013706.436742-1-inochiama@gmail.com/
+> 1. rebase to v7.0-rc1
+> 2. patch 1: Apply Conor's tag
+> 3. patch 2: Apply Frank's tag
+> 
+> Change from v2:
+> - https://lore.kernel.org/all/20251214224601.598358-1-inochiama@gmail.com/
+> 1. patch 2: rename "AXI_DMA_FLAG_HANDSHAKE_AS_CHAN" to "ARG0_AS_CHAN"
+> 
+> Change from v1:
+> - https://lore.kernel.org/all/20251212020504.915616-1-inochiama@gmail.com/
+> 1. rebase to v6.19-rc1
+> 2. patch 1: remove a comment placed in wrong place.
+> 3. patch 2: fix typo in comments.
+> 4. patch 2: initialize chan as NULL in dw_axi_dma_of_xlate.
+> Inochi Amaoto (2):
+>   dt-bindings: dma: snps,dw-axi-dmac: Add fallback compatible for
+>     CV1800B
+>   riscv: dts: sophgo: cv180x: Allow the DMA multiplexer to set channel
+>     number for DMA controller
+> 
+>  Documentation/devicetree/bindings/dma/snps,dw-axi-dmac.yaml | 5 +++--
+>  arch/riscv/boot/dts/sophgo/cv180x.dtsi                      | 2 +-
+>  2 files changed, 4 insertions(+), 3 deletions(-)
+> 
+> --
+> 2.54.0
+> 
 
-This dts change does not break backward compatibility as a fallback
-compatiable string is added.
+Please ignore this broken version, the right version is 
+https://lore.kernel.org/all/20260511063818.463877-1-inochiama@gmail.com
 
-Fixes: 514951a81a5e ("riscv: dts: sophgo: cv18xx: add DMA controller")
-Reported-by: Anton D. Stavinskii <stavinsky@gmail.com>
-Closes: https://github.com/sophgo/linux/issues/9
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-Tested-by: Anton D. Stavinskii <stavinsky@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sorry for this noise.
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index 06b0ce5a2db7..ecafdee79ac8 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -417,7 +417,7 @@ sdhci1: mmc@4320000 {
- 		};
- 
- 		dmac: dma-controller@4330000 {
--			compatible = "snps,axi-dma-1.01a";
-+			compatible = "sophgo,cv1800b-axi-dma", "snps,axi-dma-1.01a";
- 			reg = <0x04330000 0x1000>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(13) IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&clk CLK_SDMA_AXI>, <&clk CLK_SDMA_AXI>;
--- 
-2.54.0
-
+Regard,
+Inochi
