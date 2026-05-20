@@ -1,32 +1,41 @@
-Received: from m16.mail.163.com (m16.mail.163.com [117.135.210.5])
+Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8829C367B64;
-	Tue, 19 May 2026 16:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B5130E827
+	for <sophgo@lists.linux.dev>; Wed, 20 May 2026 20:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779209617; cv=none; b=mav/yzx6qiEjMJ0hfsMa4Ce9Z00fBUoUJdoba6IwDC0tagqDXgQ3GjoNYDXYErY4+GezkGYxL4ldXYofVoazYF8scaYOIF14WWhDR0z6/ExCtNqZQnwBCDsZOG6qUd9BIJF8DYdtV5wsPLCteV94GccUG5dH30LSlP34rhRaEuE=
+	t=1779309986; cv=none; b=dlOK6xjgq9NveTDaASuOJTU45UT5CxCaBThao6neDCBoCe9ZhtM6TobCAY8PkCzsUnKAM3Uskq0jIatJrH10IarYOyM+xVJkOsMpKAIIhDYghXtVTKefsBeCv41/oVwcH0kb+4ic/W/2qczusyo90z3P46zpLiZZtcSS1o1CAbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779209617; c=relaxed/simple;
-	bh=APX+21Lmcl1UqcTu1hL6sOJ0l3RM58jeHQWgsDXqq9g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TD1A/NGi5bcqENEVz6T4m0a5YIx902Afcd1rVg1oJUi6wluawxT1b1pZPvAvK0qUA72IwwTakOjh8Jv4kO1a6vZdKH3i/5MMqyCdVx2Y1/Awxc9jw0gaob1ecydaOQlUWbiith0djhuSyWDU97VCGSyMnAeNuTmMVmbFep7CHH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=Xu0Xi0jk; arc=none smtp.client-ip=117.135.210.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1779309986; c=relaxed/simple;
+	bh=TD6IYcq7yF+WdzFQ1aQwZWT5pPiFbfGpLs+zMWeBY2w=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rKJQ08XSuYTXwgHfjzOfnajdTQqke/Pnl00pxK/cJUecHw39H5bMF4uHh6GZLrL8i2pIacPIulhQf0FT+FTYW720FLJB6lEn3FVdyZgJlqUuv5BRDsKk1/Z5U12Yeo5AcHeZWBMO2pAHo1qZ6BoMpBX7nxYRQWMSSLzqF4Spb2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=rootcommit.com; spf=pass smtp.mailfrom=rootcommit.com; dkim=temperror (0-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b=UnUPtGi/; arc=none smtp.client-ip=185.246.85.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=rootcommit.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rootcommit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="Xu0Xi0jk"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=8sTqgK7mp+Unp9Wpw9+a9pZzPmJnG02xCCH/x+as8c0=;
-	b=Xu0Xi0jk2I5naAv7BW68F8wp+zf1WAfWvdPqJpYEhtBNnvKKpsM19fbiGRrZPS
-	F4gw7ba0Z9JxW9iVOQ/J8DKU643Vejg2Re33hDXOK5KpZquw7itTVc+DsmEKjzR9
-	6MmRfJR7mRKX3hFEotycCpHiXhM1D+4enlNArWgobDb24=
-Received: from [IPV6:240e:b8f:91b3:d000:7f44:7c72:8a1e:7e64] (unknown [])
-	by gzga-smtp-mtada-g0-2 (Coremail) with SMTP id _____wCHGflilQxqMA8gCQ--.43458S2;
-	Wed, 20 May 2026 00:52:51 +0800 (CST)
-Message-ID: <e0c89a4a-709e-42c6-ad1c-7ec50cc5790c@163.com>
-Date: Wed, 20 May 2026 00:52:49 +0800
+	dkim=temperror (0-bit key) header.d=rootcommit.com header.i=@rootcommit.com header.b="UnUPtGi/"
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-03.galae.net (Postfix) with ESMTPS id 5EAF24E42D07;
+	Wed, 20 May 2026 20:46:23 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 2B26260019;
+	Wed, 20 May 2026 20:46:23 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 47967107EA5AE;
+	Wed, 20 May 2026 22:46:15 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rootcommit.com;
+	s=dkim; t=1779309981;
+	h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references;
+	bh=zGsSIqVq1ifCQ3rw/2r0Ry2eIkPRdWO9epBcJ1BYbFU=;
+	b=UnUPtGi/wplH2xPXVwCTFbU+qLHRfpwz13xUkIEC4Bmapzaz4OLWZ2t6TbuNMXqiD/MpnM
+	tMoaObuq4xPhxAPPdovjmFNT6deXqqz+oRPVgy+fJkHXZRfr4B8w3GaOwX7wEQ8Kl2Uwsu
+	wZHwxBp7kZ16ajYLEGYs1nUw91K01PirpogL7bg9telBmiVZs27KKBKPtzBkPhqCv+MA++
+	+GxcROYlbiYatK3NllvRgfboqpfyIjTce0xdoLcpdxhael5qayxqcYnelguyUzjmUsKuY6
+	48y68QR0lTZoFAx0ycwSFgqTMQL6bFzorNtEswEfNnPDeD1dqTsfEM3S+NNWKQ==
+Message-ID: <5354f909-438b-4994-808c-6d055c58c901@rootcommit.com>
+Date: Wed, 20 May 2026 22:46:14 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -34,101 +43,68 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] PCI: dwc: Cache PCIe capability offset and simplify
- drivers
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- jingoohan1@gmail.com, mx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260509135152.2241235-1-18255117159@163.com>
- <beqy5ykxgo4ianya6r4mahkkyujs6lly475u26vqaemgqsdnhp@2pn5ipczwc34>
- <5cc6fbcc-98eb-4da5-b123-2c04c4d39326@163.com>
- <bejh7em2a67a6wohtakovbg6wqwhjoxkuqtdompsexfm5bbzrf@yqwcqeg6yugq>
- <3464ded9-721a-4eb2-afb6-bbca6fdc8a46@163.com>
- <m332ocvmmdzcgnzmzxmbn2nmczxuhplt5efh64fd22fagrot42@x3okixj5qjb2>
+Cc: michael.opdenacker@rootcommit.com, tglx@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org,
+ samuel.holland@sifive.com, unicorn_wang@outlook.com, inochiama@gmail.com,
+ daniel.lezcano@linaro.org, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+ alex@ghiti.fr, liujingqi@lanxincomputing.com, alexander.sverdlin@gmail.com,
+ rabenda.cn@gmail.com, dlan@kernel.org, chao.wei@sophgo.com,
+ anup@brainfault.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, Wang Jiayue <akaieurus@gmail.com>,
+ Yao Zi <me@ziyao.cc>
+Subject: Re: [PATCH v5 5/5] riscv64: dts: sophgo: add initial Milk-V Duo S
+ board support
+To: Gui-Dong Han <hanguidong02@gmail.com>, Joshua Milas <josh.milas@gmail.com>
+References: <20260403111516.379795-1-josh.milas@gmail.com>
+ <20260403111516.379795-6-josh.milas@gmail.com>
+ <CALbr=LYJKJREwh8KMqsgcXwd+jx0W7gFFFuBk-izNdgzkQU6Pg@mail.gmail.com>
 Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <m332ocvmmdzcgnzmzxmbn2nmczxuhplt5efh64fd22fagrot42@x3okixj5qjb2>
+From: Michael Opdenacker <michael.opdenacker@rootcommit.com>
+In-Reply-To: <CALbr=LYJKJREwh8KMqsgcXwd+jx0W7gFFFuBk-izNdgzkQU6Pg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wCHGflilQxqMA8gCQ--.43458S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJr4rZw1kKFy5Gr48Xr47Jwb_yoW8uFWDpa
-	y3JayFyF4UXF4Iya1Ivw48XF4xKasxJry7Xr95Gry5Arn0vF1rJr4FvrWYkF9rGrWvyr1Y
-	vF4Yq3429r15AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRMrW7UUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7AQcv2oMlWSKKgAA38
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
+Joshua, Gui-Dong
 
+(my apologies for my previous-email with HTML content... bad default 
+Thunderbird settings!
 
-On 5/20/26 00:49, Manivannan Sadhasivam wrote:
-> On Wed, May 20, 2026 at 12:27:21AM +0800, Hans Zhang wrote:
+On 4/21/26 6:13 PM, Gui-Dong Han wrote:
+> On Fri, Apr 3, 2026 at 7:16 PM Joshua Milas <josh.milas@gmail.com> wrote:
+>> This adds initial riscv support for the Milk-V Duo S board
+>> [1] making it possible to boot Linux to the command line.
 >>
+>> Link: https://milkv.io/duo-s [1]
 >>
->> On 5/20/26 00:15, Manivannan Sadhasivam wrote:
->>> On Wed, May 20, 2026 at 12:09:28AM +0800, Hans Zhang wrote:
->>>>
->>>>
->>>> On 5/19/26 21:57, Manivannan Sadhasivam wrote:
->>>>> On Sat, May 09, 2026 at 09:51:49PM +0800, Hans Zhang wrote:
->>>>>> The DWC PCIe core and its many platform drivers repeatedly call
->>>>>> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
->>>>>> PCI Express Capability structure. This is wasteful and makes the code
->>>>>> verbose. And some even search for the PCI_CAP_ID_EXP offset value within
->>>>>> the suspend/resume functions.
->>>>>>
->>>>>
->>>>> Sashiko has flagged some real issues with this series in accessing DBI space
->>>>> very early and 'pci->pcie_cap' being 0.
->>>>
->>>>
->>>> Hi Mani,
->>>>
->>>> We have discussed this issue in the Cadence driver. I think it won't cause
->>>> any problems. Specifically as follows:
->>>>
->>>> https://lore.kernel.org/linux-pci/5823faec-d972-4c77-90ec-a215c686e0a8@163.com/
->>>> """
->>>> As per PCIe r7.0, sec 7.5.1.1.11, Since all PCI Express Functions are
->>>> required to implement the PCI Express Capability structure, which
->>>> must be included somewhere in this linked list.
->>>> """
->>>>
->>>>
->>>>
->>>> Bjorn also responded as follows:
->>>> https://lore.kernel.org/linux-pci/20260505212306.GA744158@bhelgaas/
->>>> """
->>>> It's true that all Root Ports must have a PCIe Capability.
->>>> """
->>>>
->>>
->>> Ok, what about reading the DBI registers very early?
->>
->> Hi Mani,
->>
->> Yes. I have performed the DBI read register operation at the very beginning
->> of the following code.
->>
->>
->> dw_pcie_ep_init()
->>    dw_pcie_get_pcie_cap(pci);
->>
->> dw_pcie_host_init
->>    dw_pcie_get_pcie_cap(pci);
->>
-> 
-> These both calls will cause crash on a lot of platforms because these will be
-> reading the DBI registers while the resources are not enabled.
+>> Signed-off-by: Joshua Milas <josh.milas@gmail.com>
+> Great work, thanks Joshua! I really like this board.
+>
+> I encountered the same issue Michael Opdenacker saw in v4, but
+> enabling the MDIO-related configs resolved it.
+>
+> I'll keep using and testing this series and provide further feedback
+> if anything comes up. Next, I plan to test the arm64 side and will
+> also try developing an efuse driver.
+>
+> Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
+> Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
 
-Hi Mani,
+What about submitting a new iteration of your patchset? I guess the last 
+one was too close to the merge window to make it, but if you submit a 
+new version not too late and review it quickly enough, we could make it 
+this time.
 
-Next, I will check all the DBI register-related issues. It will be fixed 
-in the next version. Thank you very much.
+Don't hesitate to let us know if you need help (happy to post the new 
+iteration if you don't have time).
 
-Best regards,
-Hans
+Thanks in advance
+Cheers
+Michael.
+
+-- 
+Root Commit
+Embedded Linux Training and Consulting
+https://rootcommit.com
 
