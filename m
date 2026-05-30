@@ -1,63 +1,63 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4513AD520
-	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 17:35:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3033B38B4
+	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 17:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162532; cv=none; b=KzSMPy21Q9G/xDDVMdrSazf7zEnMI0clKdL4mPjX77LnOMEGH3UvYoToZ1qHJjcoJRdUYmxYt8QNMAVoIerpxLOYHZOZIBH3YyuUVZbQ6kdygEwgiIikmkDe8OS0BcmsnRKEGmgopuG6H+LTDNdPBmzH7uDJ70zTIKS7nxpBnKc=
+	t=1780162534; cv=none; b=c+yWovgEfLaOt0sH7DO+VWi1jQ4GU7v7rgTbalnMAYOlMXPh1ig5Q8uBo7iIbhTaZUyJeSCtqVRNIjn38jkRT4KTXaTWw/U8b/5T6mr4twnnPkU6sSCcqsVDwkIJ4T56m4yHE5yC6EGR/BlPB6rWDvLcASeaUbvdqHbwm2OwSro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162532; c=relaxed/simple;
-	bh=VJhjDbD9k93v4xWoMfUMeJOvaM+SAKtvPHI+Ks7kzIE=;
+	s=arc-20240116; t=1780162534; c=relaxed/simple;
+	bh=cmszwX0Ji3XjQt7Fpy6t/qmhlzCiNP9RsFnOxecQxzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaKWd/gPenpSe/qsp9vX9JvkPVVg85hF8apB95zxPS6cePhnikkmU01b3dohpow9vwf2AUiDooJRd5pLqibD099SWQP/V+8cxF8deb6HFPbtSBv9hUXSFrrMWj+78WLD/HCW/G6uDC4rKlEPr+cDgBDL7cOk7u0mue9RDIMDeYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cicGdl3t; arc=none smtp.client-ip=209.85.219.47
+	 MIME-Version; b=IpCoHgL/dtHUbla8xCsEyI1mbUUCl8jbCOJFP0FxTo7a2jVXEUYNP2SGrgGkTdgqpI7zmpFB0M6b6vB5ifAoWYU+tA2MWoWcKVMkaYXRt+76leepf9S9pAjmu62faz1sWbVobcn3257dHOQNJb+neztu6ykkEe0N+38X0Zb3F1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pdvOuCYE; arc=none smtp.client-ip=209.85.222.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cicGdl3t"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8cce87d7995so21356636d6.0
-        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 10:35:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pdvOuCYE"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-914b03e42b2so1081996585a.0
+        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 10:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780162531; x=1780767331; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780162532; x=1780767332; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e1iXfEJhkoJc89mTL/JJu7oRdlYA/T+hX/oQJz+ARaI=;
-        b=cicGdl3tX+LHFe5Y7kkYrSUsK0Pazg9ZquPBrqoDjA6rylp8SrTEYJwLn6NUubsXK8
-         zqk3dubgO7xRO1QCgkD2BE4wRSOaiOP/qRCgeu8ljYBYQG1omfkq0iGR8f4yEtbwrDLj
-         EnILuQzX6M+YX6xc1hBQE931CHK1CnEzq4vCxYS9Kdrt5eAG5SH3XNucYiNtGTwX+1gx
-         XC68mL6EsE0PBD8tBkh3UF7cEtNh+exPOKMenNTBdY7D8epDiBY2el34xNxK+cLgV0OR
-         bAEQmAwmQwJ2CRTX/j4YdBcGWM5bIht1aFCM+Il9aJkiQjJ5w59MI4kuakgGWPLZvNXu
-         OQxQ==
+        bh=NICNW7Co3viLg/bgtUjVDeGjmH93cilbK6h9R5fkil0=;
+        b=pdvOuCYEcnWh5dTohyIdMaJYfjfWFKdwp4nz4uHU/8yn11hBkw+70nSunjd6iKySRk
+         9+4CmL3m4CB/58p/bzxTVzqOJ0fmYiWANy1kDn7GxtAgkHYU6+2Sc4yyUxhLz5r/fF+b
+         hVm3ELyoi3LF7uW/Gwcu4DUeStQfWBet5wWVdr/o4eJGF7j32Hyl+OsPvx1L/qs+JuRT
+         anGkYIBw8jmRF7sd09lID79jePSBFfLiQJ84iTeYU/hRdnZqje4Mzdr9LrdEbovfAo1q
+         4TYq890ibzgwQmHL1IrRl/J32RhXCqCcjsowupTBA7KWx4H3GoXPhUbVjU+TERncdeMK
+         qFAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780162531; x=1780767331;
+        d=1e100.net; s=20251104; t=1780162532; x=1780767332;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=e1iXfEJhkoJc89mTL/JJu7oRdlYA/T+hX/oQJz+ARaI=;
-        b=PFIX8cDkti7ZzgaNFjKQm1Ht8RV2B89o/M+S0mHtggM0Yf4ieHmbq6JzrTiwO+iixi
-         08t1Dg6zfYBbsWdUAS+N90IgQtIxOwVD37TcBgyEfJZShGq0NyjPccbsS6lHMquHnhQI
-         4t2//8FP7h6JS2v8/G7mNnjgMgi7CXGaaY0dLZalFqKwxnLZezTlPDfwWmltoAimLDy5
-         cLMvYmlIL+QNR8OMRI+TqvYyY2VQAkIzStQVHX9AV1TbKYiLw0OFuMAAAlPaxzB71AXE
-         7l13+mxtBE4i5yQFDOd5oNEwJqBlxRKK2gxLIIZh8/Al9Gn6CJMpDxRWTUDmkEWEgh6Y
-         4M/A==
-X-Forwarded-Encrypted: i=1; AFNElJ9Tzs6zVoet2plBIsdHxAs8tc8QfUbj4FCfUmNR5YGtRb8vKBb0xRSthkNerbjk8CqtsJ3oI+U=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxcna1mstDh0PdG4dCRXtqwvKmUY9ZR2NtKJgi2ebSCrvaXkapp
-	dNHBd6H9pn6niFcM2vfqmvTj6ItiXSwoeVZIOxqjwx9KEOnIvmlL9gOc
-X-Gm-Gg: Acq92OHJX6v9P0VGmtfnc3/ErjxSkSwiUTGHSvxHI+xqwQvaGUBr5vhyipMuqmOLpUp
-	NLYV9gjLKr60F3EZj8O2N8hbcnPWvl57FD3ZpdZhuX6T2WT3Ne2zmAHYClyKWeQYWNn9zJQyVwv
-	YlJcBu1nYq6nl8NFJyLKuX9c0j03Z3xw7y+qtedrtDkcFEbtH0OZQoD1UNcV0DzcDIOtbn7RYwi
-	lr5i9zbQlIz7OETbb5WWCZRg/pYeJCW3nvogWbGJFQZ/DW7tx2t6F4TW2muMOMge19LsSdIwIuz
-	LD9rh9haiPRyoEE2ADitKgU8NoIbx3aSnOpXscGw8PwNG2xsctGui2bWgW7LrdKZA+wY99oOlLS
-	I1XJZ1/saeOV8jih+EzF6lwQANBn4gBattzqGFeLluLI7+jTsbBkt5hx7yAAByGnUDhYkeDNPqD
-	vy8P0A4DZKo+yYrG52s8XVMxf0ZUcVTSH3chnAYNEC82vTHZLDke7ut24J/hYxZIo6NFg=
-X-Received: by 2002:a05:620a:800f:b0:915:40ff:4e10 with SMTP id af79cd13be357-91540ff552dmr582669085a.4.1780162530542;
-        Sat, 30 May 2026 10:35:30 -0700 (PDT)
+        bh=NICNW7Co3viLg/bgtUjVDeGjmH93cilbK6h9R5fkil0=;
+        b=Te/eWeJD6mqrEQWjx3Z00X6mXHBickukPr/HyQ2PZWmy5wvChTNjcsaliBx1BcXuOz
+         Sq4qR/bYtgbcgF2AvmiGKKpuPC/Tb70O3/0PMPzpSgKsTbcLG46nArB3z4VIO7SxDlS5
+         W/27rMZSL7biEqzFS9CLyZU3K8/pvcuCE2LGorWsgXVan/1bV2/3TVuxh6zV1s5FT8E/
+         Nnlu84pE8qLap1EmWLX8D9TLaPN9rxHn5oYyZSDO5IAy5DV2MycxNcwboFOurXIvdBJU
+         Yd7fWu3NlQPDE3KLmmNToYJcDWqAWcAqiF44oLN2zBZ5ynyJLB4RZ3vEWS13keHkcXmQ
+         luEQ==
+X-Forwarded-Encrypted: i=1; AFNElJ+sCbs8alnSLE5cnPYGgI4bJiMUQMvD6xNBIkv+v0UUc+VWFm07z7pCEuuzgGRM+xEXboj17tM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxUVcw6r1QOqI6/Ghp6Mdo0Erz8Z7xATIJZg6AyioB8nNWdJshI
+	JTOxuOs3n8PQoR1mG8xF9gHrqlPboNIgguEBh2LNPdiira5AU1vfPk2b
+X-Gm-Gg: Acq92OHyLrnt/hFTUC5kC6Y038ck7BZa9V+PjjfhBXHSoZt6/fA0MTWm/l7p3bUNk0z
+	3bcyhsNjtPfkn3p8f//xC3F1XXJcp5IzAd26nA5Kf9t5NZTCQP/Y8iiUbjNsQ760pD05jUDsV9h
+	IMw3tRBOyQUna+r89eZ+h2cPgwHcVypfB48X5qEXMxQtQCh9OLQ/tajHT5RNFSS0fCPe/ZBZOyA
+	zEsbLVhnIEK3jLS1eOi8vglPr+NmuXVqovxGyV3dlQYCP4YC8u43XQvrjzR4rU5aOlPrlvNqy8r
+	FsINbDbqD+R8WCV0l1ohYRBQpaEC33B5JzW5s+ghlwXnfQSh56HE0DPHkvh7oqu/VyOliL7ynxZ
+	TmqztBuKVgNCInnORPTuKBetqda0oKJV17cQ44CWTTSldHR2N8eTDAlIyKTDVqXZUImcIktpE0a
+	ZhRs5mDIQUajyRTtNbAwTuSUwbSCVRRo3QldtTOVJoaOpGr4w09kJ+qDh0nzyCBwDwQLo=
+X-Received: by 2002:a05:620a:4510:b0:911:8e3c:f165 with SMTP id af79cd13be357-9153d99ebdbmr687805885a.19.1780162532103;
+        Sat, 30 May 2026 10:35:32 -0700 (PDT)
 Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153244e114sm565606885a.5.2026.05.30.10.35.28
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153244e114sm565606885a.5.2026.05.30.10.35.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 May 2026 10:35:30 -0700 (PDT)
+        Sat, 30 May 2026 10:35:31 -0700 (PDT)
 From: Joshua Milas <josh.milas@gmail.com>
 To: tglx@kernel.org,
 	robh@kernel.org,
@@ -84,9 +84,9 @@ Cc: josh.milas@gmail.com,
 	sophgo@lists.linux.dev,
 	hanguidong02@gmail.com,
 	michael.opdenacker@rootcommit.com
-Subject: [PATCH v5 RESEND 2/5] arm64: dts: sophgo: add initial Milk-V Duo S board support
-Date: Sat, 30 May 2026 13:33:44 -0400
-Message-ID: <20260530173347.33533-3-josh.milas@gmail.com>
+Subject: [PATCH v5 RESEND 3/5] dt-bindings: soc: sophgo: add sg2000 plic and clint documentation
+Date: Sat, 30 May 2026 13:33:45 -0400
+Message-ID: <20260530173347.33533-4-josh.milas@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260530173347.33533-1-josh.milas@gmail.com>
 References: <20260530173347.33533-1-josh.milas@gmail.com>
@@ -98,117 +98,39 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adds initial arm64 support for the Milk-V Duo S board
-[1] making it possible to boot Linux to the command line.
-
-Link: https://milkv.io/duo-s [1]
+Document the compatible strings for the sg2000 interrupt
+controller and timer.
 
 Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 ---
- arch/arm64/boot/dts/sophgo/Makefile           |  1 +
- .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
- 2 files changed, 86 insertions(+)
- create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+ .../bindings/interrupt-controller/sifive,plic-1.0.0.yaml         | 1 +
+ Documentation/devicetree/bindings/timer/sifive,clint.yaml        | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/sophgo/Makefile b/arch/arm64/boot/dts/sophgo/Makefile
-index 94f52cd7d994b..68aace728223a 100644
---- a/arch/arm64/boot/dts/sophgo/Makefile
-+++ b/arch/arm64/boot/dts/sophgo/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-module-01-evb.dtb
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
-diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-new file mode 100644
-index 0000000000000..8632470f43ab0
---- /dev/null
-+++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-@@ -0,0 +1,85 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+
-+/dts-v1/;
-+
-+#include "sg2000.dtsi"
-+
-+/ {
-+	model = "Milk-V Duo S";
-+	compatible = "milkv,duo-s", "sophgo,sg2000";
-+
-+	aliases {
-+		i2c4 = &i2c4;
-+		mmc0 = &sdhci0;
-+		serial0 = &uart0;
-+		spi3 = &spi3;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&osc {
-+	clock-frequency = <25000000>;
-+};
-+
-+&dmac {
-+	status = "okay";
-+};
-+
-+&emmc {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	cap-mmc-hw-reset;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
-+	status = "okay";
-+};
-+
-+&gmac0 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+};
-+
-+&saradc {
-+	status = "okay";
-+};
-+
-+&sdhci0 {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	disable-wp;
-+	status = "okay";
-+};
-+
-+&sdhci1 {
-+	bus-width = <4>;
-+	cap-sdio-irq;
-+	no-mmc;
-+	no-sd;
-+	non-removable;
-+	status = "okay";
-+};
-+
-+&spi3 {
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	status = "okay";
-+};
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
-+
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+index e0267223887ec..decc43df3c839 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/sifive,plic-1.0.0.yaml
+@@ -73,6 +73,7 @@ properties:
+               - allwinner,sun20i-d1-plic
+               - sophgo,cv1800b-plic
+               - sophgo,cv1812h-plic
++              - sophgo,sg2000-plic
+               - sophgo,sg2002-plic
+               - sophgo,sg2042-plic
+               - sophgo,sg2044-plic
+diff --git a/Documentation/devicetree/bindings/timer/sifive,clint.yaml b/Documentation/devicetree/bindings/timer/sifive,clint.yaml
+index 3bab40500df9b..54266b3c2a185 100644
+--- a/Documentation/devicetree/bindings/timer/sifive,clint.yaml
++++ b/Documentation/devicetree/bindings/timer/sifive,clint.yaml
+@@ -50,6 +50,7 @@ properties:
+               - allwinner,sun20i-d1-clint
+               - sophgo,cv1800b-clint
+               - sophgo,cv1812h-clint
++              - sophgo,sg2000-clint
+               - sophgo,sg2002-clint
+               - thead,th1520-clint
+           - const: thead,c900-clint
 -- 
 2.53.0
 
