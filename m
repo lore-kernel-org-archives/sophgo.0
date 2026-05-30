@@ -1,64 +1,64 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67163BD62F
-	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 17:35:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8476B34B40F
+	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 17:35:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780162536; cv=none; b=ICSxAh4KUOjWtYfs6oIzWcCD7M8u0MpDQzewpS3Rfi6ip37DmQOBmT3FCzre4z4tl6eApOGSi9XM+ECy/Dph7CdmUqGH+tfE8mEpxf6NsZzodR+laIc/d98BLGfz7X7XIIgZeQwI1CJvyvCIHvbmGikJxF6GCvcXZJf/7i5PHPA=
+	t=1780162539; cv=none; b=KiCcDXL2jIniaXqgncojBM1E5ZeEMnITHNSLHyvP98HJy3GmovxuDXLsSfe7Tgn8A6N2gN35VLtvu2p6U+t97l/dn8ggJZyERb90KQt/EsR7e8dGJEQfk/ZwA5hK/Lyv8NGJvmfU19SIV2WPmDadVujeJuoKSk2OjXo9AlhlSg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780162536; c=relaxed/simple;
-	bh=tFW3YISywSwOMjdHnG6FZDjw1jg1AF8WKQoGy8w1cNI=;
+	s=arc-20240116; t=1780162539; c=relaxed/simple;
+	bh=ifciZjFJsSlLqvMHHqbkFJuk8b7OaiYXAH2dMXVM6NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRIjJbY4KgMoeb1c8IZ8POs/rdL/Lc204LQSgCRY2qZfdg4K6IP1gX4Qg77CcaPwunXHO7RhPSUMsa5G92R5XjBZ/rl30A3jCbMAdLHIhDL5T2IACJHEr7B6Q7p4wa4fSprKFCL+Q3OqKocfwdE3NO0po3VjkZR7S4rNNlytJaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jO2guoTV; arc=none smtp.client-ip=209.85.222.180
+	 MIME-Version; b=NyEg1ioYF7JBPSOpVfcHSQ+vzUjPT1TuWTTipA5/C4Ov60/wB1445RAi/8h85vBmVbnJ4n2vrVYOIlxPuWlADM9NFWoEkGNFVPwQH3e6HaLF8VnOl+J+ImEDAVkSg9P6pllWCKHNwRUnssDBatW15TxZjBsjR663JjuuPDPjI1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=modURIpV; arc=none smtp.client-ip=209.85.222.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jO2guoTV"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-91550dda53cso8979585a.1
-        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 10:35:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="modURIpV"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-9155126daaaso3441685a.3
+        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 10:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780162534; x=1780767334; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780162535; x=1780767335; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fJAPLXH+JSPAdQeklsWr8qGoeKpyEbUrtjYWuQxTQmo=;
-        b=jO2guoTVKCETTXuRG2tKquF6JoX4nGKkkUVtUrg5TFuYuP/7/wr7/6L9rkwbulUaUj
-         u1mPnkc//kOV84oxG5kTZY/KeDjQG+GtuNRyUvrzZJe0ODatiONfouv+JpMPNV4XIGey
-         ZaZlj9eReohwWaXJa99xXj4KaeMdswW5GXqmaYZ6znyb4eZKanM8K1r8gx7QEGwyo7pY
-         JUdjyzflKMPIXsllDrs1isMwE4nYT0JxscGPmDPKD91P28mgzeSMHSzkXTRroCE/JDQF
-         fANzvlVTJV8/7ezOkFrYvY95FlTqr+mDFyb0wVQskyfpX+WBH3GmWBTuYBYuwZCfL5YJ
-         8R/w==
+        bh=tU9gWymIXZu8VRSy2GyhvjXHSpA4tanwIEBlc+6eVbQ=;
+        b=modURIpVj1uVzkB0jDxiOwLpRhnWxm6f5VpVDznbRQNlhW1obW/BHiySNenl/V1RKS
+         Q+5ArvubC4rU9xoPT3Sz8VDGa1SvNja5/PCY2IJQ0WUrTytk2R0/QAMcVJUVUNBLqQBA
+         /kpAD0zTxf2MgR2bGzHl2tOi7CafxYOaVzyeceoL2qDfX6yFBQ1ZxdHYWqGQg4MnpHea
+         eDbXrgfg7COBpEx3PBYt/XwSTA2Xj0phGjHSkOQhcjR64eu4vKSFXJBn3/7hmiByxC+g
+         3GLhWno+f1HLnSY40cEkSgGzKyiaow1wfimNbLGgdwFJF0IdyYeKhMEwK6AqIXZMoXoz
+         ESBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780162534; x=1780767334;
+        d=1e100.net; s=20251104; t=1780162535; x=1780767335;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fJAPLXH+JSPAdQeklsWr8qGoeKpyEbUrtjYWuQxTQmo=;
-        b=iHtlYOVwSCct8w97sjdY8fBLiQzJ1R37ao5PebZdnjnuRrAfarEMthjmXdAEnFan8t
-         BWLBR3iF2COuNnXfFgevQYTE0LLQ1F/8u8fPUgwtyKgy57pQ5FNhnnZRflKJr5WxxM9v
-         k6G/+YsdGk7EYgA4ymn6otR5X1WTy3E/rFX4qil+7ZpjcKSnlZ53aYBRruX9tBPcI8oz
-         nQ/RZcacxs9qmI0/UjHRihdrXm3oRLDgFMZzMYT4nY5NTypGNApFTW+42yXq3aACm4Mx
-         AM/nBHJe+DI+bZ4TDNckB4WzfRFY/Fr1NVU5MXu+RtuK+KroAsMK3fyNSUC5/dkD5sLW
-         QlKw==
-X-Forwarded-Encrypted: i=1; AFNElJ/mV3BvQMcYDjfF7R4KsIzGvbCT2it/GAmtzHKBZfDV7SB3YIn5EQc8tqudea84qCm8VGa1kkU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YymVhPxcOsfEjUkYuyE+97eu+HbV3Hh0cMh3sq3widG+lc6dIiD
-	yVwYvhWPcl9vlJT4OjjsV8Jl6MTpLyPj5ajE0pvhdfJ23cwGqSbe8hjg
-X-Gm-Gg: Acq92OHqX76A7M73S9rcskbq2snbA8HVDKtAvGFaosA7t8oIFc7SOE/ineKh3g+KFIl
-	BKjqcsw6l624efuR1wm/g7WngFDxwODt5sEZPG9stGREcPIG96+fjFW9f0o5oivN5xPBGt1IdYE
-	l/C/uyqeOaslRBBaC5kxq2nlnZ/mCeMdCbqZLJWRO8iKYoGY81jZUtJRX7Dl5E3gXmMUY7aqqWA
-	mQ2pPy/a7hxBdJXbFk9xKP9hrdcnKihnmiKcukCmsIOqNYt0CNKc/Ryvy9Gz3sIv3dgsEAnK04K
-	k2HsAGkyqkAC0YEH/O9Cj8oEfOIgSUy/JHNPjyJLEAB6O3SddlYMaHNmXUrCGYVxHeMVxQ4FE0N
-	4+8zZmY8XExndWtdCHlg/T9oujG7Wn5XLtmoLYmxazTGysjunXkk+SjDN2nFF1oVpf/0FcJEaDQ
-	NcpsZ2u/UkkguL7KQ7LOtiCviTv1W2AcY8B+xWjvn93lbKxHdEx56+RPLUkw6srDZhX3kgRXBIK
-	UVfnQ==
-X-Received: by 2002:a05:620a:d93:b0:914:c82c:7a12 with SMTP id af79cd13be357-9153dbd5aabmr664027185a.38.1780162533921;
-        Sat, 30 May 2026 10:35:33 -0700 (PDT)
+        bh=tU9gWymIXZu8VRSy2GyhvjXHSpA4tanwIEBlc+6eVbQ=;
+        b=iPNWVh5PRi3D4sEma410ohddNjOhstrFiypuuDke/EEyrV75TPuvMTIgX7bvawcfST
+         vTnabpNfQZ3HDqw7Rsai/H/DvgLquggWFLnBBtOU9sowC8uW6OGaWO5cTw4samqEPxvS
+         KOK7AQc800TuERA8zP8y6fiifGjX6/hKE0dxgniVHBN02D3ZByEq6Fdfb7OR8UQJqpN6
+         KAuKoZz6ORRo9z5ZWIbPjeoveFnXFKni8LR5as34UKbWB73XIHE2QXocQn2v4IcoyYcz
+         gc+lsZaVJTbUqpEfBXVsdNB+iq3ZsEMGKTt9ZAwd4hWiWOvZw4x1X7pPJxHnUxV0lUhF
+         5qfQ==
+X-Forwarded-Encrypted: i=1; AFNElJ/J6gnjqFchKh1sq0F2mPaz7VKKboFV71g9xhZNzAO7S+R5X5fdiDxfNovM399I58bdoEr4D7s=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwOAXU7sP34hjyNuaC3ntH8cI0DsIBM6Cqi6sT3IwLhqjVAcjo6
+	FKTgleq55zcpgG4cqvsVRYVYz+2RaToNvnqvX0kccSMUioLTbP+X2AKQ
+X-Gm-Gg: Acq92OELk5B7oSONDnRepbVnBUN1ojwVa5/fWdKwlKFT5Nlv8PbX3uzjAesNkYVOoTY
+	ACeUBCweFhe0UX75j+bExIS1LF7Scw6q5iOKMzHYEJYDVfG7PNhxs1LfqyDBSMkv3185WIU6xx9
+	Q41nOiOv03UU96otG0iNT9nOn8p42vGkRtpsocoEI7Wdg+UCo+FO61vrIuAyVlXWswARUyMp3HR
+	vpdO1/XfRzntXgWap4Z6KMem3/wQFSZY0G2hobe9EBw8FzVkNGApBes3Gg0B7eb25p3oOcZpLJQ
+	2md8APn4bcRXd486d5UvjtXft1UApOc3/mhLPhS2I2WwnDNc5JfU7KwDzO8S8s9swZkU9rF85Ke
+	M3u/qqXYk702i6xSIM30xzt+2SQIUzEkSegdrs9DIR9hqKBeZ5FWQHRXY53UuBdZjTpyA7TezF9
+	wAPWf1M5+pY1+YnN6CbZ7YOn4jqEUcJjz0TFPAhmXdpVImhLGJYHRoDW4BuvsBsMTCoALEmpP1Y
+	KRHlw==
+X-Received: by 2002:a05:620a:27d1:b0:914:e6cb:1e74 with SMTP id af79cd13be357-9153d99de4amr681017285a.19.1780162535602;
+        Sat, 30 May 2026 10:35:35 -0700 (PDT)
 Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153244e114sm565606885a.5.2026.05.30.10.35.32
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-9153244e114sm565606885a.5.2026.05.30.10.35.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 May 2026 10:35:33 -0700 (PDT)
+        Sat, 30 May 2026 10:35:35 -0700 (PDT)
 From: Joshua Milas <josh.milas@gmail.com>
 To: tglx@kernel.org,
 	robh@kernel.org,
@@ -85,9 +85,9 @@ Cc: josh.milas@gmail.com,
 	sophgo@lists.linux.dev,
 	hanguidong02@gmail.com,
 	michael.opdenacker@rootcommit.com
-Subject: [PATCH v5 RESEND 4/5] riscv64: dts: sophgo: add SG2000 dtsi
-Date: Sat, 30 May 2026 13:33:46 -0400
-Message-ID: <20260530173347.33533-5-josh.milas@gmail.com>
+Subject: [PATCH v5 RESEND 5/5] riscv64: dts: sophgo: add initial Milk-V Duo S board support
+Date: Sat, 30 May 2026 13:33:47 -0400
+Message-ID: <20260530173347.33533-6-josh.milas@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260530173347.33533-1-josh.milas@gmail.com>
 References: <20260530173347.33533-1-josh.milas@gmail.com>
@@ -99,73 +99,121 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adds sg2000.dtsi on the RISCV side.
+This adds initial riscv support for the Milk-V Duo S board
+[1] making it possible to boot Linux to the command line.
+
+Link: https://milkv.io/duo-s [1]
 
 Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 ---
- arch/riscv/boot/dts/sophgo/sg2000.dtsi | 53 ++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000.dtsi
+ arch/riscv/boot/dts/sophgo/Makefile           |  1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
+ 2 files changed, 86 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2000.dtsi b/arch/riscv/boot/dts/sophgo/sg2000.dtsi
+diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
+index 6f65526d4193b..58cc6b70d8de4 100644
+--- a/arch/riscv/boot/dts/sophgo/Makefile
++++ b/arch/riscv/boot/dts/sophgo/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
++dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
+diff --git a/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 new file mode 100644
-index 0000000000000..412adacc00576
+index 0000000000000..8632470f43ab0
 --- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2000.dtsi
-@@ -0,0 +1,53 @@
++++ b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+@@ -0,0 +1,85 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +
-+#define SOC_PERIPHERAL_IRQ(nr)	((nr) + 16)
++/dts-v1/;
 +
-+#include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
-+#include "cv180x-cpus.dtsi"
-+#include "cv180x.dtsi"
-+#include "cv181x.dtsi"
++#include "sg2000.dtsi"
 +
 +/ {
-+	compatible = "sophgo,sg2000";
++	model = "Milk-V Duo S";
++	compatible = "milkv,duo-s", "sophgo,sg2000";
 +
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x10000000>;
++	aliases {
++		i2c4 = &i2c4;
++		mmc0 = &sdhci0;
++		serial0 = &uart0;
++		spi3 = &spi3;
 +	};
 +
-+	soc {
-+		interrupt-parent = <&plic>;
-+		dma-noncoherent;
-+
-+		pinctrl: pinctrl@3001000 {
-+			compatible = "sophgo,sg2000-pinctrl";
-+			reg = <0x03001000 0x1000>,
-+			      <0x05027000 0x1000>;
-+			reg-names = "sys", "rtc";
-+		};
-+
-+		clk: clock-controller@3002000 {
-+			compatible = "sophgo,sg2000-clk";
-+			reg = <0x03002000 0x1000>;
-+			clocks = <&osc>;
-+			#clock-cells = <1>;
-+		};
-+
-+		plic: interrupt-controller@70000000 {
-+			compatible = "sophgo,sg2000-plic", "thead,c900-plic";
-+			reg = <0x70000000 0x4000000>;
-+			interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
-+			interrupt-controller;
-+			#address-cells = <0>;
-+			#interrupt-cells = <2>;
-+			riscv,ndev = <101>;
-+		};
-+
-+		clint: timer@74000000 {
-+			compatible = "sophgo,sg2000-clint", "thead,c900-clint";
-+			reg = <0x74000000 0x10000>;
-+			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
-+		};
++	chosen {
++		stdout-path = "serial0:115200n8";
 +	};
 +};
++
++&osc {
++	clock-frequency = <25000000>;
++};
++
++&dmac {
++	status = "okay";
++};
++
++&emmc {
++	bus-width = <4>;
++	no-1-8-v;
++	cap-mmc-hw-reset;
++	no-sd;
++	no-sdio;
++	non-removable;
++	status = "okay";
++};
++
++&gmac0 {
++	status = "okay";
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&mdio {
++	status = "okay";
++};
++
++&saradc {
++	status = "okay";
++};
++
++&sdhci0 {
++	bus-width = <4>;
++	no-1-8-v;
++	disable-wp;
++	status = "okay";
++};
++
++&sdhci1 {
++	bus-width = <4>;
++	cap-sdio-irq;
++	no-mmc;
++	no-sd;
++	non-removable;
++	status = "okay";
++};
++
++&spi3 {
++	status = "okay";
++};
++
++&uart0 {
++	status = "okay";
++};
++
++&usb {
++	dr_mode = "host";
++	status = "okay";
++};
++
 -- 
 2.53.0
 
