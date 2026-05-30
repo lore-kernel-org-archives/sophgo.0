@@ -1,63 +1,63 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F782E7394
-	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 22:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEB62BEFF6
+	for <sophgo@lists.linux.dev>; Sat, 30 May 2026 22:01:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1780178433; cv=none; b=cZ8OVx5c8pvYiMzybI7Vny7uRlc9r4hTIMNHdIn1sHoGQZ9YY4Yy3BXSWb8h7XXlYODjlvF0D3lm1jA82MyLtiHhurg/TDzbcSpgTeuy4f5vCSzIDr6JJCtb/3QnIfhSWiN8nSu0i0rO2fR6zp8uHavultL3eZ8uunQdyymtv30=
+	t=1780178506; cv=none; b=mF1I2l8db+/rmLp9ekRRIqHCn5CrtpWhjqz6kSGdEE2rbgM2JzJCY9VwhdmWinegek1hCJnMWeKSMz++7r29MIDOOQ4u25TWB7sJS0pYPVyQjAmruqJNvvjcHE7/+Ld2fLMFSGtJd53Fv5MGOzGSBrxTMb0SLfTSd0HRkPkwiG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1780178433; c=relaxed/simple;
-	bh=8ACCvZfQgDoShinwl2YMJesKGGkT1vR9PHtGFuN5urQ=;
+	s=arc-20240116; t=1780178506; c=relaxed/simple;
+	bh=4DVUohzAaXwz3eVrtrKvme/fPS4PAOQR1+cKdCnuB6A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vCEg1/IDZuzpVY0qw6Iw5MeV7LiCAXj7BW8v3/CDCVVpfVGViOlLqAFDDwgbV7Lcc6BSQQuAlkRobBDZyEn/TQ+qjxVaP5CjE4jNRhY+ISUkTs8lfVxJGwLPJwFds4/NL+mXRWzcjvSgF0Wf3ZUG0H7eAIAlTWcP62QYO/GaSvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=op3iBy48; arc=none smtp.client-ip=209.85.214.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=pTlOk4qf0LQaae/M5lF3g2dxpJJtFhX7nDr68eeh+0OsB0fRAooSuu7MtyA/GKTGum3efjXDtlxLs0LgabCBDPhdYLDPw/jaQP4ljhQaauooODt2VdyMu2uzKfDL//5ZOSfZNug3d4hR+s5It8/uZj9H2ZhRVgqKH/yBq7or55E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IjpWtHNM; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="op3iBy48"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2c0c379e8ffso1023025ad.3
-        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 15:00:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IjpWtHNM"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3698e34a567so13659128a91.2
+        for <sophgo@lists.linux.dev>; Sat, 30 May 2026 15:01:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1780178430; x=1780783230; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1780178504; x=1780783304; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sx8cn06GRvGbPjFtz25dkBjZJsL3bsmHBqAxLucbQNg=;
-        b=op3iBy48aCfsiQgI9qc5/2Rmo46SPmi+E3g4oVdQREcJ+Y7abvXfHRe5MudMVRtCnL
-         L5SveSagn6Vbcsu165Me58+AH8gfROGv/Yhv3NmU7od+8rtLZWkO/6JmmWcsy7A2jCMg
-         tPbUOiQ+4R25bAMC3jLV1V5ikl0feUvEmoCeOsCXnyHtKLeJi2BuKLENWvI++B1dF4XX
-         6qqA8AjqeFiqqfaZWODy0M1XEPfeS+RemaWXQDObUw3dpb+t+enH5R/CsL0qbxMPj2Os
-         DyJwAATdRvIubIObGCyNp+yzhuaWkbZ1PpVzUOFfMGiKBI7P6JTxE0FNgkxXFkaWOrju
-         bDHQ==
+        bh=7n4onNHcUGonSFh3iTX+9p1SOqH/aLpn6mI3I4XkfLM=;
+        b=IjpWtHNMAfx7Mrfllwf6gxbJ+C945da+YhjiAPZ6Z/CXSltmDhJix2mUp20Koi+VJk
+         QKg4f8D67p6AZbTy0WdxVP6BMqbzPdGB8P6HXpgtSDNq0hbiXiJajwp/HQULvyRGBnU7
+         bMgXhyLEmTRike/kd29s4bw1PwEBZukvnuJb38gjWkxKQBFluQBDcTVOg2olkvZM/uhk
+         2jicGF6HXqxewp/wQRudeKhGS2JCtkGwmmKULE/LWlAGPhMgUJKMTA9EgFrdBJbq414b
+         JjnwgG6p2XzmnOaZ8wyaqs7qZCRsbW3BgkxopiDRjQCJOClaB65mnLnH5wyDKDMKM8K5
+         6X0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1780178430; x=1780783230;
+        d=1e100.net; s=20251104; t=1780178504; x=1780783304;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sx8cn06GRvGbPjFtz25dkBjZJsL3bsmHBqAxLucbQNg=;
-        b=pwtoliWik1Qj+WiaFvosygaaUn9BfVAWSZGaBw7abIdvCL7F7r6nAsQ/0gNMEpk47w
-         +2hEYMbDlEp5x/v86UEhUdrVUMK58tRaEstAQtzmABU3ZSedNlILeVfI5AIivO71o11N
-         kgEAejc9lLIJQlse1otCIi2ObynA1QtrARAUY8oxUf0dXlAmG24MxCwoLs5Q0jULtwmC
-         PVLDgB7k5iGgo40ZOIapm4uttU9j7v6M2nRK1sKJ9iG0SWbGyu/bihOQ4inrGh7ydhkn
-         9uwGXCIGQ6uDC31nfeW/Py0OjFmAlNp3+7EGLM3rq/flmNIANNphiN3+GOHUolBoiVi6
-         WfyQ==
-X-Forwarded-Encrypted: i=1; AFNElJ8qfYUZCZphEVPV2NV76OQZQ1VF3zF3Om4bAAiH+W76p6vLP29S2u/m+nUQYN2+Y4N0GxmIur8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzRN7zNhV+M2boG9PYCr17wfuvpvdYGk/bCCukENkvvJDZzsGXi
-	5iKxH1vZ5oyyHhxWxbc0XpUJxojg/EKg8mm6Oq9P3IbTX/3xp1WEfCEo
-X-Gm-Gg: Acq92OGfn/n0gmycQcUZhhdK+N7cFJhV7HUsB0EbG/ftffXp1e+mACSoPNu1zolJQTs
-	Xj2HwmSoakri/j0QiwMmmH3znDpQ0OF4/T7ymeUKZ3mfXq3eYM3sukjPc4Cb1on5QHIXqXbT9NB
-	zQ9pJ98SdAfev9lsXIvEy/KCmz0xt2f3leex7xZsu+hqlWNXqkeC/GIKChzaPIrHRtK9GoHThTB
-	QEHljCgTXssFYtR+FoqlD4BOs02ZVoy5rbJ62GdvkgSiUyaUu5EqUiVOiGxfaWrEfuvAzzfyxC+
-	bJJDE2ZcoARCLgE8KqV+otyK0JTsXH+O03IofZ/kAlBdcUVHsXggT58c2QEUzrvMaXdkYX+dDyN
-	65Q8veyM9h5U304QnnF8ceO8/5v74ePcfgOXbA7xQqIv12lv0uk6C5wZq6GJjyXmnMfpT2H8elV
-	YndnjQX15+kefGfhlGgwv1T17oEMxXAfg5uw==
-X-Received: by 2002:a17:902:f651:b0:2b2:5314:e96a with SMTP id d9443c01a7336-2bf3688ab6dmr56121035ad.34.1780178430477;
-        Sat, 30 May 2026 15:00:30 -0700 (PDT)
+        bh=7n4onNHcUGonSFh3iTX+9p1SOqH/aLpn6mI3I4XkfLM=;
+        b=BJ2JKF6NnQTEWVyY9q6uqBWqoUJ254VSSQpMCwFsPnJ7GECVDWMgfe9Eci61l+3BL5
+         ZBpGtf+9AKueCuRHOdslk8OGZC8PipIt35OmYXrWPYAwPWBoRpSj8Zg17oXT6JltJggM
+         lyMa0ID+DFGS4S/kh65D7a5z/wO2T/M711v8emypMghVel+Qu71fMxjw1P9Ma89mG3CL
+         LBbLV01TTOsG3wRxFGLFb9CQ/rOqNPKEsdwVPaS9IyyjoHPYaa/F1UM8fwyYyn/C2szQ
+         JNHvRtC55WeqH2/XPwC7UsGV+ZybNGazEVlZ8VVihBXxXSCZGQ/byF0+e+1T1E+yg64N
+         kzpA==
+X-Forwarded-Encrypted: i=1; AFNElJ82xQaAXp/dcE6pJKd0TzUT4+zEULdL+axM5ZpmQnzW2exhsGrwcni+eG/UPnZKVftOyKryX8M=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyTlWQ3Qmpfh9lxlinpO2REZDvaI1eNcmXx3KsUvAZZsWpod8dW
+	2w/zWwPAuGupAFlN7kg1+YPsNxuLdWBs/Ca8naNXCOOK5Pe9nWndcneE
+X-Gm-Gg: Acq92OG26UQZ1EKHJEnVLlngT3fYhBxLlZE4NvYCVcnr6zIkcVbOSADHB9XCjzDY/s9
+	PoB5piE6Fb57GUa4esnRxVVC/aOIReg833tf3IzAMz5oE0Yrgr+gMsd49xNu2+OnDvz0YM71R/s
+	0YvKUhM4/DWK55mzHHW2KyMH1od1MsXl+ZmB5UknsDWuIrDdG3Ryn4U+HtRnBEWRDdaRZ5h1rkA
+	7jKk0W8EbouPZoDRzGKQtvg7XMDecZiKBxLsAbtheOhmBk1xO5wVd1fEhiYQg1KePnF/0ejJw1y
+	2pqb1s855xdwhXRfpEhkAEXgVZNLUTXGJMGpnxrBFyHxU0v8sgasUO73C1NfPn7+rQgGfL88dhy
+	pzm+tebWH8fqfQaEDRHJqUdmVQc20y5l2i+1n77ttIzMnXCdHKZXSFK7p3Ac2Ma3JOpPfQBdVZ/
+	FHvXFsRQYCtS16kEZKnjJjMRE+FwThXKd+hQ==
+X-Received: by 2002:a17:90b:2383:b0:36d:6315:1de5 with SMTP id 98e67ed59e1d1-36d63151e6amr2613775a91.18.1780178503719;
+        Sat, 30 May 2026 15:01:43 -0700 (PDT)
 Received: from localhost ([2001:19f0:8001:1b2d:5400:5ff:fefa:a95d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2bf239fdf0asm57301565ad.26.2026.05.30.15.00.29
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-36bc6b7c178sm5814986a91.15.2026.05.30.15.01.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 May 2026 15:00:30 -0700 (PDT)
-Date: Sun, 31 May 2026 06:00:16 +0800
+        Sat, 30 May 2026 15:01:43 -0700 (PDT)
+Date: Sun, 31 May 2026 06:01:30 +0800
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Joshua Milas <josh.milas@gmail.com>, tglx@kernel.org, robh@kernel.org, 
 	krzk+dt@kernel.org, conor+dt@kernel.org, pjw@kernel.org, samuel.holland@sifive.com, 
@@ -68,11 +68,11 @@ To: Joshua Milas <josh.milas@gmail.com>, tglx@kernel.org, robh@kernel.org,
 Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, hanguidong02@gmail.com, 
 	michael.opdenacker@rootcommit.com
-Subject: Re: [PATCH v5 RESEND 5/5] riscv64: dts: sophgo: add initial Milk-V
- Duo S board support
-Message-ID: <ahtdkX3ZCraGxVcV@inochi.infowork>
+Subject: Re: [PATCH v5 RESEND 2/5] arm64: dts: sophgo: add initial Milk-V Duo
+ S board support
+Message-ID: <ahteG0AtGbTLexVu@inochi.infowork>
 References: <20260530173347.33533-1-josh.milas@gmail.com>
- <20260530173347.33533-6-josh.milas@gmail.com>
+ <20260530173347.33533-3-josh.milas@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -81,38 +81,34 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260530173347.33533-6-josh.milas@gmail.com>
+In-Reply-To: <20260530173347.33533-3-josh.milas@gmail.com>
 
-On Sat, May 30, 2026 at 01:33:47PM -0400, Joshua Milas wrote:
-> This adds initial riscv support for the Milk-V Duo S board
+On Sat, May 30, 2026 at 01:33:44PM -0400, Joshua Milas wrote:
+> Adds initial arm64 support for the Milk-V Duo S board
 > [1] making it possible to boot Linux to the command line.
 > 
 > Link: https://milkv.io/duo-s [1]
 > 
 > Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 > ---
->  arch/riscv/boot/dts/sophgo/Makefile           |  1 +
+>  arch/arm64/boot/dts/sophgo/Makefile           |  1 +
 >  .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 85 +++++++++++++++++++
 >  2 files changed, 86 insertions(+)
->  create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+>  create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 > 
-> diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-> index 6f65526d4193b..58cc6b70d8de4 100644
-> --- a/arch/riscv/boot/dts/sophgo/Makefile
-> +++ b/arch/riscv/boot/dts/sophgo/Makefile
-> @@ -1,6 +1,7 @@
+> diff --git a/arch/arm64/boot/dts/sophgo/Makefile b/arch/arm64/boot/dts/sophgo/Makefile
+> index 94f52cd7d994b..68aace728223a 100644
+> --- a/arch/arm64/boot/dts/sophgo/Makefile
+> +++ b/arch/arm64/boot/dts/sophgo/Makefile
+> @@ -1,2 +1,3 @@
 >  # SPDX-License-Identifier: GPL-2.0
->  dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
->  dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
+>  dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-module-01-evb.dtb
 > +dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
->  dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
->  dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
->  dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
-> diff --git a/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+> diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 > new file mode 100644
 > index 0000000000000..8632470f43ab0
 > --- /dev/null
-> +++ b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+> +++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 > @@ -0,0 +1,85 @@
 > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 > +
@@ -130,7 +126,10 @@ On Sat, May 30, 2026 at 01:33:47PM -0400, Joshua Milas wrote:
 > +		serial0 = &uart0;
 > +		spi3 = &spi3;
 
-Adding all the necessary aliases here.
+Apply the same change for the reply on v5.
+
+Regards,
+Inochi
 
 > +	};
 > +
@@ -143,9 +142,6 @@ Adding all the necessary aliases here.
 > +	clock-frequency = <25000000>;
 > +};
 > +
-
-pinctrl is needed, ses sashiko's reply.
-
 > +&dmac {
 > +	status = "okay";
 > +};
