@@ -1,138 +1,226 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A23E2E7F2C;
-	Fri, 12 Jun 2026 08:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=68.232.153.233
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE25B345CB2
+	for <sophgo@lists.linux.dev>; Fri, 12 Jun 2026 13:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781253716; cv=none; b=AUq6sZJd6E7ETT8PVCP+jmJEpbCVLMBbP+k15MlVG9Aw4at3rQ6UBvuAiph85YrJZRgsPdW/+QPIdB3N9CvxEZ7eXECaU6rVXV8KuGi/Du0F8v9yU21vWvcifbXH7rMM/pB83n9IamYAADN8Baee69EL9fuzj1fUX4loMUopYFM=
+	t=1781272301; cv=none; b=AYjJpc6r5wLD7jSaEV19kIB8sEPFVFBtPChjN9fdVRA6YwhkJLfmgdnL1CSMIRkfxMKd/wUSZ0U/mXKk8A7Ccpj6lhFSDIgG8f8FVrC5MHmx+jEMWzeVtw3L0POqhu+6nXsDrBnMt1Kvd52ktCtfI2hhRDnhxVZ30Tm0rBRECjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781253716; c=relaxed/simple;
-	bh=cJS4+U+Lvd9JiTFvDEcycO1GrMxgHTDXXvhAFBUdHBY=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H3uagPofKmJ8zg14Occ6viFjskuQMTwf3MSlOU5Kz2OHvA19i4vyfwqDQabx2q8hOMIb7dgSQ7coA9nrtmiIBqWcLOF69UDVHWA8wFLJTGHEFqOglE39VFNnykUhCuqB29ipQLsmuk6vZ2jVQTwD54qcyysCc3/VF8Vj0FfOycU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com; spf=pass smtp.mailfrom=microchip.com; dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b=rn5Vab6u; arc=none smtp.client-ip=68.232.153.233
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microchip.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microchip.com
+	s=arc-20240116; t=1781272301; c=relaxed/simple;
+	bh=tT4YqoZd40mTDfR7B+ZovVmHGlTP3GckEXJWWqPnoqs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ScMs1O0+TM9IPeCLfUxn5rOd/VdLlnEFw39YtgfjY1gragmXwEriBg5tmhrfn4kYcqrJjQiOuNSP2T5tPLmWp5tX+CcWRO/cJ1NfL62Z7emgBIU4415M3N3nznis4kr5ZDcXA9/m9TNOmAko+qMvhOoJH2MTpYcyPLNr4eyncQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=eqXyFahB; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=microchip.com header.i=@microchip.com header.b="rn5Vab6u"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1781253717; x=1812789717;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cJS4+U+Lvd9JiTFvDEcycO1GrMxgHTDXXvhAFBUdHBY=;
-  b=rn5Vab6uWHYXd1rjInpzacx/i9ApDbJQIQ7WtIOeC3zQXDO+WTCSL/a+
-   p8tVZiSkk53fQr0hMwaWkiCfTqyj+tSTWG6evFK5wnJgtSGrrd/B/fsFQ
-   f2ckYMxMvl2UA97xxXtQwX2TjjjptF4gvHouvS4N3RhEKjj8zsbF+ltXj
-   9rqfMuWoIEn/z9XDbDR8/f3XP2LvUmOTtHbJfS78rxYptrns5AJ1bSC9/
-   YNUnsYYU5R2bfBWTKkvujfVUD6RWoE2G82RS63PMLdDROFgY818ER3qoN
-   QZ2l/rwwwX0LrYToVVAPfxLfG7QnIC0Vtb9NEUPKX0nQM4Y8t0F/8d9sd
-   Q==;
-X-CSE-ConnectionGUID: XuaeUrWDQs68NJpIlx5NwQ==
-X-CSE-MsgGUID: /IzbyA5FSWGqN1HaIZcVPg==
-X-IronPort-AV: E=Sophos;i="6.24,200,1774335600"; 
-   d="asc'?scan'208";a="59017390"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa3.microchip.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 12 Jun 2026 01:41:56 -0700
-Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.58; Fri, 12 Jun 2026 01:41:53 -0700
-Received: from wendy (10.10.85.11) by chn-vm-ex02.mchp-main.com (10.10.85.144)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.58 via Frontend
- Transport; Fri, 12 Jun 2026 01:41:48 -0700
-Date: Fri, 12 Jun 2026 09:41:02 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Guodong Xu <docular.xu@gmail.com>
-CC: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert
- Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Zong Li
-	<zong.li@sifive.com>, Deepak Gupta <debug@rivosinc.com>, Anup Patel
-	<anup@brainfault.org>, Atish Patra <atish.patra@linux.dev>, Rob Herring
-	<robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
-	<conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>, Chen Wang
-	<unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
-	<linux-doc@vger.kernel.org>, <linux-riscv@lists.infradead.org>,
-	<linux-kernel@vger.kernel.org>, <kvm@vger.kernel.org>,
-	<kvm-riscv@lists.infradead.org>, Paul Walmsley <paul.walmsley@sifive.com>,
-	Conor Dooley <conor@kernel.org>, <devicetree@vger.kernel.org>,
-	<spacemit@lists.linux.dev>, <sophgo@lists.linux.dev>,
-	<linux-kselftest@vger.kernel.org>, Palmer Dabbelt <palmer@sifive.com>,
-	Qingwei Hu <qingwei.hu@bytedance.com>
-Subject: Re: [PATCH v4 09/16] riscv: Add Zic64b to cpufeature and hwprobe
-Message-ID: <20260612-frays-feast-e631e3aa047d@wendy>
-References: <20260611-rva23u64-hwprobe-v2-v4-0-3f01a2449488@gmail.com>
- <20260611-rva23u64-hwprobe-v2-v4-9-3f01a2449488@gmail.com>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="eqXyFahB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1781272297;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Iy/v7kxpOlqBCTDcC4jlmM2w9KphND71Hvl/We9DfQ4=;
+	b=eqXyFahBiG3zpRsbwyYbj9/S646LwWDLO6CvFbwyO9fLgG2XeAcafbqPry0txDiEzWyocc
+	S4UTA+YZ0Bm+AolZFFZ5qpdovHbo+FmGnTi19kyGSOnyYySdW5XQckbsOz1bNBtBl5L6q2
+	Mg/nlHvk1WQNp4cSTHPAiQUZaKayYT0=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-350-MQs2s6PNOuKNC3PNeThiPQ-1; Fri, 12 Jun 2026 09:51:35 -0400
+X-MC-Unique: MQs2s6PNOuKNC3PNeThiPQ-1
+X-Mimecast-MFC-AGG-ID: MQs2s6PNOuKNC3PNeThiPQ_1781272295
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-915c1997732so236718385a.3
+        for <sophgo@lists.linux.dev>; Fri, 12 Jun 2026 06:51:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781272295; x=1781877095;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Iy/v7kxpOlqBCTDcC4jlmM2w9KphND71Hvl/We9DfQ4=;
+        b=kudPGEMVhNdZRNO6KHPeHlXyY1TCZBP/jckvbSJS9eSv79Seul/Tn37+xpyubh00mR
+         Q3KunMH3oz27htjqZ0xGpfGaV0hTW8/FE0ArBzKjdRw6HlcFD4PvT3iuGTZr/m9Xswbj
+         L4AyPwcCBPZOIyzOBJJ+eh3YneYvo0s18kEdRPSd6NJGEm0dGRz3+fQXdd3yxw+7uQ37
+         hvYiYQN2qO2buMEaJQKOrESGws7uKKcC8L0QR9Ksz+5yQDIr0WB4Wrsksjxh7TsWnIXk
+         jEoOpXbpQHVgCKqRzCJCSL4/eiHb+WfdhICcrB8XuN39Fm636HKUzY9a/v17hBfP6j+X
+         EuKw==
+X-Forwarded-Encrypted: i=1; AFNElJ9Zt+yp4ZtHTEsBBpfoccYxluImTl1eAgCD5Qo9mPPeABNtdwsUvR8eBYgexRltw2qy8aaxZtE=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwLIZ40IywYGd0o3G9uq2YrWzP/nVxNzkVzqZLhd3kyZr0xI3s0
+	KoenjY2iYjoHV7UQjrXoXm2a2WIxdRE/PdWQwKp5b6KU/OmGQCEXyjkSetpSFb+p4GKur6YKe3s
+	OzIbDjncUjJBIEqcRWL7OeR2j5WtX0IxoSfIVxgXJICFoY2/MkwIFzR4cSLh4o7TsyUuYDG0JB8
+	wnfT2WTFHQBYHFbMWPgVfXYGlW84WhEK7H
+X-Gm-Gg: Acq92OH9ndU2xK9JOIV573lb1XLvRvPqT1ipUsEOuaWfYtHrTKiZuAu9t1dWoF367qu
+	a8Ca0y6WoEuv7ue+OQDWAgnTc1amN/xMtGTLGJHqe5FRnm9Rfx0OTntIT6M4EmeNwsXxrBJZ0BA
+	lXhqRHxn7lWacJXhNo5clfX9sTdqo+t3b2FTILStOaA57ibcFjUMUziuArOeXrGwjinGx+aJR0C
+	CjlkvNESTMT8MiKxaFjNToHMJ8w5+qSPWLmMA==
+X-Received: by 2002:a05:620a:4149:b0:915:d5cd:8cce with SMTP id af79cd13be357-9161bc02c6bmr425212585a.22.1781272295111;
+        Fri, 12 Jun 2026 06:51:35 -0700 (PDT)
+X-Received: by 2002:a05:620a:4149:b0:915:d5cd:8cce with SMTP id
+ af79cd13be357-9161bc02c6bmr425204785a.22.1781272294560; Fri, 12 Jun 2026
+ 06:51:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yeEbaUwKYQ4BJ0tH"
-Content-Disposition: inline
-In-Reply-To: <20260611-rva23u64-hwprobe-v2-v4-9-3f01a2449488@gmail.com>
-
---yeEbaUwKYQ4BJ0tH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20260611-rva23u64-hwprobe-v2-v4-0-3f01a2449488@gmail.com> <20260611-rva23u64-hwprobe-v2-v4-5-3f01a2449488@gmail.com>
+In-Reply-To: <20260611-rva23u64-hwprobe-v2-v4-5-3f01a2449488@gmail.com>
+From: Jesse Taube <jtaubepe@redhat.com>
+Date: Fri, 12 Jun 2026 09:51:22 -0400
+X-Gm-Features: AVVi8Cei37Nc7wEh-QPxeO4jIlCv0ZbORPC259y2xDJU0379i8L_rI91Rp2DJbE
+Message-ID: <CADRr4bd10AYwAZwHxEiuSJEOwD5qv68L1r5DRjxXFM8pmrG+WA@mail.gmail.com>
+Subject: Re: [PATCH v4 05/16] riscv: Add Zicclsm to cpufeature and hwprobe
+To: Guodong Xu <docular.xu@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Zong Li <zong.li@sifive.com>, Deepak Gupta <debug@rivosinc.com>, 
+	Anup Patel <anup@brainfault.org>, Atish Patra <atish.patra@linux.dev>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Yixun Lan <dlan@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, linux-doc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	kvm@vger.kernel.org, kvm-riscv@lists.infradead.org, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>, devicetree@vger.kernel.org, 
+	spacemit@lists.linux.dev, sophgo@lists.linux.dev, 
+	linux-kselftest@vger.kernel.org, Palmer Dabbelt <palmer@sifive.com>, 
+	Jesse Taube <jesse@rivosinc.com>, Conor Dooley <conor.dooley@microchip.com>, 
+	Charlie Jenkins <charlie@rivosinc.com>, Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+	Andy Chiu <andybnac@gmail.com>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-MFC-PROC-ID: P16cgpTQvwOwOM4sSc4GWnB-21F5qrjSm5q6oNvVySE_1781272295
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 11, 2026 at 04:12:46PM -0400, Guodong Xu wrote:
-> From: Qingwei Hu <qingwei.hu@bytedance.com>
->=20
-> Zic64b mandates 64-byte naturally aligned cache blocks and is a
-> mandatory extension of the RVA22 and RVA23 profiles.  Allocate a
-> RISCV_ISA_EXT_ZIC64B id, parse "zic64b" from the ISA string with a
-> validate callback that requires each cbom/cbop/cboz cache block size to
-> be 64 bytes when it is present, and export it through hwprobe.
->=20
-> Link: https://lists.riscv.org/g/tech-unprivileged/topic/question_about_zi=
-c64b_and/119631059
-> Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
-> Co-developed-by: Guodong Xu <docular.xu@gmail.com>
+On Thu, Jun 11, 2026 at 4:14=E2=80=AFPM Guodong Xu <docular.xu@gmail.com> w=
+rote:
+>
+> From: Jesse Taube <jesse@rivosinc.com>
+>
+> Zicclsm requires misaligned support for all regular load and store
+> instructions, both scalar and vector, but not AMOs or other
+> specialized forms of memory access, to main memory regions with both
+> the cacheability and coherence PMAs, as defined in the profiles spec.
+> Even though mandated, misaligned loads and stores might execute
+> extremely slowly. Standard software distributions should assume their
+> existence only for correctness, not for performance.
+>
+> Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+> Reviewed-by: Andy Chiu <andy.chiu@sifive.com>
+> Reviewed-by: Charlie Jenkins <charlie@rivosinc.com>
+> Tested-by: Charlie Jenkins <charlie@rivosinc.com>
+> Signed-off-by: Jesse Taube <jesse@rivosinc.com>
+
+Thanks for the update! Just an fyi email has changed to
+jtaubepe@redhat.com though.
+No need to change the signoff though.
+
+Thanks,
+Jesse Taube
+
+> [Rebased, rewrote doc text, minor commit message revisions]
+> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
 > Signed-off-by: Guodong Xu <docular.xu@gmail.com>
-
-> +static int riscv_ext_zic64b_validate(const struct riscv_isa_ext_data *da=
-ta,
-> +				     const unsigned long *isa_bitmap)
-> +{
-> +	/*
-> +	 * Zic64b mandates 64-byte naturally aligned cache blocks; cross-check =
-the
-> +	 * cbom/cbop/cboz block-size (when declared) device-tree properties to
-> +	 * avoid inconsistency.
-> +	 */
-> +	if ((riscv_cbom_block_size && riscv_cbom_block_size !=3D 64) ||
-> +	    (riscv_cbop_block_size && riscv_cbop_block_size !=3D 64) ||
-> +	    (riscv_cboz_block_size && riscv_cboz_block_size !=3D 64)) {
-> +		pr_err("Zic64b detected in ISA string, disabling as a CBO block size i=
-s not 64 bytes\n");
-> +		return -EINVAL;
-> +	}
+>
+> ---
+> v4: No change.
+> v3:
+> - Move the hwprobe.rst entry to the IMA_EXT_1 section so its
+>   documentation matches the IMA_EXT_1 bit it was allocated in v2
+>   (Sashiko, agreed by Andrew).
+> v2:
+> - Rebased onto v7.1-rc2; moved ZICCLSM to IMA_EXT_1 and
+>   allocated a new bit for it
+> ---
+>  Documentation/arch/riscv/hwprobe.rst  | 4 ++++
+>  arch/riscv/include/asm/hwcap.h        | 1 +
+>  arch/riscv/include/uapi/asm/hwprobe.h | 1 +
+>  arch/riscv/kernel/cpufeature.c        | 1 +
+>  arch/riscv/kernel/sys_hwprobe.c       | 1 +
+>  5 files changed, 8 insertions(+)
+>
+> diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/ri=
+scv/hwprobe.rst
+> index d9928641deb99..49d9fb68632d0 100644
+> --- a/Documentation/arch/riscv/hwprobe.rst
+> +++ b/Documentation/arch/riscv/hwprobe.rst
+> @@ -401,3 +401,7 @@ The following keys are defined:
+>      as defined in version 1.0 of the RISC-V Control-flow Integrity (CFI)
+>      extensions specification, ratified in commit 302a2d45c243
+>      ("Update build-pdf.yml") of riscv-cfi.
 > +
-> +	return 0;
-> +}
+> +  * :c:macro:`RISCV_HWPROBE_EXT_ZICCLSM`: The Zicclsm extension is suppo=
+rted,
+> +    as defined in the RISC-V Profiles specification starting from commit
+> +    b1d80660 ("Updated to ratified state.")
+> diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwca=
+p.h
+> index 44bf8c7d8acc5..e8f4a7dd96a93 100644
+> --- a/arch/riscv/include/asm/hwcap.h
+> +++ b/arch/riscv/include/asm/hwcap.h
+> @@ -112,6 +112,7 @@
+>  #define RISCV_ISA_EXT_ZCLSD            103
+>  #define RISCV_ISA_EXT_ZICFILP          104
+>  #define RISCV_ISA_EXT_ZICFISS          105
+> +#define RISCV_ISA_EXT_ZICCLSM          106
+>
+>  #define RISCV_ISA_EXT_XLINUXENVCFG     127
+>
+> diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/u=
+api/asm/hwprobe.h
+> index 9139edba0aecb..6819df159c51e 100644
+> --- a/arch/riscv/include/uapi/asm/hwprobe.h
+> +++ b/arch/riscv/include/uapi/asm/hwprobe.h
+> @@ -116,6 +116,7 @@ struct riscv_hwprobe {
+>  #define RISCV_HWPROBE_KEY_ZICBOP_BLOCK_SIZE    15
+>  #define RISCV_HWPROBE_KEY_IMA_EXT_1            16
+>  #define                RISCV_HWPROBE_EXT_ZICFISS       (1ULL << 0)
+> +#define                RISCV_HWPROBE_EXT_ZICCLSM       (1ULL << 1)
+>
+>  /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
+>
+> diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeatur=
+e.c
+> index 686dde3ce3b98..1fb595581adcf 100644
+> --- a/arch/riscv/kernel/cpufeature.c
+> +++ b/arch/riscv/kernel/cpufeature.c
+> @@ -502,6 +502,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] =3D {
+>         __RISCV_ISA_EXT_SUPERSET_VALIDATE(zicbom, RISCV_ISA_EXT_ZICBOM, r=
+iscv_xlinuxenvcfg_exts, riscv_ext_zicbom_validate),
+>         __RISCV_ISA_EXT_DATA_VALIDATE(zicbop, RISCV_ISA_EXT_ZICBOP, riscv=
+_ext_zicbop_validate),
+>         __RISCV_ISA_EXT_SUPERSET_VALIDATE(zicboz, RISCV_ISA_EXT_ZICBOZ, r=
+iscv_xlinuxenvcfg_exts, riscv_ext_zicboz_validate),
+> +       __RISCV_ISA_EXT_DATA(zicclsm, RISCV_ISA_EXT_ZICCLSM),
+>         __RISCV_ISA_EXT_DATA(ziccrse, RISCV_ISA_EXT_ZICCRSE),
+>         __RISCV_ISA_EXT_SUPERSET_VALIDATE(zicfilp, RISCV_ISA_EXT_ZICFILP,=
+ riscv_xlinuxenvcfg_exts,
+>                                           riscv_cfilp_validate),
+> diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwpr=
+obe.c
+> index f8f68ba781b45..9cf62266f1890 100644
+> --- a/arch/riscv/kernel/sys_hwprobe.c
+> +++ b/arch/riscv/kernel/sys_hwprobe.c
+> @@ -205,6 +205,7 @@ static void hwprobe_isa_ext1(struct riscv_hwprobe *pa=
+ir,
+>                  * in the hart_isa bitmap, are made.
+>                  */
+>                 EXT_KEY(isainfo->isa, ZICFISS, pair->value, missing);
+> +               EXT_KEY(isainfo->isa, ZICCLSM, pair->value, missing);
+>         }
+>
+>         /* Now turn off reporting features if any CPU is missing it. */
+>
+> --
+> 2.43.0
+>
+>
+> _______________________________________________
+> linux-riscv mailing list
+> linux-riscv@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-riscv
+>
 
-I'm inclined to object to this, but we don't have validation on ACPI
-stuff to be able to mandate that people fill in the rhct entries.
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-
-
---yeEbaUwKYQ4BJ0tH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaivGHgAKCRB4tDGHoIJi
-0lFLAQDha3cantxsp/CPLOnAf10qvhl6aJAKsPOLD54gW9K0AQD+I9ggy4JDJWBL
-AjJkB9ffVB058Go53e93Vc4lz51wNQw=
-=4eTb
------END PGP SIGNATURE-----
-
---yeEbaUwKYQ4BJ0tH--
