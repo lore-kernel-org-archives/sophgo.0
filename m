@@ -1,63 +1,63 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA063E5A3B
-	for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 12:04:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D615E3E6DDD
+	for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 12:04:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781525052; cv=none; b=ZnbYx+YKnGtQM1NpRHhoHoZ1N/f4+o72JkpZyvpCsEU1DFaWbYqZo+UiVx++BeGpl8qOrYyM6+11KESpECa/N7Kf2nhgOZ7GSDrW9fDZKpOSH0sk03V8W8ekWIgIEvEKGdmEisn7s7rqP1XaxJWwjW/LpWW72bLaQB2+tr0c8Eo=
+	t=1781525058; cv=none; b=Yelber7yUF6k6/qAM3e8PIfhi2+KhnLDZBgcg2WnFSSJqptyMANJuDr879wKLTIvSlmMY0jZB0doRdmqOYAohuq8Tb/y9tC9piEP/WPzivOtgE26Mim+vaAy/x/QXJ4sfrxXfFxtADKzb/ti6mMqpHJtQihyaUjiibAOYH8KhKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781525052; c=relaxed/simple;
-	bh=iRWUrA+FeoABsmVJudqAy1L3BhEakdG0HfrnY40ToaU=;
+	s=arc-20240116; t=1781525058; c=relaxed/simple;
+	bh=44TbCxTVIe/FzBA8wmIEoz6YwN5izDWzxpNkbmfbrho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAFdd/RnYsaOK8UvT1QlnN8UD9lHCgU1LxxiWMQ6oSqYEQ7BuiwfjI0TnjjRvBSUMp/DKzhe8EbuWXw28lGEbw54KsTM9siU75qwQi+mdwdGY7VeX1YPy5y1Ihj++ANbE1o9XwS8EldmRhlvYrNOx4srJ7/USWo2HrpwPTJXVtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rDzYBHT1; arc=none smtp.client-ip=209.85.160.182
+	 MIME-Version; b=tXaQypg5CUObqebAwebS4l7ODmzdH2s4qImKWtB04OJhUsSqoQW5K3X2Y+07DbSZ6zAQDAvJLhKtQ3/QkzVh6rrvCOJHF3g65uuTEZSKV07L2+rPz5LkuedoPxLXgzQThwnSU4V3rDbS+xIkAnuqfz2ytmTmCfmWRX3voyOwJl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jCy4zem2; arc=none smtp.client-ip=209.85.160.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rDzYBHT1"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-517654b8e28so22620091cf.3
-        for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 05:04:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jCy4zem2"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-517654b8e28so22620661cf.3
+        for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 05:04:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781525050; x=1782129850; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1781525056; x=1782129856; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gRwZTT2w4p8NYfNQ0Ipiacgsycn8UzShxm+qaAwvLsw=;
-        b=rDzYBHT1reiW93bXEm9ONKXpRnV3GhZgpmj4cBo+dKJllnZB11YrehtmgpVBgLnmfl
-         PgTyN45ZqLGJ/9LGkNZVcbHVZtlN53U0giZoM65RIHdQzSsDSNJ6DEoZsZb1q2Gzx+E5
-         KXoJssG9L98ACMJjHO+kN3dShkA+2wAB3l1bMp2zUx1TdwvxzAJ6/84kZvJpqT3XBSjI
-         tKOVnjTRFO6f5wH8meEmaNK6iOma4+ih2f7k4V78eIizmGgKXvNyMoL7SlPZPTZKDCg8
-         MLPX5XA0aFB9wemcFy13B4Js2hmndRaZsD18Lh9Rm2wMw5QJOwIynZGnYWMTcyFmx5SB
-         puOQ==
+        bh=VaaLk3EgsloTd17mTIl3bCyAeJenYIahR3avArgMblQ=;
+        b=jCy4zem2JU4BkMb/OpqArDLyndxnLYcIG3FgzhcSiU/FvzkmSb6j02G3e4B1gCv+3y
+         ddK4RUUTe4j1wRzjialKt4vW+3jPeEJ0rGbG7XnVTl336rVyNYp0RCNUHFLTjxO+w0JH
+         BrEVEjM2Ykda/aCg8VpqUQH/lygsrDoI5RV5ciRobore1bcDuuewKMIDyNvQA2t+D59I
+         awmq/SN5Aq4+FR9tdi5YAezLg/zAUAJfzC6QfqKtD1EOgIxBvFHtInq2Tm6CvYXdumjs
+         Es+VcYNL5yWLAicJ7ohhLv+SIQznjbRmFhu1ytt8bdDvsT6Bi9G2eKhRFSTvWTFsvMHM
+         eD/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781525050; x=1782129850;
+        d=1e100.net; s=20251104; t=1781525056; x=1782129856;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=gRwZTT2w4p8NYfNQ0Ipiacgsycn8UzShxm+qaAwvLsw=;
-        b=LwRb2g39eYwgTBdhidQUoNKB+djLaE1sMHy0WNOyDFJU+Cs39DjIrpDjHhDdAGkGOY
-         T+CxFU5C59unb23FwANMX8aom93CMW2lGlsmyBRx69XXqnAYNxMeZREvYI6kjaHucVOO
-         1+TS/UuICqi1y+ze4/CIwbdMG8UVdel+/xQ1JhJqa4kGR4HKyPsp2Tcu/RS7gAztuBOj
-         M1GNZVfRZrYjUSNRzJ7XQYB8mQrd9nOJZ7/SpZGpYGwfbKZdArEPGjYRJ1upD17buvFM
-         ZtkJqRRsjozSKtWKiXDwVpWJ6zifAIkwuq65CrOcG0lVyGejumuBJhhorer4a95G7R5u
-         gJrQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+F2ANy7/ZBnOmYdnssZeoCkSrar1thODvtvQOZOrCssi6zrOVXxrk3Kh2SdXKAPz9EeNmiSzs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yw0mmN0C5KOVk+jjBStoGKzsDk2tc6H0pUIjum2dqhnEZe7T16b
-	Lkf0cxPfMC5RNr/QtgovHcEW9mm7rLOd6zen81sAPuyBX+v0NdlFPCQ/
-X-Gm-Gg: Acq92OGHQKcbwDjKAyiHO9LixA+CxTbeGIh9L090M3DhaMrC9xrtlkkh1zoQl9z8XxG
-	u4X6zMp1fe1xLt1v0eqjUEM8v7aN67rOIY1tPUv0oScIdhZJc+Hz1SbCfN6I8ijesiiCSaN6M11
-	y5VVk/CefPPUzVlZ2fe8hHQ2hDfr+mi88DqhhEfZ7Rlte+WKqpASin9IcBmQMRLtEEk/HTcB3x2
-	gBGnqNvkp1q2YOP0xMETBLVJo3m0dj1jd6Brmobt7x60YURNn0/AhNSTuv1Hhtyue4RTqmqRFn3
-	F/XrwT7snadxL7izAyv2rKHSWBMOL3i7WXkTCPQ8VJbeowal9UP8oRmFlwxwlcoZqTG/q7kCFbH
-	m362jmPjZPVq92wl57P4h0fuDCU7LSRFgWdGN9NSKHS2nnurFv+j3CAMDT/3Ushqfzr5jPKGZpw
-	vfpeyA8zXfqhO7Lws4hA8SORt2h1UCGqexrGHy/KRvmi921tNvOHq6sVdH
-X-Received: by 2002:a05:622a:1191:b0:517:5b2c:6aae with SMTP id d75a77b69052e-517fe1de684mr198345971cf.13.1781525050315;
-        Mon, 15 Jun 2026 05:04:10 -0700 (PDT)
+        bh=VaaLk3EgsloTd17mTIl3bCyAeJenYIahR3avArgMblQ=;
+        b=k7oP+de9RN1bJN/5AeZ09Ce0C4iS7ib03uhlleS1Wq9PsmDmZMJoTW20od1bltN79D
+         MNdbHnUyUtwXJno4NZfu8acRF4teNae4hS9jqqyUCjzSVIllCxMRs0P65U2vCBUlGsbF
+         0FUCSmFo5NkJioDHmfPQ+Kc2Bezxlql+qZI4/CJ0d1fb89R+Q8JjbpJyTWDXqOzofCZD
+         daGBOwZCEUSTFCs3FJTB5Ukr0yoQWOeqHe+TdwiVjXq3VlE248rTcoUaBXp/JtASmf46
+         mVLyUAZcDdBchII+Fz5lcEFWTftfwHxG1AfskkTSqiFppbqZtnDJ2g0Fxe6dx25Fg8NE
+         Z2Ng==
+X-Forwarded-Encrypted: i=1; AFNElJ9TM4PYYfOAdQeSF0WcTYP35H8T1i3Kv14EA6CwT3M/7a/n6sY5Pbk54Q9evpD77EGmgHOb3aM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxU3KY2/tfxtK/JvACw2Vsujkg2+fd/F5SjX8F4wvB3NWX7IZ6M
+	lU4wzCfaxNEDbDzdg9jIwEslNeJkfYaYAtwjKYJG4gOho4yZbVJdhOU0
+X-Gm-Gg: Acq92OF+NV1KgYjmEXRi3QizaJxR2HcP3Ncb/Lk3TVizN+KyOglX901/G5YRf+OXwjc
+	WAT7DMOtM5lRTy/MaTek9KiLlaskTQIF7VhBsJFQ7nX6H5gVOU+5lSY/Ra6aRLyjlQxAIqP89Vp
+	7zG/YvUha845wdTYi33miVCaEjkU5DG9Tkyss0YDZ1Nq2Dq1chsMWknpVzrt3hll4RJf+sE0OLw
+	caRKlYIEIg2PeomCYWShxXrkqUhacMTmxDsekD6LDRk45nehtsAc0l5EuWvC00/83nPpW4NAHP6
+	rh8uhjrc8AIig+xdQfei+SMHwQ8RINTIDAkURxmSPD5tymcJ97sjXXhsuqUHKmrRAyzjbQI2Kjp
+	phMXXlcYbZPvfW0iY+Q+EPWuIqFz87dVMmxQTRQs/tUwsuIndtFrPb9PVpWikIbkaOIjHaBC+Uz
+	LITu5AjUfeae+INyqzN4YOm8OKn/vD7QyA27j879b1kvXvC/2SKQU0aGNr
+X-Received: by 2002:a05:622a:229f:b0:517:8242:5bc1 with SMTP id d75a77b69052e-517fe200008mr205748761cf.15.1781525055524;
+        Mon, 15 Jun 2026 05:04:15 -0700 (PDT)
 Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51975955956sm25184311cf.17.2026.06.15.05.04.09
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51975955956sm25184311cf.17.2026.06.15.05.04.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 05:04:10 -0700 (PDT)
+        Mon, 15 Jun 2026 05:04:15 -0700 (PDT)
 From: Joshua Milas <josh.milas@gmail.com>
 To: robh@kernel.org,
 	krzk+dt@kernel.org,
@@ -78,9 +78,9 @@ Cc: josh.milas@gmail.com,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev,
 	michael.opdenacker@rootcommit.com
-Subject: [PATCH v6 2/3] riscv64: dts: sophgo: add SG2000 dtsi
-Date: Mon, 15 Jun 2026 08:03:23 -0400
-Message-ID: <20260615120324.1527881-3-josh.milas@gmail.com>
+Subject: [PATCH v6 3/3] riscv64: dts: sophgo: add initial Milk-V Duo S board support
+Date: Mon, 15 Jun 2026 08:03:24 -0400
+Message-ID: <20260615120324.1527881-4-josh.milas@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260615120324.1527881-1-josh.milas@gmail.com>
 References: <20260615120324.1527881-1-josh.milas@gmail.com>
@@ -92,75 +92,281 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adds sg2000.dtsi on the RISCV side.
+This adds initial riscv support for the Milk-V Duo S board
+[1] making it possible to boot Linux to the command line.
+
+Link: https://milkv.io/duo-s [1]
 
 Signed-off-by: Joshua Milas <josh.milas@gmail.com>
-Tested-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
 ---
- arch/riscv/boot/dts/sophgo/sg2000.dtsi | 53 ++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000.dtsi
+ arch/riscv/boot/dts/sophgo/Makefile           |   1 +
+ .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 245 ++++++++++++++++++
+ 2 files changed, 246 insertions(+)
+ create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2000.dtsi b/arch/riscv/boot/dts/sophgo/sg2000.dtsi
+diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
+index 6f65526d4193..58cc6b70d8de 100644
+--- a/arch/riscv/boot/dts/sophgo/Makefile
++++ b/arch/riscv/boot/dts/sophgo/Makefile
+@@ -1,6 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
++dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
+diff --git a/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
 new file mode 100644
-index 000000000000..38462769574f
+index 000000000000..f56bfddeacc4
 --- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2000.dtsi
-@@ -0,0 +1,53 @@
++++ b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+@@ -0,0 +1,245 @@
 +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
 +
-+#define SOC_PERIPHERAL_IRQ(nr)	((nr) + 16)
++/dts-v1/;
 +
-+#include <dt-bindings/interrupt-controller/irq.h>
 +#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
-+#include "cv180x-cpus.dtsi"
-+#include "cv180x.dtsi"
-+#include "cv181x.dtsi"
++#include "sg2000.dtsi"
 +
 +/ {
-+	compatible = "sophgo,sg2000";
++	model = "Milk-V Duo S";
++	compatible = "milkv,duo-s", "sophgo,sg2000";
 +
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x20000000>;
++	aliases {
++		i2c4 = &i2c4;
++		mmc0 = &sdhci0;
++		mmc1 = &emmc;
++		mmc2 = &sdhci1;
++		serial0 = &uart0;
++		serial4 = &uart4;
 +	};
 +
-+	soc {
-+		interrupt-parent = <&plic>;
-+		dma-noncoherent;
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
 +
-+		pinctrl: pinctrl@3001000 {
-+			compatible = "sophgo,sg2000-pinctrl";
-+			reg = <0x03001000 0x1000>,
-+			      <0x05027000 0x1000>;
-+			reg-names = "sys", "rtc";
++	wifi_pwrseq: wifi-pwrseq {
++		compatible = "mmc-pwrseq-simple";
++		reset-gpios = <&porta 15 GPIO_ACTIVE_LOW>;
++		power-off-delay-us = <50000>;
++		post-power-on-delay-ms = <200>;
++	};
++};
++
++&osc {
++	clock-frequency = <25000000>;
++};
++
++&pinctrl {
++	emmc_cfg: emmc-cfg {
++		emmc-rstn-pins {
++			pinmux = <PINMUX(PIN_EMMC_RSTN, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
 +		};
 +
-+		clk: clock-controller@3002000 {
-+			compatible = "sophgo,sg2000-clk";
-+			reg = <0x03002000 0x1000>;
-+			clocks = <&osc>;
-+			#clock-cells = <1>;
++		emmc-clk-pins {
++			pinmux = <PINMUX(PIN_EMMC_CLK, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
 +		};
 +
-+		plic: interrupt-controller@70000000 {
-+			compatible = "sophgo,sg2000-plic", "thead,c900-plic";
-+			reg = <0x70000000 0x4000000>;
-+			interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
-+			interrupt-controller;
-+			#address-cells = <0>;
-+			#interrupt-cells = <2>;
-+			riscv,ndev = <101>;
++		emmc-cmd-pins {
++			pinmux = <PINMUX(PIN_EMMC_CMD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
 +		};
 +
-+		clint: timer@74000000 {
-+			compatible = "sophgo,sg2000-clint", "thead,c900-clint";
-+			reg = <0x74000000 0x10000>;
-+			interrupts-extended = <&cpu0_intc 3>, <&cpu0_intc 7>;
++		emmc-data-pins {
++			pinmux = <PINMUX(PIN_EMMC_DAT0, 0)>,
++				 <PINMUX(PIN_EMMC_DAT1, 0)>,
++				 <PINMUX(PIN_EMMC_DAT2, 0)>,
++				 <PINMUX(PIN_EMMC_DAT3, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++	};
++
++	i2c4_cfg: i2c4-cfg {
++		i2c4-pins {
++			pinmux = <PINMUX(PIN_VIVO_D1, 7)>,
++				 <PINMUX(PIN_VIVO_D0, 7)>;
++			bias-pull-up;
++			drive-strength-microamp = <4000>;
++			power-source = <1800>;
++		};
++	};
++
++	sdhci0_cfg: sdhci0-cfg {
++		sdhci0-cd-pins {
++			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		sdhci0-clk-pins {
++			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <16100>;
++			power-source = <3300>;
++		};
++
++		sdhci0-cmd-pins {
++			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		sdhci0-data-pins {
++			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
++				 <PINMUX(PIN_SD0_D1, 0)>,
++				 <PINMUX(PIN_SD0_D2, 0)>,
++				 <PINMUX(PIN_SD0_D3, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++	};
++
++	sdhci1_cfg: sdhci1-cfg {
++		sdhci1-clk-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXM4, 1)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		sdhci1-cmd-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXP4, 1)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		sdhci1-data-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXM3, 1)>,
++				 <PINMUX(PIN_MIPI_TXP3, 1)>,
++				 <PINMUX(PIN_MIPI_TXM2, 7)>,
++				 <PINMUX(PIN_MIPI_TXP2, 7)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++	};
++
++	uart0_cfg: uart0-cfg {
++		uart0-pins {
++			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
++				 <PINMUX(PIN_UART0_RX, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++	};
++
++	uart4_cfg: uart4-cfg {
++		uart4-data-pins {
++			pinmux = <PINMUX(PIN_UART2_TX, 5)>,
++				 <PINMUX(PIN_UART2_RX, 5)>;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		uart4-control-pins {
++			pinmux = <PINMUX(PIN_UART2_CTS, 5)>,
++				 <PINMUX(PIN_UART2_RTS, 5)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
 +		};
 +	};
 +};
++
++&dmac {
++	status = "okay";
++};
++
++&emmc {
++	bus-width = <4>;
++	no-1-8-v;
++	cap-mmc-hw-reset;
++	no-sd;
++	no-sdio;
++	non-removable;
++	pinctrl-0 = <&emmc_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&gmac0 {
++	status = "okay";
++};
++
++&i2c4 {
++	pinctrl-0 = <&i2c4_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&mdio {
++	status = "okay";
++};
++
++&saradc {
++	status = "okay";
++};
++
++&sdhci0 {
++	bus-width = <4>;
++	disable-wp;
++	no-1-8-v;
++	pinctrl-0 = <&sdhci0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&sdhci1 {
++	bus-width = <4>;
++	cap-sdio-irq;
++	cap-sd-highspeed;
++	keep-power-in-suspend;
++	no-mmc;
++	no-sd;
++	non-removable;
++	max-frequency = <150000000>;
++	mmc-pwrseq = <&wifi_pwrseq>;
++	pinctrl-0 = <&sdhci1_cfg>;
++	pinctrl-names = "default";
++	sd-uhs-sdr50;
++	sd-uhs-sdr104;
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-0 = <&uart0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&uart4 {
++	pinctrl-0 = <&uart4_cfg>;
++	pinctrl-names = "default";
++	uart-has-rtscts;
++	status = "okay";
++};
++
++&usb {
++	dr_mode = "host";
++	status = "okay";
++};
++
 -- 
 2.54.0
 
