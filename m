@@ -1,61 +1,63 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3937A3E558A
-	for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 12:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BFD3E5ECF
+	for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 12:04:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781525040; cv=none; b=rsIDLSgIEAm2qrsNQJqGtXefDJWOpCG0FIBSIg2x3RatmgIgHwVtIpNL9Us5xxTyqG58q5aOXvVOHWDP3xJAPXL2K3j+V7rPfpiSw+ggz3oADmTOmlq9HGcEUjZq4biBMnaK458fnuw4AE/Z/0+0KNQJgAcZHOrwpB+i1ZEn1pU=
+	t=1781525043; cv=none; b=AJEC+oMcLcfxC4dkjiaZwUQ0y6LM1kKkl0dxv86FxZQHK8TYw0kDodMM5x1PeWfuXTcYcWfRpRE5jFy+eXrDMUTZGHAFnmnM00qBlPijkIoQ3WL2GrGVViqkl1ctnvR/sPltPmcfgjCjt5DWWB1E+SObnhtUEe+O2i2Rz0s3erA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781525040; c=relaxed/simple;
-	bh=q8hyA2uw+AulAXMplBR2AFo1kCx+r49U7bh2hgrXIiw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hMWqAt+beD8IHropqBYStYdwbKUavmLhliwpjsuTTFydlV5bT3IAnBhgCxucWzow1oVag/7t5onRme/hK58mq6y45mU8ABPrf3gY9G80NBmASoPgF6L1y3Mn1pk7QD/NkhKoTeXIHdC+PTgViZufwZjd9SKxKkSy3sCRwl6KdeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HUFpcH7c; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1781525043; c=relaxed/simple;
+	bh=Ft08IgUXh4oNU8ppJ65OFIwc+1F6KgXGqX4eecDpO14=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QS5BttIQY0liXr2YcwwdpTuatSW4lxZEZ8Q3c2FH1BZAAc6+UUyoM6GGCJPMnjPTL6ylACrosllSMPgGlA53kKTvAvtCe24YyXb+1S+oDUPKFVW/uJd7gXmbjaIpVODBf/JGtTSkL381UzLb5pC57Ml+eAo9PkFCVIoDsraxJ/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZrILFBrS; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUFpcH7c"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-8ccf181a52bso35944066d6.3
-        for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 05:03:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZrILFBrS"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-915d64fead9so434546985a.0
+        for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 05:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781525038; x=1782129838; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HVy9GUueUnFuoBBRJmJSO6EMQLHH087G7ntPfjHp8FQ=;
-        b=HUFpcH7cXsKICZ7U5W6NyHAuVxXSjSI7o88xjJ9Owz+jMD6vV9sgbB4Jedmu4qPhPs
-         OgrTr0rjkIuoK0Da/akr6xRgXpB0coa9+LbeV7JGs77ex8YNtQK1onLSFeR5kQs3ytQA
-         cJ7Oju+PAtlpBDUobyAfWp1fDey3RJTxUlkB3WRtvRCnfIncU3o3ccs+5VhZEF0hZXjV
-         6uWsfnTU2oEQip8C9L6rb3F3+QQpMLe5NPZcxr+irjbGo0YlRudyVavFOtqI/vDtPQl5
-         2qnPXsvo7l1lpmdJc7rX78u7yK7/nkSnquHfRQJ6vJZpRCffjb47dWgsa0PjyRuKPGkS
-         FIpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781525038; x=1782129838;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1781525040; x=1782129840; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HVy9GUueUnFuoBBRJmJSO6EMQLHH087G7ntPfjHp8FQ=;
-        b=aG3UhUa2tgubJIxemaKBxGNVQz6wnVPireuCw3ufAk+YTpgeUhy1PsoaQlSpnPK170
-         MuE1gxGs4+uQLmm0yNc6Z0fO6t5/Y4ifPoGitiDPTlEiuMzV8IqcHXnCivAcNhO5H+EE
-         MkSZnzp2AYqTadUMz7+4mtgw+/htlz6vcRDHQreQM1aguPuPFTxewjJ/YrePPdzDhZAC
-         tisVv+/x9nSLN5l1jsSH67zzcDhcVhC5u/iFUhdvkeNe61J89XzcWTP1/6KnuxidzYhJ
-         aoaz62a8ygzK4kBPsLPe7Lbae8de1x3gty1vw4QKm3eEh0wnaNu8aOTNH8C60tL0a3zG
-         rcOQ==
-X-Forwarded-Encrypted: i=1; AFNElJ+jcvW/5ozqTCVGpUXew2m1uOzs27vxVKPvVBML/2xlz+vZVd+1Hr0mONWpXzjqx+xB66qgXXU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyiDpRjEe4fqlfSeaVWLC8U5m3d7S8cjr6G/fX/v1HAsSnnE52Y
-	VIFHix66CUg/tO5vNockBTUav/9c5lErvhjzOMfve87ZYltMMAfwkpX+
-X-Gm-Gg: Acq92OF01GcyKn/hl2QJbKFphP8DsmmbjVL89SKIL170S4Y/1NBNNXkCrwXG2Vw73UG
-	E/2uiEruVWObj+oj7boBRd6mTLvHfTj6bYFgE2HDMHp3TujsfI1jOaRMQIpAG1B6bmYRbPPiHQt
-	NlCNBqBHSsuMjDRUIuhqZ2ToyxTjAjUZOQCaApbn/s5G7MDHq51NrW+MqzvA5Ff3QeIzCVK/9wb
-	n0oRpTLTfRvbHShWlBjGM8lOnL8/8erGT6kZd1h2RusUxgY4NXhKzdZacyvAFTz8O7XXsT0gW6Z
-	lPk6ifLp4LgEGsv0Ar8jbNxgdX/V12pHz/xIfI1hGR1YLabh49mQ4XiBKb/YPO70VQISN+xIiKQ
-	vOaeYbXc4RqgEmTJTnpesk6V1nkA9z5VxuzWnaIJJJb2Sy8KFuDoweep7NXSvLvl8ytoTC9PpO2
-	CioaN/9dhrRutLtfLFxrPhV/QJV5E3domuYPj6lTEDqEiH55Bk6CxPERnF
-X-Received: by 2002:a05:622a:e14e:20b0:517:71d2:37d2 with SMTP id d75a77b69052e-518e47232a5mr108016231cf.0.1781525037993;
-        Mon, 15 Jun 2026 05:03:57 -0700 (PDT)
+        bh=rLsSPyO0xdRuHjYZ1xItpqNCAh/cCNAbIOIeLrTOYo8=;
+        b=ZrILFBrS0LC9qihGOQXpIhAwMOMMTgn2xjXpSvdIU68ABoSN24exoHeQAGfZaN1w9R
+         6hxqOCMnIJji6La9/Esaj/ktY32VsowKtFtrGgZ2NbkrAx9Kca4q24XmQO8k3rBISW19
+         oerxgAcBAo5OsbrzvlyHAIcKQMPWbPxUJ0blbd5+N1LCmpwC/nSQFa6m2zkSTzPREY0j
+         xzXXf7la6kVLUPj95N2AAHudhG/3j9bEmC9iaghPwKbZ7SaZNzVl+jYcobpg5iSiXDEJ
+         2qsUN7Ae5Utl69MnaRDau/ymGZA2smihrTybCxhZV8BuU7BiQK5wJzMMKtvfIeDwA54e
+         XTGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1781525040; x=1782129840;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rLsSPyO0xdRuHjYZ1xItpqNCAh/cCNAbIOIeLrTOYo8=;
+        b=OJYGP0It9BqTUsRVd6Endnq08b89T7E8wRTzDqesk6bZMCa4dBxNAVVqwcwCj7F9kF
+         2HVohMULWDS5SDSU0wJjhChKwdBSPL12gmxEnEbagrDvX4cXT09cqv8q0DoLCHh3a3PW
+         viK1RR4mqLU8casJbo9W4qjArB9GGssmd+ngrZaac8rR6j7QlQqjuqJNjY3yvevotI/P
+         7gd6Hi65ObRTiz0bMJzFepQxsd+LKt7irDJcDFNUq/UYg1UotRKJ7iWLXJM4MAy6mPtx
+         UFnM2sC0VYwQLM+O13iKP59B4YV4+NMVbyqs2cFvP5edNlaqUC975irxwfaUke3Dp1qN
+         IIsQ==
+X-Forwarded-Encrypted: i=1; AFNElJ8dcjok0KZO/U2YsJXFc+bkOneqkPFSva4pRCHlS+r4WCvPC1FMoKAx9dkpOtGOznyHJ+7im9g=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yws0ZSZTNQADlo7ysWAjgHI4UN1m+/9Uc1ZPFGaxLKpjk8xWUrt
+	yVP3XIS0O5r90okbioA4X3R/vMwbO415Ku9vaSXSCMEBE3IRQLscTp6g
+X-Gm-Gg: Acq92OEyJYcXX2kEbTS7VjKcksZsmLtj8r2s4ozPrSB2A5fN1/R4PvINzWUiOanESMm
+	KfkO6DBNwTLfXngHRGHoV+nppg0kao1Z36+UtkxllUwtX3GnXJIRsaqzjwvlTaUDKASzXbGxHH+
+	rZZCbkDOFKsQh2ELo2hvzjOg6rpk/zbqKwYcXg4YubUeisemYyN8phNqrTHwATtAzocYRNc/41e
+	XReRujg7neIdmDAm1WBytGErnOdemTu0ZkTI7HznwDpNgNtyE5UZ/S0Xe5vlhEQeJw/BfVsFjto
+	5vaZw5pjItz0tFaU27WBCPfbR2CJtvk4ouyyLE5TiZgXrfj36E/RPzDr/nY7vZAO3zglRlUD3D2
+	R5HuW/B1xKgyx8yjxDNQEJrRBuob08xxE38lBnWCjiyCz3eZA3WRzAgigob8SW7sYK5IshCh/8C
+	sP38Xol6Cs2xiMk0VcK5GUTJPr/lCJsAwH8GiiM0tW09VGbiUBGe3vVfxo
+X-Received: by 2002:a05:622a:1e92:b0:513:e686:b361 with SMTP id d75a77b69052e-517fed37c66mr172462931cf.2.1781525040526;
+        Mon, 15 Jun 2026 05:04:00 -0700 (PDT)
 Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51975955956sm25184311cf.17.2026.06.15.05.03.55
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51975955956sm25184311cf.17.2026.06.15.05.03.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 05:03:57 -0700 (PDT)
+        Mon, 15 Jun 2026 05:04:00 -0700 (PDT)
 From: Joshua Milas <josh.milas@gmail.com>
 To: robh@kernel.org,
 	krzk+dt@kernel.org,
@@ -76,10 +78,12 @@ Cc: josh.milas@gmail.com,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev,
 	michael.opdenacker@rootcommit.com
-Subject: [PATCH v6 0/3] Add initial Milk-V Duo S board support
-Date: Mon, 15 Jun 2026 08:03:21 -0400
-Message-ID: <20260615120324.1527881-1-josh.milas@gmail.com>
+Subject: [PATCH v6 1/3] arm64: dts: sophgo: add initial Milk-V Duo S board support
+Date: Mon, 15 Jun 2026 08:03:22 -0400
+Message-ID: <20260615120324.1527881-2-josh.milas@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260615120324.1527881-1-josh.milas@gmail.com>
+References: <20260615120324.1527881-1-josh.milas@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -88,75 +92,277 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This adds an initial device tree for the Milk-V Duo S board
-with support for reading from the SD card and network over
-Ethernet. This is continued work from Michael Opdenacker's
-v6 series [1] on the ARM64 and RISCV side. It has been tested
-with ARM64 and RISCV64 to boot from an SD card, have networking
-from ethernet, enumerate the wifi chip, have bluetooth, and can 
-read a I2C slave device over i2c4.
+Adds initial arm64 support for the Milk-V Duo S board
+[1] making it possible to boot Linux to the command line.
 
+Link: https://milkv.io/duo-s [1]
+
+Signed-off-by: Joshua Milas <josh.milas@gmail.com>
 ---
-
-v6
-- Patches 1,3 from v5 were applied
-- Rebased to latest sophgo/for-next 
-- Added mmc1, mmc2, serial4 aliases
-- Removed spi3 alias and node as it was conflicting with sdhci1/wifi
-- Added wifi_pwrseq node for wifi chip
-- Added pinctrl configs for enabled devices
-- Reordered &sdhci0 properties
-- Updated &sdhci1 node properties for wifi chip
-- Added uart4 for bluetooth
-- Changed memory from 256 MB to 512 MB on riscv side
-
-v5: https://lore.kernel.org/sophgo/20260403111516.379795-1-josh.milas@gmail.com/
-- Fixes spaces at beginning of line in &usb node of DTS
-
-v4: https://lore.kernel.org/sophgo/20260328173450.219664-2-josh.milas@gmail.com/
-- Rebased to latest sophogo/for-next
-- Added usb node to arm64 and riscv DTS
-- Removed sg200x link in commit messages
-- Added missing change to v3 and removed link from v2
-
-v3: https://lore.kernel.org/sophgo/20251029001052.36774-1-josh.milas@gmail.com/
-- Added sg2000 interrupt controller and timer to documentation
-- Added sg2000.dtsi for RISCV and moved DTS over to use it
-- remove devices from DTS's to match what is available in the
-  default pinmux config. spi0-2, i2c0-3, uart1-4
-- Added i2c4 and spi3 aliases
-- Removed milkv,duo-s from sophgo,cv1812h in documentation
-
-v2: https://lore.kernel.org/sophgo/20251011014811.28521-1-josh.milas@gmail.com/
-- Made new entry in docs to avoid DTC error
-- "Milk-V DuoS" -> "Milk-V Duo S"
-- Sorting of aliases
-- Added uart*, emmc, mdio, gmac0, i2c*, spi*, dmac, saradc
-  to device tree matching what is available on the pinout
-- Removal of 'no-mmc' and 'no-sdio' for sdhci0 as it works without
-- Added riscv device tree
-
-v1: https://lore.kernel.org/sophgo/20250927173619.89768-1-josh.milas@gmail.com/
-
-Link: https://lore.kernel.org/linux-riscv/20240421055710.143617-1-michael.opdenacker@bootlin.com/ [1]
-
-Joshua Milas (3):
-  arm64: dts: sophgo: add initial Milk-V Duo S board support
-  riscv64: dts: sophgo: add SG2000 dtsi
-  riscv64: dts: sophgo: add initial Milk-V Duo S board support
-
  arch/arm64/boot/dts/sophgo/Makefile           |   1 +
  .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 245 ++++++++++++++++++
- arch/riscv/boot/dts/sophgo/Makefile           |   1 +
- .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 245 ++++++++++++++++++
- arch/riscv/boot/dts/sophgo/sg2000.dtsi        |  53 ++++
- 5 files changed, 545 insertions(+)
+ 2 files changed, 246 insertions(+)
  create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000.dtsi
 
-
-base-commit: f7337210bede62fc7c6230ef58013dddf7e0a921
+diff --git a/arch/arm64/boot/dts/sophgo/Makefile b/arch/arm64/boot/dts/sophgo/Makefile
+index 94f52cd7d994..68aace728223 100644
+--- a/arch/arm64/boot/dts/sophgo/Makefile
++++ b/arch/arm64/boot/dts/sophgo/Makefile
+@@ -1,2 +1,3 @@
+ # SPDX-License-Identifier: GPL-2.0
+ dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-module-01-evb.dtb
++dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
+diff --git a/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+new file mode 100644
+index 000000000000..f56bfddeacc4
+--- /dev/null
++++ b/arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+@@ -0,0 +1,245 @@
++// SPDX-License-Identifier: (GPL-2.0 OR MIT)
++
++/dts-v1/;
++
++#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
++#include "sg2000.dtsi"
++
++/ {
++	model = "Milk-V Duo S";
++	compatible = "milkv,duo-s", "sophgo,sg2000";
++
++	aliases {
++		i2c4 = &i2c4;
++		mmc0 = &sdhci0;
++		mmc1 = &emmc;
++		mmc2 = &sdhci1;
++		serial0 = &uart0;
++		serial4 = &uart4;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	wifi_pwrseq: wifi-pwrseq {
++		compatible = "mmc-pwrseq-simple";
++		reset-gpios = <&porta 15 GPIO_ACTIVE_LOW>;
++		power-off-delay-us = <50000>;
++		post-power-on-delay-ms = <200>;
++	};
++};
++
++&osc {
++	clock-frequency = <25000000>;
++};
++
++&pinctrl {
++	emmc_cfg: emmc-cfg {
++		emmc-rstn-pins {
++			pinmux = <PINMUX(PIN_EMMC_RSTN, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		emmc-clk-pins {
++			pinmux = <PINMUX(PIN_EMMC_CLK, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		emmc-cmd-pins {
++			pinmux = <PINMUX(PIN_EMMC_CMD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		emmc-data-pins {
++			pinmux = <PINMUX(PIN_EMMC_DAT0, 0)>,
++				 <PINMUX(PIN_EMMC_DAT1, 0)>,
++				 <PINMUX(PIN_EMMC_DAT2, 0)>,
++				 <PINMUX(PIN_EMMC_DAT3, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++	};
++
++	i2c4_cfg: i2c4-cfg {
++		i2c4-pins {
++			pinmux = <PINMUX(PIN_VIVO_D1, 7)>,
++				 <PINMUX(PIN_VIVO_D0, 7)>;
++			bias-pull-up;
++			drive-strength-microamp = <4000>;
++			power-source = <1800>;
++		};
++	};
++
++	sdhci0_cfg: sdhci0-cfg {
++		sdhci0-cd-pins {
++			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		sdhci0-clk-pins {
++			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <16100>;
++			power-source = <3300>;
++		};
++
++		sdhci0-cmd-pins {
++			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		sdhci0-data-pins {
++			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
++				 <PINMUX(PIN_SD0_D1, 0)>,
++				 <PINMUX(PIN_SD0_D2, 0)>,
++				 <PINMUX(PIN_SD0_D3, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++	};
++
++	sdhci1_cfg: sdhci1-cfg {
++		sdhci1-clk-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXM4, 1)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		sdhci1-cmd-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXP4, 1)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++
++		sdhci1-data-pins {
++			pinmux = <PINMUX(PIN_MIPI_TXM3, 1)>,
++				 <PINMUX(PIN_MIPI_TXP3, 1)>,
++				 <PINMUX(PIN_MIPI_TXM2, 7)>,
++				 <PINMUX(PIN_MIPI_TXP2, 7)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <1800>;
++		};
++	};
++
++	uart0_cfg: uart0-cfg {
++		uart0-pins {
++			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
++				 <PINMUX(PIN_UART0_RX, 0)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++	};
++
++	uart4_cfg: uart4-cfg {
++		uart4-data-pins {
++			pinmux = <PINMUX(PIN_UART2_TX, 5)>,
++				 <PINMUX(PIN_UART2_RX, 5)>;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++
++		uart4-control-pins {
++			pinmux = <PINMUX(PIN_UART2_CTS, 5)>,
++				 <PINMUX(PIN_UART2_RTS, 5)>;
++			bias-pull-up;
++			drive-strength-microamp = <10800>;
++			power-source = <3300>;
++		};
++	};
++};
++
++&dmac {
++	status = "okay";
++};
++
++&emmc {
++	bus-width = <4>;
++	no-1-8-v;
++	cap-mmc-hw-reset;
++	no-sd;
++	no-sdio;
++	non-removable;
++	pinctrl-0 = <&emmc_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&gmac0 {
++	status = "okay";
++};
++
++&i2c4 {
++	pinctrl-0 = <&i2c4_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&mdio {
++	status = "okay";
++};
++
++&saradc {
++	status = "okay";
++};
++
++&sdhci0 {
++	bus-width = <4>;
++	disable-wp;
++	no-1-8-v;
++	pinctrl-0 = <&sdhci0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&sdhci1 {
++	bus-width = <4>;
++	cap-sdio-irq;
++	cap-sd-highspeed;
++	keep-power-in-suspend;
++	no-mmc;
++	no-sd;
++	non-removable;
++	max-frequency = <150000000>;
++	mmc-pwrseq = <&wifi_pwrseq>;
++	pinctrl-0 = <&sdhci1_cfg>;
++	pinctrl-names = "default";
++	sd-uhs-sdr50;
++	sd-uhs-sdr104;
++	status = "okay";
++};
++
++&uart0 {
++	pinctrl-0 = <&uart0_cfg>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&uart4 {
++	pinctrl-0 = <&uart4_cfg>;
++	pinctrl-names = "default";
++	uart-has-rtscts;
++	status = "okay";
++};
++
++&usb {
++	dr_mode = "host";
++	status = "okay";
++};
++
 -- 
 2.54.0
 
