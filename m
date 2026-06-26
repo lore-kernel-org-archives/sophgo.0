@@ -1,372 +1,300 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D615E3E6DDD
-	for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 12:04:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CBD3DA7F2
+	for <sophgo@lists.linux.dev>; Fri, 26 Jun 2026 08:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1781525058; cv=none; b=Yelber7yUF6k6/qAM3e8PIfhi2+KhnLDZBgcg2WnFSSJqptyMANJuDr879wKLTIvSlmMY0jZB0doRdmqOYAohuq8Tb/y9tC9piEP/WPzivOtgE26Mim+vaAy/x/QXJ4sfrxXfFxtADKzb/ti6mMqpHJtQihyaUjiibAOYH8KhKw=
+	t=1782463337; cv=none; b=bnw5epjvvHJA/wbZquFksL2gQgxR7melsQL5sfLmb+iuCxDiRb8RTShhu2sSXIr6RB7b/Z6sEgxrBDepU+6YYlZtBT4oEe14KMnA1jMjARnqVRwef+AX2fyWbid/IeywM7I26Xa7jz6Fu5FF35dQ+doPVh/5uCzI7VMBjPWqS70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1781525058; c=relaxed/simple;
-	bh=44TbCxTVIe/FzBA8wmIEoz6YwN5izDWzxpNkbmfbrho=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tXaQypg5CUObqebAwebS4l7ODmzdH2s4qImKWtB04OJhUsSqoQW5K3X2Y+07DbSZ6zAQDAvJLhKtQ3/QkzVh6rrvCOJHF3g65uuTEZSKV07L2+rPz5LkuedoPxLXgzQThwnSU4V3rDbS+xIkAnuqfz2ytmTmCfmWRX3voyOwJl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jCy4zem2; arc=none smtp.client-ip=209.85.160.179
+	s=arc-20240116; t=1782463337; c=relaxed/simple;
+	bh=vcUvLC6avRDTrJZEGsIvosWZLLA5HorAUzlVan0sQ3w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oDv+mxNgLr101zVZ2yxlG6rmGo3zPw0JhVeEXkq+fn8r0h2VCE+wst2Yc66lR8FiZ5aIl4O3/nbsaW7VJ9oF4kdl7oqAot3EM+kz1h4dwsj1ASKIYatt/jC6zTjfuW9KuzuLk1EXECuBJIx04KeoRd/cLZp3Htm3q7UHCKDvDRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TIqkH91e; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jCy4zem2"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-517654b8e28so22620661cf.3
-        for <sophgo@lists.linux.dev>; Mon, 15 Jun 2026 05:04:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TIqkH91e"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-c88eb5e7713so244854a12.1
+        for <sophgo@lists.linux.dev>; Fri, 26 Jun 2026 01:42:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1781525056; x=1782129856; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VaaLk3EgsloTd17mTIl3bCyAeJenYIahR3avArgMblQ=;
-        b=jCy4zem2JU4BkMb/OpqArDLyndxnLYcIG3FgzhcSiU/FvzkmSb6j02G3e4B1gCv+3y
-         ddK4RUUTe4j1wRzjialKt4vW+3jPeEJ0rGbG7XnVTl336rVyNYp0RCNUHFLTjxO+w0JH
-         BrEVEjM2Ykda/aCg8VpqUQH/lygsrDoI5RV5ciRobore1bcDuuewKMIDyNvQA2t+D59I
-         awmq/SN5Aq4+FR9tdi5YAezLg/zAUAJfzC6QfqKtD1EOgIxBvFHtInq2Tm6CvYXdumjs
-         Es+VcYNL5yWLAicJ7ohhLv+SIQznjbRmFhu1ytt8bdDvsT6Bi9G2eKhRFSTvWTFsvMHM
-         eD/A==
+        d=gmail.com; s=20251104; t=1782463334; x=1783068134; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JsvSBjnG06bUFbh9b1fjdG1LZreCknqQFnMC8kjK6/8=;
+        b=TIqkH91em9cpJO7pn5DwcBPK1tRmhJMtjCHnzVMpej4aQ73l9arv3FdxfjeNpe/7o/
+         3cq9/32OBmr6SCRSKfBbUa5Y5vMRxAJIsNLYRa3mbM52+XjDfz6ih5qCtbgL6zhYwA+A
+         ayz9PwlMi2ApDg3P/gDXCzrVCKCCfkwKM4eayl8aKT6E/xYhdYBu9WJt6HUgUHHaL1KF
+         Rfl1TaVt9lqjj34mf58EpgdoAjXA0B17e9/rDT7Hv21qmIP7FRo4Qn6ye6vT5GKzXEvV
+         NtOoq4SRMxheX2lG33U9qSEJOUm75Q6dd1jUk7b1kCiMKEhEEubNLsztxlVRdoXs44No
+         jqzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1781525056; x=1782129856;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=VaaLk3EgsloTd17mTIl3bCyAeJenYIahR3avArgMblQ=;
-        b=k7oP+de9RN1bJN/5AeZ09Ce0C4iS7ib03uhlleS1Wq9PsmDmZMJoTW20od1bltN79D
-         MNdbHnUyUtwXJno4NZfu8acRF4teNae4hS9jqqyUCjzSVIllCxMRs0P65U2vCBUlGsbF
-         0FUCSmFo5NkJioDHmfPQ+Kc2Bezxlql+qZI4/CJ0d1fb89R+Q8JjbpJyTWDXqOzofCZD
-         daGBOwZCEUSTFCs3FJTB5Ukr0yoQWOeqHe+TdwiVjXq3VlE248rTcoUaBXp/JtASmf46
-         mVLyUAZcDdBchII+Fz5lcEFWTftfwHxG1AfskkTSqiFppbqZtnDJ2g0Fxe6dx25Fg8NE
-         Z2Ng==
-X-Forwarded-Encrypted: i=1; AFNElJ9TM4PYYfOAdQeSF0WcTYP35H8T1i3Kv14EA6CwT3M/7a/n6sY5Pbk54Q9evpD77EGmgHOb3aM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YxU3KY2/tfxtK/JvACw2Vsujkg2+fd/F5SjX8F4wvB3NWX7IZ6M
-	lU4wzCfaxNEDbDzdg9jIwEslNeJkfYaYAtwjKYJG4gOho4yZbVJdhOU0
-X-Gm-Gg: Acq92OF+NV1KgYjmEXRi3QizaJxR2HcP3Ncb/Lk3TVizN+KyOglX901/G5YRf+OXwjc
-	WAT7DMOtM5lRTy/MaTek9KiLlaskTQIF7VhBsJFQ7nX6H5gVOU+5lSY/Ra6aRLyjlQxAIqP89Vp
-	7zG/YvUha845wdTYi33miVCaEjkU5DG9Tkyss0YDZ1Nq2Dq1chsMWknpVzrt3hll4RJf+sE0OLw
-	caRKlYIEIg2PeomCYWShxXrkqUhacMTmxDsekD6LDRk45nehtsAc0l5EuWvC00/83nPpW4NAHP6
-	rh8uhjrc8AIig+xdQfei+SMHwQ8RINTIDAkURxmSPD5tymcJ97sjXXhsuqUHKmrRAyzjbQI2Kjp
-	phMXXlcYbZPvfW0iY+Q+EPWuIqFz87dVMmxQTRQs/tUwsuIndtFrPb9PVpWikIbkaOIjHaBC+Uz
-	LITu5AjUfeae+INyqzN4YOm8OKn/vD7QyA27j879b1kvXvC/2SKQU0aGNr
-X-Received: by 2002:a05:622a:229f:b0:517:8242:5bc1 with SMTP id d75a77b69052e-517fe200008mr205748761cf.15.1781525055524;
-        Mon, 15 Jun 2026 05:04:15 -0700 (PDT)
-Received: from sleek (d-23-244-200-70.nh.cpe.atlanticbb.net. [23.244.200.70])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-51975955956sm25184311cf.17.2026.06.15.05.04.14
+        d=1e100.net; s=20251104; t=1782463334; x=1783068134;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JsvSBjnG06bUFbh9b1fjdG1LZreCknqQFnMC8kjK6/8=;
+        b=SfwxCQGGXbRS5ETzetdtzMDLo57zKpOAT3kX8Qz122FVSC0dUPXx1n1LCmY80LUIJE
+         VCHYW2oBdu47XmSzGtxZDH3e9oPDTWeyiYYMpbnTsPu6UKsuJqEKSGoZ2n+/QPA/FCqS
+         PgkVIiWkrUWBdlmBpKWlX5q10NRTdRB+89wm2vr9pzrchrKaohf97flZ+nz2SfhQfkuj
+         vZnErsiKL3CAIme2U+qngOGdw6Mzxjtfy4OPmhm6E7h5IubszHQ03PWhNa6AQHQCz7oW
+         5Yv4+NU9CvauivYZEdb0CY3z+4um9lxjvzQwW3X4ekRApVGWyhbfgZaCjmQMJohqOcni
+         8XIg==
+X-Forwarded-Encrypted: i=1; AFNElJ+BOelahrnvwNJAdrUOnWqFhog2pYwjCn3eU9yi1azOkihgTraAfFXFus329t+TEoUMlLkdLjk=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy7Rb9jfitdNAnQDx2f+htjLjRxijdewdpHs0SKrNnowE7KrfTJ
+	Y9Rz7RmZXg1EeBl7KNtYvRy2QYnpRG8tD8v1MelF0adMkQ1Vpy6yqfUp
+X-Gm-Gg: AfdE7ck4QLbDauxTcBtZ0ZYjI9mjSfRW4o4ti5jtq5gAi0hRTz+bOPi77nd0qKZycF2
+	BYLT3NF2vWlkjvM7nHzA2enwTT68f4x+C0qWE7xc0RnokzarDldX1dw+leDgKvua5uPpPIoeK8O
+	Vbx9N1UxEzZuI6E+WXKBcUptigKLeYnOTKNqv0LbVPjIUDH977RJPETKU20jN/qgIYVNoe8m+/B
+	mNzabJYp95xVJc7kRb1ChOjbyuqUOdjkM01jfYAUmqc5az+oBggd+71yHNHteb2Ah6zrXuVziY1
+	ZTCaBkMDIVlyThf9rtJd78XLxSFAhh1v0iTp5qJ5UnvsvXMOaUAqSAwyi0iVG9IKxmqkE7pV+7j
+	DzO0Fwa2GtLYJrrarX9vHzKU9gFpbFf2ySOekp8FNIIdCANvlJwCYYP68SUVl2vGn
+X-Received: by 2002:a05:6a20:9397:b0:3b7:8027:dfeb with SMTP id adf61e73a8af0-3bd4aec7163mr7059290637.22.1782463334219;
+        Fri, 26 Jun 2026 01:42:14 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c92b96eccf8sm3107580a12.3.2026.06.26.01.42.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Jun 2026 05:04:15 -0700 (PDT)
-From: Joshua Milas <josh.milas@gmail.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	chen.wang@linux.dev,
-	inochiama@gmail.com,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	liujingqi@lanxincomputing.com,
-	alexander.sverdlin@gmail.com,
-	rabenda.cn@gmail.com,
-	hanguidong02@gmail.com
-Cc: josh.milas@gmail.com,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	michael.opdenacker@rootcommit.com
-Subject: [PATCH v6 3/3] riscv64: dts: sophgo: add initial Milk-V Duo S board support
-Date: Mon, 15 Jun 2026 08:03:24 -0400
-Message-ID: <20260615120324.1527881-4-josh.milas@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260615120324.1527881-1-josh.milas@gmail.com>
-References: <20260615120324.1527881-1-josh.milas@gmail.com>
+        Fri, 26 Jun 2026 01:42:13 -0700 (PDT)
+Date: Fri, 26 Jun 2026 16:41:52 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Paul Walmsley <pjw@kernel.org>
+Cc: guoren@kernel.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Arnd Bergmann <arnd@arndb.de>, 
+	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
+	Leonardo Bras <leobras@redhat.com>, Raj Vishwanathan4 <rvishwanathan@mips.com>, 
+	Djordje Todorovic <djordje.todorovic@htecgroup.com>, Alexandre Ghiti <alexghiti@rivosinc.com>, 
+	Han Gao <gaohan@iscas.ac.cn>, Yao Zi <me@ziyao.cc>, Xiaoguang Xing <xiaoguang.xing@sophgo.com>, 
+	Aleksandar Rikalo <arikalo@gmail.com>, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arch@vger.kernel.org, sophgo@lists.linux.dev
+Subject: Re: [PATCH V5] riscv: errata: Add ERRATA_THEAD_WRITE_ONCE fixup
+Message-ID: <aj463BBQccFwUoV5@inochi.infowork>
+References: <20260421143154.1590156-1-guoren@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260421143154.1590156-1-guoren@kernel.org>
 
-This adds initial riscv support for the Milk-V Duo S board
-[1] making it possible to boot Linux to the command line.
+On Tue, Apr 21, 2026 at 10:31:40AM -0400, guoren@kernel.org wrote:
+> From: "Guo Ren (Alibaba DAMO Academy)" <guoren@kernel.org>
+> 
+> The early version of XuanTie C910 core has a store merge buffer
+> delay problem. The store merge buffer could improve the store queue
+> performance by merging multi-store requests, but when there are not
+> continued store requests, the prior single store request would be
+> waiting in the store queue for a long time. That would cause
+> significant problems for communication between multi-cores. This
+> problem was found on sg2042 & th1520 platforms with the qspinlock
+> lock torture test.
+> 
+> So appending a fence w.o could immediately flush the store merge
+> buffer and let other cores see the write result.
+> 
+> This will apply the WRITE_ONCE errata to handle the non-standard
+> behavior via appending a fence w.o instruction for WRITE_ONCE().
+> 
+> This problem is only observed on the sg2042 hardware platform by
+> running the lock_torture test program for half an hour. The problem
+> was not found in the user space application, because interrupt can
+> break the livelock.
+> 
+> Acked-by: Arnd Bergmann <arnd@arndb.de>
+> Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+> Reviewed-by: Leonardo Bras <leobras@redhat.com>
+> Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
+> Tested-by: Han Gao <gaohan@iscas.ac.cn>
+> Tested-by: Yao Zi <me@ziyao.cc>
+> Cc: Chen Wang <unicorn_wang@outlook.com>
+> Cc: Xiaoguang Xing <xiaoguang.xing@sophgo.com>
+> Cc: Paul Walmsley <pjw@kernel.org>
+> Signed-off-by: Guo Ren (Alibaba DAMO Academy) <guoren@kernel.org>
+> ---
+> Changelog
+> 
+> v5:
+>  - Add Acked-by: Arnd Bergmann <arnd@arndb.de> for asm/generic
+>  - Add Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
+>  - Rebase on v7.0
+> 
 
-Link: https://milkv.io/duo-s [1]
+Hi, Paul
 
-Signed-off-by: Joshua Milas <josh.milas@gmail.com>
----
- arch/riscv/boot/dts/sophgo/Makefile           |   1 +
- .../boot/dts/sophgo/sg2000-milkv-duo-s.dts    | 245 ++++++++++++++++++
- 2 files changed, 246 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+I wonder whether this is possible for applying? I think this is 
+a necessary fix for SG2042.
 
-diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-index 6f65526d4193..58cc6b70d8de 100644
---- a/arch/riscv/boot/dts/sophgo/Makefile
-+++ b/arch/riscv/boot/dts/sophgo/Makefile
-@@ -1,6 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
-diff --git a/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-new file mode 100644
-index 000000000000..f56bfddeacc4
---- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2000-milkv-duo-s.dts
-@@ -0,0 +1,245 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/pinctrl/pinctrl-sg2000.h>
-+#include "sg2000.dtsi"
-+
-+/ {
-+	model = "Milk-V Duo S";
-+	compatible = "milkv,duo-s", "sophgo,sg2000";
-+
-+	aliases {
-+		i2c4 = &i2c4;
-+		mmc0 = &sdhci0;
-+		mmc1 = &emmc;
-+		mmc2 = &sdhci1;
-+		serial0 = &uart0;
-+		serial4 = &uart4;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	wifi_pwrseq: wifi-pwrseq {
-+		compatible = "mmc-pwrseq-simple";
-+		reset-gpios = <&porta 15 GPIO_ACTIVE_LOW>;
-+		power-off-delay-us = <50000>;
-+		post-power-on-delay-ms = <200>;
-+	};
-+};
-+
-+&osc {
-+	clock-frequency = <25000000>;
-+};
-+
-+&pinctrl {
-+	emmc_cfg: emmc-cfg {
-+		emmc-rstn-pins {
-+			pinmux = <PINMUX(PIN_EMMC_RSTN, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+
-+		emmc-clk-pins {
-+			pinmux = <PINMUX(PIN_EMMC_CLK, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+
-+		emmc-cmd-pins {
-+			pinmux = <PINMUX(PIN_EMMC_CMD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+
-+		emmc-data-pins {
-+			pinmux = <PINMUX(PIN_EMMC_DAT0, 0)>,
-+				 <PINMUX(PIN_EMMC_DAT1, 0)>,
-+				 <PINMUX(PIN_EMMC_DAT2, 0)>,
-+				 <PINMUX(PIN_EMMC_DAT3, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+	};
-+
-+	i2c4_cfg: i2c4-cfg {
-+		i2c4-pins {
-+			pinmux = <PINMUX(PIN_VIVO_D1, 7)>,
-+				 <PINMUX(PIN_VIVO_D0, 7)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <4000>;
-+			power-source = <1800>;
-+		};
-+	};
-+
-+	sdhci0_cfg: sdhci0-cfg {
-+		sdhci0-cd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-clk-pins {
-+			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <16100>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-cmd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-data-pins {
-+			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
-+				 <PINMUX(PIN_SD0_D1, 0)>,
-+				 <PINMUX(PIN_SD0_D2, 0)>,
-+				 <PINMUX(PIN_SD0_D3, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+
-+	sdhci1_cfg: sdhci1-cfg {
-+		sdhci1-clk-pins {
-+			pinmux = <PINMUX(PIN_MIPI_TXM4, 1)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+
-+		sdhci1-cmd-pins {
-+			pinmux = <PINMUX(PIN_MIPI_TXP4, 1)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+
-+		sdhci1-data-pins {
-+			pinmux = <PINMUX(PIN_MIPI_TXM3, 1)>,
-+				 <PINMUX(PIN_MIPI_TXP3, 1)>,
-+				 <PINMUX(PIN_MIPI_TXM2, 7)>,
-+				 <PINMUX(PIN_MIPI_TXP2, 7)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <1800>;
-+		};
-+	};
-+
-+	uart0_cfg: uart0-cfg {
-+		uart0-pins {
-+			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
-+				 <PINMUX(PIN_UART0_RX, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+
-+	uart4_cfg: uart4-cfg {
-+		uart4-data-pins {
-+			pinmux = <PINMUX(PIN_UART2_TX, 5)>,
-+				 <PINMUX(PIN_UART2_RX, 5)>;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		uart4-control-pins {
-+			pinmux = <PINMUX(PIN_UART2_CTS, 5)>,
-+				 <PINMUX(PIN_UART2_RTS, 5)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+};
-+
-+&dmac {
-+	status = "okay";
-+};
-+
-+&emmc {
-+	bus-width = <4>;
-+	no-1-8-v;
-+	cap-mmc-hw-reset;
-+	no-sd;
-+	no-sdio;
-+	non-removable;
-+	pinctrl-0 = <&emmc_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&gmac0 {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	pinctrl-0 = <&i2c4_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+};
-+
-+&saradc {
-+	status = "okay";
-+};
-+
-+&sdhci0 {
-+	bus-width = <4>;
-+	disable-wp;
-+	no-1-8-v;
-+	pinctrl-0 = <&sdhci0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&sdhci1 {
-+	bus-width = <4>;
-+	cap-sdio-irq;
-+	cap-sd-highspeed;
-+	keep-power-in-suspend;
-+	no-mmc;
-+	no-sd;
-+	non-removable;
-+	max-frequency = <150000000>;
-+	mmc-pwrseq = <&wifi_pwrseq>;
-+	pinctrl-0 = <&sdhci1_cfg>;
-+	pinctrl-names = "default";
-+	sd-uhs-sdr50;
-+	sd-uhs-sdr104;
-+	status = "okay";
-+};
-+
-+&uart0 {
-+	pinctrl-0 = <&uart0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&uart4 {
-+	pinctrl-0 = <&uart4_cfg>;
-+	pinctrl-names = "default";
-+	uart-has-rtscts;
-+	status = "okay";
-+};
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
-+
--- 
-2.54.0
+Regards,
+Inochi
 
+
+> v4:
+> https://lore.kernel.org/linux-riscv/20260412143116.1445893-1-guoren@kernel.org/
+>  - Add Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+>    (https://lore.kernel.org/linux-riscv/1cfdf6c1-a384-43ad-9588-284335d073f7@ghiti.fr/)
+>  - Add Tested-by: Yao Zi <me@ziyao.cc>
+>  - Rebase on v7.0-rc7
+> 
+> v3:
+> https://lore.kernel.org/linux-riscv/20260125063941.443777-1-guoren@kernel.org/
+>  - Rebase on 6.19-rc6.
+>  - Remove errata_list_vendors patch which has been merged.
+>  - Add Tested-by tag.
+> 
+> v2:
+> https://lore.kernel.org/linux-riscv/20250713155321.2064856-1-guoren@kernel.org/
+>  - Add new header file for errata_list_vendors.
+>  - Rebase newest kernel version.
+> 
+> v1:
+> https://lore.kernel.org/all/20241214143039.4139398-1-guoren@kernel.org/
+> ---
+>  arch/riscv/Kconfig.errata                    | 17 ++++++++++
+>  arch/riscv/errata/thead/errata.c             | 20 ++++++++++++
+>  arch/riscv/include/asm/errata_list_vendors.h |  3 +-
+>  arch/riscv/include/asm/rwonce.h              | 34 ++++++++++++++++++++
+>  include/asm-generic/rwonce.h                 |  2 ++
+>  5 files changed, 75 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/riscv/include/asm/rwonce.h
+> 
+> diff --git a/arch/riscv/Kconfig.errata b/arch/riscv/Kconfig.errata
+> index 3c945d086c7d..4d3f13522da6 100644
+> --- a/arch/riscv/Kconfig.errata
+> +++ b/arch/riscv/Kconfig.errata
+> @@ -154,4 +154,21 @@ config ERRATA_THEAD_GHOSTWRITE
+>  
+>  	  If you don't know what to do here, say "Y".
+>  
+> +config ERRATA_THEAD_WRITE_ONCE
+> +	bool "Apply T-Head WRITE_ONCE errata"
+> +	depends on ERRATA_THEAD
+> +	default y
+> +	help
+> +	  The early version of T-Head C9xx cores of sg2042 & th1520 have a store
+> +	  merge buffer delay problem. The store merge buffer could improve the
+> +	  store queue performance by merging multi-store requests, but when there
+> +	  are no continued store requests, the prior single store request would be
+> +	  waiting in the store queue for a long time. That would cause signifi-
+> +	  cant problems for communication between multi-cores. Appending a
+> +	  fence w.o could immediately flush the store merge buffer and let other
+> +	  cores see the write result.
+> +
+> +	  This will apply the WRITE_ONCE errata to handle the non-standard beh-
+> +	  avior via appending a fence w.o instruction for WRITE_ONCE().
+> +
+>  endmenu # "CPU errata selection"
+> diff --git a/arch/riscv/errata/thead/errata.c b/arch/riscv/errata/thead/errata.c
+> index 0b942183f708..fbe46f2fa8fb 100644
+> --- a/arch/riscv/errata/thead/errata.c
+> +++ b/arch/riscv/errata/thead/errata.c
+> @@ -168,6 +168,23 @@ static bool errata_probe_ghostwrite(unsigned int stage,
+>  	return true;
+>  }
+>  
+> +static bool errata_probe_write_once(unsigned int stage,
+> +				    unsigned long arch_id, unsigned long impid)
+> +{
+> +	if (!IS_ENABLED(CONFIG_ERRATA_THEAD_WRITE_ONCE))
+> +		return false;
+> +
+> +	/* target-c9xx cores report arch_id and impid as 0 */
+> +	if (arch_id != 0 || impid != 0)
+> +		return false;
+> +
+> +	if (stage == RISCV_ALTERNATIVES_BOOT ||
+> +	    stage == RISCV_ALTERNATIVES_MODULE)
+> +		return true;
+> +
+> +	return false;
+> +}
+> +
+>  static u32 thead_errata_probe(unsigned int stage,
+>  			      unsigned long archid, unsigned long impid)
+>  {
+> @@ -183,6 +200,9 @@ static u32 thead_errata_probe(unsigned int stage,
+>  
+>  	errata_probe_ghostwrite(stage, archid, impid);
+>  
+> +	if (errata_probe_write_once(stage, archid, impid))
+> +		cpu_req_errata |= BIT(ERRATA_THEAD_WRITE_ONCE);
+> +
+>  	return cpu_req_errata;
+>  }
+>  
+> diff --git a/arch/riscv/include/asm/errata_list_vendors.h b/arch/riscv/include/asm/errata_list_vendors.h
+> index ec7eba373437..8fd7c36307e2 100644
+> --- a/arch/riscv/include/asm/errata_list_vendors.h
+> +++ b/arch/riscv/include/asm/errata_list_vendors.h
+> @@ -18,7 +18,8 @@
+>  #define	ERRATA_THEAD_MAE 0
+>  #define	ERRATA_THEAD_PMU 1
+>  #define	ERRATA_THEAD_GHOSTWRITE 2
+> -#define	ERRATA_THEAD_NUMBER 3
+> +#define	ERRATA_THEAD_WRITE_ONCE 3
+> +#define	ERRATA_THEAD_NUMBER 4
+>  #endif
+>  
+>  #ifdef CONFIG_ERRATA_MIPS
+> diff --git a/arch/riscv/include/asm/rwonce.h b/arch/riscv/include/asm/rwonce.h
+> new file mode 100644
+> index 000000000000..081793d4d772
+> --- /dev/null
+> +++ b/arch/riscv/include/asm/rwonce.h
+> @@ -0,0 +1,34 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +
+> +#ifndef __ASM_RWONCE_H
+> +#define __ASM_RWONCE_H
+> +
+> +#include <linux/compiler_types.h>
+> +#include <asm/alternative-macros.h>
+> +#include <asm/vendorid_list.h>
+> +#include <asm/errata_list_vendors.h>
+> +
+> +#if defined(CONFIG_ERRATA_THEAD_WRITE_ONCE) && !defined(NO_ALTERNATIVE)
+> +
+> +#define write_once_fence()				\
+> +do {							\
+> +	asm volatile(ALTERNATIVE(			\
+> +		"nop",					\
+> +		"fence w, o",				\
+> +		THEAD_VENDOR_ID,			\
+> +		ERRATA_THEAD_WRITE_ONCE,		\
+> +		CONFIG_ERRATA_THEAD_WRITE_ONCE)		\
+> +		: : : "memory");			\
+> +} while (0)
+> +
+> +#define __WRITE_ONCE(x, val)				\
+> +do {							\
+> +	*(volatile typeof(x) *)&(x) = (val);		\
+> +	write_once_fence();				\
+> +} while (0)
+> +
+> +#endif /* defined(CONFIG_ERRATA_THEAD_WRITE_ONCE) && !defined(NO_ALTERNATIVE) */
+> +
+> +#include <asm-generic/rwonce.h>
+> +
+> +#endif	/* __ASM_RWONCE_H */
+> diff --git a/include/asm-generic/rwonce.h b/include/asm-generic/rwonce.h
+> index 52b969c7cef9..4e2d941f15a1 100644
+> --- a/include/asm-generic/rwonce.h
+> +++ b/include/asm-generic/rwonce.h
+> @@ -50,10 +50,12 @@
+>  	__READ_ONCE(x);							\
+>  })
+>  
+> +#ifndef __WRITE_ONCE
+>  #define __WRITE_ONCE(x, val)						\
+>  do {									\
+>  	*(volatile typeof(x) *)&(x) = (val);				\
+>  } while (0)
+> +#endif
+>  
+>  #define WRITE_ONCE(x, val)						\
+>  do {									\
+> -- 
+> 2.40.1
+> 
