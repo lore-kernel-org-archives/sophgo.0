@@ -1,56 +1,40 @@
-Received: from mail-oo1-f45.google.com (mail-oo1-f45.google.com [209.85.161.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922A43DCD85
-	for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 14:59:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C6B466B69
+	for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 16:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782745148; cv=none; b=t4TKuZJQ+t2std+JNVSc1Sf6VtMflVSkMC50WrgcR5qwu4i5kTEo/Y8GpK6HmUQUHZAZ3Yy2hRiS7kx/kOq6XhVsMxVPBbw39riJrLLWRUglju6RugfLKj/Coaf4V/t9cRKVKZ5rLJkFHiOjOoMmGBCBY4RhldLuy7MtjAR/5mw=
+	t=1782752060; cv=none; b=Kp+raS/G9PIQ1yCG7ajDcR2JmwrL3EZTkAIHQ/Cp03MyLMvbZq7kxWgdNp+OfMtZAZZK7oKdpCco3JNkxxIqOlSHQws9ubPm6KkrxxeL3u/q8GieH0Ph5mxD0nhecxdRtj0p7N0SmEcnVcGsRWv1PJ6yAGASRjwjNXfLz/uizS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782745148; c=relaxed/simple;
-	bh=LAoZJqVfdU9+V8F5hBZtY//uWnuQHis0eN8ii8DLed0=;
+	s=arc-20240116; t=1782752060; c=relaxed/simple;
+	bh=eE8NJJlLWJmGLS8Mjp0uHMgdO7h8J7DYtf3wXUf3DU0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cGbZ+vr+fK6DM+bqvOKBnnsNAYhLm1o3nQrogNMuGdc849Pa5vxTgKZAMm+5prgKag8/zifhWeRHn7LL8qdEV17tZgJw+Zh74q+HAzflAqWOEk2yd4HJ9wwHgx0gRCwZKB8+WTVFizXoxSVGppIThHJZV5ar9Cheq5M1CKPVS0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oo1-f45.google.com with SMTP id 006d021491bc7-6a0c7c4f55fso2546331eaf.2
-        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 07:59:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782745146; x=1783349946;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YrA9ccFaco9J2BZQ3eRpFjtGI3CKCK/xF2koXbFr26M=;
-        b=pdkoCvNeeP77n2ZtSPZfVczENN7L/LclBWQtFIpfoQtgzckFzhYiLmGK01cLLWqntE
-         iM35A+6RwxGcJWiTCiiLExYoviA9MXPHM0CWWt+IBAuOQ23CvxrggIcvZ9xztqBAjT2b
-         K26J8OQfS/wrmxH6dQy+fwGH3Tr9GZXYuGNo/PAyeJv9EHqhS3AeUxO7QDxQupu9bTwe
-         bIoqHpWID2QMPzKm0LnHy118env1n76CKYq9robnA+TzEBZHMBb1azcrPVKMf6jacEEh
-         iQ6+G0vRZv2jIPIPVf381OH88nBrqy3I937FYu33OMsZoqSjaVkV3ufa6XB3C5QZDlgu
-         JBcA==
-X-Forwarded-Encrypted: i=1; AFNElJ9p/h/VjfLz2OBAvBmcUGxf2/OUSKuN8BKaSv39NHNskpA4BRvuENpKGzA+XV0RxB0sKwpv2j8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyfNeyt2sXuOjkoy0gGG4Bqh1qFRmeVoI7uf3SxAosjBGlwH1Yd
-	AXXNtdOQXFc38+TLP91/AIxIns89zz5p2/ND7z1qBiQ1cBVDpya8LWkAZvWTT1dV
-X-Gm-Gg: AfdE7ck63xgWe1Un7bJ08tAzaOXrNevIjdQfNxEw6s4iCdqF1sZ55LONpMbFg9/a3R9
-	a8p2jdDIbNkUUCBxsuk07s6BYDpEBhu7O9svZmiMtu/VUMUqmeSqzaUroAdn5yLPIqK9rprmlr7
-	UASSDPa07+tneyd1w7cKMTHjiS1MO0/xmAJSHMvBUKWu9ztD2IJKBOD1GUhgA0VjQIJrZqEn5QU
-	WTuDRMEhsKRChjlc1Lb9WKchTPbqBlOplsWcWfVzB6tOucCaSyZPxzdWBdT5g7ARLyBfmvJbRBG
-	0fB2ADrK23qFcSpGQyseXA0HXjtsHyhfL/ugnCmE4dkzgRI2HbSKYumZJJeOa8Sha3fH6ADlN9l
-	nHY3OdKnwl8620Fg6wA7f9fOiOaNXZtP3J2JmAg99MmOvPUWHQcQAZnFQGkgfalTUQCbpy/KnN2
-	iUGRPVE4EpBIBLoFVCKr8nEjZZ2zqfpoGS0J2pzDCbGLOQGls+usKvxw==
-X-Received: by 2002:a05:6820:c2c2:20b0:6a1:4fbf:5f45 with SMTP id 006d021491bc7-6a189078adfmr19316eaf.19.1782745146406;
-        Mon, 29 Jun 2026 07:59:06 -0700 (PDT)
-Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com. [209.85.167.175])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7e9ebf891b8sm15325a34.6.2026.06.29.07.59.05
-        for <sophgo@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2026 07:59:05 -0700 (PDT)
-Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-4877a7b451dso2309594b6e.0
-        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 07:59:05 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AFNElJ9nJA0B0IJ4+4foSnghrFLZ88n0grVqg6vANNmiNkyR1PcHJcYgRWlXToz3zM3CqEtpj1K9yGs=@lists.linux.dev
-X-Received: by 2002:a05:6102:c86:b0:738:ecd7:198e with SMTP id
- ada2fe7eead31-738ecd71defmr1394925137.19.1782744721048; Mon, 29 Jun 2026
- 07:52:01 -0700 (PDT)
+	 To:Cc:Content-Type; b=F0s6hLBjX9g4lfjq8jMPSngTqMPQWXpECkPU9SSfFx16OqlkVwaiDXEBOR/n2J7nklAL+yaIGu40G74aV5q5RcoNL8twKXs/NNi+g2dbObxjlTsQuOEjV3IHUtv5qlHsY4rc/WUHpI5y7Eipegv+scCINMV8KwVpV4EUtA9ZJhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UtH5gwa+; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UtH5gwa+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22AFF1F01559
+	for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 16:54:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1782752058;
+	bh=nrtvzAHL3u6/v5L5E9Co3P0QE5xowtwOQFIomSwMWjk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc;
+	b=UtH5gwa+U1zvJ6MiDKihq7fz1abrI92vBGcYoq95X9rWwvz5W22oGlu4vG8sTBX+v
+	 lZvuZzP6DS79zjdwBazFvkl6XvoQbUodjizsh/Y5t56PyS2oiOkfYCx7wkLk7cdr+q
+	 2NhTOPmDU9hdWHEJWT+FaK8smDYBGn2B+2GOFurQSd53ujUwxlBKe0UjPhBCgGA3QX
+	 k22qz2Jmw2cBhPjOS+8yx0ottM8TY6XGd5Ka/4VbWDj5PV4d5a2kNIQXOJuCPPFOrx
+	 MdEVXZTxj/5NUCsyS7s46Ae8fQuMQf8DXRbIUUrciT9U9mcW4df21f2qy+RvS22A4/
+	 JmKSNxfAR6eag==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-39adb9a103aso26185881fa.3
+        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 09:54:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+RorGYDcpKG6fZttKpkYhRGMEIG7DVyECc9B9VVwchcFjS6ujxyBpPbQEtc7W+brJWlOqri67CM=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxYNHHoi8D5ttxkal4yjAzRq9CbFMbIkUD0T/zW2SgnKEQJmx5S
+	tDVuIDrtf69zIKxTjF9Jd6bKNg+4CTdhhNaq0S2q0WChLrChHAse57O/lAc3qTHQOxTZ4WSPGPi
+	9ulgAQmd9+dBbjNEPLJ3moHqyVJwPcS+PDsLorJTWXw==
+X-Received: by 2002:a05:6512:3d19:b0:5ae:b97b:f75a with SMTP id
+ 2adb3069b0e04-5aebdbbc205mr24885e87.55.1782752056582; Mon, 29 Jun 2026
+ 09:54:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -59,16 +43,17 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com>
  <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
- <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com> <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com>
-In-Reply-To: <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 29 Jun 2026 16:51:49 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
-X-Gm-Features: AVVi8CdkJoaQviVQ7ltoNYHwA2g-kW32TDsBBJn2QkEKdC-zwJrV4O3to75iJ6g
-Message-ID: <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
+ <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
+ <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com> <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
+In-Reply-To: <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Mon, 29 Jun 2026 18:54:04 +0200
+X-Gmail-Original-Message-ID: <CAMRc=Meb58KCuLXkNSJwUq6KJUzZv0u49FBA2L4C8Vd3NVo8Cg@mail.gmail.com>
+X-Gm-Features: AVVi8CdXDDErrbJGCmrBnsO12t_UfV9Z0jI02dBWCQjihPCNNCZY7ROJGiFNTUI
+Message-ID: <CAMRc=Meb58KCuLXkNSJwUq6KJUzZv0u49FBA2L4C8Vd3NVo8Cg@mail.gmail.com>
 Subject: Re: [PATCH net-next v11 1/7] dt-bindings: phy: document the serdes
  PHY on sa8255p
-To: Bartosz Golaszewski <brgl@kernel.org>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
@@ -93,65 +78,72 @@ Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.or
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
 	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bartosz,
-
-On Mon, 29 Jun 2026 at 16:07, Bartosz Golaszewski <brgl@kernel.org> wrote:
-> On Mon, 29 Jun 2026 15:51:31 +0200, Geert Uytterhoeven
-> <geert@linux-m68k.org> said:
-> > On Mon, 29 Jun 2026 at 13:29, Bartosz Golaszewski
-> > <bartosz.golaszewski@oss.qualcomm.com> wrote:
-> >> Describe the SGMII/SerDes PHY present on the Qualcomm sa8255p platforms.
-> >> This is essentially the same hardware as sa8775p rev3 but the PHY is
-> >> managed by firmware over SCMI.
-> >
-> > So why can't it be reuse the DT bindings, and be compatible with
-> > qcom,sa8775p-dwmac-sgmii-phy?
-> >
-> >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> >
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/phy/qcom,sa8255p-dwmac-sgmii-phy.yaml
-> >
-> >> +  power-domains:
-> >> +    maxItems: 1
-> >> +
-> >> +  power-domain-names:
-> >> +    items:
-> >> +      - const: serdes
-> >
-> >> +examples:
-> >> +  - |
-> >> +    phy@8901000 {
-> >> +        compatible = "qcom,sa8255p-dwmac-sgmii-phy";
-> >> +        reg = <0x08901000 0xe10>;
-> >> +        #phy-cells = <0>;
-> >> +        power-domains = <&scmi7_dvfs 0>;
-> >> +        power-domain-names = "serdes";
-> >
-> > Ah, this uses power-domains, while the existing bindings for
-> > qcom,sa8775p-dwmac-sgmii-phy use a clock.
-> > I guess the clock is the correct hardware description?
-> >
-> > Adding to my list of examples for backing a hardware-to-SCMI remapping
-> > driver...
-> >
+On Mon, Jun 29, 2026 at 4:58=E2=80=AFPM Geert Uytterhoeven <geert@linux-m68=
+k.org> wrote:
 >
-> Russell King asked me to put the PHY logic for SCMI pm domains into the PHY
-> driver instead of the MAC driver where it was previously. Instead of cramming
-> both HLOS and firmware handling into the same driver, I figured it makes more
-> sense to have a dedicated, cleaner driver as the two share very little code (if
-> any).
+> Hi Bartosz,
+>
+> On Mon, 29 Jun 2026 at 16:07, Bartosz Golaszewski <brgl@kernel.org> wrote=
+:
+> > On Mon, 29 Jun 2026 15:51:31 +0200, Geert Uytterhoeven
+> > <geert@linux-m68k.org> said:
+> > > On Mon, 29 Jun 2026 at 13:29, Bartosz Golaszewski
+> > > <bartosz.golaszewski@oss.qualcomm.com> wrote:
+> > >> Describe the SGMII/SerDes PHY present on the Qualcomm sa8255p platfo=
+rms.
+> > >> This is essentially the same hardware as sa8775p rev3 but the PHY is
+> > >> managed by firmware over SCMI.
+> > >
+> > > So why can't it be reuse the DT bindings, and be compatible with
+> > > qcom,sa8775p-dwmac-sgmii-phy?
+> > >
+> > >> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm=
+.com>
+> > >
+> > >> --- /dev/null
+> > >> +++ b/Documentation/devicetree/bindings/phy/qcom,sa8255p-dwmac-sgmii=
+-phy.yaml
+> > >
+> > >> +  power-domains:
+> > >> +    maxItems: 1
+> > >> +
+> > >> +  power-domain-names:
+> > >> +    items:
+> > >> +      - const: serdes
+> > >
+> > >> +examples:
+> > >> +  - |
+> > >> +    phy@8901000 {
+> > >> +        compatible =3D "qcom,sa8255p-dwmac-sgmii-phy";
+> > >> +        reg =3D <0x08901000 0xe10>;
+> > >> +        #phy-cells =3D <0>;
+> > >> +        power-domains =3D <&scmi7_dvfs 0>;
+> > >> +        power-domain-names =3D "serdes";
+> > >
+> > > Ah, this uses power-domains, while the existing bindings for
+> > > qcom,sa8775p-dwmac-sgmii-phy use a clock.
+> > > I guess the clock is the correct hardware description?
+> > >
+> > > Adding to my list of examples for backing a hardware-to-SCMI remappin=
+g
+> > > driver...
+> > >
+> >
+> > Russell King asked me to put the PHY logic for SCMI pm domains into the=
+ PHY
+> > driver instead of the MAC driver where it was previously. Instead of cr=
+amming
+> > both HLOS and firmware handling into the same driver, I figured it make=
+s more
+> > sense to have a dedicated, cleaner driver as the two share very little =
+code (if
+> > any).
+>
+> I think you are mixing up DT bindings and driver implementation?
+>
 
-I think you are mixing up DT bindings and driver implementation?
+Ah indeed, but the bindings don't share a lot of content either.
 
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+Bartosz
