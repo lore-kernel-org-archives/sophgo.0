@@ -1,147 +1,146 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD03620C00A
-	for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 13:35:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D937F319852
+	for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 13:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782740161; cv=none; b=susNH5ZGMPkMRFDNXgFuGR9iYGIPLjPINHT+4ZIexWhaXYS3iIKZtXMxZ/aG7rb/KvcQiTKlsHthTTmJCsioFYVkkHhs8CO7o00oP5w19mMdLE/eYP72R5jQYIGik7dXT7VKeuzZttnuoG5tQ8k/4ZDs/gxtGJgrcgl0GG8UIXE=
+	t=1782741482; cv=none; b=eSqo7Z5LYHes3FyU96dTK8NyroszN/FhtVmUysXbjnTf28X+lVNnuOcysRyFORk0+uFK+0gSIxTP/t2RkuVOkEHVksEpW1iNS2dlll+jThD2dWxOhLfJEKrhOh55hRXALZBawinsHAE3PC9ztvr12IDEaM1YxtD4EkMTKRot9MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782740161; c=relaxed/simple;
-	bh=zqrAv4ptgcQDDabtUqrMSNTpUU2PxpRKSgX2iLRPyeM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WYjRs1G8v5jufXiXmO2gLZi84fahBDBdrgB8/9PASXUG/izhha2faBCcwkoWBfRSif7u9Glj2JW16+H8IfEKmwhgh8lwCF/moPs5PpXx6/bKuzitKMiD06NFfZCjCjIRmwo4riQM0nu7vyozWPKxfqlE2kEKvu/0H7f+szM1sjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=rohGWZwx; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1782741482; c=relaxed/simple;
+	bh=UvkvBBzeyeMqgudY2G6gDFJg27JiOFKpvozKSRN3iE8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=cqfIm8ruEUAQHY+x23uclXbSAQaX41DpyGX+WRq1XMiAu89mSSrt+NARdAenGAtmiPX5O17sAwnkD52ltI8dkFbITJi/Pb7RmhWEUk8nLm1I6U7mqR+aUV0WIj72xl/Vt471H86jHAhwBlKjKfuagJI7pehXEnBGMTDyQxJ4C3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="rohGWZwx"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-493a285ff0cso8153355e9.2
-        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 06:35:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1782740158; x=1783344958; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=RBM+1nAZz4BwsUG4gfSKzLFy6PeoM2OFZ8wfEYkLDpg=;
-        b=rohGWZwxrWYYpDR9u1pxhEDp16zmJjtUk3bcAB0obxbIP0ymvSj319cO09s4gOeFTw
-         Ru8VzkvccjQsfUOQ6541WxVVnr3p6v8WgH+Lbz2BozAO/G0rC5Fbwo4sbsGQvxJrbHum
-         EpMqxW3k0MViw8GfyNqklVulgxpnthagvyot66AVI6S4SJfFqGI5rsRIxsL6kjQ6CRUz
-         2jl0xcajWz0QoiRZPr9XTQFMtUeLtK6LqxpOFWMlXAsOgQFWgDULUjypsj2QniAFhxAf
-         v35xT9UZdYXw2M2YoUEUmrmZy/iWrqAyL0rGrqc2oHfaHOJeJPdtl0g/B2MonbhVE2F/
-         4N+g==
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8f032b47e3cso8231706d6.0
+        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 06:58:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1782740158; x=1783344958;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1782741480; x=1783346280;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RBM+1nAZz4BwsUG4gfSKzLFy6PeoM2OFZ8wfEYkLDpg=;
-        b=b/d3oTpfw3YPpBR18ZHDqz33a9loswD38Q3FYz4JQoRolOQIwbEdRQyl4qoDyZFnoM
-         hmJMe9kBCQTPuVxOPeRCnjVImjZvLscmNDM8HciSxQwGyqSayuxGgIZdkHVAu9xJ9SHA
-         thR1F4ARsrspResuZuI6058bbi4I7sji8qmIdCjHKsKKbOAIrGjvsfeeNlDFb3QPD2Ai
-         qAtflSuD+MkAiTyV9KOKZsZz1Ld5sUew1DP8syqWrvF+NvKRdhJfuu27CTC7SpE5vYlK
-         lflpGHaCkGlInw4QObmUObhgwtMJK6igVxujNh94txbWbAfprTn30TKgf0MeyL7lYsbt
-         d4eA==
-X-Forwarded-Encrypted: i=1; AFNElJ+FLI2i4O4Hvilwm9gC7NxWyIwCQkSjAVWMz4QC2/lJIy9FIFdBjsvvwe99KpZwdYcNfMTKiew=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyIuk0d7/SKDTvxnPaNFsE1Q4MRjyR0AoptjSBwIGrkbEXIFWkk
-	lFZLMjLsybCkn7ze/lvBnotcYrHvbPdDZD66OmKf5Q489JZPCDRPXeRx
-X-Gm-Gg: AfdE7cm1SD/LysdSkJuRt0yOzOh/spOsgCm3YmO6NR9otKPmJTexK1nK7uLuKHy2QpJ
-	ZKsj7SUBQqeFvgXtBszyhWh1wCL7NJ80hUxCi+GgWEy+fg1JPPWyL1AuC6+KMg0J70zILccOeIp
-	AFCsOcrzrfVWY+W2JjnUD32n2UVSGaBZw7+w3+zPwOZxWW1Y+Bgsp2tR+NJhxFLgPPxbwCFUfIq
-	A4XarBjOPhz2kVCWb4wZdpsh2gFhf1vUF5G2gn09I/ZeGnH1GmiJRjuHkns3TL6f0Ov89N2Vqyq
-	5zGAX/+gZZtsvi9SfXqSlXenpIQ7fLRpdXRXEeNovfpyuN0cchSWs5hzAsUn5CoMgqVlflo6C9J
-	dFuCZKJOhQhKATvWAPgSjbyoch0g9yzIh3yxbWhyhrg8PKICuup3OulQv6Mz699250I3BEYjKgw
-	Ipwu9ifhU160sIpFOBntIVHDUhK4zqJkWkkuqVM0wBnf3GLNcls1+5zVJ/vSngnDV5kDae+zy4b
-	A9dOFDF
-X-Received: by 2002:a05:600c:524e:b0:493:b2c1:b302 with SMTP id 5b1f17b1804b1-493b2c1b445mr34652035e9.16.1782740157956;
-        Mon, 29 Jun 2026 06:35:57 -0700 (PDT)
-Received: from [10.128.11.240] (195-23-151-163.net.novis.pt. [195.23.151.163])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-47327c47122sm13954850f8f.34.2026.06.29.06.35.55
+        bh=yDPhNjOsxEQ0DHLYZPQfDHuBKCTUhxYTzus1J/5tEMc=;
+        b=rOJ+NQR4sm5J52SzQgmoiG+A9407IaqqTLZcEJLlpLhTULkPvRzUagVxbeK3mel7qx
+         /+egWvuYUCeYwzxhv//nvXvo6AGHcuTKV6kalJywx+cIqanTfY2EDSfYePgun4oI/6H/
+         r96OBPg6l/Dq4+eXe0YRupxMJnYqP0uWH0UrNuP0U6HcNZFMRvQNm3C7C966W1rHzAP/
+         X61+ajlQhA3D2WRHVswvIQnSFGzcN5SnZtGCZjQivCtDchw7giQFN7nFtCx5OAF6+SBh
+         4pXZjWX4KEVSUuCLz3xz91xnqg9TJgNjb0/I8yXR8zF8uLscyZvGUU+kFKHKV4P+xxqC
+         9mnQ==
+X-Forwarded-Encrypted: i=1; AHgh+Rqtp2BYmK+q9G5OihYumKRS9HDahvT/WUgP/CNVIDpShHnB/1HIK0pm81ZZKq+uCsLwhmtg7Uo=@lists.linux.dev
+X-Gm-Message-State: AOJu0YyXcBDS4Eai1Uc5j7kFtiHDQDNDUMTvgHW1uLQbLdfPckgaPY1B
+	SEiHc8vSVDZsDi0g3fyQU3yIYBkNyx3rPp076f8pRbSD5HQkcivjapHJ94mMyhnl
+X-Gm-Gg: AfdE7cmkYtN0Z8+kk48MlLjEKBqUYCet7ysme2yxe97fCs9MqsKAHLihyl8u2thr5cj
+	gTvOTplKR2rq1A3AaJSsOOmLZKrKTQ9XGUTs3kIxN+3OklnuWhzUh5qkfLp2teItneh8Y5YHDdd
+	7RVx8YaLpw9Tqmhk1VvoR1SyNVP/NW9JFwjJ6xuKmN6VLcnngFjCbKGnCJ1RPAuE+rBAoJCE7W6
+	PUaC9DEl7uMgSw2DjgkNUWXxK/pZ6M8u4ceFrdvK+HX3fOu1QP7mPccxmYwM+0f59/GX6PDrHuP
+	7zbuAQdMuPYOMXG722Gzr34eHTrKas4A27/KHffgSqZOf6NkCnk6mlHi2rTmqfSz9WZ6rhXA8nz
+	OtkRf41xWkte6a4GxFhKzZTw/XoBH5158meu5b581AOkSoqD6kqS2dDFwmAZhLLFPP7EA/mKVlO
+	4PIf0hUUERaFk2r74YUtF//Ai58MqTtKbXU+QOHxWNFSyDakm77w==
+X-Received: by 2002:a05:6214:3385:b0:8f1:3bc5:5a61 with SMTP id 6a1803df08f44-8f1578e9e5emr13656136d6.25.1782741479298;
+        Mon, 29 Jun 2026 06:57:59 -0700 (PDT)
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com. [209.85.219.42])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8ea681172aasm92249886d6.40.2026.06.29.06.57.58
+        for <sophgo@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Jun 2026 06:35:57 -0700 (PDT)
-Sender: Julian Braha <julian.braha@gmail.com>
-Message-ID: <2496717f-12b9-4d33-b6db-1db278aee8e2@gmail.com>
-Date: Mon, 29 Jun 2026 14:35:55 +0100
+        Mon, 29 Jun 2026 06:57:58 -0700 (PDT)
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-8efcef23d21so14036016d6.2
+        for <sophgo@lists.linux.dev>; Mon, 29 Jun 2026 06:57:58 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Ro21MN/Pp5r1q+xaBVPhChUa9GStOFniG3mTiYfq7cId7GMY16sySHOmKY2+rtdGFUWKyFcpS8=@lists.linux.dev
+X-Received: by 2002:a05:6102:c93:b0:739:86da:7777 with SMTP id
+ ada2fe7eead31-739fa951f6emr430364137.27.1782741103904; Mon, 29 Jun 2026
+ 06:51:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v11 2/7] phy: qcom: add the SGMII SerDes PHY
- driver for SCMI systems
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>,
- Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
- Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
- Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>,
- Christophe Roullier <christophe.roullier@foss.st.com>,
- Bartosz Golaszewski <brgl@kernel.org>, Radu Rendec <rrendec@redhat.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, Drew Fustini
- <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
- linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
- imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com>
- <20260629-qcom-sa8255p-emac-v11-2-1b7fb95b51f9@oss.qualcomm.com>
-Content-Language: en-US
-From: Julian Braha <julianbraha@gmail.com>
-In-Reply-To: <20260629-qcom-sa8255p-emac-v11-2-1b7fb95b51f9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com> <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
+In-Reply-To: <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 29 Jun 2026 15:51:31 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
+X-Gm-Features: AVVi8CdHRRLXddfc63bNJYLQ9RF__6zMi6ngPMxYGYM87lHlKy_8kZoakyQBXrY
+Message-ID: <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
+Subject: Re: [PATCH net-next v11 1/7] dt-bindings: phy: document the serdes
+ PHY on sa8255p
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
+	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+	Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Shawn Guo <shawnguo@kernel.org>, 
+	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, Romain Gantois <romain.gantois@bootlin.com>, 
+	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
+	Christophe Roullier <christophe.roullier@foss.st.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
 Hi Bartosz,
 
-On 6/29/26 12:28, Bartosz Golaszewski wrote:
-> +config PHY_QCOM_SGMII_ETH_SCMI
-> +	tristate "Qualcomm DWMAC SGMII SerDes/PHY driver (firmware managed)"
-> +	depends on OF && (ARCH_QCOM || COMPILE_TEST)
-> +	select GENERIC_PHY
-> +	select PM_GENERIC_DOMAINS
-> +	help
+Thanks for your patch!
 
-I think PHY_QCOM_SGMII_ETH_SCMI is missing a dependency on PM. I get a
-build error currently:
+On Mon, 29 Jun 2026 at 13:29, Bartosz Golaszewski
+<bartosz.golaszewski@oss.qualcomm.com> wrote:
+> Describe the SGMII/SerDes PHY present on the Qualcomm sa8255p platforms.
+> This is essentially the same hardware as sa8775p rev3 but the PHY is
+> managed by firmware over SCMI.
 
-WARNING: unmet direct dependencies detected for PM_GENERIC_DOMAINS
-  Depends on [n]: PM [=n]
-  Selected by [y]:
-  - PHY_QCOM_SGMII_ETH_SCMI [=y] && OF [=y] && (ARCH_QCOM ||
-COMPILE_TEST [=y])
+So why can't it be reuse the DT bindings, and be compatible with
+qcom,sa8775p-dwmac-sgmii-phy?
 
-drivers/pmdomain/core.c: In function ‘genpd_queue_power_off_work’:
-drivers/pmdomain/core.c:936:20: error: ‘pm_wq’ undeclared (first use in
-this function)
-  936 |         queue_work(pm_wq, &genpd->power_off_work);
-      |                    ^~~~~
-drivers/pmdomain/core.c:936:20: note: each undeclared identifier is
-reported only once for each function it appears in
-drivers/pmdomain/core.c: In function ‘genpd_dev_pm_qos_notifier’:
-drivers/pmdomain/core.c:1133:39: error: ‘struct dev_pm_info’ has no
-member named ‘ignore_children’
- 1133 |                 if (!dev || dev->power.ignore_children)
-      |                                       ^
-  CC      mm/truncate.o
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
-- Julian Braha
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sa8255p-dwmac-sgmii-phy.yaml
+
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: serdes
+
+> +examples:
+> +  - |
+> +    phy@8901000 {
+> +        compatible = "qcom,sa8255p-dwmac-sgmii-phy";
+> +        reg = <0x08901000 0xe10>;
+> +        #phy-cells = <0>;
+> +        power-domains = <&scmi7_dvfs 0>;
+> +        power-domain-names = "serdes";
+
+Ah, this uses power-domains, while the existing bindings for
+qcom,sa8775p-dwmac-sgmii-phy use a clock.
+I guess the clock is the correct hardware description?
+
+Adding to my list of examples for backing a hardware-to-SCMI remapping
+driver...
+
+> +    };
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
