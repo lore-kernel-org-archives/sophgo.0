@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2762421A17
-	for <sophgo@lists.linux.dev>; Tue, 30 Jun 2026 13:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF9C423170
+	for <sophgo@lists.linux.dev>; Wed,  1 Jul 2026 10:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782827062; cv=none; b=Y5OJ4TyJ6EKkOUQht873vD4QFTWLCZMMzig6yJN3DkSaQUVp5BKTiLNR049f7QwjWNKnPVLM9T/plrq+7o7CC2MpmNWrQa3yddhNEkeuIglUsMuPtpM2va5NlpbMBOlYn5Pk7XslHQUdVWU1zdpRqFUPYtPl6cTgfVuYt1tGW24=
+	t=1782902350; cv=none; b=kAHNqvntZGtwongXLTADFnebjXDhcCIdF/MS5lmrv1rreElhocSPMWElUQP14hGgq0saGRv9P1UIqt5x1RZ28eBjTOFEk2OUABtthkRX5s5AWc6PfR9/LL0wGb+BEmevA0KD6/y9Uxwa0t9et7X6uMIuPy80gJodr+jHG0UvN0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782827062; c=relaxed/simple;
-	bh=OYCefOR8vjCtIV8BcqF9Hkp33X+MIV9fQRrf2VF2Prw=;
+	s=arc-20240116; t=1782902350; c=relaxed/simple;
+	bh=b9vuwMyD1HJfB1Gx1jfRWFDVOFEuo0lYXOfJPkGdUSI=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iEQ6tRe6v3irvdbh3qVXQTPukFDaKhAj5ZePmqtOZKrDVZpeQ1zF9PfeXSW1FpVFVg78JcXOP9HBaymDHTJdT0BObXwLkdFX52sm38av+Bpp66BtsfdWFJnJJyy5bFU/tueSww8V1HfbRDntKo5eKdHOFgZQgA1AT51QtqrAygA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YXMCdVpn; arc=none smtp.client-ip=100.103.45.18
+	 To:Cc:Content-Type; b=iXhRjwY5I2qA0cGJbEivYk++qX6TZVhEJNbrfS92X4Na6cVW38YmrycOSYSCAKy8V3cwQGWYiHl54hTERiJgR8vkUiMTK3Zq/+3yE8qgir1TmiCkZCI9WyawfGn9ra+RV4+HEnR5cowe0qMRAWMROwkJugnDZY7t8CxS7Fm7ins=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CvmIMQlp; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YXMCdVpn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BFC1F01565
-	for <sophgo@lists.linux.dev>; Tue, 30 Jun 2026 13:44:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CvmIMQlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE301F00A3D
+	for <sophgo@lists.linux.dev>; Wed,  1 Jul 2026 10:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782827059;
-	bh=PTgTBVx6F2sw1dT8/Wpsaw/p93LgkfWgt2++tnwdsew=;
+	s=k20260515; t=1782902348;
+	bh=q4Mw1ewD/jb3yXkm243uxaRWKqoUXL01sdFnsTQHgvY=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=YXMCdVpntJnB93OzkvUVDbtYFd5zhX6pWrdfMuh2JCwfvuYS4n1e7MUgDjDc7Ox4t
-	 s6th2MipiElRnWHqws9n7L/cj9offTB/GKb3qsHlugOAtLecitT0cneyhDagFiS6B1
-	 2OMwTRqTEtXpBfNywSUPHXLxwqAqhoTI5AmZNel9mDUAg0RznYYyBhcXxVje6V7rBB
-	 kMQkHkNLoixA4SJRMtRN8KNDkTVz14wg5vSiv4Va/CllGVLgpz17B+G6SY4lQ6N32l
-	 JCjx0VVRdj91MSRW5CMXNffi/RGslJBYsxhbcNyVHWF7xY8WhqIbBdFW68U1fhhwTV
-	 tCC/dXQCAbdrg==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5aeb18fe7ceso2102694e87.0
-        for <sophgo@lists.linux.dev>; Tue, 30 Jun 2026 06:44:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rqtqr/NpS0ZgKd+UriGWkuZhX8UL1KDDgrkAYRISpDliyvL8ymnzXOz0j6fbujWq5cccisbma4=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyuOAqVrPVsPBNjDpLHxqJxCTcasfPmXVSoM0/evMFFzDOoKV08
-	7aH+t4DML/S+cm+W9QJQotE+xZLPiGoqwCD3VN9AYsqwyGTC1tQBAlpjVjblz3Bzj5bwulnHXiB
-	DEq76T3oe5gcIwNFGye3J8dqb1EoiKmIksPC2fYG5yQ==
-X-Received: by 2002:a05:6512:247:b0:5ae:b36c:81c7 with SMTP id
- 2adb3069b0e04-5aebdbd6a94mr630626e87.35.1782827058195; Tue, 30 Jun 2026
- 06:44:18 -0700 (PDT)
+	b=CvmIMQlpDPun8oKUF6snfTgD5R960tQ39+Ad7gri+Glzo8M3xcUmIR/X/ChVXo/NM
+	 LoBkt8GTKKxOJnKW8icgGzjR+KTlrxKeiu1OZOpzSQ9BahiOOvwcXZ6Uz2w8/KYIqt
+	 5VJj7HSvLi0ub+uEPGKsvoJQROh/cFbWhe+FazUqVutSc5DVw944YTwxbbd7aZB3z4
+	 2JWwgkQM538t/UZSdLP8CHDFRFmJw/hlH1T3TwFf1xJSvK8HsTtarZ2Y0umGA0QNZc
+	 v4REPnfaTuzUCQABmQV4nHd2lj6bZ8npdl9tiDVtlygmu9uuzv8Jy9bVpHCYrzBRSQ
+	 +5m7bRYHZ8lOA==
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5aebc8cb5bcso355319e87.2
+        for <sophgo@lists.linux.dev>; Wed, 01 Jul 2026 03:39:08 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AHgh+Rq6zoiMATAxyP2FaDo1Ny2JvBIygtwKBsECeRyRog6829qCk7KMhl2xTCtM1VH1tmf2gcCVVfg=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwLnh4TMQL2GUHUdWmQycSqjodO//iThQcPgIyr5/c9q+v6ZCTG
+	d1s2JAD0bpSvtfeUK/0KeGh/7/3/Nx0jUBicUXcYHllr/QcFcoW3RNxjy/ocdInY7a6tjseb+Gq
+	WwZmKmFENfikS+LJgPqRFZmTmxoFZYI62NtB3o2Tu7A==
+X-Received: by 2002:ac2:568a:0:b0:5ae:9fb4:6740 with SMTP id
+ 2adb3069b0e04-5aec742dcbemr246886e87.46.1782902347033; Wed, 01 Jul 2026
+ 03:39:07 -0700 (PDT)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Jun 2026 06:44:16 -0700
+ HTTPREST; Wed, 1 Jul 2026 05:39:04 -0500
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 30 Jun 2026 06:44:16 -0700
+ HTTPREST; Wed, 1 Jul 2026 05:39:04 -0500
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <akOZFIowVvprnAMf@vaman>
+In-Reply-To: <CAMRc=MfgAB8bc6PD-6jw_KR0uNBfH+PO2XtCeL1SUF2nCiT0xg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -51,17 +51,18 @@ References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com>
  <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
  <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
  <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com>
- <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com> <akOZFIowVvprnAMf@vaman>
-Date: Tue, 30 Jun 2026 06:44:16 -0700
-X-Gmail-Original-Message-ID: <CAMRc=MfgAB8bc6PD-6jw_KR0uNBfH+PO2XtCeL1SUF2nCiT0xg@mail.gmail.com>
-X-Gm-Features: AVVi8CeqiAShkPsoXNMgDMxOo0pT0xgKjAcbHHtz1YU8sQeDIyMdI3B6eTWFAXU
-Message-ID: <CAMRc=MfgAB8bc6PD-6jw_KR0uNBfH+PO2XtCeL1SUF2nCiT0xg@mail.gmail.com>
+ <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
+ <akOZFIowVvprnAMf@vaman> <CAMRc=MfgAB8bc6PD-6jw_KR0uNBfH+PO2XtCeL1SUF2nCiT0xg@mail.gmail.com>
+Date: Wed, 1 Jul 2026 05:39:04 -0500
+X-Gmail-Original-Message-ID: <CAMRc=MfA3OuuUUb063hAaN-0Byt=ToEf+uLtcR2DoqED6dZ+Nw@mail.gmail.com>
+X-Gm-Features: AVVi8CdM4YB1YNAKK21RhumfGngKAr8KUFWynreeOPd7b_5_r_J6FsxJ2sTmC58
+Message-ID: <CAMRc=MfA3OuuUUb063hAaN-0Byt=ToEf+uLtcR2DoqED6dZ+Nw@mail.gmail.com>
 Subject: Re: [PATCH net-next v11 1/7] dt-bindings: phy: document the serdes
  PHY on sa8255p
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Bartosz Golaszewski <brgl@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
 	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
@@ -82,28 +83,37 @@ Cc: Geert Uytterhoeven <geert@linux-m68k.org>, Bartosz Golaszewski <brgl@kernel.
 	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
 	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
 	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Tue, 30 Jun 2026 12:23:16 +0200, Vinod Koul <vkoul@kernel.org> said:
-> On 29-06-26, 16:51, Geert Uytterhoeven wrote:
->> > Russell King asked me to put the PHY logic for SCMI pm domains into the PHY
->> > driver instead of the MAC driver where it was previously. Instead of cramming
->> > both HLOS and firmware handling into the same driver, I figured it makes more
->> > sense to have a dedicated, cleaner driver as the two share very little code (if
->> > any).
+On Tue, 30 Jun 2026 15:44:16 +0200, Bartosz Golaszewski <brgl@kernel.org> said:
+> On Tue, 30 Jun 2026 12:23:16 +0200, Vinod Koul <vkoul@kernel.org> said:
+>> On 29-06-26, 16:51, Geert Uytterhoeven wrote:
+>>> > Russell King asked me to put the PHY logic for SCMI pm domains into the PHY
+>>> > driver instead of the MAC driver where it was previously. Instead of cramming
+>>> > both HLOS and firmware handling into the same driver, I figured it makes more
+>>> > sense to have a dedicated, cleaner driver as the two share very little code (if
+>>> > any).
+>>>
+>>> I think you are mixing up DT bindings and driver implementation?
 >>
->> I think you are mixing up DT bindings and driver implementation?
+>> Should the bindings change if we have different driver and firmware
+>> implementations? Isn't binding supposed to be agnostic of
+>> implementations..?
+>>
 >
-> Should the bindings change if we have different driver and firmware
-> implementations? Isn't binding supposed to be agnostic of
-> implementations..?
+> The way sa8255p implements SCMI is with SMC exclusively but - since even base
+> support is not yet upstream -  maybe it would be possible to expose SCMI clocks
+> like some platforms do and reuse the same binding.
+>
+> Would it make sense?
+>
+> Bart
 >
 
-The way sa8255p implements SCMI is with SMC exclusively but - since even base
-support is not yet upstream -  maybe it would be possible to expose SCMI clocks
-like some platforms do and reuse the same binding.
+Scratch that. The firmware on sa8255p does not expose SCMI clock protocol, we
+can only use devfs with this PHY so it's either the same binding document with
+different properties depending on compatible or two separate bindings. I prefer
+the latter because it's cleaner.
 
-Would it make sense?
-
-Bart
+Bartosz
