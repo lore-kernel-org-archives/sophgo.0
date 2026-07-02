@@ -1,131 +1,266 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC68647CC96
-	for <sophgo@lists.linux.dev>; Thu,  2 Jul 2026 09:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A634EA370
+	for <sophgo@lists.linux.dev>; Thu,  2 Jul 2026 09:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1782985501; cv=none; b=RVvNza6o+gKK5Z7E8ZbGcpKVukdIVaANE+mZ9hWiUga7nnrnLiu21X2+SDA8rq3V65IxFYycpPXObXyoFSbGnq82WBynkLbKPhDXLDDI356H3UekCM3uWyiY0neC3blJhBflIBEcDC8fCIVRvXNqv1dhizGvgk+hu0IZ+Crz5Ds=
+	t=1782985921; cv=none; b=Gf2QX4FTB+vLpDHolRragm+y8BnbkkV1rgHmgHCed4Q1Q1cbjBwZ+J3UbXB9DqGwexUIeV51eO5Y//22kNnhbBrRc0GvLKWZhg6aRLMHoS5yEgBdPIOnuu5egMwVu80pQXKUvYvcTf9b4wyMpdQS3KrClkm8UN2VvMlwSnDKXfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1782985501; c=relaxed/simple;
-	bh=ECZSUW9hSj34SFz4G8bfbFkApIByTwPPDgQgHBlg2lY=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DxmmQsFDjbh3W1Wd12uGWLupT/mzqyOFeWmCTguUqjABqDdRmcpQsPFLmQInuZlXqFJrpLMw3cIUxtkHqGaBfJr/ghoMjHyqqQZiZbd7pWydwQcOLlWQ2yNJGcs3MBYIOwAe758IVY71rY83mWL1H16x7FHh2AP6iIqAXGYOc3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CM1pHfbL; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1782985921; c=relaxed/simple;
+	bh=Aa+4CLq/1lEPi+3KENlRBYE/WUmOxjgIgxXkSN2a0b4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qqC0ABVUa/iYAxtECYll6x/CG3j3TSjnElrSM1U4Lax+esv+DCnTIp0CD+gEQ2D2PJAwMxH/ivHvsX9og4x5w+Huhq7hWasXPPwLFBMdyBlVZZ+/SFNOB7yUUDnIS6pf7TLG/gHlnlrJp9yw3HcfG4sf6+DkZLVNegH0jDaF/Gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NlaTG6XR; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CM1pHfbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C9731F00ACA
-	for <sophgo@lists.linux.dev>; Thu,  2 Jul 2026 09:44:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1782985498;
-	bh=ECZSUW9hSj34SFz4G8bfbFkApIByTwPPDgQgHBlg2lY=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc;
-	b=CM1pHfbLgxMYkSotRohphHAwfHiS2Jq6WgdNtLNVx9uS9WhtbtNpBou5sFbv3Zfbs
-	 t4EYEkBRrQ2RPOdC3sKXIYU/bXdz1i/2PmuYsFxoCMwyYQGcvrEq342mZyLtAsgOpG
-	 w/sfT7k5FjdRPizXj5j9sXzzoLSxaH4bXp0ZuISOJV1Aj9GCea4PDHBExCwb2cLFYk
-	 vD2m1iI2wTjiyqshwUVGQuj011ZBWZgfKMQS8l8tVqa50gCgevokuKhUvpXzlG1EZ+
-	 4tnuwDISjYXV/puQzCG1Qd5pr3KEdBJbwvMtN8gpQX6Ik/85EwSf3YqBWFGGYzSx4P
-	 2QjvHhzDq8Dhw==
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-39b26e2ad5eso15192141fa.0
-        for <sophgo@lists.linux.dev>; Thu, 02 Jul 2026 02:44:58 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AHgh+Rp6OwC028M4ZrRdYOmUechT4FMupxSDA5raILip/63eIO/nbC5bB0PAk0rp3qolvq3g6xQuBVs=@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz+3L8Ywqv93j3DbJwdBpcfblDBtKNK0hcOQryyOOsbvhWZebqV
-	df2pMDAw8oUTtwmLCJ7ykqVo8svTj6vdztiPcWm3UqU+gP1qXAf3IDhpJxK9rZw0z9H/AURL+LW
-	+hTQyhsqGOLT88UANjtV/kWChfBJQSHKi5wMS6YhIIw==
-X-Received: by 2002:a05:651c:2129:b0:39b:128e:ae5d with SMTP id
- 38308e7fff4ca-39b36e539cdmr10506381fa.9.1782985496830; Thu, 02 Jul 2026
- 02:44:56 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 Jul 2026 04:44:55 -0500
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 Jul 2026 04:44:55 -0500
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <CAMuHMdXNG=C=XcioQUEN1M7cQgKhO0AxUyg5X+TWb2rQ3-H3fw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NlaTG6XR"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-847a483e344so417203b3a.0
+        for <sophgo@lists.linux.dev>; Thu, 02 Jul 2026 02:51:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1782985919; x=1783590719; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=YDRpB2DKaayDiWw9YLXhH5c/W2DOhBpZscwPdMD2aSs=;
+        b=NlaTG6XRtmvy0LlmxkFPel0PM9kskgWxKnAKA4ZDtsjvB+8j108N1m7WHb0xA71KMG
+         RtwNHRaTRhO42F3muzbRds0efGRZR2vcslnqvmz1uLauBAlN0NJ7QqlNg+JGzW6/SaDa
+         jnGnki5XZnR9TIfkt31WzVlYOOXMTdzb85Hy/XAn7F1l3JkEmhQzwD3Bh6mv6Q/DFyUJ
+         b83pJt4GgoAuSn05F0PnZ8RXPvIqixloZwmlMj8cKyxgBGb8WZ3/WTI96uZXw0fXGN9c
+         DyzUENcPR9O5NqLUjXqYaa993k77c23RI6ttQOzLFQmSh8bqJkZ+r7yLcuRPw+vVFeGj
+         +iJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1782985919; x=1783590719;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YDRpB2DKaayDiWw9YLXhH5c/W2DOhBpZscwPdMD2aSs=;
+        b=gcYLAk+wdDxGx92+DQIm7KUX4ky93gmTbu5a8Ub078sHJScebQB0kBOWplPiZZCJwD
+         mZbsCp2yQZKobqu2F6QHIjTp6PW7z9vtVSdstBk6ABoRuW/N0cdEG6R/0WuD1az8dvjt
+         qeubC67BP+kvrH453W3JTWUWF1vPDC4w4+vN7coc7hycc9UEILxnNcTaOLvzWtaM7V1I
+         WrNhxJN4YAc6dyChh9TSDBa0AZ4xEa8GR0PiZefPqAvMco+ulGZXllkFr9frjqF60pNf
+         Q+GMKYzq8ABNTOZtzj/dV8P1HIFeLyVPz5E2gwxxfUNlqqTG34o8B2iaFHigsRx6HLno
+         W9UA==
+X-Forwarded-Encrypted: i=1; AFNElJ+cUlqsJAdVxvOj4/mLWBpttD2X0sNbWx7ogaz2KP8c4BTdyVA9NsuLWocwneLArlMOGYz+g/E=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxKr9iPD7QBjHxYkbxk3NN86oWSSJIfqSwi9DuBv45vEn9qkeCf
+	F+mSDY9dpSlNZGx2eXjwXg/wZs9q4/eAUvFhzA7yd0BcOT44AJUkYljy
+X-Gm-Gg: AfdE7cmggSDzG9ZzuxAFFy/QKaNAPX6s0A+fbd/A9fVU+qC9pxbdzeVBpdAn/RL2sJ9
+	uokr0MnqeFMToUhj/Tim1Zmb5uvn/M8I+0vhzRT2j790DdHWyZSm6uVidKAA36zC/VX/TvODuE7
+	A7zVCVuZfRYkPB7DdD7lMtd7+1lCHo78jZe22aB07L57nLT3SFaVDfnkCwCO6rVDd3laR4uCa81
+	lEZvIR4edtCGT4Uuwljx8taxwDWAj+h+5fz5yDtf4buJwMqEGdIAu3xxxbfIX0CqOh6/jJK529/
+	gI9JaOlGhIYNBayK548QF6hAgWnuzPjKq7ptmKE0uAlZ+vi4R1Mm8cpxe3K054xnfrLYoeRz51g
+	YgpppC5nuHSZBfH8hOZI4RyNWKFaT65oc+XZoCNE1VhuP+05RCKQqsaLZJ2/JA8FS
+X-Received: by 2002:a05:6a00:13a1:b0:847:8bd0:1b96 with SMTP id d2e1a72fcca58-847bf9d4b0amr4742033b3a.23.1782985918713;
+        Thu, 02 Jul 2026 02:51:58 -0700 (PDT)
+Received: from localhost ([2001:da8:7001:11::cb])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-847cb7933e1sm1069821b3a.26.2026.07.02.02.51.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Jul 2026 02:51:58 -0700 (PDT)
+Date: Thu, 2 Jul 2026 17:51:28 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Chen-Yu Yeh <chenyou910331@gmail.com>, unicorn_wang@outlook.com, 
+	inochiama@gmail.com
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, Han Gao <rabenda.cn@gmail.com>, 
+	Nutty Liu <liujingqi@lanxincomputing.com>, Longbin Li <looong.bin@gmail.com>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, 
+	"open list:SOPHGO DEVICETREES and DRIVERS" <sophgo@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 2/2] riscv: dts: sophgo: Add Milk-V Duo 256M board
+ support
+Message-ID: <akY0kY8yWAU_J3Eu@inochi.infowork>
+References: <20260610121026.1517621-1-chenyou910331@gmail.com>
+ <20260610121026.1517621-2-chenyou910331@gmail.com>
+ <akXbk7l9bZ_W0GLR@inochi.infowork>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260629-qcom-sa8255p-emac-v11-0-1b7fb95b51f9@oss.qualcomm.com>
- <20260629-qcom-sa8255p-emac-v11-1-1b7fb95b51f9@oss.qualcomm.com>
- <CAMuHMdXen+E-Ai51aWBa_KV9W8Fz2cQPpT-FG_kQ7akhrrYa_A@mail.gmail.com>
- <CAMRc=Me3jaZXiXa1sFXr=8Do4sCd+XN1pKTcWC8-0j78SjCkKA@mail.gmail.com>
- <CAMuHMdVUBgG0EFB16OxHisbxx-sBvDKvBPNZdpyDnmBrnX4ptQ@mail.gmail.com>
- <akOZFIowVvprnAMf@vaman> <CAMRc=MfBcOhbj=ETxy2Xz9o_nyzykrEhKAc3jYi6V5_jMZEE3Q@mail.gmail.com>
- <CAMuHMdXNG=C=XcioQUEN1M7cQgKhO0AxUyg5X+TWb2rQ3-H3fw@mail.gmail.com>
-Date: Thu, 2 Jul 2026 04:44:55 -0500
-X-Gmail-Original-Message-ID: <CAMRc=MfwB_51OLjX_19eagZ1m3UUM2iHny5rx6besR6+Np_A0g@mail.gmail.com>
-X-Gm-Features: AVVi8Cfm4QcPsY-kBu80DyHJVbYDW8Jkdy81l2_sPTIAALqyBLBgGUF_GjAGTTs
-Message-ID: <CAMRc=MfwB_51OLjX_19eagZ1m3UUM2iHny5rx6besR6+Np_A0g@mail.gmail.com>
-Subject: Re: [PATCH net-next v11 1/7] dt-bindings: phy: document the serdes
- PHY on sa8255p
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>, 
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, Romain Gantois <romain.gantois@bootlin.com>, 
-	Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Radu Rendec <rrendec@redhat.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <akXbk7l9bZ_W0GLR@inochi.infowork>
 
-On Thu, 2 Jul 2026 11:16:22 +0200, Geert Uytterhoeven
-<geert@linux-m68k.org> said:
-> Hi Bartosz,
->
-> On Thu, 2 Jul 2026 at 11:12, Bartosz Golaszewski <brgl@kernel.org> wrote:
->> On Tue, 30 Jun 2026 12:23:16 +0200, Vinod Koul <vkoul@kernel.org> said:
->> > On 29-06-26, 16:51, Geert Uytterhoeven wrote:
->> >> > Russell King asked me to put the PHY logic for SCMI pm domains into the PHY
->> >> > driver instead of the MAC driver where it was previously. Instead of cramming
->> >> > both HLOS and firmware handling into the same driver, I figured it makes more
->> >> > sense to have a dedicated, cleaner driver as the two share very little code (if
->> >> > any).
->> >>
->> >> I think you are mixing up DT bindings and driver implementation?
->> >
->> > Should the bindings change if we have different driver and firmware
->> > implementations? Isn't binding supposed to be agnostic of
->> > implementations..?
->>
->> I've thought about it some more and I believe this question is philosophical in
->> nature.
->>
->> sa8775p and sa8255p are *the same* hardware. I can flash different firmware on
->> the same Lemans Ride board and it becomes one or the other. Yet they are not
->> described by the same DTS and the bindings differ as well. I don't see why we
->> wouldn't allow the same approach for the this PHY.
->>
->> We treat it as different HW variant when it's managed by firmware - just like
->> we do with the rest of the SoC.
->
-> DT describes hardware, not software policy.
->
+On Thu, Jul 02, 2026 at 11:38:09AM +0800, Inochi Amaoto wrote:
+> On Wed, Jun 10, 2026 at 08:10:10PM +0800, Chen-Yu Yeh wrote:
+> > The Milk-V Duo 256M is a small form factor development board based on
+> > the Sophgo SG2002 SoC.
+> > 
+> > This patch adds basic device tree support for the board, including:
+> > - UART console
+> > - SD/MMC controller
+> > - USB host
+> > - Onboard blue status LED (connected to PWR_GPIO[2] / porte 2)
+> > 
+> 
+> > Tested on actual Milk-V Duo 256M hardware, verified boot to shell and
+> > heartbeat LED functionality.
+> > 
+> 
+> IIRC the led is not controlled by the small core, so the node should
+> be described in the dts.
+> 
+> I see the Sashiko does provide some good question, please check.
+> 
+> > Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
+> > ---
+> > Changes since v1:
+> > - Removed the leds node because &porte is not yet supported in cv180x.dtsi,
+> >   which would cause a dtc compilation error.
+> > - Retained the &usb node because it is already defined in cv180x.dtsi.
+> > - Cleaned up the trailing blank line in the Makefile.
+> > 
 
-I'll defer to DT maintainers then for that particular case because it affects
-more than just this platform. For instance: Qualcomm Nord[1] is already being
-upstreamed with a similar split into common parts and then sources specific to
-the SCMI and non-SCMI variants - even though it's the same SoC.
 
-Bartosz
+So why not adding the porte?
 
-[1] https://lore.kernel.org/all/20260526051300.1669201-1-shengchao.guo@oss.qualcomm.com/
+Regards,
+Inochi
+
+> >  arch/riscv/boot/dts/sophgo/Makefile           |   3 +-
+> >  .../boot/dts/sophgo/sg2002-milkv-duo256m.dts  | 108 ++++++++++++++++++
+> >  2 files changed, 110 insertions(+), 1 deletion(-)
+> >  create mode 100644 arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > 
+> > diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
+> > index 6f65526d4193..f9415c30a2c5 100644
+> > --- a/arch/riscv/boot/dts/sophgo/Makefile
+> > +++ b/arch/riscv/boot/dts/sophgo/Makefile
+> > @@ -2,7 +2,8 @@
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
+> > +dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m.dtb
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
+> >  dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v2.dtb
+> > -dtb-$(CONFIG_ARCH_SOPHGO) += sg2044-sophgo-srd3-10.dtb
+> > +dtb-$(CONFIG_ARCH_SOPHGO) += sg2044-sophgo-srd3-10.dtb
+> > \ No newline at end of file
+> 
+> 
+> Why you change this? Please do not touch unrelated things.
+> 
+> > diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > new file mode 100644
+> > index 000000000000..4cf441ab3790
+> > --- /dev/null
+> > +++ b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > @@ -0,0 +1,108 @@
+> > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> > +/*
+> > + * Copyright (C) 2023 Jisheng Zhang <jszhang@kernel.org>
+> 
+> I guess a right copyright is needed for your code.
+> 
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "sg2002.dtsi"
+> > +#include <dt-bindings/gpio/gpio.h>
+> > +
+> > +/ {
+> > +	model = "Milk-V Duo 256M";
+> > +	compatible = "milkv,duo256m", "sophgo,sg2002";
+> > +
+> > +	aliases {
+> > +		serial0 = &uart0;
+> > +		serial1 = &uart1;
+> > +		serial2 = &uart2;
+> > +		serial3 = &uart3;
+> > +		serial4 = &uart4;
+> > +	};
+> > +
+> > +	chosen {
+> > +		stdout-path = "serial0:115200n8";
+> > +	};
+> > +
+> > +	reserved-memory {
+> > +		#address-cells = <1>;
+> > +		#size-cells = <1>;
+> > +		ranges;
+> > +
+> > +		coprocessor_rtos: region@83f40000 {
+> > +			reg = <0x83f40000 0xc0000>;
+> > +			no-map;
+> > +		};
+> > +	};
+> > +};
+> > +
+> > +&osc {
+> > +	clock-frequency = <25000000>;
+> > +};
+> > +
+> > +&pinctrl {
+> > +	uart0_cfg: uart0-cfg {
+> > +		uart0-pins {
+> > +			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
+> > +				 <PINMUX(PIN_UART0_RX, 0)>;
+> > +			bias-pull-up;
+> > +			drive-strength-microamp = <10800>;
+> > +			power-source = <3300>;
+> > +		};
+> > +	};
+> > +
+> > +	sdhci0_cfg: sdhci0-cfg {
+> > +		sdhci0-clk-pins {
+> > +			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
+> > +			bias-pull-up;
+> > +			drive-strength-microamp = <16100>;
+> > +			power-source = <3300>;
+> > +		};
+> > +
+> > +		sdhci0-cmd-pins {
+> > +			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
+> > +			bias-pull-up;
+> > +			drive-strength-microamp = <10800>;
+> > +			power-source = <3300>;
+> > +		};
+> > +
+> > +		sdhci0-data-pins {
+> > +			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
+> > +				 <PINMUX(PIN_SD0_D1, 0)>,
+> > +				 <PINMUX(PIN_SD0_D2, 0)>,
+> > +				 <PINMUX(PIN_SD0_D3, 0)>;
+> > +			bias-pull-up;
+> > +			drive-strength-microamp = <10800>;
+> > +			power-source = <3300>;
+> > +		};
+> > +
+> > +		sdhci0-cd-pins {
+> > +			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
+> > +			bias-pull-up;
+> > +			drive-strength-microamp = <10800>;
+> > +			power-source = <3300>;
+> > +		};
+> > +	};
+> > +};
+> > +
+> > +&sdhci0 {
+> > +	pinctrl-0 = <&sdhci0_cfg>;
+> > +	pinctrl-names = "default";
+> > +	status = "okay";
+> > +	bus-width = <4>;
+> > +	no-1-8-v;
+> > +	no-mmc;
+> > +	no-sdio;
+> > +	disable-wp;
+> > +};
+> > +
+> > +&uart0 {
+> > +	pinctrl-0 = <&uart0_cfg>;
+> > +	pinctrl-names = "default";
+> > +	status = "okay";
+> > +};
+> > +
+> > +&usb {
+> > +	dr_mode = "host";
+> > +	status = "okay";
+> > +};
+> > -- 
+> > 2.43.0
+> > 
