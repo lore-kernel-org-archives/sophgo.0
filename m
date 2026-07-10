@@ -1,61 +1,63 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C103DC4DE
-	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 07:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9823E2767
+	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 07:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783670369; cv=none; b=G3noLvyO0jkB/fpqAD03H7OcrYEL+++FheYkV8WCCmSAXbUkJnCHw6Dlj5iNJz2zmpPAh5JgDAhyX94hJdjlaJ/6TQ3PdXk0RydWdRsuNfgancS8OlqQHsHN/1ZXydtKIO7V5aHa/VDLplIS407ej5aoIW1gQwwiF8gUF2ttBEE=
+	t=1783670376; cv=none; b=OLaFxMBnGjjPNHAUs8m/85pbHTUQ9lYnelCAjMm/KXEc/QX9h21tRFMpOif3yenXZzu9/AcuXFI4MfsfE1fTN8uGmZcB6zpasZkwUmoH6A8GojzxvxJ8aJ0S/EM5sCnU9RQvo/Y2xgBwwbs/FaJhEsGYn9ifT32E5E01yMH1b+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783670369; c=relaxed/simple;
-	bh=aOfRpLqaJPAJe/Il7ITGiReMsqW93goifJWQbOYSJng=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qxRdYG5ZrFjSVV+pUJzf8x7ElpAuiwWILarXnopI9r6KfhyudrmYbcDAIJ9q+xEHUN1bY5+Gv0Abtc8QusRWiMeDM1BjtkGleBOIkRNIilgb+itbmTkkAfjPSnpdPG6cVof6/KgBCleQJlSbfMdKPiR9CnD69sgOPmB6W/XJcpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LYg/DDgu; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1783670376; c=relaxed/simple;
+	bh=st8y4T5YN6SqtZtFwtiBYLCoyPi/Wo5ON08Qei/HluI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OvEHwwWn9OdGV2j1uRYO/aDlRp+2sjFAnZzeor03C7J32NaRBE60vDnBmIdmC4LIBQkcgo3mpCeNpOcNvo5JAc1S9gKsLuuSGkocMBPtMpaoEpTd+pgU4uI/5DqQWEpU9rIWgpIRsNDCx6icOcaa4kLdHnx+n0SGuaA5tDYv7mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=El7FM8oR; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LYg/DDgu"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2cac39b729dso1544415ad.3
-        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 00:59:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="El7FM8oR"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2c988e16bb3so2153155ad.0
+        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 00:59:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783670368; x=1784275168; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=1LGhozyiYsWCt50HZ2wp+cS9ho+JbwJYDGpb0yWaMYc=;
-        b=LYg/DDgufyj3mqN77WC3+xGsh3ub1zJ8LfHDmT47lnh5XhUIiTIDMrHatD0aUAiZ4m
-         HbEL7FPowMhOTcR9Q9XpHP88sG+MwERMqEF/W/1u2rIv/xvEpm9L+6T7sFRL7q6iB5pn
-         vUmkF/WbFEmuuPl6pxxBbesnA3wWGZq3R+lMkHRreD6KnIOglEwVX1V4RVMOhFSK5coZ
-         tevQN9l7hmCEcwmkOdVJnc5eylO3VnGxsNqbVq9WKLL72XdOtf9j5GihpttXntz1Lpaw
-         N3EgFgSi+0x99V2GmfHbSzH85MSDcXcKLlEqexDOeWC542F7zQnlYb1ZD9O3EzcrlUzs
-         OFag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783670368; x=1784275168;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1783670375; x=1784275175; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=1LGhozyiYsWCt50HZ2wp+cS9ho+JbwJYDGpb0yWaMYc=;
-        b=KUBh7zHqeWF4eTxSi8nSR03aL3zGZk/Hw1I5Jqu2jsAmtttmkUZ98NvUacAGCnUZzi
-         48OFfTqdWe7g3YIIa5A2HbMZult5DXgL04dTq5Kp1kpDJ0BctkDdb1oW0g7g5ftdOeRV
-         xC91uGJAe2h/aTc+x2yarTIqcEbjH4GcefIg/DTgLBBc6IsOzy7d/JPwTGj5S4FlUQTO
-         QR0M1WikXJJnIl5mUVu9OFkaIeKPZg0UawXsc2DhPZzumPDuB1RMlv7wgos0sfOLTgWV
-         N5U9bQ0Csyn4EprDEhObQQXfWEvM3xgbWseXKtSkMYDj+AdruadMBZFYKBLPRtfdca29
-         CKzw==
-X-Forwarded-Encrypted: i=1; AHgh+Rr9MgFkYaMFnoPmQw1+sRa7Jjf0y1JYfvAK9lBe8fBj3sngFtR7hARIglYBHBwoc+jBaL9s3LU=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwchM+PPQqz1+/GSowIuH85gBgrtQlKnZouUKcyaMpJkxYFv4zs
-	OJOuaDWBQ+YQv3ukJYuDSCm4uIktuDmcWbrTVMcf4tlZtQu7oLSWksmB
-X-Gm-Gg: AfdE7clsMAEUdg/wEqL4BO1z9qQDGhXuAUymV9VlANQPrurPveLwkmDqqC6bcS0+Ppk
-	IN4n3DXuOM2nBw68YOSCH3jIr71MAGpCu/ysy58U6ZuGkzxE6w+A1nznP+8nuLC9DYhpGIFGQ6m
-	F0bF+LnHVUWF4CtptJ70byigfKZEYLwWJB91TAPeLVQy3Ke9Cbn/ol6xRww5GZ9vKprneoqWRTB
-	mgYJEmMThH9fQ1Tnfgr+jqJuFDm/LtJwNlAQDwA3Fm+wb46Rt+pXZUXQeNx/NLXmkNTgSevVNw1
-	EUkUd5NNwJ/W4zW+Lz3iG1Q9lLPjweM5na4cvUfmqmb6L4z3J3FlS6NDqL67dYZNIZ03XcTlHNQ
-	QafryhIaEQ6Spvep2QWYXEa9BhN4JapXVw47RoIZQxL/mf5HMnRlEhygDR1OMG1FX1250KxYz4f
-	r/teyS2csI4mU46zs=
-X-Received: by 2002:a05:6a20:12d2:b0:3bf:a543:e7da with SMTP id adf61e73a8af0-3c0bce50f42mr9139492637.3.1783670367797;
-        Fri, 10 Jul 2026 00:59:27 -0700 (PDT)
+        bh=qvjNxqwnoH3kM1IlyzkqqQUMkDcovkXPiLWFB1jUKmE=;
+        b=El7FM8oRm9tOuDG+2OPHfxidsQw0Mi2dhs2z83YLm0Gf6CQk9QpH720MpgV51S+zXv
+         57iXRttB7hcER/LOhPMIs2XjX1xCtpwk6UyMRGk/JLm43c0IDCs0N0Tw7sJ11icgKk5s
+         hrlW78lQVonDFWDbGAt1JgXffe/iAgBjG3dd33NXAE8c2PnnMw5q5ALEKha8bQ8hg0RW
+         JQIpJ863xdmjpE6oWAsSGCbRnJ8GHCl4iOlCvcpebwQ9OMLqbsg1lVX0MZxPBUrZeKOR
+         WZI8FdWbkK15qAf7STzbi2B756s77QBCRHDxmTjSfBX2EMeRYFZAAPSxPjOtPZnv6Z7c
+         kZgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1783670375; x=1784275175;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=qvjNxqwnoH3kM1IlyzkqqQUMkDcovkXPiLWFB1jUKmE=;
+        b=Es3UI1V6EXlv8jyPkjofeUpvbsz1XDdXVa9XNe6tFpRFxspPFsjvACehH7BFeEVM+7
+         sjicSudYzUXRWpb+vsA4b0cLromF6fzTsuONInI6izJZH1SpmWBr6W9fLcWnZD0CwrGi
+         WcvcPjLdjb+L6xJbRHkngVUM+IzyvGQHfrF8d/qPtgXV7Tn8Gb4tWZDNB3zv7gew2c9k
+         TOy2vbHLdzC4eE9MbzSbs0l0hoxfmAczR3/gF31CRrjT5M9JrUmiXWLz4a0HqYGMC+zg
+         gKSR0rsTlMCWZBJHkuhQNMDid7X1cLcujRDZcAdoLPA0SXdbb9zzOoOFAA7FThPkLCNs
+         rKmw==
+X-Forwarded-Encrypted: i=1; AHgh+RrUQcPHsA1WgeQVP7d2MTRsqRi6CWOZvY/IdjePPOajUoxTauUZOwBG0MiXQYyzNtHZZXNcLG8=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw0YSek9llFL4Pea2DRflP7yj6L9O+mK4XdjwGbW6wmUvJfUkB2
+	VaDiAsB8mIPCx4dE9gmyNBhQKbuN7O959ZL8HNBEp66aH2KHIlvitxI+K+TX4/Zc
+X-Gm-Gg: AfdE7ckQu2y5HtIsN4I4NUokd9i3co8x1TLs5/j8g6TkD6HMiBrf+xTz26A9rvlu6JN
+	5JfoZgxcBaHGcoQT96Y1jMs2fniGemcQ5YojD5TlBiJT5sDWbVdRdtM7+9L0aS0gbzACCOKEn9v
+	kAeBhVdi0GyFZ0wmLJZTNjT3zOaJ5j+grBpzX5oLBMJaHXRWp/Dd9HwuT5t0NL5L3ZFrDJ2eYhQ
+	vx4QfYuUit2zhReTr2SdMSbpaJJ3FaZIaAYLFGLqU6ak8TtsHQxo0TGlAsCrFUvc86HbgW6v1hM
+	E9Ug7W6ajwMT3PiLjrHB2yk3ovmtjAuF2Hi8MlApy5zhRhw5MFE0709pacj9NymH1ZXtLnDNvNa
+	QLRdNQBbZTQPITaWQ5boQhGrPRWEP3289vKcpJI3VEn/ORH/ccRcQrKIV8bjURgg3MG0Hf/9avC
+	zNCMBzjVu3R1/ABEE=
+X-Received: by 2002:a17:90b:3881:b0:37d:f70f:fbf8 with SMTP id 98e67ed59e1d1-38a1c1b0a81mr5870558a91.0.1783670374731;
+        Fri, 10 Jul 2026 00:59:34 -0700 (PDT)
 Received: from chenyou.. ([140.116.78.205])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31198cb2b99sm19044999eec.26.2026.07.10.00.59.23
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31198cb2b99sm19044999eec.26.2026.07.10.00.59.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 00:59:27 -0700 (PDT)
+        Fri, 10 Jul 2026 00:59:33 -0700 (PDT)
 From: Chen-Yu Yeh <chenyou910331@gmail.com>
 To: Chen Wang <unicorn_wang@outlook.com>,
 	Inochi Amaoto <inochiama@gmail.com>
@@ -71,10 +73,12 @@ Cc: Inochi Amaoto <inochiama@outlook.com>,
 	linux-riscv@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
 	Chen-Yu Yeh <chenyou910331@gmail.com>
-Subject: [PATCH v3 0/3] riscv: dts: sophgo: Add Milk-V Duo 256M board support
-Date: Fri, 10 Jul 2026 15:59:14 +0800
-Message-ID: <20260710075917.159969-1-chenyou910331@gmail.com>
+Subject: [PATCH v3 1/3] dt-bindings: soc: sophgo: add Milk-V Duo 256M board
+Date: Fri, 10 Jul 2026 15:59:15 +0800
+Message-ID: <20260710075917.159969-2-chenyou910331@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260710075917.159969-1-chenyou910331@gmail.com>
+References: <20260710075917.159969-1-chenyou910331@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -83,44 +87,28 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Milk-V Duo 256M is a small form factor development board based on
-the Sophgo SG2002 SoC.
+Add compatible string for the Milk-V Duo 256M board.
 
-This series adds the board binding, the PWR_GPIO controller node for
-the CV180x/CV181x family, and the board device tree with support for
-the UART console, SD/MMC, USB host and the onboard blue status LED.
+Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
+---
+ Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Tested on actual Milk-V Duo 256M hardware: verified boot to shell,
-SD card rootfs mount, USB host (root hub detected) and the heartbeat
-LED, both via the default heartbeat trigger and manual sysfs control.
-
-Changes since v2:
-- Add the PWR_GPIO (porte) controller node to cv180x.dtsi as a new
-  patch, instead of dropping the LED node (suggested by Inochi Amaoto)
-- Restore the gpio-leds node for the onboard blue status LED
-- Add my copyright to the new board dts
-- Drop the unrelated Makefile trailing-newline change
-
-Changes since v1:
-- Removed the leds node because &porte was not supported in
-  cv180x.dtsi (reworked in v3, see above)
-- Retained the &usb node because it is already defined in cv180x.dtsi
-- Cleaned up the trailing blank line in the Makefile
-
-Chen-Yu Yeh (3):
-  dt-bindings: soc: sophgo: add Milk-V Duo 256M board
-  riscv: dts: sophgo: cv180x: Add PWR_GPIO controller
-  riscv: dts: sophgo: Add Milk-V Duo 256M board support
-
- .../bindings/soc/sophgo/sophgo.yaml           |   4 +
- arch/riscv/boot/dts/sophgo/Makefile           |   1 +
- arch/riscv/boot/dts/sophgo/cv180x.dtsi        |  18 +++
- .../boot/dts/sophgo/sg2002-milkv-duo256m.dts  | 121 ++++++++++++++++++
- 4 files changed, 144 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
-
-
-base-commit: acb7500801e98639f6d8c2d796ed9f64cba83d3a
+diff --git a/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml b/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
+index 1c502618de51..fcb1d905da7d 100644
+--- a/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
++++ b/Documentation/devicetree/bindings/soc/sophgo/sophgo.yaml
+@@ -31,6 +31,10 @@ properties:
+               - milkv,duo-module-01-evb
+           - const: milkv,duo-module-01
+           - const: sophgo,sg2000
++      - items:
++          - enum:
++              - milkv,duo256m
++          - const: sophgo,sg2002
+       - items:
+           - enum:
+               - sipeed,licheerv-nano-b
 -- 
 2.43.0
 
