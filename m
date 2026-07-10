@@ -1,156 +1,320 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04D03E5592
-	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 08:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783670595; cv=none; b=j4i+wyhQOlxSyV+DU8o88tDWj4+Hndx9ecHQskdxFcse2IT+iFVWSr1QkSiJr8JLi9VGZpEVRawuwRcd1mWZTInqHjNgZWZiY6LM3IO7xT5bVGA/5KvrAGakJF6W9rMUCAr2To5j7iaivXH7qL8nAJMtkoywLs/Y196nc0N9xLI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783670595; c=relaxed/simple;
-	bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eqW/bLxdBxKut3eWI09otM+UN3OncsyA8EBJo3d4UwVONLDVXUKiJMa/nRgWWsolqXXCwyyJaZcxjtjSdE1NNOrZFS1HGo1vzh4q+6MqKq5sXhtGO+S9bEI6a1tu6QmFIovLsb/OgTWurx9Qm8lVo9jlb3BbHqQle6Ui1KQUYBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=IljZosE6; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13DD39EF23
+	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 08:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1783670873; cv=pass; b=nXIgzHGb0gqcsEBOP1P7rWZQEmTc5tCOivS1tWr8S6qdRLJeMclfSA3sMrq+BVU4ICshmH6gFdIQh5T9Rq6A4+CZ7uQBvKxE6X5cXFUtH/MSJjI+0ATNgSgCtKpTg50K4IkhaNAEELGZdsdk8BoizlWXDTNe+VHUO3KZyqKjM04=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1783670873; c=relaxed/simple;
+	bh=wTtqfla7t4frqqNGoHQFYc3eEfTem+rU1Jgc0zBxbkM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mHSkd4OR46Er27JSbpf9dKatHCvQOZhRqhKqMpVMPmjcqZs9HlKFeAyzalIkCRqjc6e6Y2eS6nYCTBRWOla02PgIE8m5b+YXPSJPhzlwKAhI/fVMtNrIklvoDEcfDsDApAicJrspO1ivxf4YGuzdXqzKKbW04gAwWja9rf9w4N4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dJAtCgkp; arc=pass smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="IljZosE6"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493f4638f4aso3201245e9.3
-        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 01:03:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dJAtCgkp"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5b014810feeso62602e87.1
+        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 01:07:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1783670870; cv=none;
+        d=google.com; s=arc-20260327;
+        b=oiShmST8wQf6C7GGOS7UIZbCenLbWGfNVVEzL9A+pgRjF3TLm/EDomj1X1dsRPSbvg
+         b+DPqu4R/84fIw84ftWzcQyNY5+VIqZaJ/WryhvtmJJrvZoozHLTxn0BE311/cFXfFZ9
+         fMQrIeyQ5dPJCL3oEHgnZ/A/rjPVfPtXO3KH5O2SrEJJTMv4VzPH7IXNdhFZnk8MYA8Y
+         QP14GwRcX75F/pgH9rc0Y1HQPFMst4YiBrO8BOhelzmHqaN8WXo0X0jgtg07SxryWp7t
+         cpVujZWAnxffCRbLKu6e/WjNjI9x5U0CiRmX/WDGTSX6PHeYGezyF78Mp/+LNWKLAwSB
+         nyhA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=TgIAhkPb6XKhj25HpT0x9mH8xBPfiqrepZEoNGtW/O8=;
+        fh=5RfmgmnqH4N/9CFvw2kEHZRZmBJ1PPYo7Ib29CjVtTQ=;
+        b=oGOXMc81LznlhRDeBYrx/BuiItEQJRlTJbUtMvUGR5sZiV4NHIE2EK3T0qs7RQuPt9
+         AJ3O35wWouPRAihY59o/rntr+p0/e5RXKUQ5X0VDWftpWHaWpWpCeRy6SfPqHiyZzV4A
+         gvDKpQtELSujR33Jr9uIZ1IHfEJrUiHK99whPy3Nksw0Yte1JA6m5IlwchasoWk8Zexj
+         wi9eSr/6DlMbLET3x2AVvyNSVXyEu9/wnlRMVuCwLzNqdPxFPgVrXC+kx1m1s5ZKEV2C
+         m19kg6D0WT/bk7dC8C9EEClIj2/9Y/NtOrxMyOzGNX91LGo+LJEzi+e7F/2n0LGc3M39
+         /EiA==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1783670591; x=1784275391; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1783670870; x=1784275670; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
-        b=IljZosE6QWRG5Wb6zWVuDa5ameLKZX0nKC4pnbAkoFHk+hBfnZ1zUxEDNqgLIlKvmZ
-         BS+/7Bs30OLBnKXLntvHmhvZeyAGXgpN9nr+0pJm+6gl/Qp5AVFtt+dlpwNQcd2XpFWM
-         R6VX2Zl3ZP96P/vokbQQE2BHDcinlac/Va3ZNebvhxuOuCmjfguRXgHnjA9TSACLqDF/
-         5QwtJxsxzF91ZJ6y6z2fvQAnNdZfHfD03GimcSypb525rsMn5JALpfc6bD5E8zxIZ5z2
-         MYqgXJJMPNYZqJnQazx92TZOtraPpQxDE4xCeEBI1SDN8uNZ6bJqyy8QFsCw/NVGa29P
-         dwAw==
+        bh=TgIAhkPb6XKhj25HpT0x9mH8xBPfiqrepZEoNGtW/O8=;
+        b=dJAtCgkpjiBRJ/jl2crQwFaTmxnecpQGfQVVfn6IM43J2oAAGcEWZtU6tqOIJ+sXhN
+         wXJGRSWtV3E6th5XUZaDlQ/RQ5hM2XCrEDimLduWbJHK4QzizX6zNM666HrAOhnq2igt
+         f1I/dR24i7ZJIp9PEMYmgT+aeIZKIIxS0DtSF//dF8+X3rLHYh+qHjpnUSOBtmOYRYAR
+         taLbLol3OvtAUzVOZxdbjbn816FibG4k2JFdP4CEgAzGvVx0OH7Czt6n6Fx6L1aNaPeu
+         z1bcei9A2uIpjwRmxG12vjGv+KbFrLe+9hzfbMlgXYsT+MINTIZl6sMjjl0obm65aQyw
+         VVQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783670591; x=1784275391;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1783670870; x=1784275670;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
-        b=Fx2267cWeS40Vhbax3yxC9oE3owzjSVbvakXYcMo3uc6+jyZDHQ41xhca3ko1c/4fF
-         MGlzsvYhuJ0+g+9o4mrX4v9JqfF7HUORieQUz+w4UHuldYlXD+jAXOUVrog9xTO9ELGV
-         IvSmIYXacFoDDY46q4YRmq5JeAuZxpwMELIrwStAbbP2ejHkHpwaXLDfXRM24IN8s+gd
-         Yedt1RFh0pVccfgWSBCQAYZx+msd7UpDtrUXgIaRP5jcRIm3FMqHV2gT3skhllH7dYXG
-         l88ZSQMf+Tzt/vtt2+FufqFEAZqqXryETj0zrOrac16UBVNORZz+ZDt0M83I9tXaZIh5
-         F4kA==
-X-Forwarded-Encrypted: i=1; AHgh+Ro7I4kQqhrD3vMzIq43qXlCsroF2kdmT1wHSZG91j6Efzqp412iiQsoKuxbx4h26blmwX0TYn8=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwnDU7RoucmUjrffyFNgbEFSG3m4d0ctaKlU+VUkZdB/5Q9afrm
-	o43OXwybgO6xXUOHkjk2WbSJlKCFA0xfxQ2+R7kxpJTrR4vf1w7+615zgdqX4CN4WPk=
-X-Gm-Gg: AfdE7cnAOsPwv/TiCkgsSm8JLYFZk8lkhzLMUfTZbRhXo2zkrxrsOR5797akuWEG3Dw
-	BPcvOKocUeP8GM3UbjJE5etjKSPR2YX/gqzrPfVzxxjczt8CwTIfcusVaFk9eMHkCW2xptBNAHv
-	cSnwHAceeYbYzhCm/bTj3gfXyRQOnpZKtHPOzxpqIhQClw++d10aSo59MmeZ3usZBOFsdxj4k8g
-	VofEQqRLziuGKNkqSzH+XNdJJ9e1ohrt4H2S5kGGqq+gz2soyiiRYeDKf8GchOvix0xcBt74oZQ
-	0i8HSo3cMbpfU+BWxUs0TZY9NWAA+uvjo3srilKCGD1jt5+bWcsMysn5zJhS5v8I1OS4DSQHSQQ
-	0Yzmzcgj6eSFwjgOU5wVQcGyJZ6bLSNhn9bHeFsig0yXoR7Vh0OCXIzBIKWXUpp/FptjYEIzxUm
-	0QvDV/dcA5jetSdbWoxc75pN1/kXg2zC+aG8vEZP7qmoY9WjjMsFRexdPJKseCXu6r3Wqa+0NiQ
-	Bvv
-X-Received: by 2002:a05:600c:e557:20b0:493:c0ec:9a5f with SMTP id 5b1f17b1804b1-493e68ddd9bmr75755495e9.19.1783670590951;
-        Fri, 10 Jul 2026 01:03:10 -0700 (PDT)
-Received: from localhost (p200300f65f47db04fbea22a44ee9ba38.dip0.t-ipconnect.de. [2003:f6:5f47:db04:fbea:22a4:4ee9:ba38])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-47a9e4d6e4csm55102028f8f.10.2026.07.10.01.03.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 01:03:10 -0700 (PDT)
-Date: Fri, 10 Jul 2026 10:03:09 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
-To: linux-pwm@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, Binbin Zhou <zhoubinbin@loongson.cn>, 
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, Neal Gompa <neal@gompa.dev>, 
-	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Ray Jui <rjui@broadcom.com>, 
-	Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, Frank Li <Frank.Li@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Paul Cercueil <paul@crapouillou.net>, 
-	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Magnus Damm <magnus.damm@gmail.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Paul Walmsley <pjw@kernel.org>, 
-	Samuel Holland <samuel.holland@sifive.com>, Michael Walle <mwalle@kernel.org>, 
-	Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>, 
-	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
-	Chunyan Zhang <zhang.lyra@gmail.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Hammer Hsieh <hammerh0314@gmail.com>, Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
-	Alexey Charkov <alchark@gmail.com>, Sean Anderson <sean.anderson@linux.dev>, 
-	Michal Simek <michal.simek@amd.com>, asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
-	linux-rpi-kernel@lists.infradead.org, chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
-	linux-mips@vger.kernel.org, linux-amlogic@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH v1 0/5] pwm: Unify arrays of various *_device_id
-Message-ID: <alCm-J1wRBnhoH0C@monoceros>
-References: <cover.1783263835.git.ukleinek@kernel.org>
+        bh=TgIAhkPb6XKhj25HpT0x9mH8xBPfiqrepZEoNGtW/O8=;
+        b=I/b53ScH0qtoGeo93VlCeoZzvumFXluV8wFZO2+X2nJndnHOiDm5KHp9Lr3r+ZkvrN
+         6S0dHXXFWV37E/2b52OjPA5oicnk4BJuD4HQzwL2KubUrbdxy0oEB3rnpmRpBq/BaN1N
+         txxIlikIfSf86tZFqHLnBoQKXWdgvOvbQvZHPUTHZh/RA6s6vOMMzzXNHIYUYxztT8XO
+         FUPBczEmH++/J1JTSH8IFyyhrBKEoVFQrGKm0NXh0VMva5IfriPq/7FvXan3GcmbElOs
+         uYsPjmNg+Xkg7Tl9XBuVPUeDhRRbGN4UZK2kHS9Zt4sD363bLOUxrOYjdVV8uKq7vECm
+         bGFA==
+X-Forwarded-Encrypted: i=1; AHgh+RpCFKeayuwHpOYpum6smrY3h1Kxd+no9rbfnYY0kVo3S1tfgvUs5fRzN7Dgm+7qKr7V3rICfH0=@lists.linux.dev
+X-Gm-Message-State: AOJu0YxA/MrzLVjrYKKvIUVJyudLYSYbh4kiviZ+y/nqBaMNcJLaNxPv
+	yMmgCTwn5SRIZiD4ZdUpgRid/E2XF0M9JZ2A8nHqbzp7lmrtlHIDs1Bg7c2iHJiduis/3dGALv9
+	ghFmmPyDWAIxDC8LsuTIk11c4cxQfH+g=
+X-Gm-Gg: AfdE7ckf7V5jmusno7Iu231CfKTy8Lzgx6xvbI+vL0wQg9pIZ4pHRVVWPnO0pQQ6+1Y
+	rSxC8oyYsFsml5p33mYKrJKcoYT6FvrqhH1wglTqu+m9Fiza5vkFtSsJ/Ez90pUQvFZTimv2Uo2
+	fYeFaG/tfn5Dy1p3/P3A4Y0gS07zpLDK4MDgEyYUF4ExpKwdB+MXMaZC4t+A9uEC28wkhSNRxtF
+	t6GnX5QL0Hu9lQknWDrW8fDrykRxBRo5raBjf8wSYdk0o6svDx9i8SxMF3gUepB75QmqCSf1qJd
+	13eBLktXnG66NAuxHtPuBzVr9QjSZd8CMRcxsNy8noYQP0hs8TqWrrc=
+X-Received: by 2002:a05:6512:12cd:b0:5ae:bce5:70f2 with SMTP id
+ 2adb3069b0e04-5b0115af09amr1512517e87.4.1783670869814; Fri, 10 Jul 2026
+ 01:07:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iuf5svn2mmf3pdwc"
-Content-Disposition: inline
-In-Reply-To: <cover.1783263835.git.ukleinek@kernel.org>
-
-
---iuf5svn2mmf3pdwc
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+References: <20260610121026.1517621-1-chenyou910331@gmail.com>
+ <20260610121026.1517621-2-chenyou910331@gmail.com> <akXbk7l9bZ_W0GLR@inochi.infowork>
+ <akY0kY8yWAU_J3Eu@inochi.infowork>
+In-Reply-To: <akY0kY8yWAU_J3Eu@inochi.infowork>
+From: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>
+Date: Fri, 10 Jul 2026 16:07:38 +0800
+X-Gm-Features: AVVi8Ce9_hFv5Od1y6yR0G_uNpXufYnnP2SE-D2gTTyzsrjnIVfqX1AeuRABS8I
+Message-ID: <CAKspUhKriysiFhu-Jk-e1u6+GBJjMV1A5a7WgiLjf=aTgTyA_w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] riscv: dts: sophgo: Add Milk-V Duo 256M board support
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: unicorn_wang@outlook.com, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Han Gao <rabenda.cn@gmail.com>, 
+	Nutty Liu <liujingqi@lanxincomputing.com>, Longbin Li <looong.bin@gmail.com>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
+	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, 
+	"open list:SOPHGO DEVICETREES and DRIVERS" <sophgo@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 0/5] pwm: Unify arrays of various *_device_id
-MIME-Version: 1.0
 
-Hello,
+> > IIRC the led is not controlled by the small core, so the node should
+> > be described in the dts.
+> ...
+> So why not adding the porte?
 
-On Sun, Jul 05, 2026 at 05:14:12PM +0200, Uwe Kleine-K=F6nig (The Capable H=
-ub) wrote:
-> this series is part of a preparation for changing .driver_data (and
-> similarily named members) of *_device_id to an anonymous union.
-> See e.g.
-> https://lore.kernel.org/all/cover.1780048925.git.u.kleine-koenig@baylibre=
-=2Ecom/
-> for the idea behind it. I also grabbed the opportunity to unify the
-> coding style for all these arrays while going through these.
->=20
-> The patch series is based on pwm/for-next + "pwm: pxa: Depend on OF and
-> simplify accordingly" [1].
+You are right, adding the porte is the proper fix. In v3 I added the
+PWR_GPIO controller node to cv180x.dtsi as a separate patch, and
+restored the gpio-leds node in the board dts. Verified on the actual
+board that the heartbeat LED works with the new node.
 
-Applied the series with s/iff/if (and only if)/ in the of_device_id
-style patch.
+> Why you change this? Please do not touch unrelated things.
 
-Best regards
-Uwe
+Sorry, the removal of the trailing newline was accidental. I have
+dropped this unrelated change in v3.
 
---iuf5svn2mmf3pdwc
-Content-Type: application/pgp-signature; name="signature.asc"
+> I guess a right copyright is needed for your code.
 
------BEGIN PGP SIGNATURE-----
+Fixed in v3. Since the file is derived from cv1800b-milkv-duo.dts, I
+kept the original copyright and added my own.
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpQpzoACgkQj4D7WH0S
-/k4qdwgAk8w911oLsA5aqycP2AV5trJAC5zx53mJ8LxbKoImqWjYyvmd9Kb5YCt2
-LPeZPEPqg6LIhPMbDp91hBWArDL5UUUJ5OfgC8/i0zK1+zWS0B+UPtXUGxzQOkwk
-stkrTAN5eVW7rhVy1AtT4N+EJVm4Y8958RVsmNi75/idP+gmhs7RdJg8zMdhrVVy
-M7XB5Q1zxVcmhsx5TDStZ8tzeFMsDbMqz0s0xVECWSq50U70IwD0Scn0a1BN68kQ
-+fZQMwGT3KhdqqmLJV44puWQoDqj8OwGeAuWJQykzluefOFNtRHtRhurlZQAUOrv
-W4X++IXkqXbyyTO72ousttS/RpH5ig==
-=4YUW
------END PGP SIGNATURE-----
+v3 has been sent:
+https://lore.kernel.org/r/20260710075917.159969-1-chenyou910331@gmail.com
 
---iuf5svn2mmf3pdwc--
+Thanks for the review,
+Chen-Yu
+
+Inochi Amaoto <inochiama@gmail.com> =E6=96=BC 2026=E5=B9=B47=E6=9C=882=E6=
+=97=A5=E9=80=B1=E5=9B=9B =E4=B8=8B=E5=8D=885:51=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> On Thu, Jul 02, 2026 at 11:38:09AM +0800, Inochi Amaoto wrote:
+> > On Wed, Jun 10, 2026 at 08:10:10PM +0800, Chen-Yu Yeh wrote:
+> > > The Milk-V Duo 256M is a small form factor development board based on
+> > > the Sophgo SG2002 SoC.
+> > >
+> > > This patch adds basic device tree support for the board, including:
+> > > - UART console
+> > > - SD/MMC controller
+> > > - USB host
+> > > - Onboard blue status LED (connected to PWR_GPIO[2] / porte 2)
+> > >
+> >
+> > > Tested on actual Milk-V Duo 256M hardware, verified boot to shell and
+> > > heartbeat LED functionality.
+> > >
+> >
+> > IIRC the led is not controlled by the small core, so the node should
+> > be described in the dts.
+> >
+> > I see the Sashiko does provide some good question, please check.
+> >
+> > > Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
+> > > ---
+> > > Changes since v1:
+> > > - Removed the leds node because &porte is not yet supported in cv180x=
+.dtsi,
+> > >   which would cause a dtc compilation error.
+> > > - Retained the &usb node because it is already defined in cv180x.dtsi=
+.
+> > > - Cleaned up the trailing blank line in the Makefile.
+> > >
+>
+>
+> So why not adding the porte?
+>
+> Regards,
+> Inochi
+>
+> > >  arch/riscv/boot/dts/sophgo/Makefile           |   3 +-
+> > >  .../boot/dts/sophgo/sg2002-milkv-duo256m.dts  | 108 ++++++++++++++++=
+++
+> > >  2 files changed, 110 insertions(+), 1 deletion(-)
+> > >  create mode 100644 arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.d=
+ts
+> > >
+> > > diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dt=
+s/sophgo/Makefile
+> > > index 6f65526d4193..f9415c30a2c5 100644
+> > > --- a/arch/riscv/boot/dts/sophgo/Makefile
+> > > +++ b/arch/riscv/boot/dts/sophgo/Makefile
+> > > @@ -2,7 +2,8 @@
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D cv1800b-milkv-duo.dtb
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D cv1812h-huashan-pi.dtb
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2002-licheerv-nano-b.dtb
+> > > +dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2002-milkv-duo256m.dtb
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2042-milkv-pioneer.dtb
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2042-evb-v1.dtb
+> > >  dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2042-evb-v2.dtb
+> > > -dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2044-sophgo-srd3-10.dtb
+> > > +dtb-$(CONFIG_ARCH_SOPHGO) +=3D sg2044-sophgo-srd3-10.dtb
+> > > \ No newline at end of file
+> >
+> >
+> > Why you change this? Please do not touch unrelated things.
+> >
+> > > diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts b/ar=
+ch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > > new file mode 100644
+> > > index 000000000000..4cf441ab3790
+> > > --- /dev/null
+> > > +++ b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+> > > @@ -0,0 +1,108 @@
+> > > +// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+> > > +/*
+> > > + * Copyright (C) 2023 Jisheng Zhang <jszhang@kernel.org>
+> >
+> > I guess a right copyright is needed for your code.
+> >
+> > > + */
+> > > +
+> > > +/dts-v1/;
+> > > +
+> > > +#include "sg2002.dtsi"
+> > > +#include <dt-bindings/gpio/gpio.h>
+> > > +
+> > > +/ {
+> > > +   model =3D "Milk-V Duo 256M";
+> > > +   compatible =3D "milkv,duo256m", "sophgo,sg2002";
+> > > +
+> > > +   aliases {
+> > > +           serial0 =3D &uart0;
+> > > +           serial1 =3D &uart1;
+> > > +           serial2 =3D &uart2;
+> > > +           serial3 =3D &uart3;
+> > > +           serial4 =3D &uart4;
+> > > +   };
+> > > +
+> > > +   chosen {
+> > > +           stdout-path =3D "serial0:115200n8";
+> > > +   };
+> > > +
+> > > +   reserved-memory {
+> > > +           #address-cells =3D <1>;
+> > > +           #size-cells =3D <1>;
+> > > +           ranges;
+> > > +
+> > > +           coprocessor_rtos: region@83f40000 {
+> > > +                   reg =3D <0x83f40000 0xc0000>;
+> > > +                   no-map;
+> > > +           };
+> > > +   };
+> > > +};
+> > > +
+> > > +&osc {
+> > > +   clock-frequency =3D <25000000>;
+> > > +};
+> > > +
+> > > +&pinctrl {
+> > > +   uart0_cfg: uart0-cfg {
+> > > +           uart0-pins {
+> > > +                   pinmux =3D <PINMUX(PIN_UART0_TX, 0)>,
+> > > +                            <PINMUX(PIN_UART0_RX, 0)>;
+> > > +                   bias-pull-up;
+> > > +                   drive-strength-microamp =3D <10800>;
+> > > +                   power-source =3D <3300>;
+> > > +           };
+> > > +   };
+> > > +
+> > > +   sdhci0_cfg: sdhci0-cfg {
+> > > +           sdhci0-clk-pins {
+> > > +                   pinmux =3D <PINMUX(PIN_SD0_CLK, 0)>;
+> > > +                   bias-pull-up;
+> > > +                   drive-strength-microamp =3D <16100>;
+> > > +                   power-source =3D <3300>;
+> > > +           };
+> > > +
+> > > +           sdhci0-cmd-pins {
+> > > +                   pinmux =3D <PINMUX(PIN_SD0_CMD, 0)>;
+> > > +                   bias-pull-up;
+> > > +                   drive-strength-microamp =3D <10800>;
+> > > +                   power-source =3D <3300>;
+> > > +           };
+> > > +
+> > > +           sdhci0-data-pins {
+> > > +                   pinmux =3D <PINMUX(PIN_SD0_D0, 0)>,
+> > > +                            <PINMUX(PIN_SD0_D1, 0)>,
+> > > +                            <PINMUX(PIN_SD0_D2, 0)>,
+> > > +                            <PINMUX(PIN_SD0_D3, 0)>;
+> > > +                   bias-pull-up;
+> > > +                   drive-strength-microamp =3D <10800>;
+> > > +                   power-source =3D <3300>;
+> > > +           };
+> > > +
+> > > +           sdhci0-cd-pins {
+> > > +                   pinmux =3D <PINMUX(PIN_SD0_CD, 0)>;
+> > > +                   bias-pull-up;
+> > > +                   drive-strength-microamp =3D <10800>;
+> > > +                   power-source =3D <3300>;
+> > > +           };
+> > > +   };
+> > > +};
+> > > +
+> > > +&sdhci0 {
+> > > +   pinctrl-0 =3D <&sdhci0_cfg>;
+> > > +   pinctrl-names =3D "default";
+> > > +   status =3D "okay";
+> > > +   bus-width =3D <4>;
+> > > +   no-1-8-v;
+> > > +   no-mmc;
+> > > +   no-sdio;
+> > > +   disable-wp;
+> > > +};
+> > > +
+> > > +&uart0 {
+> > > +   pinctrl-0 =3D <&uart0_cfg>;
+> > > +   pinctrl-names =3D "default";
+> > > +   status =3D "okay";
+> > > +};
+> > > +
+> > > +&usb {
+> > > +   dr_mode =3D "host";
+> > > +   status =3D "okay";
+> > > +};
+> > > --
+> > > 2.43.0
+> > >
