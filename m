@@ -1,250 +1,156 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19773E170E
-	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 07:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04D03E5592
+	for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 08:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1783670391; cv=none; b=h9FjMPMzznkzg88ONywyJVF3J2/BKy1z5VeHt6bX2kFEJ7/h/OHVlQfIbdEazdRF+BQNHWfTANAOH3d2RtVg7Dj5adNQb7EiGBNmKCY0v5d9zUupq99s/4gEPmewhpWdl6sEAmaw3C8er76RE33eqhhpypRGOFM0iLSJNon5Z50=
+	t=1783670595; cv=none; b=j4i+wyhQOlxSyV+DU8o88tDWj4+Hndx9ecHQskdxFcse2IT+iFVWSr1QkSiJr8JLi9VGZpEVRawuwRcd1mWZTInqHjNgZWZiY6LM3IO7xT5bVGA/5KvrAGakJF6W9rMUCAr2To5j7iaivXH7qL8nAJMtkoywLs/Y196nc0N9xLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1783670391; c=relaxed/simple;
-	bh=4pgycAz8dHsjrElWNtLLwG9xn8sGYdGkxoKcBO7/0Mw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lYp/O1BmiRvRln5rCWw2TbC4I6bwZPM7lAmJC8i/QvZL8lPkYrE0WQAeQa0B0nOyjNDLclHmrwOsARcKhp0wTeggGumhKAm/tkQSEho3V9ujszT4OeXTr9Pg8Os7cbKs6JOEBsWhWzCGpvr8E5dz/DKd2NguiSliJyLTWva5YD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kRCdWoM8; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1783670595; c=relaxed/simple;
+	bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eqW/bLxdBxKut3eWI09otM+UN3OncsyA8EBJo3d4UwVONLDVXUKiJMa/nRgWWsolqXXCwyyJaZcxjtjSdE1NNOrZFS1HGo1vzh4q+6MqKq5sXhtGO+S9bEI6a1tu6QmFIovLsb/OgTWurx9Qm8lVo9jlb3BbHqQle6Ui1KQUYBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=IljZosE6; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kRCdWoM8"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3800f0907d5so143564a91.0
-        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 00:59:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="IljZosE6"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-493f4638f4aso3201245e9.3
+        for <sophgo@lists.linux.dev>; Fri, 10 Jul 2026 01:03:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1783670389; x=1784275189; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=SJgBeOO3ejSAAenm/fnjt2f8BccFZ7Q+isSN8vs0qFY=;
-        b=kRCdWoM8hSM8M1ad2k2L0FYjYl1QyUtgLF0FaT/agpehry7u9WTSne2rRvnOUd+Wdp
-         NyRPV2pzlcSUBuzD5FxcwlR7UI6RsRv4+nYlsvEAwP7XqPWyyDinyz/neEGsFjglcsd+
-         NgzF9MhHIR8W+2+VskUC+yBjDEq31vzjetNsUYN5MFjZkbFUdJPI8w1kJGy0s+ZBsqMv
-         tbh4YEtK8w2Etejv0gujuawl5fMYiywio+YdYieUhXuxKdORQsYzTUYwvJ+gJrKrTQV7
-         lfwx5ykssqwp0DIeMLVRUayNCissT0hEsto3EX6gqPW0dM+yFa9RT6FmRMmFUOafj8fF
-         0HVQ==
+        d=baylibre.com; s=google; t=1783670591; x=1784275391; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
+        b=IljZosE6QWRG5Wb6zWVuDa5ameLKZX0nKC4pnbAkoFHk+hBfnZ1zUxEDNqgLIlKvmZ
+         BS+/7Bs30OLBnKXLntvHmhvZeyAGXgpN9nr+0pJm+6gl/Qp5AVFtt+dlpwNQcd2XpFWM
+         R6VX2Zl3ZP96P/vokbQQE2BHDcinlac/Va3ZNebvhxuOuCmjfguRXgHnjA9TSACLqDF/
+         5QwtJxsxzF91ZJ6y6z2fvQAnNdZfHfD03GimcSypb525rsMn5JALpfc6bD5E8zxIZ5z2
+         MYqgXJJMPNYZqJnQazx92TZOtraPpQxDE4xCeEBI1SDN8uNZ6bJqyy8QFsCw/NVGa29P
+         dwAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1783670389; x=1784275189;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=SJgBeOO3ejSAAenm/fnjt2f8BccFZ7Q+isSN8vs0qFY=;
-        b=B6vMCJUUvYtZ37NXKA1JI5ucAZ2M9BAYwvNpUiIib/vi8NK9Jzq8g2+H4d87RdvYUN
-         oCau9RnIHyXbxTiRlwRMRrrGJH2tngmKM83V8g7XQGfawMru1/ArAbMOO7eG7StS6IXR
-         BYIldzn/ptS4ac0Rr+/2QIc5At2dPA5SSS3PgNJZAEsHK9snH4jZtr1piasJVAC3+IR1
-         gky0b3usY1y9YJsFIdcDQmhM8IB3bv51hsVhl8lcLJdLvx68QKEjB9HjSRjxwOO8lhUx
-         mppDqhARPZ2Mt0KfFnNdgMUi7qthLQ1t0Qja8RrGHRvG0aTpbAHB5rRdN03hbbdYrg0f
-         X0yw==
-X-Forwarded-Encrypted: i=1; AHgh+RpN7Zixs9CiYkbzQ6flRnELWSWV3E2816OiTktCkaYDgKlIydboYrODto0ZYvD7Rk2iKqMT7/E=@lists.linux.dev
-X-Gm-Message-State: AOJu0YwQU/7iMDJJl/HIO+mQKuMUnLlgTh9HsSaSWN65ZsQ6vPe8ezPz
-	y2mFvR7EjP6iIDJz7R6jiT+GYtxv5b7VXvHfMKN9GBcw/5RLiUOUDVN0
-X-Gm-Gg: AfdE7clpgXpijzIY3mphMyugQLwxyDRTDa8UigJ0gcppYmkWfV6Fn+e2cWkuYeh6Tr/
-	lfHw/vXUxEM7P1nCyDNQ9eDMIJBJqlpbnUXDpjwwh5J9vlFLkg3mwsgzakROLeqxWJ4eh4SUH65
-	SXXzr10AoK5OZmiOAMzOOLV93VErcDbgo2D7jozFtg5A41HebLScfJBomaIbcSlvo+u40t1Qh5V
-	1+NxkGUftAGTA91x9j670kIBTMItFBpXjyXGplflOD3ad/zMu2VMvya+zn5hvOeK4bKQQpBlLGP
-	mUnsKdgJ0GHLte0HNoQdqlrWyrIy129hLO1bfejQp9dm5AXLRnuqeC+ACDYb8fIwwwEfyWxUkrG
-	F2HhHLnYyORf9okgw7pt18aKAZtcWWhtY5+iD1opx4MaYHUw2Z+1cKojvtB02bOiVZw2LA5eXG4
-	g0vycgXfP4levIl6s=
-X-Received: by 2002:a17:90a:d606:b0:36a:5438:cff4 with SMTP id 98e67ed59e1d1-389421acc3cmr8740580a91.6.1783670388957;
-        Fri, 10 Jul 2026 00:59:48 -0700 (PDT)
-Received: from chenyou.. ([140.116.78.205])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-31198cb2b99sm19044999eec.26.2026.07.10.00.59.44
+        d=1e100.net; s=20251104; t=1783670591; x=1784275391;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=DWdfXN3BNh6HNT+0goMzdBpTUvzgP37bXlBu5ybAYas=;
+        b=Fx2267cWeS40Vhbax3yxC9oE3owzjSVbvakXYcMo3uc6+jyZDHQ41xhca3ko1c/4fF
+         MGlzsvYhuJ0+g+9o4mrX4v9JqfF7HUORieQUz+w4UHuldYlXD+jAXOUVrog9xTO9ELGV
+         IvSmIYXacFoDDY46q4YRmq5JeAuZxpwMELIrwStAbbP2ejHkHpwaXLDfXRM24IN8s+gd
+         Yedt1RFh0pVccfgWSBCQAYZx+msd7UpDtrUXgIaRP5jcRIm3FMqHV2gT3skhllH7dYXG
+         l88ZSQMf+Tzt/vtt2+FufqFEAZqqXryETj0zrOrac16UBVNORZz+ZDt0M83I9tXaZIh5
+         F4kA==
+X-Forwarded-Encrypted: i=1; AHgh+Ro7I4kQqhrD3vMzIq43qXlCsroF2kdmT1wHSZG91j6Efzqp412iiQsoKuxbx4h26blmwX0TYn8=@lists.linux.dev
+X-Gm-Message-State: AOJu0YwnDU7RoucmUjrffyFNgbEFSG3m4d0ctaKlU+VUkZdB/5Q9afrm
+	o43OXwybgO6xXUOHkjk2WbSJlKCFA0xfxQ2+R7kxpJTrR4vf1w7+615zgdqX4CN4WPk=
+X-Gm-Gg: AfdE7cnAOsPwv/TiCkgsSm8JLYFZk8lkhzLMUfTZbRhXo2zkrxrsOR5797akuWEG3Dw
+	BPcvOKocUeP8GM3UbjJE5etjKSPR2YX/gqzrPfVzxxjczt8CwTIfcusVaFk9eMHkCW2xptBNAHv
+	cSnwHAceeYbYzhCm/bTj3gfXyRQOnpZKtHPOzxpqIhQClw++d10aSo59MmeZ3usZBOFsdxj4k8g
+	VofEQqRLziuGKNkqSzH+XNdJJ9e1ohrt4H2S5kGGqq+gz2soyiiRYeDKf8GchOvix0xcBt74oZQ
+	0i8HSo3cMbpfU+BWxUs0TZY9NWAA+uvjo3srilKCGD1jt5+bWcsMysn5zJhS5v8I1OS4DSQHSQQ
+	0Yzmzcgj6eSFwjgOU5wVQcGyJZ6bLSNhn9bHeFsig0yXoR7Vh0OCXIzBIKWXUpp/FptjYEIzxUm
+	0QvDV/dcA5jetSdbWoxc75pN1/kXg2zC+aG8vEZP7qmoY9WjjMsFRexdPJKseCXu6r3Wqa+0NiQ
+	Bvv
+X-Received: by 2002:a05:600c:e557:20b0:493:c0ec:9a5f with SMTP id 5b1f17b1804b1-493e68ddd9bmr75755495e9.19.1783670590951;
+        Fri, 10 Jul 2026 01:03:10 -0700 (PDT)
+Received: from localhost (p200300f65f47db04fbea22a44ee9ba38.dip0.t-ipconnect.de. [2003:f6:5f47:db04:fbea:22a4:4ee9:ba38])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-47a9e4d6e4csm55102028f8f.10.2026.07.10.01.03.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jul 2026 00:59:48 -0700 (PDT)
-From: Chen-Yu Yeh <chenyou910331@gmail.com>
-To: Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: Inochi Amaoto <inochiama@outlook.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	devicetree@vger.kernel.org,
-	sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Chen-Yu Yeh <chenyou910331@gmail.com>
-Subject: [PATCH v3 3/3] riscv: dts: sophgo: Add Milk-V Duo 256M board support
-Date: Fri, 10 Jul 2026 15:59:17 +0800
-Message-ID: <20260710075917.159969-4-chenyou910331@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260710075917.159969-1-chenyou910331@gmail.com>
-References: <20260710075917.159969-1-chenyou910331@gmail.com>
+        Fri, 10 Jul 2026 01:03:10 -0700 (PDT)
+Date: Fri, 10 Jul 2026 10:03:09 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig_=28The_Capable_Hub=29?= <u.kleine-koenig@baylibre.com>
+To: linux-pwm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, Binbin Zhou <zhoubinbin@loongson.cn>, 
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, Neal Gompa <neal@gompa.dev>, 
+	Nicolas Ferre <nicolas.ferre@microchip.com>, Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Benson Leung <bleung@chromium.org>, Guenter Roeck <groeck@chromium.org>, Frank Li <Frank.Li@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
+	Fabio Estevam <festevam@gmail.com>, Paul Cercueil <paul@crapouillou.net>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
+	Jerome Brunet <jbrunet@baylibre.com>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, Heiko Stuebner <heiko@sntech.de>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Peter Griffin <peter.griffin@linaro.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Paul Walmsley <pjw@kernel.org>, 
+	Samuel Holland <samuel.holland@sifive.com>, Michael Walle <mwalle@kernel.org>, 
+	Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, 
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Hammer Hsieh <hammerh0314@gmail.com>, Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
+	Alexey Charkov <alchark@gmail.com>, Sean Anderson <sean.anderson@linux.dev>, 
+	Michal Simek <michal.simek@amd.com>, asahi@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
+	linux-rpi-kernel@lists.infradead.org, chrome-platform@lists.linux.dev, imx@lists.linux.dev, 
+	linux-mips@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	linux-mediatek@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	linux-rockchip@lists.infradead.org, linux-samsung-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, sophgo@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, 
+	linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH v1 0/5] pwm: Unify arrays of various *_device_id
+Message-ID: <alCm-J1wRBnhoH0C@monoceros>
+References: <cover.1783263835.git.ukleinek@kernel.org>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iuf5svn2mmf3pdwc"
+Content-Disposition: inline
+In-Reply-To: <cover.1783263835.git.ukleinek@kernel.org>
 
-The Milk-V Duo 256M is a small form factor development board based on
-the Sophgo SG2002 SoC.
 
-This patch adds basic device tree support for the board, including:
-- UART console
-- SD/MMC controller
-- USB host
-- Onboard blue status LED (connected to PWR_GPIO[2] / porte 2)
+--iuf5svn2mmf3pdwc
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v1 0/5] pwm: Unify arrays of various *_device_id
+MIME-Version: 1.0
 
-Tested on actual Milk-V Duo 256M hardware, verified boot to shell and
-heartbeat LED functionality.
+Hello,
 
-Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
----
- arch/riscv/boot/dts/sophgo/Makefile           |   1 +
- .../boot/dts/sophgo/sg2002-milkv-duo256m.dts  | 121 ++++++++++++++++++
- 2 files changed, 122 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
+On Sun, Jul 05, 2026 at 05:14:12PM +0200, Uwe Kleine-K=F6nig (The Capable H=
+ub) wrote:
+> this series is part of a preparation for changing .driver_data (and
+> similarily named members) of *_device_id to an anonymous union.
+> See e.g.
+> https://lore.kernel.org/all/cover.1780048925.git.u.kleine-koenig@baylibre=
+=2Ecom/
+> for the idea behind it. I also grabbed the opportunity to unify the
+> coding style for all these arrays while going through these.
+>=20
+> The patch series is based on pwm/for-next + "pwm: pxa: Depend on OF and
+> simplify accordingly" [1].
 
-diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-index 6f65526d4193..1ff69cf7f178 100644
---- a/arch/riscv/boot/dts/sophgo/Makefile
-+++ b/arch/riscv/boot/dts/sophgo/Makefile
-@@ -2,6 +2,7 @@
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v2.dtb
-diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
-new file mode 100644
-index 000000000000..21ef6ed9f0d2
---- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m.dts
-@@ -0,0 +1,121 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Copyright (C) 2023 Jisheng Zhang <jszhang@kernel.org>
-+ * Copyright (C) 2026 Chen-Yu Yeh <chenyou910331@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sg2002.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
-+
-+/ {
-+	model = "Milk-V Duo 256M";
-+	compatible = "milkv,duo256m", "sophgo,sg2002";
-+
-+	aliases {
-+		serial0 = &uart0;
-+		serial1 = &uart1;
-+		serial2 = &uart2;
-+		serial3 = &uart3;
-+		serial4 = &uart4;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		led-0 {
-+			gpios = <&porte 2 GPIO_ACTIVE_HIGH>;
-+			color = <LED_COLOR_ID_BLUE>;
-+			function = LED_FUNCTION_STATUS;
-+			linux,default-trigger = "heartbeat";
-+		};
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		coprocessor_rtos: region@83f40000 {
-+			reg = <0x83f40000 0xc0000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&osc {
-+	clock-frequency = <25000000>;
-+};
-+
-+&pinctrl {
-+	uart0_cfg: uart0-cfg {
-+		uart0-pins {
-+			pinmux = <PINMUX(PIN_UART0_TX, 0)>,
-+				 <PINMUX(PIN_UART0_RX, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+
-+	sdhci0_cfg: sdhci0-cfg {
-+		sdhci0-clk-pins {
-+			pinmux = <PINMUX(PIN_SD0_CLK, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <16100>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-cmd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CMD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-data-pins {
-+			pinmux = <PINMUX(PIN_SD0_D0, 0)>,
-+				 <PINMUX(PIN_SD0_D1, 0)>,
-+				 <PINMUX(PIN_SD0_D2, 0)>,
-+				 <PINMUX(PIN_SD0_D3, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+
-+		sdhci0-cd-pins {
-+			pinmux = <PINMUX(PIN_SD0_CD, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <10800>;
-+			power-source = <3300>;
-+		};
-+	};
-+};
-+
-+&sdhci0 {
-+	pinctrl-0 = <&sdhci0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+	bus-width = <4>;
-+	no-1-8-v;
-+	no-mmc;
-+	no-sdio;
-+	disable-wp;
-+};
-+
-+&uart0 {
-+	pinctrl-0 = <&uart0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&usb {
-+	dr_mode = "host";
-+	status = "okay";
-+};
--- 
-2.43.0
+Applied the series with s/iff/if (and only if)/ in the of_device_id
+style patch.
 
+Best regards
+Uwe
+
+--iuf5svn2mmf3pdwc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmpQpzoACgkQj4D7WH0S
+/k4qdwgAk8w911oLsA5aqycP2AV5trJAC5zx53mJ8LxbKoImqWjYyvmd9Kb5YCt2
+LPeZPEPqg6LIhPMbDp91hBWArDL5UUUJ5OfgC8/i0zK1+zWS0B+UPtXUGxzQOkwk
+stkrTAN5eVW7rhVy1AtT4N+EJVm4Y8958RVsmNi75/idP+gmhs7RdJg8zMdhrVVy
+M7XB5Q1zxVcmhsx5TDStZ8tzeFMsDbMqz0s0xVECWSq50U70IwD0Scn0a1BN68kQ
++fZQMwGT3KhdqqmLJV44puWQoDqj8OwGeAuWJQykzluefOFNtRHtRhurlZQAUOrv
+W4X++IXkqXbyyTO72ousttS/RpH5ig==
+=4YUW
+-----END PGP SIGNATURE-----
+
+--iuf5svn2mmf3pdwc--
