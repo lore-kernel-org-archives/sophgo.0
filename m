@@ -1,90 +1,42 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE50E3368A7
-	for <sophgo@lists.linux.dev>; Wed, 29 Jul 2026 01:55:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CBA448EBC3;
+	Wed, 29 Jul 2026 13:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785290149; cv=none; b=pkZ+RrYdHtUR8jRM8yNEP0SciEpQNR03jXZ3kB/LXU53ayj/fnweMoNbFbOqNfG+e7xL+PgAV7E30CtTLh7LQs/03sm272rbjH5jsVjDYmiv6elCd7E++lT8nGdJl/5DM6bCdhFhV/O7ZlH77pKqKTLfvHhVUqeXxpAuxgBhu5E=
+	t=1785331963; cv=none; b=qAlWBSyNZwhF0+1jnDNxmFGZgZP/s3whnl9T5mqKBrUAu2wIDIJGc9rfA0eJzhhTmQy7dXui0ZeKQ6xfL2vHjj4Ny4jLoCiF/5W4wOK3n3JqsiWvk8WeOUU0CyO90RUHMInh27Y28AtwRE/t6HxPQfv4WcWIhJPYiyn8lgsZLi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785290149; c=relaxed/simple;
-	bh=uNZvcbJs/pdC9ytN6jQCPgX4Z+OKYj6tcEv+kHCGMmY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oUJ/H+1uiz8zobGFrOXf1/3+Z7+bpl1gY+sWx8uGVAjqhmmLEl4VOUO7N0LGAsA7oXZkzOZnrl1WfpYfIAgv1LSVHWr2F4QNUr5ZpP51xmD/AKBtB2/dHS/CrBEzUDmmmbty8Rlffk/PQU8TLXFXGX3IzmvF4DqoTlzprzhgcqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvFcD47O; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785331963; c=relaxed/simple;
+	bh=+wW+l36q/INLZ3UEDPE5HeaDYiDtkj8r4hVyf8KjyjE=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=MYhjVUpN6QAlNd67NjnjMfz5xt/K7BmxhinBryo1ixCcSlbcnRP2DGcCxBPPWbadPH6sv5EswGrmtIX1X5g1V+EsysP34+nWxMD35TWlnSa0gXnQ7HCjqM8JWGg89FgkbdVNm4saA2C2zsHmPjLzAz3fbzX3R90L0+EeS/Cflv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KJgQ7iNV; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvFcD47O"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-381216921aaso400709a91.1
-        for <sophgo@lists.linux.dev>; Tue, 28 Jul 2026 18:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785290146; x=1785894946; darn=lists.linux.dev;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=7grHuSDIPRW8L8mo7e1hpwggYcsc7BeN7mOCkn3pJuU=;
-        b=JvFcD47OJMruk153ox4htGTjwad7DuuJ2rp9JWr6Yaqhb0fqDyImzCEzXRqO6bEQTb
-         DQXGmGM7YAZEOaMLwlygC3oQrxOqkYadhN/Hpgdey+m68xMKev2Xv0vnfIr3Y23Xqed+
-         RsOSIEDozqb2aA9xKaQkRjiWbd0TUjWW6jvbE97bwF80QRGrhYCja94mAUs2ZyUsswH2
-         CJN2VPTjfZwG6v4YPeBcri2KmBbqO18RQIseoFMRMLitCBXO6lcDU3QvvASfjE89Pikp
-         K5TIZadcAi9IWhYdgoDpQCput4LuT/f09p0W2cNOmAYiqgzqwjH7UhNJshIkl3xp4Elz
-         7DBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785290146; x=1785894946;
-        h=content-transfer-encoding:content-type:mime-version:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=7grHuSDIPRW8L8mo7e1hpwggYcsc7BeN7mOCkn3pJuU=;
-        b=bgWfyhAhmD5KS/DDdN2IfX/zPu10A247x9s6JCDL6vip7BmUEFEv+iLn9KPP0Tf1ba
-         A3dCcJdAN+v6IfVbhE+FYlFuOe4mpUwdEOMgfJoy82Fu+DcoDschQYk6WNU2NixKdHan
-         5tkrPMzBeTZIa0JdiYIq/3aS76LPw7XQiNodrD3oFJCL27UH5SbnqTuPfMNLdIWgKjLt
-         Ef+fy/r6cEEDMv7Aa8TIoRvrVxU8GeD4Y3S1dEyakRpzacYD2sJh6zvgsNZAQbyBQUEs
-         6vVJ9PKm4jSVZ0wKBi13zoAg1zFOOP2Fyq/skMID9MJ2r2TOU/BNsSF67twPIJPQ1ued
-         oXfg==
-X-Forwarded-Encrypted: i=1; AHgh+RrpgDScVf1mVzh3u9wnFOzXteueRI/sVfL2qpBLowGGK9KDXhRMq0LXYVn1XrK4ZEP5jznECZI=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJRMjsNnC9lDYBTjVZjXiwX5Asbs7V974Lteeb0X0ZbnlEPnCn
-	+tuGOuMTR8PqHpBTgg6Kv/fOdR+A79W+nkczhcjc8ociQKsHmRRmELTe
-X-Gm-Gg: AR+sD12IWt9iFpqizv6nZ8Y3UeTnYu+H55EpslGFHUHkBnTRqHKqbyUxRYHXG2cPdFZ
-	PZDxtJX5sRKBeeiYyn311kA0Jhq+SRMhsR3X75DLPmsciGfj/5H5ZpyPTmBmzqulxUhyyO7nRum
-	M3cF5XR0m2gIgpQId7tqKYg+76RkUVV9ylyv2wfPky+YpbdSRLRVtsX6TguG9YJ1vJzWEfUHdXX
-	yWrR6J+QO8l9s+8aDaTLFJ5hyVSqBfblni2o2I5ZmuwHADdrzxWmMg3wG7gqgZDf8zFfGt915Qe
-	exQipDY0gCeKn06Ns6bxeKnAhn8RfJyJ82oDZOIw/GzY+wbjPGoMGeK6lV+P+eX//OEezOWbg2U
-	wLriE3jEZ9cbYfCIoqSInLVpDCO7r+R+6mx0BpU5MTEerNLGvPCuIOAXFDvkenzPHyQREs70olg
-	rE0FRzeYmHe9lrGKoRmuMenLcEEMyfA5fuJaXo6fdvTNKhInOLha6ad0kxy/VnF9ojgvTJJA==
-X-Received: by 2002:a17:90b:3b41:b0:38e:6aa7:68ad with SMTP id 98e67ed59e1d1-38f6a30c840mr4956125a91.5.1785290146311;
-        Tue, 28 Jul 2026 18:55:46 -0700 (PDT)
-Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-38f642dd6casm1984373a91.13.2026.07.28.18.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 18:55:46 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	pjw@kernel.org,
-	chen.wang@linux.dev,
-	palmer@dabbelt.com,
-	aou@eecs.berkeley.edu,
-	alex@ghiti.fr,
-	liujingqi@lanxincomputing.com,
-	rabenda.cn@gmail.com,
-	hanguidong02@gmail.com,
-	Alexander Sverdlin <alex@sverdlin.org>,
-	Joshua Milas <josh.milas@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-riscv@lists.infradead.org,
-	sophgo@lists.linux.dev,
-	michael.opdenacker@rootcommit.com
-Subject: Re: (subset) [PATCH v6 0/3] Add initial Milk-V Duo S board support
-Date: Wed, 29 Jul 2026 09:54:59 +0800
-Message-ID: <178529008850.164571.1818758565125739771.b4-ty@b4>
-X-Mailer: git-send-email 2.55.0
-In-Reply-To: <20260615120324.1527881-1-josh.milas@gmail.com>
-References: <20260615120324.1527881-1-josh.milas@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KJgQ7iNV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F1F1F000E9;
+	Wed, 29 Jul 2026 13:32:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1785331958;
+	bh=sXat4/wO3I9N40BaXssvvSMMJCWz+4vn9sa/eW2N5Hk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=KJgQ7iNV9OWkoUQgOsBEeIsbUBO1VWsyYcMz0+DvUsHBLQOmRWHhVlVGs6W3NMl6t
+	 7pd3J3P1Kkoj9CRkzLjS8APsQZdm6zPWwBmI8OBNKSgJcXC3ZwFzlCc6FkIilhGWIT
+	 bafe6X6GZw361zZs98HgMDRj3nOkxgTWi+gzYvL0UsIdS5UPu2+45J79sRsm/WSFD5
+	 i4fnuDmKjPnPXrcrzMGN3xcGohOMC/1bBiEBU+wdo/9NTu2EqC9mqyZjYSq2o8YMmb
+	 bjtbHLQP44kf4E7G/P0kmjomIlWvDsKCKaaDsfxXq7336EB8exUrfQMT0I/sOWpfYb
+	 aUIKB8eGbmqJw==
+From: Mark Brown <broonie@kernel.org>
+To: lgirdwood@gmail.com, kr494167@gmail.com
+Cc: stavinsky@gmail.com, chen.wang@linux.dev, inochiama@gmail.com, 
+ linux-sound@vger.kernel.org, sophgo@lists.linux.dev, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20260727053804.25599-1-kr494167@gmail.com>
+References: <20260727053804.25599-1-kr494167@gmail.com>
+Subject: Re: [PATCH] ASoC: sophgo: return 1 on volume change in
+ cv1800b_adc_volume_set()
+Message-Id: <178519394359.552178.18240351256217472749.b4-ty@b4>
+Date: Tue, 28 Jul 2026 00:12:23 +0100
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -92,26 +44,48 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.16-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1158; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=+wW+l36q/INLZ3UEDPE5HeaDYiDtkj8r4hVyf8KjyjE=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqagDzOaZwVnhTNhodhl0xqboDfC5/wlowu7Rj4
+ mCAnthM6wKJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCamoA8wAKCRAk1otyXVSH
+ 0H/cB/93ojKJ1guXpWt4bBKbBsNBKcm4QhvHCu5UinIP+FJT0mZ699khPkyl+NeFX8JnICBBotu
+ pk2WohHuJEktA8FdSsA4cVKelHcp6xpXXe00M1fXV8SYfRkhW2M7Fzmmqjz0BZT4hMERk/6QTcE
+ 4MhbUH5PTaCulKM7MbbY0Kg72aY/r+4IeFDtPKnf1q7eRvrg+XbkTgkje+j3ao6LmtYJeXyQyue
+ zeOj5jNjJts69qvILDKMzE7bEkb9LwwoZ1NfGygg+ARmzQKi+KcmeDmtX5lLU+4kbKkqckDYQNb
+ 6dPSXwrlcrCaoBTSKAZsN7xis3A+MsqcdYZ9ua6L3VwCRHHc
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
 
-On Mon, 15 Jun 2026 08:03:21 -0400, Joshua Milas wrote:
-> This adds an initial device tree for the Milk-V Duo S board
-> with support for reading from the SD card and network over
-> Ethernet. This is continued work from Michael Opdenacker's
-> v6 series [1] on the ARM64 and RISCV side. It has been tested
-> with ARM64 and RISCV64 to boot from an SD card, have networking
-> from ethernet, enumerate the wifi chip, have bluetooth, and can
-> read a I2C slave device over i2c4.
-> 
-> [...]
+On Mon, 27 Jul 2026 11:08:04 +0530, kr494167@gmail.com wrote:
+> ASoC: sophgo: return 1 on volume change in cv1800b_adc_volume_set()
 
-Applied to dt/riscv, thanks!
+Applied to
 
-[2/3] riscv64: dts: sophgo: add SG2000 dtsi
-      https://github.com/sophgo/linux/commit/022d1bd8b08257966c4a00fc21fb72a828bca870
-[3/3] riscv64: dts: sophgo: add initial Milk-V Duo S board support
-      https://github.com/sophgo/linux/commit/0cef4f813649eb19476c98f763128561f5bdf969
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.2
+
+Thanks!
+
+[1/1] ASoC: sophgo: return 1 on volume change in cv1800b_adc_volume_set()
+      https://git.kernel.org/broonie/sound/c/f47064c970d3
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Inochi
+Mark
 
