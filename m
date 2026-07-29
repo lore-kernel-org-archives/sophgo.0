@@ -1,139 +1,115 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85807277CA5
-	for <sophgo@lists.linux.dev>; Wed, 29 Jul 2026 01:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AC921ABBB
+	for <sophgo@lists.linux.dev>; Wed, 29 Jul 2026 01:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785288804; cv=none; b=pPdIOF35sjJ1/rCSptkKmY9Qk7/YzlH6onat2hXjIVsEi3zFEPK8DSM6RfIu8wrvnqyrEYzbPslhCLzDkr27mptJO7308jKTdQwAfqsTpjjDaZoFYmJiaxjFecR0wyQbgRuyx3/gRSR/r0I8/+NMaiYIaPWOfc7rUDTKF3dU5ic=
+	t=1785289716; cv=none; b=Cg4XzR9eJKJ7bjmrZgCAbyIQWRJjacum3F2jgn14UIKYViWOzNmywhD3Parb3f8J1WOTLkaV4VectB9Uqeo/6Xi2aD3BWvQKkh9vYcoOg93LaYhuzKYWrT5TJLhNno0sKZZxqwnlDKbkZjG7JRkBx0hJUZ+cbS9varf2CPZIfSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785288804; c=relaxed/simple;
-	bh=SkCx3j5OWK8cRKkNE4gK2DCWeBt/zckisJ2qwGPjxMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VOiuvH5bIKzAUh8jSi1C7Uvuq3cak9ObO4dOUir/sFMenkTkOge+BxTr49Bc4vyM+7lVDU/7VMn00eC/JVd+UysuGVTtzPp0WI9Mh8KEq62zv64uwfiqAvRhL70v26Tneqmwb+16yM6BdDnAB3gWNEpK8UmcBKnwarCgdFgv/pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NA4T/e1h; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1785289716; c=relaxed/simple;
+	bh=hkS3fpJJGFq5pnP1DWaVGxQA4OwEvU2qy5Rss0XWaCQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MrZAsBwZFagFB+uSCnpWWP1SI62H6RTWDMT/r6yy0/zqtrE83ZTwUDDw5Y6H8FHdzLyxI+LTC8ZAGR5fGMXgU9W3DIvvlqvrC7QVt4wO0apX01+SK2408zUtG06HKtY+0ZdvD57Aw7/6HoKymtq5mSTriKB6awMYDC2T0dkVkKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FruQBlEd; arc=none smtp.client-ip=209.85.210.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NA4T/e1h"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-8485b358552so465767b3a.2
-        for <sophgo@lists.linux.dev>; Tue, 28 Jul 2026 18:33:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FruQBlEd"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-8485b358552so475506b3a.2
+        for <sophgo@lists.linux.dev>; Tue, 28 Jul 2026 18:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785288803; x=1785893603; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20251104; t=1785289715; x=1785894515; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=GM5L/RCtIKftte5HNn5DkACBL6uoAu93LpRcVTfZgFA=;
-        b=NA4T/e1hVcOeOAqy8OwGhw6tD0lj931W6qFB0SH+Kv4xQeE2KUyxxqXAKXQ0pV9KgL
-         ScKlyQ9r5Ccv4efYBz+K85YrBWpgy98M5rD3exI3+6/D0vmguMcSQnLxU9WpstH2l54E
-         +Oe4zieiJudOvzpLnkQ+tmAyypra3g0xS6g8nHHK/HIv6Jcbdyu2d6H1H2EsKAd1v2JM
-         SQLzBIgxH/wxhcRwE7xIelPpwz1tK991EQO6yXWhSGRfRh8yyW0Du/nvF+GEpddGZ1KI
-         PLK/ecGguq2G2H4Lk7hfwdTSS30TVSc3u38NkJEEAERBRIzqsIl/uZmevGGeUD2hxArZ
-         QQ9w==
+        bh=J8VS8ZB1guuCz2FDTf2FUiR3jOA+ZzoXLBMbwtZp+5A=;
+        b=FruQBlEdqz0dSKs7B7jFdw+pEgV4h8XVJhsOF5d2o4FcYib7h1tIf27CrN7rD7sXwx
+         6T3v4kgZHmmC030F2PkvWUdiPn/l9dWOyjZMlTfmph8UeCRh2TXTMuyEY1HGucXsmuAI
+         RN6awh9mXtrSGINdX4tUnAB5KOXVQiHq8xijYY2+J82lJKdbhYxU+LA9oKW2Sp97YUwb
+         kY2gb8UjoL2lQvyYEY65rUUrjyBLU2UdQJZWSppYhxwGBvAtzgty+IDJHaPkcnphGW3e
+         JotrxT05VjDp55F81ABxei7Nlq9DTAOvjz+Srf8WcZ6XD16MStqcSl9KTC5aK+BHPCS4
+         cakg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785288803; x=1785893603;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20251104; t=1785289715; x=1785894515;
+        h=content-transfer-encoding:content-type:mime-version:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=GM5L/RCtIKftte5HNn5DkACBL6uoAu93LpRcVTfZgFA=;
-        b=WVqssCZUKTMyWYee49f0tPdszYfQls00w4Recad26bOmrXtesBdt8cUeTWaWC6+fYT
-         5o0hxu6mVJ/I7BDYXcLPb9q7jpHyACJlzx3B+Sn6u5FAeK5AXQteb9UH+BDxCt+1gyAI
-         azygOJZMC0fFZJiLJkJ8TdBWxWeUlA91OexLfzG8TEKboSha5sLjRnrVlfmlhErZ+66r
-         8omo1jfr/LOwl9ct0TYnBCb3FOg9mLbp0MDbUM3wyXWnwXHzUID7S2nDT3bHa1j/REri
-         KgYfPm76t71AjVPHkijULHR4OzTE0dRLKjn3kZESUbD2V8QWiaRs1OTBOppPiutapn6D
-         tJhg==
-X-Forwarded-Encrypted: i=1; AHgh+Rpnoy/eTDSwNeKM3m4cdbt49hIpOK/Ttn/13ig+aKucPzIrTyELGoqTejHBdfpx8nIEidMC42g=@lists.linux.dev
-X-Gm-Message-State: AOJu0YzTccUHhmHqvhG2zgO9t7qFmsFUNu3mkr/OtZg58F/9JK+7GrXH
-	I4S+Q4McZHi4TsnpayTKGiAzFlY/XvOcY7j/n9dx4He4Yd2X5hmeq98N
-X-Gm-Gg: AR+sD11iMjAVCKh7oRMBfqnbUVjiDKKxbve9xx5wedrOGXAdMQJ13pcZ8gDPYtUxoAN
-	DBp+//UVGRX7EKV02sBtR9CC+dq006r+bjUgVvfCoUzmJ/1LNRBBDKncEQ7+8E42cCzoLKR3Wtp
-	uySibuGkjdH06cVYstIP0LwP4mDe+qzAMlNKMQvM9Vhp9vEoQpKBHVgghGhoT+SlObRXS/SNh2R
-	eawYPrPT1jK0mD1oNmVMF4yrDR/u3e9LvENu72uSXnIUp9KuVkmdx+En8mfUsG27WUPiR6LUr68
-	0X/QfoT0VrG9yp25zU+EfTvxeCbCePLGtvC4rAlEN0knX6/c8hlWkWJPWyUlb20/SQBtQ/ZoEN7
-	8DdP7tZOdXaOjvlpeH6HOOCSWLaldy0jMzMzvAJL780eQWu9yMVa8QLnOGY8IO7V6Y9VSTiRlc8
-	zXmrt4yNlDqx5QHExlW4NLm6ErCup8619im7BQVWd4lGIEqXZRnrq17OLNGAI=
-X-Received: by 2002:a05:6a00:999:b0:848:411f:3969 with SMTP id d2e1a72fcca58-84e931595b6mr4900316b3a.20.1785288802849;
-        Tue, 28 Jul 2026 18:33:22 -0700 (PDT)
+        bh=J8VS8ZB1guuCz2FDTf2FUiR3jOA+ZzoXLBMbwtZp+5A=;
+        b=sji+e9zX215SYGC1pl9BeDFgoXVcPBZrhmhaazGO4urAvn/SapNaWfmFeYe/r4q4BD
+         fKLqv/M67/YWV0UUbuXb3xRqjAvwH3MvGq4V7WvKKJc6gtc08ds0YmNwFvCXQ6bSSE1C
+         uDB+Zk3BUnyjDW6yEdzuSHy29RIbH963IVvB4yf6tK7Dr0aOHb6D744mI3GZCZvnZRO/
+         9/dVm1P0ivt79yTs3VVgotiAq4ZuPG4SAaLdyrZhnhdJSCtBE3BhnFg7lPLeMvkhziK1
+         gOphDmfO4fUGV/VinQ/T9uvknbJeGZDFFyGq26F5Ke7ah0Z5cUz4Xhc9+yYEQpwpunUI
+         5buA==
+X-Forwarded-Encrypted: i=1; AHgh+RrxQyyLfJpe42S0pJUzxw1jZmwcl4t5aATX1A8+cRl5Ek1lCoZaKBfyJ+Cr7FjjdJKNV4NCS0M=@lists.linux.dev
+X-Gm-Message-State: AOJu0Yy46piWGTnMp64fjblw9zU9POP+LyYLD+MbGDexWOSndRmYz2sK
+	FgcjJGrfUWKCdyeT1HqiRVQMWC5GHc9ri+Pnai39/B0UPB9dV/MuZ2zx
+X-Gm-Gg: AR+sD10R3ftlIBNOfeaIiikZ6l2WJ2PWG/R4E+IOkkiBQVKYdxeilUxCjaXu0SSxNki
+	8RbnhjlIBXWb6QgocwaKfsAcYkQZvOa0z81/abyvU5ZR9vEkhxGJW2ChWZK6j9CmNo4j1oSP9zG
+	Uxr3Bxm7afEdrbvxmA1kE1KlkQJK+fjbiimQsGn9UNphwu2Pf/1XirPJA9rF5rlptAsv/TH2x+I
+	7/N9ThEGnoSFFWI1CbKoZygbyRXPtADAsC8vKruJ60rQFC7pkC5AmIk4kwYhGvH0kmYZOVtDy6r
+	bJXmayiBPVfwof+dz1t/ZLYTIKQAB5Pra1Wl6xy+qU+9ECmQEv/JYVazv+A8FRjYX74VeKpAxRg
+	i+xlxNLMk7ocn8lpUSprOM3W8lzyk9nbCiCEL16FJWMonFm6IaNnB+Z/J0XeYtk9Nr5NLyfzDmd
+	CVr2cjh94Z0sYJpjOV9WCus3PQTvE5cW43/kMOEqQr3JyRXPCONF1TsVMYTj4=
+X-Received: by 2002:a05:6a00:4fc2:b0:846:8b21:6304 with SMTP id d2e1a72fcca58-84e9311de36mr5193587b3a.14.1785289714696;
+        Tue, 28 Jul 2026 18:48:34 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea03d3f16sm582845b3a.59.2026.07.28.18.33.21
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-84ea03d3c5dsm590510b3a.57.2026.07.28.18.48.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jul 2026 18:33:22 -0700 (PDT)
-Date: Wed, 29 Jul 2026 09:33:11 +0800
+        Tue, 28 Jul 2026 18:48:34 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
-To: kr494167@gmail.com, broonie@kernel.org, lgirdwood@gmail.com
-Cc: stavinsky@gmail.com, chen.wang@linux.dev, inochiama@gmail.com, 
-	linux-sound@vger.kernel.org, sophgo@lists.linux.dev, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] ASoC: sophgo: return 1 on volume change in
- cv1800b_adc_volume_set()
-Message-ID: <amlX65QfQGty0E-q@inochi.infowork>
-References: <20260727053804.25599-1-kr494167@gmail.com>
+To: robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	pjw@kernel.org,
+	chen.wang@linux.dev,
+	palmer@dabbelt.com,
+	aou@eecs.berkeley.edu,
+	alex@ghiti.fr,
+	liujingqi@lanxincomputing.com,
+	rabenda.cn@gmail.com,
+	hanguidong02@gmail.com,
+	Alexander Sverdlin <alex@sverdlin.org>,
+	Joshua Milas <josh.milas@gmail.com>
+Cc: Inochi Amaoto <inochiama@gmail.com>,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-riscv@lists.infradead.org,
+	sophgo@lists.linux.dev,
+	michael.opdenacker@rootcommit.com
+Subject: Re: (subset) [PATCH v6 0/3] Add initial Milk-V Duo S board support
+Date: Wed, 29 Jul 2026 09:48:20 +0800
+Message-ID: <178528968141.162041.7895894684986779851.b4-ty@b4>
+X-Mailer: git-send-email 2.55.0
+In-Reply-To: <20260615120324.1527881-1-josh.milas@gmail.com>
+References: <20260615120324.1527881-1-josh.milas@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260727053804.25599-1-kr494167@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jul 27, 2026 at 11:08:04AM +0530, kr494167@gmail.com wrote:
-> From: Surendra Singh Chouhan <kr494167@gmail.com>
+On Mon, 15 Jun 2026 08:03:21 -0400, Joshua Milas wrote:
+> This adds an initial device tree for the Milk-V Duo S board
+> with support for reading from the SD card and network over
+> Ethernet. This is continued work from Michael Opdenacker's
+> v6 series [1] on the ARM64 and RISCV side. It has been tested
+> with ARM64 and RISCV64 to boot from an SD card, have networking
+> from ethernet, enumerate the wifi chip, have bluetooth, and can
+> read a I2C slave device over i2c4.
 > 
-> cv1800b_adc_volume_set() serves as the .put callback for the "Internal
-> I2S Capture Volume" control.
-> 
-> ALSA mixer control callbacks must return 1 when the register value is
-> modified, 0 if unchanged, or a negative error code on failure. Returning
-> 0 unconditionally causes ALSA core to assume the value was unchanged,
-> suppressing SNDRV_CTL_EVENT_MASK_VALUE change notifications to userspace
-> sound servers (e.g. PipeWire/PulseAudio).
-> 
-> Fix this by comparing the new register value with the existing register
-> value. If unchanged, return 0; otherwise, write the updated value and
-> return 1.
-> 
-> Fixes: 4cf8752a03e6 ("ASoC: sophgo: add CV1800B internal ADC codec driver")
-> Signed-off-by: Surendra Singh Chouhan <kr494167@gmail.com>
-> ---
+> [...]
 
-LGTM
+Applied to dt/arm, thanks!
 
-Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
+[1/3] arm64: dts: sophgo: add initial Milk-V Duo S board support
+      https://github.com/sophgo/linux/commit/fd2544c8cffa6a53ef8faeedbf9a66a171de0fcc
 
->  sound/soc/sophgo/cv1800b-sound-adc.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/sound/soc/sophgo/cv1800b-sound-adc.c b/sound/soc/sophgo/cv1800b-sound-adc.c
-> index b66761156b99..bd93e261bdd1 100644
-> --- a/sound/soc/sophgo/cv1800b-sound-adc.c
-> +++ b/sound/soc/sophgo/cv1800b-sound-adc.c
-> @@ -251,16 +251,22 @@ static int cv1800b_adc_volume_set(struct snd_kcontrol *kcontrol,
->  
->  	u32 v_left = clamp_t(u32, ucontrol->value.integer.value[0], 0, 24);
->  	u32 v_right = clamp_t(u32, ucontrol->value.integer.value[1], 0, 24);
-> -	u32 val;
-> +	u32 val, old_val;
->  
->  	val = readl(priv->regs + CV1800B_RXADC_ANA0);
-> +	old_val = val;
-> +
->  	val = u32_replace_bits(val, cv1800b_gains[v_left],
->  			       REG_COMB_LEFT_VOLUME);
->  	val = u32_replace_bits(val, cv1800b_gains[v_right],
->  			       REG_COMB_RIGHT_VOLUME);
-> +
-> +	if (val == old_val)
-> +		return 0;
-> +
->  	writel(val, priv->regs + CV1800B_RXADC_ANA0);
->  
-> -	return 0;
-> +	return 1;
->  }
->  
->  static DECLARE_TLV_DB_SCALE(cv1800b_volume_tlv, 0, 200, 0);
-> -- 
-> 2.55.0
-> 
+Thanks,
+Inochi
+
