@@ -1,122 +1,90 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-175.mta1.migadu.com (out-175.mta1.migadu.com [95.215.58.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548E63803D0
-	for <sophgo@lists.linux.dev>; Mon,  3 Aug 2026 16:34:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E5512BB17
+	for <sophgo@lists.linux.dev>; Wed,  5 Aug 2026 00:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1785774881; cv=none; b=KoX5/HNEws9SGF3R5oyhV62f/ZhbLcrsuSCpi0H7/EtgkejseI6bHxSfsJqEeKK02Ti6gMkTXED5lYUs06m5F7+Eefie7xxdCuAsaaD/oJII0RA5/PorJh04yGHP17sF1hhzA/2SjyJ/ourzj37Ac6xs8uTpMS/MYOKSmZ9fxvc=
+	t=1785890757; cv=none; b=XLMu5L4F8zdOAbawFALUujgGanUtOxrZr9XW27JBZeTeowXwZRK7WPqkvEA58RPAFeGteIs+AF1xaSPF9A3z5XxkM6U7etNBGXDvqBbdE1IMwZIBvcmi8hdMkMzGfpmG280D4AhgVV8xwb/I3eM5HAYvioScqNRabTQbBf+IMjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1785774881; c=relaxed/simple;
-	bh=EEVP9pVu3z+hlSGNX14rsUHc7/USklIJ0bXaAo53PIc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cmzB/plW6ougBtghibOu6E0MI/ERtiatawIrAh3NUvaqOke338tmtfVEgEtcc+GyXMWJbwKbJyRAdeQIJRKCOWu/3k4Np+ZsDmas73q2fh8ua2Uug7JuY9RDEM/moTsxM7fT9wK/yQ5wDLbFg4xBcuvqHSY2VFY+0tA4PaStTc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G8T2XwEz; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1785890757; c=relaxed/simple;
+	bh=6B+rvSDc/PnF3Xd4qn2GBLURqoGngogDuxv3umlplQU=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=fxuFymFIvjDPJo+WvwWrnZ33NiBs6M/RzMwOoWkSlfK75AciYBlE+/BIfR2Y5DXTdmDVFyyS6p5lkFTCTpI7V4wCdDrSNYYasRPl2kPqX6i5e3aNtsUUMVMeJO65pZ4bo3uyJH1uQfS4eiKW+nBoTFVCLQShabRrfQ74s6AlXg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=oQYP44F6; arc=none smtp.client-ip=95.215.58.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G8T2XwEz"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-cbe4c537ad6so73556a12.0
-        for <sophgo@lists.linux.dev>; Mon, 03 Aug 2026 09:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1785774880; x=1786379680; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=ipT5exq6LUV0S+KzcId/vjoUA8Xp4TlUp/KpBpmvGT4=;
-        b=G8T2XwEzEnxnJ8sD/WH2EBCNoyQkylCDL7s9xE7BwEtKqVeJNwLBRF4G6ShMQmmeaR
-         zU2QXIftP+nqkliVW9IiMIGc+iOaNz3iDKO4hbNwdy2TSeaDpE/iXKr7rfd2ernjNhyr
-         1iTOfTwtEWhFG9/AwYoyn5rUL5macLcyr5zk/YozX40agVIXvlwhQ8BqcDXI7xk068wM
-         suRCXyFdJvkRNDkqImy/oxNZre3TKmSSm8W8bS4Z37msP4mGU1Rrp/tWErRsemv+75mX
-         E7IfWpaIoedJTix7cfN/a+r/mtg3MtFs1aqcIybCQMN1yAxskm2Sb1lwiwO7O4Lnpzeu
-         Z3wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1785774880; x=1786379680;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ipT5exq6LUV0S+KzcId/vjoUA8Xp4TlUp/KpBpmvGT4=;
-        b=C4Q/rtk280titwq6O8bHCoGudaMG7uEzzG12UGbrOeo862/4k/DacPCoH41j/YzycB
-         AsPLPLFFaTCz8UHBoDyv7+Xh899NO4h0YsJ4O73Pio8oJmx251aFxXAzxSmPqOAu831i
-         eDfqbl9FbLU7MqdtjKvtLyrsF6rAU26RqEKcXK+cBqGIVo4pT8sIDrPR92x9FT/CUo7M
-         tRaNmyZu0drD1jxHgs6lr3qvig4lo2DrdJCLxuPZk8D51NPw2CpGPn3glVCq4pfPX7gz
-         SY4vanDJ5POFaiB95RvHTTlhTNymuWcv9hMwE9P/hT80iJPGyxPT/eGPUcKmF04pReWA
-         YUPw==
-X-Forwarded-Encrypted: i=1; AHgh+RoMzbSV6aYHXtwAGWe0ya3NNU//+zfTojezG5WrMmuqztvCA4iN042ahMBI/E+coUl5gMDgFxM=@lists.linux.dev
-X-Gm-Message-State: AOJu0YyJJlu1RrCRl2/2mAmc8uJ+zwLK5AtNgl1qm2tX/aKybgW1lgMh
-	o+pQrRuHFWJjBird8WStn4XH5r4b03PeyNs0oVAArLP2SVxYRxIibWVM
-X-Gm-Gg: AR+sD10Uywc1QwzkOsjYx0z73Q1hbXyFqEJkx1x2ddtyDUb5Q2f2bYXAgR688ANLqx4
-	Xon9rG4zrrtxPiCdY33SPD9tOqAyrjqA6p954soKFTsoH6M7wtJzP7W5jnlUHn8lrcmafygGHpT
-	LhPl5Yblb1F9xZJMKOc1k796rZAnXWJJbqDFd1LR8sB8uGFUPP/OU7j4/x8FHLQtkiJ/ocKB/Rw
-	3bJLtyLXhOvwiSExGQPsP3pt2z9tSDyXsXUGIOTj9PE6D4vXSfNAuga9xrA1ZpNM24B9ekKy40j
-	S4/t8WesldZX5mHzZLd6JNL8v76O8UCfOmcbrT8aIH+bX2PLMeCz+Z06/d2K7fGsMs5gGPethUM
-	3PKeDkbK7e/aXZwFOHX9clT29hkiQklJ3AA+roAg3Xqk+a/6LCfoSXJNO2ejDyVJCtaO8RNjiZf
-	eC5Kul1WkPb9/u9oULYJSx1lL0TqxIf/cKP1xbr+q7jQ3ASKAAgguMZMBx1clHsEhbHoA00KPO5
-	29ci9k0SztdEb/mnAmgsmBlmEzH7RfuN+SQFvP9grt7LG65E1TKM7FzKChffgmIH7uygG2I6okY
-	gQRsubNEVlaCP90kdRPcOMI=
-X-Received: by 2002:a17:903:1aa3:b0:2cf:ca85:57e2 with SMTP id d9443c01a7336-2d05219bb79mr145306785ad.1.1785774879604;
-        Mon, 03 Aug 2026 09:34:39 -0700 (PDT)
-Received: from chenyou.R15NEW (112-104-169-66.adsl.dynamic.seed.net.tw. [112.104.169.66])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2d04ae99af1sm41180545ad.33.2026.08.03.09.34.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Aug 2026 09:34:38 -0700 (PDT)
-From: Chen-Yu Yeh <chenyou910331@gmail.com>
-To: chen.wang@linux.dev,
-	inochiama@gmail.com
-Cc: Chen-Yu Yeh <chenyou910331@gmail.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Alexandre Ghiti <alex@ghiti.fr>,
-	Longbin Li <looong.bin@gmail.com>,
-	"Anton D. Stavinskii" <stavinsky@gmail.com>,
-	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
-	linux-riscv@lists.infradead.org (open list:RISC-V ARCHITECTURE),
-	sophgo@lists.linux.dev (open list:SOPHGO DEVICETREES and DRIVERS),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/2] riscv: dts: sophgo: cv180x: Fix internal ephy node name
-Date: Tue,  4 Aug 2026 00:34:24 +0800
-Message-ID: <20260803163427.74445-1-chenyou910331@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="oQYP44F6"
+Message-ID: <c68193e7-4917-4941-a461-b70ff9521dc5@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1785890753;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=wIHfopREpj63E+t8aIw2YnOoOYw/Ruoq0AuZz9xlk9M=;
+	b=oQYP44F6FoHStEmYnwI5ikgmyxlg4rnWi9TtP56KrrYbr7LNNwCSQzIDFqGhN5TGMP6jq9
+	Oy4BOiDNXe/eCray/6hLSwYBRhsfwtL7zfVRNiVgXF443Ns58WfRBOAl3VoZayOhGWSA0f
+	54fDqvQJ9UbZNzXKaexRxrSVfJ3K2Ko=
+Date: Wed, 5 Aug 2026 08:45:20 +0800
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+To: soc@kernel.org, Arnd Bergmann <arnd@arndb.de>
+Cc: Conor Dooley <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
+ "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
+ Chen Wang <unicorn_wang@outlook.com>, Chen Wang <chen.wang@linux.dev>,
+ Joshua Milas <josh.milas@gmail.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Chen Wang <chen.wang@linux.dev>
+Subject: [GIT PULL] ARM Sophgo Devicetrees for v7.3
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
-The internal EPHY node is named "phy@0" while its reg property is <1>.
-The unit-address should match the first entry of the reg property, but
-this is not checked by dtc for MDIO buses. The kernel confirms the PHY
-is indeed at address 1:
+Hey Arnd,
 
-  eth0: PHY [mdio_mux-0.0:01] driver [Generic PHY]
+Please pull this dt changes for ARM/Sophgo.
 
-Rename the node to ethernet-phy@1, which also follows the common naming
-convention for ethernet PHY nodes.
+Thanks,
 
-Fixes: ba1abacc57cb ("riscv: dts: sophgo: Add mdio multiplexer device for cv18xx")
+Chen
 
-Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
----
- arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+The following changes since commit dc59e4fea9d83f03bad6bddf3fa2e52491777482:
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index ec3bf305274a..cf672cc6b935 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -71,7 +71,7 @@ internal_mdio: mdio@0 {
- 				#size-cells = <0>;
- 				reg = <0>;
- 
--				internal_ephy: phy@0 {
-+				internal_ephy: phy@1 {
- 					compatible = "ethernet-phy-ieee802.3-c22";
- 					reg = <1>;
- 				};
--- 
-2.43.0
+   Linux 7.2-rc1 (2026-06-28 12:01:31 -0700)
+
+are available in the Git repository at:
+
+   https://github.com/sophgo/linux.git tags/arm-sophgo-dt-for-v7.3
+
+for you to fetch changes up to d5e1ea5b05fe62c296701251c628ced6c68a6a80:
+
+   arm64: dts: sophgo: add initial Milk-V Duo S board support 
+(2026-08-04 18:05:28 +0800)
+
+----------------------------------------------------------------
+ARM Devicetrees for v7.3
+
+Sophgo:
+
+Add initial support for "Duo S" Board.
+This board uses SG2000(old codename CV181xH),
+which is dual-arch, RISC-V and ARM64. This
+patch adds the support for ARM64.
+
+Signed-off-by: Chen Wang <chen.wang@linux.dev>
+
+----------------------------------------------------------------
+Joshua Milas (1):
+       arm64: dts: sophgo: add initial Milk-V Duo S board support
+
+  arch/arm64/boot/dts/sophgo/Makefile               |   1 +
+  arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts | 244 
+++++++++++++++++++++++
+  2 files changed, 245 insertions(+)
+  create mode 100644 arch/arm64/boot/dts/sophgo/sg2000-milkv-duo-s.dts
+
 
