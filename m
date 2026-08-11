@@ -1,94 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from out-175.mta1.migadu.com (out-175.mta1.migadu.com [95.215.58.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB9C431A41;
-	Fri,  7 Aug 2026 11:23:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F6417A300
+	for <sophgo@lists.linux.dev>; Tue, 11 Aug 2026 00:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1786101815; cv=none; b=YHH3VI8++mHUYgoX6pqLvUP46eEeJH5CdvCSHktKv/ZsR7wVPpqZOiQ3lVsNUbAFbDsJYrxmQoZFFU+P1wIlZVfnR0J9UtfRLxIx53khlbS9WaDIXtt4vTav1Bn4SGAYOjNQFl9p3OPP2Iib0Zu6E6x6FR/zdxoR04n4nPSonDU=
+	t=1786407368; cv=none; b=nU1w7qbg3XBj5vaN7BiejNF7MMCFpZi/dN2OuUN4/fUbJHs8SXTNhuMIr8ImgZOXdeIjahwHypJrcCIYA0l+eKnQaWT+R1wt28z2RMmkr/0cMii2e8ujNLCHjZTD+SzCC+PMUr3grd6K6ka8MPh36LgQSoEER4wxwilyZRZxs2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1786101815; c=relaxed/simple;
-	bh=ZtKgrTVNjrMucm1azeTrEuWm+KHzluo3o1Z2D+B2ZSM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=qNaLwIfuZY+3jQ9ZYibyTPXPMfxn98/CGQv1vS4xBQ5G/bShs83N2BMWhtuzcvfYXqmmvXkZLdOTCSCQptADhMgLDeO5LpKWqkHYTeIpMpCpg79ygzYLtqqE2GCZzoi8yEiraLBrHwLd4xRq5zetLpfPCW3+EbK/KFzMsyypjlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OoYGz25T; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1786407368; c=relaxed/simple;
+	bh=tS5jl2qbCNXJF6mPJFEWLReVNkbdCHVQ2yVE9T1041o=;
+	h=Message-ID:Date:MIME-Version:Subject:References:To:From:
+	 In-Reply-To:Content-Type; b=pDeDWmvUu9A+znW1yFOHugGW9hVokJWf/I7faW9Tm6t4VJjnFmZnsvO8dZXJAFb1Ctf107Fhc/p5f/8CCxXWCus9yJBWqyE3zfED4qSr9L/5BgiDD5TmoENHIG+pXY3y3OYVZCbFJtwInY88dcHkD/WuTQaXvHO2/tnceyG4d5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=T0+3Xmio; arc=none smtp.client-ip=95.215.58.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OoYGz25T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 018711F00A3A;
-	Fri,  7 Aug 2026 11:23:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1786101811;
-	bh=Um34j4uf2ir//B+mkCj+DjA2ieMhJJj3lLlzlCCUQVw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=OoYGz25Tlz0PwrsGwLUA6VSE70tr8hZCp7qlTKGoGca/BYwVIbNHie4EnsonR9Dlk
-	 vDoupTEFdT8PsiUv6yuqz1g5kF8gpLQL5zPRrrezlQ3UTmO9upeJETD1/QuYMetqEi
-	 4zF2TWtqn/L/1VosP2rvGagfX+vlZnbrP3MWC9o7lj03w01LZGAaxuhv2a4F2+5VZ2
-	 LcipiVOkOhSERMiiUbD8lpPTeOdiQOBVF5c6BqA8VcADrI8bWG6ne38RqS1dgOEyuR
-	 SVd9tZeQMU8ShZ0LuNE2PqOL3ocgkdG6dEucXPtIynj4EQdTrO81mnlygYkh3uYZDg
-	 H9ogwgQEb8EjQ==
-From: Mark Brown <broonie@kernel.org>
-To: Chen Wang <chen.wang@linux.dev>, Takashi Iwai <tiwai@suse.com>, 
- Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
- phucduc.bui@gmail.com
-Cc: Inochi Amaoto <inochiama@gmail.com>, stavinsky@gmail.com, 
- sophgo@lists.linux.dev, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20260803061605.35485-1-phucduc.bui@gmail.com>
-References: <20260803061605.35485-1-phucduc.bui@gmail.com>
-Subject: Re: [PATCH 1/2] ASoC: sophgo: Drop redundant error messages
-Message-Id: <178604047116.110757.6902503041163949810.b4-ty@b4>
-Date: Thu, 06 Aug 2026 19:21:11 +0100
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="T0+3Xmio"
+Message-ID: <266f0f4c-21db-4b5a-a0f9-c5d707c522fb@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1786407364;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rFsAgDg/1ZmpDqwb9SAAObQKLDTd2K4pMff4sGjacQA=;
+	b=T0+3XmioJqIPbO2u8ezaRBLLkiQSQn97UWXFTgSHE8m4+94Vl/yhxO7fkoGVB/VF0rcMsd
+	nAvZ8xEq/t5I08X8K2cjZmK+3u665zu78lXy4jQVBe5JlmXYi5eQP/9ytVenoSjyrwPVqJ
+	cos5MXndP/dCdC3WXrSvZlLGvejnbmU=
+Date: Tue, 11 Aug 2026 08:15:33 +0800
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Subject: Fwd: [GIT PULL] ARM Sophgo Devicetrees for v7.3
+References: <178638063913.3872609.8369367317225821467.git-patchwork-notify@kernel.org>
+To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Chen Wang <chen.wang@linux.dev>
+In-Reply-To: <178638063913.3872609.8369367317225821467.git-patchwork-notify@kernel.org>
+X-Forwarded-Message-Id: <178638063913.3872609.8369367317225821467.git-patchwork-notify@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1239; i=broonie@kernel.org;
- h=from:subject:message-id; bh=ZtKgrTVNjrMucm1azeTrEuWm+KHzluo3o1Z2D+B2ZSM=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBqdcAwhWTZdNvzL3cu3NH1Lf2xLrGBqT8OPQKa0
- d0VFYXn8aqJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCanXAMAAKCRAk1otyXVSH
- 0JjhB/9xmYiwHC49+6xpnMDqKjmpzs2mpeuymBqQuG5RQLEuuXXwXWFhs44n4tquSXSV/c3jYsR
- MMqO7vK5TJnm+nwW6YZR8ed4XNIH9AvDiwmBaaVp8pVG1ivCnxw4MExM+PHCMy/BrezbU0zvu+c
- n9lgLr7kTTxMheCqBmuySikk7GYe/3z1zoTytN4HMCzNYtoOI/3dI80IhLx03I0MsbKDEi2J3+5
- hOc/9VVS76sHx9b/cp8Cs0kYsec1kyCyHWqJbUcCLm0m74fqZvPNGFh5UqQIRzfNxdMs1W1wwdy
- kgahiuNagnWfokjuXEewSZM+Xcf2zDXg+XaS6xDuJ72Qkm9/
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, 03 Aug 2026 13:16:04 +0700, phucduc.bui@gmail.com wrote:
-> ASoC: sophgo: Drop redundant error messages
+FYI.
 
-Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.3
 
-Thanks!
+-------- Forwarded Message --------
+Subject: 	Re: [GIT PULL] ARM Sophgo Devicetrees for v7.3
+Date: 	Mon, 10 Aug 2026 16:50:39 +0000
+From: 	patchwork-bot+linux-soc@kernel.org
+To: 	Chen Wang <chen.wang@linux.dev>
+CC: 	soc@kernel.org
 
-[1/2] ASoC: sophgo: Drop redundant error messages
-      https://git.kernel.org/broonie/sound/c/85665ff342c7
-[2/2] ASoC: sophgo: remove unneeded devm_kmemdup() for DAI driver
-      https://git.kernel.org/broonie/sound/c/6d0451f9bf1a
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+Hello:
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+This pull request was applied to soc/soc.git (for-next)
+by Arnd Bergmann <arnd@arndb.de>:
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+On Wed, 5 Aug 2026 08:45:20 +0800 you wrote:
+> Hey Arnd,
+>
+> Please pull this dt changes for ARM/Sophgo.
+>
+> Thanks,
+>
+> Chen
+>
+> [...]
 
-Thanks,
-Mark
+Here is the summary with links:
+- [GIT,PULL] ARM Sophgo Devicetrees for v7.3
+https://git.kernel.org/soc/soc/c/bfe9922bea4a
+
+You are awesome, thank you!
+
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
