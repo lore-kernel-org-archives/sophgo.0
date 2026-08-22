@@ -1,128 +1,150 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5181C2FF675
-	for <sophgo@lists.linux.dev>; Sat, 22 Aug 2026 02:15:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787364920; cv=none; b=jUknac1dBf2dLZexipKrffVhkZGxZek/waz5C8PX/QBAhPXww+Ri1wBJR6R6N18FeDLLUR/+AJq3PSr4uLHoeKF9zVq/r2Pm62kBXTS9JAbNbuyO09/BZ7NNh3uIdVpsm3j9ZMyC6ZdRvFNwXyclEfxXTP/bfYrtYg9YXlOB5e0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787364920; c=relaxed/simple;
-	bh=mD5xjXCGIl4YFPLhqSxXfqSUdA/Yx43BvWrOBmOpsuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dzdWlReXaNiJBA8S7nSz8cR23yB5hChIMXavdd6zjJIjZ3TOos7FwoYwM2jJi/6rAUf1zzxsfZu7DzW4M8fXxO+STNzXCutv4yjSGQQJstS/sHn6NmpdDNwZrlbFkJC1la4i8z+ywE6Yr5KznGve0qUGjBSzJheeAQa14Jk2CxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ivrm78mn; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC9C339388
+	for <sophgo@lists.linux.dev>; Sat, 22 Aug 2026 22:27:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.44
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1787437654; cv=pass; b=b6cYfI4Ocv9/QMISsb8c/ER2UHwUcrhd6EHGC8TEOb+RfVwICR75emeA4fSQJ0+RJl6J44R6MRmUoHOG9l+qoSp4sRdBtKIliKPhTeM9jjLRd8GcXue7qsDp0FYMB3GDrbAV4Y6c78LtUl1YDUSQyzUae72m0VAIDgilm/QxtCE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1787437654; c=relaxed/simple;
+	bh=JUAn2KimmN/o/eHfXlDSULICtgG62oPP2Hyu94+omBk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MtxZ0jrE1C+oS1oFfajzp0+rmNAVt0zHceTssTEF+vviYwUgHrbEEcw87FRzN+zF/1faAt5jdoiaKwXeKDROr5icLT6yBjBv+YL9mrm5/nLaOY9zj8ylc0zE/QWuaeAbdrWHrJmgXDEetqfIYwLihwKWw5kZA97D0soNjEG53w0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RwZ4ib7P; arc=pass smtp.client-ip=209.85.216.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ivrm78mn"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-382ef647e20so1693101a91.1
-        for <sophgo@lists.linux.dev>; Fri, 21 Aug 2026 19:15:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RwZ4ib7P"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-38125cebfdaso3102277a91.1
+        for <sophgo@lists.linux.dev>; Sat, 22 Aug 2026 15:27:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1787437652; cv=none;
+        d=google.com; s=arc-20260327;
+        b=F1g1GIua+LdgbD70PJLg/Myk0z13q6AB3KdBaLsojLA2QVhB93p38u1FxcUK4lKksk
+         SO5XBy6IKG/4cUo4JFblu+iD4YBcz8veaUMDw7PGtzU9C26rTgVK7/4Wt2vmbNsonrHG
+         xXO8Yevgc5DCohe8fkcyb4kATucvY5UKiuvUrP0TOI5u37PrZFYylsMdEG434niEorer
+         7eXiF0QslzoYMg+iffGO7DieYbda/3OQpALp2FVZnBFxuJ+H9wBejsnca3+K6OliZpdG
+         fP/PmNY9UtMvIFC5io/LPIPHXcD+8vgVh5VWUlhFgIwAJMXDuRjcy/FZ5Hy/twhYwgeL
+         MWxQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=h2KBP7bJOZESyKVN512DplqH6zyDbmVZ0g4qOVUEItw=;
+        fh=nX0aZMPzV1jj4dUykolXUEAYgZPw6EEJe/oSGUVUhx8=;
+        b=prrsM5XA+xHEnRzd5aZYBl1GtbSdN4dt8zUmC+7yx4AprxGrCb0kEkcun3wts7t/pS
+         jJFJxXuJgqdfgiCZLcxGeo59CFNXGbK2JTIMesv/VrzY56jeeZua20S+luoz1jgNxfRW
+         ITyqvmlwjeoUc5w5RWJbTdroqs5FpoJKaO+1x21gcr2Hu7Vjdk3fTXrvgibSJ5GK16qZ
+         i3mI9oevbF7PESO8NFbtpuPPlDX+cKV00LDrObO7WqQhuGTQ4fQxyloKa2WD81NR7OYj
+         Aoe946tOKWfTZxNhjLxmLw4VlYiYZQbZLdws8zajn0v0ynaIiZ1N6rjm6UnS/H0x51GY
+         iwzg==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1787364915; x=1787969715; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=w9puE3+zCLEaWdw8EId49ZyEBO5d5Da/X77xZvHMcX4=;
-        b=Ivrm78mnBcRE8+5cWNvQ5Kf+m1OPgRcEbEvfg/uAyBkjyaNGx7TbbfGXtnGx+UbxP5
-         FT3w25WBTWW3q4XJLnN/ba2YJKOkJbvLJLacFAO6QPiBlvxnYOqNglgPZBHYQMN2cQNU
-         TdDmoWG6SiyhHjndYZXUI4lc2HzrcqEk7tWIfN9l2l9xoWCUEkzNNVmYYKVntbDnyLmi
-         d31gAt7QcB1NtpdClp8nIsSfKCWkRwTduCOg+hsjTg4/J17QZdADXwSAsXczRRtFkJPA
-         xez35KQZMpH+ZWfxGdNt+JxGVWmtOpAF0W/0zzBIxQZFOO/zTF+ohphc+bOpVDGM3TCD
-         E3IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1787364915; x=1787969715;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+        d=gmail.com; s=20251104; t=1787437652; x=1788042452; darn=lists.linux.dev;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=w9puE3+zCLEaWdw8EId49ZyEBO5d5Da/X77xZvHMcX4=;
-        b=Mw4EDyWClNoEk7zx4LtLPW6A6HW7X5BoOix3xU/cXWuNGoSMvIcyrGXxFeTOZoex3b
-         ZDTTf0wGklVm2Xo/tOzjaLCjd00UGCQ1AzRaprBvlaczle4zIjLY57rhZkNV4nYOqUeu
-         RwyuMZpxbSSMQ9zuxorqz1yDFeSS5GzBnlQ3JLryNpOhzwp13+ndpoEVm3E7VvWgLP9v
-         349J/a1Btgkb3QrKyZ8g/7D31cYDyVBup4mt8R4NJiDveXGlanwi7C5In+YoH0j48Enj
-         RTUqf1cNYMFfMwaSXGsFOR53lzpLT1yYcRc5YVEMlQ10jOfNKHoQVmlTSvOAGXOQuJI2
-         lG+g==
-X-Forwarded-Encrypted: i=1; AHgh+RonTf94x/5dXepK0yVWUb4IHXvIFsssYBOtoDMo1UVbwy58Hb2TTpUYLs3ldBRlWvyqSctSIFY=@lists.linux.dev
-X-Gm-Message-State: AFuF++mFKOJHTyomSkzgW3CRoQN5S6C7n/kL/7xsrtyjpb6VommF99jT
-	1R0gShvXmvbuiA9aFLYArgyW5sLoVG5PgBJOUIERT7QXqS831VYJ2a2y
-X-Gm-Gg: AR+sD10p6A/DK08FgdgIe4U+tRVV7kK0xogYYdq5jprH6Nvk/GDemOsWECR0HiKokR9
-	7kcqBVYtDu9LeY1Ff6DfZdq05t20uj7bMLvGeYxE7n5h13qD3G6uXSna5t0mMHw8kfzoxzTBXby
-	4KoYejkJrcNdGewJt1I8jNtrSnDysoM67/MFriL4vdkyTWkfxiz+weC2ApjmGtzhYbns8TBipEQ
-	QGbhOWEJivssMjQLG0vLbUyhb5/kqTmrzF64Wh3KtFK4TMFecFBktv1ABjxKuW1NjwfklAUrFit
-	yH/s+YZinF+llbD7xqc2BMCPKbfJkrgcmLPkCn4ehqcaRMUQ1cqdya+qA3qHmI1WQ0mHcVDVG9i
-	RdeM/vLiLrs5vpkV0ZSAL7vEjafKAf/Y+tfkccR/vKq3vzdD6slFfVh0yO8uPe3Al7uNgWOdVHn
-	XEmfeRSNVaaTChvty+Tp2cckTAbT3IS9lP0FapgW7Usk8CA6dEwlwKsRWQzLE=
-X-Received: by 2002:a17:90b:4b89:b0:38e:67e1:15b with SMTP id 98e67ed59e1d1-395deeae6e3mr4932581a91.6.1787364915420;
-        Fri, 21 Aug 2026 19:15:15 -0700 (PDT)
-Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-395e49d8b1csm1062983a91.11.2026.08.21.19.15.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Aug 2026 19:15:15 -0700 (PDT)
-Date: Sat, 22 Aug 2026 10:15:12 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen-Yu Yeh <chenyou910331@gmail.com>, chen.wang@linux.dev, 
-	inochiama@gmail.com
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Longbin Li <looong.bin@gmail.com>, "Anton D. Stavinskii" <stavinsky@gmail.com>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, 
-	"open list:RISC-V ARCHITECTURE" <linux-riscv@lists.infradead.org>, 
-	"open list:SOPHGO DEVICETREES and DRIVERS" <sophgo@lists.linux.dev>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] riscv: dts: sophgo: cv180x: Fix internal ephy node
- name
-Message-ID: <aokF9v3orE3nBz4D@inochi.infowork>
-References: <20260803163427.74445-1-chenyou910331@gmail.com>
+        bh=h2KBP7bJOZESyKVN512DplqH6zyDbmVZ0g4qOVUEItw=;
+        b=RwZ4ib7PLfl9Cdr+PK2jW20Ylo2MNM+ZDGoOQbxtsCW+bz5hhvAX/FuZ44Fk5bHvYu
+         zxkIn0qkmZ0+m0iSUzud0XSISIOn+2CdFK5CRwrc6JlqwuCLhggZohcUS1zgfLU/uEr/
+         9D2mzLHaCNYbVoTmcNb9JpIne+MvRoCj/zK2EBjyYBA+kPbu3rokKo9/sAYsiFhKBsGP
+         B5mGZJZFNMna36ZsM2jtuiPydFsLzCkQIOXxu0tQ6V4MYOngmEIA1p9DEsXvFeuS+bFZ
+         CAF7SZxnVkL+191ii0KY55RJjQoE2lnNJkkbxY7x0u+6nYppG0E5ck4fi8D4rI01Uo2Q
+         sqXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1787437652; x=1788042452;
+        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
+         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=h2KBP7bJOZESyKVN512DplqH6zyDbmVZ0g4qOVUEItw=;
+        b=suHl8rTQFlft+ejyqUpXULt01AW9i+L0iOJTFo5KUlWxUzw/w8zZvgCYSS9tjKLHJs
+         W4bh7O9My+h3PGEkBIPEBl8hCJ7+DDgf/W2l36eQlDK/jJVVOxf2/IZ4JSFrncjohBjn
+         bKnpIlrTBJ4c9EMNlDArTsPgkhTdwQGdtGJCUKsj5pH9YBlW6aKkYkTlQNN8iLveOCAS
+         WT7rKJI/jIwI0Tgs7V5o8j4JZp36zTkh5D1r0Um97w5dfzeWZoytMATl/BjTLxzW//gX
+         BUHqv5nChISX5vC9j+p+N6ygfL7IpPUhSP9TmZBHaiJonfLQConISP7qW0z6YVEBnxG9
+         GsZA==
+X-Forwarded-Encrypted: i=1; AHgh+Rp3i/eQEuywqzAq9nhi74XqS5za4eXxu1iUmxW5fl0CcQTuj80nsN4B3n3zMPGIrJITLwbilnI=@lists.linux.dev
+X-Gm-Message-State: AFuF++mXroytQnCqWDYaJcU3j6YoIQE6ZAfeNXI+ezqKcUfErSEYrbVA
+	LMI6ZeLheoaQSNvSOii2HaRp5l6QmKzVhaUONVXHIapvXVAi8Ilc2wtgbtkViZtyxs+ulKxgaKj
+	7sLF1YonzA+a1S24oCg44wQ/uu/rOs3Q=
+X-Gm-Gg: AR+sD115LP1ayl+WXvFKbjncRxk3R1plKspSiNmJdc0EnIyEOcw2CDRfDxfCuAbC5pK
+	Mk/wL2iKJMNyW1GYDlruLElIYClo2aNDKzpIoYyq0m+bjm7q+2iGh89g2O7uXPGzgVasm4c4tPI
+	RL429ARykPYuQEhqvepJfnssWm+tjpe7kVx2GqXcCdrzVllLSd8xqyEDxwvYLCR4ThRy8YuO7v4
+	U1R4ErGnCT6H+BR9yk/iHeTahH8k4JLr69YxzCopGfUdy3ekzZgWiSFjx+RKVUpqMOmo2/txIg8
+	FfI1ENgDsbxTUITFvWrSew4gfl/Pu33v7K7HEtzcoyUEGj/inOebkJeGdrpmOnaFD4UjwcJ2RnP
+	etvUC/cq23duLcqzyWn6dDipqn4fSExDWizu6nR7z6An+Q20T8NifNA8H/f7p3uN9nCfAt968uy
+	PAod5YJvbo4EasPzA=
+X-Received: by 2002:a17:90b:3b4d:b0:38d:ef48:b04 with SMTP id
+ 98e67ed59e1d1-395c39b1750mr25888560a91.10.1787437652530; Sat, 22 Aug 2026
+ 15:27:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260803163427.74445-1-chenyou910331@gmail.com>
+References: <20260813074810.27574-1-phucduc.bui@gmail.com> <20260822023959.4319f0c3@jic23-huawei>
+In-Reply-To: <20260822023959.4319f0c3@jic23-huawei>
+From: Bui Duc Phuc <phucduc.bui@gmail.com>
+Date: Sun, 23 Aug 2026 05:27:21 +0700
+X-Gm-Features: AcwNN1XUh84KX3jaBPa7kHJp99hE9mYWPs2QfVJIdkLloGc_YiaGMghuVA1RL-I
+Message-ID: <CAABR9nFdnFH-gspxEZffAb13_vvrs+x4Ksznq5JFO1gMEmw4_Q@mail.gmail.com>
+Subject: Re: [PATCH] iio: adc: sophgo-saradc: Handle errors from optional IRQ lookup
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: David Lechner <dlechner@baylibre.com>, nuno.sa@analog.com, 
+	Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>, 
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>, u.kleine-koenig@baylibre.com, 
+	Danilo Krummrich <dakr@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, linux-iio@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Aug 04, 2026 at 12:34:24AM +0800, Chen-Yu Yeh wrote:
-> The internal EPHY node is named "phy@0" while its reg property is <1>.
-> The unit-address should match the first entry of the reg property, but
-> this is not checked by dtc for MDIO buses. The kernel confirms the PHY
-> is indeed at address 1:
-> 
->   eth0: PHY [mdio_mux-0.0:01] driver [Generic PHY]
-> 
-> Rename the node to ethernet-phy@1, which also follows the common naming
-> convention for ethernet PHY nodes.
-> 
-> Fixes: ba1abacc57cb ("riscv: dts: sophgo: Add mdio multiplexer device for cv18xx")
-> 
-> Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
-> ---
->  arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> index ec3bf305274a..cf672cc6b935 100644
-> --- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> +++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-> @@ -71,7 +71,7 @@ internal_mdio: mdio@0 {
->  				#size-cells = <0>;
->  				reg = <0>;
->  
-> -				internal_ephy: phy@0 {
-> +				internal_ephy: phy@1 {
->  					compatible = "ethernet-phy-ieee802.3-c22";
->  					reg = <1>;
->  				};
-> -- 
-> 2.43.0
-> 
+Hi Jonathan,
 
-Please send this with the same thread of PATCH 1. Otherwise, LGTM
+Thank you for your feedback.
 
-Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
+> >
+> > platform_get_irq_optional() returns a positive IRQ number on success or
+> > a negative error code on failure. For an optional IRQ, -ENXIO indicates
+> > that no optional IRQ is available. Other errors, such as -EPROBE_DEFER
+> > and -EINVAL, should be propagated so that the caller can handle them
+> > appropriately.
+>
+> That function is very much undocumented other than not printing a
+> message when it returns an error.  However I think you analysis is
+> correct.
+>
 
-Regards,
-Inochi
+Yes, I agree. The documentation for this function may not be clear enough,
+which could have led to error handling being implemented incorrectly
+in some places.
+
+There is also an inconsistency in this driver: if devm_request_irq() fails,
+the error is returned and the probe fails. But if platform_get_irq_optional()
+fails, the error is ignored.
+I'm not sure whether the author misunderstood and assumed that any
+negative return value simply means that there is no IRQ.
+
+> I'm not going to rush this is because it is not known to have
+> been a problem in the wild (only odd loading orders should have
+> caused deferal).
+>
+
+I understand your point. However, in this case the error can be
+completely hidden:
+There is no error message or log, the error is not returned, and the
+driver falls back
+to polling:
+-----------------------------------
+if (saradc->irq < 0) {
+        u32 reg;
+
+        return readl_poll_timeout(saradc->regs + CV1800B_ADC_STATUS_REG,
+                                                 reg, !(reg & CV1800B_ADC_BUSY),
+                                                 500, CV1800B_READ_TIMEOUT_US);
+}
+------------------------------------
+
+So there may never be an obvious failure for a user to report.
+
+Best regards,
+Phuc
