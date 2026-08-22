@@ -1,116 +1,94 @@
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.3])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B20E380FCE;
-	Thu, 20 Aug 2026 15:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B69C284B2F;
+	Sat, 22 Aug 2026 01:40:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1787239052; cv=none; b=sFGLT1w1n2XR+bKasXivSK2P5PCP5/gImQEeH8LdaoTmyL/HU9JSgeCzGmzZw9gIJ1iR7S3fizVsCd9PqVNo6crA3Is+zZDoB6WEdkgdHNuBVVXT0MgsTZTAM89LBsRGsYuzyFrxAmxwtHId64yw3xPUre40d0z+yNHmzX9ODaU=
+	t=1787362806; cv=none; b=FqLM5G80DCh2y3cHuXux4Pqim8r8VcydlI+b9lpXMbFfMh0DRz9z+ErbmwLx5LBtXJ8uACbdfH1s73Vg1qjsHmamVQv7Xz8Ply+S1BFKdbQqcJmIXmxKhVbf/Oux/sVVyNsU6fswyLTGLZ1LpPUgMwmGTVT0Fu0vk3/BgmNpomA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1787239052; c=relaxed/simple;
-	bh=cWpIAtyTCdPlakiXlW38UncZwFCKnczScJWBpx1E6I4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k57FWVmD57qbW6Gv4+y6qk2ijXE0YwyMlyGu3hJbfDaTB14O1WjDA8sRLMdxpG6QEY8iTsbeNhc5nOTsj6y21etRrhT7ALxudMYuI5aXtqNflhSNDD/Uf3JfKNHBGeqY2evb1ObsjGFi9HDu6zDZUUCcqXD1xgda4kcpec54eiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b=jz7Yb4NV; arc=none smtp.client-ip=220.197.31.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1787362806; c=relaxed/simple;
+	bh=KTgpU9/8zh8wApa/SPdOT4w3OESsMoV7DtdiPjQbrXY=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dPBcRK4rs0l8oLLHso/Lca6q8xE4pAY5sQFmME83yAtvR6cJT1H1FW3Tf9cU5aQSDBUfZXQu+zgq1r4bj6DKzMDRHU8/CPph2WN1lNqq2wEn7dCOgLhb2e5qWYMie4Cmh4aCMY26oc5gs3hmSLHznyfBsN0VwhuGr658ddmcfKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kaw98fmm; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=163.com header.i=@163.com header.b="jz7Yb4NV"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
-	Content-Type; bh=hCBCfkhuylDswajnEAey0yhp/w2gaAIUfLfZkrqLJZI=;
-	b=jz7Yb4NV2f4ape26Kp1GE/Cg4BTdXVJCyxo9NcOQCjfIZGGbmJazQ27Qg+bQ8E
-	K9iqAp0NKgajM4aFMscqoafCMxBrzSFXaGCX0qxzW+EEXJDVnZ6q9s4aaPkyr85P
-	DVveMqpuEMuJ7rSa8XEECERFA43Wfvq3V2lj4f80cLFVM=
-Received: from [IPV6:240e:b8f:91b3:d000:fc9b:5f4:477a:dca5] (unknown [])
-	by gzga-smtp-mtada-g1-2 (Coremail) with SMTP id _____wCHTa9jGodqjxLpQQ--.14990S2;
-	Thu, 20 Aug 2026 23:16:52 +0800 (CST)
-Message-ID: <a2f0c2d6-750e-4076-aae2-6efaba1009a1@163.com>
-Date: Thu, 20 Aug 2026 23:16:50 +0800
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kaw98fmm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 064421F000E9;
+	Sat, 22 Aug 2026 01:40:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1787362804;
+	bh=5GTMKh9J6oce0GKOv9wCZNoicYsfUpE1mImuA2CZKBA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=Kaw98fmmXekhLrjzv/RNlHoWF8NgZvXdzQhdtNikJB5rd70RQX7ibCw26EZtpWvVV
+	 yxBuv6is02ixN4JmPE3MFUjdKg4rYiBzCfdavYrtrwV/O1vQcbIY2YPucm7pIKSQn2
+	 CUfmniAR1GCPfBfRF98EZwzQFufAz6TgGQMa9v8fnNSyqXJmSK0cHvm6sszXPFHzuA
+	 HXPx1Ph3gBP9PIQ+GCgiO9m9DOMa/+t4qY1abGuNmALzjWUrQ6SM7tqrZlEeZUTDpQ
+	 ABeLXaY6CfH3BZXkvVWzccARRmdKoPHdKY3yFIBF7INSHGKeu3eICCTz8HLzyqW7F8
+	 issEFEaXgb8mA==
+Date: Sat, 22 Aug 2026 02:39:59 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: phucduc.bui@gmail.com
+Cc: David Lechner <dlechner@baylibre.com>, nuno.sa@analog.com, Chen Wang
+ <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>, Takashi
+ Sakamoto <o-takashi@sakamocchi.jp>, u.kleine-koenig@baylibre.com, Danilo
+ Krummrich <dakr@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+ linux-iio@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] iio: adc: sophgo-saradc: Handle errors from optional
+ IRQ lookup
+Message-ID: <20260822023959.4319f0c3@jic23-huawei>
+In-Reply-To: <20260813074810.27574-1-phucduc.bui@gmail.com>
+References: <20260813074810.27574-1-phucduc.bui@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/16] PCI: dwc: Use cached PCIe capability offset in
- core
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org,
- jingoohan1@gmail.com, imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260720150619.24733-1-18255117159@163.com>
- <20260720150619.24733-3-18255117159@163.com>
- <ps2qzgcb5lixkoqz2xbofdurkgmsiojg7e5ueqfdhyissqvzf2@tuderrjgzg6b>
-Content-Language: en-US
-From: Hans Zhang <18255117159@163.com>
-In-Reply-To: <ps2qzgcb5lixkoqz2xbofdurkgmsiojg7e5ueqfdhyissqvzf2@tuderrjgzg6b>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-CM-TRANSID:_____wCHTa9jGodqjxLpQQ--.14990S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW7KF15GFy5tryfZw17uFy8Zrb_yoW8ur18p3
-	yaqr4ayr4kZrW2vFWxJa1YqF10gF98trW3J3s3Kr15ZwsxCFWxJrW2yryYvF9rGrWqyr1F
-	kF4UXryDur98AaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0zRi2-OUUUUU=
-X-CM-SenderInfo: rpryjkyvrrlimvzbiqqrwthudrp/xtbC7AQcv2qHGmR67gAA3M
 
+On Thu, 13 Aug 2026 14:48:10 +0700
+phucduc.bui@gmail.com wrote:
 
-
-On 8/13/26 14:06, Manivannan Sadhasivam wrote:
-> On Mon, Jul 20, 2026 at 11:06:05PM +0800, Hans Zhang wrote:
->> Modify the DWC core functions to use the cached pcie_cap offset instead
->> of calling dw_pcie_find_capability() each time.
->>
->> In the DWC core, dw_pcie_find_capability() is called at several locations:
->> - dw_pcie_ep_init_non_sticky_registers()
->> - dw_pcie_wait_for_link()
->> - dw_pcie_link_set_max_speed()
->> - dw_pcie_link_get_max_link_width()
->> - dw_pcie_link_set_max_link_width()
->>
->> The cached offset is initialized after hardware is ready:
->> - In host mode: dw_pcie_host_init() calls pp->ops->host_init() (enables
->>    clocks/resets), then dw_pcie_get_pcie_cap() caches the offset.
->> - In endpoint mode: the core no longer caches automatically. Instead,
->>    drivers must call dw_pcie_get_pcie_cap() after hardware is enabled
->>    (e.g., after PERST# deassert).
+> From: bui duc phuc <phucduc.bui@gmail.com>
 > 
-> But you didn't modify all DWC EP drivers to call dw_pcie_get_pcie_cap(). This
-> can lead to pcie_cap being 0.
-> 
->> dw_pcie_ep_init_non_sticky_registers()
->>    is called after that point, so it can safely use pci->pcie_cap.
->>
->> dw_pcie_ep_init_non_sticky_registers() now assumes pci->pcie_cap is
->> valid. if not, it prints a warning and skips the operation.
-> 
-> Where is this warning printed?
-> 
-> These are already pointed out by Sashiko. You should go really go through all of
-> them (not the pre-existing issues) and comment whether the issues are valid or
-> false positive. For a series touching many controller drivers, this is necessary
-> to avoid introducing regressions.
-> 
-> I'm not going to merge this series until you fix the real issues Sashiko
-> reported or mark them as false positive if not valid.
+> platform_get_irq_optional() returns a positive IRQ number on success or
+> a negative error code on failure. For an optional IRQ, -ENXIO indicates
+> that no optional IRQ is available. Other errors, such as -EPROBE_DEFER
+> and -EINVAL, should be propagated so that the caller can handle them
+> appropriately.
 
-Hello Mani,
+That function is very much undocumented other than not printing a
+message when it returns an error.  However I think you analysis is
+correct.
 
-I'm truly sorry. Recently, due to work commitments, I haven't had any 
-spare time. I plan to handle this series after v7.3-rc1 is released. 
-Thank you very much for your reply. I will carefully consider the 
-subsequent review comments regarding Sashiko. Thank you again.
+I'm not going to rush this is because it is not known to have
+been a problem in the wild (only odd loading orders should have
+caused deferal).
 
-
-Best regards,
-Hans
 
 > 
-> - Mani
+> Propagate negative errors other than -ENXIO.
 > 
+> Signed-off-by: bui duc phuc <phucduc.bui@gmail.com>
+> ---
+>  drivers/iio/adc/sophgo-cv1800b-adc.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/iio/adc/sophgo-cv1800b-adc.c b/drivers/iio/adc/sophgo-cv1800b-adc.c
+> index bdc3e1326a9a..c6eed09acfcd 100644
+> --- a/drivers/iio/adc/sophgo-cv1800b-adc.c
+> +++ b/drivers/iio/adc/sophgo-cv1800b-adc.c
+> @@ -182,6 +182,8 @@ static int cv1800b_adc_probe(struct platform_device *pdev)
+>  		return PTR_ERR(saradc->regs);
+>  
+>  	saradc->irq = platform_get_irq_optional(pdev, 0);
+> +	if (saradc->irq < 0 && saradc->irq != -ENXIO)
+> +		return saradc->irq;
+>  	if (saradc->irq > 0) {
+>  		init_completion(&saradc->completion);
+>  		ret = devm_request_irq(dev, saradc->irq,
 
