@@ -1,164 +1,167 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010005.outbound.protection.outlook.com [52.103.67.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A0020E702
-	for <sophgo@lists.linux.dev>; Wed,  2 Sep 2026 02:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.5
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788317656; cv=fail; b=tJ1h9QxIu7zJ5pCnTToLZaMaUttUpzxq0Dp/A0xgWB34xFgcvCHtcatj7g2BHiaeuFrG59YxoBFguHqQljzwY8350gOGMWTQunDFNvZUk0ELAnbVM86FBqWtUTwwtHXG2YmeQKWJ/1pM/JwcFSX94E95vusnBGZzrwFl/pYFG9o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788317656; c=relaxed/simple;
-	bh=Ln8iIWMSpQJOD34p0R4uh77ONf8fQnF7p/7tCezSns4=;
-	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=lRaBUkRGcAkNJqhB00FXI6TwvgwT8f9y7jMU5kP8np0T0khU5fBVhhpQl+rZJ2MUnLucknq7nhnlqnKERXKN3J8miM5KelV33YxJbTh+O8TYiDJqbY66kH4jwvojJoMM+1Wj6Mu/Z3gvT2B7BCd0+DqRSalO8YAxiEbUqQEQTgc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=RW8EHpSJ; arc=fail smtp.client-ip=52.103.67.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+Received: from ultrarisc.com (unknown [218.76.62.146])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22113A382B
+	for <sophgo@lists.linux.dev>; Mon,  7 Sep 2026 07:47:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1788767241; cv=none; b=DAFIF00rUalILwn793pExct22oiTdb5pwSjV5G90EvxbJ0sQk7dFpGh358opZluO9HKlWVIwVvit1esQTkPdo8uV6ttnEQWcJjcdN9SJYat+Kl3DR2bM2+xsuZUDEez44O+qiuTzQ+P1tojWWCTUilaAi0pZKQzLes2jlS/HKdw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1788767241; c=relaxed/simple;
+	bh=E0fIp/TpmZlPXhCfLju8023vKe4cY7vjVI1k+JcRdXM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=mjhETYQFVcBlwgv6YEd4fSyEKNp3TlyFziwDjT3MTVI5eB2UGNGjYWdemnl2IDR9URJtbZBLOdJj8AX+U8Fpd/ADmUMCjGtzeW0qk4OzGRSY2wOGiBBuDaqu7FmpU9SwC7am4HmFRY3G4XGUg+s6M3WcMIUEIBKdy3b9kp08hJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=Ln9cOCLV; arc=none smtp.client-ip=218.76.62.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="RW8EHpSJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uvpLSkjfrjA8cpwoKSj/n6JbbfDM+RExJ6Sju101MHvN/viO86+0qLnazcUbZshS6ot9evC5dalSIhFRWOX2+Ld5oB1fabi8cTp76g7ddMmpam6/7IjwErcQr0TsS8dS+DfGlGx9STjOQ4hXX2LUpgpXyjIMwNHrAYpdzGi1l1P/G6bHWOhCujQTkUEuZTZNb0OyP/kCzcnap0onPLiagH3LuwROlFweohUkm+OSerWpnP9aHsB810FivXpu1aSspUWyo9Iw1kFytlJ1iNK5g843nSCPNPApuQPLVfZkEHhE+insJKYqjaiOi4aTYLoTMePEoVkzbGZ2SwopvnUm2w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hURiV+RSHZi5RCf3zzacpsX7TEoVzGyxwBHLOTPxQ3o=;
- b=YdEltqt+mnZTo12Ndg/v3tTEvT37C1WyPm2PZjGr1FcYbMDPzWynfKy50pmyJpHgNkDExq2kNUgkZV+VSXVEBUvOPutNfPo/VCh9Mcr1MDxtMpR4Aae21GLHD/tCfHu0TtvXF+XKIhst+qZVEs56uEvrdpzFPv5fFUztV6ogwKiX/lponwTlSeejlBLxzpBRkqhCStPW0mB3KHm+265nsZpVgpVhB3NarNmp15BwBeBTbJ7FvYIh5XNYkq0wT/K7HmwV/8OY+C9HPBsMrcDiYRPCbb2yFZ3cwsBF5ai4jmoc1Iq9CXMg0ucxaO/sIigcLyv92pfJX8SPPbwlxw3MfA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hURiV+RSHZi5RCf3zzacpsX7TEoVzGyxwBHLOTPxQ3o=;
- b=RW8EHpSJJxvMH5iYHRzBOUhsYeUwf0eCzksUbv64+8joosVNVHWMj0QmsnRh08Hh6VVx8zby/J0L7kHw03JTNfzLS/Hiyv5lcavOurNMWuhOfUisU4YhLLSm9yik3yJdx+cqnzt4fkSxKtRHujpcO2UxPlGzCjNoHPv6qDypiYuoQPrf+mIAi71cy+K3jf2tX2oYg4NfmvFoqxTqn44+v/BpX/ywLk/BflcsrQAvFq9WjWtPevnA2VQWMEt6Uhglnn1iM1zUZOWmzI/yCQSLiJkRCqGJmf7Fpk6k5Y6ZvxZqeoc3HA/sX5uqy8vsP1QoHP0clFITxBeq39fEDnhBpA==
-Received: from MA5P287MB6080.INDP287.PROD.OUTLOOK.COM (2603:1096:a01:230::5)
- by PN2P287MB1454.INDP287.PROD.OUTLOOK.COM (2603:1096:c01:1a5::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.360.13; Wed, 2 Sep
- 2026 02:54:10 +0000
-Received: from MA5P287MB6080.INDP287.PROD.OUTLOOK.COM
- ([fe80::ca09:8db4:b558:2f73]) by MA5P287MB6080.INDP287.PROD.OUTLOOK.COM
- ([fe80::ca09:8db4:b558:2f73%6]) with mapi id 15.21.0382.007; Wed, 2 Sep 2026
- 02:54:10 +0000
-Message-ID:
- <MA5P287MB6080B800F49DD04AD0F46714FEB72@MA5P287MB6080.INDP287.PROD.OUTLOOK.COM>
-Date: Wed, 2 Sep 2026 10:54:06 +0800
-User-Agent: Mozilla Thunderbird
-To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
-From: Chen Wang <unicorn_wang@outlook.com>
-Subject: Linux Upstream Status updated: Sep/2/2026
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR01CA0041.apcprd01.prod.exchangelabs.com
- (2603:1096:4:193::15) To MA5P287MB6080.INDP287.PROD.OUTLOOK.COM
- (2603:1096:a01:230::5)
-X-Microsoft-Original-Message-ID:
- <fb866834-0d27-422c-aaba-83952b7807a2@outlook.com>
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="Ln9cOCLV"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=ultrarisc.com; s=dkim; h=Received:From:Subject:Date:Message-Id:
+	MIME-Version:Content-Type:Content-Transfer-Encoding:To:Cc; bh=/I
+	uHbdKM4Vlg4v55WkOO4/O+rKTsVzLmcSrrax4XTxQ=; b=Ln9cOCLVtolM7KcE/E
+	Ohz6OceECfg9/GCfHvDBhq7lF4ikO3PXcIeWPl1WWLXQTvjhBjUgvQ1Pd7x5Pz+9
+	OPmKdaaCl9KPXIHCQL8fwQbVvKTMkXXOcI6SstUeBLXRH+sIAiG05NyeFv27M1vv
+	HYXMdISDWiyIX6Qf41Ud2rNQo=
+Received: from [127.0.0.1] (unknown [192.168.100.1])
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDHQAf_a55qnlUAAA--.364S2;
+	Mon, 07 Sep 2026 15:47:11 +0800 (CST)
+From: Jia Wang <wangjia@ultrarisc.com>
+Subject: [PATCH net-next v2 0/5] net: stmmac: Add common RGMII delay
+ handling and DP1000 support
+Date: Mon, 07 Sep 2026 15:46:49 +0800
+Message-Id: <20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MA5P287MB6080:EE_|PN2P287MB1454:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4ae8dfcc-ea0b-467d-c49b-08df089d7676
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|24071999003|25010399006|15080799012|5072599009|6090799003|4140399003|22402599018|20031999006|8060799015|19110799012|24121999003|22091999003|25031999004|23021999003|24021099003|39105399006|440099028|3412199025|4302099013|1602099012|40105399003|25131999003|2607281247196008|10035399007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?eThQeGpjb293OStMMDdnOWh1bWZtR21DTWxzYVhoZkRVcFh2MzREbVA5MjIx?=
- =?utf-8?B?SmE2dXl0d1JYSG1VeVNxNEFsZ0pucFlHekFFODkzeGhKTEdVbUIwK245ZXRG?=
- =?utf-8?B?TnQ0SlByVGN0eGVjNmE1SElVb1BScXZnbXJhSVdRMnFMZHQ0ME1KNVpKQkp1?=
- =?utf-8?B?ckk5R1RyaUZpdXA3Q25ISTBud3E2eG1OYkFReGVob01kRmkrazlqQXlaSVFu?=
- =?utf-8?B?Qm8ybEN6aVR2bFk5RXdUQmhRQWY3NTVpRnE0RHF6VmdQSkFwT1JvZHF6d2Mr?=
- =?utf-8?B?M1FtUFJvbzNZQ29KSHhrVTR1UzlwZ25ibHdLQkphY29kVWZJTk9YUEdQRnJX?=
- =?utf-8?B?MkMwRmJxaWt2RHowcy9CQWZycDRFeTRsZW5Ta3N5dTNTNlpLVjc2d2RqZlZL?=
- =?utf-8?B?YksxbWcwMGszZ1NPL0M5QjFoU2k5UERwQzN3OWp6OG1GYk55amUxUVRnZW5X?=
- =?utf-8?B?OG0xYmpyRWkrQnU4bFhHYnArVEpBRFFjNmZHS2FPS2FYODBRUk4xdG40RkRU?=
- =?utf-8?B?K1JsQ1BwVUJNdDFwb0F3Y05HL1dRU0pFdHBmRHNQNWo1TFFRMWl5Z0tVY2N3?=
- =?utf-8?B?bGZCQUM1SW9zMGpnbHNIZG9NVnNETFpPWXFJZjZKYlY2QUVTMHgvTFJpeVN3?=
- =?utf-8?B?aklpZ3ZYRkdQRitMcTZ6UG1QMDVUUkNwUmtxbWJKM0YxR3pTcSsvRUw2Rits?=
- =?utf-8?B?S2ExODgzVlRkUWlQT1V3VWtDZFhwQmFkZkpnbFJkMTlOVnFKWG1FQmw1NXNZ?=
- =?utf-8?B?bzc3N0IzUWNZTWt1a3krejdDMjVuTGMyV2VCZ3lvY2pZQkp4MkhleGdNS0R5?=
- =?utf-8?B?ZkJpZlhVUC9PZVYwL2lFUXFEQ2VNditIdlpzeXd0bmlSUzltaEZhRG95TUFV?=
- =?utf-8?B?VEwwTTAxdHQ2ZElJM2dpRC92QWZldkZNakMzWU1jSVp5Zlk5T29vVGttaHBY?=
- =?utf-8?B?Q1g4ZDB6UXBGZ2hBTnQ4N1hwbm9xYmhpcUNYTzNIcnNmcUNrQlM3ZzZzOEdO?=
- =?utf-8?B?bkhjK0NzVFNDN0ZienBWQ0hacERKeVZWajA1L2xLeFprVGR5VEQ3c2dMdFI3?=
- =?utf-8?B?aXNNNDMzK3NYVXcrYjdtRFByaE5zNS9iRFM4SVpMMWZNbVBBVEsyTHpKQTJL?=
- =?utf-8?B?QTN3QVcrT2d1aGdkNEtFSkJZckcwejFFK3pxdlRtNDlvYzRuOGxMaUozMlBy?=
- =?utf-8?B?N0w0dEFHNUNoUXRCMU9zaDM2SnZsRnphdHRQeUJCcEpjZElna3NWTFlkWHQy?=
- =?utf-8?B?Ymt1MEREeFNyekJGNW5UMnRzb1ErN21ZRHoydDZvOE1HQW9CQXBXNFF1cnYr?=
- =?utf-8?B?ZDl2OXlGaU03Wlo2N3NYTGFxcjEweCtlMjg3bDNTV0Q4SGg1QWhrSTBKYmZB?=
- =?utf-8?B?ZFlaYkhuMFFESE9xcVhKTVJrTzduNnU4eEJEVXVKMzI4cFpsUk5zSTkzOHBq?=
- =?utf-8?B?RVMwb0s2czNRN1I1WXlZcTMxSlBHK2tYYWRyamNxVHFMOHBVc2c3NncycWxV?=
- =?utf-8?B?bk5RVFQxRlppTlhwWmVVNVp0WnB5eXd0dFVudjhPeCtqRTJpcDBZa0tHcjdZ?=
- =?utf-8?B?dnVzREFIcnZDNFlkYmpLYWxMelFGZkozL2FJWkxDRHE3NU5SVEhXNWZBSStu?=
- =?utf-8?B?cndnQ2lvTHZOclM3ODVJeHpCTlYxY1E9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UVVMOVh5MTVxLzhnVlpQaDNzTzhDb3B2V29jMEJiRlM3NWJPR3BGejZTYmNh?=
- =?utf-8?B?ZHpVMUZPb3c3OWtFb1BxK1h3amZSM3MxU2dIRGRQQVVrWGdLRVVpeDBDZjRC?=
- =?utf-8?B?Vmd2TUpOWW9JVXJISmg0cTc4WEYyb0o5eUN6aEx6ZXM4TGtIcnZmTzF1MlZi?=
- =?utf-8?B?SitlTnRVTTlaaVFjTFZSUFhlVzdpd2llVi8zV3RMdnl6STI5b1pxamMzdU9w?=
- =?utf-8?B?b092UlFlODRCaWZZVG9raXo3Vy9BZzlyUmkyVTFtdzU0WXdiWTNsdFRvL3pk?=
- =?utf-8?B?eWZRSFh1aElYL0RnU3ErbWx3UE8wbXltSzFJd2xyNHJyeVJUWGdXUGo3RjN6?=
- =?utf-8?B?ZGdNTzlRYnJxNUI0V1h4aWtnZjRvekJVdW1OczhRRGlVT1dqOHlVWTJicElv?=
- =?utf-8?B?S2s2dDZNR1pMczJKSm1VY1NvZWQ1VFgzcGxXNzc3SGlhMGRLbUwrT3MyWisx?=
- =?utf-8?B?MXRGQ2g4eGtQUFNiMUZuVmFUcEY4OWVJTWFOUERaZG1uQnJBZUxhT2dRZ1Qv?=
- =?utf-8?B?bmM2Sjc2WGdLYWxBSCtXQ3pqbmcrbHo3MXh1ekk3Ym4xYTFsRUp6ZTR0QW8v?=
- =?utf-8?B?a2VPL1ExbUZBR3Vqck1Lb1ZWbVphYkQ0UDdocXIxU09OL3dZVTVnbDJRcVM0?=
- =?utf-8?B?Nk1uWHJiNy83bG5Qc2pORWxURHhVWElyOWhycFlFc2FFK0xGTTkzTjlnOHhM?=
- =?utf-8?B?cERrOFZZSWhDR21yZk5wS3A4ZFRiS3BhOFZMMmhVajJ2UC9KbFE2dndLZ1dm?=
- =?utf-8?B?cXJ0azNwenBvL0x5UUtSeUVkaFVUdVZ6OHV3VzB4cHNFekdQekxDKzg2L3VK?=
- =?utf-8?B?eHREMG9ZODFVVld4UFZ3WVUvQzMvUWNiMlBlYk9oNXhTU1VTOHpjeWIvOHNs?=
- =?utf-8?B?K3dtSGY4NC8yUnR3RjZFc0dJdmFPb09RdW9JdkN0a25YZmh5ei93U3gwakc0?=
- =?utf-8?B?N1Nld3ZTamE0NnFWQnNQeGh3NERIeWxXN1ArSkFNQ2N6NWdWTWl3YmM5NnNo?=
- =?utf-8?B?Y0J4RUJ3MHlmcDZadHhuWVNJQjVLc21SQk52N1RxajBpWFVIS2Fsb21Bbkdh?=
- =?utf-8?B?eExoR3RYRWo0eEZrSXFjR3FubFpmeVN3MTRqY0llSUk1bnpvS1pMK1Q5ellx?=
- =?utf-8?B?UzA0T0JieExEZHFvWjlJb3pVbStsTHRZb2I2NUpzM2FzMFdlNGp5UlhqNzVt?=
- =?utf-8?B?Mm9TbEpvNkUzeUNQY3JNTGtONzIrNURtZFdGcWh4SzhUaGtpc0N0NE5zY2pF?=
- =?utf-8?B?cDVmTlN6dDFObk5OMUwrUnBrbkZGeXNpTHBPMjM0UUV6MGpkck85VTA3MnNG?=
- =?utf-8?B?TVptUmsxdXdKaGVuVUxxUEZnSWJKQ290d2d3djhwcyt4dVNVb3Q3T0QySElz?=
- =?utf-8?B?MXhuNDdKYjVPUzl5a2tSUG02TlBWTUQ5VzF3THgxUnpQSGdIUEZMVXp2b243?=
- =?utf-8?B?U3N1aVV6VU9GQzFmMzh5Rm9zN1crdDNiUDc3d3BoTUJOQlhWdS9GNGVKWkFN?=
- =?utf-8?B?M1JsVnowaE01cUxiUWluMkluMmZQWHgvRk1WMGcwcFVIYm54bWVOYnpOQzc3?=
- =?utf-8?B?U3N0bHA4UGNxQUdLVFZQS3NDOUNkdTdRTVArWVZEL1hFQW1UREQ3TTVKekdY?=
- =?utf-8?B?RERXVk9CbzI0YXFVcyswWTNHS2t4VTE1Mk9NYVl1d240OEUxTUR4S1dJNHdh?=
- =?utf-8?B?aVQ4eTRTZWdFV0dOYm1kVEwySjc2Z3hnN1EzaUZsRE9zRmg2RklvVGw0N0c1?=
- =?utf-8?B?eVJMTU0ySk1VZzlodVNRSWcwcHRqSEpHK0w0UzVycGNyUFBaSnd1R1MrVjYz?=
- =?utf-8?B?UHJkajZkTjY5Y3FjSnc0VFZieFpCMVBRVEJlOVErKzFyTFhBb1VES1ZDNENo?=
- =?utf-8?B?RnIrMEpLWmFZMVFGZktPZjZwTDZsY1F1VkI5UGliV0g5QSt2MVFod05ZQU9i?=
- =?utf-8?Q?1nxqbIPLMhfoOhFcw1jAVTTvPOdf44Ai?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4ae8dfcc-ea0b-467d-c49b-08df089d7676
-X-MS-Exchange-CrossTenant-AuthSource: MA5P287MB6080.INDP287.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2026 02:54:10.2941
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2P287MB1454
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOprnmoC/2WNwQ6CMBBEf4Xs2TVtgwKe/A/DAZat1EghbUEM4
+ d+FmnjxOJl58xbw7Ax7uCQLOJ6MN73dgjokQG1l74ym2TIooc4iVxk2r64iHJ/BVc54woyyQiu
+ dC91I2KjBsTZzfLyB5YCW5wDlt/Fj/WAK++G+bY0PvXtH+SQjET2FkH+eSaJALYv0lOYyrUlff
+ 92R+g7KdV0/Arql5s4AAAA=
+X-Change-ID: 20260827-dwmac-ultrarisc-7c79f2f80fd1
+To: Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Maxime Chevallier <maxime.chevallier@bootlin.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
+ Jose Abreu <joabreu@synopsys.com>, Chen Wang <chen.wang@linux.dev>, 
+ Inochi Amaoto <inochiama@gmail.com>
+Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, Jia Wang <wangjia@ultrarisc.com>, 
+ sophgo@lists.linux.dev, Conor Dooley <conor.dooley@microchip.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788767221; l=3539;
+ i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
+ bh=E0fIp/TpmZlPXhCfLju8023vKe4cY7vjVI1k+JcRdXM=;
+ b=7q5KhNLkPIVPaYJq+BSR/OQFUBp8T8TvMM/iF0fcGmrLCXZGptDJJOls0LRVYq27eDCCpAkLb
+ qWa2PueH5IUCSn93tk9PAHSuoHWwvwoZwNESHXaHUgy0MFTa7XBrLEn
+X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
+ pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
+X-CM-TRANSID:AQAAfwDHQAf_a55qnlUAAA--.364S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXr1DtF1xGrWxAry7Ar4fXwb_yoW5Kr1kpa
+	93CFy5C3s7Jr4fGwsakw10vFyFqay8try3GF4xKw1fXas8AFyYqr90v3y5AF1qyr4kWF1a
+	yr1Uuw13Kas0v37anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUU9l14x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
+	6F4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4j6r
+	4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0
+	I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r
+	4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02628v
+	n2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCY02Avz4vE-syl42xK82IYc2Ij64vIr41l4I
+	8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s026x8GjcxK67AK
+	xVWUGVWUWwC2zVAF1VAY17CE14v26r4a6rW5MIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcV
+	AFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r4j6F4UMIIF0xvE42xK8VAvwI8I
+	cIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
+	4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjTRRBT5DUUUU
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQACEWqdDaQAAQALsG
 
-Linux Upstream Status updated: Sep/2/2026 
-@https://github.com/sophgo/linux/wiki
+The UltraRISC DP1000 integrates a Synopsys DesignWare GMAC from the 5.20
+series with fixed internal delays on both TX and RX RGMII clock paths.
 
-Linux 7.3-rc1 was released. Some patches for CV18XX family products are 
-added.
+For boards without PCB delays, "rgmii-id" describes the link. Passing this
+mode unchanged to the PHY would enable another pair of delays and break
+RGMII timing.
 
-New Patches:
+Add TX and RX internal-delay capability flags to the common stmmac platform
+data and adjust the PHY interface mode in stmmac_pltfr_probe(). Convert the
+Sophgo and EIC7700 glue drivers to this common handling, then add the DP1000
+binding and glue driver. The DP1000 glue driver only declares both delay
+capabilities.
 
-CV18xx:
-- Enable ethernet for Milk-V Duo 256M: v1 was posted but need rework.
+Tested with:
 
-SG2042:
-- N/A.
+1. dt_binding_check and dtbs_check.
+2. RISC-V build with CONFIG_DWMAC_ULTRARISC=m.
+3. Runtime validation on Shenzhen Rongda M0 with a YT8531S PHY and
+   Milk-V Titan with an RTL8211F PHY: ultrarisc-dwmac binds and
+   establishes a 1000 Mb/s full-duplex link on both boards.
 
-SG2044:
-- Add spifmc nodes for srd3 board: v1 was posted.
+Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
+---
+Changes in v2:
+- Fold the snps,dwmac compatible-list update into the DP1000 binding patch.
+- Add common stmmac capability flags for MAC-provided RGMII delays.
+- Convert Sophgo and EIC7700 to the common RGMII delay handling.
+- Simplify the DP1000 glue driver to declare its TX and RX delay
+  capabilities.
+- Add Conor Dooley's Reviewed-by tag to the DP1000 binding patch.
+- Link to v1: https://patch.msgid.link/20260901-dwmac-ultrarisc-v1-0-f19454814bcf@ultrarisc.com
 
-Thanks,
+To: Andrew Lunn <andrew+netdev@lunn.ch>
+To: "David S. Miller" <davem@davemloft.net>
+To: Eric Dumazet <edumazet@google.com>
+To: Jakub Kicinski <kuba@kernel.org>
+To: Paolo Abeni <pabeni@redhat.com>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Jia Wang <wangjia@ultrarisc.com>
+To: Alexandre Torgue <alexandre.torgue@foss.st.com>
+To: Giuseppe Cavallaro <peppe.cavallaro@st.com>
+To: Jose Abreu <joabreu@synopsys.com>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+To: Maxime Coquelin <mcoquelin.stm32@gmail.com>
+To: Chen Wang <chen.wang@linux.dev>
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: netdev@vger.kernel.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-stm32@st-md-mailman.stormreply.com
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: sophgo@lists.linux.dev
 
-Chen
+---
+Jia Wang (5):
+      net: stmmac: Add common internal RGMII delay handling
+      net: stmmac: sophgo: Use common RGMII delay handling
+      net: stmmac: eic7700: Use common RGMII delay handling
+      dt-bindings: net: Add UltraRISC DP1000 GMAC
+      net: stmmac: Add UltraRISC DP1000 GMAC support
 
+ .../devicetree/bindings/net/snps,dwmac.yaml        |  1 +
+ .../bindings/net/ultrarisc,dp1000-gmac.yaml        | 74 ++++++++++++++++++++++
+ MAINTAINERS                                        |  6 ++
+ drivers/net/ethernet/stmicro/stmmac/Kconfig        | 11 ++++
+ drivers/net/ethernet/stmicro/stmmac/Makefile       |  1 +
+ .../net/ethernet/stmicro/stmmac/dwmac-eic7700.c    | 13 +---
+ drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c | 12 ++--
+ .../net/ethernet/stmicro/stmmac/dwmac-ultrarisc.c  | 52 +++++++++++++++
+ .../net/ethernet/stmicro/stmmac/stmmac_platform.c  | 11 ++++
+ include/linux/stmmac.h                             |  2 +
+ 10 files changed, 164 insertions(+), 19 deletions(-)
+---
+base-commit: df2908090cda368b01ff43709f51890076c56157
+change-id: 20260827-dwmac-ultrarisc-7c79f2f80fd1
+
+Best regards,
+--  
+Jia Wang <wangjia@ultrarisc.com>
 
