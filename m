@@ -1,32 +1,32 @@
 Received: from ultrarisc.com (unknown [218.76.62.146])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22B941D647
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49004411FA6
 	for <sophgo@lists.linux.dev>; Mon,  7 Sep 2026 07:47:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.76.62.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788767241; cv=none; b=aQI4CIS+KVTEmfeUfnitCZV7hxPEoO+tkxXSzRJaGRA443E5ALy8rId+jrnlsyJVq8N4K3JTo2mAWozg5OWS2i8OClgggexlYiuHxXShCndaZnlODAioePAy0E1+xkZmj6yFwIUrEsMSB/wXj30uR5husZocbFT+/dkGKQwnh+c=
+	t=1788767243; cv=none; b=W+gicMbG4nmwKJRE8V0kXjnCTPhAXzJ+QwV0ASIcyDp86wZ3FPgBfbVnteFa23Vi0qkzeV0o1uz+Ch7ux1YVrxT6Cyg6vk/FePv10ZcW4O1btTuqcsZsqi3SM3FsAAsfJMeYvjjdv89fW12lFMPtQRoNc4gqdvFP9FDMWpL/2j0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788767241; c=relaxed/simple;
-	bh=CDI070e+NOZ/ruqicjlaZpPE25aCTxfliAy88qsKICo=;
+	s=arc-20240116; t=1788767243; c=relaxed/simple;
+	bh=8JFbeS+Py36rOhLIgvUhB9mAaPmVG/RndlIsx1DgsiM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=S5Zj/wGJ0N8kCHMvD6mHRhWXlVqINne5EBz49nkolMcxBPY7kvWOVLhRHB31kA+4+3hbtMY+w537ByFYNHVH4L9PEinSqnQRWunU1YJ4qtJ0U3ndl7ON5ZuLcU+LktwXVES1XtyaaJyImoIKkJlXOk9wHXtfkqGvsJZKndr+ewQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=ZtJifY6q; arc=none smtp.client-ip=218.76.62.146
+	 In-Reply-To:To:Cc; b=kqpgEwK5a9MQE4fPmpqt6+wxoDPst/o3lkYGsiBHSe32DHZkNJ5kpMmOszkODcqD7OblVxV6GWIZvTnc3MjNcYN+mChoZ3Dk45/svZFDgSkN9tIACEh6woUqzCTrTqR9LNw+aOmGUFS+mwhr8fjEnHN6lv9jtNsc2kc+tN71J80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com; spf=none smtp.mailfrom=ultrarisc.com; dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b=i4Wk9lQT; arc=none smtp.client-ip=218.76.62.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ultrarisc.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="ZtJifY6q"
+	dkim=pass (1024-bit key) header.d=ultrarisc.com header.i=@ultrarisc.com header.b="i4Wk9lQT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
 	d=ultrarisc.com; s=dkim; h=Received:From:Date:Subject:
 	MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:
-	References:In-Reply-To:To:Cc; bh=+nPO1TI6PhcIovZv4CegSlinuFtOw5S
-	UcbsLM6dvhUU=; b=ZtJifY6qz+n1xQC7E8yC6YfAJhyMYlTTYA7SabGkgKkESMe
-	+OXOG4Ya+3NmB88YK1kUKtxp6BddPG41Vhk/49qz9pbFWoJyOewsXzcYXqwUYGQa
-	BxvJeG5QgPJAWx22z+ADXg6zz5gACOpX71WDs4SGyLlmVF9jjHBjLEFcCrGs=
+	References:In-Reply-To:To:Cc; bh=826tG4CJ8qXFpoWs+M4CKnCE0V6wdTg
+	DiM5l8QR/xC0=; b=i4Wk9lQTV1c8cUxckKQbwikaLXzLidwHd907Qxwqs3rCjJj
+	F1uxUjuR7SEMN6wDILp40V+kF/MTAUcloEc6WNADj8Mi6UJT3X0MpVk+qQRvf+6w
+	7FaazqjFKoNeheg1I12blBhVmSQoPeObmMaAqrnlng1eF2nQG8hpMm9GOsIc=
 Received: from [127.0.0.1] (unknown [192.168.100.1])
-	by localhost.localdomain (Coremail) with SMTP id AQAAfwDHQAf_a55qnlUAAA--.364S4;
-	Mon, 07 Sep 2026 15:47:19 +0800 (CST)
+	by localhost.localdomain (Coremail) with SMTP id AQAAfwDHQAf_a55qnlUAAA--.364S3;
+	Mon, 07 Sep 2026 15:47:18 +0800 (CST)
 From: Jia Wang <wangjia@ultrarisc.com>
-Date: Mon, 07 Sep 2026 15:46:51 +0800
-Subject: [PATCH net-next v2 2/5] net: stmmac: sophgo: Use common RGMII
+Date: Mon, 07 Sep 2026 15:46:50 +0800
+Subject: [PATCH net-next v2 1/5] net: stmmac: Add common internal RGMII
  delay handling
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
@@ -36,7 +36,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260907-dwmac-ultrarisc-v2-2-9a39bf8db313@ultrarisc.com>
+Message-Id: <20260907-dwmac-ultrarisc-v2-1-9a39bf8db313@ultrarisc.com>
 References: <20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com>
 In-Reply-To: <20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com>
 To: Andrew Lunn <andrew+netdev@lunn.ch>, 
@@ -55,19 +55,19 @@ Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, Jia Wang <wangjia@ultrarisc.com>, 
  sophgo@lists.linux.dev
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1788767221; l=1357;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1788767221; l=2291;
  i=wangjia@ultrarisc.com; s=20260515; h=from:subject:message-id;
- bh=CDI070e+NOZ/ruqicjlaZpPE25aCTxfliAy88qsKICo=;
- b=IQF3xUotir2QfLDg3r7ZgEAnMaIc0rhUw8Jyn+COg58zKlYEvAyzLQJcHMCEMeDMSQNy/Eym6
- SbxQS1Zz9uZBX9n3GyIwwcYaEumahXlVcDAx+Fav+0HlgAhVbHHcDMo
+ bh=8JFbeS+Py36rOhLIgvUhB9mAaPmVG/RndlIsx1DgsiM=;
+ b=U54wAoUOL/UPMsjC/20nyWiakLD/fkZD8+RhaL3RFCDl5C7EBqSc173xsMTwiaWma0ybZQDE7
+ N5lKAYPGMB6BQV4hsQWg/jNQc6rSZJOGZsOPakAP94oi0ZDMnC4/rQx
 X-Developer-Key: i=wangjia@ultrarisc.com; a=ed25519;
  pk=wGVm18siRScehKOkOz0WKxgxDy7IezHEszhnN4/TUCY=
-X-CM-TRANSID:AQAAfwDHQAf_a55qnlUAAA--.364S4
-X-Coremail-Antispam: 1UD129KBjvJXoW7CrW8uw4UurW3CrWUJw1rtFb_yoW8GFy5pr
-	ZrCa4a9rn7tr4aq3Z8Jr48ZFy5Wa47KFWj9a48tws3Zay0yFyaqwn0yFW0qFnrAFWUZry7
-	tr4UZFy5ZF98Ar7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUmK14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jryl82xGYIkIc2
+X-CM-TRANSID:AQAAfwDHQAf_a55qnlUAAA--.364S3
+X-Coremail-Antispam: 1UD129KBjvJXoW7ZrWDGw15Kr1rZrW8JF1xGrg_yoW8Kr13pa
+	yDCa43Xr1kGr17KwnxCa1UZFyY9ay7KrW2k34UW393Zay7tr9Iqrn0qrWjyFnxCrZxW3W7
+	tr12ka98ua98ZrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUmC14x267AKxVWrJVCq3wAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2048vs2IY020E87I2jVAFwI0_Jr4l82xGYIkIc2
 	x26xkF7I0E14v26ryj6s0DM28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48ve4kI8wA2z4x0
 	Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI0_Cr0_Gr1UM2
 	8EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv6xkF7I0E14v26r4UJVWxJr1l
@@ -78,45 +78,69 @@ X-Coremail-Antispam: 1UD129KBjvJXoW7CrW8uw4UurW3CrWUJw1rtFb_yoW8GFy5pr
 	6xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_Jr
 	I_JrWlx4CE17CEb7AF67AKxVW8ZVWrXwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v2
 	6r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWxJVW8Jr1lIxAIcVCF04k26cxKx2IYs7
-	xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr1j
-	6F4UJbIYCTnIWIevJa73UjIFyTuYvjTRRCJPDUUUU
-X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQACEWqdDaQAAQAPsC
+	xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_
+	Gr1UYxBIdaVFxhVjvjDU0xZFpf9x0JUU9N3UUUUU=
+X-CM-SenderInfo: pzdqwylld63zxwud2x1vfou0bp/1tbiAQACEWqdDaQAAQANsA
 
-Describe the SG2042 internal RX delay through the common stmmac
-platform data and let stmmac_pltfr_probe() adjust the PHY interface
-mode.
+Some DWMAC integrations add fixed RGMII clock delays internally.
+Glue drivers need to account for these delays before passing the
+interface mode to the PHY.
 
-This removes the duplicated mode conversion without changing the
-hardware behavior.
+Add TX and RX delay capability flags to the common platform data.
+Apply phy_fix_phy_mode_for_mac_delays() in stmmac_pltfr_probe() when
+either capability is present.
+
+This lets glue drivers describe the MAC capabilities without
+duplicating the interface-mode validation and conversion.
 
 Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c | 11 +++++++++++
+ include/linux/stmmac.h                                |  2 ++
+ 2 files changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-index e02ad3762b5f..f62c803665ad 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-sophgo.c
-@@ -55,14 +55,10 @@ static int sophgo_dwmac_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+index 6128ed1bd521..93b9af203a18 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -16,6 +16,7 @@
+ #include <linux/of.h>
+ #include <linux/of_net.h>
+ #include <linux/of_mdio.h>
++#include <linux/phy.h>
  
- 	data = device_get_match_data(&pdev->dev);
--	if (data && data->has_internal_rx_delay) {
--		plat_dat->phy_interface = phy_fix_phy_mode_for_mac_delays(plat_dat->phy_interface,
--									  false, true);
--		if (plat_dat->phy_interface == PHY_INTERFACE_MODE_NA)
--			return -EINVAL;
--	}
--
--	return stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
-+	if (data)
-+		plat_dat->has_internal_rx_delay = data->has_internal_rx_delay;
+ #include "stmmac.h"
+ #include "stmmac_platform.h"
+@@ -847,6 +848,16 @@ int stmmac_pltfr_probe(struct platform_device *pdev,
+ 		       struct plat_stmmacenet_data *plat,
+ 		       struct stmmac_resources *res)
+ {
++	if (plat->has_internal_tx_delay || plat->has_internal_rx_delay) {
++		plat->phy_interface =
++			phy_fix_phy_mode_for_mac_delays(plat->phy_interface,
++							plat->has_internal_tx_delay,
++							plat->has_internal_rx_delay);
++		if (plat->phy_interface == PHY_INTERFACE_MODE_NA)
++			return dev_err_probe(&pdev->dev, -EINVAL,
++					     "unsupported phy interface mode\n");
++	}
 +
-+	return stmmac_pltfr_probe(pdev, plat_dat, &stmmac_res);
- }
- 
- static const struct sophgo_dwmac_data sg2042_dwmac_data = {
+ 	if (!plat->suspend && plat->exit)
+ 		plat->suspend = stmmac_plat_suspend;
+ 	if (!plat->resume && plat->init)
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index 4430b967abde..00be2df63d22 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -242,6 +242,8 @@ struct plat_stmmacenet_data {
+ 	 * that phylink uses.
+ 	 */
+ 	phy_interface_t phy_interface;
++	bool has_internal_tx_delay;
++	bool has_internal_rx_delay;
+ 	struct stmmac_mdio_bus_data *mdio_bus_data;
+ 	struct device_node *phy_node;
+ 	struct device_node *mdio_node;
 
 -- 
 2.34.1
