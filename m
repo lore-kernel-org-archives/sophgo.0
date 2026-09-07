@@ -1,40 +1,40 @@
 Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EC3B5DE9
-	for <sophgo@lists.linux.dev>; Mon,  7 Sep 2026 11:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1C8488DBA
+	for <sophgo@lists.linux.dev>; Mon,  7 Sep 2026 11:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1788781612; cv=none; b=lscvrbGC79sATNChXIONyVie8NnYwXIy7L3uZne02JwjRbyr9RERZYIZm7dNQWAyuoZuhqaMVEhc/SoiTHevwu2ZiUuLztZwOkxe4puV1gjkEAR3S8crYl66bWj1PriLZxNuVucxZzQ4fbvYpZyFuwJPsn09pQpYmGYtBtxJo+c=
+	t=1788781696; cv=none; b=J7q3QC7BVJHKSp3Z8XK/LjPyqOXFoRzEsw6FUlfRGaMBQrKf5YmlKMAWqozD7ygrMnfFD/zXz9RGqSO7tGbxcbcl2fj7d6/ALHu/cQeSr+PC+cqrBHyowaf2+PyCEnX3E0sgYkgCNhglqdSOBzkK0qOLXp76wAbw21CMV75bPME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1788781612; c=relaxed/simple;
-	bh=7ZLTjDEEtC6zkMgDu91plBy4nX8z3Tjj1H5vamyi2mc=;
+	s=arc-20240116; t=1788781696; c=relaxed/simple;
+	bh=XvhgKk55OlQI9HFk85ohFGQVC1+2fsP3rubx4lhEhD8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FXlhgxN+DxZrRUbOgyaoUSn8vyBZGllhib1ypCMRuUlrPOF/oIjt4ulU/Ba5ftjE3r8dxVye0qm4VAJ0FC/XcRFR2fFKTbFONfOxmVhryT/263ZVO/fNM9S0qdACqhXjST7w9jG+RIBtl0t5EgpD9JOUBQmI9jTFJLIpAcFByKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Qi35WIgG; arc=none smtp.client-ip=185.246.84.56
+	 In-Reply-To:Content-Type; b=fnfdAU61l6wuoQGh0PIam3ggODIYSSIlrcH4wcrbxLqxOPgtv/sBU+PPCvbLs5RptYaSpKFD488MyJvO2lUwg83TgByp7yWJUnbLoPyu07sTGQ1L/5tYnBKXqOJPB7mapDct5V4zrIH8k8mqf6x5Gi5Vh5yVmF+IZrUVZS9+6Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=SE0jBVwa; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Qi35WIgG"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="SE0jBVwa"
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 4AC591A1A30;
-	Mon,  7 Sep 2026 11:46:49 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 833AC1A1A30;
+	Mon,  7 Sep 2026 11:48:12 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 17AA460383;
-	Mon,  7 Sep 2026 11:46:49 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id E5D0411C79C68;
-	Mon,  7 Sep 2026 13:46:42 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 562CB60383;
+	Mon,  7 Sep 2026 11:48:12 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 86E5111C7A21B;
+	Mon,  7 Sep 2026 13:48:05 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1788781608; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1788781691; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=G/2HjxRQLVx4ZIzd+9uQPx/YxtgBjjNF2hoUfh2eYWI=;
-	b=Qi35WIgGFkYfNOA1MoQiPmFgq1xHgqBj4Xo7MGjEOC8AdWELyANs5M6LXLU02RKnc1XIe0
-	+g7n+yJjb4FsZsTnTf0rXyRNqGtWgL+UPYPePBSfB40pE+i7q9E2XIdd2LE0IFhcxVHh7e
-	NQXv3egZ1ofjN4N9DlhiEN0H1g5bKd1RFQdTrwWf8SOoiQhVIuwiHvIU93gwNxcL+q+7nD
-	UHWlaUdk1xTqL1n27Vf27w+BwmMaeWXpiZVq3hwv77z45b3b5o9VTgT86masdCH0dUcMvF
-	p6y7cOm9kBosqi2AvOd6RumrkqZM1fjQazpEmGsyxAUfcC3vyqbwwGBcAUgWNg==
-Message-ID: <ed05c706-8370-43cc-ae04-b479a28de9d1@bootlin.com>
-Date: Mon, 7 Sep 2026 13:46:42 +0200
+	bh=fGNYCWNaaifl4L31TWFkjKkylDh1BAcBuGtP8MSWGuA=;
+	b=SE0jBVwaSwgZ9CLxKn6rT0b0oMih3vYka7JkHUNfgCVej8o4ER01h0G+/P2N6IKbLGn2eM
+	CYe/ApGcc6IUBiYYiw2wiMhTHDQr1gEQz7Ea6Ze+hSc9henJmKpWMTilVAYXIIhjaecD6v
+	U3CNlXJ2cvf1/X5ItESGGMRPUr6fGVh22NH1Y7Y2kRq4oKHY2N3vjZPbWFM9hzMCT2awEk
+	CyMIaIWZ1SRJfDsG9BA96hqM8msweSOgmmGDwQr5gxbaUaE0o6o5EQ3t/I6V0adO7e7OQi
+	OK0XWk/ffi5R2aJ0f9P1Hu07dzG12wCeqozUDRMnSQTygMY0y33Jv6vOo06eRg==
+Message-ID: <ff98879d-4761-4343-89f8-060d81df39b0@bootlin.com>
+Date: Mon, 7 Sep 2026 13:48:04 +0200
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -42,8 +42,8 @@ List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v2 3/5] net: stmmac: eic7700: Use common RGMII
- delay handling
+Subject: Re: [PATCH net-next v2 5/5] net: stmmac: Add UltraRISC DP1000 GMAC
+ support
 To: Jia Wang <wangjia@ultrarisc.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
  "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
@@ -58,10 +58,10 @@ Cc: netdev@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
  linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev
 References: <20260907-dwmac-ultrarisc-v2-0-9a39bf8db313@ultrarisc.com>
- <20260907-dwmac-ultrarisc-v2-3-9a39bf8db313@ultrarisc.com>
+ <20260907-dwmac-ultrarisc-v2-5-9a39bf8db313@ultrarisc.com>
 Content-Language: en-US
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-In-Reply-To: <20260907-dwmac-ultrarisc-v2-3-9a39bf8db313@ultrarisc.com>
+In-Reply-To: <20260907-dwmac-ultrarisc-v2-5-9a39bf8db313@ultrarisc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Last-TLS-Session-Version: TLSv1.3
@@ -69,12 +69,13 @@ X-Last-TLS-Session-Version: TLSv1.3
 Hi,
 
 On 9/7/26 09:46, Jia Wang wrote:
-> Describe the EIC7700 inherent TX delay through the common stmmac
-> platform data and let stmmac_pltfr_probe() adjust the PHY interface
-> mode.
+> The UltraRISC DP1000 GMAC provides fixed internal delays on both TX and RX
+> RGMII clock paths.
 > 
-> Keep the existing programmable TX and RX delay configuration in the
-> EIC7700 glue driver.
+> Add a platform glue driver and describe both delay capabilities through
+> the common stmmac platform data. This lets the common RGMII delay handling
+> adjust the interface mode passed to the PHY and reject incompatible RGMII
+> modes.
 > 
 > Signed-off-by: Jia Wang <wangjia@ultrarisc.com>
 
