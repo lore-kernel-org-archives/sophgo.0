@@ -1,87 +1,86 @@
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57C73D952E
-	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B423DB31D
+	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789888751; cv=none; b=OkQ+Wp79dzILnggZOKz64MwQPLBeV/++SoE8d6by6u96J6lUXjHhrgJfezXmyZhBOc6U17vKHgD0xTWbPYEgK6kArD2ikk0/LNsVk7+S+Bczahh1o+ySMkZptk5YNOZwK7DgAiDRqXpvGoM1OFUz/EobbwOp8hEsvrvjmI5RXfg=
+	t=1789888761; cv=none; b=TkXzeaF+gUKi3TKyVZ5e5sp87FMwxEWE6t/Esd5uGQVsopEvbDjBS9wB2YEkCtwyvepnQRX/HpMAo1QIn6D9griF8moM1a8cNfrZymSvSHD4YjAy2GaZvzqRjgZsIZKMiZxxDgTswtgeYnp7+nPuayNRLsi0S9/k47e0s3SbxJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789888751; c=relaxed/simple;
-	bh=YtizxNhzSjBCt9sQnYHFkLSFuB+kE8v57Hh6K2S5Rxg=;
+	s=arc-20240116; t=1789888761; c=relaxed/simple;
+	bh=RTL01ScSKxB6mKcKAe0HYA/5QXS4Il7ZRYxZuWsWmmY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YGwCumgX3Nf9v94hTqJ7kWeYIhxmhU3XKm0qa4UbnSjXNv4vfARD4AJFjy5+KSXlkLHeRBAp0xn4r8C3IZ0ODT5Ufk4oyLJQO1ikVnec8tn/bDIvGUQCmp3ZLNZaCyehef3kFsOc2+Ik4fcHMyY73c0hfFyB4SFbWpnI+8KdFt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NsswISVR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=J9gV/srW; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=FLl1ny86c20tOAO/sXBglxror5egSzOshvvOz/L6UYI/lTi3KcOthAZCSl5KCLiDjhpr5I2a36bMQPsZr6DJE3iFvkNhJm87l9lm+uLdjm50CZws8D7/Fe93KmLQsrZW9Y2KFfDn/X+lP4qkoWQFOZ427h5wls95wkDsY3EIpeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ic5MB7VA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=N4hHVCxp; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NsswISVR";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="J9gV/srW"
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68K55XPQ1477021
-	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:08 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ic5MB7VA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="N4hHVCxp"
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68K54rTP760269
+	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bC+2yuEEK8/OFJUbDMNad6VAaCQB5BaPqGUNGwsKKRc=; b=NsswISVRApcxNnWd
-	q9I7ebIEijYBgNSzK53NvxYK6vfDmnBchXTGFnd87W43g4i/ZCnmvh8ERfITtzrC
-	Q4yrhbhZvaz2cc+4afmKS3BoDvSsKa4X0n13/qMnrPluqkmcP/5V9QXQadq/AJIr
-	/MukywDiwsY7CYzgQN8fReDdaE+PFwMkYDsZZlpShm1LQpJHhNs8XWVDZFZ8LIrn
-	G/eMZJYlavH2jybYjYA5rSMgWF24ZBpEVDnm+FlLaJ2zRx7bI1lFmbkMw26zzhEV
-	8aqB+7otClsf3bOiAkhIIqRAeH1JR/QBiD1weknie4Ekou1ovUtNuF55PHwuUDdx
-	7CBebQ==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gsfrntu7n-1
+	UHFLhSSjFeK/2Qgt8PRoHcg0OoUbDpRSGGwb1qbscJE=; b=Ic5MB7VAwC36ZUUy
+	bcXInZp7ieo9Xs39FShMA4Jn8xyDoivece3lPN9XccWYNIKwSIrf//vGWTrYS7aQ
+	sRLjVjkR82o/wGFq8kDASk9LHbnkMDvusfdBbBPF93opeT8I5zFBRwxtJLFDkcvl
+	1mJQeFyiy2QEMa7CoVLK/hZHE9868BgAgVZMy14oicWW5uVEle1iOzTT8GXpxwT5
+	Vvy4pRS549EWrgegn3jvkrSJhonkSdcucdlzYAtoJcMmQfEGul89R+akhg1jIuMT
+	h2bojKvPMLOZ9PjFFTq9StVz8pRDVApDQdYhA24I60YxtxvVWGBV/JQzpTxs4+TL
+	FtNrBQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4gskp9taxp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:08 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-cc1a439db36so1840975a12.2
-        for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 00:19:08 -0700 (PDT)
+	for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 07:19:16 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2dd8920c132so50485715ad.0
+        for <sophgo@lists.linux.dev>; Sun, 20 Sep 2026 00:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1789888748; x=1790493548; darn=lists.linux.dev;
+        d=oss.qualcomm.com; s=google; t=1789888756; x=1790493556; darn=lists.linux.dev;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=bC+2yuEEK8/OFJUbDMNad6VAaCQB5BaPqGUNGwsKKRc=;
-        b=J9gV/srWfpwKc3XDiwToMJdBlmAp44J9NY76qqmNkGGfYhFbZ0bg1lC86uUfPVCOpQ
-         npARxhTUz2Zmmge4gywiJbcyusb3KBlCUxgaPTR5vNAiQi3MPTWZ3A3142hMkxh165de
-         IPVKmLBOjnB6+yHr6djsNlslBfPJQ8bePduxIYvDTZLx8nZ+MNqfRoev1smLTMJ2jcE5
-         /EKvo2O2D8eU5pNs5uLIjYFelsczEiseyZfH4NzunbwPrbV+tvrEhqtRO4MpToyo2opm
-         2AZIItY+00YaG/vzkciFEZnlCus0IzhrjiEzS7uLHDheqgwMFBdvi1Zb0ur2W1SIt0XU
-         vI3Q==
+        bh=UHFLhSSjFeK/2Qgt8PRoHcg0OoUbDpRSGGwb1qbscJE=;
+        b=N4hHVCxpWtMmczZ0MrJKFN7IbjqsxpePzFXApLaplbkLkBZf8sBtM6Wwzo/UVy7/CC
+         J9M8d/0B0Mjo6SrQH1N2m/j43jBhj7Q1UNN6OQ0WyRX5hCcs5cK54bn0YmOgOpWXMHRi
+         IDgqIInsqoh4lJt3dYAY/ZTIuwxUADmz/jbZuW4L97rTxFebGB6NgPZow7Nftsow26y2
+         E875iDEEq8gL6rZEjkuyb1bMapDzlPDW86Dqj10idoi6AN39nIZdMjkOsCKmxGSSETdB
+         xJCpcM2lS7N1xl9Fbl9c+W+JLgNGEbZYG0bs/nJ1WivrSNX6SmcuSCvLlXTYcpOPdFQ4
+         Pv1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789888748; x=1790493548;
+        d=1e100.net; s=20260707; t=1789888756; x=1790493556;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :content-type:mime-version:subject:date:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=bC+2yuEEK8/OFJUbDMNad6VAaCQB5BaPqGUNGwsKKRc=;
-        b=1e1ME4zrg+AunzI6MS6xWWRnHfidJQO/i15BpHU1YEl8ZzFWMyVWbByDRmwgyIsTnl
-         Ab8vouEAiTlyZSQmkoVKk7ca/ZUNnpQzANFEYmmfmLXK0Ad3Bn3KDQNzeVMlHjGd4hbZ
-         GNwujscdFyKj5GbstfWdP3uFA1lzOq+9yYZuNJjFOnHx4Jl37W/U6i/42e116hxw0FgQ
-         0Gd+x5/cvEC1HFAM6r4KuaUAziqzl68ssEk4an8+8g1+4awe5as6sVfYDkizxgBxeha/
-         75y+SY/4gBmWRy8zD5z2qimaZsI7T4Emv8yd84R3X5/P2am0VXG+IW644RDDq22CaoWT
-         R37w==
-X-Forwarded-Encrypted: i=1; AKwUvByfMcjdrkd5O4Ev9zIA5ALG1VXex7fFf+EQGn5bEJzPg32UhbUOnl2kjuXOg9a/w79r0H0D74A=@lists.linux.dev
-X-Gm-Message-State: AFuF++lJ8gVxoPKIKpfICf1SKLE0DGIgzKNVcEfCMMdIfaIk2bMahjEy
-	j2W+PQH95K31NIKkv0t9Ah4Yc8Cv/k+fkcp19Z8f98AhhFuqx1rRCZ966VzZEfKedUQYvvvrNh6
-	Ru9+bEKxZUzVRMc2Qh9we6a4UyrehYbJL5LxifONNFoC98iu3zCAJd2ALqvQ=
-X-Gm-Gg: AYBFou2aWwp347RvS2Ta2XFD99Tt2FvUYh6oLLfynUTukiNmyRtPjKOLxVVivC7pEcu
-	riZzGWNfITNrniW01DBEdpZAGjSXxxJ/49frx/+akcrXm/J6/3rr8wM21Er8edf2PKsRzcA/CjO
-	I7WdjBQ1sf/plsjaCzFFT611APO49TNYito6WQh+jCpZkkpmhpI9Ue6AkC/rLBS1OUH+SmnqyZl
-	nfXWIYi0hnDKOuReHCZGXmgotj71UCzrUbN2tnnoaUiolfuf1GVPc6e419hQzrUaQWpy1fpIJxB
-	zu7r6N5P9N/XW2yadFbGDKvihdov1G05ZVCLqqw+YOjzl67UZuI7ax5uzks=
-X-Received: by 2002:a17:902:db0f:b0:2dd:b52d:e83e with SMTP id d9443c01a7336-2ddb52debe3mr111653795ad.19.1789888747509;
-        Sun, 20 Sep 2026 00:19:07 -0700 (PDT)
-X-Received: by 2002:a17:902:db0f:b0:2dd:b52d:e83e with SMTP id d9443c01a7336-2ddb52debe3mr111653405ad.19.1789888747065;
-        Sun, 20 Sep 2026 00:19:07 -0700 (PDT)
+        bh=UHFLhSSjFeK/2Qgt8PRoHcg0OoUbDpRSGGwb1qbscJE=;
+        b=wn4UQVUxgA0J4GbOd1DMrYKxlzKPFKqb+MGMCKOpvrKGiyuE6r1fT/PrRT8tiIjIMT
+         FH2Tcj//ec/LrnGJjlbMPIbUthMzRZt1K4sAoTy3Vd1rB7vGSIuJCM8b1VS3R8ManmNC
+         oV93zgYqmOgwChx3vCHgI+muyGwfYb+YsSzffl29G3/kmXMqBz4kubkWYJb9T5lx1zmq
+         LPsL7Nv7PRTg2te4ujBO5GYjMuxd8i55aUf+UoH4jCDWv2zCMnFOibWdTe0Bax5JQZ2f
+         vrwCYL0G048OucPKZGWdyBTNJYEeGnkdtnh6jo+8N/kFXBWAJpQ0SdsXRekKbq2cKZdb
+         x5Mw==
+X-Forwarded-Encrypted: i=1; AKwUvByIN1V3WvTHu2ERpPPso7yuZnbafua7OSibAMslThaBBcyWziLwJYVZJX95sVYkUKbCZlj8GvY=@lists.linux.dev
+X-Gm-Message-State: AFuF++koLk1zBKKv2ow626rvXj39gOZFTmwI/xvaUW+8ArxTLcxGgPbQ
+	elaJiucGbIn9+8wOPTzAxqRXqtYsTAB/3KXgm9VOwUMEFT6JUX1eE/UAeGZKkze3m1hzlfYuNeC
+	6xiALLdrkM1qVURlicIbwFj8fH0s2lQIChqd5SId0vmwFuH8jJMhnL8RViHM=
+X-Gm-Gg: AYBFou2U2rym/s8CliuiO8roz5wYZFsq0HHMtEeRMGCKFA3WFKr/LhfxDs9QltAt3R1
+	1BptK1U5otMS49aLYsn6ABArwJMzrX2oOO8SsyK1QXDE+jz/g03vH4/lpeedkzcDLVttvRggxj7
+	ni8LaIYr67qswQsu0aUBHeAulAq9wzVoJHjJTUHyXVKc2ZNm15GgKd4BysMHEWXfAzvnfpLKb8h
+	b369Z/06Z9klSGrKvegcidgH0lHhgeNlnnE0a1jISSyXWBJJRsCkGgnguJe4rmyQu6qNfUH5YXE
+	FnFT4p2i52RizG0Vpw6G69kNKNymFbpf7wlEsmO13pgtc5hsQB9Kl3OnfB4=
+X-Received: by 2002:a17:903:2349:b0:2dd:c100:3136 with SMTP id d9443c01a7336-2ddc100317fmr57726405ad.50.1789888756055;
+        Sun, 20 Sep 2026 00:19:16 -0700 (PDT)
+X-Received: by 2002:a17:903:2349:b0:2dd:c100:3136 with SMTP id d9443c01a7336-2ddc100317fmr57726175ad.50.1789888755494;
+        Sun, 20 Sep 2026 00:19:15 -0700 (PDT)
 Received: from [127.0.1.1] ([2a12:a305:4::30fb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df346152d7sm13908655ad.16.2026.09.20.00.18.59
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2df346152d7sm13908655ad.16.2026.09.20.00.19.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Sep 2026 00:19:06 -0700 (PDT)
+        Sun, 20 Sep 2026 00:19:15 -0700 (PDT)
 From: Guodong Xu <guodong.xu@oss.qualcomm.com>
-Date: Sun, 20 Sep 2026 03:18:23 -0400
-Subject: [PATCH v8 03/11] dt-bindings: riscv: Add Zic64b extension
- description
+Date: Sun, 20 Sep 2026 03:18:24 -0400
+Subject: [PATCH v8 04/11] riscv: Add Zic64b to cpufeature and hwprobe
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -90,7 +89,7 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260920-rva23u64-hwprobe-v2-v8-3-5f14bc5c23d3@oss.qualcomm.com>
+Message-Id: <20260920-rva23u64-hwprobe-v2-v8-4-5f14bc5c23d3@oss.qualcomm.com>
 References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
 In-Reply-To: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
 To: Jonathan Corbet <corbet@lwn.net>, Shuah Khan <skhan@linuxfoundation.org>,
@@ -112,114 +111,175 @@ Cc: linux-doc@vger.kernel.org, linux-riscv@lists.infradead.org,
         Mark Harris <mark.hsj@gmail.com>,
         Aurelien Jarno <aurelien@aurel32.net>,
         Guodong Xu <guodong.xu@oss.qualcomm.com>,
+        Qingwei Hu <qingwei.hu@bytedance.com>,
+        Andrew Jones <andrew.jones@oss.qualcomm.com>,
         Conor Dooley <conor.dooley@microchip.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2839;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5864;
  i=guodong.xu@oss.qualcomm.com; s=default; h=from:subject:message-id;
- bh=YtizxNhzSjBCt9sQnYHFkLSFuB+kE8v57Hh6K2S5Rxg=;
- b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhqz1HSeumV0wYZYK+vLtRbLJ6lylrDY+nTvdCdoiixkD1
- 2Stu8fdUcrCIMbFICumyHL4aEv21lc+0b7POX/AzGFlAhnCwMUpABN51srIMCsoe/lpzy/vhKV/
- S/9pkJ3Hkm6TZL9H7rLShfSXAZXnHRkZpk2ZoRiwsild9cBTqV0XDt58dW+J2Rrfme+LpTJ+MRx
- M5QIA
+ bh=m8QTnRAVXBgeltmWje4/RsUPIbOd9dsnEyfmYwjKXH0=;
+ b=owGbwMvMwCXWtEl1Z3CGpCDjabUkhqz1HScj1nvMNWr43/+7IHyl/kW3yeedt5acYbzP1TR75
+ Yy9d0OqO0pZGMS4GGTFFFkOH23J3vrKJ9r3OecPmDmsTCBDGLg4BWAiRVMYGXZcv8JS/sx9udwL
+ /+iFm2Pda2L1UvVr+PMWafya02rDlM/IsE70cHZU3rUfS3gUblu39HHV5b8xrRQOSGM9t2P6g2t
+ u3AA=
 X-Developer-Key: i=guodong.xu@oss.qualcomm.com; a=openpgp;
  fpr=90B1DC3DF0BD10FD1227BD6344F254AF42F143EE
-X-Authority-Analysis: v=2.4 cv=W9mtxhWk c=1 sm=1 tr=0 ts=6aaf88ec cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-ORIG-GUID: 5rtodvQfats5spv6wKjQayGxqz4KtQr3
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIwMDEwNCBTYWx0ZWRfXxk2JVEoI+cjt
+ ZFVFFN9LIhxZbT1QqB0MTHDpbY5ntAd4QI4PE4WktU9UWzN+dfiM61uBcbUpQ4oR0gxFa7BGBUF
+ vEf9TkGtYTb7bI4nIX1xn9oVKiEAyH1MjAIrSH+mMMGi8CgeILlYKo8+qP9YWN/EE/FwMoPwVy0
+ t3mXwkUIcSQNwsWAUCPIr++9PlWn9/IfuqZBcxHp9f5yymO6+EA2TY3zCvn+pkmxUqGxELfYjyO
+ KLLnRd+DfFmEPYxbu4VWxBsZxIwijwK5cQW409Kn++FHjyJ5Z68z4ZpmVTiqt53qBwTbIvWjm2T
+ JGhF3ig8bomPvom6RqbTppAWybCGtoKlZPfJ1FBqKCrxS5q3m0qhNcZ0NG8VEndm9Oo6cfPg5RX
+ kzS88Un/Z1+8GdrIBnMwm+HcJGWVUsIUpdblyz2p6qcuODj1O7tJpxSBY2QmlEVZy2yOyu9AZQ2
+ dSiQCBLXqwZxtBUjI6g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIwMDEwNCBTYWx0ZWRfX/RL6Mya7a7z6
+ ffOnsVY0P5OOBm6iBWUykZ66QS5JCC+SJNoolPovvYJHAT285NRZvDFB4MWPj45kkhCnmcaNFzo
+ dAX8a5QhEJigp+hGeBtNpBwJ34l0kkA=
+X-Authority-Analysis: v=2.4 cv=BKAmP1QG c=1 sm=1 tr=0 ts=6aaf88f4 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=VdqzKS8jKosA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=XYAwZIGsAAAA:8
- a=EUspDBNiAAAA:8 a=B0juqsJzrbe9EOqzv1oA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22 a=E8ToXWR_bxluHZ7gmE-Z:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwOTIwMDEwNCBTYWx0ZWRfXyEMbidxZkrOk
- dV8+dW5IXG5kFe0qC89iELp8483Vwpv6md07T3SAQDZEljQZUHG10e0KkRI6Eeo6rwPDyxrMd0R
- d3grkoRTyz4ulHL+DoMjW02KJOP3DNk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTIwMDEwNCBTYWx0ZWRfX34rZQmECW9IC
- LQCRv/iwWhMoWlsPm4eMmssiUwuCREFbKYuVXjilJw+UNhmtfeKqpHbQNx/rRDbEu55PCKj88KE
- o2n+ozryiHpW2MzCLrVov3FS0yWCP3M/hcxq6X/d2AyVO2fkhWKIwEOC6PA+8bUmSCq9lEV4xNt
- +7Gf1+QMpOBj1Q2YNCReA32EKw3YBmx8QiYOotnzoBCGtxudbFX8/XnqfqKzhiH5lLHl3MmYrR+
- JH1VSSNbUAMX0oZngr7Z8Ueng8VFpXIl/+TSZKHh7LPfQhHR2W9aU8scnoC/2YlPbwhQ5VW/XL/
- h4mC64gcMbn9jWC+We2jna9+B5+k5NMAJMDplGUH1yFtDuN9mBADKT+tK0zB56m5RVkB1JIqkC0
- DMJI4Xvs0PnLMRcLmd8cYzxBdxlLA76peOlU9nLVBAtGmZXEzX3rPqG/98FrPRxHGAm+GoZrlzX
- FLwgLBZyxD7CW6AIylQ==
-X-Proofpoint-ORIG-GUID: fLbt8QbYZSibr6AWk1Qmuun5mya0fd7Q
-X-Proofpoint-GUID: fLbt8QbYZSibr6AWk1Qmuun5mya0fd7Q
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=HwFc7jivAAAA:8
+ a=968KyxNXAAAA:8 a=EUspDBNiAAAA:8 a=XYAwZIGsAAAA:8 a=fFnMLytXjIv02VNa_WYA:9
+ a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=kr7TZk85JJIQSqC0cl8G:22
+ a=E8ToXWR_bxluHZ7gmE-Z:22
+X-Proofpoint-GUID: 5rtodvQfats5spv6wKjQayGxqz4KtQr3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
  definitions=2026-09-20_02,2026-09-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 priorityscore=1501 spamscore=0 suspectscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0 spamscore=0
+ malwarescore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2609040000 definitions=main-2609200104
 
-Zic64b mandates that cache blocks are 64 bytes in size and naturally
-aligned in the address space. It is a mandatory extension of both the
-RVA22 (U64/S64) and RVA23 (U64/S64) profiles, ratified with RISC-V
-Profiles Version 1.0.
+From: Qingwei Hu <qingwei.hu@bytedance.com>
 
-Document it so it can be described in the riscv,isa-extensions property,
-alongside the related Zicbom/Zicbop/Zicboz cache-block extensions. Since
-Zic64b fixes the cache block size at 64 bytes, also add a schema check
-requiring any present cbom/cbop/cboz block size to be 64. The check
-matches only nodes that use riscv,isa-extensions, so nodes carrying
-just the deprecated riscv,isa string are not affected.
+Zic64b mandates 64-byte naturally aligned cache blocks and is a
+mandatory extension of the RVA22 and RVA23 profiles.  Allocate a
+RISCV_ISA_EXT_ZIC64B id, parse "zic64b" from the ISA string with a
+validate callback that requires each cbom/cbop/cboz cache block size to
+be 64 bytes when it is present, and export it through hwprobe.
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lists.riscv.org/g/tech-unprivileged/topic/question_about_zic64b_and/119631059
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
+Co-developed-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
 Signed-off-by: Guodong Xu <guodong.xu@oss.qualcomm.com>
 ---
 v8: No change.
-v7: Collected Acked-by from Conor Dooley.
-v6: Guard the zic64b rule with required: riscv,isa-extensions so it
-    cannot match nodes using only the deprecated riscv,isa string
-    (same defect class as Rob's bot reported against the Zicbo*
-    block-size patch).
-v5: Commit message clean up, fix a double space (Conor).
-v4: Insert zic64b at its sorted position (before zicbom).
-    Update the commit message.
+v7: No change.
+v6: Rebase onto riscv/for-next: RISCV_ISA_EXT_ZIC64B renumbered 110
+    to 116; RISCV_HWPROBE_EXT_ZIC64B now uses the _BITULL() style of
+    commit 8da45c93dfa9.
+v5:
+- Collected Reviewed-by from Andrew Jones and Conor Dooley.
+v4:
+- Credit Qingwei Hu's earlier Zic64b cpufeature patch: set him as
+  author, with Co-developed-by (Guodong Xu).
+- Validate only the cbom/cbop/cboz block sizes that are present; Zic64b
+  does not imply the CMO extensions (Conor, Qingwei, Greg).
+- Add a Link: to Greg's confirmation on the tech-unprivileged list.
+- Add the missing blank line before the ZIC64B hwprobe.rst entry
+  (Andrew).
+- Did not carry Andrew Jones's v3 Reviewed-by: the validation was
+  rewritten (present block sizes only) and the patch is now authored by
+  Qingwei, so it warrants a fresh review.
 v3: New patch.
 ---
- .../devicetree/bindings/riscv/extensions.yaml      | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ Documentation/arch/riscv/hwprobe.rst  |  4 ++++
+ arch/riscv/include/asm/hwcap.h        |  1 +
+ arch/riscv/include/uapi/asm/hwprobe.h |  1 +
+ arch/riscv/kernel/cpufeature.c        | 19 +++++++++++++++++++
+ arch/riscv/kernel/sys_hwprobe.c       |  1 +
+ 5 files changed, 26 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/riscv/extensions.yaml b/Documentation/devicetree/bindings/riscv/extensions.yaml
-index d4cde2a7b8b2..79491ef8f86a 100644
---- a/Documentation/devicetree/bindings/riscv/extensions.yaml
-+++ b/Documentation/devicetree/bindings/riscv/extensions.yaml
-@@ -537,6 +537,12 @@   riscv,isa-extensions:
-             in commit 64074bc ("Update version numbers for Zfh/Zfinx") of
-             riscv-isa-manual.
- 
-+        - const: zic64b
-+          description:
-+            The standard Zic64b extension for 64-byte naturally aligned cache
-+            blocks, as ratified in RISC-V Profiles Version 1.0, with commit
-+            b1d806605f87 ("Updated to ratified state.")
+diff --git a/Documentation/arch/riscv/hwprobe.rst b/Documentation/arch/riscv/hwprobe.rst
+index 69a3fc0a29b7..8454a6ae6fd1 100644
+--- a/Documentation/arch/riscv/hwprobe.rst
++++ b/Documentation/arch/riscv/hwprobe.rst
+@@ -427,3 +427,7 @@ * :c:macro:`RISCV_HWPROBE_KEY_IMA_EXT_1`: A bitmask containing additional
+   * :c:macro:`RISCV_HWPROBE_EXT_B`: The B extension is supported, as defined
+     in version 1.0 of the Bit-Manipulation ISA extensions, and implies the
+     presence of the Zba, Zbb, and Zbs sub-extensions.
 +
-         - const: zicbom
-           description:
-             The standard Zicbom extension for base cache management operations as
-@@ -1211,6 +1217,22 @@   - if:
-           not:
-             contains:
-               const: zilsd
-+  # Zic64b mandates 64-byte naturally aligned cache blocks
-+  - if:
-+      properties:
-+        riscv,isa-extensions:
-+          contains:
-+            const: zic64b
-+      required:
-+        - riscv,isa-extensions
-+    then:
-+      properties:
-+        riscv,cbom-block-size:
-+          const: 64
-+        riscv,cbop-block-size:
-+          const: 64
-+        riscv,cboz-block-size:
-+          const: 64
-   # All three Zicbo* extensions require their block size property as there's no
-   # default.
-   - if:
++  * :c:macro:`RISCV_HWPROBE_EXT_ZIC64B`: The Zic64b extension is supported,
++    as defined in the RISC-V Profiles specification starting from commit
++    b1d80660 ("Updated to ratified state.")
+diff --git a/arch/riscv/include/asm/hwcap.h b/arch/riscv/include/asm/hwcap.h
+index 6a693210b251..b103aaeafa47 100644
+--- a/arch/riscv/include/asm/hwcap.h
++++ b/arch/riscv/include/asm/hwcap.h
+@@ -123,6 +123,7 @@
+ #define RISCV_ISA_EXT_ZICCAMOA		113
+ #define RISCV_ISA_EXT_ZICCIF		114
+ #define RISCV_ISA_EXT_ZA64RS		115
++#define RISCV_ISA_EXT_ZIC64B		116
+ 
+ #define RISCV_ISA_EXT_XLINUXENVCFG	127
+ 
+diff --git a/arch/riscv/include/uapi/asm/hwprobe.h b/arch/riscv/include/uapi/asm/hwprobe.h
+index 9323feb7c3c8..9a121ee3b436 100644
+--- a/arch/riscv/include/uapi/asm/hwprobe.h
++++ b/arch/riscv/include/uapi/asm/hwprobe.h
+@@ -123,6 +123,7 @@ struct riscv_hwprobe {
+ #define		RISCV_HWPROBE_EXT_ZICCRSE	_BITULL(4)
+ #define		RISCV_HWPROBE_EXT_ZA64RS	_BITULL(5)
+ #define		RISCV_HWPROBE_EXT_B		_BITULL(6)
++#define		RISCV_HWPROBE_EXT_ZIC64B	_BITULL(7)
+ 
+ /* Increase RISCV_HWPROBE_MAX_KEY when adding items. */
+ 
+diff --git a/arch/riscv/kernel/cpufeature.c b/arch/riscv/kernel/cpufeature.c
+index beb766420b5b..ef3133a52c0e 100644
+--- a/arch/riscv/kernel/cpufeature.c
++++ b/arch/riscv/kernel/cpufeature.c
+@@ -136,6 +136,24 @@ static int riscv_ext_zicbop_validate(const struct riscv_isa_ext_data *data,
+ 	return 0;
+ }
+ 
++static int riscv_ext_zic64b_validate(const struct riscv_isa_ext_data *data,
++				     const unsigned long *isa_bitmap)
++{
++	/*
++	 * Zic64b mandates 64-byte naturally aligned cache blocks; cross-check the
++	 * cbom/cbop/cboz block-size (when declared) device-tree properties to
++	 * avoid inconsistency.
++	 */
++	if ((riscv_cbom_block_size && riscv_cbom_block_size != 64) ||
++	    (riscv_cbop_block_size && riscv_cbop_block_size != 64) ||
++	    (riscv_cboz_block_size && riscv_cboz_block_size != 64)) {
++		pr_err("Zic64b detected in ISA string, disabling as a CBO block size is not 64 bytes\n");
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int riscv_ext_f_validate(const struct riscv_isa_ext_data *data,
+ 				const unsigned long *isa_bitmap)
+ {
+@@ -542,6 +560,7 @@ const struct riscv_isa_ext_data riscv_isa_ext[] = {
+ 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(v, RISCV_ISA_EXT_V, riscv_v_exts,
+ 					  riscv_ext_vector_float_validate),
+ 	__RISCV_ISA_EXT_DATA(h, RISCV_ISA_EXT_H),
++	__RISCV_ISA_EXT_DATA_VALIDATE(zic64b, RISCV_ISA_EXT_ZIC64B, riscv_ext_zic64b_validate),
+ 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicbom, RISCV_ISA_EXT_ZICBOM, riscv_xlinuxenvcfg_exts, riscv_ext_zicbom_validate),
+ 	__RISCV_ISA_EXT_DATA_VALIDATE(zicbop, RISCV_ISA_EXT_ZICBOP, riscv_ext_zicbop_validate),
+ 	__RISCV_ISA_EXT_SUPERSET_VALIDATE(zicboz, RISCV_ISA_EXT_ZICBOZ, riscv_xlinuxenvcfg_exts, riscv_ext_zicboz_validate),
+diff --git a/arch/riscv/kernel/sys_hwprobe.c b/arch/riscv/kernel/sys_hwprobe.c
+index c03c6e08dd4d..8a38a4d37806 100644
+--- a/arch/riscv/kernel/sys_hwprobe.c
++++ b/arch/riscv/kernel/sys_hwprobe.c
+@@ -208,6 +208,7 @@ static void hwprobe_isa_ext1(struct riscv_hwprobe *pair,
+ 		EXT_KEY(isainfo->isa, ZICCRSE, pair->value, missing);
+ 		EXT_KEY(isainfo->isa, ZA64RS, pair->value, missing);
+ 		EXT_KEY(isainfo->isa, B, pair->value, missing);
++		EXT_KEY(isainfo->isa, ZIC64B, pair->value, missing);
+ 	}
+ 
+ 	/* Now turn off reporting features if any CPU is missing it. */
 
 -- 
 2.43.0
