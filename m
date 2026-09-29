@@ -1,203 +1,215 @@
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55303E5EEA
-	for <sophgo@lists.linux.dev>; Tue, 29 Sep 2026 16:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.188.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B23F4DD9;
+	Tue, 29 Sep 2026 19:24:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790699961; cv=none; b=SMAYrD58ihdVwyvdeD967SkIsjaCimJSBG9G9XYkHzNnddQ7HYDmlkS4mSh1a7mlNL5ifQUvmyU2SBtj0QS0BRPPDCrWstABuwED+GFIUXomaPL1wZsr5ILKPKzveruNfBGIPmEFHuA85iO6YL4cImQJdNZHWpiWieCJiViiwxg=
+	t=1790709865; cv=none; b=cCuubDEgAT3kCpDun9xCkKGlll3qovPc9mzG+20sUHqABAaq+Jmd+a+GptdswCmawHF6VcT7pLJ4QJw5wvHM9n+KlntlYyDedQWhvYq6rEGpsbA/Y5SWNx5YGX8hvMdPDLo5j2GTuBQBEtinFDLtYvtaVkuZ1YJZ/lZ5jhlSF1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790699961; c=relaxed/simple;
-	bh=pVTGW5dlSw+FAj2NlT/PbOJGDXOB4L2ia6EM3qRYftY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Pn2o2duy9uf/xbhOTq/13GTkI3JsahmMPewMkwBueV5ADXZHxCpd0rwSX4+PQ9rJ8A1+iQgg5R6T6BokvONpJVu+K0f9NCUYM3QwY0ceJ2UBWN6FHIThmLgeEHdg0k/TJkoq2rDGQaPXWj/VOXanK1mZPgAD2UEi3OiLbuK+4oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=F93ajY+1; arc=none smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
+	s=arc-20240116; t=1790709865; c=relaxed/simple;
+	bh=QbK+E8OtIzF32QonND+KHJdCfdBfayxRrD0iDnQSt0M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ddmxKqsF4sbZeUiar+aTvU+Y5vm5zeCIXLiFjt3H98UTOkKJbVorGlPWHngbjNRSyWvRPkqqhKyQ1ZRrw9p9nWLHPJ3hlDWCU5bWtm9fcxuzUw8EqECKrkg9a6LgEnb6mtIQNnhRgFSJD1oZqUnijR9yia12tSvhAA1zqeVB9yI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FLeVPkRh; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="F93ajY+1"
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com [209.85.128.69])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 4322E3FB76
-	for <sophgo@lists.linux.dev>; Tue, 29 Sep 2026 16:30:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1790699453;
-	bh=Vn3/Z2DdvynqvHJ/P+ee00azyAyRLA5sp7pyzKMdaqg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type;
-	b=F93ajY+17xMPVWY0RKWQEtIOTnd/V8JSALoUkpyO6X5gwggAEmXev7MUzo0Zp10gN
-	 6/QwQSKfjzrbk3+YwWiUQY8ZW7P63ktVo032pBKe72V1ybUR1HNq4WRcJHcesQmqFi
-	 sPoVcuoKjn3XKw9kOdzuX11BWy+hOManHW0k0Io0nfIq+s/7YEzuzKLWJtdbKiyEWo
-	 BZql7t5qdeXXmPsANUJ71+dV6HON0SrG4XpBxHblyNQ1aFlwWi++BGQHoFIFyCTftl
-	 0eGJ4qpMo8u+BIFp+/U9hKkiE1bN51oxOFq9TkGZWVTeQ7TnaYpIlwEfhfdav5ct/N
-	 ll64Ff2vtF5YlAUbLpYEjEhg86YubTHuDEQwLJterMdkRKDyNY8kQs5sShXFHW3u+0
-	 f2U4/fbK0Lr7B5ZX00Szic/5DuV5h08/FQZnJQYgZimZklfJfTMhFZGDCa2Cqja7/A
-	 Wu4ANlpa/XA2piv6q3L6juOE/s6pTH/VzraMzjcrVUML4pDq9wSPw6+u8n7s1799YD
-	 NrXY5dpZHAfONxh07VqvpGE6WfUHgL3CtaB1u/jV2U2naYSNF/1bY5BUlortP9PxqL
-	 imLovw0bgRnUe1AZQZNGkX4+VqavKU2Y/B3DlLGTUSmswaMCBIfjEOnGSEIVOVfLuu
-	 gVlws5dW/MhQnXSsi+u2/SNQ=
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-49cdc4080ddso6581465e9.1
-        for <sophgo@lists.linux.dev>; Tue, 29 Sep 2026 09:30:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1790699453; x=1791304253;
-        h=content-transfer-encoding:content-type:in-reply-to:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=Vn3/Z2DdvynqvHJ/P+ee00azyAyRLA5sp7pyzKMdaqg=;
-        b=UChXkf+1HiShOwJF6zXZ0y4h8cyLmmamcxuAeQDxoaL/yPZAekZfKb3MET8QSr2mRh
-         ad6wKhsVHwpOshDrUhFWrc/ZxL+asQiqh7CqAoRDkCI3O3x6yGiv/KSG960iHHsjN0hF
-         LSbXAf706IIospMWAYaP+B53T+L1h4QUW7EIMWXXbw1B7BDI0NdHq5+PVKPFgcr5p6l7
-         7n5TGsf/VlEsBm7jOU/HylYbG4MpWFYq3lcYUMRCx5tu7lQ23dDfPSvWrQohW+0LDXyK
-         9ZjgRTEHTcx16XzKlWlB2zNomUdNOcGxdS+cA6fRQqPJoYj5Sh6LbMblpSCK24SNO5ff
-         Q7Dg==
-X-Forwarded-Encrypted: i=1; AKwUvBwpyvxbYgJRHnajVgnrYXnnfieEFlrVaLencCgA8+lzY36d/oIvGzhDd+Ee0BMjb4gyy2NWrCU=@lists.linux.dev
-X-Gm-Message-State: AFuF++nz+SHPv4BS3ycHwVESE3bZh1zGmGoG8c7SvDbpnFFnajJ5Jz3V
-	iKGp9iZJ0jqDKe59yzgHxVK0OX4dPgdO5mO0/SUHEJmHZPUaHtQx46Dscr0oxqgrvVtYwLa+e12
-	y4UBOI0JLYdie8/I5napG4hnm7qo2bzWJu3KHQOGQPkBlL1hpaDJHPmcDdcpZojeeW+9vKMWWxg
-	==
-X-Gm-Gg: AYBFou3VCuCGupxcDs+zS7art1taVh+/cvhJua1fUAdY1vjP5thACvbbUAHMFixrSVd
-	JBqMo0+g2PemY4pVa4UuzeMEawBZ6dhL68XVXvJImsRp/ljI4YaQRCAZrsT4dkHJ8srFrAXPP4m
-	coU1UEenQWWHTWXeqb0GCPhiGxTjKMxrWeJcF6v9uELiMrYPlUTafPLcw3Yx4NhDZBXTN8yoVNa
-	QFoY1W7UGm1SC3j92padeihihMrJcmAhEAkgas1yi7HloP/jQxyPpWlW6Z9ToVREUsSPWD+VaAk
-	1P74gMbba/IPhJX7Y3UEGXI5YGYcHo5J0omcU2MwjIgMJTHuVa6vIsq2M4XekxiZtS+1ZEZvnEQ
-	QI7QuoRapBv+O709oMSkocUk1rucYcoydklIAprw1CO5oEwkgDybvIR+diIIJeOg7+ihy5HgjY6
-	kqqnthHEBmzQ6xeS2hVoOkDw==
-X-Received: by 2002:a05:600c:8b10:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a00d780b78mr58589645e9.17.1790699452749;
-        Tue, 29 Sep 2026 09:30:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b10:b0:49f:fbad:29ae with SMTP id 5b1f17b1804b1-4a00d780b78mr58589205e9.17.1790699452395;
-        Tue, 29 Sep 2026 09:30:52 -0700 (PDT)
-Received: from ?IPV6:2a02:908:1242:30e0:769:5000:73ee:deb3? ([2a02:908:1242:30e0:769:5000:73ee:deb3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4a00cf9dfdbsm130957335e9.1.2026.09.29.09.30.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Sep 2026 09:30:51 -0700 (PDT)
-Message-ID: <70a3451c-db31-41d0-af9d-8c9e123557f6@canonical.com>
-Date: Tue, 29 Sep 2026 18:30:49 +0200
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FLeVPkRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A9C1F000FF;
+	Tue, 29 Sep 2026 19:24:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790709863;
+	bh=+4lcFV7BWlJxo0mkhLOYTkZFGAJFfiTavqhBD4KO1lY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=FLeVPkRh1a34ogB9TpRqthY2RcbpuPqQsAGNc8EBMC8NIGvoauZPvtJdN18aNpI85
+	 m5+apCTFoKPSgyD80h3yqAunUkZBSHhpsRtktMeQU6PmoV9plQ7nxsmRnEdZpzeITd
+	 iuw7p12XnIonSLvhM0cCedPFuSbrmDNrcnUJJ6ZkbtgzLKV3vq5Rk8YPLs3Zsj2Tem
+	 vtYbJG/7wRtE8fsTUkKYkWlHUVEShd1dUSTrq5K+X+n/Dn2Af17dIsj1rG6KW+RDD9
+	 UFRZdZ7Avco2qztl/Zdyx7lN7s5vlRb0NWHXIq+UPEs1nanv/2dE8haepp2+acg6/1
+	 +FekM+w1yBvmA==
+Date: Tue, 29 Sep 2026 20:24:15 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Cc: Radim Krcmar <rkrcmar@qti.qualcomm.com>,
+	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
+	"sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
+	"linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+	Andy Chiu <tchiu@tenstorrent.com>,
+	Florian Weimer <fweimer@redhat.com>,
+	Peter Bergner <bergner@oss.tenstorrent.com>,
+	Zihong Yao <zihong.plct@isrc.iscas.ac.cn>,
+	Mark Harris <mark.hsj@gmail.com>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Andrew Jones <andrew.jones@oss.qualcomm.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
+	Chen Wang <chen.wang@linux.dev>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	linux-riscv <linux-riscv-bounces@lists.infradead.org>,
+	Guodong Xu <guodong.xu@oss.qualcomm.com>
+Subject: Re: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
+Message-ID: <20260929-operative-anointer-7f54be845b54@spud>
+References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
+ <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
+ <9d058591-466e-4c06-a820-b8ecc7d319a6@canonical.com>
+ <15151b8ab012ca7444d4117e393cf999.guodong.xu@oss.qualcomm.com>
+ <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
+ <70a3451c-db31-41d0-af9d-8c9e123557f6@canonical.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
-To: Radim Krcmar <rkrcmar@qti.qualcomm.com>
-Cc: "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- Paul Walmsley <paul.walmsley@sifive.com>, Conor Dooley <conor@kernel.org>,
- "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
- "spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
- "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
- "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
- Andy Chiu <tchiu@tenstorrent.com>, Florian Weimer <fweimer@redhat.com>,
- Peter Bergner <bergner@oss.tenstorrent.com>,
- Zihong Yao <zihong.plct@isrc.iscas.ac.cn>, Mark Harris <mark.hsj@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Andrew Jones <andrew.jones@oss.qualcomm.com>,
- Conor Dooley <conor.dooley@microchip.com>, Jonathan Corbet <corbet@lwn.net>,
- Shuah Khan <skhan@linuxfoundation.org>, Paul Walmsley <pjw@kernel.org>,
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
- Alexandre Ghiti <alex@ghiti.fr>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Yixun Lan <dlan@kernel.org>,
- Chen Wang <chen.wang@linux.dev>, Inochi Amaoto <inochiama@gmail.com>,
- Randy Dunlap <rdunlap@infradead.org>,
- linux-riscv <linux-riscv-bounces@lists.infradead.org>,
- Guodong Xu <guodong.xu@oss.qualcomm.com>
-References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
- <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
- <9d058591-466e-4c06-a820-b8ecc7d319a6@canonical.com>
- <15151b8ab012ca7444d4117e393cf999.guodong.xu@oss.qualcomm.com>
- <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
-Content-Language: en-US
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-In-Reply-To: <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rW7jw50OZvM/1nk9"
+Content-Disposition: inline
+In-Reply-To: <70a3451c-db31-41d0-af9d-8c9e123557f6@canonical.com>
 
-On 9/29/26 17:12, Radim Krcmar wrote:
-> 2026-09-24T06:38:17-04:00, Guodong Xu <guodong.xu@oss.qualcomm.com>:
->> On Mon, 21 Sep 2026 16:24:53 +0200, Heinrich Schuchardt wrote:
->>> On 9/20/26 09:18, Guodong Xu wrote:
->>>> [ ... ]
->>>>    	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_Q),
->>>>    	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_C, riscv_c_exts),
->>>> +	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
->>>
->>> Hello Guodong,
->>>
->>> The RISC-V Unpriviledged ISA specification has this description of
->>> extension B:
->>>
->>> "The B standard extension comprises instructions provided by the Zba,
->>> Zbb, and Zbs extensions."
->>>
->>> __RISCV_ISA_EXT_SUPERSET would imply that something else but
->>> riscv_b_exts is in B. But such an extra seems not to exist.
->>>
->>> So shouldn't __RISCV_ISA_EXT_BUNDLE be used here? Some code further
->>> change may be needed to set extension B if riscv_b_exts is fulfilled.
->>
->> Thanks for the review. Intentional, and the difference between the two
->> macros is whether the extension gets a bit of its own.
->>
->> __RISCV_ISA_EXT_BUNDLE carries RISCV_ISA_EXT_INVALID as its id: parsing
->> the name only sets the bits of its parts. That fits zk, zkn names, which
->> are shorthands with no identity of their own beyond the ISA string.
->>
->> B is different: it is a single-letter standard extension with its own
->> misa bit (in the same way as A), and AT_HWCAP on RISC-V is the bitmask
->> of exactly those single letters, so the kernel needs a bit for B itself.
->>
->> A is declared the same way; with the spec defines A in the same words as
->> B. If I can take that as a precedence.
->>
->> IMHO, "superset" in this table means "also sets these subset bits", not
->> "contains something extra".
-> 
-> Zba, Zbb, and Zbs are equivalent to B for our purposes.
-> 
-> Are we sure that B will always be listed in the ISA string when Zba,
-> Zbb, and Zbs are present?
-> 
-> We could incorrectly lose RVA23U64 bit otherwise, and I think this was
-> Heinrich's concern as well...
-> 
-> (The "A" extension has the same issue...)
-> 
-> Thanks.
+--rW7jw50OZvM/1nk9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If Zba, Zbb, and Zbs are present the kernel should set the B flag in 
-hwprobe. This is why RISCV_ISA_EXT_SUPERSET() cannot be used to describe 
-the B extension. RISCV_ISA_EXT_BUNDLE looks more appropriate but may 
-lack functionality.
+On Tue, Sep 29, 2026 at 06:30:49PM +0200, Heinrich Schuchardt wrote:
+> On 9/29/26 17:12, Radim Krcmar wrote:
+> > 2026-09-24T06:38:17-04:00, Guodong Xu <guodong.xu@oss.qualcomm.com>:
+> > > On Mon, 21 Sep 2026 16:24:53 +0200, Heinrich Schuchardt wrote:
+> > > > On 9/20/26 09:18, Guodong Xu wrote:
+> > > > > [ ... ]
+> > > > >    	__RISCV_ISA_EXT_DATA(q, RISCV_ISA_EXT_Q),
+> > > > >    	__RISCV_ISA_EXT_SUPERSET(c, RISCV_ISA_EXT_C, riscv_c_exts),
+> > > > > +	__RISCV_ISA_EXT_SUPERSET(b, RISCV_ISA_EXT_B, riscv_b_exts),
+> > > >=20
+> > > > Hello Guodong,
+> > > >=20
+> > > > The RISC-V Unpriviledged ISA specification has this description of
+> > > > extension B:
+> > > >=20
+> > > > "The B standard extension comprises instructions provided by the Zb=
+a,
+> > > > Zbb, and Zbs extensions."
+> > > >=20
+> > > > __RISCV_ISA_EXT_SUPERSET would imply that something else but
+> > > > riscv_b_exts is in B. But such an extra seems not to exist.
+> > > >=20
+> > > > So shouldn't __RISCV_ISA_EXT_BUNDLE be used here? Some code further
+> > > > change may be needed to set extension B if riscv_b_exts is fulfille=
+d.
+> > >=20
+> > > Thanks for the review. Intentional, and the difference between the two
+> > > macros is whether the extension gets a bit of its own.
+> > >=20
+> > > __RISCV_ISA_EXT_BUNDLE carries RISCV_ISA_EXT_INVALID as its id: parsi=
+ng
+> > > the name only sets the bits of its parts. That fits zk, zkn names, wh=
+ich
+> > > are shorthands with no identity of their own beyond the ISA string.
+> > >=20
+> > > B is different: it is a single-letter standard extension with its own
+> > > misa bit (in the same way as A), and AT_HWCAP on RISC-V is the bitmask
+> > > of exactly those single letters, so the kernel needs a bit for B itse=
+lf.
+> > >=20
+> > > A is declared the same way; with the spec defines A in the same words=
+ as
+> > > B. If I can take that as a precedence.
+> > >=20
+> > > IMHO, "superset" in this table means "also sets these subset bits", n=
+ot
+> > > "contains something extra".
+> >=20
+> > Zba, Zbb, and Zbs are equivalent to B for our purposes.
+> >=20
+> > Are we sure that B will always be listed in the ISA string when Zba,
+> > Zbb, and Zbs are present?
+> >=20
+> > We could incorrectly lose RVA23U64 bit otherwise, and I think this was
+> > Heinrich's concern as well...
+> >=20
+> > (The "A" extension has the same issue...)
+> >=20
+> > Thanks.
+>=20
+> If Zba, Zbb, and Zbs are present the kernel should set the B flag in
+> hwprobe. This is why RISCV_ISA_EXT_SUPERSET() cannot be used to describe =
+the
+> B extension. RISCV_ISA_EXT_BUNDLE looks more appropriate but may lack
+> functionality.
+>=20
+> RVA23U64 looks like an RISCV_ISA_EXT_BUNDLE() to me, too.
+>=20
+> Unfortunately these macros are not properly documented.
+>=20
+> It would be helpful to first align on the meaning and usage of the macros
+> and document them properly.
 
-RVA23U64 looks like an RISCV_ISA_EXT_BUNDLE() to me, too.
+The intended meaning was "bundle contains no additional features beyond
+the components" and "superset contains additional features beyond the
+components".
 
-Unfortunately these macros are not properly documented.
+IIRC the reason for differentiation between the two was to simplify
+things in the kernel and avoid having code which requires y feature checking
+for "bundle extension xyz", because firmware might only set "component
+extension y" and therefore get a false negative on support.
+Probably ditto for userspace parsing /proc/cpuinfo, since I don't think
+hwprobe existed at that point. The things that are using superset now
+don't quite match that, because some extensions have been retroactively
+changed by RVI to match the bundle definition (due to new extensions being
+created for subsets of an existing extension) and superset was used also for
+the xlinuxenvcfg stuff.
 
-It would be helpful to first align on the meaning and usage of the 
-macros and document them properly.
+At this point, I think we could probably just cull the differentiation
+entirely, retaining a macro called "bundle" that has the behaviour of
+the current "superset". People should just know to check the minimum
+required extension (that's common sense surely?!?) and the kernel will
+always propagate support down to components. This is at least the 3rd
+time recently that I have seen confusion over what each is supposed to
+do.
 
----
 
-The benefit of an additional hwprobe flags for B is limited. When I want 
-to check for B I can already use:
+>=20
+> ---
+>=20
+> The benefit of an additional hwprobe flags for B is limited. When I want =
+to
+> check for B I can already use:
+>=20
+> RISCV_HWPROBE_EXT_B =3D
+> RISCV_HWPROBE_EXT_ZBA | RISCV_HWPROBE_EXT_ZBB | RISCV_HWPROBE_EXT_ZBS;
+>=20
+> if ((value & RISCV_HWPROBE_EXT_B) =3D=3D RISCV_HWPROBE_EXT_B) {
+> 	// Hurray, I have the B extension.
+> }
+>=20
+> There is more utility in the RVA23U64 flag because it combines values from
+> RISCV_HWPROBE_KEY_BASE_BEHAVIOR, RISCV_HWPROBE_KEY_IMA_EXT_0, and
+> RISCV_HWPROBE_KEY_IMA_EXT_1.
+>=20
+> Best regards
+>=20
+> Heinrich
 
-RISCV_HWPROBE_EXT_B =
-RISCV_HWPROBE_EXT_ZBA | RISCV_HWPROBE_EXT_ZBB | RISCV_HWPROBE_EXT_ZBS;
+--rW7jw50OZvM/1nk9
+Content-Type: application/pgp-signature; name=signature.asc
 
-if ((value & RISCV_HWPROBE_EXT_B) == RISCV_HWPROBE_EXT_B) {
-	// Hurray, I have the B extension.
-}
+-----BEGIN PGP SIGNATURE-----
 
-There is more utility in the RVA23U64 flag because it combines values 
-from RISCV_HWPROBE_KEY_BASE_BEHAVIOR, RISCV_HWPROBE_KEY_IMA_EXT_0, and 
-RISCV_HWPROBE_KEY_IMA_EXT_1.
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCarwQXwAKCRB4tDGHoIJi
+0gsNAP4zCeyU0ECIOLqFYp7eKcSULXfObTdh0pHUxJ7mwe9PCgD9HL3G732aWACU
+0okpHhU7u0xbfNAkhsrFUz0MfF4L9A0=
+=Sl5P
+-----END PGP SIGNATURE-----
 
-Best regards
-
-Heinrich
+--rW7jw50OZvM/1nk9--
