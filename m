@@ -1,321 +1,252 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4347424D64;
-	Sun, 27 Sep 2026 16:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790526566; cv=none; b=iVnW1hYgyOIULVrT1vb1lfFUOVV2HB/SjxNJUjXcB6Un+/UaJCPz7hs+6dU3NK5t23Uzoar6jvt6CqSTT04K4zK2+oJIEsiFVukA3ZRusYDa/z0BSbmRmF5vn9tB8wo0KaJwpmNukRBbR4qOUzHrclgqGX4W57N9HKLlztYfLOI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790526566; c=relaxed/simple;
-	bh=WZrhzPU9ggaAPz6T902N9uW8zKhN+Vfr9kKmhl4UWOU=;
-	h=Subject:From:To:Cc:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=fyh2Yl7mhccxonpoMpv8cTmHwZbEI97FU16b0u5dk6f/tbGwNUERf5sidZ1sxAIUST0uHyEKPKNKkQx798z8hiA914Y9vAOCvyHtaWZgL6xuLMGRUbQHwEkg/44GpUTjUghFgY7NpDe8BWvKdV+fBIUq30mD7uKhyxPR7M6sBrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fasPIneY; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EAEA4E9C10;
+	Tue, 29 Sep 2026 15:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1790694834; cv=fail; b=mZE3C6L/gwdCUdLp226Qoh2Gb3ocOunT/tqxY0V5Ps6bMa+WdxT3VKmz3F4sbFwuN/rqdZ2n7D/+T+FVIX/MxDMiKNUHpHHwlQhKogIxnakn+2R+yOQpK6ZDDH2vqGd4SxRDYm5fHIuyNbOcXjyQCnlQCAKO9gFs34zr2SGhoN4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1790694834; c=relaxed/simple;
+	bh=dlt4mPRoZOEDWPJxLTAcTCRtPuQNbaWs2fjk1RhJLqA=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=sm3cTl7yb6OZO8YPSl2IBOurzK13f00bc3T2FxwbZtkYV8xzoXoIreUHaAsG2DORIJ6kUGguhKXtVTHeuYvS9PZDvzui76SAT6U98Udid6jpcnChMwahWRCA48+kPqBcyJcj3o47xmNhMlC6M4AkGS79uemCn9DEX8stWXgHluk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com; spf=pass smtp.mailfrom=qti.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pPOy3uZt; arc=fail smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qti.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qti.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fasPIneY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434BB1F00893;
-	Sun, 27 Sep 2026 16:29:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1790526564;
-	bh=zoTLegbFfnJOrfpouRcz/WJeOTR3x5k8yoa9csThsL4=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=fasPIneYM039A2YmPrOM+hwgTjDSA4RpxXcuABCxGj4qge9l8d8vOlRXpQUCuBKIf
-	 EKDDxJhKdCWKMqDURCeksM8gBY7HCgJh8CqAWrVLo+hHtzlWriiotKkmwmV4dhEAeI
-	 GIhwzy+b+gArY2IxjFLsmwQo9DzyTgeS4AidS3xsYcCcU0V+JlbowXGrR8XKTaZjzC
-	 iMoYlU7rqRtNwZ8430QticP/BGWJZy4hOgL+fYPr8JRdW3yaFGO/6M3n7JFjLDw9fQ
-	 LaTiVU99BI2uubFo4yectHfpuyYGEKmiAsnkfbDQZaE7HoJg7IP1mJ9fCZOPJX3/cl
-	 dG554urWeC5/g==
-Subject: Re: [PATCH net-next v15 9/9] net: stmmac: qcom-ethqos: add support
- for sa8255p
-From: netdev-bot+sashiko@kernel.org
-To: bartosz.golaszewski@oss.qualcomm.com
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com, vkoul@kernel.org,
- peppe.cavallaro@st.com, wens@kernel.org, jernej.skrabec@gmail.com,
- neil.armstrong@linaro.org, khilman@baylibre.com, jbrunet@baylibre.com,
- shawnguo@kernel.org, festevam@gmail.com, jan.petrous@oss.nxp.com, s32@nxp.com,
- mohd.anwar@oss.qualcomm.com, romain.gantois@bootlin.com,
- geert+renesas@glider.be, magnus.damm@gmail.com, mripard@kernel.org,
- christophe.roullier@foss.st.com, brgl@kernel.org, radu@rendec.net,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, dfustini@tenstorrent.com,
- linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
- linux-mips@vger.kernel.org, imx@lists.linux.dev,
- linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
- sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
- bartosz.golaszewski@linaro.org
-Date: Sun, 27 Sep 2026 16:29:21 +0000
-Message-ID: <179052656185.2160803.1751830002645522416@kernel.org>
-In-Reply-To: <20260923-qcom-sa8255p-emac-v15-9-e82f33720737@oss.qualcomm.com>
-References: <20260923-qcom-sa8255p-emac-v15-9-e82f33720737@oss.qualcomm.com>
-X-sashiko-severity: Medium
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pPOy3uZt"
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 68TCqfED1577264;
+	Tue, 29 Sep 2026 15:12:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-id:content-transfer-encoding:content-type:date:from
+	:in-reply-to:message-id:mime-version:references:subject:to; s=
+	qcppdkim1; bh=dlt4mPRoZOEDWPJxLTAcTCRtPuQNbaWs2fjk1RhJLqA=; b=pP
+	Oy3uZtyxoUs5N6z10oP075BzOayg8mMVR36rjBea9kapkLBSPaL7PgnglOeIj0Pq
+	VzOI2d+yNk5U7x+ReFZiCQQHSCK4grRM3joxbeySdiUX5dlBWY8DCbHpAoNMBHBv
+	HBZzY3uIeScjWpia7TbxMS0V8W+Gs+VwoK95AcEb4+waqVMgBJv2IXcqIbhcU/X1
+	1iswcsDbgrbvaiAbMzLcSrY2b1rqOlqo4n9Pt33rPl//xWeUDZ3/dXVDf8hYP+Db
+	Tpw2XF+Y1kLlgyGHOe4oFZNbHBgItyv2nr17NeGi8WbErxrZuXc0+7dg0LShPEn4
+	jE8gkdfCOW7t6cZKOSFg==
+Received: from bn1pr07cu003.outbound.protection.outlook.com (mail-bn1pr07cu00306.outbound.protection.outlook.com [40.93.12.6])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4h09x4sqjb-1
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 29 Sep 2026 15:12:42 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=EDo2Wx4Xf+3us0x3qo5cuTYamFG/WYpDm8iWoRVEPh8oxaWgndY1MO1IbsMSp22bDkBKDQZxvFYOmf6qKpMoaAa+Bwx4JR++E+AfMBopXBaOBFyrxRwvPdByYmUj1Y0zBUkaTcDSPayhL34zjkVJhYksbL39ZS264ovpOYaooRkKf+ES2xNkbd/8PQ2+VIFS8AstKZxRSn2OT7QN+eV/W8m1GA5kL19A+uoGrQ62ter3f5MIO9s+0p9qBDlOgVuSYohPFWyKN5gEg4t0PXFWNNqfKfAL2LH1xqFdsbZ7e/18zWB2UEY3Q4e/u9h33fUIXutJzvhIKG88Upx+LcZ1JA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dlt4mPRoZOEDWPJxLTAcTCRtPuQNbaWs2fjk1RhJLqA=;
+ b=DT0jKaBhO7FqBy8jPYcJYG6+Sjfyg+CrjZR92/kTB18Nd4GCiPPGdKdR0FUUzWUbBRyHUj8NbOh/Yy57KHv9RiVoDcIULj0mHT/shH5hza4tzZ4v14J1GBDkI4IKCrsoZzXpjgUY884AtfV4IaxodQwuzDkkEepGnoNd3oLegGk9hJLDLwu83B/uFG5397fvdwwxWSmQdehO8HfClVQeq1SCEFWRcYno5AJ3+rFjItt1dbz4eShd9jcre340SRJ6Rq1Y/Wk08AZm7hqBVOL9mty8oLUdoCzPPAapm6bNfqSZau8v0vXYbICJMQhv9p3sgfS4tGccVcB1W9gf/7KogQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=qti.qualcomm.com; dmarc=pass action=none
+ header.from=qti.qualcomm.com; dkim=pass header.d=qti.qualcomm.com; arc=none
+Received: from BL0PR02MB4435.namprd02.prod.outlook.com (2603:10b6:208:4a::23)
+ by SA0PR02MB210799.namprd02.prod.outlook.com (2603:10b6:806:dd::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.451.24; Tue, 29 Sep
+ 2026 15:12:36 +0000
+Received: from BL0PR02MB4435.namprd02.prod.outlook.com
+ ([fe80::5818:27e:c1c8:7aa0]) by BL0PR02MB4435.namprd02.prod.outlook.com
+ ([fe80::5818:27e:c1c8:7aa0%6]) with mapi id 15.21.0451.026; Tue, 29 Sep 2026
+ 15:12:36 +0000
+From: Radim Krcmar <rkrcmar@qti.qualcomm.com>
+To: Guodong Xu <guodong.xu@oss.qualcomm.com>,
+        Heinrich Schuchardt
+	<heinrich.schuchardt@canonical.com>
+CC: "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+        "linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Paul Walmsley
+	<paul.walmsley@sifive.com>,
+        Conor Dooley <conor@kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "spacemit@lists.linux.dev" <spacemit@lists.linux.dev>,
+        "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>,
+        "linux-kselftest@vger.kernel.org" <linux-kselftest@vger.kernel.org>,
+        Andy
+ Chiu <tchiu@tenstorrent.com>,
+        Florian Weimer <fweimer@redhat.com>,
+        Peter
+ Bergner <bergner@oss.tenstorrent.com>,
+        Zihong Yao
+	<zihong.plct@isrc.iscas.ac.cn>,
+        Mark Harris <mark.hsj@gmail.com>,
+        Aurelien
+ Jarno <aurelien@aurel32.net>,
+        Andrew Jones <andrew.jones@oss.qualcomm.com>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Paul Walmsley <pjw@kernel.org>,
+        Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>,
+        Alexandre Ghiti <alex@ghiti.fr>, Rob Herring <robh@kernel.org>,
+        Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Yixun Lan
+	<dlan@kernel.org>,
+        Chen Wang <chen.wang@linux.dev>, Inochi Amaoto
+	<inochiama@gmail.com>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        linux-riscv
+	<linux-riscv-bounces@lists.infradead.org>
+Subject: Re: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
+Thread-Topic: [PATCH v8 01/11] riscv: Add B to hwcap and hwprobe
+Thread-Index: AQHdUCT1AafgZkO7UkSDCQjLkxCJvw==
+Date: Tue, 29 Sep 2026 15:12:36 +0000
+Message-ID: <DLRWB8R7P6SF.1XIL0OXLZ2F23@qti.qualcomm.com>
+References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
+ <20260920-rva23u64-hwprobe-v2-v8-1-5f14bc5c23d3@oss.qualcomm.com>
+ <9d058591-466e-4c06-a820-b8ecc7d319a6@canonical.com>
+ <15151b8ab012ca7444d4117e393cf999.guodong.xu@oss.qualcomm.com>
+In-Reply-To: <15151b8ab012ca7444d4117e393cf999.guodong.xu@oss.qualcomm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: mx.microsoft.com 1; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=qti.qualcomm.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: BL0PR02MB4435:EE_|SA0PR02MB210799:EE_
+x-ms-office365-filtering-correlation-id: b04aaf3b-920e-44ce-1cb6-08df1e3c1840
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|23010399003|1800799024|366016|7416014|376014|10067099003|11063799006|56012099006|3023799007|22082099003|18002099003|4143699003|38070700021;
+x-microsoft-antispam-message-info:
+ OZo2LTg3LlYMcMx6xwZSCyLo62fpp9MkE64Vm3DzaoIWVVpFDsVa0Pszfqg69AhZc7SPWHoUf8xaKq+7OGhB0GMaFyIjsexGk9DK/5syBSw7stIXqErltlHaQRztr1l2HZ1DTlzA7c9t9ww3AGbn7GcFsL4rNo1J+XXscRQC5ZcZDjOPR3FH3A82WLEdjR7sxasZ3L0kP/OzG7jiePNL69FIpneZnOraU8JdOZxGeT6Q/ZrC591Ptik4XMZH9FNkS8jQVv+hHX3DN2u6Whsz9VikXDpkR0Mkmb+wz0rRMvgq3sz7Ir+4dy/kVtFJpaGLZm/KwfpnaxViXzBDX6XdrXhHBxZSGWooMfkAk+WSH6Hs4VngJaPOhkVSbas2lU1ZGiOQICdf9M4pcrSHy9o/UZe1H9nz6VJtz5n7qjavGrHU8dM6AbuY1ySkBhQewOFxda3ewQqR8SQCt7PdSS/zeQ6Kbntt98sqr0XTMC6/zsFxFw7HfKurl571bvzsIKRBQqXPdpuZKrlOf7UZLixcspaZGF8CyAAGcsSJwEjeOosyg55JFCz+VH2H6p94GqPnZW/oxXRgRzwNFWh478s31M9M0ZTBnz20M92QxRP+I26wKcaASlylwgsWrhhdB97NH9CEuzucSk4jEHn0GwBoeKnXhHBTUhdBYkOTC9FaaOjuKM0e24S7sJyukPk0hHAN4wCQzJAXoqk77ms18uA8J/FNd0jht1xYLLGecP3GDEQ=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL0PR02MB4435.namprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(23010399003)(1800799024)(366016)(7416014)(376014)(10067099003)(11063799006)(56012099006)(3023799007)(22082099003)(18002099003)(4143699003)(38070700021);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?SnRDYzVsaFRHWUxLcGx3ZHIvaXArY1o3NGs4bG1NMmlvVm5PVmhadGptVTNa?=
+ =?utf-8?B?NUlac2lvWFdmc0M0dnlKeUNUNld3ai81Y2JuVXh0U1libEVqN3dieXcxRjFu?=
+ =?utf-8?B?MkozMi93ZWo4cDI5ekVEdFIzM3h2TjQ0UEhiWjM4SmR6djRSTGJWUTkybXJG?=
+ =?utf-8?B?K2Z3S1Nyb0JUOXFqVEU4NUdqWlhuclpxbGVaaEhkc29NREpsVUNwQlFzYnpL?=
+ =?utf-8?B?VEErMHRTTTlmSXNWUW1zc1MrNGZCamNaWDVWdE1hM0ZYd1NiSDdrMjE3dFRO?=
+ =?utf-8?B?c3EwTmxsYjZoK3BhMVlrdXA0cmFqS0ptTjdiVW93QytObG1JcGtwSDNqOVZz?=
+ =?utf-8?B?Zmhxay96aG5wUGIwZUxTWFRCbzVSRWM4RUh0ejRQaEhqWHJIb1I1UjB0aE5K?=
+ =?utf-8?B?SytXQXJnN3YwUDVPQitWL2RpTGV6RkJhckQ4RzVuRDFqWC9tblVRNm1WNFN3?=
+ =?utf-8?B?WXgreHA5bUlBZEVEWVB4L2NDZkNFMEI3Zk55R2hqZnNjc2Vxb3AwS3V0TEJI?=
+ =?utf-8?B?VUlOaTdZRUdOVmpsRURsREwzSjRqTDF5S0xKOFZ0RW1ZOTNIQjdwd204T1dh?=
+ =?utf-8?B?L1h2dGtSNkpBdVFUSkNreks4TUxHQkVEUFRGamF6a1lycGJxNzdvbmpzQzU0?=
+ =?utf-8?B?cFczQWFMSXZWdzFTTWw0bG1wZWpGcUVCanp1QzYzYTZMMVRGaXRBVW5zZWov?=
+ =?utf-8?B?ZEtDN24xTDM0THo3enpnUXVjT3AwNVdid2ZYN1FOWmd0SW5NSndtbjAvK0dG?=
+ =?utf-8?B?RHRRQVpSenc0L1puUTRIK041dm5acmZxd1gzK1VtZ3ZKZnhYMVMyL3pqc0k3?=
+ =?utf-8?B?ZjVRbFkzT1BKWndyVDJiWTdFTEEyOUFqTDFBN2JPMHE2RCs1UFNTR3hwVHly?=
+ =?utf-8?B?bWRxcUEvZ3I5amRzcHRGMTFRK3Z6SGp5SWN6VSsrN2x3T3dsMDJYcXhtSU9L?=
+ =?utf-8?B?NUpqRmFKYmtxeEhHQUVjaFJ1Y2NtNDBUZExCN281MlBJU3pvcHNIU3c0UWxC?=
+ =?utf-8?B?UjdMNUdhU3poUTV2MEpncmJtNXJuSE1rTnhPYm5lbEViZmkyalV5aXVJbE1m?=
+ =?utf-8?B?R0Jaa3RmWU9nMFRIUFdqMkJRY0k1Si85NjBDbTk0M1d1U2p6ZEhqbjBFK1py?=
+ =?utf-8?B?blZxSDQ0OXZ3Z1gzVTBaT3lnTXFzWTRSS1EvODdmeXhnZEduS1dzczd1UVdz?=
+ =?utf-8?B?MVl0NGNLYWFSeXBPQk9NSG0rLzUvL2xYNGxkNk1Gc3NTUllIZnJvSitXa1dw?=
+ =?utf-8?B?L0pGQVJQa3QybktERHJCTlpRa1VvTnlUa1VLQk5nRitnWDhITURzR0dETGJl?=
+ =?utf-8?B?RjAxR3d5L00vekVvWFhtVTlVQXdITGROcmRDOWhJY252Nld3MXpONFZFZ3Nr?=
+ =?utf-8?B?SGNvL013VFcrajJjOEVYcUo1Y0RGb05sNC9UUkVwM21PN09Sem5PQ0RWZWp1?=
+ =?utf-8?B?QUpobHVjbmNWdm54aVBSRjkveG53MFo3UnVZWXY1NVAyRkpvMHoxWlNxNWtk?=
+ =?utf-8?B?bHNsdHN4cDBKS3o5REFEdEg1U3hPZkEzdjEzZS9kUTRkUTNIdXVEbnl5TUJ3?=
+ =?utf-8?B?WlpqNlRGNFRMMW13RTErdy81NmFUYytWTWVPelYzRnFRdnVWaHJnbFkveVVp?=
+ =?utf-8?B?d3JOSEd3RzA0VEQ2Y3lYNlZSb1A5dGtURjdTUmNReERYNlhhQXordjFwLytn?=
+ =?utf-8?B?MmxHeENUQW42SHhPdkFRWUxtYlpvelNRVjVHU3EzTWoxbld1T0FVbHovMno0?=
+ =?utf-8?B?d0RWam8rdXFVV3VoaHVRcGpsUEZVcUpNZDNXV09UVDBRcHVqRG82T0tXWlI1?=
+ =?utf-8?B?ZjFhc283MGtiNzhldlI4clF4TU5hQ1dCNTNZQlJxK0V5NzdlWDhqWHFoVUJz?=
+ =?utf-8?B?ZmpacHErdjIwdTc0NFlHRkg2ekEwaU1pNk9Nd2FYN3kwdGMra3JDajNOSkVp?=
+ =?utf-8?B?UFFQemNoRGdmVmNjMFQyNEJFaDV1eVJTL3BXRDBid3VYWVBoMUhqRVBLYWZi?=
+ =?utf-8?B?WjUwdXp4V2gza0diTXg3ZWIrWU1mUWxIeklOU1dlUVg3WmJuOW1OWDVrQUhn?=
+ =?utf-8?B?cEE2QUF6U3QweHVFSzR4M0dTSzFYTld4dHYxbzBvb29BWHVDYzZNT1orMkxw?=
+ =?utf-8?B?YWVGN3Fid3hSU1NOTmd6bHhkcWVOcU5ZcjVmUnlGKzRYWllSaDNLZ3l0QzVt?=
+ =?utf-8?B?VnhtWFpzMFRVU0FHN2xkRmZoK3Y4Vy9PZGJKbDI4dGhlbkZlazZ4Uk9VZ0Rp?=
+ =?utf-8?B?TU9RU2JLM1hoelQ0QjFqejBIaWU4aEZZMjlFVDBJSVFzcXNaR0owYk1vVHNI?=
+ =?utf-8?B?MGtSSFFiYVl1ZGZ6OTNMZUNJNzJKRkZkUVBmQ0xDT1ZCd1Q3UWtzTEtIWjdt?=
+ =?utf-8?Q?9nqy59xiOzU5N7/I=3D?=
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-ID: <BFB357F7C542E34EB02CDAF46195055F@namprd02.prod.outlook.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked:
+	JhZj1eHPieY0295lfn5NNRSIsHy2Ul8ze8WTEZJ9UaYoQPPW4q8UlhcGwU9+UDfnVrRZ+hnYTVZQdHHZRo4iaOqYmmC9oi4KAkF6I5kv4fc8+Wd9BTPAMG+AdvY/y/fCf8O9tA++YpgDRxXncWFmW6n8iK9SQytiONxdmY8bRJ5NJ4O3m013ozLDzy4Nxd9f97aWTEHWNyv1fBQz+4r0GIILKAe2i74il5a2nxV5XlDDuqoZTQVhqG6ttVdMa97ic4rN7QBErCbI5HMk6rHbVEMaq2igzL08hHj6Y0aEmb3fOW4ujH56EHpnvEJovG3KXo4dAnZVh09D/RUL/hJ+Qw==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	zbySiv+fFN2jPRs448PhbVaNKPUbUvrGNQdYjQoBhY78lp35pk8MpTXXQ7syjoRWJrLAuwKRC1gMUpWW1p+UZiXiA5RlNoyVJi9SrutNW2SVfMnKbqr8DqNJKdRk5Ae7oIv+L2fXnbEgVPwq0zHZUW+MCX8P1HozupbH217PuXBrgdwe+miCJTafe4JReSPiieGKcmD8zbMIM1MHVsFFGdPeZTUX33AmlFzTY83k67cgsAjw1qFiPlWRDXX8dVSsv9XsuhUeF+8MpCj05peuontGZ16kmBRz+mEZ9PaR1HvKe6zDyyPcIrpAgIGErWfxdt0W6jXVpeO03knIEIOgkUUwfy6p9CY4qqbB8A90ETG7/5KTTt+jtubfPiRyMB2zJ1NFijMr5GXlowUzw8q7qU7TbC0mm8PBBtP1BsQ17miMg05Nf+RA3tvA/TsswR/x2OTUXQENnop7OOH7MtN7O4Laqok/wceCivhjJbQpCjf9a/xtrZxVhsZyjrANjdmJhiRyZHNyHwuam8P135bc/4gQa8PO/YrbplF6QNpuwSz4DcSefNuqZn+BfuYDjNhdvJ/JOzwpo23bWoTmfhkCVleLkZiOjbZwZpKGo2noOekIEC1SKQN1rSFz+akoUXh1
+X-OriginatorOrg: qti.qualcomm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BL0PR02MB4435.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b04aaf3b-920e-44ce-1cb6-08df1e3c1840
+X-MS-Exchange-CrossTenant-originalarrivaltime: 29 Sep 2026 15:12:36.3556
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 98e9ba89-e1a1-4e38-9007-8bdabc25de1d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: qrSxvtB/nG1QVnDDLaY2FEn4AThsYLHxn6y8mxtuf81B//5xAdO+Le/MxLoAXx6nzSi7E+H0RyaaATDw4akJjetG/H00MfIGLD+uiF4c6iE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR02MB210799
+X-Proofpoint-Spam-Info: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX/6IoKYO06CRT
+ GlCPR9uZD/YrmDyHjQ434R/mVsCDswfCct+F9vZ2McrLYQpB5sCa7GvUKZZPA1UelyZ8/0BuTq+
+ E2z4M6p67j81NCe6l6ApBC5GpscaHvA=
+X-Proofpoint-GUID: 388DG219h6GL6mPIy3GKUM8uJYMhUbzh
+X-Authority-Analysis: v=2.4 cv=I5Hw19gg c=1 sm=1 tr=0 ts=6abbd56a cx=c_pps
+ a=vyniI6In/5XBr/U1JZq+ag==:117 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=VdqzKS8jKosA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=dnoDzjF9eS-z_a7k34cA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 388DG219h6GL6mPIy3GKUM8uJYMhUbzh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwOTI5MDA2MCBTYWx0ZWRfX9keJ3C83ex1K
+ /lnFKM4fJZxmJ6do/U3TPwQXhVpCpJYQt2Haq/7moyJXgd1PDYT1JP4BMwoNaN2noj37eWnIwRX
+ AM2f7AE46/uPwSfap7y2bhW9jchevGxxLhsIvIvxAThdltFkoVU52DUk6bN1fTFm7xYeKgj29E/
+ vgr+0hEmudu1XzBMNE5LLGRHXGY38Hp8aZ/bBSAtA5Icf2qgXkJE0UQ1ebGrZcXhrpAfKBhOKeQ
+ mAcAmtv7ISh1fUJ8GC76GWbNnEKEmkTc4zDvdsrFK/E4OPaLsRwcDe78Hrwb3GCkkVLg6ePwVDo
+ oYhnI6PKB56ANXE8ab4FxqCDdZnQ/lmMcD0dVFUISZw1KICw3fL3OZNzQGoa/9Av+icHEzYC9vz
+ mpSDb1MwkviEQOpa2d3xKx60NTmrvfeXTajbhNngm773qauXwFbPeUO2ug+zRX190VtPIfDtWe5
+ se4m/i4EnzWqXNQq+Hw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1176,Hydra:6.1.134,FMLib:17.12.100.49
+ definitions=2026-09-29_04,2026-09-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 clxscore=1011
+ impostorscore=0 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2609040000
+ definitions=main-2609290060
 
-Thank you for your contribution! Sashiko AI review found 4 potential
-issue(s) to consider.
-
-Critical: 0 · High: 0 · Medium: 2 · Low: 2
-
-If you believe none of the issues are legitimate, please reply to each
-issue of Medium severity or higher and explain why the AI is wrong.
-If any of them are legitimate and you plan to respin, please let patchwork
-know by including "pw-bot: cr" as a separate line at the end of your reply
-(one such reply per series is enough).
-
-- [Medium] With Wake-on-LAN armed, system suspend on sa8255p powers off
-  the MAC's SCMI "core"/"mdio" domains, and on resume the EMAC wrapper…
-- [Medium] The SCMI variant has no CSR/application clock, and nothing
-  substitutes a rate for it.
-- [Low] The new sa8255p (SCMI) variant accepts RGMII phy-modes but
-  silently misconfigures them.
-- [Low] The new comment in ethqos_scmi_setup() and the commit message
-  misdescribe what the code does.
-
---
-
-net: stmmac: qcom-ethqos: add support for sa8255p
-
-This adds a new sa8255p variant to the qcom-ethqos glue driver. On this
-variant, firmware handles power management over SCMI, and Linux models it
-with power domains. It adds a new emac data variant with a fixed PTP clock
-rate, plus a separate ethqos_scmi_setup() callback.
-
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> index 509a5368e69a8..3d4bc950a72ac 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-
-[ ... ]
-
-> @@ -756,6 +788,80 @@ static int ethqos_hlos_setup(struct qcom_ethqos *ethqos,
->  	return 0;
->  }
->  
-> +static const char *const ethqos_scmi_pd_names[] = { "core", "mdio" };
-> +
-> +static int ethqos_scmi_setup(struct qcom_ethqos *ethqos,
-> +			     struct plat_stmmacenet_data *plat_dat)
-> +{
-> +	const struct dev_pm_domain_attach_data pd_data = {
-> +		.pd_names	= ethqos_scmi_pd_names,
-> +		.num_pd_names	= ARRAY_SIZE(ethqos_scmi_pd_names),
-> +		.pd_flags	= PD_FLAG_DEV_LINK_ON,
-> +	};
-> +
-> +	struct platform_device *pdev = ethqos->pdev;
-> +	struct device *dev = &pdev->dev;
-> +	int ret;
-> +
-> +	ret = devm_pm_domain_attach_list(dev, &pd_data, &ethqos->pds);
-> +	if (ret < 0)
-> +		return dev_err_probe(dev, ret,
-> +				     "Failed to attach power domains\n");
-
-[Severity: Medium]
-What happens to these two domains during system suspend when Wake-on-LAN
-is armed?
-
-devm_pm_domain_attach_list() creates virtual genpd devices through
-genpd_dev_pm_attach_by_id(). Those devices have no parent:
-
-drivers/pmdomain/core.c:genpd_dev_pm_attach_by_id() {
-    ...
-	dev_set_name(virt_dev, "genpd:%u:%s", index, dev_name(dev));
-	virt_dev->bus = &genpd_bus_type;
-	virt_dev->release = genpd_release_dev;
-	virt_dev->of_node = of_node_get(dev->of_node);
-    ...
-}
-
-dpm_propagate_wakeup_to_parent() only passes wakeup_path to dev->parent.
-It does not reach device-link suppliers, so device_awake_path(virt_dev)
-stays false.
-
-SCMI domains set GENPD_FLAG_ACTIVE_WAKEUP. Even so, genpd_finish_suspend()
-falls through to genpd_sync_power_off():
-
-	if (device_awake_path(dev) && genpd_is_active_wakeup(genpd) &&
-	    !device_out_band_wakeup(dev))
-		return 0;
-
-qcom_ethqos_probe() also sets plat_dat->pmt = true for this variant, so
-WoL can be enabled with ethtool. With priv->wolopts set,
-stmmac_pltfr_noirq_suspend() and stmmac_pltfr_noirq_resume() skip
-pm_runtime_force_suspend() and pm_runtime_force_resume():
-
-	if (!priv->wolopts) {
-		/* enable the clk previously disabled */
-		ret = pm_runtime_force_resume(dev);
-
-As a result, ethqos_clks_config(true) does not run on resume.
-
-If firmware really power-cycles the MAC and wrapper when the "core" and
-"mdio" domains are turned off, can WoL fail to wake the system? Would the
-SGMII loopback and FUNC_CLK_EN bits at rgmii_base also be lost, so that
-stmmac_resume()->stmmac_hw_setup() hits the DMA SW-reset timeout that the
-comment below describes?
-
-On the HLOS variants, the single GDSC is the MAC's own pm_domain, so the
-awake-path check applies to the MAC device itself. This looks specific to
-the multi-domain attach used here. The kernel tree can't show whether
-firmware actually removes power on that request.
-
-> +
-> +	/*
-> +	 * The SerDes lane, its clocks and the MAC AXI/AHB clocks are owned by
-> +	 * firmware and brought up through the SCMI power domains above. The
-> +	 * MAC wrapper itself, however is in the kernel's register space: the
-> +	 * wrapper bit that loops the PHY TX clock into the MAC's clk_rx_i -
-> +	 * needed because no recovered RX clock exists yet - is not
-> +	 * configured by firmware. Without it, clk_rx_i never toggles and the
-> +	 * DMA SW-reset polled in dwmac4_dma_reset() never completes.
-
-[Severity: Low]
-Is this comment right about where the SerDes power comes from?
-
-The sa8255p SerDes PHY binding (qcom,sa8255p-dwmac-sgmii-phy.yaml)
-requires a power-domain of its own. phy-qcom-sgmii-eth-scmi.c votes for
-it through the PHY device's runtime PM (devm_pm_runtime_enable() before
-devm_phy_create()), and set_mode() sets its performance state.
-
-qcom_ethqos_probe() still gets the "serdes" phy and installs
-qcom_ethqos_serdes_powerup(). The PHY TX clock that is looped into
-clk_rx_i therefore comes from serdes_powerup() in stmmac_open(), before
-__stmmac_open()->stmmac_hw_setup(). It does not come from the "core" and
-"mdio" domains attached above.
-
-The current ordering works. Could the comment name the SerDes PHY's own
-domain instead, so later changes to the SerDes or PM ordering are not
-misled?
-
-The commit message also says only:
-
-  Unlike the previously supported variants, this one's power management
-  is done in the firmware over SCMI. This is modeled in linux using power
-  domains so add a new emac data variant and a separate setup callback.
-
-Could it also mention the following?
-
-  - The kernel still maps and programs the "rgmii" wrapper registers
-    (SGMII loopback and FUNC_CLK_EN) at probe and on every runtime resume.
-  - set_clk_tx_rate and dump_debug_regs are dropped for this variant.
-  - A fixed 230.4 MHz PTP reference rate is hardcoded in
-    emac_v4_0_0_scmi_data.
-
-> +	 *
-> +	 * Map the wrapper and program the same loopback/functional clock bits
-> +	 * the non-firmware platforms rely on (see ethqos_clks_config) so the
-> +	 * RX clock is present by the time the DMA engine is reset.
-> +	 */
-
-[ ... ]
-
-> +	ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
-> +	if (ret)
-> +		return ret;
-> +
-> +	plat_dat->clk_ptp_rate = ethqos->data->ptp_clk_rate;
-
-[Severity: Medium]
-The PTP rate gets a fixed value here, but what about the CSR clock?
-
-The sa8255p binding has no clocks property. stmmac_probe_config_dt()
-therefore fails devm_clk_get("stmmaceth") and leaves plat->stmmac_clk
-NULL:
-
-	plat->stmmac_clk = devm_clk_get(&pdev->dev,
-					STMMAC_RESOURCE_NAME);
-	if (IS_ERR(plat->stmmac_clk)) {
-		dev_warn(&pdev->dev, "Cannot get CSR clock\n");
-		plat->stmmac_clk = NULL;
-
-dwmac4_core_init() then runs this on every stmmac_hw_setup():
-
-	clk_rate = clk_get_rate(priv->plat->stmmac_clk);
-	writel((clk_rate / 1000000) - 1, ioaddr + GMAC4_MAC_ONEUS_TIC_COUNTER);
-
-With clk_rate == 0, won't this write 0xFFFFFFFF into
-GMAC4_MAC_ONEUS_TIC_COUNTER? That would break the LPI/EEE timers, which
-count in microseconds.
-
-plat_dat->clk_ref_rate is not set either, so stmmac_usec2riwt() and
-stmmac_riwt2usec() return 0:
-
-	unsigned long clk = clk_get_rate(priv->plat->stmmac_clk);
-
-	if (!clk) {
-		clk = priv->plat->clk_ref_rate;
-		if (!clk)
-			return 0;
-
-Would ethtool -C rx-usecs then fail the MIN_DMA_RIWT check, and would
-rx-usecs be reported as 0?
-
-> +
-> +	switch (ethqos->phy_mode) {
-> +	case PHY_INTERFACE_MODE_2500BASEX:
-> +	case PHY_INTERFACE_MODE_SGMII:
-> +		plat_dat->fix_mac_speed = ethqos_fix_mac_speed_sgmii;
-> +		break;
-> +	default:
-> +		break;
-> +	}
-
-[Severity: Low]
-What happens here if the device tree sets an RGMII phy-mode on a
-qcom,sa8255p-ethqos node?
-
-qcom_ethqos_probe() accepts PHY_INTERFACE_MODE_RGMII, _ID, _RXID and _TXID
-for every compatible, and the sa8255p binding does not constrain
-phy-mode. For RGMII, this switch takes the default branch, so none of the
-following happens:
-
-  - no fix_mac_speed is installed
-  - no set_clk_tx_rate is installed
-  - no RGMII IO macro or DLL programming is done (emac_v4_0_0_scmi_data
-    has no rgmii_por)
-
-qcom_ethqos_set_sgmii_loopback() also returns early for non-SGMII modes.
-
-The SCMI SerDes provider rejects RGMII as well:
-
-drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c:qcom_dwmac_sgmii_phy_scmi_validate() {
-	switch (submode) {
-	case PHY_INTERFACE_MODE_SGMII:
-	case PHY_INTERFACE_MODE_1000BASEX:
-	case PHY_INTERFACE_MODE_2500BASEX:
-		return 0;
-	default:
-		return -EINVAL;
-    ...
-}
-
-With a phys property, qcom_ethqos_serdes_powerup()->phy_set_mode_ext()
-fails at open time. Without one, the MAC runs in RGMII mode with no
-wrapper configuration. In both cases probe succeeds, but the interface
-never works.
-
-Would it be better for ethqos_scmi_setup() to return -EINVAL for modes
-that don't use the SerDes, or for the binding to limit phy-mode to an
-enum, or both?
-
-> +
-> +	return 0;
-> +}
-
-[ ... ]
-
--- 
-Sashiko AI review · https://netdev-ai.bots.linux.dev/sashiko/#/patchset/20260923-qcom-sa8255p-emac-v15-0-e82f33720737%40oss.qualcomm.com
+MjAyNi0wOS0yNFQwNjozODoxNy0wNDowMCwgR3VvZG9uZyBYdSA8Z3VvZG9uZy54dUBvc3MucXVh
+bGNvbW0uY29tPjoNCj4gT24gTW9uLCAyMSBTZXAgMjAyNiAxNjoyNDo1MyArMDIwMCwgSGVpbnJp
+Y2ggU2NodWNoYXJkdCB3cm90ZToNCj4+IE9uIDkvMjAvMjYgMDk6MTgsIEd1b2RvbmcgWHUgd3Jv
+dGU6DQo+Pj4gWyAuLi4gXQ0KPj4+ICAgCV9fUklTQ1ZfSVNBX0VYVF9EQVRBKHEsIFJJU0NWX0lT
+QV9FWFRfUSksDQo+Pj4gICAJX19SSVNDVl9JU0FfRVhUX1NVUEVSU0VUKGMsIFJJU0NWX0lTQV9F
+WFRfQywgcmlzY3ZfY19leHRzKSwNCj4+PiArCV9fUklTQ1ZfSVNBX0VYVF9TVVBFUlNFVChiLCBS
+SVNDVl9JU0FfRVhUX0IsIHJpc2N2X2JfZXh0cyksDQo+Pg0KPj4gSGVsbG8gR3VvZG9uZywNCj4+
+DQo+PiBUaGUgUklTQy1WIFVucHJpdmlsZWRnZWQgSVNBIHNwZWNpZmljYXRpb24gaGFzIHRoaXMg
+ZGVzY3JpcHRpb24gb2YgDQo+PiBleHRlbnNpb24gQjoNCj4+DQo+PiAiVGhlIEIgc3RhbmRhcmQg
+ZXh0ZW5zaW9uIGNvbXByaXNlcyBpbnN0cnVjdGlvbnMgcHJvdmlkZWQgYnkgdGhlIFpiYSwgDQo+
+PiBaYmIsIGFuZCBaYnMgZXh0ZW5zaW9ucy4iDQo+Pg0KPj4gX19SSVNDVl9JU0FfRVhUX1NVUEVS
+U0VUIHdvdWxkIGltcGx5IHRoYXQgc29tZXRoaW5nIGVsc2UgYnV0IA0KPj4gcmlzY3ZfYl9leHRz
+IGlzIGluIEIuIEJ1dCBzdWNoIGFuIGV4dHJhIHNlZW1zIG5vdCB0byBleGlzdC4NCj4+DQo+PiBT
+byBzaG91bGRuJ3QgX19SSVNDVl9JU0FfRVhUX0JVTkRMRSBiZSB1c2VkIGhlcmU/IFNvbWUgY29k
+ZSBmdXJ0aGVyIA0KPj4gY2hhbmdlIG1heSBiZSBuZWVkZWQgdG8gc2V0IGV4dGVuc2lvbiBCIGlm
+IHJpc2N2X2JfZXh0cyBpcyBmdWxmaWxsZWQuDQo+DQo+IFRoYW5rcyBmb3IgdGhlIHJldmlldy4g
+SW50ZW50aW9uYWwsIGFuZCB0aGUgZGlmZmVyZW5jZSBiZXR3ZWVuIHRoZSB0d28NCj4gbWFjcm9z
+IGlzIHdoZXRoZXIgdGhlIGV4dGVuc2lvbiBnZXRzIGEgYml0IG9mIGl0cyBvd24uDQo+DQo+IF9f
+UklTQ1ZfSVNBX0VYVF9CVU5ETEUgY2FycmllcyBSSVNDVl9JU0FfRVhUX0lOVkFMSUQgYXMgaXRz
+IGlkOiBwYXJzaW5nDQo+IHRoZSBuYW1lIG9ubHkgc2V0cyB0aGUgYml0cyBvZiBpdHMgcGFydHMu
+IFRoYXQgZml0cyB6aywgemtuIG5hbWVzLCB3aGljaA0KPiBhcmUgc2hvcnRoYW5kcyB3aXRoIG5v
+IGlkZW50aXR5IG9mIHRoZWlyIG93biBiZXlvbmQgdGhlIElTQSBzdHJpbmcuDQo+DQo+IEIgaXMg
+ZGlmZmVyZW50OiBpdCBpcyBhIHNpbmdsZS1sZXR0ZXIgc3RhbmRhcmQgZXh0ZW5zaW9uIHdpdGgg
+aXRzIG93bg0KPiBtaXNhIGJpdCAoaW4gdGhlIHNhbWUgd2F5IGFzIEEpLCBhbmQgQVRfSFdDQVAg
+b24gUklTQy1WIGlzIHRoZSBiaXRtYXNrDQo+IG9mIGV4YWN0bHkgdGhvc2Ugc2luZ2xlIGxldHRl
+cnMsIHNvIHRoZSBrZXJuZWwgbmVlZHMgYSBiaXQgZm9yIEIgaXRzZWxmLg0KPg0KPiBBIGlzIGRl
+Y2xhcmVkIHRoZSBzYW1lIHdheTsgd2l0aCB0aGUgc3BlYyBkZWZpbmVzIEEgaW4gdGhlIHNhbWUg
+d29yZHMgYXMNCj4gQi4gSWYgSSBjYW4gdGFrZSB0aGF0IGFzIGEgcHJlY2VkZW5jZS4NCj4NCj4g
+SU1ITywgInN1cGVyc2V0IiBpbiB0aGlzIHRhYmxlIG1lYW5zICJhbHNvIHNldHMgdGhlc2Ugc3Vi
+c2V0IGJpdHMiLCBub3QNCj4gImNvbnRhaW5zIHNvbWV0aGluZyBleHRyYSIuDQoNClpiYSwgWmJi
+LCBhbmQgWmJzIGFyZSBlcXVpdmFsZW50IHRvIEIgZm9yIG91ciBwdXJwb3Nlcy4NCg0KQXJlIHdl
+IHN1cmUgdGhhdCBCIHdpbGwgYWx3YXlzIGJlIGxpc3RlZCBpbiB0aGUgSVNBIHN0cmluZyB3aGVu
+IFpiYSwNClpiYiwgYW5kIFpicyBhcmUgcHJlc2VudD8NCg0KV2UgY291bGQgaW5jb3JyZWN0bHkg
+bG9zZSBSVkEyM1U2NCBiaXQgb3RoZXJ3aXNlLCBhbmQgSSB0aGluayB0aGlzIHdhcw0KSGVpbnJp
+Y2gncyBjb25jZXJuIGFzIHdlbGwuLi4NCg0KKFRoZSAiQSIgZXh0ZW5zaW9uIGhhcyB0aGUgc2Ft
+ZSBpc3N1ZS4uLikNCg0KVGhhbmtzLg==
