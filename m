@@ -1,107 +1,88 @@
-Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE8F51A723
-	for <sophgo@lists.linux.dev>; Wed, 30 Sep 2026 18:23:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871BD4A499F;
+	Wed, 30 Sep 2026 23:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1790792610; cv=none; b=OCDoXTwn52C+0FklcUp0rPdDPVriwKBWw8djzQFZYej0xHblh+0hefHnZfyKBtCjKi7UWxloY6TT3f6ABj6W5J46iUCoxgKyixQquFaDYQnllJiBus+KWpD1ox6Lijhx4d7trMspys6mtQ4rh46lmMM+HUP0AtugfTlET+kxYgQ=
+	t=1790811140; cv=none; b=U1CjMpMSGWbEXpiFsYw4dWqb899crKLIa94Gpa1fzCKvqZl53/LBA+QY//PM57JxgjGHQ2oIku0lMQguSituHFwX4EG3hB4BGYWmVDh6RXJDpGpVTy8a3llmpfcW2hzDej/cRuxhqPHkmejRzi1Uu37RxY4zXUw+/474OCQ5d/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1790792610; c=relaxed/simple;
-	bh=MAoTJpfR9sQ+sH6Mer8E0bQLsExiA9OmKfJdD4rVNUg=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Cu4KQZdiCn0hVyGgXkWsr1Vjg0gEysQnKNZgpmJ+N5bvC8tbhFi3nIStaFSPEaOxlOQdwJg49MGZZV3rEh+gvifGhax9Mh3dhuDlMBq/4MdxGYq+YpL97eXAM5PjdB/WjkFB/dh0bXjURT+uTvFBp6TDZRd+gW3xOm96WPFRAWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from [127.0.1.1] (unknown [223.166.93.127])
-	by APP-01 (Coremail) with SMTP id qwCowAAHofR9U71q8y58CQ--.14027S2;
-	Thu, 01 Oct 2026 02:23:02 +0800 (CST)
-From: Han Gao <gaohan@iscas.ac.cn>
-Subject: [PATCH v2 0/4] spi: sophgo: Fix SPI NOR errors and clock limits
-Date: Thu, 01 Oct 2026 02:22:49 +0800
-Message-Id: <20261001-fix-sg204xspi-v2-0-014dbaf22b5e@iscas.ac.cn>
+	s=arc-20240116; t=1790811140; c=relaxed/simple;
+	bh=klMsnEP+vb9DhYgoK6Y/sENCG6Q3x+RrqvetvjVh6zM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oAU44vK1MFSJHz9XgBSCO08e8oMeRsOksD9VymdgV/RBXyFb3YB7dQTyHomHO1jF72jwV61n/Y2XduHGqljMHaD7BhmAxiiAOwUNEUbcZF9pq2YJe9jg+u3uUUBfvq5HWc6hkPKi335MEvmFJzJM/F5fqURnlJqxHI/bDTxw4a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YKzKQScV; arc=none smtp.client-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YKzKQScV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C3C1F000FF;
+	Wed, 30 Sep 2026 23:32:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1790811139;
+	bh=ng115hWZ2LMwKhDc1Httr+OsIIIboQhXGl5/aPDAQoQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=YKzKQScVQVhjWvsISsBvvd+RZk8usvWcSOdVDF+hEZmkCSypcdgnfyxLAOWFWnGUi
+	 QQEtlC7xApH7XqyAoqUafqECurZATIh9SGxK2FQ0WsjPQgbReJZlKuzNRlqWqi4EPw
+	 8SPR0Dl+eXnngN0zEKgnmlMMy3a9TkzwfiLB0VmPHYpMR3k8e0iCbwYDWCIiRllFh5
+	 vOckl23hCF9F09n+LN0KGaC+Y1drrkXrkVoBItWgbdX7P/CqiN3H9WihVWBbDes6E5
+	 hmQ9VdXbGtwO/GBtB/pNrkR78Ld9LQx9p6P8JW2bgZbSZTLc3hZldUygvFbZw/h2IT
+	 rp0CwiCFJHtvw==
+Date: Wed, 30 Sep 2026 16:32:17 -0700
+From: Jakub Kicinski <kuba@kernel.org>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Andrew
+ Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Maxime
+ Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Vinod Koul <vkoul@kernel.org>, Giuseppe
+ Cavallaro <peppe.cavallaro@st.com>, Chen-Yu Tsai <wens@kernel.org>, Jernej
+ Skrabec <jernej.skrabec@gmail.com>, Neil Armstrong
+ <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, Jerome
+ Brunet <jbrunet@baylibre.com>, Shawn Guo <shawnguo@kernel.org>, Fabio
+ Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>,
+ s32@nxp.com, Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, Romain Gantois
+ <romain.gantois@bootlin.com>, Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>,
+ Christophe Roullier <christophe.roullier@foss.st.com>, Bartosz Golaszewski
+ <brgl@kernel.org>, Radu Rendec <radu@rendec.net>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, Drew Fustini
+ <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+ linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+ linux-riscv@lists.infradead.org, Bartosz Golaszewski
+ <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH net-next v15 3/9] phy: qcom: add the SGMII SerDes PHY
+ driver for SCMI systems
+Message-ID: <20260930163217.4003d232@kernel.org>
+In-Reply-To: <20260923-qcom-sa8255p-emac-v15-3-e82f33720737@oss.qualcomm.com>
+References: <20260923-qcom-sa8255p-emac-v15-0-e82f33720737@oss.qualcomm.com>
+	<20260923-qcom-sa8255p-emac-v15-3-e82f33720737@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHlTvWoC/3WMQQ6CMBBFr0JmbUk7AWxdeQ/Dok4rzAZIxzQY0
- rtb2bt8P/+9AyQmjgK35oAUMwuvSwW8NECzX6aoOFQG1DhoZ67qxbuSCXW3y8Yq+IB2cGifhqA
- 6W4r1cPYeY+WZ5b2mz5nP5rf+K2WjtOrJ9cFTh87bOwt5aT21tMBYSvkCO/ZeBqwAAAA=
-X-Change-ID: 20260917-fix-sg204xspi-dad286928b1c
-To: Mark Brown <broonie@kernel.org>, Longbin Li <looong.bin@gmail.com>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Han Gao <rabenda.cn@gmail.com>, Hangfan Li <lihangfan@iscas.ac.cn>, 
- linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-riscv@lists.infradead.org, Han Gao <gaohan@iscas.ac.cn>
-X-Mailer: b4 0.14.2
-X-CM-TRANSID:qwCowAAHofR9U71q8y58CQ--.14027S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7AF1xGF4DKFW3WrWkur17Wrg_yoW8WF4UpF
-	4xAanxtw1xGryfAaySqrW2gF93Gr95GF1UJr13Ww4rZwsFvry8WryIkr4IgF9rXr48J348
-	KrZxJFyrCrnFvrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUU9214x267AKxVW5JVWrJwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26r4j6ryUM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Gr1j6F4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_Gr
-	1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv
-	7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r
-	1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8vx2IErcIFxwACI402YVCY1x02
-	628vn2kIc2xKxwCY1x0262kKe7AKxVW8ZVWrXwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4
-	IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1r
-	MI8E67AF67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJV
-	WUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j
-	6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYx
-	BIdaVFxhVjvjDU0xZFpf9x0pRHUDLUUUUU=
-X-CM-SenderInfo: xjdrxt3q6l2u1dvotugofq/1tbiCRQGDGq9GDh2-QAAsr
 
-The SG204x SPI NOR driver ignores transfer errors and clock limits.
-Fix both, enable SPI NOR on SRD3-10, and use 12.5 MHz on SRD3-10 and
-SG2042 to match EDK2 and the vendor kernel, respectively.
+On Wed, 23 Sep 2026 17:14:37 +0200 Bartosz Golaszewski wrote:
+> Implement support for the firmware-managed SGMII/SerDes PHY present on
+> Qualcomm platforms. Do this as a separate driver from the HLOS-managed
+> variant as they don't share almost any code.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> ---
+>  drivers/phy/qualcomm/Kconfig                   |  10 +++
+>  drivers/phy/qualcomm/Makefile                  |   1 +
+>  drivers/phy/qualcomm/phy-qcom-sgmii-eth-scmi.c | 117 +++++++++++++++++++++++++
+>  3 files changed, 128 insertions(+)
 
-Tested on SRD3-12 at 12.5 MHz: both flashes identify correctly, SFDP
-reads succeed, and two full 64 MiB reads per flash match.
-
-The SRD3-10 patch supersedes the earlier submission [1]. Please disregard
-that version, which used a 133 MHz flash clock limit.
-
-[1] https://lore.kernel.org/all/20260902-sg2044-dts-v1-1-aa1fd1a4ec0d@iscas.ac.cn/
-
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
-Changes in v2:
-- Advertise the controller maximum speed and use the fastest divider when
-  the optional maximum speed is omitted (Mark Brown).
-- Rebase onto Linux v7.3-rc5.
-- Link to v1: https://lore.kernel.org/r/20260917-fix-sg204xspi-v1-0-5c95dac429a8@iscas.ac.cn
-
----
-Han Gao (3):
-      spi: sg2044-nor: Return transfer errors
-      spi: sg2044-nor: Honor SPI clock limits
-      riscv: dts: sophgo: Limit SG2042 SPI NOR to 12.5 MHz
-
-Hangfan Li (1):
-      riscv: dts: sophgo: Enable SPI NOR on SRD3-10
-
- arch/riscv/boot/dts/sophgo/sg2042-evb-v1.dts       |  4 +-
- arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts       |  2 +-
- .../riscv/boot/dts/sophgo/sg2042-milkv-pioneer.dts |  4 +-
- .../boot/dts/sophgo/sg2044-sophgo-srd3-10.dts      | 24 ++++++++++
- drivers/spi/spi-sg2044-nor.c                       | 56 ++++++++++++++++++----
- 5 files changed, 77 insertions(+), 13 deletions(-)
----
-base-commit: 72d3fcf802c45d00b300f25b848a93c3a2bd7c7e
-change-id: 20260917-fix-sg204xspi-dad286928b1c
-
-Best regards,
--- 
-Han Gao <gaohan@iscas.ac.cn>
-
+Hmm, why is this here? is there a hard dependency?
+Otherwise it'd be better to send it separately out to Vinod,
+this is drivers/phy after all.
