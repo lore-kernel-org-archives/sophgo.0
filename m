@@ -1,64 +1,64 @@
-Received: from mail-pz2-f41.google.com (mail-pz2-f41.google.com [74.125.228.41])
+Received: from mail-pz2-f12.google.com (mail-pz2-f12.google.com [74.125.228.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC23EEB3
-	for <sophgo@lists.linux.dev>; Sat,  3 Oct 2026 08:46:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91E43AA4F8
+	for <sophgo@lists.linux.dev>; Sat,  3 Oct 2026 08:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.228.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791017209; cv=none; b=FhINKcko6umkZlnSX8/Nd7VY9H/Af7E5Ewd5had2l2aoILSafJYxjj/kMljf+V7RxdY0tqXiSP8twH3CK9M0te4yTsSQUBjc66LP/xVNeQ/CjnptE3vGaJMb+U7wzcfJHKu2LaOq0UuiAhmevvWu7WQW0BSULQKleyIeZGtdlG4=
+	t=1791017213; cv=none; b=tfZN5plGDuNaiHAhw+dHmc+npk7JhGGxE0Xoh5KXlyxHV208+l5EFVw/KOsccUohKK3vy9/c6DwBmuFd5nKfrQXdKZiuWP9/v4yY9KzyXO7qnZIB9yO6pVZkPDie41MeGh17GHVX8wOChmPN35DJpOMOpeNgQI7PvuOwPcIOMPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791017209; c=relaxed/simple;
-	bh=qyBCYS+MPERrvSOjCZVI+1tSKoaEhtcRPA6ygVGDDxk=;
+	s=arc-20240116; t=1791017213; c=relaxed/simple;
+	bh=X8Qa47CYVA3jb3xwrWDiCUnyO5eG5JwR6h7Z7o49DH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDQ6bcEEO34iVuzV/8M4lH05QeyDdH9fd0SytOJBSRZnVj8u1pHuOgNE7l4YhvARyU+fZgpFQZoH1bTHnYJ3Z2mpSZwZY3pUFOryEBH+Kx8fHIL+kErW33z85CIgiJgbcLb8p/2dgO3F+MyhUP4h2e8+0KuNMYmPEO2V3uwTQR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k8B82nSK; arc=none smtp.client-ip=74.125.228.41
+	 MIME-Version; b=IacSeGZ4i1L9XpSKEugxjMumf0n6djTUkAPM6tztrsRWvN+jzvQ6u2SRgJyGaVyYz+lziio9gGeRXxFh8rWKjZ0r26yPgieasOUCkjM/YBnjmg9keYBijw4zim82NoehaXb7sCv6YvlRbBB55BR71bQuamAEd4pr0t0LR5afwlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MT+7pUoN; arc=none smtp.client-ip=74.125.228.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8B82nSK"
-Received: by mail-pz2-f41.google.com with SMTP id 41be03b00d2f7-cca1f026cfeso65857a12.3
-        for <sophgo@lists.linux.dev>; Sat, 03 Oct 2026 01:46:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MT+7pUoN"
+Received: by mail-pz2-f12.google.com with SMTP id 41be03b00d2f7-cc1ab17a156so66370a12.0
+        for <sophgo@lists.linux.dev>; Sat, 03 Oct 2026 01:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791017205; x=1791622005; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791017209; x=1791622009; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=y2X6RfdoRZCSwn03+0O701g2gXtz+LDb8LKtxHTTyDg=;
-        b=k8B82nSKObCCShZy81KvDgsgQegHhLPZuCoo5bBBRrB4NMfcTTxfQZUBjhCNtgs++0
-         JsYDZGYguBc2tge8GBfW1hsSEy3jL2leMXf5wheoWc1TOzlrUtbkRMSbQua7P+5mTL6f
-         aSlJOJiPK0YtDva+VHg7khICSve4/hOO7rC4ThDU5AJKRwrVZaqANnqI1ddH1LckptuQ
-         cdXAvEPH0bgcId9fAa+rYTCfUUWZQ8XO3P/ec9oGTx1f2p16f/JrzeLzrnce5kFTvyTK
-         nnLMxYObcHRRhQbz5bSbpCxe6jIOPPZIQL18WGmkbdIFd+fL1X5MA3cfqIRUsMzGqO+q
-         WGdw==
+        bh=DxxheazlFCgAiD+d31s/AiAJsZYYLo8W1wj/LuSYOIM=;
+        b=MT+7pUoNGX89b9YlUSifrNqhHUK7QDVdh5YQ761Qb1qnlQ38Xa7welSg9Z3HEVNfYz
+         lQ3zDkhkk8Ceu56C8iGaK3WM+ofbvjkzx/07DmcjId/BkFnMhzMCoVLERuqcZWPdhweI
+         OtT0kEbA/jdD4FUTfOFQp5+wrCVxCDpx/W5lOjQDaQxR75pkseXhPp7Sf6eBo2XFOg4w
+         vI15wQE38amspHNYP0UW72GpiAZ7XA+Zx4T0ujc3KQK1fxZjwbOaBcPihnVT3XhIR4zO
+         LxFhOzY7MQfg0rJZlvFq0FEU3D2I9lQQyx/5lSdpwA9ZjkkHKMMFiEkXPb9W4EFEQR/l
+         gp0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791017205; x=1791622005;
+        d=1e100.net; s=20260707; t=1791017209; x=1791622009;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=y2X6RfdoRZCSwn03+0O701g2gXtz+LDb8LKtxHTTyDg=;
-        b=wh0RFnOb05spZ0GXfiSVsC5hkwpqTJ/qk1dQdPaVDdez+5FlvoU2qtAdxVQFRuxG84
-         9v/p4iJKgnLjOKd/9k4swUe6CBuL8ZzHRGbFLFOtYFD90u6/PPyAtjwMSV+luW6s1iJ3
-         8JopHYL8wtJhkNZ0jKE7KgGthK0nNH2ySWcdZ/xsr9pYSvK0nNY1O+ZE1FY4CBoGZE3s
-         ih/QUvNfUteia1DrC51k8w/YXgq4CZjw5VbyubyeOFE6JHG+E1HU8rhT7GstE6bWVEF7
-         tQzI+LCpHsP91/p3QbVK6saSu+bQGMLtvUXJLZhRI54MFpA9SLNkfQa39CmUHVO0GuMR
-         EpzQ==
-X-Forwarded-Encrypted: i=1; AKwUvBxI/UEk24wXlp2c5oheGqME2FgI/gHkaWzwlPbhwHmoXOyOA9CRLmkqTXysntDJKx5IuaHPfe4=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKdlNTI5MUzsMYVpSl6v3crhAbjmyvIThVUr1ba1pxhv/A23p4o
-	bS8gJn6eV4bH98lQHwA02zWy5P6LHcmeNeS7AB3U3KxphgaDxdRwyop4
-X-Gm-Gg: AYBFou22wkHwTyx3UdY04EVzUUagb0RPOtx0HSpnU4tEnjc+TY6bQ1O3fFnr5RqHER3
-	HXsq/mPgdT/L/nWn3C83i8Gere5DRPjv+JtpLJlVaMhqV+vp8KIwzZ6f5hx9QwuHFbUTwmRMku1
-	ngYDHeaEY6FO19hLs1Pm27hHRvTy9hA5Gj1U5vZefRCyxdH18fxyQY08y2zR1NwFM8SjYGgrdO2
-	x6hSjO1Os4fuP08xjpmNDM/EdpV2SVkTKfOqfzzGcVixPf/W7VteKrYMUFjFkCK7YznMyJqhvZD
-	nsyPbOpkEtjKpUGKZJVTOcxvIYbZpM+p62S1MPNFk4Ncn9F/bq6KyuRxFKWhKZ3EeMtZuXlWFJv
-	/6GQa7kNEsqykJii1qKSfnsfW17e/D2GRET8Si8gadCeic/2w/rCY1t/qcy2prLR3hvyGsQll6F
-	mBf+AdAxb5vg1EGTAYXX4cUXU1wE2Ypezf8L6S4Jx/KwnsDeK46aOnVHoLh8Ud3Bs7ryA49L+EN
-	rxiXnQTcYLJ7QpYWdWEB0DG/RsdRq75egu3i4BUq3BwD8YDadTP6DDL0+7XpGz+QL77m8c=
-X-Received: by 2002:a17:90b:2804:b0:39e:3728:3b11 with SMTP id 98e67ed59e1d1-3a6ce6dc25dmr7643738a91.3.1791017204760;
-        Sat, 03 Oct 2026 01:46:44 -0700 (PDT)
+        bh=DxxheazlFCgAiD+d31s/AiAJsZYYLo8W1wj/LuSYOIM=;
+        b=X4jsLFERVNh/oiZvNG24CT9PruvqWI2Te1K8nrHNRDOJ0/2QnE1I4t5rMv0+x3/6O+
+         N5zHDM2PgsAOkFBJNkWygqB0YIqCFv4G31q6VikIkIrjHZJjA5bPnNY3fHV4Bs7nNikF
+         1XTOJgZ7lfX5+mPrYnVoYj4SAbX01qPgUH/g4q+BLqRy8QH6UMUxtOQY3cmTFZyoshsf
+         hUTurjFDn061WMcLASnqugCoWKt6hXp7ML7GSKP+HLrti/nV1xQp1F1UIuYwERiVd6lf
+         d9DfbRIwJNPvPh9QHVod9xSL650glklOQRZHcfcXNwFfGIwnE36H3Q5KCOb7F+KkNR9O
+         zV1A==
+X-Forwarded-Encrypted: i=1; AKwUvBzFocHdpggq+Z6p7WviXQ2xffhvQsbV/v5LDqikcz701PUKPeVh7WeL6kv/PGgIH8fgYFX6ud8=@lists.linux.dev
+X-Gm-Message-State: AFq9FYKbVBD6FxRPnuu1SYp0TBbdvNaLS195asmFzWGJyFS7vmQ6n3o6
+	5Jo4nczwfqZv7Utu/0yXPoG5lQUGcIIGpAEDS5Uiqxlpuzi3IhOHWo03
+X-Gm-Gg: AYBFou2pIRhkNhz3vKQaend74WD7qYvJF0BaFRR3PZx89UPJK58v1lJwabEGLMiHwxs
+	HWW+fJurPan8SKTnPGqDnUyvM/ueKd3rkwM1mc4anVkJqzu7kQerF9qqfz86ubQ5vAcR4zt+2Kc
+	cL3l9jqUIupQhtcXRFVAfUYKzPpvcOqzsKb+uNQUpaSuPkUZRUyM+fzVEF5me4cPyWvZE0wo9oI
+	6gJE1vx5wjGuHQvlAkYZyaCEtbGiCT7sTwhMPdSUwAVCcitTZMUjM+5S13M+SlfqJ3QiocQZ1Rz
+	4qxiPeNf4xReoou1JcFb/Y2fS1rB12TfRazKxo4Yo2QXvLiGXT+zvQRrDimbtOGMrBBPJ4vImuo
+	Z6C3ECnEqdODWMSEXbWRVUXVeMEPVzUM6tQfSAJlSiItYDb3/KSlRQkrTMa0Zwduf2UbmSVjBHE
+	OISqVq8HbKfNqJkZXSRBifaL9Oj1qpOi0JtHtIF9FlGpjBwn85SFmXnIj8fy9YOv1HkKyP7mYUN
+	50LGJSy2dnnqK2nWwxpbYKWuP8AFUTQpI3cjiIVDAWCWZweTDGFyceOQtu1XkgWEhX1vBeD
+X-Received: by 2002:a17:90b:4b83:b0:3a6:e1d1:e511 with SMTP id 98e67ed59e1d1-3a6e1d201ddmr6386816a91.4.1791017209449;
+        Sat, 03 Oct 2026 01:46:49 -0700 (PDT)
 Received: from chenyou.ncku.edu.tw ([140.116.19.16])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a78e4664ebsm2208033a91.7.2026.10.03.01.46.39
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3a78e4664ebsm2208033a91.7.2026.10.03.01.46.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 03 Oct 2026 01:46:44 -0700 (PDT)
+        Sat, 03 Oct 2026 01:46:48 -0700 (PDT)
 From: Chen-Yu Yeh <chenyou910331@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -78,9 +78,9 @@ Cc: Hiago De Franco <hfranco@baylibre.com>,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	Chen-Yu Yeh <chenyou910331@gmail.com>
-Subject: [PATCH v2 1/2] riscv: dts: sophgo: add Milk-V Duo 256M ethernet support overlay
-Date: Sat,  3 Oct 2026 16:46:25 +0800
-Message-ID: <20261003084627.353899-2-chenyou910331@gmail.com>
+Subject: [PATCH v2 2/2] riscv: dts: sophgo: cv180x: Fix internal ephy node name
+Date: Sat,  3 Oct 2026 16:46:26 +0800
+Message-ID: <20261003084627.353899-3-chenyou910331@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20261003084627.353899-1-chenyou910331@gmail.com>
 References: <20261003084627.353899-1-chenyou910331@gmail.com>
@@ -92,64 +92,37 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The SG2002 has an internal 10/100 Ethernet PHY, but on the Milk-V Duo
-256M the Ethernet signals only reach the RJ45 connector on the optional
-USB & Ethernet IO board. The MAC (gmac0) and the MDIO multiplexer used
-to reach the internal PHY are already described in cv180x.dtsi but are
-disabled, and they cannot be enabled in the board devicetree because
-without the IO board the same pins may be used as GPIO.
+The internal EPHY node is named "phy@0" while its reg property is <1>.
+The unit-address should match the first entry of the reg property, but
+this is not checked by dtc for MDIO buses. The kernel confirms the PHY
+is indeed at address 1:
 
-Add an overlay that enables them.
+  eth0: PHY [mdio_mux-0.0:01] driver [Generic PHY]
 
-Tested on Milk-V Duo 256M with the USB & Ethernet IO board: the link
-comes up at 100Mbps/Full, the interface gets an address via DHCP and
-passes traffic in both directions. Without the overlay, eth0 does not
-appear.
+Rename the node to ethernet-phy@1, which also follows the common naming
+convention for ethernet PHY nodes.
 
+Fixes: ba1abacc57cb ("riscv: dts: sophgo: Add mdio multiplexer device for cv18xx")
+
+Reviewed-by: Inochi Amaoto <inochiama@gmail.com>
 Signed-off-by: Chen-Yu Yeh <chenyou910331@gmail.com>
 ---
- arch/riscv/boot/dts/sophgo/Makefile             |  3 +++
- .../dts/sophgo/sg2002-milkv-duo256m-eth.dtso    | 17 +++++++++++++++++
- 2 files changed, 20 insertions(+)
- create mode 100644 arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso
+ arch/riscv/boot/dts/sophgo/cv180x.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
-index d5c80d4ff005..49639cb0888b 100644
---- a/arch/riscv/boot/dts/sophgo/Makefile
-+++ b/arch/riscv/boot/dts/sophgo/Makefile
-@@ -4,6 +4,9 @@ dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m.dtb
-+sg2002-milkv-duo256m-eth-dtbs := sg2002-milkv-duo256m.dtb sg2002-milkv-duo256m-eth.dtbo
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m-eth.dtb
-+dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m-eth.dtbo
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
- dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v2.dtb
-diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso
-new file mode 100644
-index 000000000000..cc93746d932c
---- /dev/null
-+++ b/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso
-@@ -0,0 +1,17 @@
-+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
-+/*
-+ * Enable ethernet on Milk-V Duo 256M with the USB & Ethernet IO board.
-+ *
-+ * Copyright (c) 2026, Chen-Yu Yeh <chenyou910331@gmail.com>
-+ */
-+
-+/dts-v1/;
-+/plugin/;
-+
-+&gmac0 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+};
+diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+index ec3bf305274a..cf672cc6b935 100644
+--- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
++++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
+@@ -71,7 +71,7 @@ internal_mdio: mdio@0 {
+ 				#size-cells = <0>;
+ 				reg = <0>;
+ 
+-				internal_ephy: phy@0 {
++				internal_ephy: phy@1 {
+ 					compatible = "ethernet-phy-ieee802.3-c22";
+ 					reg = <1>;
+ 				};
 -- 
 2.43.0
 
