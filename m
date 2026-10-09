@@ -1,64 +1,64 @@
 Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B41336402A
-	for <sophgo@lists.linux.dev>; Fri,  9 Oct 2026 09:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030A236B92F
+	for <sophgo@lists.linux.dev>; Fri,  9 Oct 2026 09:47:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791539255; cv=none; b=fWV0KX20i26xdn2L4fNLJQXt/M0kaCRRLBN0kMr+SdKMM0rlpi8focys7A1zxwqAXOwxavMOIirW1Av9s5PnnRi3ZblKD58bjMXlDB5fb4pPCj180pI4Wj3D7cYuBzWAP3vrgImqFAfZ1uBabcCUEn8YOQPKvA6IPxaGypdlDMg=
+	t=1791539263; cv=none; b=n2KYXACRW5zFGr7ccdBFObm1Of3RJ/oMXggrJ2VI6HiJHiC+O16+L8Utm+MzTYsnIej+WMEYql6lOCxbqItIMCiUpPrgCrbqMnMhp1mdL/4EkWziD59eGx5RWm7ldzrMh5eLDEabRHJKlsppwDxkpp0ahOtSHhmivdhrUU9icj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791539255; c=relaxed/simple;
-	bh=s3u5T5breAgT2P8lcRxXYdcTlv5dNJi6cEZM9dWPzaw=;
+	s=arc-20240116; t=1791539263; c=relaxed/simple;
+	bh=b3E2k84QQEGwtviD/HyyfH8SNZuxyZTPnb62hGODMfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D4babD68rBzUqS1DoneKagWNBXfHlYy7VpCYPo7EjcSGArdnM35fmU27M0mT/m4EJQQ9DahU22a2KJuvmu7Ic2GK68AsZAIFmr+vPBXsGr7wMS2D/hHzne5Gm1qKsmGczZ47PpRenGzt0vSZvtrZxNClxArBNhc9czYnT3cDtYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IHqrav8o; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version:Content-Type; b=k40rGiIj8atnep/nVyU+U4LSXm8GO9MvSxbd69qHxI5cSmxb7PnWZt8RSQPsIwhnb6hxrDB8j/c+A7wYhgZ6l9T/0xYOM0ewdLtTBQMTsv0f0pjSSIR9GVF1y+gowW1EBHroW38aSQ+9TVnOT2I4AjFdy2mi/OpmDQOnAGwzgWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OLMkanba; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IHqrav8o"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2d560775ca2so20031105ad.1
-        for <sophgo@lists.linux.dev>; Fri, 09 Oct 2026 02:47:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OLMkanba"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2dfa54c8ccfso9356285ad.0
+        for <sophgo@lists.linux.dev>; Fri, 09 Oct 2026 02:47:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791539253; x=1792144053; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791539261; x=1792144061; darn=lists.linux.dev;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=owqjwJWBuPvcpm2AwPuIEABZT8Ua6Ztz/UXZ6nA+qF0=;
-        b=IHqrav8ozb/FElIFCyvvLSKMgbDgcRFGHgP3tJvBUWlXwAhVkUP62DgOLTkAWShUQl
-         q0IbcWMMw2ENZzyfDXZ6NNDH86bQm8mBwVVuUa+U/SJCsHZOZ22EM7jSp7ACvlLv+tBi
-         gz0Vj8xzBKtZkOWaaw5MeMFXveaP1IblkLq0OJRoIxJmvYlYGDPpDEqXgJ1HCbA9Xb4G
-         xuKePf6CSmyZtCU16Xvrkk0BlZ98l2FFRkMUkzJ9SClYqlXIZv/GzQjOhfW6WtO5AMjD
-         Py219uEBdStYaUMA32nWNrlNAKeCfGL4T3qA3OXWsDE+BIOuF2t2hVB21sCevEFGfsLD
-         Uj+A==
+        bh=ux6hJESR9kZkvYlx2D/IGwLIHS0t2PsKL+AJPtGbIUU=;
+        b=OLMkanbaqebyDuLU4GxDcwQBlFvRoyMA6enIVvt00MIX5+UBM2vryFXigUSb/V/6as
+         til1kkelE3RwB/EAN01D2mIVqCSrjJGyKhMZknio2rtpEEf++enB9ifvz0cpXXHPg7E1
+         XbBJOi0edPA7bgTq0WzuS/I4GIONHCyeC5RYmxD1UPtOUVBsaYJjunAyomzqlNKkqy+P
+         ZpahW+zsihthaOtC1P4wuMs3NC/aMjhk07WYzem05X93yeoSfzqlfgJetWhy1vMgtzu7
+         qz+lKKT73yxk2gIogbfnvTjJbnRGrSGmzyb6vgvB25ECxnd88Y9Mzl4L+ib18Gr3J1/q
+         Q62Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791539253; x=1792144053;
+        d=1e100.net; s=20260707; t=1791539261; x=1792144061;
         h=content-transfer-encoding:content-type:mime-version:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=owqjwJWBuPvcpm2AwPuIEABZT8Ua6Ztz/UXZ6nA+qF0=;
-        b=t+R4qwUNlLWR2lZrL7fkaKj3npuTb+T+PFi3O6+7sVY2bnAyYylszkPgHixQFc+21+
-         nnH4iXDVySWgk6kGVLD/B5i00YWvzYHFiq8J5UmspXgjC1TnU46wgbjwDp6dfTWM6J9Y
-         4LD1dwm4qzlmDefIkinKGdLPFe380XfDQeglk/HtQv8tSRt8iLrAsYEok4LndeXA7+7E
-         3PioIPnIjFZvPnpuPoo09oZ2EBr3woQ+ob5bxGYHdO6mtez/GTTYb0jCtDlWd8UH1eE8
-         8hp8rfe7I2Ao73lodaluN4P6VXG41Xaqdwr3Npc27S5m12Wcy4xmEB40sNJ3xvnhyqy+
-         QHUQ==
-X-Forwarded-Encrypted: i=1; AKwUvBz1Lnz1xney+S75XwYAIDgWziG65VCxzZ8oP0/dszFBRqQXij3NOWp2qNq1HcfaYwqt9zChzFo=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJYrxeF1fIfiBAECRKmgCUxu5HY6vLxA1S2PFtaI4u4NBORYeCh
-	X5omTB9ns1rAaCIL3f7+ZpIawYmdKpad8eYSnHVDZqjC0iO6Vi/T2muq
-X-Gm-Gg: AYBFou0uICsZntPbRYW/oC4v2sy2KlZZriuMQ68UBKDn64AsmpL5i+3hQ4hHvwJ5Fw7
-	1p4j8bvjtfaVLseKIIAqGYLXcQZ0mIXGvw+Qu5j4pqjHKTGeVZ0ZF8WidwH/sOR95GaFWOZ3qk5
-	h1DZ6JPbOsOPw5AKvXCnMFnUnWGxgt72OFRK1AanWWJkd7GtCCnRWZuDPfb8e2lIPR3raybBKEC
-	4jsODl4mEQyZ/c0D8lAtpi4O2j/hJQehepEsDjKPE/9E1HNGvdwjgNaMN4gBlJDlMnLBsU14pk+
-	QEMvXCLi6yLxqdjOvZzMULgbLQQpN9E1s6luZ/qzghaO9xdqaj9Rk2t562wK7gE6qnUvdKlKj8S
-	Sf6+y337KQXbJquA9W1tIolybUFkgJyl5xpJZ05gzlBqY4eUXZP/bm1Ex8yM7LbTSGkDvBcdMSa
-	AA7MLEE90dyMQHoaoRVmAE1iG05LL/Gm2U7lDmvq7Q1pRFT9imoERH3/OgxjP/wkpGFZtX
-X-Received: by 2002:a17:902:ec84:b0:2e5:d2db:bf57 with SMTP id d9443c01a7336-2e842d03028mr11541545ad.49.1791539253450;
-        Fri, 09 Oct 2026 02:47:33 -0700 (PDT)
+        bh=ux6hJESR9kZkvYlx2D/IGwLIHS0t2PsKL+AJPtGbIUU=;
+        b=ul7pJZIKQQzqnfp+DbdCAGb+ULFOxZV38/5KRb+Z7JslVwS6y0YzWVwqS6s2XCQCdY
+         oc4Ha7oTgFC2gCYq8CplzT4FbcGtdKt52jdXVoHT1SRHfnLRMKQ/NHvht8VVXLxlhZXf
+         wReEqWiEE1gM8ESXV2bt5gqegpxx9kodotS4+58/PyQfQ4LV5A6nae0376SEL7Prtxe9
+         XlirgLA8fxReLw+aEciJss5polmlMgToC/t3m322qZwq363IIyAKWqg4FVJpzu8Juxwj
+         2n9SDvObKdsDJi3CyGkIkkqSKDNsw63bkDI1JvE9xSxY/L7sTPeEI9Hl4Drr9Ru13G/0
+         BEWA==
+X-Forwarded-Encrypted: i=1; AKwUvByCkzUEnEEOJwXYAb1+n04ZCdjqp7YBnW68SWQRBnIhPK19pJPhhlAgKcp1euXChlPxcGvjX8o=@lists.linux.dev
+X-Gm-Message-State: AFq9FYIRUtx00Tptsh+x2b9D0l7tzlEoEmlDIp004AtC0vwfjSX82NqQ
+	5+9gN5XgHzXj8skRcs2g/OAYBHigCdUm2L8LvmzczBSxHlesy/BBoqaZ
+X-Gm-Gg: AYBFou0qx1VHAtgDFM3tiLUbOuqeZO2H7iDPzAFLlcHYy/V83tg7Asb+KiBoPOxieUQ
+	8SbjMDbmVrjUubfOKGP0MUXUgNreeP1tUcqp6wc+B/ET9U+lbHAM3sAOLVHWDyAMPUQuDBYWaJD
+	WWaW4S43ulNsH9L8e2SurFI3ON7tS+f5LtvgTRgzCdmEMMiI8cGZqeoWDPwe/HpAJhrZkRgKY2x
+	RoBvP6Zvz70Jqa36d8ISP0sUEv1MDJxn20CsoAZpW86/k5MuObcORz/6YCi9VM4Y7iJ6JGLlnSn
+	i03ybd2x6dLoTlzcjYGPJVcOw2mafEopLciMtE8g/k1bU63UB43n89nzP9Zx4r5fbBTkHdt4RAH
+	CARa1AjD6z2qhoSm1Dm3N0PasF3/Gi6keWAUJGmbp8YebbYf+ItFpAKQF3Ulrka5eA0Y8bpJEW1
+	pnFeU7Xq4Mt6zNysvOZVqYA6btmNp4zZl715QyORWtVeWAQiRllhcwDtShwlc/tNAOIaf6
+X-Received: by 2002:a17:903:1b70:b0:2e6:e9a:eb48 with SMTP id d9443c01a7336-2e842f2d257mr7768075ad.41.1791539260811;
+        Fri, 09 Oct 2026 02:47:40 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e8421b298dsm5963035ad.33.2026.10.09.02.47.32
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e8421b17basm5833635ad.42.2026.10.09.02.47.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Oct 2026 02:47:32 -0700 (PDT)
+        Fri, 09 Oct 2026 02:47:40 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -68,19 +68,22 @@ To: Rob Herring <robh@kernel.org>,
 	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>,
-	Yao Zi <me@ziyao.cc>,
-	Andrei Lalaev <andrey.lalaev@gmail.com>
+	Chen-Yu Yeh <chenyou910331@gmail.com>
 Cc: Inochi Amaoto <inochiama@gmail.com>,
+	Hiago De Franco <hfranco@baylibre.com>,
+	Longbin Li <looong.bin@gmail.com>,
+	"Anton D. Stavinskii" <stavinsky@gmail.com>,
+	Joshua Milas <josh.milas@gmail.com>,
 	devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Do not reserve memory for coprocessor FW
-Date: Fri,  9 Oct 2026 17:47:06 +0800
-Message-ID: <179153921383.259252.13110307622319000120.b4-ty@b4>
+Subject: Re: [PATCH v3 0/2] riscv: dts: sophgo: Milk-V Duo 256M ethernet support
+Date: Fri,  9 Oct 2026 17:47:07 +0800
+Message-ID: <179153921381.259252.9054877756385260471.b4-ty@b4>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20260921-sophgo-remove-coprocessor-node-v1-0-ace29446b327@gmail.com>
-References: <20260921-sophgo-remove-coprocessor-node-v1-0-ace29446b327@gmail.com>
+In-Reply-To: <20261005093749.645014-1-chenyou910331@gmail.com>
+References: <20261005093749.645014-1-chenyou910331@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -90,22 +93,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
-On Mon, 21 Sep 2026 17:08:58 +0200, Andrei Lalaev wrote:
-> Milk-V Duo and Duo-256M reserve a region for coprocessor FW at
-> the end of RAM. It is not correct because:
->   - FSBL can be configured to load FW into a different region
->   - if no firmware is loaded, the reserved memory is wasted
+On Mon, 05 Oct 2026 17:37:47 +0800, Chen-Yu Yeh wrote:
+> The Milk-V Duo 256M has no Ethernet connector of its own; the SG2002's
+> internal PHY is only usable through the optional USB & Ethernet IO
+> board. This series adds an overlay for that board and fixes the name of
+> the internal PHY node it exposes.
 > 
-> As explained in [1, 2], FSBL should reserve the region at runtime.
+> Changes in v3:
+>  - Rename the PHY node to ethernet-phy@1, as the commit message already
+>    said; v2 only changed the unit address (sashiko-bot). dtbs_check now
+>    validates the node against ethernet-phy.yaml, with no new warnings.
+>  - Drop the blank line in the trailer block of 2/2 (Hiago)
+>  - Collect Hiago's Reviewed-by
+>  - Keep Inochi's Reviewed-by on 2/2, since the only change is the node
+>    name
 > 
 > [...]
 
 Applied to for-next, thanks!
 
-[1/2] riscv: dts: sophgo: cv1800b-milkv-duo: drop reserved memory node
-      https://github.com/sophgo/linux/commit/6645398c46219e97fd153ae6188ae86c493d2d6a
-[2/2] riscv: dts: sophgo: sg2002-milkv-duo256m: drop reserved memory node
-      https://github.com/sophgo/linux/commit/60e4cafd30908e7d8cdfdb4fa1a74dabed9f47b5
+[1/2] riscv: dts: sophgo: add Milk-V Duo 256M ethernet support overlay
+      https://github.com/sophgo/linux/commit/627e4e43e555ba252f93784eafff74ed82234c63
+[2/2] riscv: dts: sophgo: cv180x: Fix internal ephy node name
+      https://github.com/sophgo/linux/commit/673f8e66d5edf424eaf599c8051e0f6962605861
 
 Thanks,
 Inochi
