@@ -1,107 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mta1.migadu.com (out-54.mta1.migadu.com [95.215.58.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CC213A258;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C9F3BB130
+	for <sophgo@lists.linux.dev>; Sat, 10 Oct 2026 08:58:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791576611; cv=none; b=jVftPSZPBioCrVbIcXfknHFrsbi/dIaJi03IlyJFv9XZNzM8my2dS6B8WAhU3lOFsaO0Ma2rAPwsiIbHdJKfDkY8RYQfdFBNvIF0Ln1gjaoxUWMR0cU31X8TZLWQZ92mcryIfFKBSslaxZ9c5HndaU068RA+JLM93obrY5YyyDU=
+	t=1791622719; cv=none; b=I0VwGOVY6/5qVlHKDnRpSFyEnVhsc73K3GUr+515lrVGQiLkPbg6TOSldpmklKFbD6UuwM7oHXtM1ORslfB2k7R26l9atynDvkssriVg6LHPpMoAxSXv4tzG8dJ0wH2Eyr0z4CPbNoKirwi/pUeiCNqqjKkkCqx7qQrL706ULPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791576611; c=relaxed/simple;
-	bh=fdXBHBKBGOWZYHxGmnNehDYrYDgodaAYcpW8x1x9m4M=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=f2u/9bMESyAM/oy8wygSOPHO4Yhwkc0pGXpL1+lBfeG/4zNjHfcC1+MgOolNtiNPO0AhVGA0o17RGPFBOyz6ax9v4xxinM0TfxkIASnDr6GuVktbPzmVdKhFlutqrlcUtREPtcSskxHR89UouMKydsMnhOFOf8vczgO60a+lcLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KuW/M6N/; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1791622719; c=relaxed/simple;
+	bh=W97+P1sI+wVSHvjZGqgM3hRTxCZAypDzv59Q/KyifIQ=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=DhB5dieFeX3BBijw+Cra1eKiq+AUGULWADGh022HbGHvtuq4mQAMNUcbyNB0/ND6x6vyX8p0CzgX52NTF75R3le+dOTYhFjhVPEbldiU7c4h32YHS5PylGFL33Zmi9PZ6z6LqLgiMvtMFE8r05/gQy4biM6Hr3lBmsyUMhI+dzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mvBzs7as; arc=none smtp.client-ip=95.215.58.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KuW/M6N/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823791F000FF;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1791576609;
-	bh=yAtT7Kz/cfBbECexhY2+7vMzFYjycFt1jV6uHWCe2qk=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=KuW/M6N/Jv+w8fSTI5MzC+c9uyJsMxvbGXsObHMBwAHcv9THa/zJNw6bKJbAShw+b
-	 vo4r+Bin+QhP33tm/lxugoPH+tlrxXLdYq2PXG7LEpA8Rm9PbrObKEo3J/22umLOmX
-	 J6pW9AV0n+1Rxc3sdTw6eUmSMMhezq88f+/bVbtCbHU/q8rg1HMrSuZtly5bTfvCrJ
-	 pzuTkS+Nrg7nULbEPCcKpx2psI1+uWR2olv7EEwBAOUR5dHGgbiJfCwi+Dye3uNTnl
-	 3VNLX/ZtnUsgaetwYGolyY055wcRD0nTv6z49gmPJl4Lm2lABU1cDz45QS71EshN6x
-	 G/tZjYSKsz6Tg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7742D392627A;
-	Fri,  9 Oct 2026 20:10:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mvBzs7as"
+X-Envelope-To: sophgo@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=W97+P1sI+wVSHvjZGqgM3hRTxCZAypDzv59Q/KyifIQ=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1791622715; v=1; x=1792227515;
+ b=mvBzs7askcm+d+opNUMt64GM7QVlbq+JWmj9qRKIKg6kZ/kvjcrg4C0nd5gmmJPL0ZWQRWBj
+ 2pnSmAn6h8sDYmVtechp2fbf5puIxpCyDozg5rhpUhNAexp9Ni2OBUbaw9lhpBtyr03JnjlcKd8
+ x+/D3JWAgI5H9pKMXnsblkaY=
+X-Envelope-To: sophgo@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 5c8771d9512265de;
+	Sat, 10 Oct 2026 08:58:35 +0000
+X-Mizu-Trace-ID: 5c8771d9512265de
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <d0107403-7278-45e7-845e-0c054c1c144b@linux.dev>
+Date: Sat, 10 Oct 2026 16:58:32 +0800
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v8 00/11] riscv: hwprobe: Expose RVA23U64 base behavior
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <179157660809.984023.2184718764665109991.git-patchwork-notify@kernel.org>
-Date: Fri, 09 Oct 2026 20:10:08 +0000
-References: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
-In-Reply-To: <20260920-rva23u64-hwprobe-v2-v8-0-5f14bc5c23d3@oss.qualcomm.com>
-To: Guodong Xu <guodong.xu@oss.qualcomm.com>
-Cc: linux-riscv@lists.infradead.org, corbet@lwn.net,
- skhan@linuxfoundation.org, pjw@kernel.org, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, alex@ghiti.fr, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, dlan@kernel.org, chen.wang@linux.dev,
- inochiama@gmail.com, rdunlap@infradead.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, paul.walmsley@sifive.com, conor@kernel.org,
- devicetree@vger.kernel.org, spacemit@lists.linux.dev, sophgo@lists.linux.dev,
- linux-kselftest@vger.kernel.org, tchiu@tenstorrent.com, fweimer@redhat.com,
- bergner@oss.tenstorrent.com, zihong.plct@isrc.iscas.ac.cn,
- mark.hsj@gmail.com, aurelien@aurel32.net, andrew.jones@oss.qualcomm.com,
- conor.dooley@microchip.com, qingwei.hu@bytedance.com
+User-Agent: Mozilla Thunderbird
+To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+From: Chen Wang <chen.wang@linux.dev>
+Subject: Linux Upstream Status updated: Oct/10/2026
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello:
+Linux Upstream Status updated: Oct/10/2026 
+@https://github.com/sophgo/linux/wiki
 
-This series was applied to riscv/linux.git (for-next)
-by Paul Walmsley <pjw@kernel.org>:
+CV18xx:
+- Do not reserve memory for coprocessor FW: v1, applied by 
+sophgo/for-next, expected to be in 7.4.
+- Enable ethernet for Milk-V Duo 256M: v3, applied by sophgo/for-next, 
+expected to be in 7.4.
 
-On Sun, 20 Sep 2026 03:18:20 -0400 you wrote:
-> This series builds on Andrew Jones's earlier RFC [1]. It lets userspace
-> check for RVA23U64 conformance in one call, instead of walking hwprobe +
-> prctl across every mandatory extension.
-> 
-> The series adds a small framework that resolves profile-class bases (IMA
-> and RVA23U64) from the kernel's ISA extension bitmap at init time, and
-> surfaces the result through both /proc/cpuinfo and hwprobe. Later patches
-> can add RVA23S64, and backward RVA22 / RVA20 detection, to
-> riscv_set_isa_bases() without changes to the surrounding code.
-> 
-> [...]
+SG2042:
+- Limit SG2042 SPI NOR to 12.5 MHz: v2, applied by sophgo/for-next, 
+expected to be in 7.4.
 
-Here is the summary with links:
-  - [v8,01/11] riscv: Add B to hwcap and hwprobe
-    https://git.kernel.org/riscv/c/fbab8abaac8f
-  - [v8,02/11] dt-bindings: riscv: Require block-size for Zicbom, Zicbop, and Zicboz
-    https://git.kernel.org/riscv/c/40623184c6f0
-  - [v8,03/11] dt-bindings: riscv: Add Zic64b extension description
-    https://git.kernel.org/riscv/c/3776fb1a1b6c
-  - [v8,04/11] riscv: Add Zic64b to cpufeature and hwprobe
-    https://git.kernel.org/riscv/c/7493567982b0
-  - [v8,05/11] riscv: dts: spacemit: k3: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/7c4752c60f99
-  - [v8,06/11] riscv: dts: spacemit: k1: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/1fc72ff0d3fc
-  - [v8,07/11] riscv: dts: sophgo: sg2044: Add Zic64b ISA extension
-    https://git.kernel.org/riscv/c/ca0c312bdf6a
-  - [v8,08/11] riscv: Add a getter for user PMLEN support
-    https://git.kernel.org/riscv/c/55458c7347a3
-  - [v8,09/11] riscv: cpufeature: Introduce ISA bases bitmap and rva23u64 detection
-    (no matching commit)
-  - [v8,10/11] riscv: cpu: Output isa bases lines in cpuinfo
-    (no matching commit)
-  - [v8,11/11] riscv: hwprobe: Introduce rva23u64 base behavior
-    (no matching commit)
+SG2044:
+- Enable SPI NOR on SRD3-10: v2, applied by sophgo/for-next, expected to 
+be in 7.4.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Thanks,
 
+Chen
 
