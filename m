@@ -1,66 +1,101 @@
-Received: from mta1.migadu.com (out-54.mta1.migadu.com [95.215.58.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from hognose1.porkbun.com (hognose1.porkbun.com [35.82.102.206])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C9F3BB130
-	for <sophgo@lists.linux.dev>; Sat, 10 Oct 2026 08:58:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F58339872
+	for <sophgo@lists.linux.dev>; Tue, 13 Oct 2026 12:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.82.102.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791622719; cv=none; b=I0VwGOVY6/5qVlHKDnRpSFyEnVhsc73K3GUr+515lrVGQiLkPbg6TOSldpmklKFbD6UuwM7oHXtM1ORslfB2k7R26l9atynDvkssriVg6LHPpMoAxSXv4tzG8dJ0wH2Eyr0z4CPbNoKirwi/pUeiCNqqjKkkCqx7qQrL706ULPQ=
+	t=1791895757; cv=none; b=ArFYXuBh26Nje8GRsmuUC5/j35mVKTgGhHCyyuNSDrp4R0uRpTXOaoJd5ewjis65rw8lkfdrzvEOWQZAk9p2eSjq8HSoI8BC2la+2ZmrKcCfNnKfzJcGJd281kj6LvpFH7zZ5Hnku5enaE+VmM8hQcdrHy/mGS/nkMmWDjgz6hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791622719; c=relaxed/simple;
-	bh=W97+P1sI+wVSHvjZGqgM3hRTxCZAypDzv59Q/KyifIQ=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=DhB5dieFeX3BBijw+Cra1eKiq+AUGULWADGh022HbGHvtuq4mQAMNUcbyNB0/ND6x6vyX8p0CzgX52NTF75R3le+dOTYhFjhVPEbldiU7c4h32YHS5PylGFL33Zmi9PZ6z6LqLgiMvtMFE8r05/gQy4biM6Hr3lBmsyUMhI+dzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mvBzs7as; arc=none smtp.client-ip=95.215.58.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	s=arc-20240116; t=1791895757; c=relaxed/simple;
+	bh=1lj31HeXa69jItxDxDL9HohtbmQ56rG8/gJS9xSPmg0=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=qu8qCW8BKxrYwdnWFGcngdcUzS2bQV/Zm+z4pGuKO22Jage3IGmgQZRi1aGguSk7w+TtMust+f7ELZqaP2Fsm/woi2ilJ1Qbt6uQftS85EepjuY3jktPEUlE27MdZj03gcrl3HqazaMsENgnungMe1WShtWbL+cQq2qhSPkhfLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=detello.com; spf=pass smtp.mailfrom=detello.com; dkim=pass (1024-bit key) header.d=detello.com header.i=@detello.com header.b=mnOaGy74; arc=none smtp.client-ip=35.82.102.206
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=detello.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=detello.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mvBzs7as"
-X-Envelope-To: sophgo@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=W97+P1sI+wVSHvjZGqgM3hRTxCZAypDzv59Q/KyifIQ=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1791622715; v=1; x=1792227515;
- b=mvBzs7askcm+d+opNUMt64GM7QVlbq+JWmj9qRKIKg6kZ/kvjcrg4C0nd5gmmJPL0ZWQRWBj
- 2pnSmAn6h8sDYmVtechp2fbf5puIxpCyDozg5rhpUhNAexp9Ni2OBUbaw9lhpBtyr03JnjlcKd8
- x+/D3JWAgI5H9pKMXnsblkaY=
-X-Envelope-To: sophgo@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 5c8771d9512265de;
-	Sat, 10 Oct 2026 08:58:35 +0000
-X-Mizu-Trace-ID: 5c8771d9512265de
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <d0107403-7278-45e7-845e-0c054c1c144b@linux.dev>
-Date: Sat, 10 Oct 2026 16:58:32 +0800
+	dkim=pass (1024-bit key) header.d=detello.com header.i=@detello.com header.b="mnOaGy74"
+Received: from webmail.porkbun.com (unknown [52.88.61.100])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: nick@detello.com)
+	by hognose1.porkbun.com (Postfix) with ESMTPSA id 28B79422757;
+	Tue, 13 Oct 2026 12:49:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=detello.com;
+	s=default; t=1791895755;
+	bh=D8AyAKw905aeq2Nq8z0ftkJ08U8HBzPXk/q7kIstOP8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References;
+	b=mnOaGy74ReVihJKHNhFEmWuYDCiwzOMpr4IpjKWlEgdqIN0LLckfv0JhtzOR77Mo7
+	 UeBmdQ3d9ZRqt2X3ziF0/0herFPKwhc8FVi2bB5RtiQf3hyrbR5Bq4SCnpj4sLi6OR
+	 hhX9v6wSaCv5nm4Vd3OJFa+sMtCDkaa90r7V1jGQ=
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
-From: Chen Wang <chen.wang@linux.dev>
-Subject: Linux Upstream Status updated: Oct/10/2026
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Tue, 13 Oct 2026 08:49:15 -0400
+From: nick@detello.com
+To: sophgo@lists.linux.dev
+Cc: unicorn_wang@outlook.com, inochiama@outlook.com
+Subject: Re: SG2000 display: DSI host + LT8912B HDMI working on v7.2, intent
+ to upstream
+In-Reply-To: <cdbe4812564fe417b8a7321e035cc7b3@detello.com>
+References: <cdbe4812564fe417b8a7321e035cc7b3@detello.com>
+Message-ID: <817ee00d07821f32f11fa0fdf961540c@detello.com>
+X-Sender: nick@detello.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
 
-Linux Upstream Status updated: Oct/10/2026 
-@https://github.com/sophgo/linux/wiki
+(Resent in plain text; the list rejected the HTML copy.)
 
-CV18xx:
-- Do not reserve memory for coprocessor FW: v1, applied by 
-sophgo/for-next, expected to be in 7.4.
-- Enable ethernet for Milk-V Duo 256M: v3, applied by sophgo/for-next, 
-expected to be in 7.4.
-
-SG2042:
-- Limit SG2042 SPI NOR to 12.5 MHz: v2, applied by sophgo/for-next, 
-expected to be in 7.4.
-
-SG2044:
-- Enable SPI NOR on SRD3-10: v2, applied by sophgo/for-next, expected to 
-be in 7.4.
-
-Thanks,
-
-Chen
-
+On 2026-10-13 02:24, nick@detello.com wrote:
+> Hi Chen, Inochi,
+> 
+> I have the SG2000 display path working on v7.2 with two small kernel
+> patches: DISP, DSI MAC and D-PHY driven by a new DRM host driver,
+> through the in-tree lontium-lt8912b bridge, to HDMI at 1280x720@60
+> over
+> two lanes. It's tested on both cores (RISC-V and ARM) on the Nix Badge
+> 2.0,
+> a custom board around the Milk-V Duo S module: console on HDMI and a
+> 15 fps framebuffer animation.
+> 
+> Two questions before I prepare the submission:
+> 
+> 1. Is either of you, or anyone you know of, working on the VO/DSI
+> block
+>    for cv18xx/SG2000? I would rather join than duplicate.
+> 2. Any preference on where the host driver lives
+>    (drivers/gpu/drm/sophgo/?) and on compatibles before I write the
+>    bindings? The branch uses sophgo,sg2000-dsi and a
+>    sophgo,sg2000-vip-sys syscon, and adds one clock ID
+>    (CLK_DSI_SYNTH_SRC) to the cv1800 binding header.
+> 
+> Code, as one reviewable PR against the board's NixOS repo:
+>   https://github.com/NixVegas/BadgeOS/pull/8
+>   Driver:  pkgs/video/sophgo-dsi/src/sophgo-dsi.c (~1,500 lines,
+>            register provenance from sophgo/osdrv cited in place)
+>   Patches: pkgs/kernel/patches/ (clk-cv18xx: poll DISPPLL's real lock
+>            bit and expose the DSI source gate; lt8912b: do the bridge
+>            setup in pre_enable, between the host's LP-11 and HS)
+>   DT:      pkgs/firmware/dts/sg2000-milkv-duo-s-common.dtsi
+> 
+> Planned order: the clk fix; display nodes for sg2000.dtsi and for the
+> Duo S DTS Joshua Milas's series added in July; the DSI host as an RFC
+> to dri-devel; then the lt8912b change, which as written is specific to
+> this host (fixed HDMI mode, LVDS and PM paths dropped) and will be
+> rebased on Maxime's atomic-callback conversion on drm-misc-next before
+> it goes anywhere. Known gaps before the RFC: fixed mode (no EDID, no
+> hot-plug; HPD goes to the bridge on this board), no vblank interrupt,
+> and register sequences reproduced from the vendor driver rather than
+> modelled.
+> 
+> Happy to share a video, serial logs or register traces. The driver was
+> developed with Claude Code assistance; I have read and tested every
+> line and will carry the review.
+> 
+> Thanks,
+> Nick DeTello
