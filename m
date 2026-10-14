@@ -1,61 +1,63 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499C24A0935
-	for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 07:45:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC14A4410
+	for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 07:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791963953; cv=none; b=BOoTn9mGMlc4Mqj28drnmsISavNQodHLp/0N9w5cDtV+rgZ7oqonY398xvvSsovOXPsGT5lw8JCr41HK/fhWTNGN1sFHsTZ6sUZqBRr5zTm46cu8l8cVGmmsu8BexBEoujSB1n0Izqn6JmrP0E+MpaGNHXYHYX27bHK7XjVrc98=
+	t=1791963960; cv=none; b=Ub5WqESxBqx+9RnXaRpxWj/opMFw+G+JMJNa2Ie4r1N0BlXXqJfG0PRYiw6dUZTgyOVudIVMcP6hnTXps0fwmj01lvX6w90et7grRED7fwErp2UJN3k+B1b1kKrWVxnRmknJTefWBCQ56Glt5g41BVvj3BSLBObU8MacLndvLXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791963953; c=relaxed/simple;
-	bh=FG/LJNXH1VUYYc/k/8W7Og7Fpv4MygAGBEKkCvtgcNo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AcI+ZlXRmdMhjOnkPoeka1ZeZ2EPpwtxkdqxdsPvEHWUXY2VhQqUqznIJ8E7lthvmkup0lvpQq1Nro7K/GbwteYzjkgHP4ytXKj+bFqZT0Ib1x9VN/UH7WP/ES5cZBufWRwMkDA5xoRdxP/s2ifENJbS+r3dwEb9+F8nQYJwDcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yw+ZNdxK; arc=none smtp.client-ip=209.85.215.171
+	s=arc-20240116; t=1791963960; c=relaxed/simple;
+	bh=k1r41giEFofExMQ2e6Ka53lnCCUSRqj2gUqcvshC6U0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=FJxai5TKY79cgNgpozkRt+gEXpNIQj7jGxrBaR3YBCbj2fZygobZsmlX1bTGMEasBekKxzvLbXYpuqpmJv8bIcnVTlWj1wGF+vPc66LbtnW7JRKm36p2K16fkPLVLn23wp6f7P0kvh3X3GerOjFxPXky/GubuF81HHYjQWy/waw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3Tk098R; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yw+ZNdxK"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-cc4aa0246b7so1702100a12.3
-        for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 00:45:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3Tk098R"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-868b3248b2cso2907218b3a.1
+        for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 00:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791963949; x=1792568749; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=hCKIAVPSYo0vK8WrzKbxMMpR/7Fs8ssXef3I4R/nZQA=;
-        b=Yw+ZNdxKJnog++rd1ZM/U2gK0OyobzmolhnH17tr+S+9Rp1TdQL0eRg03c4YuzZvra
-         TnouMPIZjuOBuyIDi96oSZ7AgP00T0iaSOfaSovlW6D3gjEHR8CtRGvs/jwBkaYlvP1P
-         9E3mIRl332aR340/dSQdwl06M6A9XzqlPmY3RUtw8t/2wbWzWz7s/XnUHm3vUAH57Ayp
-         zu1LuT6Osq6QwKyBWa5t7wSDhDIQabReVxVT7cJJR5zXwaZiKgvY7KUlK89XBQmNhpNt
-         6dDmRpyyShNfJD7u7iE+L26dyqfb7Q+LGa5YOlr0o9edjfYXEL5ueOyXzvKE+cMwK4WY
-         KvEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791963949; x=1792568749;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20251104; t=1791963956; x=1792568756; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=hCKIAVPSYo0vK8WrzKbxMMpR/7Fs8ssXef3I4R/nZQA=;
-        b=Z0uHzZcsemzBX++Slue2mhOmmYA0bF5ppkZxg0hBBbqA7rODnzoLbd4Ad2ZNn+BQXu
-         vumZWx6ZOXVFqKXQOHPf+6B2G+Pi1YmCQh+xeK88WjIWnHfmftjXn/vMK9kw/WxCOubZ
-         MgPgIQXO8GXlFKz21zXUkfFomTDiRKTQrKrs81wUTUy/fKV39IdaY3MhdDb5dI1+X/zA
-         7L5GfwuPcqwpz0HTJXKc7N/JCM1Ovy9SdlRV+9hrWrSZREbjcWwJan76h2xi0rypkJqh
-         HRhomX39uhNAB6d8IqOMZp+BRqBMgZ/TL/662KdYm9RcsqOgzr5ZSclVpcQLxhQ1gNxp
-         V+kg==
-X-Forwarded-Encrypted: i=1; AKwUvBwPIk4hTJyDXwgbxSHXUAuV0sQpWJEJ2XBrTvvl5r+XYtiWrerx5dos0a539O7TrHDHS5uEo2g=@lists.linux.dev
-X-Gm-Message-State: AFq9FYJ3vnjMlghGD3uJp3TNBlbc2ssREq9esTg7kbs38uFYAlPk36iZ
-	S/8jXMMhCm5P/p6R0FtcUDARPL499jNBlI+8wsJVUmlj84cacUBPCemn
-X-Gm-Gg: AYBFou1FGlSsTi3ZUEvqQ9vox6jNMdz+TfMqvzAmHWcO9pOJR6rObDN0gxKHUDmmmib
-	VUZ2JlF0h1E28v9lYSx+1fm2lCRljdzwz4ZYtNVh0ESSb9zsuGBikI2dnZmfdz6WgA4kvlyKrey
-	C0Si3Y/Kxxi+8HWvnBIYf2zrquTm3OQXBw2ipAblKsbAsS+cAjmZijl42dvXerKY68JohnWSsn5
-	aGh317nwITofchYNztuKCgprHXUzACVlvgP0gsBI1TmsrA9DHlOXANgBifebIAwYuXF9bea5VLU
-	2+fenLqlJ8bV/x8eA0AxzdzwXFToE2E1x30PVXpkbJS/KR2d2Wt6pllPqNPm0xBWeawX4pdVRDf
-	7FgATygN7sHNMF2EZHsdcdATuYp8/hwKrBii4Zn0S/l/UjImA1Pu1ATSQCkQyPxZhHaecOvy/w3
-	5klpHkiyQXhH4xFTkzUKe+HZU/tObRmouKPlEbxwRtDxvrlgndUZpjvt25nj1taSdmeouE
-X-Received: by 2002:a17:902:e74d:b0:2e2:cb65:a719 with SMTP id d9443c01a7336-2e842ab6a10mr114098215ad.15.1791963949146;
-        Wed, 14 Oct 2026 00:45:49 -0700 (PDT)
+        bh=p/Mwahr2z9hW7MyIWREn6uWQ3XJrmLHNA2tUduWF5gQ=;
+        b=k3Tk098RrqS67dMaczJoZLwjK6DnznznFTP9384JUdWFOdMfVO3Znec1bI5FezfUUW
+         ged7qJH30wWrrw3k0JEm0uUQsZs70xPqx3jfqhJe7UECzZstczbhoF0qWJto4akUQhfl
+         hyS2yumVlUzqsC2bVX2RboLmwhnYoiH645WfekYU9peBls0O1AmHhFaR+roqQ6CmNqy1
+         TRsrzjy7NCEwItAuldxt3mcAa8UskVg2OW2DkEW37C3BRLLrnlL/mk1Tn39KR+Iy7s1y
+         6LG+QurwYq0lyMW5qx8c7az/cmIQ5Gbdcdx4hzfKZSbv9uJLbiEEUHDZxXBFBvVeabib
+         Vb4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1791963956; x=1792568756;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to:content-type;
+        bh=p/Mwahr2z9hW7MyIWREn6uWQ3XJrmLHNA2tUduWF5gQ=;
+        b=PiYOXQf2eq5WhdgFEfnuIuU7o1QAfbXoorDPWz6RFdCarKVph78h1A2XT0llhm5Dm0
+         dj5nUe8jTm8ZJ+r8Wmqm73ACUHAFjFccB4S9HReFFt+Z5lK+Lqz3mLu/iLteNlLDhLQ5
+         fnq8tVs+XcPOuA4a8o8XpnsDdTFHggL1M4OpEa1X9Xt3BC5KtAuukaWmS6QjOQRRRuTV
+         odo3UUSpO2PMZmDawKEWBowuth9OQ5clYHC+sOFEFCAx/rNZEFh2F8SLcsaxSmIxkPG9
+         TIsesWl/b//5YEqiUN1WxZ4JDx9T2zCvFwluf1m8SD2rIGOTPAthqfHG5viN6VU6FwTy
+         nz2g==
+X-Forwarded-Encrypted: i=1; AKwUvBxRvgx63Cst6jxPHQk5AGNgTXUc6PBhwn/zh6dlTByYZhhCZ/gTDjd7S1DIR7EQ14vqroLPKWg=@lists.linux.dev
+X-Gm-Message-State: AFq9FYKMnuLgAyutU1sKL3gJFLOsPox3doefsfna5pkSiodzkpFT/0ti
+	bChr7M9NaeCwRi4Kr1Mb8wumY5duVarIwL5I56d79zhc+sBEXOHVHbMR
+X-Gm-Gg: AYBFou0/dQM2yeQV2RbReuXgkeHzJCZ0/8of4Zyf1BdE0+QLnChn7JLPaU6FG52rX8s
+	XE5ePBp3BIM8Q0SdNPL0020wiRgqYPJZwXFiwbtxd5E67oAvhXc7iu+dbN4RXubFgriExeThoXf
+	af1Jupg5Ye/tMyPX1mraAcLGrw98ui2lVMfkQ2ClLNCHlK+JSN4kD0fVoDXbyGZsI9gzQLXa/KR
+	0uZI2X8EW5Y0iH6nB3C13Ch4eAOJ/7t6gsbxoyL/4rUwpM7mKeeOCENhWCB7Sw0Zd+CEEmBee4H
+	AHeyXedPV5ZuqYQlb+emIOdQW+sMWVjJ/cyysY9M7MVmROCz3FpJb9/W7/bHKBg0egLXMfuz+P9
+	Fxe5sJTXE58u/tzkoraZrlOXfu5vPVMGtiumP2ve0ZX+EqanfV7mQrlsP+wCUkMd365YD0npZOz
+	QljclVqrZH1m0Z7VTOZWFc6f1SRnzvaoSv8ER/vsnDyadjFfsZ5pT84bOOVrql2OgDeu8k
+X-Received: by 2002:a05:6a00:3d4b:b0:89d:e946:8c64 with SMTP id d2e1a72fcca58-89de9468d0cmr338050b3a.57.1791963955830;
+        Wed, 14 Oct 2026 00:45:55 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e8421b1347sm67038615ad.44.2026.10.14.00.45.47
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-89d7f518b74sm797660b3a.4.2026.10.14.00.45.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 00:45:48 -0700 (PDT)
+        Wed, 14 Oct 2026 00:45:55 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -73,10 +75,12 @@ Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 0/3] Add SG2044 eFUSE driver
-Date: Wed, 14 Oct 2026 15:45:12 +0800
-Message-ID: <20261014074516.240247-1-inochiama@gmail.com>
+Subject: [PATCH 1/3] dt-bindings: nvmem: Add SG2044 eFuse controller
+Date: Wed, 14 Oct 2026 15:45:13 +0800
+Message-ID: <20261014074516.240247-2-inochiama@gmail.com>
 X-Mailer: git-send-email 2.56.0
+In-Reply-To: <20261014074516.240247-1-inochiama@gmail.com>
+References: <20261014074516.240247-1-inochiama@gmail.com>
 Precedence: bulk
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -85,25 +89,82 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add SG2044 eFUSE driver, The eFUSE contains factory-programmed data,
-and it will be auto loaded into shadow registers while startup. So
-only MMIO read is needed.
+Sophgo SG2044 uses eFuses used to store factory-programmed data
+such as ROM patch, public keys and other factory information.
 
-Inochi Amaoto (3):
-  dt-bindings: nvmem: Add SG2044 eFuse controller
-  nvmem: Add Sophgo SG2044 eFuse driver
-  riscv: dts: sophgo: sg2044: Add eFUSE device
-
- .../bindings/nvmem/sophgo,efuse.yaml          |  61 ++++++
- .../boot/dts/sophgo/sg2044-sophgo-srd3-10.dts |   4 +
- arch/riscv/boot/dts/sophgo/sg2044.dtsi        |  12 ++
- drivers/nvmem/Kconfig                         |  12 ++
- drivers/nvmem/Makefile                        |   2 +
- drivers/nvmem/sophgo-efuse.c                  | 177 ++++++++++++++++++
- 6 files changed, 268 insertions(+)
+Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+---
+ .../bindings/nvmem/sophgo,efuse.yaml          | 61 +++++++++++++++++++
+ 1 file changed, 61 insertions(+)
  create mode 100644 Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
- create mode 100644 drivers/nvmem/sophgo-efuse.c
 
---
+diff --git a/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml b/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
+new file mode 100644
+index 000000000000..d4bffe2724ac
+--- /dev/null
++++ b/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
+@@ -0,0 +1,61 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/nvmem/sophgo,efuse.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Sophgo SoC eFuse-based NVMEM
++
++description:
++  Sophgo SoCs contain factory-programmed eFuses used to store ROM patch,
++  public key and other factory information.
++
++maintainers:
++  - Inochi Amaoto <inochiama@gmail.com>
++
++allOf:
++  - $ref: nvmem.yaml#
++
++properties:
++  compatible:
++    enum:
++      - sophgo,sg2044-efuse
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    minItems: 1
++    items:
++      - description: Core clock
++      - description: APB clock
++
++  clock-names:
++    minItems: 1
++    items:
++      - const: core
++      - const: apb
++
++  resets:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - clocks
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    efuse@40000000 {
++        compatible = "sophgo,sg2044-efuse";
++        reg = <0x40000000 0x1000>;
++        #address-cells = <1>;
++        #size-cells = <1>;
++        clocks = <&clk 0>,
++                 <&clk 1>;
++        clock-names = "core", "apb";
++    };
++
++...
+-- 
 2.56.0
 
