@@ -1,63 +1,63 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FC14A4410
-	for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 07:45:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1B04B95D3
+	for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 07:46:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1791963960; cv=none; b=Ub5WqESxBqx+9RnXaRpxWj/opMFw+G+JMJNa2Ie4r1N0BlXXqJfG0PRYiw6dUZTgyOVudIVMcP6hnTXps0fwmj01lvX6w90et7grRED7fwErp2UJN3k+B1b1kKrWVxnRmknJTefWBCQ56Glt5g41BVvj3BSLBObU8MacLndvLXY=
+	t=1791963965; cv=none; b=i+O1wVhNsfm4KwTc/rmJZog2shB966CA41RXYV6tFbPCAAO0Lz6btHlcxRY4rxDn8gp4q5h8CNHRKyu5AAXzjBojVYL2YKccJ6sdtxthtMFAtJj+JRptftjP1Mth9NKi7fme0YS/Gjs8CeBGN1Zf7lqoQWAbQoDF7K9FYJlMBeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1791963960; c=relaxed/simple;
-	bh=k1r41giEFofExMQ2e6Ka53lnCCUSRqj2gUqcvshC6U0=;
+	s=arc-20240116; t=1791963965; c=relaxed/simple;
+	bh=RfqMKSFM0scXEd3t9DBM9oELeQHeOiEd/sfSVVzp2EU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FJxai5TKY79cgNgpozkRt+gEXpNIQj7jGxrBaR3YBCbj2fZygobZsmlX1bTGMEasBekKxzvLbXYpuqpmJv8bIcnVTlWj1wGF+vPc66LbtnW7JRKm36p2K16fkPLVLn23wp6f7P0kvh3X3GerOjFxPXky/GubuF81HHYjQWy/waw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3Tk098R; arc=none smtp.client-ip=209.85.210.178
+	 MIME-Version; b=QvGo9Z3pr5RnrkiYeG2wngWZnIBgri1aFxcrljoFwoniyrTedYgtwYs9fccgMN4r+ohr/nxz7BHvp3OfydJXA7JdUslq3h8cArD25P5/bkk9cEnjKiAUTljdXZHGYWj79q8/K5ONQtENIcFrWmU0k2JKrxlZ7L3OUycDKTBKvaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dV6Fdftt; arc=none smtp.client-ip=209.85.214.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3Tk098R"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-868b3248b2cso2907218b3a.1
-        for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 00:45:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dV6Fdftt"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2e8ad5b31c7so21423915ad.3
+        for <sophgo@lists.linux.dev>; Wed, 14 Oct 2026 00:46:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1791963956; x=1792568756; darn=lists.linux.dev;
+        d=gmail.com; s=20251104; t=1791963961; x=1792568761; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=p/Mwahr2z9hW7MyIWREn6uWQ3XJrmLHNA2tUduWF5gQ=;
-        b=k3Tk098RrqS67dMaczJoZLwjK6DnznznFTP9384JUdWFOdMfVO3Znec1bI5FezfUUW
-         ged7qJH30wWrrw3k0JEm0uUQsZs70xPqx3jfqhJe7UECzZstczbhoF0qWJto4akUQhfl
-         hyS2yumVlUzqsC2bVX2RboLmwhnYoiH645WfekYU9peBls0O1AmHhFaR+roqQ6CmNqy1
-         TRsrzjy7NCEwItAuldxt3mcAa8UskVg2OW2DkEW37C3BRLLrnlL/mk1Tn39KR+Iy7s1y
-         6LG+QurwYq0lyMW5qx8c7az/cmIQ5Gbdcdx4hzfKZSbv9uJLbiEEUHDZxXBFBvVeabib
-         Vb4g==
+        bh=+mIieeGY1UVHx10SysmP5f2W/As1aw4zkNpA5Xc1vkM=;
+        b=dV6Fdfttou3rCoA0gvWsVmJyTrQNlMJVTjAYGfkTYuqHHcuWUFE8pNEdUd/KfL+KBR
+         gr5hDFPFmE5TqJ3H9HPcxqEsy1nlFQIBfd27Yq3tcYUsg4ZDjeBgIJXcTEzLccxwlBXH
+         9lQhy6sVP6H/S6UF58G6i6eXp4pT1rjdFUz+w8Wfy5s2CHqRefFZFE3O9s6p65fQarON
+         uyLNMknCUkYnayQpGxljsHznQxaKGzOLt/pyzPgs8lq9YGXp0rFTvrm/rBUiH57jzfoI
+         e547I+0MImJMukZe92b/j+nIwyra2VMdBQRMZqwmMHXHsy62ibABoayd3PYcTi8FGv+2
+         /w3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1791963956; x=1792568756;
+        d=1e100.net; s=20260707; t=1791963961; x=1792568761;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=p/Mwahr2z9hW7MyIWREn6uWQ3XJrmLHNA2tUduWF5gQ=;
-        b=PiYOXQf2eq5WhdgFEfnuIuU7o1QAfbXoorDPWz6RFdCarKVph78h1A2XT0llhm5Dm0
-         dj5nUe8jTm8ZJ+r8Wmqm73ACUHAFjFccB4S9HReFFt+Z5lK+Lqz3mLu/iLteNlLDhLQ5
-         fnq8tVs+XcPOuA4a8o8XpnsDdTFHggL1M4OpEa1X9Xt3BC5KtAuukaWmS6QjOQRRRuTV
-         odo3UUSpO2PMZmDawKEWBowuth9OQ5clYHC+sOFEFCAx/rNZEFh2F8SLcsaxSmIxkPG9
-         TIsesWl/b//5YEqiUN1WxZ4JDx9T2zCvFwluf1m8SD2rIGOTPAthqfHG5viN6VU6FwTy
-         nz2g==
-X-Forwarded-Encrypted: i=1; AKwUvBxRvgx63Cst6jxPHQk5AGNgTXUc6PBhwn/zh6dlTByYZhhCZ/gTDjd7S1DIR7EQ14vqroLPKWg=@lists.linux.dev
-X-Gm-Message-State: AFq9FYKMnuLgAyutU1sKL3gJFLOsPox3doefsfna5pkSiodzkpFT/0ti
-	bChr7M9NaeCwRi4Kr1Mb8wumY5duVarIwL5I56d79zhc+sBEXOHVHbMR
-X-Gm-Gg: AYBFou0/dQM2yeQV2RbReuXgkeHzJCZ0/8of4Zyf1BdE0+QLnChn7JLPaU6FG52rX8s
-	XE5ePBp3BIM8Q0SdNPL0020wiRgqYPJZwXFiwbtxd5E67oAvhXc7iu+dbN4RXubFgriExeThoXf
-	af1Jupg5Ye/tMyPX1mraAcLGrw98ui2lVMfkQ2ClLNCHlK+JSN4kD0fVoDXbyGZsI9gzQLXa/KR
-	0uZI2X8EW5Y0iH6nB3C13Ch4eAOJ/7t6gsbxoyL/4rUwpM7mKeeOCENhWCB7Sw0Zd+CEEmBee4H
-	AHeyXedPV5ZuqYQlb+emIOdQW+sMWVjJ/cyysY9M7MVmROCz3FpJb9/W7/bHKBg0egLXMfuz+P9
-	Fxe5sJTXE58u/tzkoraZrlOXfu5vPVMGtiumP2ve0ZX+EqanfV7mQrlsP+wCUkMd365YD0npZOz
-	QljclVqrZH1m0Z7VTOZWFc6f1SRnzvaoSv8ER/vsnDyadjFfsZ5pT84bOOVrql2OgDeu8k
-X-Received: by 2002:a05:6a00:3d4b:b0:89d:e946:8c64 with SMTP id d2e1a72fcca58-89de9468d0cmr338050b3a.57.1791963955830;
-        Wed, 14 Oct 2026 00:45:55 -0700 (PDT)
+        bh=+mIieeGY1UVHx10SysmP5f2W/As1aw4zkNpA5Xc1vkM=;
+        b=nDAjG7eymJx90XsUci03CcdHC+Udwge9aRwYGHWgDlW3lOAjkovi7EovJ1FDNaZ6mo
+         oEAgvg0UDh1FQybNHluhFyHERoYTFrCEN0JlrxiP4EbPi9O1rIOyaZhiitFGKtX+uHGv
+         JnAnKshzBBuRMKxIPCafZNwZ4c/rgx18jjsv02a8rJ5/7MqCSvpJK++0+xMQUZT8OWBE
+         Z/ZTcBrQCJpiJ+vfhCaJn46X7LnlnGS9NvW2KcM5Snz6Giz3TJX+cRPx9aiAuFobnM6e
+         gbVxzRAWKwS+SNi4kZGaxPhyIh31Wy2L5BrWcKyn5Mebpwpz6IkU1tNHoidDl/5QuRSR
+         XscA==
+X-Forwarded-Encrypted: i=1; AKwUvBy5z90BtYf7ZYEgOqmSeL92sL2ukF7DgIXffMz9fnLUs05B49T8lUiXWfWnI6uYZFI01/3i3WM=@lists.linux.dev
+X-Gm-Message-State: AFq9FYJeAPO9B/yUL/068yrKvmdTZNrJXKsP6joo4odcs+WNdsB+JqeE
+	X7dDA7WXhP0MahAzAYK4SIIU/3/du8qulRVkTwpWZi4PEF+lxA1CxT7+
+X-Gm-Gg: AYBFou1MiAXQAIo0zxI4ugCNKj6p5ViKGwaoA6nnPMK2SuKB8Moxg7KjWdDucTjHj9N
+	5VMuER+uC+ChAETlEmdi7ByXjpwz6dDZAMgJlLF9AQKVQ3AMx1Hdb2zQxq+XmAKXmgCgvCmFVk8
+	vgJ4g9hj+/RBqEC/wUJxPyPCeHQaGY0X2KJ8bWsrw68S7I+ArX+42ZTx9nktnEmVy4LtT9uIhvW
+	eOk1470URxkfDluhUkcGwXXFekmEr+VM1cz2FKtZghwQ19a5496RzYCBGLxljsYSCCW8jNdpRYm
+	VJmbtgLc/hfc0NORxx2XdisOvPhkuMYTvv9JgSzmEAh3kLrjTkVQ5kr9n0S3yqB2Lxdo8F7ZDAi
+	codbHlua6vpEPVgl/7uv4l55gyFFytievvSv9xb357qPi9exGTNHnxhpBpP/8d4jlXzzwH9ZdBp
+	8yS40DnGv15MMJGKOrSZUYPd7CnFPebxYsbPlYYziMzinVd4Pu+Q3XQdDlg/voi2+1pIZC
+X-Received: by 2002:a17:903:2307:b0:2e9:401f:f102 with SMTP id d9443c01a7336-2e9401ffc4cmr7724765ad.32.1791963960773;
+        Wed, 14 Oct 2026 00:46:00 -0700 (PDT)
 Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-89d7f518b74sm797660b3a.4.2026.10.14.00.45.54
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2e841a05f70sm65986985ad.7.2026.10.14.00.45.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Oct 2026 00:45:55 -0700 (PDT)
+        Wed, 14 Oct 2026 00:46:00 -0700 (PDT)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Rob Herring <robh@kernel.org>,
@@ -66,7 +66,6 @@ To: Srinivas Kandagatla <srini@kernel.org>,
 	Chen Wang <chen.wang@linux.dev>,
 	Inochi Amaoto <inochiama@gmail.com>,
 	Paul Walmsley <pjw@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
 	Albert Ou <aou@eecs.berkeley.edu>,
 	Alexandre Ghiti <alex@ghiti.fr>
 Cc: devicetree@vger.kernel.org,
@@ -75,9 +74,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-riscv@lists.infradead.org,
 	Yixun Lan <dlan@gentoo.org>,
 	Longbin Li <looong.bin@gmail.com>
-Subject: [PATCH 1/3] dt-bindings: nvmem: Add SG2044 eFuse controller
-Date: Wed, 14 Oct 2026 15:45:13 +0800
-Message-ID: <20261014074516.240247-2-inochiama@gmail.com>
+Subject: [PATCH 2/3] nvmem: Add Sophgo SG2044 eFuse driver
+Date: Wed, 14 Oct 2026 15:45:14 +0800
+Message-ID: <20261014074516.240247-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261014074516.240247-1-inochiama@gmail.com>
 References: <20261014074516.240247-1-inochiama@gmail.com>
@@ -89,82 +88,239 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sophgo SG2044 uses eFuses used to store factory-programmed data
-such as ROM patch, public keys and other factory information.
+Sophgo SoCs such as SG2044 contain eFuses used to store
+factory-programmed data.
+
+As for SG2044, HW automatically loads the eFuse content
+into shadow registers which are organized as 32bit values
+exposed as MMIO.
 
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- .../bindings/nvmem/sophgo,efuse.yaml          | 61 +++++++++++++++++++
- 1 file changed, 61 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
+ drivers/nvmem/Kconfig        |  12 +++
+ drivers/nvmem/Makefile       |   2 +
+ drivers/nvmem/sophgo-efuse.c | 176 +++++++++++++++++++++++++++++++++++
+ 3 files changed, 190 insertions(+)
+ create mode 100644 drivers/nvmem/sophgo-efuse.c
 
-diff --git a/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml b/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
+diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
+index c36c2a4c2a0b..a7936dd65bdd 100644
+--- a/drivers/nvmem/Kconfig
++++ b/drivers/nvmem/Kconfig
+@@ -465,6 +465,18 @@ config NVMEM_SNVS_LPGPR
+ 	  This driver can also be built as a module. If so, the module
+ 	  will be called nvmem-snvs-lpgpr.
+ 
++config NVMEM_SOPHGO_EFUSE
++	tristate "Sophgo eFuse support"
++	depends on ARCH_SOPHGO || COMPILE_TEST
++	default ARCH_SOPHGO
++	help
++	  Say y here to enable support for reading eFuses on Sophgo SoCs
++	  such as the CV1800B. These are e.g. used to store factory programmed
++	  calibration data required for the builtin ethernet PHY.
++
++	  This driver can also be built as a module. If so, the module will
++	  be called nvmem-sophgo-efuse.
++
+ config NVMEM_SPMI_SDAM
+ 	tristate "SPMI SDAM Support"
+ 	depends on SPMI
+diff --git a/drivers/nvmem/Makefile b/drivers/nvmem/Makefile
+index 2bbfb9ff1885..430ddddf8c3c 100644
+--- a/drivers/nvmem/Makefile
++++ b/drivers/nvmem/Makefile
+@@ -79,6 +79,8 @@ obj-$(CONFIG_NVMEM_SC27XX_EFUSE)	+= nvmem-sc27xx-efuse.o
+ nvmem-sc27xx-efuse-y			:= sc27xx-efuse.o
+ obj-$(CONFIG_NVMEM_SNVS_LPGPR)		+= nvmem_snvs_lpgpr.o
+ nvmem_snvs_lpgpr-y			:= snvs_lpgpr.o
++obj-$(CONFIG_NVMEM_SOPHGO_EFUSE)	+= nvmem-sophgo-efuse.o
++nvmem-sophgo-efuse-y			:= sophgo-efuse.o
+ obj-$(CONFIG_NVMEM_SPMI_SDAM)		+= nvmem_qcom-spmi-sdam.o
+ nvmem_qcom-spmi-sdam-y			+= qcom-spmi-sdam.o
+ obj-$(CONFIG_NVMEM_SPRD_EFUSE)		+= nvmem_sprd_efuse.o
+diff --git a/drivers/nvmem/sophgo-efuse.c b/drivers/nvmem/sophgo-efuse.c
 new file mode 100644
-index 000000000000..d4bffe2724ac
+index 000000000000..5f90adaf8e4f
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/nvmem/sophgo,efuse.yaml
-@@ -0,0 +1,61 @@
-+# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/nvmem/sophgo,efuse.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/nvmem/sophgo-efuse.c
+@@ -0,0 +1,176 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Sophgo SoC eFuse driver
++ */
 +
-+title: Sophgo SoC eFuse-based NVMEM
++#include <linux/bitfield.h>
++#include <linux/bits.h>
++#include <linux/clk.h>
++#include <linux/cleanup.h>
++#include <linux/iopoll.h>
++#include <linux/math.h>
++#include <linux/mod_devicetable.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/nvmem-provider.h>
++#include <linux/platform_device.h>
 +
-+description:
-+  Sophgo SoCs contain factory-programmed eFuses used to store ROM patch,
-+  public key and other factory information.
++#define SG2044_EFUSE_CONTENT_SIZE		0x400
 +
-+maintainers:
-+  - Inochi Amaoto <inochiama@gmail.com>
++#define SG2044_EFUSE_MD				0x000
++#define SG2044_EFUSE_ADR			0x004
++#define SG2044_EFUSE_RD_DATA			0x00c
 +
-+allOf:
-+  - $ref: nvmem.yaml#
++#define SG2044_EFUSE_MODE			GENMASK(1, 0)
++#define SG2044_EFUSE_MODE_READ			2
 +
-+properties:
-+  compatible:
-+    enum:
-+      - sophgo,sg2044-efuse
++#define SG2044_EFUSE_BOOT_DONE			BIT(7)
++#define SG2044_BOOT_TIMEOUT			10000
 +
-+  reg:
-+    maxItems: 1
++#define SG2044_EFUSE_ADR_ADDR			GENMASK(7, 0)
 +
-+  clocks:
-+    minItems: 1
-+    items:
-+      - description: Core clock
-+      - description: APB clock
++#define SG2044_EFUSE_ALIGN			4
 +
-+  clock-names:
-+    minItems: 1
-+    items:
-+      - const: core
-+      - const: apb
++struct sophgo_efuses {
++	void __iomem *base;
++	struct clk_bulk_data *clks;
++	int num_clks;
++	struct mutex mutex;
++};
 +
-+  resets:
-+    maxItems: 1
++static int sg2044_efuse_wait_mode(struct sophgo_efuses *efuse)
++{
++	u32 value;
 +
-+required:
-+  - compatible
-+  - reg
-+  - clocks
++	return readl_poll_timeout(efuse->base + SG2044_EFUSE_MD, value,
++				  FIELD_GET(SG2044_EFUSE_MODE, value) == 0,
++				  1, SG2044_BOOT_TIMEOUT);
++}
 +
-+unevaluatedProperties: false
++static int sg2044_efuse_set_mode(struct sophgo_efuses *efuse, int mode)
++{
++	u32 val = readl(efuse->base + SG2044_EFUSE_MD);
 +
-+examples:
-+  - |
-+    efuse@40000000 {
-+        compatible = "sophgo,sg2044-efuse";
-+        reg = <0x40000000 0x1000>;
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        clocks = <&clk 0>,
-+                 <&clk 1>;
-+        clock-names = "core", "apb";
-+    };
++	val &= ~SG2044_EFUSE_MODE;
++	val |= FIELD_PREP(SG2044_EFUSE_MODE, mode);
 +
-+...
++	writel(val, efuse->base + SG2044_EFUSE_MD);
++
++	return sg2044_efuse_wait_mode(efuse);
++}
++
++static u32 sg2044_efuses_read_strip(struct sophgo_efuses *efuse,
++				    unsigned int offset, u32 *strip)
++{
++	u32 val = FIELD_PREP(SG2044_EFUSE_ADR_ADDR, offset);
++	int ret;
++
++	guard(mutex)(&efuse->mutex);
++
++	writel(val, efuse->base + SG2044_EFUSE_ADR);
++
++	ret = sg2044_efuse_set_mode(efuse, SG2044_EFUSE_MODE_READ);
++	if (ret < 0)
++		return ret;
++
++	*strip = readl(efuse->base + SG2044_EFUSE_RD_DATA);
++
++	return 0;
++}
++
++static int sg2044_efuses_read(void *context, unsigned int offset, void *val,
++			      size_t bytes)
++{
++	struct sophgo_efuses *efuse = context;
++	unsigned int start, start_offset, end, i;
++	u32 value;
++	u8 *buf;
++	int ret;
++
++	start = rounddown(offset, SG2044_EFUSE_ALIGN);
++	end = roundup(offset + bytes, SG2044_EFUSE_ALIGN);
++	start_offset = offset - start;
++
++	start /= SG2044_EFUSE_ALIGN;
++	end /= SG2044_EFUSE_ALIGN;
++
++	ret = readl_poll_timeout(efuse->base + SG2044_EFUSE_MD, value,
++				 (value & SG2044_EFUSE_BOOT_DONE),
++				 1, SG2044_BOOT_TIMEOUT);
++	if (ret < 0)
++		return ret;
++
++	buf = kzalloc(end - start, GFP_KERNEL);
++	if (!buf)
++		return -ENOMEM;
++
++	for (i = start; i < end; i++) {
++		ret = sg2044_efuses_read_strip(efuse, i, &value);
++		if (ret)
++			goto failed;
++
++		memcpy(&buf[(i - start) * 4], &value, SG2044_EFUSE_ALIGN);
++	}
++
++	memcpy(val, buf + start_offset, bytes);
++
++failed:
++	kfree(buf);
++
++	return ret;
++}
++
++static int sophgo_efuses_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct sophgo_efuses *efuse;
++	struct nvmem_config config = {
++		.dev = &pdev->dev,
++		.add_legacy_fixed_of_cells = true,
++		.read_only = true,
++		.reg_read = sg2044_efuses_read,
++		.stride = 1,
++		.word_size = 1,
++		.name = "sophgo-efuse",
++		.id = NVMEM_DEVID_AUTO,
++		.root_only = true,
++	};
++
++	efuse = devm_kzalloc(dev, sizeof(*efuse), GFP_KERNEL);
++	if (!efuse)
++		return -ENOMEM;
++
++	efuse->base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(efuse->base))
++		return PTR_ERR(efuse->base);
++
++	efuse->num_clks = devm_clk_bulk_get_all_enabled(&pdev->dev, &efuse->clks);
++	if (efuse->num_clks < 0)
++		return dev_err_probe(dev, efuse->num_clks, "failed to get clocks\n");
++
++	config.priv = efuse;
++	config.size = SG2044_EFUSE_CONTENT_SIZE;
++
++	return PTR_ERR_OR_ZERO(devm_nvmem_register(config.dev, &config));
++}
++
++static const struct of_device_id sophgo_efuses_of_match[] = {
++	{ .compatible = "sophgo,sg2044-efuse", },
++	{}
++};
++
++MODULE_DEVICE_TABLE(of, sophgo_efuses_of_match);
++
++static struct platform_driver sophgo_efuses_driver = {
++	.driver = {
++		.name = "sophgo_efuse",
++		.of_match_table = sophgo_efuses_of_match,
++	},
++	.probe = sophgo_efuses_probe,
++};
++
++module_platform_driver(sophgo_efuses_driver);
++
++MODULE_AUTHOR("Inochi Amaoto <inochiama@gmail.com>");
++MODULE_DESCRIPTION("Sophgo efuse driver");
++MODULE_LICENSE("GPL");
 -- 
 2.56.0
 
