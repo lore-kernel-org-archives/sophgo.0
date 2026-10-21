@@ -1,128 +1,125 @@
-Received: from mta1.migadu.com (out-169.mta1.migadu.com [95.215.58.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1792549211;
+	b=i9xBa+dxzZyPEyhBQFBfnlimcTeI55miGMsX3mCarEB8DgkBFmCEhYA69Xvg6EvxaUuf
+	 yCNvZ6q11eVleS5oyF0jQVfxOsjRVv3QB5tpvdbGIgm2Utn62FO6IDyzdAKvj9vyjyIM2
+	 kYWHLju3CWHTAtCIgD1fntceA58atBCSb8zlh6skeJ3xvewxxWkAeoY0wk6m4LXSA0tcf
+	 WvJHSErU6frGRFXWOChhYURq9y3ZH9DpcDGIU3tlhT+QtOleAK9EnzUbanSIyYCXfLQo2
+	 5TcYmvUg6s6JpthnKAe+EFVcwRh0D9x9Ed5Au8l7pce964Y/kQWqtzkNqWoCeMD3HNQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792549211;
+	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
+	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc;
+	bh=CPwgKGW+9+HgEnPqxnA55xboDkaUxoq5NKTXtZj/nJE=;
+	b=qSpqf2mCSgSrhwYtbrDxeTqmy8TGjBYhvWkfQNifw2DAodqMaV5uVpjIem2QlZsrBW++
+	 E8pLg2KoObaEexlqqtCHUiijNjo8HTqFtNMfc/eUmCYqtNscdlmTxOhLSVlD8610EUMPo
+	 oTkzoBCgunbbGhTt47+uX7BbITVTq4rB8oA1r3rs/aIL/aj9V6wbpVzlSJVt9Qy7tsRm/
+	 Vov0aNanMJoSoEJFxqEym/VVl8NvCYmT0Sk7dwnGI3dnLcB8QdnP50Jpb3OqfBe3vIcQ2
+	 V8/Asuc9/ViYZvUT46rXJ/7yrTt0XRGQxgk4Ri5ZkEkiNsr0cVA7LvwPCWPVfT/lh7g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NYaa27a+;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58DBC48BD5B
-	for <sophgo@lists.linux.dev>; Mon, 19 Oct 2026 08:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1792399001; cv=none; b=gymesNPN2brDr6rTCqQUmO803pmq3ELx60PZzkgCV2twoS2+v/5Gt9SD2af4fo7liBnuAv5lJm1mxFHlhC7XNOcTSmevcKy+xEGVGODsjtwHc42Fe0eBB/SBR3dU3Wa47VQFx6AaePPwyiOWDofQcJ5oQFcK7VgMfohEJDxeEjE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1792399001; c=relaxed/simple;
-	bh=Fkql/pEOQaE3VVKr6TeO/9vnVJHDezf5e25RtfA6m3A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UDzSKX1vGb31GzEtpEHMRRy8mvuO0TvUYSj0+4p4VXmmd6lGWYau68Ngc4yuIEfDYhch+9Yn0xaD4QsSqzUrBppJuiNlnhgkhnDMlYLZeoqMKuTt04ynTTXgGNuR5bKzpfMWnQ0FVlkE/NFbH05JyEP/dmdWcuX/cFEcWgF+hzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=KTEXuZDT; arc=none smtp.client-ip=95.215.58.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41433606A31E;
+	Wed, 21 Oct 2026 02:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="KTEXuZDT"
-X-Envelope-To: sophgo@lists.linux.dev
-DKIM-Signature: a=rsa-sha256; bh=Fkql/pEOQaE3VVKr6TeO/9vnVJHDezf5e25RtfA6m3A=;
- c=simple/simple; d=linux.dev;
- h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1792398996; v=1; x=1793003796;
- b=KTEXuZDTQO+fwxuE6kZ2YYQrwrao6nV5sbly7CCoR1oOcGp2d28RgbmJII6dyU4iVVhl8pCA
- W7vlzhnbCNZJDxAU8YS2+v46wzMuUiWMybYzg99smEJWm/4bAFrdFP5avqVcAx+Buj/JXZ68XFJ
- GU+cmqyu1JLxzwRacXWkTB/I=
-X-Envelope-To: sophgo@lists.linux.dev
-Received: by smtp.migadu.com with ESMTPS id 7040c2419ab9fe67;
-	Mon, 19 Oct 2026 08:36:36 +0000
-X-Mizu-Trace-ID: 7040c2419ab9fe67
-X-Migadu-Flow: FLOW_OUT
-Message-ID: <1036bcd5-09ce-47f0-855b-1f1fbf248825@linux.dev>
-Date: Mon, 19 Oct 2026 16:36:31 +0800
-Precedence: bulk
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=NYaa27a+
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BC5E1F000CA;
+	Wed, 21 Oct 2026 02:20:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1792549211;
+	bh=CPwgKGW+9+HgEnPqxnA55xboDkaUxoq5NKTXtZj/nJE=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc;
+	b=NYaa27a+E7gei+Ol9psKdfXfiAU6OpungqJR76z1KeeQFEFjyBLQ7xIxVzxWnluTL
+	 lv3N7b/TqCO/EiJdxHVaCU/fcS6BXhoq6fF14VrgR+8ZHJNQf46BZXs2+XZrUw9yu2
+	 /5Dr1WnBxhlBBstrX1xZ2aF6ul1B9XIocoPHlvkMtCSnKmDJeRAtjl0UvhLiY7ZJYp
+	 3UJd9MC0EZ19gJ/B5qErRGgDAFgHjiX+qs3qfbAw2AxYBptLmuv9JTlDFdtBnYRi2t
+	 k1Q1LqBg+wMQ3NJei12Fvm2YJG37ykFf7fVyuZSUo5hlj3OGXZY/EK4OAQNR3gnpqp
+	 SiLeJk2xQV++w==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id F146D3809A0D;
+	Wed, 21 Oct 2026 02:20:10 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
+List-Post: <mailto:sophgo@lists.linux.dev>
+List-Help: <mailto:sophgo+help@lists.linux.dev>
 List-Subscribe: <mailto:sophgo+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
+List-Owner: <mailto:sophgo+owner@lists.linux.dev>
+Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] riscv: dts: sophgo: add cv1800b ethernet support overlay
-To: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>,
- Hiago De Franco <hfranco@baylibre.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>, sophgo@lists.linux.dev
-References: <6067ebd6-83a3-4ba5-86c9-a66c3348f8e4@linux.dev>
- <as802eClIH7MpxBR@inochi.infowork> <as-_ZlweuKWU1dsc@hiagonb>
- <CAKspUhL1HMT14JZARuxnoh21+mH+7_9rJRggqu_s-t4_CZB8PA@mail.gmail.com>
-From: Chen Wang <chen.wang@linux.dev>
-In-Reply-To: <CAKspUhL1HMT14JZARuxnoh21+mH+7_9rJRggqu_s-t4_CZB8PA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v16 0/7] net: stmmac: qcom-ethqos: add support
+ for
+ SCMI power domains
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <179254920980.330607.14638814196996636300.git-patchwork-notify@kernel.org>
+Date: Wed, 21 Oct 2026 02:20:09 +0000
+References: <20261014-qcom-sa8255p-emac-v16-0-0266c2ead980@oss.qualcomm.com>
+In-Reply-To: <20261014-qcom-sa8255p-emac-v16-0-0266c2ead980@oss.qualcomm.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andrew+netdev@lunn.ch,
+ davem@davemloft.net, kuba@kernel.org, pabeni@redhat.com,
+ mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com, vkoul@kernel.org,
+ peppe.cavallaro@st.com, wens@kernel.org, jernej.skrabec@gmail.com,
+ neil.armstrong@linaro.org, khilman@baylibre.com, jbrunet@baylibre.com,
+ shawnguo@kernel.org, festevam@gmail.com, jan.petrous@oss.nxp.com,
+ s32@nxp.com, mohd.anwar@oss.qualcomm.com, romain.gantois@bootlin.com,
+ geert+renesas@glider.be, magnus.damm@gmail.com, mripard@kernel.org,
+ christophe.roullier@foss.st.com, brgl@kernel.org, edumazet@kernel.org,
+ radu@rendec.net, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, dfustini@tenstorrent.com,
+ linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ linux-mips@vger.kernel.org, imx@lists.linux.dev,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
+ bartosz.golaszewski@linaro.org, sashiko-bot@kernel.org,
+ martin.blumenstingl@googlemail.com, krzysztof.kozlowski@oss.qualcomm.com,
+ prabhakar.mahadev-lad.rj@bp.renesas.com
 
+Hello:
 
-On 10/16/2026 10:34 AM, 葉宸佑 wrote:
-> Hi Hiago, Inochi, Chen,
->
-> On Wed, Oct 14, 2026 at 02:49:15PM -0300, Hiago De Franco wrote:
->> On Wed, Oct 14, 2026 at 03:56:02PM +0800, Inochi Amaoto wrote:
->>> Instead of taking this patch, I wonder whether it can be converted to a
->>> generic DT overlay file for all the supported boards, so we won't needed
->>> to merge many duplicated patch for it.
->> thanks for the idea. I can think about that, but in this case the other
->> overlay for 256M is already on linux-riscv/for-next, so after 7.4-rc1 is
->> out I can think about merging both overlays into only one file.
-> Since the 256M overlay in for-next is mine, I can take the merge after
-> 7.4-rc1, if that suits you.
-Chen-Yu and Hiago, you two can discuss it amongst yourselves, just make 
-sure there's no duplication should be fine.
->
-> Only the Duo and the Duo 256M would use it: the Duo S and the Huashan
-> Pi already enable gmac0 and mdio in their board files. Both labels come
-> from cv180x.dtsi, so the overlay itself has nothing board-specific in
-> it.
->
-> What I have in mind:
->
->    1/2  turn sg2002-milkv-duo256m-eth.dtso into a shared cv18xx-eth.dtso
->    2/2  compose the same overlay with cv1800b-milkv-duo.dtb
->
-> 2/2 is your patch reduced to two Makefile lines, so I would rather it
-> stay yours, sent on top of 1/2 with your Duo test. If you would prefer
-> to do the whole thing yourself, that is fine too, and I will test it on
-> the Duo 256M.
->
-> On naming, I would like to settle it in this series while the 256M
-> overlay is still new. The overlay is named after what it enables, but
-> the composed DTB is really the board plus the IO board: the base DTS
-> already sets USB to host, which the IO board's hub needs. So I would
-> call the composed DTBs sg2002-milkv-duo256m-ioboard.dtb and
-> cv1800b-milkv-duo-ioboard.dtb.
->
-> The reason I care about this is my own setup. Besides the IO board, I
-> use the Duo 256M with Ethernet wired up without the IO board, together
-> with USB networking over the USB-C port. That works on the vendor BSP,
-> which uses OTG, but not on mainline: both boards are host-only today,
-> and the host setting in the 256M DTS came from my own board patch,
-> copied from the Duo.
->
-> Once the overlay is done, I plan to look at device mode on mainline.
-> If it works, the host setting could move into a usb-host overlay:
->
->    <board>-ioboard.dtb = base + eth + usb-host
->    <board>-eth.dtb     = base + eth
->
-> IO board users would then see no change. If the composed DTB kept the
-> -eth name instead, it would silently lose the IO board's USB ports when
-> the base changes, which is why I would rather rename now. That part
-> would be a separate series, of course.
->
-> I have both setups here, so please feel free to Cc me on Milk-V Duo
-> patches; I am glad to test.
->
-> Inochi, Chen, does that layout make sense to you, and any preference
-> on the names?
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Are there many expansion I/O boards currently on the market for the Duo 
-series? I'm not entirely sure, but my suggestion would be to avoid 
-adding too much support for expansion boards to the main codebase, 
-that's something best left for others to implement offline.
+On Wed, 14 Oct 2026 14:36:39 +0200 you wrote:
+> Add support for the firmware-managed variant of the DesignWare MAC on
+> the sa8255p platform. This series contains new DT bindings and driver
+> changes required to support the MAC in the STMMAC driver.
+> 
+> It also reorganizes the ethqos code quite a bit to make the introduction
+> of power domains into the driver a bit easier on the eye.
+> 
+> [...]
 
-Inochi, what do you think?
+Here is the summary with links:
+  - [net-next,v16,1/7] net: stmmac: dwmac4: don't program the 1us tick counter without a CSR clock
+    https://git.kernel.org/netdev/net-next/c/d09d7b8e86e5
+  - [net-next,v16,2/7] dt-bindings: net: qcom: document the ethqos device for SCMI-based systems
+    https://git.kernel.org/netdev/net-next/c/534198a05d92
+  - [net-next,v16,3/7] net: stmmac: qcom-ethqos: set serdes mode before powerup
+    https://git.kernel.org/netdev/net-next/c/7af44cb9e447
+  - [net-next,v16,4/7] net: stmmac: qcom-ethqos: update phy_mode to the resolved interface in mac_finish()
+    https://git.kernel.org/netdev/net-next/c/05b3ea7346e3
+  - [net-next,v16,5/7] net: stmmac: qcom-ethqos: reuse the address of ethqos_emac_driver_data
+    https://git.kernel.org/netdev/net-next/c/92719abd6378
+  - [net-next,v16,6/7] net: stmmac: qcom-ethqos: factor out linux-level setup into a separate function
+    https://git.kernel.org/netdev/net-next/c/acf1e3db9151
+  - [net-next,v16,7/7] net: stmmac: qcom-ethqos: add support for sa8255p
+    https://git.kernel.org/netdev/net-next/c/bb3183e1c938
 
-> Thanks,
-> Chen-Yu
-
-Thanks, Chen
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
