@@ -1,44 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=156.224.81.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.170
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793106793;
-	b=mPJZBjcEK4NUTvVC7tbmZggGfZcenh12GwZgst+rKqJuAwi53lg9L2LhI4bvRLtoyn5q
-	 Q+Zhog4eyyou9TW1Ofe7hzBlUQA/fEJf7TA+u35Kzc9axZwY7Kxjjw47XHJN1kiWFsO7I
-	 qNR14k7yX4xhpInZO7VGCMItvH5mqFbJqdg6rqC+gKnr/4194rc3aCdrnJ+ckVHl/tEpJ
-	 3ES17Kml/k0JnyfjoYULxdXG3FWFx5LPHVdlxYzr3O5WXSO2D6Ujw2zm6m8fEpNI9H0Uo
-	 d4QUNUYwS04wGU9e61qXEkV2bCsNwPqGzGuW21fH3kPUQvDi+70+8HTfobG4JjEI5IA==
+	t=1793109464;
+	b=YWS24tvdDt69rtHOvTct4BuRMpw0ARRvX3LAP2xqdWSk+2h+SY+8iAkp90hDldXgF5fb
+	 GpIUB/D74famir6tzZi1NXJglPlNvQDYr/CyI/2zAIbAh1A2NdpeBiNMJ6RxUuoALuTAE
+	 W5hKYj+Wg5zhkMisngc2bGaFeay25SG1/WGuPcOUTm6l030qVjFglV4rbTYMZil3BpyOp
+	 BtBAVy0pu0QBNnQaL1c4dKUnMeaQDx016Jqb6Rke+LoYp10qPmxa6tb1eGYIvvE7cFguW
+	 5g2Zr7t76mwp2F3ybysIw9NZTfA3kD414O/AgTdg2hHyvdz9pfe6IPY50kZFNdk6LgA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793106793;
-	h=DMARC-Filter:Received:Message-ID:Date:MIME-Version:User-Agent:Cc:
-	 Subject:To:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-HM-Tid:X-HM-MType:X-HM-Spam-Status:
-	 DKIM-Signature;
-	bh=g7rGr35rsfUat/aHvoe/Mi5rDCRRMxT0NcwnokuEoLQ=;
-	b=gspUcpsWM1JrtBAyaKVW5pHEE1k/i0+7refMYWhRM8LlM2e+b5tw7GUMjmdFD3imdLn1
-	 a65veAv2yRnXj3zI6FQRm5AH35r4mkqhSkZGrMYsX1GO1fEIVX7/JbCyrAkAhX+M6HsCm
-	 2kwhcOuV3WAXVyEmSwi0i9agBiiKFNURBSGAQQF728XWtvJ/jRPgp+He8bbpcf2ENEFuQ
-	 I4NK8iiBWUOJCF4J3QCuTDnADSh7ST7PdMaQuzYGtfRe8fVpe3A65Mgsfv3r3/QhoQYT0
-	 q0gWzFzCs35deRzRV1tVg/7LMCrAmCrU3OKFlvwpaZkq9lnV3v+lu4rbJ6JtdizPTtw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793109464;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=XNC5//Bd5KQNucbkx3QsmmiwGgEOwdHKbps9MXx0uvM=;
+	b=yB4XifkAbepmtzlVbGDlrNyL+DBKrQM9Lv0nC3yXGCPbHydJUgR3Vi+6/si6FPv2rDVr
+	 WFd+H9z4SUX64KgbJIs6bgYT2HdNeCpBe6EYEJUzvyQ5S9FMumo58wSrhbiDq1GsqCEkB
+	 G0xuUO5Jskh4gVgw+GJfwSuOw/ItYAenYDJinqnuC9RHJ/HN4kqREApvP6bI3jpGr0KxY
+	 dAu9oFGVW1sACTiFsM1Hw/lAoYIFuYryaaH4zB8zaKQNlw42RMWDF86nbl1BZrX0KkEzj
+	 fb7aVzCyLdVzAR+qvAt2B0er2BYjwASOGNu2y3iozZNlevaBt4XtBDnEnYJ8WxLvQJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=rock-chips.com;
-	spf=pass smtp.mailfrom=rock-chips.com;
-	dkim=pass header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=if1OE+s+;
-	arc=none smtp.remote-ip=156.224.81.154
-Received: from mail-m81154.xmail.ntesmail.com (mail-m81154.xmail.ntesmail.com [156.224.81.154])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	dmarc=none header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=UnsyCuJO;
+	arc=none smtp.remote-ip=209.85.221.170
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCC3606A32F;
-	Tue, 27 Oct 2026 13:13:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org CBCC3606A32F
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B358606A31F
+	for <sophgo@lists.linux.dev>; Tue, 27 Oct 2026 13:57:42 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 0B358606A31F
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=rock-chips.com header.i=@rock-chips.com header.a=rsa-sha256 header.s=default header.b=if1OE+s+
-Received: from [172.16.12.48] (unknown [61.154.14.86])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 528713ae7;
-	Tue, 27 Oct 2026 21:12:59 +0800 (GMT+08:00)
-Message-ID: <80f85ae9-7162-4940-8dec-690bc00098b4@rock-chips.com>
-Date: Tue, 27 Oct 2026 21:12:57 +0800
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=UnsyCuJO
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5c9e7731b34so2992534e0c.2
+        for <sophgo@lists.linux.dev>; Tue, 27 Oct 2026 06:57:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1793109462; x=1793714262; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=XNC5//Bd5KQNucbkx3QsmmiwGgEOwdHKbps9MXx0uvM=;
+        b=UnsyCuJO9xyekgBoMeHA7lcj3M7sGMa+HOK+9fp7h7cunVARBljdIuQr7ffkTxs9fe
+         uEcupUbw+59pKhyo35wDgfe/ys322FUWuE+yKDOpqjjbwqxrxs19AuoNNDweJHzR0Ebz
+         py2BXm7t5Xiz8q+qzdQNOkGFCfhaHSnt6yr6bImpucNiZlWnOdH5HweuIFVzbDZpMyGt
+         RMKVcyfrMM2IYF+4y/wFxCPpfvI4Ek5fkTuWdrh4x25pOhZTLwC0m1URqvxKrGN7t21+
+         WEY68DK0SoF67LkXShBAWrNd23oAdmC4Euw5IYloAerlq9Kod5ODkCqU9scpU7Zj6MNs
+         je1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793109462; x=1793714262;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=XNC5//Bd5KQNucbkx3QsmmiwGgEOwdHKbps9MXx0uvM=;
+        b=xGh47PHMYZCvgd17uW9QPoD3AcmEAvSip/MueWPo8caV/nIa5d9pZ4awSNow2PwY0o
+         gXf9kykwefWrVXozez0rNJEIxFfGAKK4WiE+MlnR3VZ3Lf2GZ75likGcgYxeKe3y/ql9
+         M4A4IPLIgHi+i+gRIidajzeCG1Pw8jMdVM8urO3mwNlOxkx1z8tk5RC4WNvfNaGSTRV0
+         R0iqBWWLuI16yfe8K0rOccC9j+EE3XltWthWxQcmhAfzTuV62KaQk/QvKB9eQoh7fckX
+         f5W9r+caoxtVzEkxwmjLTG8iIYSd870stNpdasR9oi0IgBoPxT6rA/T/ILrsGxiyOtQC
+         U0ww==
+X-Forwarded-Encrypted: i=1; AKwUvBzs9OTY10SvC0PVQuRllkCtuiVCBKTWmI61sNdkHXM7AhBw7hDS0f3d25h8m38TTf9a7TTfRCU=@lists.linux.dev
+X-Gm-Message-State: AFq9FYI+du1TniiuDHG7ea3iQ+GDocWQDQZigeMPhj82KgV8f0aJs6Os
+	36VuYY6f79w9LUqGEwbAzxYBCsCQIDCFtqki6rjpqoEJW+qAsa6hwvxhaISk7nZy6B0=
+X-Gm-Gg: AYBFou3AP4qu6HvWQtBDpPXZkeU5oNJOxqeZ4VXDba01imzf2SNcF+yyDGNU3WL3NXE
+	RPX4sxfim+VfOs5rWh6EqQ3EY4OSoHtPemtxt2bOH2u4LX0++znva3G7rI724is9zWfZR2SkmHV
+	mPpaRftyKtMxI27Tr24m7X6mFqcwGdbcqRCtGSsCh/zzHZU+88UKk8l3NqFmjj4QtLGPdMLSB3L
+	xfh0l3gm5JZIylfGbDaqGLaAyAjJqZ9GVZY1l0i5d51iJZwC3Bn/6R7F7YSnKlMJaRv1TEfNSZf
+	rNq6fmR2iKHyhvb7ukgb170D0hDxTehTctQe2wh3gskg0RzhgJlKauqKqGGFCIQIDoGqRe4CnLR
+	LG2LIN8Kl8fQnvOPC6KEOy3mBSNy9TR4FPZjIhE2j0GqqpE8dMvbda0We3rgtpbZpzfCOp9gI16
+	P1Y1P1CZy14MjRBDYxmgoQq/vR1Yw9sefYR+9+fHfOY+yNYWhlyfHQohWQTYnpuI2irmzaY9d6R
+	Px8ttJLTMe3RM6oXmVDFh9I3y9tANp9RogMMN5Mylhs0XgT9F64WbHn8k+Jr9wQo+iVbWPXOsEi
+	NrMW6/mPi831pQ==
+X-Received: by 2002:a05:6122:1c07:b0:5ea:a1ad:6376 with SMTP id 71dfb90a1353d-5ec230a26b8mr4056026e0c.1.1793109461968;
+        Tue, 27 Oct 2026 06:57:41 -0700 (PDT)
+Received: from hiagonb ([2804:14c:4c5:8bf0::33ca])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5ec2343a846sm11578284e0c.10.2026.10.27.06.57.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Oct 2026 06:57:41 -0700 (PDT)
+Date: Tue, 27 Oct 2026 10:57:29 -0300
+From: Hiago De Franco <hfranco@baylibre.com>
+To: Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
+	=?utf-8?Q?Miqu=C3=A8l?= Raynal <miquel.raynal@bootlin.com>, linux-pwm@vger.kernel.org, devicetree@vger.kernel.org, 
+	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Jingbao Qiu <qiujingbao.dlmu@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v8 0/2] riscv: pwm: sophgo: add pwm support for CV1800
+Message-ID: <auCsaQt0kda01tZ4@hiagonb>
+References: <20250509-pwm_sophgo-v8-0-cfaebeb8ee17@bootlin.com>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -48,136 +101,134 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, imx@lists.linux.dev,
- linuxppc-dev@lists.ozlabs.org, linux-amlogic@lists.infradead.org,
- linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- sophgo@lists.linux.dev, linux-riscv@lists.infradead.org,
- spacemit@lists.linux.dev, linux-tegra@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 01/16] PCI: dwc: Add pcie_cap field and caching helper
-To: Hans Zhang <18255117159@163.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kwilczynski@kernel.org, mani@kernel.org,
- jingoohan1@gmail.com
-References: <20261027122827.2725643-1-18255117159@163.com>
- <20261027122827.2725643-2-18255117159@163.com>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <20261027122827.2725643-2-18255117159@163.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0aa17d7e1c8c03a4kunmbc22d35997dd
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWRgWCB1ZQUpXWS1ZQUlXWQ8JGhUIEh9ZQVkaTkxPVksdSUpMGR9OGhlMTVYVFA
-	kWGhdVEwETFhoSFyQUDg9ZV1kYEgtZQVlNSlVKTk9VSk9VQ01ZV1kWGg8SFR0UWUFZT0tIVUpLSU
-	9PT0hVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=if1OE+s+0vJEWd3Li6qhSK+6BnN+GRMpiXbxk3rZd8OP+gZRRJTgOPkxvlHVvkfTSHfgfCHrlQaCwDegrXIGqsg5RiwE8+kwUi0A9fecpSt8Hux3Z2shlMceNBl4RxxWxv/AwzexIk4Q9bjOpYyaV2XS7lJ5MiQP1V21+XMyr64=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=g7rGr35rsfUat/aHvoe/Mi5rDCRRMxT0NcwnokuEoLQ=;
-	h=date:mime-version:subject:message-id:from;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250509-pwm_sophgo-v8-0-cfaebeb8ee17@bootlin.com>
 
-Hi Hans,
+Hello all,
 
-在 2026/10/27 星期二 20:28, Hans Zhang 写道:
-> The DWC PCIe core and its platform drivers repeatedly call
-> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
-> PCI Express Capability structure. Besides being verbose, that performs a
-> DBI read every time, including in paths that run repeatedly such as link
-> up polling, suspend/resume and interrupt handlers.
+On Fri, May 09, 2025 at 11:45:42AM +0200, Thomas Bonnefille wrote:
+> The Sophgo CV1800 chip provides a set of four independent
+> PWM channel outputs.
+> This series adds PWM controller support for Sophgo cv1800.
 > 
-> Add a pcie_cap field to struct dw_pcie and a helper
-> dw_pcie_get_pcie_cap() that performs the lookup on first use and caches
-> the result for the subsequent calls.
-> 
-> The lookup is deliberately done lazily, at the first place that needs the
-> offset, instead of at a fixed point during controller initialization.
-> This guarantees that the DBI read happens exactly when the open coded
-> dw_pcie_find_capability() call it replaces used to happen, so no DBI
-> access can be made before the controller clocks, resets and power are
+> Signed-off-by: Jingbao Qiu <qiujingbao.dlmu@gmail.com>
+> [Thomas since v8]
+> Signed-off-by: Thomas Bonnefille <thomas.bonnefille@bootlin.com>
 
+I see this series is abandoned. I worked on a patch to enable PWM for
+cv1800b reusing pwm-sophgo-sg2042.c driver [1], as Uwe asked.
 
-With the controller inaccessible (clocks/power gated), what a DBI
-read returns is platform dependent, most integrations just hang the
-accessing CPU, like Rockchip's SoCs, others might return zero or
-garbage. Zero self-heals as the commit message describes, but a garbage 
-non-zero lookup would now be cached indefinitely, so every later caller
-would use a bogus offset?
+Is it ok if I take over this patch?
 
-Perhaps the "TX Interface Progression Detection Features" of dwc IP
-could help return a dedicated value? I don't know, so I need to check
-it internally. I will get back to you later.
+If yes, I will wait v7.4-rc1 and send the new series.
 
+[1] https://github.com/hiagofranco/linux/tree/v7.3-milkv-duo-pwm
 
-> enabled. This matters for endpoint controllers such as qcom-ep and
-> tegra194, where DBI is only accessible after PERST# is deasserted, and it
-> also means platform drivers do not have to call the helper from a
-> specific callback at the right time.
-> 
-> The cached value is accessed with READ_ONCE()/WRITE_ONCE(), because the
-> first lookup may be triggered from different contexts, for example the
-> qcom-ep global IRQ and PERST# IRQ handlers. A concurrent lookup stores
-> the same value, so this race is benign.
-> 
-> A return value of 0 means that the capability is not present. This
-> cannot happen on real DWC hardware, where the PCI Express Capability is
-> mandatory, so a negative result is not cached separately: it only causes
-> the search to be repeated, which does not affect correctness.
-> 
-> Signed-off-by: Hans Zhang <18255117159@163.com>
 > ---
->   drivers/pci/controller/dwc/pcie-designware.h | 34 ++++++++++++++++++++
->   1 file changed, 34 insertions(+)
+> Changes in v8:
+> - Rewrote supported frequency
+> - Hardcoded HLPERIOD_BASE and PERIDO_BASE
+> - Change usage of update_bits to set/clear bits when needed
+> - Rewrote construct of enablement of PWM
+> - Fixed OE activation
+> - Fixed hw state modification in case where pwm value cannot be reached
+> - Renamed variables
+> - Errors out for new cases
+> - Reworded some comments
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index 0735ae940924..fa31e8b763bc 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -592,6 +592,8 @@ struct dw_pcie {
->   	 * use_parent_dt_ranges to true to avoid this warning.
->   	 */
->   	bool			use_parent_dt_ranges;
-> +
-> +	u8			pcie_cap;	/* Offset of PCI_CAP_ID_EXP */
->   };
->   
->   #define to_dw_pcie_from_pp(port) container_of((port), struct dw_pcie, pp)
-> @@ -830,6 +832,38 @@ static inline void dw_pcie_dbi_ro_wr_dis(struct dw_pcie *pci)
->   	dw_pcie_writel_dbi(pci, reg, val);
->   }
->   
-> +/**
-> + * dw_pcie_get_pcie_cap() - Return the PCIe Capability offset
-> + * @pci: DWC instance
-> + *
-> + * The offset of the PCI Express Capability structure is read once from
-> + * the DBI configuration space on the first call and cached in
-> + * @pci->pcie_cap for the subsequent ones.
-> + *
-> + * The lookup is done lazily at the first place that actually needs the
-> + * offset, so the DBI read happens exactly when it used to happen before
-> + * caching was introduced, i.e. never before the controller's clocks,
-> + * resets and power are enabled.
-> + *
-> + * DWC PCIe controllers always implement the PCI Express Capability, so a
-> + * return value of 0 means that the hardware is not usable. Callers that
-> + * check the returned offset keep working, and the (never expected)
-> + * lookup is simply repeated on the next call.
-> + *
-> + * Return: the cached offset, or 0 if the capability is not present.
-> + */
-> +static inline u8 dw_pcie_get_pcie_cap(struct dw_pcie *pci)
-> +{
-> +	u8 cap = READ_ONCE(pci->pcie_cap);
-> +
-> +	if (!cap) {
-> +		cap = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +		WRITE_ONCE(pci->pcie_cap, cap);
-> +	}
-> +
-> +	return cap;
-> +}
-> +
->   static inline int dw_pcie_start_link(struct dw_pcie *pci)
->   {
->   	if (pci->ops && pci->ops->start_link)
+> v7: https://lore.kernel.org/linux-pwm/20240501083242.773305-1-qiujingbao.dlmu@gmail.com/
+> 
+> Changes in v7:
+> - add detailed Limitations
+> - using BIT(n) instead BIT(0) << n
+> - use 0 instead of disable macro
+> - modify OE judgment criteria
+> - add devm_regmap_init_mmio error message
+> - delete unused variable
+> 
+> v6: https://lore.kernel.org/all/20240406063413.3334639-1-qiujingbao.dlmu@gmail.com/
+> 
+> Changes in v6:
+> - delete the OE function because we plan to use the counter subsystem
+>   instead of capture, so there is no need to reuse this code.
+> - fix set polarity reverse error.
+> 
+> v5: https://lore.kernel.org/all/20240314100131.323540-1-qiujingbao.dlmu@gmail.com/
+> 
+> Changes in v5:
+> - drop filename
+> - fix macro
+> - optimize cv1800_pwm_set_polarity()
+> - optimize cv1800_pwm_set_oe()
+> - add comment for cv1800_pwm_set_oe()
+> - use ticks replace tem
+> - fix duty_cycle larger than period_val
+> - use devm_clk_rate_exclusive_get() replace
+>   clk_rate_exclusive_get()
+> - map linux polarity to register polarity 
+> 
+> v4: https://lore.kernel.org/all/20240304085933.1246964-1-qiujingbao.dlmu@gmail.com/
+> 
+> datasheet Link: https://github.com/milkv-duo/duo-files/blob/main/duo/datasheet/CV1800B-CV1801B-Preliminary-Datasheet-full-en.pdf
+> page 614
+> 
+> Changes in v4:
+> - use macro instead of npwm number
+> - add support for polarity feature
+> - add support for Output-Enable/OE feature
+> 
+> v3: https://lore.kernel.org/all/20240223082014.109385-1-qiujingbao.dlmu@gmail.com/
+> 
+> Changes in v3:
+> - use 0x08 instead of macro
+> - split if statements based on conditions
+> - in order to round up, first calculate the
+>   number of high-level cycles, then subtract
+>   it from the PERIOD to obtain the number of HLPERIOD
+> - use new pwmchip_alloc() API instead of old style
+> 
+> v2: https://lore.kernel.org/all/20240212121729.1086718-1-qiujingbao.dlmu@gmail.com/
+> 
+> Changes in v2:
+> - drop full stop from subject
+> - re-order maintainers and description
+> - pass checkpatch.pl --strict
+> - fix naming errors
+> - add "Limitations" section
+> - use a driver specific prefix for all defines
+> - using bool instead u32 in cv1800_pwm_enable
+> - check and set state->polarity
+> - use mul_u64_u64_div_u64
+> - use clk_rate_exclusive_get(), balance with clk_rate_exclusive_put()
+> - using macro definitions instead of shift operations
+> - remove shift operation on 0
+> - use priv replace cv_pwm
+> - hardcode npwm
+> - set atomic to true
+> - remove MODULE_ALIAS
+> 
+> v1: https://lore.kernel.org/all/20240207055856.672184-1-qiujingbao.dlmu@gmail.com/
+> 
+> ---
+> Jingbao Qiu (2):
+>       dt-bindings: pwm: sophgo: add pwm for Sophgo CV1800 series SoC
+>       pwm: sophgo: add pwm support for Sophgo CV1800 SoC
+> 
+>  .../devicetree/bindings/pwm/sophgo,cv1800-pwm.yaml |  45 ++++
+>  drivers/pwm/Kconfig                                |  10 +
+>  drivers/pwm/Makefile                               |   1 +
+>  drivers/pwm/pwm-cv1800.c                           | 294 +++++++++++++++++++++
+>  4 files changed, 350 insertions(+)
+> ---
+> base-commit: 0af2f6be1b4281385b618cb86ad946eded089ac8
+> change-id: 20250407-pwm_sophgo-5032b3858c27
+> 
+> Best regards,
+> -- 
+> Thomas Bonnefille <thomas.bonnefille@bootlin.com>
+> 
 
+Best regards,
+-- 
+Hiago
