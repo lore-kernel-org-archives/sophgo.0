@@ -1,48 +1,48 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793571361;
-	b=vtf7L4uFu9Aeh3+/ncS2ZvaLkIXfSrm3nXXR5keJci0V25itsrl8by/fQr22hBk+HwKG
-	 D2ariMmE7LLzJIxF7UTps+ODowUdKkhf8w4/Zh8afjMNk1f2jOoJAdpGZLrjl2m60KCRK
-	 QXVvYKSv8z+gbyYkld5xhKi9JFiGkWWTbc1FuR1Yp0nx/HY4cUdLBuXIF9rFXKXJp+pb9
-	 dA0gZ42KFWMv5xgcoi77lnb4u5JBFdJlqqtEkhm7fRyKWlPty4/jUjRn7EJElNt/fzGPK
-	 RMxbQ4R0cA1B7+1nt5awJrkVL3y1GXi8cUTzJd+z7AlFjkKtZcrG2tXnFEBMQ5NENzA==
+	t=1793571376;
+	b=WJyEdeA8/oc9mzbuYY9NuGNvGWLcawR6xVZuYBlGTHCUWcK1EuxJ1x5x2/djiNnPlfEO
+	 EH6JMG8+OptuLutObuyT7oaVs0cnlkU/R4v+vl5etQ+twHkIYXahmfiL/HmyIX5Ydi1u7
+	 UelFCQnf0QEEIN8tqDycuRycvNlRNk84aO+M4Emt3mES2aabG2SnazHyIUYXTOYZuI5Pk
+	 kXjnpUwdnvAbglnyqHNuHUxNm3piXqAUv2e3E9CEtUBLqBt/6mlqQDp7qM7rHOFyUpI6w
+	 eHOLiAk6aLX9DGsskqdeH0pfFYl1A5rAvT2C+TuMbU3Kfkowq92TMqS9DIHDfC8ls7Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793571361;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793571376;
 	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
 	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
 	 In-Reply-To:To:Cc;
-	bh=HaiWGXBSErIs4k623zp/ao2jxpqugtsdrB7YWP808LA=;
-	b=Wrd9T666hYxzSYkZLmHTOZrp+wU7onJCNH8YC9YQXJlpYjLf0plJ+gYTXQ3KIxfr7AS7
-	 Luj/2jZQqDXpc1PnhYxmBAlddZflV1ODmDw2mm0/hF78veFB5FJ9qU/oNVPaKF1Uk58Hb
-	 UNCZxWa4rbwvKk7Rg9oDMc2gA2l1e08CJuznZNswG/x/kdyiju0hzpxGjgurpvAyXKS4M
-	 QaJvwdwsuOqcD0UonXv0GwPF0TYX1AUUxmeET9DPKITei1lj5sPrf7kpzHCBbKXQ39EEd
-	 zkcX7zNgGrX1g3Id8LlGiiJ7NR5fytTEQJtZzc41ZXhqCH1Cw+N4PXvj7tt8EB3VKxQ==
+	bh=pqV79QmChFOf3bbPGI4+7921MVE85dKKWV9jL57f3sM=;
+	b=obeYWEINmYD/ogNxPzrWPKxscJzMt/B9tERFaQWT6t5g0s9OgOmW4lvW1++jLTiEmWDI
+	 MMCe2LVMj4rku7zv/WJQziaq/5XT1IfvLiC/vxRjIpBEVYW7q8I7jObodaivpfYqg54LU
+	 RtetPHliaxy9oLj8iL3WNbQViRq8GS2dxYQlkk10tOrq6Qypv8l0W/Ve4Ya2iEr9fGkWQ
+	 gAXEqJh3L4xImKdJIWDVuqBHMql6oNsEFndtJhv3ggS6xSDZFe68LG2oNgpdun0uO/S2a
+	 3qbbF+LtyHyvQjwevqngxCt4/CUJYci5JVio/IMfIydPQGPJbI0oTd26H1YUdqC01kw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FAAdBT7L;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0LOEbRv;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE48360A3809;
-	Sun,  1 Nov 2026 22:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAD360A6F77;
+	Sun,  1 Nov 2026 22:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=FAAdBT7L
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8696C1F00A1C;
-	Sun,  1 Nov 2026 22:16:00 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=P0LOEbRv
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8632D1F00A1D;
+	Sun,  1 Nov 2026 22:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793571360;
-	bh=HaiWGXBSErIs4k623zp/ao2jxpqugtsdrB7YWP808LA=;
+	s=k20260515; t=1793571375;
+	bh=pqV79QmChFOf3bbPGI4+7921MVE85dKKWV9jL57f3sM=;
 	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=FAAdBT7LZWiow3HSB73F5Qhg5zJ4bgGnyl5I+sKWixLnuLEnazBGZUb7DEaISTEla
-	 qe/iCgNu3IWYoqR8SbhcXtxfwtEdmS1g7OEnNehNWyv1HwaIunuanbKSKU9I2D9804
-	 BHEX5zq0gvX9Aecn4T2zogxgL85S9U4X2WFfZlfs9/IgihuioIbqltE86ZToOaByPM
-	 obMmIepdSuAjBbB1svcQhSFrU6dJ0xWCWSpw2aWHF21z+Xi43M/wSTWwLMNYpMkGaE
-	 hduuGgX4/nKfy4nKPmB8nxGmWLraXzAoYd/KgSDQw51qZ6nF7OQ2QyIE2PTUMOfUXD
-	 Cw7cwVyQPSv8Q==
+	b=P0LOEbRvwTcNBUSW901O5u0IbTsFAS0u7tlHAilX4zpQhlj7rov3kTzRYxOrtXJkq
+	 +kLlB6UyHSdCxIZGfBJQPBLWPHsIw97WryXY4R57r+FehjA0yUzJg9yHCqGZu5/j7u
+	 qF/Ye8qIspqZju8mEmIBaczCeiWVktuLMbCu4tTlypu/S5LEtFoYvRsLOGiwJOxDK2
+	 fhKyBYx4IL+DOEPxJrlBKp6SmfV9nsobQTiRrZDMrgZQPiFYfY0ahvxyOCsHSIIgxn
+	 7zGTWtOhm+EOfESSKUksCnsHptg+CLBeRTvGHiV3Lmw6GrMNWHipG3V8ozR5jeBUhV
+	 pcMZBgzINShfQ==
 Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7D2E438003B8;
-	Sun,  1 Nov 2026 22:16:00 +0000 (UTC)
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7D49838003B8;
+	Sun,  1 Nov 2026 22:16:15 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
@@ -54,20 +54,20 @@ List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/2] riscv: dts: sophgo: Milk-V Duo 256M ethernet
- support
+Subject: Re: [PATCH 0/2] Do not reserve memory for coprocessor FW
 From: patchwork-bot+linux-riscv@kernel.org
 Message-Id: 
- <179357135904.2624073.18131553531055071528.git-patchwork-notify@kernel.org>
-Date: Sun, 01 Nov 2026 22:15:59 +0000
-References: <20261005093749.645014-1-chenyou910331@gmail.com>
-In-Reply-To: <20261005093749.645014-1-chenyou910331@gmail.com>
-To: Chen-Yu Yeh <chenyou910331@gmail.com>
+ <179357137404.2624073.6489638020939885844.git-patchwork-notify@kernel.org>
+Date: Sun, 01 Nov 2026 22:16:14 +0000
+References: 
+ <20260921-sophgo-remove-coprocessor-node-v1-0-ace29446b327@gmail.com>
+In-Reply-To: 
+ <20260921-sophgo-remove-coprocessor-node-v1-0-ace29446b327@gmail.com>
+To: Andrei Lalaev <andrey.lalaev@gmail.com>
 Cc: linux-riscv@lists.infradead.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, chen.wang@linux.dev, inochiama@gmail.com,
  pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, alex@ghiti.fr,
- hfranco@baylibre.com, looong.bin@gmail.com, stavinsky@gmail.com,
- josh.milas@gmail.com, devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+ me@ziyao.cc, devicetree@vger.kernel.org, sophgo@lists.linux.dev,
  linux-kernel@vger.kernel.org
 
 Hello:
@@ -75,28 +75,21 @@ Hello:
 This series was applied to riscv/linux.git (fixes)
 by Inochi Amaoto <inochiama@gmail.com>:
 
-On Mon,  5 Oct 2026 17:37:47 +0800 you wrote:
-> The Milk-V Duo 256M has no Ethernet connector of its own; the SG2002's
-> internal PHY is only usable through the optional USB & Ethernet IO
-> board. This series adds an overlay for that board and fixes the name of
-> the internal PHY node it exposes.
+On Mon, 21 Sep 2026 17:08:58 +0200 you wrote:
+> Milk-V Duo and Duo-256M reserve a region for coprocessor FW at
+> the end of RAM. It is not correct because:
+>   - FSBL can be configured to load FW into a different region
+>   - if no firmware is loaded, the reserved memory is wasted
 > 
-> Changes in v3:
->  - Rename the PHY node to ethernet-phy@1, as the commit message already
->    said; v2 only changed the unit address (sashiko-bot). dtbs_check now
->    validates the node against ethernet-phy.yaml, with no new warnings.
->  - Drop the blank line in the trailer block of 2/2 (Hiago)
->  - Collect Hiago's Reviewed-by
->  - Keep Inochi's Reviewed-by on 2/2, since the only change is the node
->    name
+> As explained in [1, 2], FSBL should reserve the region at runtime.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v3,1/2] riscv: dts: sophgo: add Milk-V Duo 256M ethernet support overlay
-    https://git.kernel.org/riscv/c/627e4e43e555
-  - [v3,2/2] riscv: dts: sophgo: cv180x: Fix internal ephy node name
-    https://git.kernel.org/riscv/c/673f8e66d5ed
+  - [1/2] riscv: dts: sophgo: cv1800b-milkv-duo: drop reserved memory node
+    https://git.kernel.org/riscv/c/6645398c4621
+  - [2/2] riscv: dts: sophgo: sg2002-milkv-duo256m: drop reserved memory node
+    https://git.kernel.org/riscv/c/60e4cafd3090
 
 You are awesome, thank you!
 -- 
