@@ -1,49 +1,50 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.201
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793572782;
-	b=AKYvArEZTjLzY/N4U1Y25eUl61OQfBvRUdYAfqd/4el11KrZyqm6AmAK1T4lYslNGgaT
-	 BSbSYK1P1n5DCiWK7DvzvWSNclM5PEjzq2utw094Rt129UVwxJ+kUc1GJ0tZaqgNKofUo
-	 AMK5T6ZPNF6m0Fk4Eb5PzqQIB+YqX/BPFTgZLSHrXcDGVOXh0iR5DWU9WSzVh8j2ZOvdy
-	 w8f+YQpKhGruXYFxt57Z7wMCpKPqtceGLvNZQdnZwHVa4qokFZ3m5yC3WMypSmJbipt+4
-	 I3JZHAOs28OVlY8dR9MwFWaymrEO8L39hYJdvd5zQ0y4uNQLU1dPu4Xe0LXWdlPmTFA==
+	t=1793690518;
+	b=gqcE20DSbGrgD9IiMX0bnX0xoTIZ83/qa/4LF33yFi3SP/rrnbTSF484DadLlTfaNFTD
+	 gKIf0c10m4W0i3TP5+lUqcWP5FYckCtAyuS6b/lPwptiNYK64RDrYK1+QWgEApAveakiP
+	 aJZ+K4a1uyfssSdnIH+m7k9ONZQQfJG/sxaWIgKeKaqvILaMt3P+wh6MolRvkvXksaEhy
+	 S4yAYxgaXud0BKVx/CcFwPBTnBfzZYV2SPH5ysDtEibK1jfvt/UnYHaZgVKYVktXfqPLT
+	 vc+/9ZUEq+ZBM32fOVZPqdECEYL6Jx6ROczhFgDemLBz4hYshYa31MK//6eiNNyAIMg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793572782;
-	h=Received:DKIM-Signature:Received:Content-Type:MIME-Version:
-	 Content-Transfer-Encoding:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc;
-	bh=uKOf/sWuocTr+7AtsLJJEtOK0qwIac4arzN8no/qmUE=;
-	b=GvbbE3BM+aHIv04p3vCtt8ElAOkmRmcBxZ7YoTxCFi5OP/A83S5ZT9rtGLHAB8bg/pSZ
-	 P6bhPuqmSmzkrOFtKv1kQwnkpA1gKzABwU/GcGehRooTC2kmq0nmO/+nn8XQcdLFPOTXh
-	 UR2v3sFU7Ng1YrirBz4K5O6aPUJj0LjhwX6I23dunY3gp+0ah7ueiW4SwhmVHcPjGg0pO
-	 7t83TQEN5ePSEP2uewhbtm223v6df2rwtTc0KTjJcJf15MlMgldOTM2C6qgGz9OrlOdhD
-	 xYHARVkDHwqVIK1m6HmmXjdJesa325t8u5fAUL9GXOsrkG/DapLA6gvNfEwaa99ezvg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793690518;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 To:Cc:From:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=mgdgkD5bfLPRWsey/eQyLeLRVW9sxJsb6Jy7oprYHjc=;
+	b=MaRWBqV4HLxVJIkJUWgr0npGEnFDmOWt7y5s0DQtjtU41/hJw6Kj0Yw4zB7y5Rw+/RBr
+	 MQs85IvvvIOYjhwZmjjPWr/eq2LtwlY3WK3z3RGwVmn1d83eYyNX7cohROQP3mEMzHTkd
+	 Zeg3UWZzA06qLqrUlA/NHW77VHKLPJyKSECS+UpXqsIk4iaL6ISXh+/T6jlL/RqO/UB1u
+	 0piG0hI1BlWH01IPtROOCd51SCoz0aZxRvJm4czQ5O0bby609LIEOr/DZjtAOiy6715Ws
+	 0KTSdrw/VtovG3I1Qe3Q3x0r7y9ZCmrzIg276Cj8dtfD5aSs7rATy6HJlPQne8dIcGg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QphlQCK8;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	arc=none smtp.remote-ip=91.218.175.201
+Received: from mta0.migadu.com (out-201.mta0.migadu.com [91.218.175.201])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3643B60A2603
-	for <sophgo@lists.linux.dev>; Sun,  1 Nov 2026 22:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=QphlQCK8
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CEB1F00A15;
-	Sun,  1 Nov 2026 22:39:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1793572781;
-	bh=uKOf/sWuocTr+7AtsLJJEtOK0qwIac4arzN8no/qmUE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc;
-	b=QphlQCK8cpyKZuXZE49sZvVNg4wC9zZbAZq8JggdsOIJ5/Jv2HOTHHVSr0SGZ0VfM
-	 SGfAJrhIQjrkWNZd67JOm67gETu116yDg0Y8XASkdC0QA/KPSft57ElcJKmgx9sq8n
-	 CI6zyrHdsnmPr4N01ivysUI89C+y4mjbbCXC+i5g3V5Hq5DjWt0sI6f38KF3/IjTUq
-	 +rgjeOvteGPHVDbr8i7jkfzvIprxCsgDafSYnknEU9zUGJvnacnYVJV+/Bgs1ofO/6
-	 uUWECZt8Y7dugr1aIceBUnZrRXbRHK0jqlPPUn5/02FKZLMujct1uqmvCxMnAXDvM4
-	 HxQN66YfkYiDQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id BA41C391AF9C;
-	Sun,  1 Nov 2026 22:39:41 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63404606A324
+	for <sophgo@lists.linux.dev>; Tue,  3 Nov 2026 07:21:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 63404606A324
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+X-Envelope-To: sophgo@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=rSkbbVN2hzRIwD0U7ZJZJMDJ+E6mFgQa0gOOGWdPink=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1793690512; v=1; x=1794295312;
+ b=OTKjM9LIMfPN4Oqy3LOMGfFkKPYkSwLSvwQhhtthbXsupFACAs/Y/NbdoQBwb774h1Tgx6tI
+ x4DgqXpa8ljCFastNNna+clnlTaAftPZyvbPWDVr0qeJiXXkzMceNN6lmCL8ECZapvTBcz1Dkdx
+ x4NfFoURkI1RgWCMv14EEXvM=
+X-Envelope-To: sophgo@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 7a1b40a4a7ca7ad4;
+	Tue, 03 Nov 2026 07:21:52 +0000
+X-Mizu-Trace-ID: 7a1b40a4a7ca7ad4
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <cddb29f6-fa77-4c3a-94da-1a41dc58df0d@linux.dev>
+Date: Tue, 3 Nov 2026 15:21:44 +0800
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -53,43 +54,41 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+To: "sophgo@lists.linux.dev" <sophgo@lists.linux.dev>
+Cc: =?UTF-8?B?6ZmI6KKB5byY?= <djmolq@gmail.com>,
+ Hiago De Franco <hfranco@baylibre.com>
+From: Chen Wang <chen.wang@linux.dev>
+Subject: Linux Upstream Status updated: Nov/3/2026
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [GIT PULL] RISC-V Sophgo Devicetrees for v7.4
-From: patchwork-bot+linux-riscv@kernel.org
-Message-Id: 
- <179357278029.2624073.4779038529304323110.git-patchwork-notify@kernel.org>
-Date: Sun, 01 Nov 2026 22:39:40 +0000
-References: <aff6ff25-8969-4a35-9543-9113afb2e003@linux.dev>
-In-Reply-To: <aff6ff25-8969-4a35-9543-9113afb2e003@linux.dev>
-To: Chen Wang <chen.wang@linux.dev>
-Cc: linux-riscv@lists.infradead.org, soc@kernel.org, arnd@arndb.de,
- conor+dt@kernel.org, inochiama@gmail.com, sophgo@lists.linux.dev,
- gaohan@iscas.ac.cn, lihangfan@iscas.ac.cn, chenyou910331@gmail.com,
- andrey.lalaev@gmail.com
 
-Hello:
+Linux Upstream Status updated: Nov/3/2026  
+@https://github.com/sophgo/linux/wiki
 
-This pull request was applied to riscv/linux.git (for-next)
-by Alexandre Belloni <alexandre.belloni@bootlin.com>:
+v7.4-rc1 has been released, which incldues PRs for Sophgo Devicetrees.
 
-On Fri, 9 Oct 2026 17:23:58 +0800 you wrote:
-> Hey Arnd,
-> 
-> Please pull this dt changes for RISC-V/Sophgo.
-> 
-> Thanks,
-> 
-> Chen
-> 
-> [...]
+About PRs for v7.4, see 
+<https://lore.kernel.org/sophgo/aff6ff25-8969-4a35-9543-9113afb2e003@linux.dev/>. 
 
-Here is the summary with links:
-  - [GIT,PULL] RISC-V Sophgo Devicetrees for v7.4
-    https://git.kernel.org/riscv/c/5d299ec9395e
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Other new activites:
+
+CV18xx:
+- Yuxuan Zeng <djmolq@gmail.com> would like to take over efuse driver 
+development, thank you Yuxuan Zeng.
+- Hiago De Franco <hfranco@baylibre.com> would like to take over PWM 
+driver development, thank you Hiago.
+
+SG2042:
+- N/A
+
+SG2044:
+- eFuse driver: v1 submitted, in reviewing.
+
+Thanks,
+
+Chen
+
 
 
