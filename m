@@ -1,100 +1,59 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.43
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793931426;
-	b=Iz/KYLXrGrDgbew9qjsN9CwizOjJpwFgBUmipNcet4BzXQ+3mWvGxSWnvm7Iwsw2up1s
-	 mZvjDmRNQShGRKwDybvfFVa1adStJe8afO9Il7SmqSgMHOTsDlVjCROS66hBtB+TFP6y+
-	 CLx8grvApMfI6N6hmCNDokvRX56MKA7iJVthpQ4cKrBx5ue4yMc5Kkoqz0dzNdYGVsCX5
-	 C+KaEHuPNne3NtNpOXHUDItDOvoZHeyQq2smxRZpDQbOYXPMFPx5/bP0JuwZm8PxHXcEN
-	 q/0Da01vB2gYWV1aBsGO34U1DHR40k7SxvxL3TEXUpbH6gWI7Y8QeeXY4P32PM5xEVQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793931426;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=brMY+OaA/TMsf3LmZkAREDA9GFOOeLxAwqMfVeCmlKI=;
-	b=RfKMpRrlEsMVW3FrB0P2YVh75YbyBL3B80uZoUSWvUtRe1zwDVTwkuTq3708tOxGRDeg
-	 zBPZe6ungL505y6XUxdeCU7OwKcWQPMQCytIyEl/pz/Ze3CFSsuHmFSICQlYjNv/Q0EmY
-	 BwhWNJn+30g8ECttplbaI3TYYvxk4st2CTCuyldQh9dUK9yyLRSu6w8AmgtDiHeVTx0CS
-	 usQgFAq33Y16P4m+hRD+Yjar3eZJzwaw/Vyp7u/PV3+KoQTl5UnrsNKmcIt614oskVIjv
-	 dkeM98N9tmQXcp2hq1Ipfr3Ip/NP48DgaHA9lY2j2jt+RKTKHE8azSeo3h+7WNJ4pWg==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QnoxjMuW;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.167.43
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1794091516;
+	b=a3nwMfthz2P3h4MzZPmpokwTOD2zd3ruwrSE+5ZdIqKVTO1ve8UUDDdpzCAx8Pd1ngTa
+	 luJUDAepG2NsuMmEIAvMnIxQKVNaTIluC2VaPf/xdw+whwfzmxOt8Px9hk76nrveOhs5H
+	 Ruswk8YGFouKJoN2iRuQFh1psnsNyvatJoo1Qi5Sop9FhBzCNEHxTpNWmJETkOzpPap3q
+	 jUFdVwWtsJg0iMQcnLMtHc9KVMcNITGQ83luqvAL+T0V1qsz3G65OSPxcUhStntQx91YS
+	 BO/GLBszy53stfjhftnF02lsQ/2aXyqU7jZXx/qlBkEWG7RWYm9Gx+afnhafC/f3mIA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794091516;
+	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
+	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	 X-Mailer;
+	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
+	b=TzMR85idSYNhM+wSMS7heG0h7qka7SxG38xRH6d6/UjOSzbSww1Nv4T7Bi9ypEfFgdQ1
+	 lzTF/JKlQam4Pg26dYvgceXva1QtvSbdDi9iyirpcg7giRoPZW6QSuhZ9YGhPKB9etHEU
+	 l7J84djR+n/C+92d4BJtfWNeOU9x+nu6ILYFLaLtkMpViKc5sQYz081iNQ3M4XWol42NB
+	 auvF/oAXPSHi0dHtkcywKC3F/3cX74UGZg/2YxmHqYx+VBE74btsWLZOMjqRYi1go9wk5
+	 pdYbbuqL8ILPTfIok+oxuRJMc7aZjUqujwhMR4FtMJ76O8k6BGX5OtrtzHHCBnCXyjg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688DB606A31B
-	for <sophgo@lists.linux.dev>; Fri,  6 Nov 2026 02:17:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 688DB606A31B
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E58606A32C;
+	Sat,  7 Nov 2026 22:45:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=QnoxjMuW
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5be3ec14bc5so33673e87.1
-        for <sophgo@lists.linux.dev>; Thu, 05 Nov 2026 18:17:06 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1793931424; cv=none;
-        d=google.com; s=arc-20260327;
-        b=HgtZ6Ge5eOncLrbOjxDvBGBLUWpG8CzIJlnk/B0dfRIwMJh8Lqc1PB7pYHUS/Hl/tv
-         vdjyGi8cjuqzPzOys0J8g2LkiZduJ8UbZrhn/Re+vLnmZdcpwWbvqCJOMRtY86y7lVlv
-         7/VZ1e/6y/623v0a84juF7LCxWMCY0rM2whhhlFlfFuk6mFZdT1AytLlDTL/7SRYUkfD
-         bYfxlq+N3rt07c6G+RfTqMlW7qiIvROyN/cN83RvdOaygCwoAjyh4NhBQW+h++ynDZpA
-         kUTm8fA9MiLt5RWRO3PDj05v5GgMm7/mK34Nai+SSGBgraL93ibHjVUvsHr0yG6LEQIJ
-         NQtw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=brMY+OaA/TMsf3LmZkAREDA9GFOOeLxAwqMfVeCmlKI=;
-        fh=uM32r7o8wu3Y2bQhoMHhoCnkgn2ZGBu9/Fo9rQqYONg=;
-        b=mTVYUC16/myLQs84qbu1Sb/D5X1CTOKkHwk9UlElWwRexF95/FCLQQw9q0slcZB6OL
-         GjKy5/+cqYVlW0sDOu7QfpmKNvplGnx3HZkxi8JMiaMm2lEUqUfzjj4OHdl5Hs3Y1Jen
-         wlRuHPdiAck8HAOoV90aUnGr+EzaSRMQxciz+AhhE8TQnPZY/Au8QQwHGxZ/04GWpdVd
-         IYqc9DDi4hVFeRN3f/RLOGqdkCb+X4mAHTAEgYAGKzb7h4bkHvUlBQ2ezO9rChct1qdt
-         W1lFJzADQYh2eDnac8js/rA6AkfpqsifkSP9u/TB45vKp+KK/hL2IAfPcOTNcmG0z9Zc
-         WplQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1793931424; x=1794536224; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=brMY+OaA/TMsf3LmZkAREDA9GFOOeLxAwqMfVeCmlKI=;
-        b=QnoxjMuWlEHQEvH/XPL9uT7/YeM8X8CK0gv/mJOCb7u2y95BvSPoX2v3VQ1Mj3X+ry
-         0lM+PGiIwArOCr+IlQnx2xXVXB03GhlB/UhytGoW2oKpFqosqMP23ob1jYA9OJxtntyy
-         9assn8n1LP/w9L8N7H7VHq8TrFWSaJUGeKQv53fpK6WarW4jRvl7GSeqoeQ+YmlCLUuK
-         nqjCgNCP6NuH6QrGfrAYbu1dpjvDOXxyUYvaemfQ8YxsAItsp82Po2jwdXx8AogXjBmF
-         i01c6D/Fnk9ARigxX5DjcSgVhVRZm4T8uZay3+LhRmx7nJPcqlunGOhV/VpK1FQeQn7q
-         Z25w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793931424; x=1794536224;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=brMY+OaA/TMsf3LmZkAREDA9GFOOeLxAwqMfVeCmlKI=;
-        b=lfcHU8vXaXK5UmcszNKu538CqPFDptmbgGNL/SGaJVWyqxTN9T3x7s3U79LGSWXj2D
-         mhepZ1FbzXBFyBGplk6mOXcfNV8K56JrDanPAEk2cYM44D8odZzcHiwsFnQRjuHZQUVy
-         XUi1BmdL9j0Gx65g9wvYgsF6YXs8ItqHtjXm5mt185RMtq3Wd6OHeXlR8YsA6K9sskNJ
-         M5trG1xr0wXc79o87g1nsY9gMvlgtHcBjBTRrJFL61cUOub8+n+5jWIJrrE3bjjoLOlE
-         UlG0Zw5Mx9wGcv90j7iSL1SKlhPRN/GDA78Hq5CThXlWcT1aB3HIrd+eDd74OIb2RjDl
-         sAgg==
-X-Forwarded-Encrypted: i=1; AKwUvBzS8J5ANU/lLRANtEETSczuq+dy5RimQoAMIsDVS5LaNxgJRZ17jet9M0/y/P4a+fLOKhQLFdU=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9I19RfWZKR5PX1+EjOomDOvjWPIDCoRQJuadI4TN/RUoZwOdFI
-	kc8HbrcaO+Y+/8JHf3It1vdZZn3aAwIH3RmJY9xaVPP5SgbYos0gwC5h5hd98HSel7njufDNRJn
-	MH60jpV5N9umoZdQM5HGOKUFbJoiKHHA=
-X-Gm-Gg: AYBFou0Z75c1YDf3hxp+PsULYeqKBpGgWt8ED7h2q1DDMm0xLiujLFXZUGas+dXFjxr
-	OrHVRaMdKf5jP+coQEGEj3h9u/uAFnVtoWOYmsMG79var2wlpTGQ6ahwV+JdKqx9QufFbYQ3COI
-	7EQxGdSeu7KfqWHFdOeIFIqDKDZzlFfJ6RIXAFZLT5XCoa8OywhhnAgbuWcNrGAbZ+imj/Gi5sY
-	P29RkJ9rgoIPAUZSVRuPfKPHylXQGPRV9qAI5tPPjTIoYcGAa2hXoEhGw9qL9IeYYAC+KZm9uWv
-	qmGoJ4hWTd8zHSWDRFgjEFa5JcJwHFJGZxqaGLKyQfcdEy7q83NUgoaXeJ2hr1WAZ4Mh4ynUkef
-	VwpzkEvki0XoPE+RGA4f6kYN39f5NFORd9dydZpAtVNeGZhafOsDYZ7+eLP/k/HxD+GdjVvf6Oq
-	uMr/KNiQkpzZvD/buZAw==
-X-Received: by 2002:a05:6512:2524:b0:5bf:d9b4:2481 with SMTP id
- 2adb3069b0e04-5c003c16440mr312893e87.6.1793931424363; Thu, 05 Nov 2026
- 18:17:04 -0800 (PST)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4951F0089F;
+	Sat,  7 Nov 2026 22:45:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794091516;
+	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date;
+	b=WnnaW6MPIQMe5PP2NqlUxaetG2uBm1miygWQ2RwaFHPcW743Qpf4SaYmS2T1W61ye
+	 WtdLYYA4E71F2MSu+qlnK1gs3ILHqyGdT0fIPskWakrOfWSf75OrgTnIPXrPPbnDod
+	 RcpTsR04TFbydLjDDwd7MPCIYTKMNw0PRvfh2SaPORn7p1LhhCmIWA1+NUUJlmZax0
+	 E8mF6dwI4qrxmJn4dvjOc2AJqdOH8WXq9NMbU1SD6QAYbX5EaDHjYAttWMTX9DFOwC
+	 dipLk31/oxxl8oL8kBrRhFzBxfDn15PRVa46dzLqpqkiTQAsjbCkyMrtEWMXA1h5cP
+	 2SIHlV9PuGYRA==
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
+ jingoohan1@gmail.com, Hans Zhang <18255117159@163.com>
+Cc: imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
+ linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev, 
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+ linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <20261028030652.2917756-1-18255117159@163.com>
+References: <20261028030652.2917756-1-18255117159@163.com>
+Subject: Re: [PATCH v5 00/16] PCI: dwc: Cache PCIe capability offset
+Message-Id: <179409150473.143243.11323239293809371653.b4-ty@b4>
+Date: Sun, 08 Nov 2026 04:15:04 +0530
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -104,26 +63,61 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <20261104-milkv-duo-eth-overlay-v2-0-e3d2d39cf229@baylibre.com> <20261104-milkv-duo-eth-overlay-v2-1-e3d2d39cf229@baylibre.com>
-In-Reply-To: <20261104-milkv-duo-eth-overlay-v2-1-e3d2d39cf229@baylibre.com>
-From: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>
-Date: Fri, 6 Nov 2026 10:16:53 +0800
-X-Gm-Features: AclHuK-dqaISPAtfDlMGbnSeryvn5bwnJRHt-qebg7Qbj88Q7XOH_5ONWOiQpyg
-Message-ID: <CAKspUhKv_6BLHVH_5oBsM8UhvCGHEsukRDmMozZEebHZtoJmcg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] riscv: dts: sophgo: make sg2002-milkv-duo256m-eth
- overlay generic
-To: Hiago De Franco <hfranco@baylibre.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>, 
-	Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
-	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
-	Alexandre Ghiti <alex@ghiti.fr>, devicetree@vger.kernel.org, linux-riscv@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.16.0
 
-Tested on a Milk-V Duo 256M with the USB & Ethernet IO board, on top of
-v7.4-rc1. The composed sg2002-milkv-duo256m-eth.dtb is byte-identical
-before and after this patch. Booting it, eth0 links at 100Mbps/Full and
-pings the PC over a direct link, 5/5.
 
-Tested-by: Chen-Yu Yeh <chenyou910331@gmail.com> # Milk-V Duo 256M
+On Wed, 28 Oct 2026 11:06:36 +0800, Hans Zhang wrote:
+> The DWC PCIe core and its platform drivers repeatedly call
+> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
+> PCI Express Capability structure, including in paths that run more than
+> once such as link polling, suspend/resume and interrupt handlers.
+> 
+> Add a cached pcie_cap field to struct dw_pcie and a
+> dw_pcie_get_pcie_cap() helper that performs the lookup on first use and
+> caches the result, then convert the core and the 14 platform drivers
+> that use PCI_CAP_ID_EXP.
+> 
+> [...]
+
+Applied, thanks!
+
+[01/16] PCI: dwc: Add pcie_cap field and caching helper
+        commit: d018ff4be8961981828e75afd36eef90cc524cd8
+[02/16] PCI: dwc: Use cached PCIe capability offset in core
+        commit: f83a7b55517012496bd9539fbbdeeecf0d1e9ff9
+[03/16] PCI: dwc: imx6: Use cached PCIe capability offset
+        commit: 8472374576d300d36de20ad592fd1f39181b85a8
+[04/16] PCI: dwc: layerscape-ep: Use cached PCIe capability offset
+        commit: 87427cc9d7115088e92e8c92c282e28481c9b26b
+[05/16] PCI: dwc: meson: Use cached PCIe capability offset
+        commit: 53f9ed3d6807c6aa79944ed42b3362aa89192956
+[06/16] PCI: dwc: rockchip: Use cached PCIe capability offset
+        commit: bf5c3f4975010750c535b127cb3ab81951c7ffd0
+[07/16] PCI: dwc: eswin: Use cached PCIe capability offset
+        commit: 386b9fa49e26afbd76d934f136f68bc355791ce8
+[08/16] PCI: dwc: fu740: Use cached PCIe capability offset
+        commit: 6fba557b82f4996786d12676f554ad12e67e46d9
+[09/16] PCI: dwc: intel-gw: Use cached PCIe capability offset
+        commit: 02305ad3ad2f918ac009e8ae4c2df8c2b11dc0bc
+[10/16] PCI: dwc: qcom-ep: Use cached PCIe capability offset
+        commit: c489e1008df8a7456686ab637593582be63f14c9
+[11/16] PCI: dwc: qcom: Use cached PCIe capability offset
+        commit: 38af9eda49198b0b2e3d90324af6c5b00123d4ec
+[12/16] PCI: dwc: sophgo: Use cached PCIe capability offset
+        commit: 328c6d507696eb3b075efa6236cdc1c12a2a800c
+[13/16] PCI: dwc: spacemit-k1: Use cached PCIe capability offset
+        commit: ef2bc56f097aafdeee7fceb68d2ca9e4c6956dbf
+[14/16] PCI: dwc: spear13xx: Use cached PCIe capability offset
+        commit: ebd968f20c61b3d86165d9e1bc387044dcf73707
+[15/16] PCI: dwc: tegra194: Use cached PCIe capability offset
+        commit: 8078927bf27866ecc5251919ec6b41478ae620ac
+[16/16] PCI: dwc: ultrarisc: Use cached PCIe capability offset
+        commit: 64e2e54238dc1a63d4c8bd827d140bdffef05403
+
+Best regards,
+-- 
+மணிவண்ணன் சதாசிவம்
+
+
