@@ -1,98 +1,47 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794294584;
-	b=0rU1P8YokSelp7ZKJDZvIFnibNS2b64m6WzORbcdMBhXFPcR7w4Hbwq0gpp6LCnF5TI8
-	 q5elteEji2tFJCneGBrT7LQPETeZHA8Nh6kVckSb3p4qr3s8KYZ+CzvLMz3CkDyTolStY
-	 sam6ZcfGntav3TmBAJbkDIFG/a8S7ih/7Bcr18824M9Ve0XRneixF7LJ6IZH2ZDIdNwv1
-	 wicMpFgUjx8j5N8murXwy0yiaxheKG+cZuxUXdmfyguJcCUYYf7fObcOLfPgs95J5mrBs
-	 mIi/ULAIFVvsNBZvGWql7V9xFEt0M2zyGnEg+34MYJldNlPRXJWx3ELE7O4mzpHxfNg==
+	t=1794307305;
+	b=YsCNqEWkGz1Ih8ar+YBmhBgcZZZgHPpAkFzDtxlHrBqgPbeBDNxInU3ZHrQ5DIUIjOL8
+	 B5pRLhbC6dsLkeQztTX5FfPCeHg7M+VkNR0XLnMfhF/XioJ2rV/bTkAQ3cXPFo2GwQtsw
+	 Qn6a1Zhoafv2zfRKftekidu8JHU0VoyZT5/wnxz9+jjc/d73fmAhbmi+Htbglrsv5oaT8
+	 XbmE6b+QMaZmcadLJ2hdENo/DaW/ObQTEaaqmA4ZPFq82emWLjGxCy5btXQdk7dgvRqeF
+	 nWKxsHshlY3zZpOwe8lnPiQs0X95i2yHkTG2vgtq1ot8VNmVirpPJT3/t/hcpZx2tgQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794294584;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=8o8wjjmrwoQdO4Xnhs54i8QvAQRlpkIVByEC39d22TI=;
-	b=KXJn0DU8kmXfIf5PAT1l9r985VSYlcrqr0VIheGzRsaEcra9Ry8lZveJ6a6ZwmmTfkgN
-	 PceU2M0u92TPZxy7rj3m6bScED/lZ3Qwc8VsbO8Qskj976H+EypAxFSVSr4xlVrDO8hSc
-	 dVJijPJ45GmAV/q/6zwQO3TTIsuYe1LdGEVOwgGMSarLJxd9f5ckSNEErEefZTtzUVvYz
-	 XlQTV4AKHTl4HGJ2oURSTKT2QgKcxkuMh8x1z+Vrz1V3x+taRnwMaUCh0PmraiakfCP0T
-	 jMEqyc4utSwqas4f5qqKQFF2usKOgWcHUDKrz6uFu/uz6a01JWCIR54yaD1IEZuWsJA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794307305;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=TrUCkLH/luW4Lq8qxENFCmJBtDYj2YjkTU7I0UeIPkY=;
+	b=vOJdwOlYqCLcwVDoU+KXvZE1LSWi93SaCeHozuhYTXqJrJsJ7+zIxEa8vYCmEBn0Z01K
+	 ucYRBZsLT+Ip/D1x1Ijco80gM4kI0q+cItR3WfP+iwbmbSYAhYNyAtyhCzJELtTEQP9x/
+	 Uc34J6jpyvHebq4SCsl3ylrXqIT3ko+VtxoRLCG4R5iWDcgMoJLXtCtlzrbCEzZZTtmdL
+	 SNmxK5P9178lRwNcDxVNxeeGpio62uXPZ1OkcBDD8ki+4yUP6EJ5W29Pn928FytvZ+Ta4
+	 FLdN3Z89k8Z+wvHDUKbNByTYA0aAvD1m3a3TClyD9wT5lER6TxXTZSU2I/I+r+vKoTA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XTf69syH;
-	arc=none smtp.remote-ip=209.85.214.178
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OTrfXiUE;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DA4606A326
-	for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 07:09:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 79DA4606A326
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E2F606A33E;
+	Tue, 10 Nov 2026 10:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=XTf69syH
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2e987b4a710so7996535ad.1
-        for <sophgo@lists.linux.dev>; Mon, 09 Nov 2026 23:09:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794294583; x=1794899383; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to:content-type;
-        bh=8o8wjjmrwoQdO4Xnhs54i8QvAQRlpkIVByEC39d22TI=;
-        b=XTf69syHzbIoTgyjrZ25e5sHcRAP/ObNuR1FU6AUt7zrttrOJKAR1st9Hg/TjnMw8h
-         evgi5Z49JYt91dIh2dTrdTUb3cccbRhvOiYoJctYOLFD3jqWDxVlB5RlIYPNGixFuVgB
-         pdlpF4sMPvIP2SnREde3vWwxhtbhfmCrHihTX59a6LfYx8zKfm5t1Od9EKAovxngP7bP
-         EzvuT+F3tdxmty1R8QvcJzID1kg4O6LixWx01J5sciJiVhYSNHccNdgnOamyvPBw5+sb
-         Qv60V8LM07nQN65+gsc2w1ApTQve5jzdgS8/puAkXA5O0o1HJz1inES7D2lMzFNkRkTA
-         4XEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794294583; x=1794899383;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=8o8wjjmrwoQdO4Xnhs54i8QvAQRlpkIVByEC39d22TI=;
-        b=ZbqsUJ4bLEz4zJNgY0Kz+mJ5U/wRVdGum0iMzrE1mrluzBvueJLJmpUJ4Ml8+SBOFP
-         Ka7i2I9ZJHr4XDw62XeIUUkwB/lJ6w8o8PpHuhSlq2vEqWYrRH3SN/aTm5URQTb64lAd
-         /e+5zV8zo7HUNjY6sOeMreEFQrSTWR7iaWhmbVdqa5j81g3FV+9ZTkkzVdgKOY5iHh6W
-         4PQ/Hj7ALXKAIYm9clYLoCblvU40UJOJDljqB1gPLw3V8pTNEeNRua3gT12Ld2w0Lvvz
-         i7itRQTz/jVv4OOGnJsngcr6oGA5z3wcUXPSZaYXaAiyPHUjRszcvdCpN4Xkn6o4U0d+
-         6BXQ==
-X-Forwarded-Encrypted: i=1; AL+hErHz+x2Cqsoo8Kt75ULGmFEW/6vIgJ8JmOS8sW2NQBqCAvswVRDs4nx7u+fOW0fzbGPiDhIg1xg=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/E763F85w3B2/7ne7aVLwEm0MIY1YvscdQSo4e7c9YA21yPutf
-	yqWeJviZQg+BdH65P2jjvo9lv5snk47VeUG2H1FVgaaBA74SK/9qtFm9
-X-Gm-Gg: AYBFou0EfJei5kIY9DgsvtrLfk846yDgnCI4RCZgXIzzd2mB7tvWM44/KgqHqi+IJm/
-	+jhGHN6qcGFPm+I5ap8IF0ArWTA1Uv9oMlUZ/0ktoM/fvWZJds/gPGVRhMMRbxKW+L6dnDoaMuq
-	GlCC7PibwNA1z3n25uzgRsCsT5HZ9pd2Jcs8yIWEV/iiOBk+RaaY1J3e4weRIMY5XIBx2T/FrIG
-	lVTdaPbfKo2XkcXJHPpu/HAH0Sd+/iEKVDFD6hm/MtmnsvXkXOjrb+xFIU09wAkg8zWkkB850LY
-	WjiSaf3PJq2RLPPD7aPIoCzCQ1eAgcREtsHMFiyTVQ8/uOOPK/Ytpz6cM+lGguGb7x/bK3ysKFk
-	v+HMG/ygsXkiwh3EA4eS3jDCNx4h2hraDC+1bPakphNpOy6wUtlcD9xQqWgAMtVM0LwlUGwZKKD
-	JqIOZulCcFCyqczMHWGR4TJWRZJdQl3HUb2saRxC+Gp5dUMyFXQlmUsGW7wU+20zEsMukTUSqRN
-	qxdAtT4imWPqhIhtccgbFXWUxmctRx3ahmEroQnbNLxi3ndiEoPv+MqI0eZEg/7ypH2D2O0k6Ck
-	0N3ym/G80h3DC1Ak48D5utAkF5E=
-X-Received: by 2002:a17:90b:3844:b0:3a7:a3c8:8f4a with SMTP id 98e67ed59e1d1-3b16797724fmr1270966a91.18.1794294582592;
-        Mon, 09 Nov 2026 23:09:42 -0800 (PST)
-Received: from localhost ([2001:19f0:8000:3bef:5400:6ff:fef9:667])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16771b08asm2648642a91.13.2026.11.09.23.09.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:09:42 -0800 (PST)
-Date: Tue, 10 Nov 2026 15:09:23 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen-Yu Yeh <chenyou910331@gmail.com>, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Inochi Amaoto <inochiama@gmail.com>, 
-	Chen Wang <chen.wang@linux.dev>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
-	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
-	Hiago De Franco <hfranco@baylibre.com>, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] phy: sophgo: Add USB role switch for CV18XX/SG200X
-Message-ID: <avLC68zOj8WKuslb@inochi.infowork>
-References: <20261103085847.338613-1-chenyou910331@gmail.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OTrfXiUE
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DF31F008A2;
+	Tue, 10 Nov 2026 10:41:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794307305;
+	bh=TrUCkLH/luW4Lq8qxENFCmJBtDYj2YjkTU7I0UeIPkY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=OTrfXiUErQbonlOA/WsjAetIgyIbgZqKQoipPvgALRJVYDpgVI65lYLgQArSIJ69z
+	 ScvOSlKfS/3iCZE08WSDRRURPLzRIWu6N8LROrY474CApSRHySQikM6TcNwsQEUnXC
+	 1UJeYMBHZpV82Q5LFACMhy4MioMHbhC6pSjIHjZb/HGrvyHJjzZ8UQctqmtMXPzC4h
+	 O76vWqsrv5Cf+YVug4jDJ+F635VJUR6/BfKIJKRfJ7B4VT7RTg9OCW+0QrNvZh2hHk
+	 7ru498g7/6AhrjlZ9K77t9leDHEjz/J3/xK4CY1pkAHGMDzHLPNDqqP1l/hAXc+g8S
+	 hK4ZOIGTauXVg==
+Message-ID: <2e878ad2-1a20-4ee7-8460-64e0d9774ff5@kernel.org>
+Date: Tue, 10 Nov 2026 11:41:37 +0100
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -102,189 +51,87 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261103085847.338613-1-chenyou910331@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] riscv: dts: sophgo: Enable USB role switch on Huashan
+ PI
+To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+ Minas Harutyunyan <hminas@synopsys.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Longbin Li <looong.bin@gmail.com>,
+ Dinh Nguyen <dinguyen@opensource.altera.com>,
+ Paul Zimmerman <paulz@synopsys.com>, Felipe Balbi <balbi@ti.com>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-usb@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
+References: <20261110070627.217946-1-inochiama@gmail.com>
+ <20261110070627.217946-5-inochiama@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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
+In-Reply-To: <20261110070627.217946-5-inochiama@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Nov 03, 2026 at 04:58:44PM +0800, Chen-Yu Yeh wrote:
-> This makes one DTB work as both USB host and USB device on the Milk-V
-> Duo 256M, following the discussion in the thread "Milk-V Duo 256M: USB
-> peripheral mode works on mainline, how should dr_mode be handled?" on
-> the sophgo list. There, Inochi pointed out that a dual-role switch is the
-> right way and that the default should match the vendor image.
+On 10/11/2026 08:06, Inochi Amaoto wrote:
+> As current the DWC2 support role switch on CV18XX SoCs. Enable it
+> on Huashan PI.
 > 
-> The usb-role-switch support in dwc2 hangs on this SoC. It clears B-valid
-> through the GOTGCTL session overrides while VBUS is present, and
-> GOTGINT.SesEndDet then fires back to back. The vendor kernel writes only
-> the ID override in the top syscon and lets dwc2 follow the Connector ID
-> change, and this works on mainline too, without any change to dwc2. So
-> the role switch lives in the PHY driver, which already owns those bits.
-> 
-> Test setup
-> ==========
-> 
-> Milk-V Duo 256M, vendor buildroot rootfs, loaded by hand from U-Boot.
-> Tree: v7.3-rc5 with these changes, CONFIG_USB_DWC2_DUAL_ROLE=y,
-> CONFIG_USB_ETH=y. The series itself is based on current master; the files
-> touched by patches 1 and 2 are the same in both trees.
-> 
-> Tests 1 to 3 ran with CONFIG_USB_DWC2_DEBUG=y and the DT properties
-> applied through an overlay. Test 4 ran with debug disabled and the
-> board DTS from patch 3.
-> 
-> In the logs below, 
-> R=/sys/class/usb_role/3000000.syscon:phy@48-role-switch
-> 
-> 1. Default peripheral, bare board on a PC, nothing done after boot
-> ------------------------------------------------------------------
-> 
->   # ls /sys/class/usb_role/
->   3000000.syscon:phy@48-role-switch
->   # cat $R/role
->   device
->   # devmem 0x03000048 32
->   0x000003C0
->   # cat /sys/class/udc/*/state
->   configured
-> 
->   PC$ lsusb | grep 0525
->   Bus 003 Device 009: ID 0525:a4a2 Netchip Technology, Inc. Linux-USB Ethernet/RNDIS Gadget
-> 
-> 2. Switching at runtime, same setup
-> -----------------------------------
-> 
->   # echo host > $R/role
->   # cat $R/role
->   host
->   # devmem 0x03000048 32
->   0x00000142
->   # echo device > $R/role
->   # cat $R/role
->   device
->   # devmem 0x03000048 32
->   0x000003C0
->   # cat /sys/class/udc/*/state
->   configured
-> 
-> The switch was repeated without an interrupt storm, then:
-> 
->   # echo none > $R/role
->   # cat $R/role
->   device
->   # devmem 0x03000048 32
->   0x000003C0
-> 
-> 3. Default host, on the USB & Ethernet IO board, nothing done after boot
-> ------------------------------------------------------------------------
-> 
-> Only role-switch-default-mode differs from patch 3 here.
-> 
->   [    3.409672] usb 1-1: new high-speed USB device number 2 using dwc2
->   [    3.666655] hub 1-1:1.0: 4 ports detected
->   [   72.484979] usb 1-1.1: new high-speed USB device number 3 using dwc2
->   [   74.804484]  sda: sda1 sda2 sda3 sda4
-> 
-> The USB stick was plugged in by hand at about 72 s.
-> 
->   # cat $R/role
->   host
->   # devmem 0x03000048 32
->   0x00000142
->   # devmem 0x04340018 32
->   0xF300081E
->   # devmem 0x04340440 32
->   0x00001005
->   # echo none > $R/role
->   # cat $R/role
->   host
->   # ls /dev/sd*
->   /dev/sda  /dev/sda1  /dev/sda2  /dev/sda3  /dev/sda4
-> 
-> 4. Patch 3 as committed, debug disabled
-> ---------------------------------------
-> 
-> Bare board on a PC, nothing done after boot:
-> 
->   # cat $R/role
->   device
-> 
->   PC: usb 3-9: New USB device found, idVendor=0525, idProduct=a4a2
->   PC: usb 3-9: Product: RNDIS/Ethernet Gadget
-> 
-> On the IO board, with a USB stick already plugged in at boot:
-> 
->   # cat $R/role
->   device
->   # echo host > $R/role
->   # cat $R/role
->   host
->   # dmesg | grep -E 'usb 1-1'
->   [  415.464739] usb 1-1: new high-speed USB device number 2 using dwc2
->   [  415.940738] usb 1-1.1: new high-speed USB device number 3 using dwc2
-> 
-> Before this series
-> ==================
-> 
-> With usb-role-switch on the dwc2 node, "echo host" hangs the board in the
-> SesEndDet storm, and so does boot without role-switch-default-mode.
-> 
-> With dr_mode = "otg" and no role switch, writing the ID override by hand
-> worked:
-> 
->   devmem 0x03000048 32 0x3C0  -> high-speed RNDIS gadget on the PC
->   devmem 0x03000048 32 0x142  -> disconnects from the PC, host side starts
-> 
-> Three round trips were all correct, and ping over usb0 afterwards was
-> 5/5. On the IO board, the hub and USB stick appeared after one toggle,
-> but not at boot, because usb_add_hcd() moved the PHY to host after dwc2
-> had already set up for device:
-> 
->             at boot       after one toggle
->   GINTSTS   0x05000023    0x04200021
->   GINTMSK   0xd0bc3cd4    0xf300081e    (PrtInt masked -> unmasked)
->   HPRT0     0x00021403    0x00001005    (ConnDet pending -> port enabled)
-> 
-> Test 3 above reaches the right-hand values at boot without a toggle.
-> 
-> Not tested
-> ==========
-> 
->  - A USB stick already plugged in at boot in the default host case.
->  - Running on a master based tree: all tests used the v7.3-rc5 tree.
->  - Boards other than the Duo 256M. Nothing changes on them, since the
->    role switch is only registered when the PHY node has usb-role-switch.
-> 
-> Question
-> ========
-> 
-> With patch 3, the hub on the IO board needs "echo host" after each boot.
-> Should the IO board overlay (sg2002-milkv-duo256m-eth.dtso) set
-> role-switch-default-mode = "host", or should it stay the same as the
-> vendor image?
-> 
-> 
-> Chen-Yu Yeh (3):
->   dt-bindings: phy: sophgo,cv1800b-usb2-phy: Add USB role switch
->     properties
->   phy: sophgo: Add USB role switch support for CV18XX/SG200X
->   riscv: dts: sophgo: sg2002-milkv-duo256m: Enable USB role switch
-> 
->  .../bindings/phy/sophgo,cv1800b-usb2-phy.yaml |  11 ++
->  .../boot/dts/sophgo/sg2002-milkv-duo256m.dts  |   7 +-
->  drivers/phy/sophgo/Kconfig                    |   2 +
->  drivers/phy/sophgo/phy-cv1800-usb2.c          | 107 ++++++++++++++++--
->  4 files changed, 119 insertions(+), 8 deletions(-)
-> 
-> 
-> base-commit: 6628e7d4c6b25c8d18f1345e3a20d21829aae7e4
-> -- 
-> 2.43.0
-> 
+> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> ---
+>  arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-NAK on this patch, I do not think fix phy is the right way for a
-controller problem. See my new patch:
+DTS cannot be combined in this patchset and must be split. Don't mix
+patches from independent subsystems when you send something explicitly
+targeting only one subsystem.
+See also: Documentation/devicetree/bindings/submitting-patches.rst
 
-https://lore.kernel.org/linux-usb/20261110070627.217946-1-inochiama@gmail.com
 
-Regards,
-Inochi
+Best regards,
+Krzysztof
