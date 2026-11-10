@@ -1,59 +1,108 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.210.181
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794091516;
-	b=a3nwMfthz2P3h4MzZPmpokwTOD2zd3ruwrSE+5ZdIqKVTO1ve8UUDDdpzCAx8Pd1ngTa
-	 luJUDAepG2NsuMmEIAvMnIxQKVNaTIluC2VaPf/xdw+whwfzmxOt8Px9hk76nrveOhs5H
-	 Ruswk8YGFouKJoN2iRuQFh1psnsNyvatJoo1Qi5Sop9FhBzCNEHxTpNWmJETkOzpPap3q
-	 jUFdVwWtsJg0iMQcnLMtHc9KVMcNITGQ83luqvAL+T0V1qsz3G65OSPxcUhStntQx91YS
-	 BO/GLBszy53stfjhftnF02lsQ/2aXyqU7jZXx/qlBkEWG7RWYm9Gx+afnhafC/f3mIA==
+	t=1794294408;
+	b=cLRoy8CtGJOAnI2jZJrGFTZfcDaHCHRks2ojL4RJ0RJyeC9QIL35T8y5jzotEnZ0vesH
+	 fjP6mf+9CjueLgoC08FHfuAo9vWKZHakuW8999RkCxB7GHmesPxxtofpvdrrTNyqZvlZR
+	 SHPBQDJ/ZtEpbDMtHPIMPKhAj7kWbkyTp5K+c1sXxz+77kbYSpARBGJo2R08bDlmilEuT
+	 fKkJ0PkYQWdfYxfxvzBmWHMil8wxqji4SCEOyt4u0AGeQOtMwd+fTe0fTzHHE6H2dzz28
+	 /mPbI3OZDF/ONTCX84S2zsAxHY/PrYhbfRHi/iff8kXMPYtVBaBkYdBha5HLLSVozVA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794091516;
-	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
-	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Mailer;
-	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
-	b=TzMR85idSYNhM+wSMS7heG0h7qka7SxG38xRH6d6/UjOSzbSww1Nv4T7Bi9ypEfFgdQ1
-	 lzTF/JKlQam4Pg26dYvgceXva1QtvSbdDi9iyirpcg7giRoPZW6QSuhZ9YGhPKB9etHEU
-	 l7J84djR+n/C+92d4BJtfWNeOU9x+nu6ILYFLaLtkMpViKc5sQYz081iNQ3M4XWol42NB
-	 auvF/oAXPSHi0dHtkcywKC3F/3cX74UGZg/2YxmHqYx+VBE74btsWLZOMjqRYi1go9wk5
-	 pdYbbuqL8ILPTfIok+oxuRJMc7aZjUqujwhMR4FtMJ76O8k6BGX5OtrtzHHCBnCXyjg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794294408;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=oK7s+kTj8JHO9aImQkcN2MWu+t89MEslq0oYBzkYn0I=;
+	b=JOVnumUXGzJqhDO59NAK8Gt4uy0lzlnV/NbuSSTFkTilcJ+J3JrL7t4x34bt9dVMwmCj
+	 O3AXlpMclmsfDtnr7AyuoBEhfz0R5poIvRhAt9skq7T5qkBzMWgr/wsG5FzZVNP5Mf4P1
+	 Za+jms/0rxezjooh6Ejjjm2FPLmU+smVhFuTbQoz66AEHE1Bs2OEjnRPgrZw1F0lwwGt3
+	 U94zE+gFDxek3B9l3pBWYbhD0l16H3SqW6d2vWb6/y3KbciZ0HtcJZQXCr0ZDhSufetgN
+	 KNFtSxpjCrrAlAsVHdkaVr0m15SUUyZD76u/ScB/joYxPWhzXbZuO/zqOkF8u0wPMhA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q1Lu++0l;
+	arc=none smtp.remote-ip=209.85.210.181
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E58606A32C;
-	Sat,  7 Nov 2026 22:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8624A606A326
+	for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 07:06:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8624A606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=WnnaW6MP
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4951F0089F;
-	Sat,  7 Nov 2026 22:45:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794091516;
-	bh=5Sg/QYc64KGsYlE8LxgBfqmE1GMl4mLlfKRfIL2XKbk=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=WnnaW6MPIQMe5PP2NqlUxaetG2uBm1miygWQ2RwaFHPcW743Qpf4SaYmS2T1W61ye
-	 WtdLYYA4E71F2MSu+qlnK1gs3ILHqyGdT0fIPskWakrOfWSf75OrgTnIPXrPPbnDod
-	 RcpTsR04TFbydLjDDwd7MPCIYTKMNw0PRvfh2SaPORn7p1LhhCmIWA1+NUUJlmZax0
-	 E8mF6dwI4qrxmJn4dvjOc2AJqdOH8WXq9NMbU1SD6QAYbX5EaDHjYAttWMTX9DFOwC
-	 dipLk31/oxxl8oL8kBrRhFzBxfDn15PRVa46dzLqpqkiTQAsjbCkyMrtEWMXA1h5cP
-	 2SIHlV9PuGYRA==
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: bhelgaas@google.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
- jingoohan1@gmail.com, Hans Zhang <18255117159@163.com>
-Cc: imx@lists.linux.dev, linuxppc-dev@lists.ozlabs.org, 
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
- linux-tegra@vger.kernel.org, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-In-Reply-To: <20261028030652.2917756-1-18255117159@163.com>
-References: <20261028030652.2917756-1-18255117159@163.com>
-Subject: Re: [PATCH v5 00/16] PCI: dwc: Cache PCIe capability offset
-Message-Id: <179409150473.143243.11323239293809371653.b4-ty@b4>
-Date: Sun, 08 Nov 2026 04:15:04 +0530
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=q1Lu++0l
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-8b68e59ab33so1206691b3a.2
+        for <sophgo@lists.linux.dev>; Mon, 09 Nov 2026 23:06:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794294408; x=1794899208; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=oK7s+kTj8JHO9aImQkcN2MWu+t89MEslq0oYBzkYn0I=;
+        b=q1Lu++0lUyDs671G2KwG8UKHCTr+gaimDj1GlbICPcB2WNWUN8K/zhRdVGCvXKxV4e
+         VVbAkgKfKdjwcmG69mokuQTmiz2e0OSlHY/D1reL5x0xWHODBOcKGkQyRKsGTvBENKuD
+         +gle3DGs7uQhD9hAxzgC1Ap1ZDy4pG+C8rThTkfUovO8u20fUWQFc+kxBgFr7mffcveJ
+         a41nHtHUj0FBhB9Z1gqOrhXpzUfQTrCpgwGIcnbqijyWkv/GB3fLXYVF+G/QHYOUxj7o
+         tT9WTh1BsHKOC7BijC+e+0cqPc0y2SySw7hxcBmz46ah2JE956UvLoNgrThwOnsjDesP
+         mRuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794294408; x=1794899208;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=oK7s+kTj8JHO9aImQkcN2MWu+t89MEslq0oYBzkYn0I=;
+        b=O/mZe3l5i8MnWdRMXXo2KhZr4NReRYXV7WnGue3iD6UOogsG/aCTOxc5Ptg6Il46A4
+         TYhEBjp9k4gb5I/b/yy4+z/G6ZYWUj+Um6OuFu6k/AQ7WU15OWuAo49Fwai71uLmZhoP
+         y/cXXiajOhZpjo3hMxeeJsExod42HEa8tvCOA5Vo06MmbsqPOimlDIK52EUs21SfOW0e
+         VxUPIwE+L57SNh4Y4SQQb3yjZJQKCkoa2c7kd/HUIHWIK/IecFe6QE1M/TMCGUyZ5XNR
+         bN8bfZjaY71rQmlwhDAAy4mNM3JfVIcf7ipbZsGGpGV7N6lpOrT0u0TXgzT8C11u24K0
+         WIZA==
+X-Forwarded-Encrypted: i=1; AL+hErEopCnRNXDv93VZlOO0G+ozADk2MaQPav6j+GadIbH92YBElPtZFZCyIfTFYUzejNgdVzhubXs=@lists.linux.dev
+X-Gm-Message-State: APuU4Z99SWwQrBOB5HpOepEK32SAxpt86lUg4mUpXxU56CbyTVvg96sx
+	Afjeyp2HPrqeD4mx/yOsvtPt415T8qEWkDPMbbx4hQqf2qc8+eZZoj+f
+X-Gm-Gg: AYBFou10dxtorRNaa1TC7U1gkkff2RmWASYkhcwi0iHJevVVSXT8m5UGAJaYiLssRZk
+	8NZ66TprmvXtZeOSy3HztO/XHr1HpQt0HJbH5dj3XATDo4QK9xGK8W8MQIUPgyxx+xktrid87nN
+	Ejct1pRgViUYz5qf0/NHwytk8smANA4aF/EcSefPP2A75ztH9PYATwZEg/jKE7MovVADyBbelfX
+	XkDYOEpDcpBvGFVaIi/BJu0POxNTXNXKbe1dXmGpWxTHaaWnwm6gfg1nLJM57JXYbJe3j3mUe0f
+	9ZcGEQ7Nn6dJ+135Nx3sPB4nEJc+c6hBDULA33hbaaLpZJqB87SyTNYZOx6BOOBjioNtIAVMNI9
+	Ns5rYDNa8g1i74N2Rk5c9ToTJerQc+hUG9+EVdD8bsjBFPKgk/1pcWUz7+hVki4ydd5Hq+SJqJz
+	s7CU4xxpINshkUri30L4WEyaZ8coEibhpHYdperae4p9gmIjbfBciBhG9dClYr4KBPfOIBPAsrF
+	z9Eadl72MeKUi5E64fILl8q3Ku6aV3SSHqi+inwDll6eENYMmPYxNrHZTtBzH5oquHehj87oWIa
+	pbRGNNNfF4mlXDJmT7Al0BpDtMg=
+X-Received: by 2002:a05:6a00:1389:b0:89a:19ae:10e9 with SMTP id d2e1a72fcca58-8ba8725e415mr1910547b3a.38.1794294407637;
+        Mon, 09 Nov 2026 23:06:47 -0800 (PST)
+Received: from localhost ([2001:19f0:8000:3bef:5400:6ff:fef9:667])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8baaae3f3e7sm511794b3a.40.2026.11.09.23.06.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Nov 2026 23:06:47 -0800 (PST)
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Chen Wang <chen.wang@linux.dev>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>,
+	Alexandre Ghiti <alex@ghiti.fr>,
+	Minas Harutyunyan <hminas@synopsys.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Longbin Li <looong.bin@gmail.com>,
+	Dinh Nguyen <dinguyen@opensource.altera.com>,
+	Paul Zimmerman <paulz@synopsys.com>,
+	Felipe Balbi <balbi@ti.com>
+Cc: devicetree@vger.kernel.org,
+	sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org,
+	Yixun Lan <dlan@gentoo.org>
+Subject: [PATCH 0/4] usb: dwc2: Add USB DRD support on CV1800 Series SoC
+Date: Tue, 10 Nov 2026 15:06:21 +0800
+Message-ID: <20261110070627.217946-1-inochiama@gmail.com>
+X-Mailer: git-send-email 2.56.0
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -63,61 +112,40 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.16.0
 
+The current DRD implementation of DRD will cause a interrupt flow on
+CV1800 Series SoC. It has two reasons:
+1. The DRD does not sync the phy mode when change the controller mode,
+   it is a violation of the DRD as it does not rely on a OTG phy.
+2. The CV1800 is entered with a Session End Detected interrupt, but the
+   DRD code has no change on it, so the controller will enter the
+   interrupt storm.
 
-On Wed, 28 Oct 2026 11:06:36 +0800, Hans Zhang wrote:
-> The DWC PCIe core and its platform drivers repeatedly call
-> dw_pcie_find_capability(pci, PCI_CAP_ID_EXP) to obtain the offset of the
-> PCI Express Capability structure, including in paths that run more than
-> once such as link polling, suspend/resume and interrupt handlers.
-> 
-> Add a cached pcie_cap field to struct dw_pcie and a
-> dw_pcie_get_pcie_cap() helper that performs the lookup on first use and
-> caches the result, then convert the core and the 14 platform drivers
-> that use PCI_CAP_ID_EXP.
-> 
-> [...]
+This patch add fixes for these two problem, and I have tested this on
+a Huashan PI board (it has a CV1812H SoC).
 
-Applied, thanks!
+Note: This patches set does not resolve all the problems, as
+      usb_add_hcd() will override the role set by dwc2, but I am not
+      sure whether it should change skip_phy_initialization of hcd.
+      So I kept it as it is and users still needs to set the role
+      in the userspace as "role-switch-default-mode" in devicetree
+      takes no effect.
 
-[01/16] PCI: dwc: Add pcie_cap field and caching helper
-        commit: d018ff4be8961981828e75afd36eef90cc524cd8
-[02/16] PCI: dwc: Use cached PCIe capability offset in core
-        commit: f83a7b55517012496bd9539fbbdeeecf0d1e9ff9
-[03/16] PCI: dwc: imx6: Use cached PCIe capability offset
-        commit: 8472374576d300d36de20ad592fd1f39181b85a8
-[04/16] PCI: dwc: layerscape-ep: Use cached PCIe capability offset
-        commit: 87427cc9d7115088e92e8c92c282e28481c9b26b
-[05/16] PCI: dwc: meson: Use cached PCIe capability offset
-        commit: 53f9ed3d6807c6aa79944ed42b3362aa89192956
-[06/16] PCI: dwc: rockchip: Use cached PCIe capability offset
-        commit: bf5c3f4975010750c535b127cb3ab81951c7ffd0
-[07/16] PCI: dwc: eswin: Use cached PCIe capability offset
-        commit: 386b9fa49e26afbd76d934f136f68bc355791ce8
-[08/16] PCI: dwc: fu740: Use cached PCIe capability offset
-        commit: 6fba557b82f4996786d12676f554ad12e67e46d9
-[09/16] PCI: dwc: intel-gw: Use cached PCIe capability offset
-        commit: 02305ad3ad2f918ac009e8ae4c2df8c2b11dc0bc
-[10/16] PCI: dwc: qcom-ep: Use cached PCIe capability offset
-        commit: c489e1008df8a7456686ab637593582be63f14c9
-[11/16] PCI: dwc: qcom: Use cached PCIe capability offset
-        commit: 38af9eda49198b0b2e3d90324af6c5b00123d4ec
-[12/16] PCI: dwc: sophgo: Use cached PCIe capability offset
-        commit: 328c6d507696eb3b075efa6236cdc1c12a2a800c
-[13/16] PCI: dwc: spacemit-k1: Use cached PCIe capability offset
-        commit: ef2bc56f097aafdeee7fceb68d2ca9e4c6956dbf
-[14/16] PCI: dwc: spear13xx: Use cached PCIe capability offset
-        commit: ebd968f20c61b3d86165d9e1bc387044dcf73707
-[15/16] PCI: dwc: tegra194: Use cached PCIe capability offset
-        commit: 8078927bf27866ecc5251919ec6b41478ae620ac
-[16/16] PCI: dwc: ultrarisc: Use cached PCIe capability offset
-        commit: 64e2e54238dc1a63d4c8bd827d140bdffef05403
+Inochi Amaoto (4):
+  usb: dwc2: gadget: honor pullup requests in core_connect
+  usb: dwc2: drd: Sync the generic PHY mode with role requests
+  usb: dwc2: Add USB DRD support on CV1800 series SoC
+  riscv: dts: sophgo: Enable USB role switch on Huashan PI
 
-Best regards,
--- 
-மணிவண்ணன் சதாசிவம்
+ .../boot/dts/sophgo/cv1812h-huashan-pi.dts    |  4 +-
+ drivers/usb/dwc2/core.h                       |  5 +-
+ drivers/usb/dwc2/drd.c                        | 77 +++++++++++++++----
+ drivers/usb/dwc2/gadget.c                     |  3 +-
+ drivers/usb/dwc2/params.c                     |  1 +
+ drivers/usb/dwc2/platform.c                   |  4 +-
+ 6 files changed, 73 insertions(+), 21 deletions(-)
 
+--
+2.56.0
 
