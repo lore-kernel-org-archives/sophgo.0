@@ -1,83 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.172
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794294412;
-	b=rV0f4qSvN8tNoBB5zyK4M3IVDKZrieLDHfcG6UyKRRbjIMQLh2NzWOPSUDCd4TExB+QM
-	 g2kYHKowWm7wtB7rlrsp4xe474FEhpJwmBOO4rRDF1U4dpTx5Txo7pbNVwRfkhjEnguKG
-	 FeoXjYBjRiM2t5ezO7hFSmOTt4chF8g7yOPBUDG2xzXliJJHMgsWRIauSR9zhBXGlMtVQ
-	 g1xah/vFedO5hJozIlhk/fOE1gq48fIQC8TMD/KVYdmI+AJ9XCn7NKtOQZpmbYwc1RJBm
-	 MQIm71lxmotVoIfOp7F24sCkiksvam1CG0BkFGqtm00trOL7WXSgfkXmJce+lWu/pkg==
+	t=1794294416;
+	b=DRcxjDro92A6qz6w6BjtRmUa9ScejW2IbuCqF/WdIjxVxeXVR1e3CVpE9Wh0ToDe81np
+	 poGKCwqscNiJSZBI2Fqw9YhdTbFf+a/O8zoGyg8VhwocXQBrqK2fQSIOAOtw3MScL+TXT
+	 vJMvdtmxa6vHSj6cp6mUhASgVN1Xv+TS21eiZdHnqjVJk61XmwerPghKrmBYInVizM9jp
+	 QKVf3fTWTimCogsYZ7daZUIjEdvAYa1HHj9gkha6i/6wVpFigOapG2HDlXfg54j2ujVqq
+	 7Htnch7VbBO5Cg5GxxKF6iXXfl/BqYyP5ikCm4GwXW+exKLFAjByDO7yr/o8njsBAMQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794294412;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794294416;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=unKmJDdAUE6W9/H4slkPzsgdbPWz7GOGEzJyQiys7w0=;
-	b=BJ26Lg2l7J1Abpx6bB1WyTX2Hh8wO5DbDr/MBgYTeGFH9NK/hE44YfbbHXwHVlKC4hD1
-	 p6gPJO8+VK8oiyPFWQX93dW5Y7B2/8qwrMm/Ci+tWQ2pIKJuTwBzZCqQilMXcPWLXntZc
-	 OJlFu2Dk48lVtvHrkkBEAoE+ug2tXDn0z7f3YJP9inSjf7Dm+XUIzvsUlKN33dQF7ra5j
-	 ig027LHUDI083jMUNRfnyldyLZoNG9ycUwfJCnd/t+gXcjj7ZVX/iTGtFSo8R1Wdsuzzl
-	 Kb+Soapb7dGW/V3g4vKXvXwQUe+xngHi6RoHoUEIofQKSAza1wYCABRMqb8VhiSrUSA==
+	bh=c6zK+GaiWFIPNNFR8ZSdROw2IY+x8dIA3wZEKaYc0CA=;
+	b=mfeU5XNjJpsbJ13laM7A3WCpaFNaCHcDlnOJq4BG3QjJI7AINmGPuulUXuVrvvSCpSLe
+	 23ofeM8pttKAXoeF2dWJId+gLEqJNmRfnbxMwaIkFvP+G+uXxKPyqN4cztJU+0tag4ncm
+	 uqVx0dPwLEGILDuDHDcE1ov8f+9g6ZzBRh/vCso0FEJWV+yGoxZpwKp735zwgKCjoPw/J
+	 tHrcOP8I8M7/ehw0FKx1eBlgnB9dZwm0lJO+nGgY1B+b3L62qG4DA/sjWOt5y8V0hF4LP
+	 S0HbCISAl5y5YaRNZSAw0SG/lR/AoFZHvtyz4JRcZKHCT7WlrY7CXezTWMK6/r57Gjg==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wPm27lAq;
-	arc=none smtp.remote-ip=209.85.215.175
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nennEvo4;
+	arc=none smtp.remote-ip=209.85.215.172
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C23C60A2609
-	for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 07:06:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 1C23C60A2609
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C482F606A325
+	for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 07:06:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org C482F606A325
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=wPm27lAq
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cdac6d19ddaso620839a12.2
-        for <sophgo@lists.linux.dev>; Mon, 09 Nov 2026 23:06:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=nennEvo4
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-cdaefe02d5dso1016473a12.1
+        for <sophgo@lists.linux.dev>; Mon, 09 Nov 2026 23:06:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1794294411; x=1794899211; darn=lists.linux.dev;
+        d=gmail.com; s=20260707; t=1794294415; x=1794899215; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=unKmJDdAUE6W9/H4slkPzsgdbPWz7GOGEzJyQiys7w0=;
-        b=wPm27lAq7XJpmw3Tp/J2n/XXeqZOvadk43q/fJni1fQNpeTHHSoiGfaqo3G4zlq6LB
-         XdRO3j0Nf8ieZLhZBMiETJzobPTu0OCqTO5fYxgWDcpjwiUD7loU8X8bvlSlixeUGYEA
-         zliMw0YzwprwpMv5Zrj/HZGo86gTMx5Eply7Xg0ebE1S54QDsYg+mbJzG+zmmtQfOkEg
-         c6YGw8SWzIbnFQfpGfe1iVXTWOv9pu2VbqngLEsT4jd+L/KyMg/Qp31u2LhKe2oGTi1V
-         UBKKPg4Sxu2UuuJa+OFvCyK8xH72Al8PVsQ3TEwL2fnnIrGapX46uNohpwNoce19Hu5F
-         ZyjQ==
+        bh=c6zK+GaiWFIPNNFR8ZSdROw2IY+x8dIA3wZEKaYc0CA=;
+        b=nennEvo4QHhJJ9rL17+sr/bM4yqEr1g6SvTKHZT+x0QWkREXgj3rfyQIwohOuHvV08
+         dpmYJfOgFTrcB0uDWme3gC7UhUDWEwEbmzHb/gI6Z4uU6R02vSFM01MGb7xg93zN7Q8w
+         6p5QVqpIhYTGJc2TFe41NRYcT+j2SR93ACs1AqssMSFGtW2Ga2Eho4Z/a0L6qb/TkU5b
+         7c/4H76iLZcvgOyzWBjfnOpMMNpEnO2bpgtAPrVg3c2XA3x3F5BzJOnHyIJAyaucosjk
+         AEviLEGC+jA0Rdmf/2AniOsLyhDFRO3RpwnbkfwWRTFqiH4ZQS3chcR2sdCHMWV+CmHa
+         VgWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794294411; x=1794899211;
+        d=1e100.net; s=20260707; t=1794294415; x=1794899215;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=unKmJDdAUE6W9/H4slkPzsgdbPWz7GOGEzJyQiys7w0=;
-        b=Kts2ACqnAiRN9sWe4aL2Dt0q3WE7hWAzPevbOgfm7iVeA0HzO1aoh/2kYk+EX/Dpl8
-         rYzkU450azncHdvV8ja6SxwjfegSzfaMs2B/zuFQoFkMtDu2qMJHcL8bxIJTZVgMPfM7
-         FdFZ8JeAeQouushR6WCE9JEAa6w/5VDjgO/Ej/el91oX6bq9h+hrgfC5bhWCRmD2RArj
-         0ESKKNYtdZyeWlMJAoHGbcH1sfiWEvhxpHIlq+sM1PFDbK0ai1MmjTecBuZvw/Fs8+/3
-         8iqwdJKJGqYeHqriq+qHzqeqini6+4l3KPBCnOeV6MTd/fyo9LoQfscxFXxXA2mGl6OW
-         kYUQ==
-X-Forwarded-Encrypted: i=1; AL+hErHCp+ixW1BhlB9KEo0dfuXbYQBbs5rGk0ivaJ94vQx2JlVCqKrh10vhScGd+YVLCGAIE7xQkkE=@lists.linux.dev
-X-Gm-Message-State: APuU4Z/e6TPXJWo6juaHYFx/w75qZ83gFez7v92acyCHiMqeSA/Q7NxQ
-	8SgDpYvSLOT5u3ojfsQKS85cOUo9H2C0b1xLxUMQG0YLopdym2sV2XC4
-X-Gm-Gg: AYBFou26jObI71926Td3QaXOYnucrXW58f/UxiME6VV9smprWZkyKmkVkZoezT7hRco
-	3o4vAkk2QzdR7BekK2mwcgl+5qdqfoN58mVAr8s5EkQgCi/XocQ9TL0pI34d0bvgN56N05fJP+E
-	bG5DPkq0eHUKDWpHJL2cSx+G/DvwnTu/qZIJWBdYV9f6mlMXBvm+yeVpUX0b9jWIJbqaDb7JUxx
-	k4XjMFmkoyjfP0c7lhovtGsOb9a25A+KS+9LfX730bb/JNffCgwtlZlK2LnizlxkiTCvIB55Kss
-	AguOv5DpdgyNKUMB8mCHf40RJEJAQgMCC4jEFwIq3JrRMM8hVG8QTIxMiOlnfw66t8fhg8hyyKX
-	zZk7cNNzhSj1s2Gh/yIj17JsBA9ZZbJWAXnf0vjYfcS6Pk6suB+7RPgAUYtMO+gHR4mpCBGMaCF
-	Q8Secl2d5OOj/Q3kXWal8bp6oRXfA2Ehc7SgtlGEl2Zv6BWiX9hmtphWME7TtWOb4gK+SPIDYXJ
-	QlKS9PuF9UWxzHRibnW/ARUTevSWjG43MEZEzIv3s3xnl2nA8s/Pm2PBi6TTE8YiKJPf/lpTyTS
-	1u+SXTBJUJi89O7mU7dpgJhK2r/4G2Mf8krM/VYg7mN15T4x
-X-Received: by 2002:a17:90b:3b44:b0:3ac:9259:122c with SMTP id 98e67ed59e1d1-3b166d12825mr1909705a91.40.1794294411341;
-        Mon, 09 Nov 2026 23:06:51 -0800 (PST)
+        bh=c6zK+GaiWFIPNNFR8ZSdROw2IY+x8dIA3wZEKaYc0CA=;
+        b=SZ3wkKf68BAXIfGcTPix9S3IjRvFUl70jA/LEy5k1NkGw6xxRdDAk67AyxR25qBjsp
+         E+qpQdw6FctDKgP8dS/dSVY0Fvf+r7ei09K1oZAHLgmWkuCg3Rmdx7fKWaPOGlyovUD6
+         rv9JPwcdtfnNS4yYyfpum0B9aZReGPj5g43szHBToq63/L5TogIesVxhm+cj+mKGdgf/
+         yNhUsLUegwYTN7BkjEip0gXuI+LvcEoqa+akVImqLNGUXH2wSL6bpB9y9YLdbXjbFduT
+         Jw+ot/zf13thc1/hu9/jrtLK/p3AdeRLlJ21iwtpIgAB290tKMnGwdTmfkOju5sfXDYb
+         R7Kg==
+X-Forwarded-Encrypted: i=1; AL+hErFUSU7wlwvBhHLYKEmn1j1yusn9PtcweWfv9idisje4byY4jImMhlOHDZSKvwBisTCVidepIfE=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+R9KGEvpypZ77Y8RjrQeuhq3mvKDfOGo+/I61o4RqsR5qoGAkW
+	PEwDdGP+DMi3h92vpeO+9HUS52nwOq8wzQVKIUDcGzYiDzmCb5n0ZVWb
+X-Gm-Gg: AYBFou2p2XMcNyLnY7pN90O8xbX9CeCRwNk0B9FNXlrf40MguXyCVHqe58qNTGeyvJn
+	eOQ4HMKC2zFQy0ncKEPYbsr4RShQMT9pZ3DoCqgs2KNrF38L60iciUB/cxcCPRMKceBIprZFoF2
+	/eBBPv0ZpUy3bbfcS4pMgqfzRsWQ+ep6T6YFVyfL9OkcU7K1yDBYI2vsVmzP+zW7FWc99TRgdQd
+	/65SF6JWkZ4gLFLFOSE/YM25DrKAZ75XK9FdoYoAj3iMC8UTyIKEzo36YsB2MLL7wyB3+HrnHNA
+	z3JNX20WgwB38IeK0yEHVhHACKJ7+uA9l5W5TclyG0Jr2MSp4/Fa8MCwOCkQPjIP04h+Kiwzet/
+	s+o/JNMazU4ZnIjaSHgajSXE2KQ5bSlNzVOnAmrz2oEZKHBbYGqRE9OxQ1Rwyk9073CXekUghsN
+	/sugVaMKaVMlFd6skyN8w5uf1qDcgiBTisHO6lm1qGJPUJoqnlo6tBIsdzbosG0yg0ss44HzmF1
+	iGvgZoPKzuf3LpaHs6aPJZ7I19L+eMvT3G0aWbvhIZ1tFu6/dGYlBt8jH5Mml9p3DrVt4ZZqeiV
+	YFwxmNLxyyhGUtuav+czLtdTLk8=
+X-Received: by 2002:a17:90b:5101:b0:3b1:12ba:867e with SMTP id 98e67ed59e1d1-3b166c817c9mr2153597a91.13.1794294415185;
+        Mon, 09 Nov 2026 23:06:55 -0800 (PST)
 Received: from localhost ([2001:19f0:8000:3bef:5400:6ff:fef9:667])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b167918e94sm2647121a91.11.2026.11.09.23.06.50
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b16797069bsm2551932a91.14.2026.11.09.23.06.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Nov 2026 23:06:51 -0800 (PST)
+        Mon, 09 Nov 2026 23:06:54 -0800 (PST)
 From: Inochi Amaoto <inochiama@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -100,9 +100,9 @@ Cc: devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	linux-usb@vger.kernel.org,
 	Yixun Lan <dlan@gentoo.org>
-Subject: [PATCH 1/4] usb: dwc2: gadget: honor pullup requests in core_connect
-Date: Tue, 10 Nov 2026 15:06:22 +0800
-Message-ID: <20261110070627.217946-2-inochiama@gmail.com>
+Subject: [PATCH 2/4] usb: dwc2: drd: Sync the generic PHY mode with role requests
+Date: Tue, 10 Nov 2026 15:06:23 +0800
+Message-ID: <20261110070627.217946-3-inochiama@gmail.com>
 X-Mailer: git-send-email 2.56.0
 In-Reply-To: <20261110070627.217946-1-inochiama@gmail.com>
 References: <20261110070627.217946-1-inochiama@gmail.com>
@@ -117,34 +117,180 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The connector ID work initializes the peripheral controller and calls
-dwc2_hsotg_core_connect() even when no gadget driver has requested a
-connection. After a host-to-device role change, this clears SFTDISCON
-and lets the host enumerate an unconfigured gadget.
+The USB DRD does not reply on a OTG phy, which means the controller
+should not reply on the switch behavior from PHY. Instead, it should
+sync the phy state to avoid a brolen role.
 
-Check enabled in the connection helper. So the device will keep
-disconnect until the controller is ready
+Set the generic PHY mode after resolving the default role and before
+updating the controller. And disable the controller clock if there
+is a failure and it is disabled.
 
-Fixes: 510ffaa48eac ("usb: dwc2: Initialize the USB core for peripheral mode")
 Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
 ---
- drivers/usb/dwc2/gadget.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc2/core.h     |  2 +-
+ drivers/usb/dwc2/drd.c      | 48 ++++++++++++++++++++++++++++++-------
+ drivers/usb/dwc2/platform.c |  4 +++-
+ 3 files changed, 43 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index 6c8a9f05fff0..5c8e85493289 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -3664,7 +3664,8 @@ void dwc2_hsotg_core_disconnect(struct dwc2_hsotg *hsotg)
- void dwc2_hsotg_core_connect(struct dwc2_hsotg *hsotg)
- {
- 	/* remove the soft-disconnect and let's go */
--	if (!hsotg->role_sw || (dwc2_readl(hsotg, GOTGCTL) & GOTGCTL_BSESVLD))
-+	if (hsotg->enabled &&
-+	    (!hsotg->role_sw || (dwc2_readl(hsotg, GOTGCTL) & GOTGCTL_BSESVLD)))
- 		dwc2_clear_bit(hsotg, DCTL, DCTL_SFTDISCON);
+diff --git a/drivers/usb/dwc2/core.h b/drivers/usb/dwc2/core.h
+index 015a5fb7842d..298b418e6859 100644
+--- a/drivers/usb/dwc2/core.h
++++ b/drivers/usb/dwc2/core.h
+@@ -1400,7 +1400,7 @@ static inline int dwc2_is_device_mode(struct dwc2_hsotg *hsotg)
+ 
+ int dwc2_drd_init(struct dwc2_hsotg *hsotg);
+ void dwc2_drd_suspend(struct dwc2_hsotg *hsotg);
+-void dwc2_drd_resume(struct dwc2_hsotg *hsotg);
++int dwc2_drd_resume(struct dwc2_hsotg *hsotg);
+ void dwc2_drd_exit(struct dwc2_hsotg *hsotg);
+ 
+ /*
+diff --git a/drivers/usb/dwc2/drd.c b/drivers/usb/dwc2/drd.c
+index 1ad8fa3f862a..1ad3804cbc80 100644
+--- a/drivers/usb/dwc2/drd.c
++++ b/drivers/usb/dwc2/drd.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/clk.h>
+ #include <linux/iopoll.h>
++#include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
+ #include <linux/usb/role.h>
+ #include "core.h"
+@@ -88,6 +89,7 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
+ 	struct dwc2_hsotg *hsotg = usb_role_switch_get_drvdata(sw);
+ 	unsigned long flags;
+ 	int already = 0;
++	int ret = 0;
+ 
+ 	/* Skip session not in line with dr_mode */
+ 	if ((role == USB_ROLE_DEVICE && hsotg->dr_mode == USB_DR_MODE_HOST) ||
+@@ -111,14 +113,11 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
+ 	 * mode and sessions. It is the case if cable is plugged at boot.
+ 	 */
+ 	if (!hsotg->ll_hw_enabled && hsotg->clk) {
+-		int ret = clk_prepare_enable(hsotg->clk);
+-
++		ret = clk_prepare_enable(hsotg->clk);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+-	spin_lock_irqsave(&hsotg->lock, flags);
+-
+ 	if (role == USB_ROLE_NONE) {
+ 		/* default operation mode when usb role is USB_ROLE_NONE */
+ 		if (hsotg->role_sw_default_mode == USB_DR_MODE_HOST)
+@@ -127,6 +126,15 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
+ 			role = USB_ROLE_DEVICE;
+ 	}
+ 
++	if (role == USB_ROLE_HOST || role == USB_ROLE_DEVICE) {
++		ret = phy_set_mode(hsotg->phy, role == USB_ROLE_HOST ?
++				   PHY_MODE_USB_HOST : PHY_MODE_USB_DEVICE);
++		if (ret)
++			goto out_clk;
++	}
++
++	spin_lock_irqsave(&hsotg->lock, flags);
++
+ 	if ((IS_ENABLED(CONFIG_USB_DWC2_PERIPHERAL) ||
+ 	     IS_ENABLED(CONFIG_USB_DWC2_DUAL_ROLE)) &&
+ 	     dwc2_is_device_mode(hsotg) &&
+@@ -160,26 +168,40 @@ static int dwc2_drd_role_sw_set(struct usb_role_switch *sw, enum usb_role role)
+ 		/* This will raise a Connector ID Status Change Interrupt */
+ 		dwc2_force_mode(hsotg, role == USB_ROLE_HOST);
+ 
+-	if (!hsotg->ll_hw_enabled && hsotg->clk)
+-		clk_disable_unprepare(hsotg->clk);
+-
+ 	dev_dbg(hsotg->dev, "%s-session valid\n",
+ 		role == USB_ROLE_NONE ? "No" :
+ 		role == USB_ROLE_HOST ? "A" : "B");
+ 
+-	return 0;
++out_clk:
++	if (!hsotg->ll_hw_enabled && hsotg->clk)
++		clk_disable_unprepare(hsotg->clk);
++
++	return ret;
  }
  
+ int dwc2_drd_init(struct dwc2_hsotg *hsotg)
+ {
+ 	struct usb_role_switch_desc role_sw_desc = {0};
+ 	struct usb_role_switch *role_sw;
++	bool is_host;
+ 	int ret;
+ 
+ 	if (!device_property_read_bool(hsotg->dev, "usb-role-switch"))
+ 		return 0;
+ 
+ 	hsotg->role_sw_default_mode = usb_get_role_switch_default_mode(hsotg->dev);
++
++	if (hsotg->role_sw_default_mode != USB_DR_MODE_UNKNOWN)
++		is_host = hsotg->dr_mode == USB_DR_MODE_HOST;
++	else
++		is_host = hsotg->role_sw_default_mode == USB_DR_MODE_HOST;
++
++	ret = phy_set_mode(hsotg->phy,
++			   is_host ? PHY_MODE_USB_HOST : PHY_MODE_USB_DEVICE);
++	if (ret)
++		return dev_err_probe(hsotg->dev, ret,
++				     "failed to set default PHY mode\n");
++
+ 	role_sw_desc.driver_data = hsotg;
+ 	role_sw_desc.fwnode = dev_fwnode(hsotg->dev);
+ 	role_sw_desc.set = dwc2_drd_role_sw_set;
+@@ -214,10 +236,11 @@ void dwc2_drd_suspend(struct dwc2_hsotg *hsotg)
+ 	}
+ }
+ 
+-void dwc2_drd_resume(struct dwc2_hsotg *hsotg)
++int dwc2_drd_resume(struct dwc2_hsotg *hsotg)
+ {
+ 	u32 gintsts, gintmsk;
+ 	enum usb_role role;
++	int ret;
+ 
+ 	if (hsotg->role_sw) {
+ 		/* get last known role (as the get ops isn't implemented by this driver) */
+@@ -230,6 +253,11 @@ void dwc2_drd_resume(struct dwc2_hsotg *hsotg)
+ 				role = USB_ROLE_DEVICE;
+ 		}
+ 
++		ret = phy_set_mode(hsotg->phy, role == USB_ROLE_HOST ?
++				   PHY_MODE_USB_HOST : PHY_MODE_USB_DEVICE);
++		if (ret)
++			return ret;
++
+ 		/* restore last role that may have been lost */
+ 		if (role == USB_ROLE_HOST)
+ 			dwc2_ovr_avalid(hsotg, true);
+@@ -250,6 +278,8 @@ void dwc2_drd_resume(struct dwc2_hsotg *hsotg)
+ 		gintmsk |= GINTSTS_CONIDSTSCHNG;
+ 		dwc2_writel(hsotg, gintmsk, GINTMSK);
+ 	}
++
++	return 0;
+ }
+ 
+ void dwc2_drd_exit(struct dwc2_hsotg *hsotg)
+diff --git a/drivers/usb/dwc2/platform.c b/drivers/usb/dwc2/platform.c
+index ef0d73077034..ab39d6b36b19 100644
+--- a/drivers/usb/dwc2/platform.c
++++ b/drivers/usb/dwc2/platform.c
+@@ -783,7 +783,9 @@ static int __maybe_unused dwc2_resume(struct device *dev)
+ 		/* Need to restore FORCEDEVMODE/FORCEHOSTMODE */
+ 		dwc2_force_dr_mode(dwc2);
+ 	} else {
+-		dwc2_drd_resume(dwc2);
++		ret = dwc2_drd_resume(dwc2);
++		if (ret)
++			return ret;
+ 	}
+ 
+ 	if (dwc2_is_device_mode(dwc2))
 -- 
 2.56.0
 
