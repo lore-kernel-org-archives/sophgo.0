@@ -1,47 +1,103 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.177
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794307305;
-	b=YsCNqEWkGz1Ih8ar+YBmhBgcZZZgHPpAkFzDtxlHrBqgPbeBDNxInU3ZHrQ5DIUIjOL8
-	 B5pRLhbC6dsLkeQztTX5FfPCeHg7M+VkNR0XLnMfhF/XioJ2rV/bTkAQ3cXPFo2GwQtsw
-	 Qn6a1Zhoafv2zfRKftekidu8JHU0VoyZT5/wnxz9+jjc/d73fmAhbmi+Htbglrsv5oaT8
-	 XbmE6b+QMaZmcadLJ2hdENo/DaW/ObQTEaaqmA4ZPFq82emWLjGxCy5btXQdk7dgvRqeF
-	 nWKxsHshlY3zZpOwe8lnPiQs0X95i2yHkTG2vgtq1ot8VNmVirpPJT3/t/hcpZx2tgQ==
+	t=1794309731;
+	b=JtEt1ExnmfItYLYKAQI40skloirEiPmCY6bAcBSxftQs1GKGDjJvS1C3vpSFKeAcoVqc
+	 /DRqZ5Kk4CXvx0DIXFoBrTWLl12HckZ2DZcJqLP6ahE/zge3tTYkq4nTD3gYLGQOn1bmb
+	 WVDvS0HnqXkTtYD91sX1lTZv7tC2JlOCfztoFcrYxrOzDg1gUNM+AJ9cVExkZhrA0FHgv
+	 ispv+zpk9G9AATz97XO86xg8VSLY+ZzuyH2xZJwoLx1ORmOKZQAat6r2WcrMHdwtI7R+i
+	 WrcSEi//BRQKT2Dxk+6fb7oV4Q97rRYF16AIWY5uBIeksetwV6kl3Xrvgxme3jgWxLA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794307305;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:To:Cc:References:From:Content-Language:Autocrypt:In-Reply-To:
-	 Content-Type:Content-Transfer-Encoding;
-	bh=TrUCkLH/luW4Lq8qxENFCmJBtDYj2YjkTU7I0UeIPkY=;
-	b=vOJdwOlYqCLcwVDoU+KXvZE1LSWi93SaCeHozuhYTXqJrJsJ7+zIxEa8vYCmEBn0Z01K
-	 ucYRBZsLT+Ip/D1x1Ijco80gM4kI0q+cItR3WfP+iwbmbSYAhYNyAtyhCzJELtTEQP9x/
-	 Uc34J6jpyvHebq4SCsl3ylrXqIT3ko+VtxoRLCG4R5iWDcgMoJLXtCtlzrbCEzZZTtmdL
-	 SNmxK5P9178lRwNcDxVNxeeGpio62uXPZ1OkcBDD8ki+4yUP6EJ5W29Pn928FytvZ+Ta4
-	 FLdN3Z89k8Z+wvHDUKbNByTYA0aAvD1m3a3TClyD9wT5lER6TxXTZSU2I/I+r+vKoTA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794309731;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To;
+	bh=w1281HNKMHRY/p1WTqMav+kPZ7qzyo5uCTwzSETBiXI=;
+	b=MzH3KCXYh2MYLCOdJ3ed5v++s2VcrgiAI2NF/bMidqOauVE/pG0/jMpG51K7CF/6gPTK
+	 c/uanHekbyBi13gvysEVe5MI6Gym/z18+1oXkEO+/XH5FKPr4llhKh3yHloYORzjKxFyl
+	 ZRLFST5+czf9vD9fn+cSnwj4NXmNy6k7j2ay0h2KXW3stzWrad1CP7XgGqJj3MA5E/mDu
+	 Lt+HN945hpGBaFMedhw7dj+npozT523tZMbIgGiCefdTpleO9VPypd0S2zvc5M+QNxzpG
+	 9F6AaNXmrUD60oXzI9EM8NDIDPHFETpFER0FKoP9KLMetRubCMk0DBMkbMSJmflBfAA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OTrfXiUE;
-	arc=none smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ntH4HAkd;
+	arc=none smtp.remote-ip=209.85.215.177
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E2F606A33E;
-	Tue, 10 Nov 2026 10:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE752606A326
+	for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 11:22:10 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BE752606A326
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=OTrfXiUE
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56DF31F008A2;
-	Tue, 10 Nov 2026 10:41:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1794307305;
-	bh=TrUCkLH/luW4Lq8qxENFCmJBtDYj2YjkTU7I0UeIPkY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=OTrfXiUErQbonlOA/WsjAetIgyIbgZqKQoipPvgALRJVYDpgVI65lYLgQArSIJ69z
-	 ScvOSlKfS/3iCZE08WSDRRURPLzRIWu6N8LROrY474CApSRHySQikM6TcNwsQEUnXC
-	 1UJeYMBHZpV82Q5LFACMhy4MioMHbhC6pSjIHjZb/HGrvyHJjzZ8UQctqmtMXPzC4h
-	 O76vWqsrv5Cf+YVug4jDJ+F635VJUR6/BfKIJKRfJ7B4VT7RTg9OCW+0QrNvZh2hHk
-	 7ru498g7/6AhrjlZ9K77t9leDHEjz/J3/xK4CY1pkAHGMDzHLPNDqqP1l/hAXc+g8S
-	 hK4ZOIGTauXVg==
-Message-ID: <2e878ad2-1a20-4ee7-8460-64e0d9774ff5@kernel.org>
-Date: Tue, 10 Nov 2026 11:41:37 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=ntH4HAkd
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-cdb45e96d2bso737335a12.0
+        for <sophgo@lists.linux.dev>; Tue, 10 Nov 2026 03:22:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1794309730; x=1794914530; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=w1281HNKMHRY/p1WTqMav+kPZ7qzyo5uCTwzSETBiXI=;
+        b=ntH4HAkdLDCux13HNdBZJS1a5OsW8gRSHkPdjCh21B3vId6GeGkGEoUMFDu3WfMrLs
+         tdxVI/kL2oFdJk9JBxlujuWuhC9ARXVgft+giyIXpcknwvXWZm3hQN1mmLai0Xnk0xji
+         h13HKJsPjNWZ8yJKFu+dxd+T1hZTdf9Or4pV9PR3QTlKl+nuvHqx8mdmYgs1JtQHQFyE
+         dggzpd4AZT55sl1+rXvfR3OLrkGoyc9RNmiiLwVogAlfXGaBqtUwmD0dpMqnlooVZF6o
+         iW1Fwd3dZn4g6Bthon3LJTKEcqWJKYCwWdeLRBrpEisUfUBO2W3S7n/dd3DWC8OGhBQ8
+         gGjA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1794309730; x=1794914530;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=w1281HNKMHRY/p1WTqMav+kPZ7qzyo5uCTwzSETBiXI=;
+        b=MOqCcGPiyPQNVAR6Mpk5oQDj9gELD2WEm1Pnkmwh+ZZdxxfBbhu9wiBqZzDn7T/oLQ
+         6HpN6LyvIbSG1VSeqBU3KB0Qv0n7yYNQnmtqBjH/QJISNe8ymDGZkADydywO8uCJGmi/
+         qbDDbMnsTn3ua9FlDZKW9yoeehxiKHJ6sQPzEyos8IKKd1jsjYEMQl2Co8zkOpJpO9/E
+         P5rj+NDSkhT62bqm9QTHI2fwvEVI24dvNiV7Q6LD4tv/XvZR2mdsyLluBFnyIbsRisQV
+         usi1uMTcJiGjjyIBm892s9xCRNyUtoflVeWZNXnJzeOVkccSd8B4Ax5VnlxUzZWxJlYg
+         KEUA==
+X-Forwarded-Encrypted: i=1; AL+hErGyVzWbIzV4ZLfHbg8Z4TGRam0oDT7MfVNwmd9uG35LKOG2g3C5jmjp3gcPOS/q3Do2MieeL4M=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+6qFqbig0FBPBE3m7v5AcA+eYGK32swZEMHf6rcE7/f1282nzn
+	Zf31F0RGeZrkD550IDUTbTpzf9X8UgVQx4fMlA1tPPRqe/wzCvPxVt3z
+X-Gm-Gg: AYBFou26tEebM9WfzWa4Alkc2R1Xy8rdbybuAGmabH+tjqIqEk31QL15hzreLJz6TlZ
+	fFMek39i2Wg4h4YGRdagEg5M8IEmvEe6GsSPRyPJPhD4LsZuziykAPgNkB8+DdP7NZ/WyY9IPjH
+	EEkOB0OXESF3hbY9+FsdIGJjYlFvZ/fCCjKSINdL0BGwfvBawinwJMY0YFQwge3VUEP2Z721E5u
+	Z31hbkv0tYZlThlKsLioMYITtYv+yDylBmSSwWHG9iwfiTp9VDbwckHIiDfVTdtSoiXD5OUkeeL
+	9Phf/z1gFONl8UTHVeuzfGo52vcw7ZbRXJ1JYQYQksKXEC6xHjuQRUnG0ygDdep0TLRd7xlzwqZ
+	oqnIeEhQuQufjwxY6PIoyoOETLEsUHbxbkb7vLXQ5pbKBr6djw1R0Y/jaZN2xcOwxZ7eVTF/Kes
+	wHI5jh53QUw70zlUlyzcxDWRJOH3S5DPdsspaBLO67vrzhh8RS4WhAtQ6woqsD6DR69lS9qlaPm
+	UVQpU1CUtY4C45yPq6eoBHb7L6wPLyRxsb3NHrVAB75Qftq8VFzR7qSNjfADTzkCYrQ26TACf9j
+	zWgrTgmAzvv6Pd41OH5ijP7KkKg=
+X-Received: by 2002:a17:90b:1641:b0:3ab:c674:cad1 with SMTP id 98e67ed59e1d1-3b166ce8601mr2382151a91.50.1794309729892;
+        Tue, 10 Nov 2026 03:22:09 -0800 (PST)
+Received: from localhost ([2001:19f0:8000:3bef:5400:6ff:fef9:667])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b1678d1c0csm3413913a91.6.2026.11.10.03.22.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Nov 2026 03:22:09 -0800 (PST)
+Date: Tue, 10 Nov 2026 19:21:50 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>, 
+	Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Chen Wang <chen.wang@linux.dev>, Paul Walmsley <pjw@kernel.org>, 
+	Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
+	Alexandre Ghiti <alex@ghiti.fr>, Minas Harutyunyan <hminas@synopsys.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Longbin Li <looong.bin@gmail.com>, 
+	Dinh Nguyen <dinguyen@opensource.altera.com>, Paul Zimmerman <paulz@synopsys.com>, Felipe Balbi <balbi@ti.com>
+Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+	Yixun Lan <dlan@gentoo.org>
+Subject: Re: [PATCH 4/4] riscv: dts: sophgo: Enable USB role switch on
+ Huashan PI
+Message-ID: <avL-KigWPepz-Z2A@inochi.infowork>
+References: <20261110070627.217946-1-inochiama@gmail.com>
+ <20261110070627.217946-5-inochiama@gmail.com>
+ <2e878ad2-1a20-4ee7-8460-64e0d9774ff5@kernel.org>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -51,87 +107,31 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] riscv: dts: sophgo: Enable USB role switch on Huashan
- PI
-To: Inochi Amaoto <inochiama@gmail.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>,
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
- Minas Harutyunyan <hminas@synopsys.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Longbin Li <looong.bin@gmail.com>,
- Dinh Nguyen <dinguyen@opensource.altera.com>,
- Paul Zimmerman <paulz@synopsys.com>, Felipe Balbi <balbi@ti.com>
-Cc: devicetree@vger.kernel.org, sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-usb@vger.kernel.org, Yixun Lan <dlan@gentoo.org>
-References: <20261110070627.217946-1-inochiama@gmail.com>
- <20261110070627.217946-5-inochiama@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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
-In-Reply-To: <20261110070627.217946-5-inochiama@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2e878ad2-1a20-4ee7-8460-64e0d9774ff5@kernel.org>
 
-On 10/11/2026 08:06, Inochi Amaoto wrote:
-> As current the DWC2 support role switch on CV18XX SoCs. Enable it
-> on Huashan PI.
+On Tue, Nov 10, 2026 at 11:41:37AM +0100, Krzysztof Kozlowski wrote:
+> On 10/11/2026 08:06, Inochi Amaoto wrote:
+> > As current the DWC2 support role switch on CV18XX SoCs. Enable it
+> > on Huashan PI.
+> > 
+> > Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
+> > ---
+> >  arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
-> ---
->  arch/riscv/boot/dts/sophgo/cv1812h-huashan-pi.dts | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+> DTS cannot be combined in this patchset and must be split. Don't mix
+> patches from independent subsystems when you send something explicitly
+> targeting only one subsystem.
+> See also: Documentation/devicetree/bindings/submitting-patches.rst
+> 
+> 
+> Best regards,
+> Krzysztof
 
-DTS cannot be combined in this patchset and must be split. Don't mix
-patches from independent subsystems when you send something explicitly
-targeting only one subsystem.
-See also: Documentation/devicetree/bindings/submitting-patches.rst
 
+Sorry for this mistake, I will spilt them in the next patch. Thanks.
 
-Best regards,
-Krzysztof
+Regards,
+Inochi
