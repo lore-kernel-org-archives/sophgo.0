@@ -1,82 +1,82 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.41
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794768827;
-	b=ZN0Av3FOCpZgfPD76JiJ0Syd6NYLD/N16gXjXj+c5reMSOZKgaimqUMJpzzhkRUe45sa
-	 nEhR+fRLUia1a0n75noxz3RiSAjz+swgLx/iSeMVa007wXOYQQMLC0LSWrcR72Up0cxZy
-	 yzZdczIOTkIPCkqUa5uITkdA3330uNmpcD8B3u/WeCvSMo6ahp8jeXrTqqW/mQohrQKb7
-	 v2fezYINRluiqYzRdIcgUYEUdXTu+P6+qpxYKK36Dyi1oo2S3oo3zEuOqn6fa2OxOf4T4
-	 gDnA6ows2yWLfqQCGN7G7za2p1D+xwV+PwTUPojoBDroe3uJngB3AIcUCmeH5Jdc5MQ==
+	t=1794780189;
+	b=mKWc52kHt1go3rpkI66T4XxCVq1VCnpHeBvGsQbvujgQ8jvGQFlXVnDZuBMQe3P0MEvh
+	 A0c6OtcslOSvSV6TmKDzErEAP4VI+R3dCHXdB+4SkxDVeGdbTUvM0HY3ULnX9lFIFd6kp
+	 3yIKu9ls2NMFEaA7OdNWVLyeUvrHv+A5xjTc+Fka0SSnb/Ic95ZgGLRJR76DcMtogYWZ2
+	 WvAwn8IlE3H639pnWNR2wcSOanq+Q7F7M7AAT1kkfRcqNGkeosirEL+cAs8jFEbOOlWno
+	 h2nwAmUsvmW8wRa0eRoYfhhl3980pZkGUi0+NKrr0tDkQYzGDBRUGENBvjwUof9FMfw==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794768827;
+	a=rsa-sha256; c=relaxed/relaxed; t=1794780189;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
 	 MIME-Version:Content-Transfer-Encoding;
-	bh=XRhuQlMYzHQu/cSsivJpIzm9mt/nTPkd+5XFG9V8Aww=;
-	b=uhaNQHMXYZ0n44pWiUXRA1fCzLSXdqwve3LF/xP4x4KO5bEVkPDis1ONMet1xY2Z94m6
-	 C+xdMm4RNRgpTWrz3YXZWzOEBuZtRbbfMjivfKwoNSE8zb5u+OnRLcBzf1sd5c1Z9tq7/
-	 Z9FkKavw4+ayvXTjU+jfZq91V1zuoPdyUhXUf/vGqUanT9ej8FYhNddkJZYc4PHgWnSqa
-	 lNQ9Et8vy+GXKHTd1DOvWh1gf9qP5NrKApaJhVR6v6upetGh8UVc4GgBaO+a7rfHnSqSx
-	 uR6iziewNEACXBygZjaa6+PaTNwaqZ6pDTCncWGPrbbgHiVUIm5hKWrWCn76yQgRq7Q==
+	bh=AvuwrZIWInS/vmhg3MkifAQ2jLu31ynJDcJbkxB/zW8=;
+	b=dBvDzHilb+VYNW8HjD30IrNi6u+P0B6GZFVyT+C+LNbjyBPaigAya8zKRIGBRpuav4TU
+	 ezx0fo2ZpjOMJ58MpcfdKO1XCJT1mZxUz3IxYQtVcm/gbJ+uaWJeZM8n8o9QyHvZ+j6gp
+	 bTMcndWlEm1ccPoE3qGuEmEWAnMrzjoARIudHCwAh0VOfXpPWSw45IWXEKXBZEvkBURZW
+	 zUQ6JM+LY/u1hbof5ChnY0cV/AzN532Cw0TbFlTAhu7MzUHxZ50d8RrOJ4QWe3xzUZr0f
+	 zIq9/LwE/Bhq8gO2b3g6OtiDeP5tjNlD25HzP/GFdlwx16J986SFqh4xL5fe64ckx5A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=yuzi.co;
 	spf=pass smtp.mailfrom=yuzifovich.name;
-	dkim=pass header.d=yuzi.co header.i=@yuzi.co header.a=rsa-sha256 header.s=google header.b="MIL2/69z";
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	dkim=pass header.d=yuzi.co header.i=@yuzi.co header.a=rsa-sha256 header.s=google header.b=Fcrbv9zb;
+	arc=none smtp.remote-ip=209.85.221.41
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050F8606A31E
-	for <sophgo@lists.linux.dev>; Sun, 15 Nov 2026 18:53:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 050F8606A31E
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6A4606A31F
+	for <sophgo@lists.linux.dev>; Sun, 15 Nov 2026 22:03:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DB6A4606A31F
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yuzi.co
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yuzifovich.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yuzi.co header.i=@yuzi.co header.a=rsa-sha256 header.s=google header.b=MIL2/69z
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-4910b863b84so2083924f8f.0
-        for <sophgo@lists.linux.dev>; Sun, 15 Nov 2026 10:53:46 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=yuzi.co header.i=@yuzi.co header.a=rsa-sha256 header.s=google header.b=Fcrbv9zb
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-490c3ae81d3so1387458f8f.2
+        for <sophgo@lists.linux.dev>; Sun, 15 Nov 2026 14:03:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=yuzi.co; s=google; t=1794768825; x=1795373625; darn=lists.linux.dev;
+        d=yuzi.co; s=google; t=1794780187; x=1795384987; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to:content-type;
-        bh=XRhuQlMYzHQu/cSsivJpIzm9mt/nTPkd+5XFG9V8Aww=;
-        b=MIL2/69zPsKaLufCwH9R+IXiIdgPwItbZTjFu90iiRdhbdLsuzv7EAwWLIrweDIZuA
-         MXRzXcJ1T5XJQ83+qtEhP3zruJ47sz2/Rntk8pXnFeqlPXw1k8Ud7k6DEaGyKCHtQBnT
-         MZHXRbK7vie2aoLSu2H5Iij7L1/Op1qYkUkss=
+        bh=AvuwrZIWInS/vmhg3MkifAQ2jLu31ynJDcJbkxB/zW8=;
+        b=Fcrbv9zbt58oXf7uP7iP/o1IIM9ZgypHch4hM9t8yJlO0eqAhQ1mM6WxylDDthdqlF
+         9to8DH673Jr8axD8ygg9WG0y4icHBCd8f9V2PBe7ZQzyxus31QGtO/X/1OpDzS1TBuya
+         v5p6tGRDrRV5ATE6WLTAW4IP6eOfjbO2J5cPo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794768825; x=1795373625;
+        d=1e100.net; s=20260707; t=1794780187; x=1795384987;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to:content-type;
-        bh=XRhuQlMYzHQu/cSsivJpIzm9mt/nTPkd+5XFG9V8Aww=;
-        b=p1MBY7VUK78ppLGn6laGL5BL7isYirp4wwjchyBzHRb2FJcT8Ej7lPkk7pWvdRc8HA
-         3gn9vt8wlmi39gVAvqdDm4k7reg3h7/v+v1s9fwKPagXKy+w8cNKZIABBSXD6/ZNPBoc
-         C2DFee8ieGGgerZS2OKstj92JKxRX5Uh0I3KxdJ3ucef4vR/uvyMHx/UN8rHef/+iOMW
-         4bnAiLnNvGsnKjCdc6YT6s1/viXp9vyk+1VtMHADPi5K0x5g1+aRYdTURvCWbs32FNNd
-         JRJIukFLM7P2rW/Dp8kvDaMb59Oz/VBuWyBoWjCTLsn/QyjXY3ol4NI0001N0t73+YAb
-         xWAw==
-X-Forwarded-Encrypted: i=1; AL+hErHC/NjM76/JtS5Q0IVXraVkKjP1fSzHpRl/ulm6AYhAnaaAuVma4apbg/C8SxcTmekQYZMw8Uc=@lists.linux.dev
-X-Gm-Message-State: APuU4Z8boxcrB5nMspbty1qwH27J5WW1f5XlqcAF4BAgb5lML/VRpKJD
-	JP6S5P62P2/KzxnZ1jViFB8GEQ4kabtKNKjrLSsJv5Hmu2vdvY7q5OrYPEtwMK/Nxw8=
-X-Gm-Gg: AYBFou2oqG+yVau6pUv8BV9jMxFwSSywOdiZek4P84rTUsT7ER88kUSDSMiczw4jnny
-	DqymtHIogqRfT7GGGvq+OxKwaHVdreE1ZnpfGCbeWuIXxMs25S1CAYtZUS4GfFGSQpmogjJEySy
-	0CCVmw/uu6zu1gz4VHKpehCzBSpqKjbKgtSJUmf5x991eDkmkQiRFKj7DMyD7l7oNq33d7+PmVb
-	LMsrZirtplqAmDXXjDuT2Kpa3JVU/y3v1m+VFLHZ06kfLvN1v3Q4yKI5IzVbNEcP0tJ+I3qqJVH
-	KrI6o+K7qVgoAZx8l/wmizASTFtU13xypIkhmVCH2146hLGDdYPkqG2b7JKo/nGd8H1PhaVuKJZ
-	FXyoDNBHLPzUh6/D/D/gySZ/bqvlnfw+bJlTp8h/aFDKmOakua4vyGqAKnDpQTfYw8OaKkuc0m6
-	Q48gqxHBEJ3HUAYsAWFkyqp0ztY9U/1KiDNOQrAWd/Hsc4TlXGEp8XtRXmTmEGr+02rmJKwq5GD
-	AUtIzrS3jFPZ99iLfDcomtu/JQPrxWggjf/inDI1QPLtQQiOuGT80wiDGgTk9agv3fNLbU0fZT7
-	GjL6bLqdg2I5s0iSB6HgX/YpeObSSYqdpNF2zLRgJ7xvAOMafOsInMmUurTGV6tytdID4BfsTcs
-	gbDGYP7vRocr+72XL7UbeXIFfgNlkbP52vL5D/KKMeakJqlXVjgq7FFhvsS3sJCt/eigh82Usfu
-	8A+luo9kKAvApZlw==
-X-Received: by 2002:a05:600c:8b16:b0:4bb:5d38:259f with SMTP id 5b1f17b1804b1-4bb5d382639mr158238605e9.12.1794768825374;
-        Sun, 15 Nov 2026 10:53:45 -0800 (PST)
+        bh=AvuwrZIWInS/vmhg3MkifAQ2jLu31ynJDcJbkxB/zW8=;
+        b=iDDr8C26OCOaVeSZd+PXEJeYXb0blk3sEfPCbj6wKXvNI/TkOLgb/PYlzdVYKLG5nD
+         VAxsn/UGyQWlYKdq0CmbWd62+0IsqKWUdZ6lfd0FB/Ql80l+bjI9sLSQJkcSsYjLA+b4
+         sTWtOFyydJTFOwxS7m90GunlddUJaHNTLAcgNR3GAhJWEZmvQkf5ka0dxdUKf716GzKI
+         VWp6ywZqJvfaU+0rsbZ8/iYPsuEozaGHoGH0uNreL7NOx4TDd7lUnQ2Xa+xzwTtO+UJR
+         N4PB6TMQpAQuRtkFIKhXQjxVk7rJnEgf2wO08w8duvkRS8CPTmCt8A8vsL9GgJG2azfH
+         H+8A==
+X-Forwarded-Encrypted: i=1; AL+hErEKOyOkb2oCBdlrw2+vxQrlGu+kSn93BHkY3+Ae9w2vmBNYJPXyOJDn1wr5bGY1+hLGM0d2u2I=@lists.linux.dev
+X-Gm-Message-State: APuU4Z91am4OGhWJR7+d45dpAdzG/aVRMn/VTekg5cKZkzLCXSiR2ySq
+	yV+C8KKsW48SiDAzSNPf8/8h3Pfj1+GSRSujoCgurbHTDe1ppRsnzr8Uv/DJXp5U2H0=
+X-Gm-Gg: AYBFou2viEW9CaRd9GODjOC3BiIxSL7/gKI5o5tGS99RdIvIR/Y1e7jrhdmKNHssTsu
+	bxPaPkzwzLbKq++r6nkiQVAIRTuWA2RF8KwYqdzsl7hAaSzbCAkPLLrOjgxagxOnm7qEI1xB1gR
+	bhPaKt/E65FcWW2QLpqhGkTZ8IEW5bm0+OC5JJw/Rbd+AwtaNkORZQmDytJmRE2AjEmfx7Qmqdr
+	sABrUaWdV8KM3llKhnQ9FpI9Ux5wHbOFPs6Q/EsnLJWuSBz3Seuvvsf20dBl+HRi+Bgvb4v3AMA
+	sYW02yqVS/rZZgBFxaZM6T8PVAnIs8dkWpe8TNVH8Y51oei3c7GQQs0ZE+hdx+qAdJrt++TCbgT
+	QRwkSVqxv2+D8O/ydTz8HNR6OvThptY465aPfcfqTb6yuKpOmu8uo+OBy4uVi/mnGxFW+5fhLj5
+	jGR8osxbgBCGqW83qZlq8agBXTmFYRi9t5VzaGgCzNXtWErDYIvxP7I6KfpVS4LmgU+b2UzLuvT
+	i3njAZQfAvXACAXklZzwzvRlKsaxGq25OG9x4xy0inVV2Czo0uPAcp2nCGPuJrBhH63186tNFIZ
+	sWJWcBFj/dZ9jJgIVth/FcQek1RLr5ScsAJiXyfDHnUi/OJ+D/SWXehJ+ebVE67N06vJX9Ne3D+
+	h4LU2mO2GLlfjvyglSteUVELeWVloslMsyuvvkJf3rJvclO7ostlt+hXuNz+OP9TOWNV8Qlkk24
+	p2cYw7mHOSJkcXEQ==
+X-Received: by 2002:a5d:5e01:0:b0:493:c0a:507d with SMTP id ffacd0b85a97d-49c6e4a3953mr20083609f8f.1.1794780186868;
+        Sun, 15 Nov 2026 14:03:06 -0800 (PST)
 Received: from terra.lan ([78.83.170.221])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4bb4e2538b9sm508419145e9.1.2026.11.15.10.53.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-49c5fe370f8sm16616543f8f.27.2026.11.15.14.03.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Nov 2026 10:53:44 -0800 (PST)
+        Sun, 15 Nov 2026 14:03:05 -0800 (PST)
 From: Vadim Yuzifovich <vadim@yuzi.co>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
@@ -85,12 +85,12 @@ Cc: Chen-Yu Yeh <chenyou910331@gmail.com>,
 	linux-usb@vger.kernel.org,
 	sophgo@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] usb: dwc2: gadget: make descriptors visible before the endpoint is enabled
-Date: Sun, 15 Nov 2026 20:53:35 +0200
-Message-ID: <20261115185335.782678-4-vadim@yuzi.co>
+Subject: Re: [PATCH 1/3] usb: dwc2: gadget: restart descriptor DMA isochronous OUT endpoints after BNA
+Date: Mon, 16 Nov 2026 00:02:58 +0200
+Message-ID: <20261115220258.1519467-1-vadim@yuzi.co>
 X-Mailer: git-send-email 2.56.0
-In-Reply-To: <20261115185335.782678-1-vadim@yuzi.co>
-References: <20261115185335.782678-1-vadim@yuzi.co>
+In-Reply-To: <20261115185335.782678-2-vadim@yuzi.co>
+References: <20261115185335.782678-2-vadim@yuzi.co>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -102,104 +102,104 @@ Precedence: list
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In descriptor DMA mode the core fetches the first descriptor of a chain
-as soon as the endpoint is enabled. dwc2 fills the chain in coherent
-memory and then writes DxEPDMA and DxEPCTL.EPENA with writel(), whose
-barrier orders the earlier stores before the MMIO write. On a Sophgo
-SG2002 (T-Head C906, DWC_otg 4.20a) that is not enough: the core still
-finds a descriptor that is not host ready, raises BNA and disables the
-endpoint, although the descriptor reads host ready, last, short, IOC
-when the interrupt is handled.
+Please do not apply this patch. It is wrong, and I found that only now,
+testing the changes for the Sashiko review. Patches 2 and 3 are not
+affected; numbers for them are at the end.
 
-With a host sending TEST UNIT READY to a CD-ROM LUN as fast as it can
-(about 2600 a second, each followed by REQUEST SENSE) and a 1080p60
-H.264 encode loading the DRAM, about 0.8% of transfer starts raised BNA,
-99.5% of them within 20 us of the enable (the latency of the interrupt
-itself), with DxEPDMA still at the head of the chain. Without the
-encode there was none in 254000 commands. BNAs per variant, measured in
-turn on one boot with a diagnostic build, at about 780000 transfer
-starts a minute each:
+The test: SG2002 (DWC_otg 4.20a), a tone played into the UAC1 gadget,
+eight 200 byte requests queued, and interrupts held off for 12 ms once
+to cause a BNA. With this patch the endpoint is restarted, as the
+changelog says. But from then on it takes one BNA and one restart for
+every packet, about 2000 interrupts a second, until the host closes the
+stream. Most of the audio still arrives, so the test I did before, which
+only looked at whether the stream went on, passed.
 
-  unchanged                                   6215, 6510
-  mb(), read the last descriptor, mb()           0
-  th.sync.s                                      0
-  udelay(2)                                      2
-  descriptor written as two word stores,
-    status last, dma_wmb() between            3728
+A trace of the endpoint interrupt and of the restart shows why (time in
+microseconds from the start of the hold; desc0 and desc1 are the status
+words of the first two descriptors as the CPU reads them):
 
-Mapping coherent memory non-bufferable on the C906 did not change the
-rate either. So the stores are still on their way to DRAM when the core
-reads, and a load from the descriptor waits for them.
+  12015 irq      DOEPINT 0211  DOEPCTL 000480c8
+  12121 restart  DOEPCTL 800480c8  DOEPINT 2201
+                 desc0 8e2d8008  desc1 020000c8
+  12129 irq      DOEPINT 0201  DOEPCTL 800480c8
+  12630 irq      DOEPINT 0200  DOEPCTL 000480c8  DOEPDMA at desc1
+                 desc0 8e2d8008  desc1 020000c8
+  12715 restart  DOEPCTL 800480c8  DOEPINT 2201
+                 desc0 8e2f8008  desc1 020000c8
+  12725 irq      DOEPINT 0201  DOEPCTL 800480c8
+  13633 irq      DOEPINT 0200  DOEPCTL 000480c8  DOEPDMA at desc1
+  ... and so on, once a millisecond
 
-Read the last descriptor of a chain back between two full barriers
-before the endpoint is enabled, for non-isochronous transfers and for
-the start of an isochronous chain. It costs one uncached load per
-transfer. With it there was no BNA in 6.2 million transfer starts under
-the same load, and none in a 60 minute run at 1080p60.
+Right after the restart descriptor 0 is already DMA done, with 192
+bytes received, the frame number of the current frame and the L bit
+set, while descriptor 1 is host ready and never used. A second trace
+point shows descriptor 0 done even before DOEPDMA and EPENA are
+written.
 
-Signed-off-by: Vadim Yuzifovich <vadim@yuzi.co>
----
- drivers/usb/dwc2/gadget.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+So, as far as I can tell from outside:
 
-diff --git a/drivers/usb/dwc2/gadget.c b/drivers/usb/dwc2/gadget.c
-index 046b5b045..fe37250fe 100644
---- a/drivers/usb/dwc2/gadget.c
-+++ b/drivers/usb/dwc2/gadget.c
-@@ -854,6 +854,27 @@ static void dwc2_gadget_fill_nonisoc_xfer_ddma_one(struct dwc2_hsotg_ep *hs_ep,
- 	}
- }
- 
-+/*
-+ * dwc2_gadget_desc_visible - make descriptors the CPU has just written
-+ * visible to the core before it is told to fetch them.
-+ * @desc: The descriptor written last.
-+ *
-+ * The core fetches the first descriptor of a chain as soon as the endpoint is
-+ * enabled. writel() orders the CPU's earlier stores before that MMIO write,
-+ * but on the Sophgo SG2002 (T-Head C906) the stores to coherent memory can
-+ * still be on their way to DRAM when the core reads it. The core then finds a
-+ * descriptor that is not host ready and raises BNA. Reading the last
-+ * descriptor back between two full barriers waits for the stores to land.
-+ */
-+static void dwc2_gadget_desc_visible(struct dwc2_dma_desc *desc)
-+{
-+	/* Order the stores to the chain before the load below. */
-+	mb();
-+	(void)READ_ONCE(desc->status);
-+	/* Finish the load before the MMIO write that enables the endpoint. */
-+	mb();
-+}
-+
- /*
-  * dwc2_gadget_config_nonisoc_xfer_ddma - prepare non ISOC DMA desc chain.
-  * @hs_ep: The endpoint
-@@ -881,6 +902,7 @@ static void dwc2_gadget_config_nonisoc_xfer_ddma(struct dwc2_hsotg_ep *hs_ep,
- 	if (!ureq || !ureq->num_sgs) {
- 		dwc2_gadget_fill_nonisoc_xfer_ddma_one(hs_ep, &desc,
- 			dma_buff, len, true);
-+		dwc2_gadget_desc_visible(desc - 1);
- 		return;
- 	}
- 
-@@ -893,6 +915,7 @@ static void dwc2_gadget_config_nonisoc_xfer_ddma(struct dwc2_hsotg_ep *hs_ep,
- 	}
- 
- 	hs_ep->desc_count = desc_count;
-+	dwc2_gadget_desc_visible(desc - 1);
- }
- 
- /*
-@@ -1021,6 +1044,9 @@ static void dwc2_gadget_start_isoc_ddma(struct dwc2_hsotg_ep *hs_ep)
- 	depctl = hs_ep->dir_in ? DIEPCTL(index) : DOEPCTL(index);
- 	dma_reg = hs_ep->dir_in ? DIEPDMA(index) : DOEPDMA(index);
- 
-+	if (hs_ep->next_desc)
-+		dwc2_gadget_desc_visible(&hs_ep->desc_list[hs_ep->next_desc - 1]);
-+
- 	/* write descriptor chain address to control register */
- 	dwc2_writel(hsotg, hs_ep->desc_list_dma, dma_reg);
- 
--- 
-2.56.0
+- After the BNA the core keeps the OUT packet that met it. DOEPCTL
+  shows EPENA clear, but the core goes on trying the descriptor at the
+  start of the chain and raises BNA each time. That is the repeating
+  BNA of the changelog. Flushing the RxFIFO, which
+  dwc2_gadget_handle_isoc_bna() does, does not remove the packet.
+- The moment descriptor 0 is host ready, the core writes the packet to
+  it, without the endpoint being enabled.
+  dwc2_gadget_start_isoc_ddma() fills the chain front to back, so at
+  that moment descriptor 0 still has L set.
+- After that the core is done. DOEPDMA and EPENA are written, the next
+  packet finds descriptor 0 used, and there is the next BNA.
 
+What I tried:
+
+- RxFIFO flush just before the restart, clearing DOEPINT.BNA just
+  before the enable, reading every descriptor back: no change.
+- Global OUT NAK around the restart: GOUTNAKEFF does not come within
+  100 us, no change.
+- Marking descriptor 0 host ready last, after DOEPDMA is written: the
+  chain then runs normally if the core takes descriptor 0 after EPENA
+  is set. If it takes it before, the chain again ends after that one
+  packet.
+- The same, plus: if the core takes descriptor 0 before the enable,
+  wait for the packet to land, give the request back, build the chain
+  again and enable. No packet is waiting for that second chain. This
+  gave one BNA and one restart per hold for 34 holds of 9 to 50 ms.
+  Then three runs failed after 10, 19 and 9 restarts, each time on a
+  9 ms hold, which is the edge of the eight queued requests: the stream
+  stopped, and twice the host reset the port. I have not traced that
+  case yet.
+
+Thinh, what does the core expect the driver to do with an isochronous
+OUT endpoint after a BNA in descriptor DMA mode? In particular, is
+there a way to make it drop the packet it holds, or a defined point at
+which the chain may be written again? I would rather do what the core
+is designed for than poll a descriptor in the interrupt handler.
+
+The Sashiko findings on this patch (BNA handled after the chain was
+restarted in the same interrupt, a BNA latched before the restart) are
+real as well and are fixed in what I have, but they do not matter until
+the above is solved.
+
+Patches 2 and 3, same board, TEST UNIT READY as fast as the host can
+with a 1080p60 H.264 encode running, counters added for the test:
+
+- With the read-back of patch 3 switched off to get BNAs: 368000
+  commands in 120 s (3070 a second), 13103 BNAs, 12809 of them
+  restarted by patch 2, no port reset. The other 294 were on the bulk
+  OUT endpoint, came together with XferCompl and found no request
+  current. Two more such runs: one the same, one with a port reset
+  whose cause I did not capture.
+- With the read-back on: 546000 commands in 180 s, no BNA, no reset.
+- In about 40000 BNAs on bulk endpoints the endpoint was disabled when
+  the BNA was handled, and no endpoint-disabled interrupt followed. So
+  the timing cases Sashiko describes for patch 2 did not occur on this
+  core. I do not know what the core guarantees there.
+- Patch 2 in that test restarted the request from req.actual, as
+  Sashiko suggested, not from its beginning as posted. A BNA on a later
+  part of a long request did not occur, so that path is still not
+  exercised.
+
+I will send a v2 with the review fixes for patches 2 and 3, and with
+patch 1 either done properly or left out.
+
+Vadim
