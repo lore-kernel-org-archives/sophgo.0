@@ -1,88 +1,62 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1794920269;
-	b=hu5XAkJjSbuwfMXyaPd8lo84J5LEKqUKkIK96vliWndMj98HUvtMuFrU9/X16gAZZ/c/
-	 HHypt7G7s5sGsS0j9sr+B1uRx+9VL3LetiaZE8dlMx2wQuBaEivZZvBrCtGZlj3lLycRN
-	 hcLXUOHoC6vj9PSFTNL7UN4GagRmUBgpRqn63ODfSUneXGx7jn+/eiVoxgi+29ScQIkA8
-	 45HPLt/x+G7jl4B5DmEzHDhE/OzDUc4A77sUnzgwd5VfP1HlII/LFS492tccE5JSEyHvn
-	 bJvSdP5f6NjPeAAsW8+hgYOvByiGyL+FfL9sgfaouWeWMJDZa1vK6rbSzWRi1wIGJTQ==
+	t=1794936536;
+	b=WF63gzLdXnozXhQnSek05NTT8dXPYd0M8DQkzBkYwT1b6UtsTj00OKL6VIBY7XOmWov3
+	 q4E1N1FjEJABwHAdUhKZq1s/+L7S/PRQWkefDKE7BWyT6uxeCZAy35BlathUXuqikOjVo
+	 eKV3oXDhyyRz02aWjPC+pDmIqfXFykFp5Rt6AkSknXBg1Vw3zXFmYWi3PYbWWXDUPNWYk
+	 4NT9XFTupst/BDtQutC9BBnw7f/CIU2Oou3AxZrCVZsp+j/LRKhFjiAbMgWVXp6gnEGME
+	 0qu9RDZg1J6WYVMZhRo8UUIibBHyTinWX7or1lfQtws1AdqAHXDEVkuXKFV1+IrHhHQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1794920269;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:Date:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer;
-	bh=ZlelFqtSwzH7qLeRIoPSb1dB65eEiaq1xmBL8y2J6Sk=;
-	b=O7GEaDNRXso9NmCnawfYs3u2ZB7zhqNn6bU8uQ6BKp/rj08+EegXs5I0s+vfHuhvL7W2
-	 K9Q5gB1bTIvWbMogzZvns/k/IOsr9YdaaqYhqlgZQlYWGrypLDRzRHwDQ8F5PYc0hvZPp
-	 Y2k433at0wzLY0c0DcVKWZdc4uw4cwJzcVlItm6pH3nkBqKetcLl8WbEM9tvSfMeJs4vH
-	 lF56Q0eTmCJ5YmGXpawEDVXOEWjXbhLX5pgvqGQ/CPgpsT0qGpWT7GXyFFE5E2/OHT4uY
-	 gesUgaTwxbpJbZTDSC9Q3gdF9kJwBqjnHlvZvoSN/npyR8XygV/wHR3fQ6RiKyaEeZw==
+	a=rsa-sha256; c=relaxed/relaxed; t=1794936536;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=wQcSUYQL3Pq5KKkb7/1z2kjXyCgi6wTpcgrI6k/1zug=;
+	b=0Cr3K7HlLxIuFPPpNuJEOl+YwzrrDZDWwhDXrbQK/pSCR/NiOWmG5rOay8JyfcZ14VQX
+	 KGGnKDHIR8XZ9SF3ULaPKlBLo2uGx1mMZob9UEvf3Meb1arKzYntic3Kf3fgeZukENe8E
+	 /GYJ9uKabNb+UEKEsn2OQTQccoxer2Bg02jIBxLOius2MXiwL4CYYqEU4y76CChRSZw4X
+	 lsjrBzeq88ykkH0IaMW3SHa/eK+rWkCYGQ9/+EdRIlnR1K3eQrxRM56UnZoPMjsAARCS+
+	 J4agBd8JAVY7M5pLRA/NiaQeYgvj0/68a8dhjUBwqHJh6rYmw3ciR8SBcAY5SmULkuA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=baylibre.com;
-	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Y3Db0vFC;
-	arc=none smtp.remote-ip=74.125.82.178
-Received: from mail-dy1-f178.google.com (mail-dy1-f178.google.com [74.125.82.178])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nohL5RVb;
+	arc=none smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4D6606A337
-	for <sophgo@lists.linux.dev>; Tue, 17 Nov 2026 12:57:48 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org AC4D6606A337
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A73606A31C;
+	Tue, 17 Nov 2026 17:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=Y3Db0vFC
-Received: by mail-dy1-f178.google.com with SMTP id 5a478bee46e88-3791619605cso8289111eec.0
-        for <sophgo@lists.linux.dev>; Tue, 17 Nov 2026 04:57:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1794920268; x=1795525068; darn=lists.linux.dev;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=ZlelFqtSwzH7qLeRIoPSb1dB65eEiaq1xmBL8y2J6Sk=;
-        b=Y3Db0vFCmmiyuidjjHAZXhlYM5iDP3XLFOAxvzp1X1/a4zpvlP9pxhT0sGz2vEBfyj
-         E2KJPn0nOYOAWrkIkK17IfbKnU80v0irSuWyEY1aTXvwfdjQBSoCeH4YFxoYMoQ0BLy5
-         HmIubBOfkn/hCfJOlFWJr2SgNiq9jewyhPEXm2T4PDjHw4Imn8aSpps46/L6pnzWvvcN
-         CVoBmMuNP/wZhszGn9UJjypBiEwBYxZvyhv4lICuI5Bb9pDmaCKt+NyLECVjg+wrB1h1
-         H+dSaeFNcnPLDWjP6H71+d5IEAtWYaHaWvFHFALT1/6N5hqAfYInTUO4glT9FvKn0wrF
-         RDag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1794920268; x=1795525068;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :content-type:mime-version:subject:date:from:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=ZlelFqtSwzH7qLeRIoPSb1dB65eEiaq1xmBL8y2J6Sk=;
-        b=vtqGoCNdWjQMU3Ws2JXqBVFHJUbQlEyj0fykHdMHqXkPkO1tK5bqbt1V9Y5XLRYKvw
-         hXA4JcPH8L0/skm2hu3gylLyXyKiYeiU159IYp6SAvDN2hCQDtrySTBHu2YkhzKTffY6
-         y7yjZarE2MUrVPYSdk55vrxtwEjzB6vZA5oXNsWOtWZ+72gqqVNYXJmUlwNph/ZhSBj1
-         /ws3w+to7Qj/u9O+IUj4nfBz/8b8X3II3JUwNXKybrX9f0REWaPkqQcL7DEQTMJfwg1V
-         yc2f4WuKdjoAzaPqoZBdqxyjjMKU5FvRusiLoh//KwS3l1Y6SBWu6zqRnYC/nw92CM3N
-         3wWw==
-X-Forwarded-Encrypted: i=1; AL+hErHUposUkSOeycYnTdSMFQgTWSv1mcnurRqzn49Dj/iQddZTVLtc6Ps9KTHeKYIVXrsaTArfi88=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+/qPCK7PpP4TfXUCHW/Sro5EiMljw6yvSdq85LQ4lQa2UK7kbU
-	buCk/QxiIq0b/0nZxwgMh6gj+RC03HoAaWd9cY78HnaA+ljbe4SCxDWbmKiwMtExHCY=
-X-Gm-Gg: AZFdTZc3oUUHEqAmSUCvnk/AYnFATuU8xiDvhYTZ21fo3hnf1BBCNkLR8zsqQoVaJyc
-	w8MOjtBdkITxh53NxbM6a8uRg10UNdbDRBorMNBYb9ShYTMcsZaCgnQdPnPHqi0TFJnswvVh+zF
-	oQGB+TAIbgyXKY6TUmPILSYxX7GtcCtYfSAhbtmDaFKnISg8WLp0ytliJ6GIqV5LdqO2NTg8J/F
-	IRJxcVx+R1Myn8mpVck3uJGUcjps4nOvI+dvFuQF9H0Y4VN/GeMlEwrEEyAP9WJueZsEoA7vCSB
-	OmuDTo2gHqiV1wbdExG/IL1KHpUxI3eePVCHxF50DNYVO67rBdWlBTQKFNyEcIU+KMittGOBfvR
-	mHtgiX2FRA8CI7qzLBmWvrp0u7z4TQZeNcCcj9myMPcjqbpVlVeW08h4xQ22XlxVRfZ2E1ZAUXy
-	NiSlo7XWGoYM2pJkdItZT/2VCF5I7wDQvaBH9hJnlsDhBqidjn5XOnjx9GaZVJfkAEfDAvZk1vO
-	FB8quPFbkzb0zaT5yR8oGRzHqo7C61gWk+wvRU5m7xVz8q4Wtt1O3HewUnok7XR0UEdMkEnfIHh
-	IdPXtOvZTA98jhdmoGOhYfgvor8tJvIKHBTi89CdCr2FHlcwOFZitSxWevvlrX1eexAnrJ6foIU
-	bI9G5bfXVMctHQg==
-X-Received: by 2002:a05:693c:4097:b0:36f:d53:cf2f with SMTP id 5a478bee46e88-379635648f7mr13425750eec.1.1794920267749;
-        Tue, 17 Nov 2026 04:57:47 -0800 (PST)
-Received: from [127.0.1.1] ([2804:14c:4c5:8bf0::a1aa])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-379559189e8sm44767034eec.11.2026.11.17.04.57.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Nov 2026 04:57:47 -0800 (PST)
-From: Hiago De Franco <hfranco@baylibre.com>
-Date: Tue, 17 Nov 2026 09:57:15 -0300
-Subject: [PATCH 3/3] riscv: dts: sophgo: cv180x: add PWM controller nodes
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=nohL5RVb
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509DE1F000CC;
+	Tue, 17 Nov 2026 17:28:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1794936535;
+	bh=wQcSUYQL3Pq5KKkb7/1z2kjXyCgi6wTpcgrI6k/1zug=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=nohL5RVb23MA05VdY6Ds9sRm+y8bwpMFts8Ytzb5Mm4oA7RgSmNC8B7FVKCjLrgtW
+	 bLP9Jx7rlXfe36QapiLVlrfpwkKtwgWLXTr3JXNtHNrpJ8StdWpCS/YnstgF6mZErC
+	 oZ7bFwxA0miMFFX4qLJEB5pNllUbEktG0BI7ZlHvj5MTofLh9FInnThH4R06canHLr
+	 q5F/asXaheKGALKxM27g1eZ98P0PvEOODD3vNS0RDEHt8gjEb/90g20QsuW9eSe4yA
+	 wrFBEtVeMhQ50OqEAmgk2w2ocFsLgTwt+FiP6A/SvnflGGWuSbLc2WIrPFj8e6hA5b
+	 M881GSI46N8JQ==
+Date: Tue, 17 Nov 2026 17:28:50 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Hiago De Franco <hfranco@baylibre.com>
+Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>,
+	Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>,
+	Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>,
+	Chen Wang <unicorn_wang@outlook.com>, linux-pwm@vger.kernel.org,
+	devicetree@vger.kernel.org, sophgo@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 1/3] dt-bindings: pwm: sophgo: add PWM controller for
+ CV1800B
+Message-ID: <20261117-impish-dipped-3177675d9ea8@spud>
+References: <20261117-milkv-duo-pwm-v1-0-3f1786ea57b7@baylibre.com>
+ <20261117-milkv-duo-pwm-v1-1-3f1786ea57b7@baylibre.com>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -92,86 +66,27 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20261117-milkv-duo-pwm-v1-3-3f1786ea57b7@baylibre.com>
-References: <20261117-milkv-duo-pwm-v1-0-3f1786ea57b7@baylibre.com>
-In-Reply-To: <20261117-milkv-duo-pwm-v1-0-3f1786ea57b7@baylibre.com>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>
-Cc: Chen Wang <unicorn_wang@outlook.com>, linux-pwm@vger.kernel.org, 
- devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
- linux-kernel@vger.kernel.org, linux-riscv@lists.infradead.org
-X-Mailer: b4 0.16.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TNXTGBunDxcfULCz"
+Content-Disposition: inline
+In-Reply-To: <20261117-milkv-duo-pwm-v1-1-3f1786ea57b7@baylibre.com>
 
-The CV180x/CV181x/SG200x SoCs provide four PWM controller instances at
-0x03060000, 0x03061000, 0x03062000 and 0x03063000.
+--TNXTGBunDxcfULCz
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Add the corresponding nodes to the shared cv180x.dtsi, so that they are
-available to every SoC including it, and keep them disabled by default
-since the boards still need to describe how the outputs are wired.
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+pw-bot: not-applicable
 
-Signed-off-by: Hiago De Franco <hfranco@baylibre.com>
----
- arch/riscv/boot/dts/sophgo/cv180x.dtsi | 40 ++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+--TNXTGBunDxcfULCz
+Content-Type: application/pgp-signature; name=signature.asc
 
-diff --git a/arch/riscv/boot/dts/sophgo/cv180x.dtsi b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-index d2ec70fd515e..c478e7eb549f 100644
---- a/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-+++ b/arch/riscv/boot/dts/sophgo/cv180x.dtsi
-@@ -160,6 +160,46 @@ portd: gpio-controller@0 {
- 			};
- 		};
- 
-+		pwm0: pwm@3060000 {
-+			compatible = "sophgo,cv1800b-pwm";
-+			reg = <0x3060000 0x1000>;
-+			#pwm-cells = <3>;
-+			clocks = <&clk CLK_PWM>;
-+			clock-names = "apb";
-+			resets = <&rst RST_PWM0>;
-+			status = "disabled";
-+		};
-+
-+		pwm1: pwm@3061000 {
-+			compatible = "sophgo,cv1800b-pwm";
-+			reg = <0x3061000 0x1000>;
-+			#pwm-cells = <3>;
-+			clocks = <&clk CLK_PWM>;
-+			clock-names = "apb";
-+			resets = <&rst RST_PWM1>;
-+			status = "disabled";
-+		};
-+
-+		pwm2: pwm@3062000 {
-+			compatible = "sophgo,cv1800b-pwm";
-+			reg = <0x3062000 0x1000>;
-+			#pwm-cells = <3>;
-+			clocks = <&clk CLK_PWM>;
-+			clock-names = "apb";
-+			resets = <&rst RST_PWM2>;
-+			status = "disabled";
-+		};
-+
-+		pwm3: pwm@3063000 {
-+			compatible = "sophgo,cv1800b-pwm";
-+			reg = <0x3063000 0x1000>;
-+			#pwm-cells = <3>;
-+			clocks = <&clk CLK_PWM>;
-+			clock-names = "apb";
-+			resets = <&rst RST_PWM3>;
-+			status = "disabled";
-+		};
-+
- 		saradc: adc@30f0000 {
- 			compatible = "sophgo,cv1800b-saradc";
- 			reg = <0x030f0000 0x1000>;
+-----BEGIN PGP SIGNATURE-----
 
--- 
-2.53.0
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCavyO0gAKCRB4tDGHoIJi
+0gZ7AP9wGtq7rXQpu9xAty+Q78SmrK8DVsrvCJiTqcE24Y/G6gD/QsdJayxk263D
+NDXQSKT4jV9QQiI3mvXrFjXlGy5zdAQ=
+=+4yC
+-----END PGP SIGNATURE-----
 
+--TNXTGBunDxcfULCz--
