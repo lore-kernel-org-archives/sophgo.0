@@ -1,98 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.175
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795001795;
-	b=WlJiFKv/3g3ae8PIEXCpXUusj1Lfll0a4Hm0EWckxYamHMkQ9KhvzrTaPo2laSfyvbRF
-	 kA9hK11o86bf7R+NB9ZKUlFX7yo40qGq42+gm1eljabRCHgterN1gpLxny/kPbqjGrsGq
-	 9yj0EOn6HGGWhp578Drz7ejH83whfRXewLUWCQpHax9xS4rP5dwWkcL6fww84M72hQmqC
-	 3dlyvtjyFbWJkuJEQOXRI9lmXILSZBUk7mN1Cway+8lRvNDzpAC8gx5x+tvGA+88oiV5v
-	 SuVy6O1m4zwcIuNvt01/LcZhA8OA5ImY02FrNjfDLhVpWRtw1cl0hucy4WmZ9QRXlrQ==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795001795;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.171
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795089376;
+	b=ZiYyj4qDuFG97/m9FNsmj7KagQt5fPRsw7/q0sYeT8FMwwfEvrJ97Yzov2DUgSnz7EiZ
+	 DwtvPSmjgW7RPz+AAJ4Qt2C3jpoZSQ+9sSMXtOalW5Tn+hbPZ6DLteO6Ny4Tu/VcWhPrx
+	 68kEgxsn0raR3t/7kk1axAbcjWRoYe1In6BHaRY4LEjVmDAU/9DTjAcQn5St8FoDazv7r
+	 pWGB8HyGuo9mu0UDJayydwHO6K/Mw24qsv9E3K5H4+gl2+bucPwJ9Bpba5+X2vWOH3+4z
+	 4gmboGPoi5pwBRng4xnBrq705p7Scn/70mjivZP2rdE82k8BXy3H5EdSkXch6sIEVow==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795089376;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To;
-	bh=EohF+oRx/8zwt+ylfzEGCIcRitUdjLX/99U3WEU8q48=;
-	b=dKp81FY7BQdfexMRwq11i11n/47cWoyWREsaQ0+qj3bA4zSTgHyCoBYE51vDnqV4kVeh
-	 74fp3cVk87eE+uEF6WX2dHFFjinKCOUG0Kh0p33uDjD2E46pNw8kgK3xt8l7HOewd2lV7
-	 YcpMH+KSMxw37qGljjbRtAcEzPOW93U6kFd64hUD6/5Avgo3TKs95MlMjJGK0+dhh4ow0
-	 BT4U30qf9HpygSY6PxIsEUIaNnHpDGWjftLuIFyNHMRzhxWU9Zy4RajWdfWrKlwS15gtJ
-	 Ff2kri90rQL0yz5VUWwiPkF1QjkR7cnqY/DjLvenS77JMieNWZ0Jz5TpLra7rnp7PcQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=RSQlhZLcdrbQFLEEra+ei00sOkbYZJ9sKIwJK+CMs6Y=;
+	b=aM9aQYWHfuN6KtzqJRmNRBOZrPyqnrdBt/iWk9OebVicoGfkwnbAlRMu751Rmad/ksU3
+	 BjBjcCQ+DFHEJh52uY1QxWsmydtVadPY/b9B5VdIMem6Yb2axgVoYXC2zH2lUwBhSoUGp
+	 Unt3j29Ca9yZzTmKGZpwNdLbdsuH/Ey9PyPaV9KtP7dOT5BdD4jW9C6pe+maRaI4RnPO7
+	 1lt6fAPM51Gtl9UKQIgS7C4XikWc8TNbgGWTCf7bMX3/tihte97e3WrYSJE8gQcK2pL/q
+	 evEbpRUOKYy+X0R7OawLX42hs/6qpZsQTmCQV6qI4hnw4nEaRYvKFcrJgm+M2B27j8w==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0BU0k1Xm;
-	arc=none smtp.remote-ip=209.85.215.175
-Received: from mail-pg1-f175.google.com (mail-pg1-f175.google.com [209.85.215.175])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vR8r5cDS;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.171
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C4D606A32A
-	for <sophgo@lists.linux.dev>; Wed, 18 Nov 2026 11:36:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 60C4D606A32A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E299C606A324
+	for <sophgo@lists.linux.dev>; Thu, 19 Nov 2026 11:56:15 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E299C606A324
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=0BU0k1Xm
-Received: by mail-pg1-f175.google.com with SMTP id 41be03b00d2f7-cdba1bbde0bso407246a12.2
-        for <sophgo@lists.linux.dev>; Wed, 18 Nov 2026 03:36:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=vR8r5cDS
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-3adfe7a31dfso2132711fa.3
+        for <sophgo@lists.linux.dev>; Thu, 19 Nov 2026 03:56:15 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1795089374; cv=none;
+        d=google.com; s=arc-20260327;
+        b=esoHOJXLw4Gc/kKcaz+HEZcBshFYKppHF5XKfTQtIxTozIBcXX9nFQWDZW615ZWh6J
+         t2OKA35KBFXQhihOaU7HTFa5i81xd2z16kQvfS+gHmsmBb8tYFvfYa3Plwpxa3l0vzCF
+         hcP7qwE3CvTWBTeCFFNyqN/6AuDZo6sZTXJ/a+kQGpLHr5pKfWNhFU4Ipf2PLWDkeDcX
+         /RRSFdhjsdzzfh3axkPh0pVYk9bakq1uxFQNBOWqCg4dS44vB9baZ3e676hZw3BzD3JP
+         hociwQ2c4C1JlbKjliZfKnuZj1obUwgHCty7oJyPsiZAiYlyRyh4W1TWlU+n8aDWgrKj
+         B/8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=RSQlhZLcdrbQFLEEra+ei00sOkbYZJ9sKIwJK+CMs6Y=;
+        fh=bA4KEL4E/M6lKloWPx/Lusi2rqEUcdouuJXS7pp4jLE=;
+        b=ZRVPqeGyG7/L28LKw89f6WsljohEdWKiUD/8eNxZb/JSVrRS1KRgkPRzcNl1SwiI52
+         N4nnnBnAvIkMWMuTwRAY8DYTSCR4r6Od011M7xcBEBe8XtQxyEWo+Rtp5wj1qsaWd6kd
+         q2mGF/WbPG4SeDyXA1IrkuwDfJprzgbfU/+MBkajXm+2/wey74Xjh4ZPNHnMrzKlQROh
+         /tQHvSWoSrf+9Q8G2arVw98D6t4fOUr06lr9/c6r1lbfBVF+a5s/fNaDbUGGS4pWfYw6
+         ZxmZFi1uk9uvaR0IrChbQywDHIlHa78jEghx86fKH6m8qDLGG6Ko6AclFzhvaDqMK0nO
+         e/yw==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795001795; x=1795606595; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1795089374; x=1795694174; darn=lists.linux.dev;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=EohF+oRx/8zwt+ylfzEGCIcRitUdjLX/99U3WEU8q48=;
-        b=0BU0k1XmAzo4m2RtOr7HM/24saTv4OfSpqxyx2DN0ExnjDY8PwKT1Is5LlCkRvxR/8
-         FnqbliwfAk/89lIl7h3e/qrTTAq37ciOX9ispOSzOoliXgmXG9kf4ot8Bu0V7Mo58Bbu
-         ZPGK/Qxj98PRIOV/BCFnk1Wx2nhX7YvSDsCJYnEcSS5gv7oIJqdoWsgq3bg7re5kvXgq
-         tPMpjfn15a4oN5TIZcaCLbPP5SZR3DWit8vFjfKSbQvvZoVAjGEk9gPqH7Chj6TOF3nF
-         weSa3NlCPL02CP5KGc1gpnHwXTndfICwcuFLopDrkkbOdhrxcAIOMWt50yj/SOYE5USo
-         un+A==
+        bh=RSQlhZLcdrbQFLEEra+ei00sOkbYZJ9sKIwJK+CMs6Y=;
+        b=vR8r5cDSrQ7yjbAbySsfjKu4/naHnx8O9tIXkeJ9s4Plcx/DC9V11B2BSY8aOny63l
+         D89QuOASuXpMH8e8oKR9ZFJ3EMEwXW3sZiv1FJF7yuW2XfC9jI/ynhOJ8tXKuUXz5p8p
+         jhJev8MB/Vn+CDPHZ+TyulVSJdOo26kdvKTqeU8g09d1KLZNcTM/Sv/JshR3fobw9y31
+         9R2zrv616wnkbPqVjteAMrDWdFs4xhSg/psXANM8XTKvONT86cdNAnefq44UicPfAJHj
+         BJEF01iRGf9hlINKk4pkc7AR/GV1iHGG/A+G3FwrBcI/MDi+uCmkmsBVqhMlYeko2NdC
+         42gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795001795; x=1795606595;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1795089374; x=1795694174;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=EohF+oRx/8zwt+ylfzEGCIcRitUdjLX/99U3WEU8q48=;
-        b=lBtpYYmHKvLAn7djaBoyGLqayY3ed4h4aIFJ7LAaXl/tcmZuqflYMvVnZExl9NJGmq
-         UcLtMuos34V05U0TODs9MPzr7PUAgk4YEO/9l55zKUTEeIBK+b7Rk4eTO4lKK6IAE8+Y
-         6Up56eYqaKst03vhsR2qOddcQelHU9wSf8H37AUgWwOR+py61cqyRrTpq6glqWgY4UJi
-         93URXIVGLPoEvLf3Rb5qSbOKJMuozNuQxC99vbMjzYXl3UZKXmnuz/af3YOjR8H+3QJB
-         wwt+DKyk3724H8Aj6Y3QtKNO+x1M8zuK8P+fmtWJotnkM6iCjDmjEMYIRYWlahFVPfnV
-         LGeA==
-X-Forwarded-Encrypted: i=1; AL+hErGRV3XJHpfaVCEQcO7dFDEuz4Tsrmzfd173dPOOohOWDWbsdN46PfWOxulXUE7CgwOrVC2A1vk=@lists.linux.dev
-X-Gm-Message-State: APuU4Z+YWXlwhJQRT53/yqrfDvXshzHB1W6Y7/Q9rMalxBFcMaC5mf3W
-	OUpfq0GgrN7P6NzgoCcLlaOBQP71ssEsxaSwzenZO5HGIi7iLGQ6efVt
-X-Gm-Gg: AZFdTZfAnkRe6rs2YZhbh0rNuAVMWK0xtLt8I1iCVyCRv1NHKaCTUtEwv30Lq6DBudl
-	h9JOJcVFQ5iLaHZ2d9X7BiPrJ3m+YAEGlJIRL8KghgVhPMrk+NUTa76eoY9GTAKdlMak5sgjhnE
-	1RthHJgcmTVt/+zM8aU07w5v4Z96irV9qWi864yKujCjGcRyHyxLwBnDlYBBpKT/BA0dKdfnQ18
-	PDv3N7xsavmBhExDGFlOBBXzUbMQUNn2FiRU1Y0HmutxyoN8yzI2QCLjS5tg9U3GH7vcdhIPGPN
-	I0MpcafQigN7a769iajgbmIMIYLw2HfJHx/q/XUzcBQsNa+452M4AuKHg39sRdw03uMHnlVlfd6
-	hD2gVcGXC4iWidYbSEQ9dqzw6azvA94at77oYTOGKAq/a+GdwFPp+Sj6q81c9DNK9Sa6JBWKE1M
-	h4FTHP1lNC/0XLMppJchdE7Pe7MUqWLmXD2mBZUwmS0+ybekur77fMfBO2Va/KHpuWuLsGEqJCt
-	L5lgl2YvxUXTOpcCZUZ8/9BZhdt7XWxFvoO4SIOKHjMdByG3LQIuexanP+AqNZN2RH7b9bqwMBd
-	VVoqb9lg2dKB7ojXKNyqOmtgaMo=
-X-Received: by 2002:a17:90b:4488:b0:3b0:e388:d9da with SMTP id 98e67ed59e1d1-3b3d0761702mr2554146a91.29.1795001794613;
-        Wed, 18 Nov 2026 03:36:34 -0800 (PST)
-Received: from localhost ([2001:19f0:8000:4ce8:5400:7ff:fe0e:e6b2])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3b3ac254ba6sm8944570a91.4.2026.11.18.03.36.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Nov 2026 03:36:34 -0800 (PST)
-Date: Wed, 18 Nov 2026 19:36:04 +0800
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Chen-Yu Yeh <chenyou910331@gmail.com>, 
-	Inochi Amaoto <inochiama@gmail.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	chen.wang@linux.dev, pjw@kernel.org, palmer@dabbelt.com, aou@eecs.berkeley.edu, 
-	alex@ghiti.fr, hminas@synopsys.com, gregkh@linuxfoundation.org, 
-	looong.bin@gmail.com, dinguyen@opensource.altera.com, paulz@synopsys.com, balbi@ti.com, 
-	dlan@gentoo.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: Re: [PATCH 0/4] usb: dwc2: Add USB DRD support on CV1800 Series SoC
-Message-ID: <av2M-6w1u5mOyqDM@inochi.infowork>
-References: <20261110070627.217946-1-inochiama@gmail.com>
- <20261113072305.220610-1-chenyou910331@gmail.com>
+        bh=RSQlhZLcdrbQFLEEra+ei00sOkbYZJ9sKIwJK+CMs6Y=;
+        b=SPgGW9kroJ/bdw2+JpYmR1+ZCYjqBfFloY5AyUstSBmYki0mgEs1faikdsGTqFgiue
+         a9ZVOJfatv3Z0npBshw/b0fETTEo26tUhxuUpK1R3lHRm7h4OVGv4BU0+S7LGF/HZ6Ea
+         TtKc/TP2sbrCOuOP/D04ivdQnFGJJX6qqNfQXW0T49mINKdgsU1mt9/4ZOUXIZBsIn1Y
+         e1Pv3g728eXjIHJzsxqQqPeUopdCVdOUsxoDclVPwVI0KYxRXoIREsyDcwT0gYWpovpB
+         OHwOX0ZgBzfaca7o6mSx/ak85ec+8jvACBfKWs9k8rw12eCCIe1PZcHI5Ypi3JRYKxHv
+         V0iQ==
+X-Forwarded-Encrypted: i=1; AL+hErG3TV0oMVb3S14kAPfO3/2/EKukkHTe6cTdcKfxsupIZLj0je88kWurQUrrc60MBh7A/ZJmU5I=@lists.linux.dev
+X-Gm-Message-State: APuU4Z8pAen7f5UtOMAcPjtaO85Q25+7GlVlKQzN9mA3i2GpOgtnDRxf
+	YCt99H5xapgcP25N5HICMwKMW9FuW3f0Hg2JEuXkHHbZeNLV9NWIHmzACuRPWNafKZ180ZpNi9y
+	1JQFY4sb/G4IeQUMHDoCcWdCBCJqjZts=
+X-Gm-Gg: AYBFou0Epzqa5mRpPLXHBs1oe5Tx7JBmfLntTUncSGZTJizmFhwOsW6Xgiom/fS9k7V
+	rSXrxAqUGywXSSZUx14Hzy4JGVWmSVo1gN4WD+EzQJIwQ3jTvAvNxfATrpnlkakYDxZd3DesAxJ
+	uu22Tv0kA0Cyh0sTfyFebQKlEEJ0uwNraw3Yq0DPukBQQteLJ1SQPwtS1xZbIWBCXt4iqFlp/X9
+	pcPNhF3NMr6iF0KWVL33D6OBkxTtKnN6H5Z46zyemHd+tAjUWUIRDKDzDECd7NUBIoPB6577eeA
+	PCzO+j6ilUXq2aNhHDK52F3IYmx9Uc5bljTjjfUPnXFBQWJ1KkWBCBtLDL2WlJ5qd1EXWX42Xu1
+	huPT7tvJ5n74sLjj/DxpH62RChB7I0eMWsHJjD2yoHFruBCQAhVOyYobADuhH1MDFB3oY1VWxII
+	HDxETnlJ2Qa9hra6qlMg==
+X-Received: by 2002:a05:6512:ba9:b0:5bf:e6a1:3115 with SMTP id
+ 2adb3069b0e04-5c1a9bbdf96mr2564765e87.2.1795089373747; Thu, 19 Nov 2026
+ 03:56:13 -0800 (PST)
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -102,108 +105,49 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20261113072305.220610-1-chenyou910331@gmail.com>
+References: <20261110070627.217946-1-inochiama@gmail.com> <20261113072305.220610-1-chenyou910331@gmail.com>
+ <av2M-6w1u5mOyqDM@inochi.infowork>
+In-Reply-To: <av2M-6w1u5mOyqDM@inochi.infowork>
+From: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>
+Date: Thu, 19 Nov 2026 19:56:01 +0800
+X-Gm-Features: Aa3M54riNxFLUFg84fAOhmY6bjWZvKgiNBwAs9BSg1G7sMgZ9DPXd0hZVBFcQ9M
+Message-ID: <CAKspUh+LLonm90ywMGrRUcsLDE+Axw64qjs0OtDB_ySUsrPPQw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] usb: dwc2: Add USB DRD support on CV1800 Series SoC
+To: Inochi Amaoto <inochiama@gmail.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	chen.wang@linux.dev, pjw@kernel.org, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, alex@ghiti.fr, hminas@synopsys.com, 
+	gregkh@linuxfoundation.org, looong.bin@gmail.com, 
+	dinguyen@opensource.altera.com, paulz@synopsys.com, balbi@ti.com, 
+	dlan@gentoo.org, devicetree@vger.kernel.org, sophgo@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-usb@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Nov 13, 2026 at 03:23:05PM +0800, Chen-Yu Yeh wrote:
-> On Tue, Nov 10, 2026 at 03:06:21PM +0800, Inochi Amaoto wrote:
-> > The current DRD implementation of DRD will cause a interrupt flow on
-> > CV1800 Series SoC. It has two reasons:
-> > 1. The DRD does not sync the phy mode when change the controller mode,
-> >    it is a violation of the DRD as it does not rely on a OTG phy.
-> > 2. The CV1800 is entered with a Session End Detected interrupt, but the
-> >    DRD code has no change on it, so the controller will enter the
-> >    interrupt storm.
-> 
-> Thanks, fixing this in dwc2 makes sense to me. I am dropping my PHY
-> series [1].
-> 
-> I tested patches 1-3 on a Milk-V Duo 256M (SG2002), on top of
-> f66469d9905b, with this on the board DTS:
-> 
->   &usb {
->   	dr_mode = "otg";
->   	usb-role-switch;
->   	role-switch-default-mode = "peripheral";
->   	status = "okay";
->   };
-> 
-> R=/sys/class/usb_role/4340000.usb-role-switch below.
-> 
-> Bare board on a PC, after booting:
-> 
->   # echo device > $R/role
->   # devmem 0x03000048 32
->   0x000003C0
->   # cat /sys/class/udc/*/state
->   configured
-> 
->   PC$ lsusb | grep 0525
->   Bus 003 Device 012: ID 0525:a4a2 Netchip Technology, Inc. Linux-USB Ethernet/RNDIS Gadget
-> 
->   # echo host > $R/role
->   # devmem 0x04340000 32    (GOTGCTL)
->   0x002C00FC
->   # devmem 0x04340004 32    (GOTGINT)
->   0x00000000
-> 
-> The interrupt count did not move over one second in host mode, so no
-> storm. Switching back to device gave "configured" again, and "none"
-> went back to device. I did one host/device round on each of two boots.
-> 
-> On the USB & Ethernet IO board, with a USB stick plugged in:
-> 
->   # echo host > $R/role
->   [  136.556790] hub 1-1:1.0: 4 ports detected
->   [  136.837392] usb 1-1.1: new high-speed USB device number 3 using dwc2
->   [  139.174764]  sda: sda1 sda2 sda3 sda4
-> 
->   GINTMSK 0xF300081E, HPRT0 0x00001005
-> 
-> Tested-by: Chen-Yu Yeh <chenyou910331@gmail.com> # Milk-V Duo 256M
-> 
-> > Note: This patches set does not resolve all the problems, as
-> >       usb_add_hcd() will override the role set by dwc2, but I am not
-> >       sure whether it should change skip_phy_initialization of hcd.
-> >       So I kept it as it is and users still needs to set the role
-> >       in the userspace as "role-switch-default-mode" in devicetree
-> >       takes no effect.
-> 
-> I see the same at boot, and the "set mode" print in the PHY driver
-> shows the order:
-> 
->   [    1.777738] phy phy-3000000.syscon:phy@48.0: set mode 6
->   [    1.778979] phy phy-3000000.syscon:phy@48.0: set mode 5
->   [    1.779005] phy phy-3000000.syscon:phy@48.0: set mode 1
-> 
-> That is PHY_MODE_USB_DEVICE from dwc2_drd_init(), then HOST_SS (not
-> supported by the PHY) and HOST from usb_add_hcd(). The PHY ends up in
-> host (0x03000048 = 0x142) while the controller is still in device mode
-> (GINTSTS = 0x04000020). On the bare board the UDC stays "not attached"
-> and the PC sees nothing. On the IO board the hub does not show up
-> either. So until a role is written, the port does not work in either
-> mode. This was the same on all three boots.
-> 
-> I am happy to test the next versions on the Duo 256M, in both device
-> and host mode, and send a Tested-by.
-> 
+On Wed, Nov 18, 2026 at 07:36:04PM +0800, Inochi Amaoto wrote:
+> If there are no other bug in this patch. There should be no new
+> version. The device probe problem is not a very big one. And I have
+> no idea about these thing. Since my time is tight, you are free to
+> send the fix for the device mode.
 
-If there are no other bug in this patch. There should be no new
-version. The device probe problem is not a very big one. And I have
-no idea about these thing. Since my time is tight, you are free to
-send the fix for the device mode.
+Thanks, I will work on it.
 
-> Once your series is merged, would you like me to send the DTS change
-> for the Duo 256M, or would you prefer to do it yourself?
-> 
-> [1] https://lore.kernel.org/all/avLC68zOj8WKuslb@inochi.infowork/
-> 
-> Regards,
-> Chen-Yu
+> It depends, if you accept setting this to host, I can add them
+> at once. (Note: once set, no change will be accepted).
 
-It depends, if you accept setting this to host, I can add them
-at once. (Note: once set, no change will be accepted).
+I would prefer peripheral as the default. The vendor kernel uses
+device mode by default, and the bare Duo 256M is usually connected to
+a PC over USB-C (RNDIS); host mode needs the IO board or an OTG
+adapter.
+If the "host" mode is used, it means that anyone wanting to use the
+product would have to purchase an additional I/O board=E2=80=94that doesn't
+seem like a very good option, does it?
+
+Since the peripheral default only works once the boot role is fixed,
+I will send the fix together with the Duo 256M DTS change (dr_mode =3D
+"otg", usb-role-switch, role-switch-default-mode =3D "peripheral") as
+one series on top of yours. Is that fine with you?
 
 Regards,
-Inochi
+Chen-Yu
