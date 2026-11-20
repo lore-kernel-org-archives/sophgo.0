@@ -1,95 +1,85 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795172280;
-	b=utNXhI+htyvqFTFNmVgL59GaGvnkAT0xDIKkQ1nUSWQd0dLRmzb7eK6zdzGaRivd+Ulb
-	 Ph5w2j+5ZdHkSTKNjnd8w4y02zGo+eXyxEgRZYcNPHTX3eHG6SggrYqz0GCD2pwSrGL93
-	 1KKpvpXCm+Dc5QD/Fjv9P3DS+Hr3EHZl9tpteanwI1YXEksaEVFOOZLzOPrUSz7G04IL5
-	 LA96W7yr4+TG/DKJZhdxdYhs2amDnrphMsC94Yv/PCgBaQs9IZpXq8dcQ0wHS+qMHf7ur
-	 zzdK0UJaHpfqnwXMscae+2jyLp4zKVaiUky+jYOBETcOFjpf3I27p0vtlNXeikwQ5fg==
+	t=1795200279;
+	b=oRv0EDzOR7YGXtpg/xnDfn6Q+vYDOci07Fsm2H2NAddsStLW5iAzkX0s/J7V/mNCveA+
+	 xx5CjWsCLkLcVSrmR8vE1FSFc4ncxJHhjTWVmGkdvobGrzYxvaIq71JB5GW0qCG8fEf1S
+	 l5SAcTMpgTfPu0c9RVfiHk7CqosExFeKLG4GE0s8Pp3qeiAgudPWHtPcZ5XE38+cP0657
+	 AE4BXe63/EyPtwf0Wjoh//T+30Q4bjYpdQ6ZgpQ3ncqHTKYy77+q0o467U8hCvKqdXsD1
+	 jF4qYi9zb56XVSlGf8cdGSbh/e2V7jsVLnayCmag0sMFJS+2GPHbT0inc+65TyDM/8Q==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795172280;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795200279;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
-	 Content-Transfer-Encoding;
-	bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
-	b=xxknxLcx9CQFskjFNSYNY5M1A9D0eYZBFvgwONQgVzCA5+QLiNkS6YwFiekaeTg1JT2Z
-	 +WKtQg7wY2PuRGOQdkOaSrSAN39nxIzMWgbCmXmb1yC400y/GwVSxDCqF1j2+RdTrDKP8
-	 deynUVGdqWxEroJ3teIAT5Lpke940emjNjK2Ko5FVLGPlmPCt1Yu0QLYklFEujGYDfNbW
-	 /j7Ikym41CS2Db0TbOdiWPopwOzYWfwGYILlCF0fKtccH3Fl7RaGJtjnkB5Nlp/w+yXIT
-	 ZzrTuaXhYKbmN/i3gPVLq5Cg0rgGHOxJ2n4/EYCXO5Z/VuV4iJrkLAL+Nueufl8IPAw==
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
+	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key;
+	bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
+	b=NiiBKD6/sbUXPSOKSSyNHsWgCV2LockWAVWitdFsrcl6H7xc5SD+IfDOxhLrxSsC7Pzp
+	 fNB/gORa9m0zecfa8uPiQPpmbzJHYk0eVfBEGQ14oNZVC/SjxJBXZN2BDd/40l1gEeD10
+	 NGKS9Bchf3tg53ZO0t/VAVvtMWke28pibEc+k8y7vhRRaMkUIiakFYxTkOll2ZbQ5va72
+	 8uUfPXXYFrLph11ObsWuXM7XvuCskVUOvbyfwMbMZ6zGVPHZbSFX94HuBMXVLLAaG72Mj
+	 YkcfCJ/Xr4OCahd8a1AJJutJc3x3oMhrlXj7JjJpclb4EkDYOEuYogeRY7LUZwLMEJA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=gmail.com;
-	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YgdH+GeA;
-	arc=none smtp.remote-ip=74.125.82.175
-Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
+	dmarc=pass header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=RW35N9UV;
+	arc=none smtp.remote-ip=209.85.221.51
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8156606A320
-	for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 10:57:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8156606A320
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314460A261E
+	for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 18:44:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A314460A261E
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YgdH+GeA
-Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-382f4710a17so1202990eec.0
-        for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 02:57:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=RW35N9UV
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e3b22e971so698008f8f.0
+        for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 10:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795172279; x=1795777079; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
-        bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
-        b=YgdH+GeAwrxTSlAQJovC9XdWNFdFhcuaeRbzxzIvOjFguhY2c4xWHyBw7uC3Ne5OcP
-         5X6++9PEh8tcvWjQnrzucqYhAws9Yqi9MOEoMk/FnRajLinYVCN7oQ9tyuB3IXU2lQ31
-         18w98B9ORXWM25PuYMTHVbeM8YFcp7dv9R0/xNnaNfQ8jYhXSDS3Wkd0Y6SAQdDQM6Y3
-         xxMbn3Vvgqy/Nq3Tq+XYvknzMSwk8hjhoh822/tpyJoTxfvteh/DTs1ECa6Nus6jOTmJ
-         EqPkVr/9+w7T8EALuzF1keWW8n0QTDq4YcIN/WrH/lY08qrDkU7otKGz/EU3VK1QtdV3
-         K6Ew==
+        d=baylibre.com; s=google; t=1795200277; x=1795805077; darn=lists.linux.dev;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:from:to:cc
+         :subject:date:message-id:reply-to:content-type;
+        bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
+        b=RW35N9UVpDU0dvSo7y1DxCVNrcZecRPVfFSlDoW2TafSgL39W5Q6HCEWYUNCvqWxxr
+         HCl7pLpHe+bSSa7rY1nBl6kJhbBNms/ehKAhB0wGjaprwgWbXi0b6VZuqEyiWptcgpZJ
+         RqKHY3ELuloSrYjO021TsYi2bR41/8OrhFPUwomaep5uZNP+ga1yiNp2xhW/kkmbseyX
+         GLLUqk2HQv7NRmJyYSf7DzCTMOc1uPif24oNS67D6oBGrVqVYop9DYwg/+u3ny3PS/Kf
+         yDroboptAOp9StMNNh4pXxFQufIbpcaaIgz65mrdhb+IuOYukduLWVVrAOQ3cV88i+Rt
+         8N9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795172279; x=1795777079;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to:content-type;
-        bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
-        b=Zw/rzNpetvBhRgPVpb9i0y0AHsXP7go3lNV36WRbPLvr89T46q4ppr7WSrC1Tfq4qg
-         l4v87lLo1pzWRXomfDB71qqk5iOufbX9Xz2cuXvXzoyjA9ebtcyly6MBF7EczTfSS+Wz
-         Iyr+mA3LZS0UN+0DP9EUYqTDsOKsKMUcz+M4sZYdT4n5yP/+CqC617aLXQqqf2ui5h0Z
-         kinFl3x6H9CWIGc7bHmviZ8fL7YgMNRpG7WKjfkWxAJorsPa+KJX7nKI5ebQBCrpLcUj
-         IuwStOoMAQMaA3XEdhohu4mSs+O9urhPKZsLm+98KjzL7pV7l6L+mppjImLBW7zspCUE
-         uIVw==
-X-Forwarded-Encrypted: i=1; AL+hErF4T9aG0WCkdpILQxql0MMSTneWp69Kyedugi2UgIF9JePhPcOoUoFs9eMBHmBt6r80GayksMc=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9M7ItNhaeeCIw4lIqixKN8vKhjWEGK/C34BVOECA1AWfaQ7Lei
-	D7Rb3yRjuhejZhX8fEsW4if1/5X5KjOR5qLXFGWZvWULiLXKxMEBEJDO
-X-Gm-Gg: AZFdTZeY3cBoohS9wFcbL7CzLrLK018W3cO1zKa0q2Z1jGzxIcOeH/qGEdDCj5bDEyI
-	LsPIDF4pmRUo0vcf9yWOaq+ytTdU7KO391R21eOH3L4i0xjGN9NqThmI5NOxUT9ZQ2jqDK8Ll0E
-	5cyyMppakj7VXKPdkhW63+uZf3XOi94obQiuqFAGq3tNOzpCLFoXVqX7xe9VbdXqwXVdCQ8Z8hM
-	fg9FAaP0uSs0tYFlWctwlBO5Gmh4/RyWQZM8jWK3qQLOgTF/qgZtfQ6OanR90Eexb72hx9vCtPW
-	eu1EdJIOBZg2TAjkz3eFMnMRxlV7V854pvTDtx+CWrY9g8+7Faj5AQmGX+eHmgaU7U6pcR7wdR+
-	Wihv/csUuWsIVL2C8ps6gqHtJ6apB6bIr+YMqvqk7pMg1DN+sQHgv6KTvNe7VSXKWwDpQZweEKT
-	5+4tIkgWh5Q6o288saO9SgYtq20r7Z2j8Y4o6blt84wxonm+/7WYvL6bzX4gkt/Ziek21f8DAeV
-	+3U1rigeOiAnXSdfQIrVlu0rUJRP3QSF9jeuF1SQN12tNEBfGYSEEeZpahaGGzhggBTwRqbprRa
-	xJFGRq23263zpVHonAfxEY9etmbp9TyjHyw=
-X-Received: by 2002:a05:7300:e91e:b0:384:2780:8757 with SMTP id 5a478bee46e88-38570a3e793mr2596721eec.22.1795172278895;
-        Fri, 20 Nov 2026 02:57:58 -0800 (PST)
-Received: from ilotus-PC.8.8.8.8 ([113.172.110.233])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567abb870sm6126602eec.25.2026.11.20.02.57.54
+        d=1e100.net; s=20260707; t=1795200277; x=1795805077;
+        h=message-id:date:references:in-reply-to:cc:to:from:subject
+         :content-transfer-encoding:content-type:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
+        b=XVRpow7deeURXTDMgt/gevcTcta4m8Tczc42ErhLksqp5PIR4ZH1+cQQt8InOZ+0S3
+         iwZQ+fXwKDkgAc4GY9/Jmd4jHwoMYUnXzfoTilVqE+dtofXKu41OuD2YCjmjPYYRAGaj
+         VKU8MOxcWYi90S5rH18rGVeZaudBZXZi2QUZALzPT19H7O5AJBhHiFCtg8K/SU0e3TaU
+         9Sj5gopMpekNwD7SwqWJU89mZGikJQQ4nKUm9eT344AbogGWQ//g1bcR6XPVkwaSYtm5
+         9KFdodi15nTVjG3ehPl6V4l1cdjEQ8xDvc8prVFxIIPqbnIznbTTLFNbaPb2pjCayaKO
+         2LGg==
+X-Forwarded-Encrypted: i=1; AL+hErE0+gYIM92pyVnOoEVp+3203kb1GLnvO+2lp6HUMyuvyYiHxtChj1AKY/O6LDUfigg8ea6DPMY=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9vtbQhIkKtOyqelnJhG4OoBFj2vgFLIeAlcB4yv7vGxdvuBNLp
+	8yZcG5JVIpnUVHx6Xbcu74pUcscYzoQsUM0F1rZHupWAtbrCY8H8lygynOYEVXn+f0g=
+X-Gm-Gg: AZFdTZdCQaesErvE0kT78VwQUfBIBmwQNxlwEkfjYXsS3z8RVH4hdPSm526p0dUShj/
+	ZyVXI0aS3nJNam8fSAaRTP6V9dZPjxnCQBMbDRR13cwf+Ebamv/wDUGWwS5PL6U2zPeQ6Mf5YRO
+	+W9hRxLzSyaYHWHYYCiEszAVAL+BBVgZEbsUAR39FtNBmXaW8Gk0234LBBgh8Dlj1a8+tBpJ5qm
+	zJg2JPxrcF55fxltuJDIEUE43I4UIu7wRSFwoyBRl9dYch0ORI4bppWsbLhBH4j+SuO38tE31G/
+	EHylsU0CWRwLmjpJB+mLfsrEx8VoYTdZqSpljT9pONOUHSkgGqn/uzEyafm3gZ9mAdH/sPYiw8P
+	ep/+XWRZAHMPdsma1BDxqqpJBnSBUrrCYi+DNAXa10lfJZrU2o1pl/HlZvNsHnalchmhrSCRutX
+	85MGADEtIHI0jRSV1OUr3FnM1md6Hhbuf06xIDuFHsurMAovV8JiwaV0F3yKvUBB0Iq0KUhghxe
+	il23o9JvOfEBZmCWZl0dmLq7wbqLTW4EVTeL4fqJIs3dZI8A9cP7NfENPTBvNtn/V/PCVE1HpN1
+	PxTW+vRa/wkygdyi8njKm8xe9mDRN4QIhlVUAUaNL1B5+Vf+
+X-Received: by 2002:a5d:6691:0:b0:4a6:c3f:9d0e with SMTP id ffacd0b85a97d-4abb3d2c0bemr5838892f8f.44.1795200277031;
+        Fri, 20 Nov 2026 10:44:37 -0800 (PST)
+Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6a67fe75sm7999128f8f.24.2026.11.20.10.44.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 02:57:58 -0800 (PST)
-From: Phuong Nguyen <ndp2809@gmail.com>
-To: Stephen Boyd <sboyd@kernel.org>,
-	Brian Masney <bmasney+clk@redhat.com>,
-	Jerome Brunet <jbrunet+clk@baylibre.com>,
-	Chen Wang <chen.wang@linux.dev>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	linux-clk@vger.kernel.org,
-	sophgo@lists.linux.dev
-Cc: Inochi Amaoto <inochiama@outlook.com>
-Subject: [PATCH] clk: sophgo: cv1800: set mux parent in bypass_mux_set_parent()
-Date: Fri, 20 Nov 2026 17:57:33 +0700
-Message-ID: <20261120105737.7461-1-ndp2809@gmail.com>
-X-Mailer: git-send-email 2.43.0
+        Fri, 20 Nov 2026 10:44:36 -0800 (PST)
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -99,42 +89,44 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] clk: sophgo: cv1800: set mux parent in
+ bypass_mux_set_parent()
+From: Jerome Brunet <jbrunet@baylibre.com>
+To: Phuong Nguyen <ndp2809@gmail.com>
+Cc: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
+ Jerome Brunet <jbrunet+clk@baylibre.com>, Chen Wang <chen.wang@linux.dev>, 
+ Inochi Amaoto <inochiama@gmail.com>, linux-clk@vger.kernel.org, 
+ sophgo@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>, 
+ Jerome Brunet <jbrunet@baylibre.com>
+In-Reply-To: <20261120105737.7461-1-ndp2809@gmail.com>
+References: <20261120105737.7461-1-ndp2809@gmail.com>
+Date: Fri, 20 Nov 2026 19:44:34 +0100
+Message-Id: <179520027402.3795820.10625849754833863467.b4-review@b4>
+X-Mailer: b4 0.17-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=542; i=jbrunet@baylibre.com;
+ h=from:subject:message-id; bh=eYRKSzuppIIPsVALhR3By5BFF1H2aR0BnquIko5QzAY=;
+ b=owGbwMvMwCW2VtK+WnvWU3HG02pJDNkMU4U3Hp2+zfeUxPVfFT9DCubkvvgZvIoneHLQgoWVu
+ 9MLbXf5dpSyMIhxMciKKbLUcFeLv5PU+jJrus5tmDmsTCBDGLg4BWAi9tEMv5i1dNcrNVy+u1qq
+ vWDC77kxUnMSZvdd5HG59dyL59s9ZmaGv/IBl2sXVJ+ttOPb7Xv00dqkq+duOxQnJ3WrhvhMqc3
+ p4QIA
+X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
+ fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
 
-In bypass_mux_set_parent(), when index > 0, clearing the bypass bit
-switches the clock to the mux path without updating the mux selector.
-As a result, the hardware mux remains at parent 0 instead of selecting
-the requested parent.
+On Fri, 20 Nov 2026 17:57:33 +0700, Phuong Nguyen <ndp2809@gmail.com> wrote:
+> In bypass_mux_set_parent(), when index > 0, clearing the bypass bit
+> switches the clock to the mux path without updating the mux selector.
+> As a result, the hardware mux remains at parent 0 instead of selecting
+> the requested parent.
+> 
+> Call mux_set_parent(hw, index - 1) before clearing the bypass bit to
+> configure the mux selector before switching to the mux path.
+> 
+> [...]
 
-Call mux_set_parent(hw, index - 1) before clearing the bypass bit to
-configure the mux selector before switching to the mux path.
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
 
-Fixes: 80fd61ec4612 ("clk: sophgo: Add clock support for CV1800 SoC")
-Signed-off-by: Phuong Nguyen <ndp2809@gmail.com>
----
- drivers/clk/sophgo/clk-cv18xx-ip.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/clk/sophgo/clk-cv18xx-ip.c b/drivers/clk/sophgo/clk-cv18xx-ip.c
-index e936e3154003..34062ad7f2aa 100644
---- a/drivers/clk/sophgo/clk-cv18xx-ip.c
-+++ b/drivers/clk/sophgo/clk-cv18xx-ip.c
-@@ -588,10 +588,15 @@ static u8 bypass_mux_get_parent(struct clk_hw *hw)
- static int bypass_mux_set_parent(struct clk_hw *hw, u8 index)
- {
- 	struct cv1800_clk_bypass_mux *mux = hw_to_cv1800_clk_bypass_mux(hw);
-+	int ret;
- 
- 	if (index == 0)
- 		return cv1800_clk_setbit(&mux->mux.common, &mux->bypass);
- 
-+	ret = mux_set_parent(hw, index - 1);
-+	if (ret)
-+		return ret;
-+
- 	return cv1800_clk_clearbit(&mux->mux.common, &mux->bypass);
- }
- 
 -- 
-2.43.0
+Jerome
 
