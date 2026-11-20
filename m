@@ -1,100 +1,95 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.178
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795089430;
-	b=dQLvs0jqiWmjzNiELDcm3Ys1MKBiptYGpOd2A1fgYy2zdKd6rrRhcPWtFu0EqTInN91H
-	 5z4YFpgiTiyW7nPGCPKicq3UYEVTdEF0pmj9JfFbdfPHg5MvSvLBDiqMsH9bRrbXE9tgK
-	 v/ThbujWvZml8ICWb/TOriut4O4cT2JOAd93K8y6wrhikjsRscIwwZzgnzx77QPAuTF3F
-	 HBDigeGlZoPjPQwMDLOCelPc+i1FZ1/QETeoNq6JwXcHy3aNLlVSKSfR9njs5S6Idz7mB
-	 YGmEcPwMW+HiwqYHtOLG+W2jXmZFjfmlGv8bKizBecUL2sh+KKTbf6X+nwIGC1Rno6g==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795089430;
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=74.125.82.175
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795172280;
+	b=utNXhI+htyvqFTFNmVgL59GaGvnkAT0xDIKkQ1nUSWQd0dLRmzb7eK6zdzGaRivd+Ulb
+	 Ph5w2j+5ZdHkSTKNjnd8w4y02zGo+eXyxEgRZYcNPHTX3eHG6SggrYqz0GCD2pwSrGL93
+	 1KKpvpXCm+Dc5QD/Fjv9P3DS+Hr3EHZl9tpteanwI1YXEksaEVFOOZLzOPrUSz7G04IL5
+	 LA96W7yr4+TG/DKJZhdxdYhs2amDnrphMsC94Yv/PCgBaQs9IZpXq8dcQ0wHS+qMHf7ur
+	 zzdK0UJaHpfqnwXMscae+2jyLp4zKVaiUky+jYOBETcOFjpf3I27p0vtlNXeikwQ5fg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795172280;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
-	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
-	 Message-ID:Subject:To:Cc:Content-Type;
-	bh=3DGHJD9OI5RgR3FDLdSkUexvvMBs0ImZw3eBtdXnyLE=;
-	b=v6Fim0QK4mG1p3fsk3I8LZiRJSqBfkAG/t7nQcmpObr9Q41Rhc1hITJ/h3GwhpDk6Ubn
-	 rX367mPJQ86i0U83UcQc3bc2VY9NnqcVTHYnpdzWBiTf569OkPEkE0kVymz+/ZIWb+Ojx
-	 S2bmi1u6TGJuHig5BExuFcY3Tc2+ezXCOeqjrok1lOXi9rtw+WDxJ8kxOMemM//y5BURB
-	 JSXJmLulsiTNIroG+8+lqtV3SL+HSZ7FLypEZbRvDbO9Sr4HiJIlvHzLX0TWY/PsfrUKv
-	 3+2hcci96c3oP19iM2cjE+wg5tjmEjPhRRUZejZMFnJgZ4LBVsvfqx+cmSZ6rgF3nxw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding;
+	bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
+	b=xxknxLcx9CQFskjFNSYNY5M1A9D0eYZBFvgwONQgVzCA5+QLiNkS6YwFiekaeTg1JT2Z
+	 +WKtQg7wY2PuRGOQdkOaSrSAN39nxIzMWgbCmXmb1yC400y/GwVSxDCqF1j2+RdTrDKP8
+	 deynUVGdqWxEroJ3teIAT5Lpke940emjNjK2Ko5FVLGPlmPCt1Yu0QLYklFEujGYDfNbW
+	 /j7Ikym41CS2Db0TbOdiWPopwOzYWfwGYILlCF0fKtccH3Fl7RaGJtjnkB5Nlp/w+yXIT
+	 ZzrTuaXhYKbmN/i3gPVLq5Cg0rgGHOxJ2n4/EYCXO5Z/VuV4iJrkLAL+Nueufl8IPAw==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=gmail.com;
 	spf=pass smtp.mailfrom=gmail.com;
-	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pw6WpUGK;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.178
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YgdH+GeA;
+	arc=none smtp.remote-ip=74.125.82.175
+Received: from mail-dy1-f175.google.com (mail-dy1-f175.google.com [74.125.82.175])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3B2606A325
-	for <sophgo@lists.linux.dev>; Thu, 19 Nov 2026 11:57:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3F3B2606A325
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8156606A320
+	for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 10:57:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8156606A320
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=pw6WpUGK
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3adfb744fa6so2356811fa.2
-        for <sophgo@lists.linux.dev>; Thu, 19 Nov 2026 03:57:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1795089428; cv=none;
-        d=google.com; s=arc-20260327;
-        b=h2XzvtdYc4qeT9Ft1RZYbcw90Vsl82bTEExoLEdXwpwYHJYCD3HRjsuyb0Lf7MPeiy
-         nzaY1RT1C9ZbrVZxMfIuyY1kjmLoN3TP2NA/kCFOuU6BSilNUb651QHTCJIwxJ28RbRQ
-         I4Ff8kMgl40CrdbiooqgiV52fqr88SvY634qMcPLmimJPY2+5t0IWJ7k+rJ7XIFPQ2df
-         xf1x3fS8yzR90EsEzY6p/GjIVyFBtRIy0Sl/ecYvu/0h2bnb+kx5a0sldo3EPkgl6KPp
-         oBsa6izC+vwBdZ9l6v6tGTDtBGUOKa4eN7H1ydIq7hwBQJpMztU84XeO5qKI2fzckaPy
-         xLrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=3DGHJD9OI5RgR3FDLdSkUexvvMBs0ImZw3eBtdXnyLE=;
-        fh=+Fy/+tR5OHdqlmTT2q/W/kGhZ7VC5SZBg/SzjcjfgwA=;
-        b=Do90JiQOdhnRuh96JBGQVnb+kgHfcjwCp1cCxL8fsYFs5K4KutQyPYwFnjFUzeZ4Uf
-         4dizeKSUUkA/i/2gmsl6plkuGyJrkt+p6kz6xyV2qKGu6q9WKKURB5p7lhYthkrH3ggT
-         9G/h3F5mtIEIr21bIgOJEOzBkiCeUVhCquYYOYckY5ZHltdHsDUARhfMjHAddJ++e1fS
-         s3sGYKpncIxllv5efPuld3jcrW7ak7pVj8q4OpNRlGH5DApDEpoLmUgnT8mCEGZ4IGe9
-         ss1GPqdyzW1ivHALZ+epPM79vpXdQZ3JxknDSuHgIMSvzVa0Ssw7s4cj99OgXJdSjhPN
-         XVjg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=YgdH+GeA
+Received: by mail-dy1-f175.google.com with SMTP id 5a478bee46e88-382f4710a17so1202990eec.0
+        for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 02:57:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20260707; t=1795089428; x=1795694228; darn=lists.linux.dev;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=3DGHJD9OI5RgR3FDLdSkUexvvMBs0ImZw3eBtdXnyLE=;
-        b=pw6WpUGKp0XRx03K4pVg6Ma+cMIjqralFV9up5T4gzHb1LRaadZ2gz+47T670XmbOT
-         8YGCyu5Z9EVI1Kz5+9kyUSRH51L/vwkkrzMNX8A+LW5sNUsXcuhtYQ77FTQtBiYgOE+b
-         Ra+Nz3vuTsiDgzImZanI4TzSsW/Nu3ZAx7taVdlRqQ5xK0Qg0QKF9IEMnZAylUTXjkla
-         b8fcekCS0n1w7Ta+r0J68DGmYB/QspsqbnIRo0N6ZcPJ0aLsz23W4CNv9X8GhGw8uLey
-         TPPqmlGyuWUhZ3qlY45l5QNOjvmoAffabc8MJRVZ/yFhxuTL0JZ7hHSBzyF3X6adqQsy
-         d1NQ==
+        d=gmail.com; s=20260707; t=1795172279; x=1795777079; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
+        b=YgdH+GeAwrxTSlAQJovC9XdWNFdFhcuaeRbzxzIvOjFguhY2c4xWHyBw7uC3Ne5OcP
+         5X6++9PEh8tcvWjQnrzucqYhAws9Yqi9MOEoMk/FnRajLinYVCN7oQ9tyuB3IXU2lQ31
+         18w98B9ORXWM25PuYMTHVbeM8YFcp7dv9R0/xNnaNfQ8jYhXSDS3Wkd0Y6SAQdDQM6Y3
+         xxMbn3Vvgqy/Nq3Tq+XYvknzMSwk8hjhoh822/tpyJoTxfvteh/DTs1ECa6Nus6jOTmJ
+         EqPkVr/9+w7T8EALuzF1keWW8n0QTDq4YcIN/WrH/lY08qrDkU7otKGz/EU3VK1QtdV3
+         K6Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795089428; x=1795694228;
-        h=content-type:cc:to:subject:message-id:date:from:in-reply-to
-         :references:mime-version:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=3DGHJD9OI5RgR3FDLdSkUexvvMBs0ImZw3eBtdXnyLE=;
-        b=FlTHK5BoAMBs8olFfKEPiz+bJKhViyMpqV6L3QnAWwxN/57niGzilsbjPdajbkxMwJ
-         fJAx6sLMqwlJC5BAGuGuwiu9wSdaAXHJ7pVGwWWzfzaM0q8cXtKgEsR/fMfAXUDR2oh6
-         VadG9CAhdoOEKEs7AS6kljS2cWt4zQIW4JnhirtCROwkL5gCXYOhiDf62RDknYPP8/ew
-         xtuQL0ffUjsO9KAWPvaEvWQWU4lf5x7Q4BVGsSJXntwPvDu4p5Q14m+QzH6C2BpLYKXs
-         HZ54WJvU6BP6WmPTU0ARng9+uPCJfAGKvEpAQVgeZgW0tcJWui42XPXd8NTYlyFixmwo
-         oTcA==
-X-Forwarded-Encrypted: i=1; AL+hErEB+/0C6j2ffPya6Oq2xt1H051KDaaHtdZYzLv3BUKtm8zu64Jmiuo5mlTAwlrsulVyNHrknQs=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9We++mTF62przBKQPnAvlNAHEGcgNxYj+823rGt/HG3WGhUOaH
-	R7xSPTwG9XGRXj930PFD/J8y85dJ6dlQGfkzL7+5309U9Z3+hO8DESaLX3dUVYV89FzuUseE6QE
-	/91BU5GcT9Dp9ELfdwu5ohWyLydpfl5Q=
-X-Gm-Gg: AYBFou38u86Dv5tVlczcBh/iPRKHijsAfyoXF96JR8JTyBMFdcqBqT0+dJ9OfIg8rgq
-	jfAPMTN7t++y3qlx08uy2Z/BAwkJ9HwQfR+KJ9idElYeLEd8NT/FUqcxxQA1RamhIzzryyptA9y
-	FRDUsB3kMpiG0kwzCWcpfFcQooTad7putGR4rn1Hl9E0S/tX9Hrs3Xjq8Lo33nVg6dPw1/wCSQP
-	ldGzkAWuSNFYNyJAUaFRN7s5ss1N+SWXCLI7il4lO39ESBxU+d19pYC/QLXmTbIBf48OYkN9q6C
-	0CEAebTOIkuTlwLw3qw/bOeW6BsjN46+EYS7kFFKbNdwr+qFfJoCuvzz8wKE3Ou4e4gNQmPQph0
-	cE59TBaEKUQZBBdzTy9v3H7TkHhRAI/qzaQMicYSZ9BzM/moQRVriL5yBA+WXEQot54hFosr8Ek
-	yBbr/yN5zO3aTZepCDUo72xPUlI2q3DeWMrbLjDPE=
-X-Received: by 2002:a05:6512:2289:b0:5c1:5488:f57d with SMTP id
- 2adb3069b0e04-5c1a9d2f33cmr2121143e87.4.1795089427939; Thu, 19 Nov 2026
- 03:57:07 -0800 (PST)
+        d=1e100.net; s=20260707; t=1795172279; x=1795777079;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to:content-type;
+        bh=+aoykV8a18EfGjtngppAxydVm7TBp0whXeYggjz5TCk=;
+        b=Zw/rzNpetvBhRgPVpb9i0y0AHsXP7go3lNV36WRbPLvr89T46q4ppr7WSrC1Tfq4qg
+         l4v87lLo1pzWRXomfDB71qqk5iOufbX9Xz2cuXvXzoyjA9ebtcyly6MBF7EczTfSS+Wz
+         Iyr+mA3LZS0UN+0DP9EUYqTDsOKsKMUcz+M4sZYdT4n5yP/+CqC617aLXQqqf2ui5h0Z
+         kinFl3x6H9CWIGc7bHmviZ8fL7YgMNRpG7WKjfkWxAJorsPa+KJX7nKI5ebQBCrpLcUj
+         IuwStOoMAQMaA3XEdhohu4mSs+O9urhPKZsLm+98KjzL7pV7l6L+mppjImLBW7zspCUE
+         uIVw==
+X-Forwarded-Encrypted: i=1; AL+hErF4T9aG0WCkdpILQxql0MMSTneWp69Kyedugi2UgIF9JePhPcOoUoFs9eMBHmBt6r80GayksMc=@lists.linux.dev
+X-Gm-Message-State: APuU4Z9M7ItNhaeeCIw4lIqixKN8vKhjWEGK/C34BVOECA1AWfaQ7Lei
+	D7Rb3yRjuhejZhX8fEsW4if1/5X5KjOR5qLXFGWZvWULiLXKxMEBEJDO
+X-Gm-Gg: AZFdTZeY3cBoohS9wFcbL7CzLrLK018W3cO1zKa0q2Z1jGzxIcOeH/qGEdDCj5bDEyI
+	LsPIDF4pmRUo0vcf9yWOaq+ytTdU7KO391R21eOH3L4i0xjGN9NqThmI5NOxUT9ZQ2jqDK8Ll0E
+	5cyyMppakj7VXKPdkhW63+uZf3XOi94obQiuqFAGq3tNOzpCLFoXVqX7xe9VbdXqwXVdCQ8Z8hM
+	fg9FAaP0uSs0tYFlWctwlBO5Gmh4/RyWQZM8jWK3qQLOgTF/qgZtfQ6OanR90Eexb72hx9vCtPW
+	eu1EdJIOBZg2TAjkz3eFMnMRxlV7V854pvTDtx+CWrY9g8+7Faj5AQmGX+eHmgaU7U6pcR7wdR+
+	Wihv/csUuWsIVL2C8ps6gqHtJ6apB6bIr+YMqvqk7pMg1DN+sQHgv6KTvNe7VSXKWwDpQZweEKT
+	5+4tIkgWh5Q6o288saO9SgYtq20r7Z2j8Y4o6blt84wxonm+/7WYvL6bzX4gkt/Ziek21f8DAeV
+	+3U1rigeOiAnXSdfQIrVlu0rUJRP3QSF9jeuF1SQN12tNEBfGYSEEeZpahaGGzhggBTwRqbprRa
+	xJFGRq23263zpVHonAfxEY9etmbp9TyjHyw=
+X-Received: by 2002:a05:7300:e91e:b0:384:2780:8757 with SMTP id 5a478bee46e88-38570a3e793mr2596721eec.22.1795172278895;
+        Fri, 20 Nov 2026 02:57:58 -0800 (PST)
+Received: from ilotus-PC.8.8.8.8 ([113.172.110.233])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-38567abb870sm6126602eec.25.2026.11.20.02.57.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Nov 2026 02:57:58 -0800 (PST)
+From: Phuong Nguyen <ndp2809@gmail.com>
+To: Stephen Boyd <sboyd@kernel.org>,
+	Brian Masney <bmasney+clk@redhat.com>,
+	Jerome Brunet <jbrunet+clk@baylibre.com>,
+	Chen Wang <chen.wang@linux.dev>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	linux-clk@vger.kernel.org,
+	sophgo@lists.linux.dev
+Cc: Inochi Amaoto <inochiama@outlook.com>
+Subject: [PATCH] clk: sophgo: cv1800: set mux parent in bypass_mux_set_parent()
+Date: Fri, 20 Nov 2026 17:57:33 +0700
+Message-ID: <20261120105737.7461-1-ndp2809@gmail.com>
+X-Mailer: git-send-email 2.43.0
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -104,33 +99,42 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-References: <DM6PR20MB2316366FC9ADCBC7B6E9C289AB7A2@DM6PR20MB2316.namprd20.prod.outlook.com>
- <20261113124748.339778-1-chenyou910331@gmail.com> <av2McZf10FiOKDcZ@inochi.infowork>
-In-Reply-To: <av2McZf10FiOKDcZ@inochi.infowork>
-From: =?UTF-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>
-Date: Thu, 19 Nov 2026 19:56:56 +0800
-X-Gm-Features: Aa3M54qSyoSPK0sbiO1qulApR7twGYkaLmwyVt_kNcR7vSHn3UAf0ux0G1y2ll8
-Message-ID: <CAKspUhLiZ8GwfVu5cs3f3nr0uFV=qEFs2r+xP+1CkZ5jT5rp6Q@mail.gmail.com>
-Subject: Re: [PATCH v2] riscv: dts: sophgo: add watchdog dt node for CV1800
-To: Inochi Amaoto <inochiama@gmail.com>
-Cc: AnnanLiu <annan.liu.xdu@outlook.com>, Chen Wang <chen.wang@linux.dev>, 
-	Alexander Sverdlin <alexander.sverdlin@gmail.com>, sophgo@lists.linux.dev, 
-	linux-riscv@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Wed, Nov 18, 2026 at 07:32:50PM +0800, Inochi Amaoto wrote:
-> If you want to take this patch, you need to add all watchdog device
-> instead of the only one for RISC-V. There are three watchdog devices
-> for A53/C906 0/C906 1. IIRC only one can take effect at the same
-> time.
+In bypass_mux_set_parent(), when index > 0, clearing the bypass bit
+switches the clock to the mux path without updating the mux selector.
+As a result, the hardware mux remains at parent 0 instead of selecting
+the requested parent.
 
-OK, I will add all three (WDT0-2) to the shared dtsi, so the arm64
-SG2000/SG2002 DTS gets them too.
+Call mux_set_parent(hw, index - 1) before clearing the bypass bit to
+configure the mux selector before switching to the mux path.
 
-Since only one can take effect, should all three be enabled in the
-dtsi, or should they be disabled there and enabled by the board DTS?
-I will check in the TRM how the active one is selected and test each
-of them on the Duo 256M.
+Fixes: 80fd61ec4612 ("clk: sophgo: Add clock support for CV1800 SoC")
+Signed-off-by: Phuong Nguyen <ndp2809@gmail.com>
+---
+ drivers/clk/sophgo/clk-cv18xx-ip.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Regards,
-Chen-Yu
+diff --git a/drivers/clk/sophgo/clk-cv18xx-ip.c b/drivers/clk/sophgo/clk-cv18xx-ip.c
+index e936e3154003..34062ad7f2aa 100644
+--- a/drivers/clk/sophgo/clk-cv18xx-ip.c
++++ b/drivers/clk/sophgo/clk-cv18xx-ip.c
+@@ -588,10 +588,15 @@ static u8 bypass_mux_get_parent(struct clk_hw *hw)
+ static int bypass_mux_set_parent(struct clk_hw *hw, u8 index)
+ {
+ 	struct cv1800_clk_bypass_mux *mux = hw_to_cv1800_clk_bypass_mux(hw);
++	int ret;
+ 
+ 	if (index == 0)
+ 		return cv1800_clk_setbit(&mux->mux.common, &mux->bypass);
+ 
++	ret = mux_set_parent(hw, index - 1);
++	if (ret)
++		return ret;
++
+ 	return cv1800_clk_clearbit(&mux->mux.common, &mux->bypass);
+ }
+ 
+-- 
+2.43.0
+
