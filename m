@@ -1,79 +1,97 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795285101;
-	b=tLXKuiS7pwBaMPPT3TUhTcHbpwifCvpU+Cl+avFf/w6l02psX/PDPMQNBI/nZpKlGWjK
-	 zqApJwpOgHlMEGb9oMtdUO033ca4b+hpObvSBW4n7yyQrausmh0Bm8akI+FozMBvBe88j
-	 i4LtYwAlbx/mKt/bryzQ0rwPCB/gU4JdlDWG7XJhCUtTYJwxgi8++aPVordZ0yaFFTk+V
-	 bDVMjEhnGNZIcGnFpPri4kqnHLTyo5FhGQGjARBTVWYqbeKHJNJVlgmdkw0L3XHsO7wG7
-	 3ArqvIc3wvUGCsnFXVpMsXXHKAt+BPiqn1oAsvnXDQex1YCGoRBxvakteRYOVFU6GOQ==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795285101;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=m1gnqWwuy37LNfIKTHMUOJxWxBN6DAuoZEotlbuqcgA=;
-	b=yDbZlLoCEbPjd+AaZupvvzqnMqTkLKzSUJFR7MBe9eYl69s2D5svvD1SsTlqeI/jF/uP
-	 +ev32QlB9ujhoBDBp42SD/FQSfTA3VEfOw6Bz3Ty6p+ZHkl2ifvGEv76Qkokt3BNulV5K
-	 UtQClP+lm1C16WlKUxEghSOY6rnB+Q+2SjINNzR1nP9BSMIciH78Ppq1KXN2Q7wBZrdpD
-	 N4zJDpELNQvGHBbI8eEH7TIOfRxCxNcgFQntE1Yl/4wL8MOHcQCW9+efXl+/hrG2twssE
-	 UBiEKywJLucjooBlsOn9ZXDWa17+SOWg9lm4bn4361veGzX2M4dUW3N3LPzsC9edghA==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J84xZG0d;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB33E606A336;
-	Sat, 21 Nov 2026 18:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=J84xZG0d
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795285101;
-	b=qK5kQHq5vCZv2v4o8xikgO8S6tiec9Zv1W+7mmBjigLi53PgZr1vbwzrCJb1UyL5Xawk
-	 9WDnBUWJWJltIVgjGA2aB0fBzG9fDTz7Kd1x+rIrI8C/GVY9XFQJ0bkiZre7S/uOz2OJ9
-	 Q8YCRTpHgIUdgynP//U+YZtRsR19yGuU04v8QcP787pIQG1niXrsMH7Db2vkpWSK7knK3
-	 8z29yeSgWIBySGL7BnOgd3kHYGU/bM1BVqCpgtUgagzAUR6i6D3SZHXgPB/8fM44r+Qmi
-	 7559QbBe6lDSw0tgIcLdWvclzkkDGmkJYseod1SwoqsHKfCMFq8daUJ4Pgo0m3YTA2A==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795285101;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=m1gnqWwuy37LNfIKTHMUOJxWxBN6DAuoZEotlbuqcgA=;
-	b=RFnTsod7DL4qdLlnHE6G2GT4LLiRp2qTYcL1bl+hEd7p0ivRJ8NA4zn+/1s/qnxGx2lT
-	 SWnZJcQqHRvUYfr+1y1Qs+xPHa0nD6OJHrmwCeVS3G3nqkTTO8Q7sW0moC41TqHBXp9iE
-	 78+nHQDaeeWymdF3wgj2e//P5itf2cfGycQk3kAAL+8dUn8JdaDgsGRZ56vyPIJ9WppFm
-	 bvWfk3XaB5GW3TzRXqmPEVF7hkTYcyaLch/j/8rwtOjSAIwCf1uAY6/16aK+E9MuWXUNx
-	 IeohdCNiwmCjr+hUCSQFeFvmAEOB+ug178tbWFTMOpuzEqTZoCxVzonPlPrPR2Zna1w==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.215.182
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795304695;
+	b=yU33oEPrjY0KO2tHO3YYuxk0n0wFmosKS5aLA/m+Wj2GTOfSprP2HQOOUdUdoGHPii+E
+	 5IvN40obSn41j4TIne1tSvGPSevjmn3n8Ubeui8AZ9JQXa3alyX6Bih84R5UIzcHRX7jJ
+	 vOJSJOXJvm0IZSb09iUOJjN/nc0hnWK37LvR4dHh3FM4VHIcRF6GR9bhnsM5kxtJ6KW+Y
+	 aJ65i/8CPfJwzLhJGiESe0BU76Jw3sTHnyZwnHF8bbfj3mCgnmBD+XwPE9Fdq7SCsMel+
+	 K623DXutcf0RNZxpVt3sy1mg59mjZnBy/lfMSCq9c0baoWQQM7vpE3UZmtfOYJBc3DA==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795304695;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
+	 Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:Content-Transfer-Encoding:
+	 In-Reply-To;
+	bh=euG+RqQvheU6keSPzs75dZgF0gjjXiXQTzRnhsV5zcw=;
+	b=wB3YxGu0MA8vJqdGFDwWRggDzWkpSWitySvXS6DMiYGikNmyOnLLaOvugpYI8nxVXdU/
+	 FqVlHYJzdbVxD0wDCBgbZqAWOBWuk/VFZ8yw4nWpg/7Q6qOM0D9Efemi03zdMWX/d3Tzc
+	 oDTnqNCAJpstudJjMXQKvQOSIF7N4F9KpROLGin7zGS3Cs8CcsGwpfRS1Hl9u1zQQBEpB
+	 ylcjlpc5chvdr42ad4nQe0z3K9I9cip5uzuJwnRuFRaYHWTo3EBqzB3VPbFjNAvAFeK7L
+	 iW3mW1lwsg+tbxWA/FDThWCnrTvHAUc2GGANcYhEdEewt8wkVynD7XMeZt18xZxfy3g==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kDwfq2kd;
+	arc=none smtp.remote-ip=209.85.215.182
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 7AA391F000CA;
-	Sat, 21 Nov 2026 18:18:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795285101;
-	bh=m1gnqWwuy37LNfIKTHMUOJxWxBN6DAuoZEotlbuqcgA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=J84xZG0dDbtJxIshdnzJgdfjYDrQRB6PxKi4qSdKGBQGGv9JPc91wXk5MThmLkQO9
-	 M5iacNcuqOU4KIf+zeRLX2vWQW2QP83+uC2QNNlxObsGf7YrlpFuIudZSXHwN/Yi5w
-	 blgke7xqLB4/6WOVJ+Ic8hJzkgw1SG05C4ARMcdmbiuCx8Wtfsco8zPYPJH1KNlSfo
-	 VXzO1yb9G+8mbqvLl5nx88zMAqZRYBARq5Vi175rXdiH4B7kDg/Vz0zYDViA7MEmYk
-	 0N5EBpWujyn3dGqGnnRDqxF0eOV/V8fTvXiRtnLX3LX0AsvfQJWYXM8qhKNWXLsrfc
-	 za+sMIjgV4qrA==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 020E14BD37;
-	Sat, 21 Nov 2026 18:18:20 +0000 (UTC)
-From: Han Gao via B4 Relay <devnull+gaohan.iscas.ac.cn@kernel.org>
-Date: Sun, 22 Nov 2026 02:18:04 +0800
-Subject: [PATCH v2 1/2] dt-bindings: clock: sophgo: Allow protected gate
- clocks on SG2042
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EE2606A332
+	for <sophgo@lists.linux.dev>; Sat, 21 Nov 2026 23:44:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E8EE2606A332
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=kDwfq2kd
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-cddc597d062so1261246a12.3
+        for <sophgo@lists.linux.dev>; Sat, 21 Nov 2026 15:44:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20260707; t=1795304694; x=1795909494; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to:content-type;
+        bh=euG+RqQvheU6keSPzs75dZgF0gjjXiXQTzRnhsV5zcw=;
+        b=kDwfq2kd5c31LSC5Ww4IjCbyT8mnSdvdeEDS2fmExPscqzm926VdVUmRLsQdQOc9XO
+         j0NiWxZafuZXL3jtIk86is5SOsKOMusZwB75ePcCX5/hjP7XqF0hDkmMwyCZmy0e5uO7
+         OVwlMyMDjxWkZMyQyPCTNjlfyfUD0tBYGp7ygwxoI0az3l86l4EMBEs95hFEpwQI6iS7
+         3mVfAJorTYXTpjMzK0mcHygBH0zKDKt+UjNcp+C9uOx0vT87ejpGs8LFIJhwF5oz+64u
+         BhSk+m8PPZ3nVlPwYLAL0K5Lr1FYS7Mib8onLot2ZrgIxBOOfxW/0Lx7Wb8xc4O3ENF9
+         TThA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1795304694; x=1795909494;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :content-type:mime-version:references:message-id:subject:cc:to:from
+         :date:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to:content-type;
+        bh=euG+RqQvheU6keSPzs75dZgF0gjjXiXQTzRnhsV5zcw=;
+        b=kNwMrYV8YDcn/vtosN+4fq1g1Vyu9wSlLZJl7zIaLLoT/1NLxFzWLkTlLomB9bWrfH
+         xuZFse7aazgDM59ZGtDRPcYxEuYnMRR6wltJuVoL7SNDX6GmBaLzBwYrA46pzGuoAHuK
+         I2fdabpWWMq3PO1uSRVO9++0JH2YYbs00+hdpWtZpbILPahY8cEwEwhpKbYhV3s5gL1S
+         Xs/XSsuq587IMOj1YFwsf9D2MkS8vggpvNXYz4Y68zuUVAzLKHlapE7hqwtOd8Oq93wg
+         Fnxi3EWEaIfh2Kv8lmKDg6vvU4QiGrSwoKib9WBH7/RGddyHxz7gIf+hHI7nyIEWXSfF
+         k6ww==
+X-Forwarded-Encrypted: i=1; AL+hErFmRF2+McbYjRI5eFRRwGpHwkt8eZhM2uFXU9+jG/5hpY0y1pC0/DD+VTq3c3r9dOPVFx6U5Xg=@lists.linux.dev
+X-Gm-Message-State: APuU4Z+pbrFNZapOoD4Bh/xoV903mjUG4GIFurFboT7O6EN+1ai+hvPk
+	2RnDXy+V+rbGjfKIhBC8L22iXIhKGni8LMRn8wY7KqyDUGoO1JTa6ldw
+X-Gm-Gg: AZFdTZfVFNuR7J6C71IMIZZB/j6y2TrUV87j3DwH0qlWPpY0bjGu+GanAK3uVF9QY4U
+	SusQ9bftuT7rCo1bJgRns0qnejwvkl2c1n21C9TX/swDwIXyNtkNC+uWwV6M1vhQaQBY8FPxqY4
+	KxqP6zPyTOEX3DG9kjz0b/rORLb67n09Epj6u7bhwpUY64eDW7gorR0tAfdIZJPn8GeH+lsT7Jo
+	xiWLclgKykOXOd4+qyUltsgzg3VpE8ZbuwC0uCqjAZoqx0Za52YYK7jbBJelNAKmv2pCV9PKcV7
+	XIGVohvC9uXGIy1jcrvF7uT6+seAW081Zu4hM/tnjHbr5ogKAAoAL4p+Xftm+7k9Fol0IeYDieT
+	Pw8JaLDXcAjFMIrmN+Tfslvueeo3y81TLChc728vNw5HO5AOddzSPmYhSrXxtMsaUhvs6s1/XeQ
+	q++oUFefBvL3J5L6EuygPgiYqkWwrA8FBXvyomqFoKuqHvFAgX0Nh1Z1RAEXIYxmcT0UVc18Xo+
+	JAW+NQnnS0Rc+NNKGlntpd+qwpHY+R23hb3d6bPk/KYJxwqqocl5cvuvrXqiVK0rLMySaiGoF72
+	3tufqsTZXVkflQh3JQCQcFEwMSME0zOQRBF+dF5OcPiMjbLu
+X-Received: by 2002:a05:6a20:6a08:b0:3f8:f0b1:e7bd with SMTP id adf61e73a8af0-4014d457995mr7749315637.39.1795304694184;
+        Sat, 21 Nov 2026 15:44:54 -0800 (PST)
+Received: from localhost ([2001:19f0:8000:4ce8:5400:7ff:fe0e:e6b2])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8c87285c219sm3289745b3a.18.2026.11.21.15.44.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Nov 2026 15:44:53 -0800 (PST)
+Date: Sun, 22 Nov 2026 07:44:20 +0800
+From: Inochi Amaoto <inochiama@gmail.com>
+To: =?utf-8?B?6JGJ5a645L2R?= <chenyou910331@gmail.com>, 
+	Inochi Amaoto <inochiama@gmail.com>
+Cc: AnnanLiu <annan.liu.xdu@outlook.com>, Chen Wang <chen.wang@linux.dev>, 
+	Alexander Sverdlin <alexander.sverdlin@gmail.com>, sophgo@lists.linux.dev, linux-riscv@lists.infradead.org
+Subject: Re: [PATCH v2] riscv: dts: sophgo: add watchdog dt node for CV1800
+Message-ID: <awIsvG9xhNFPe1Bj@inochi.infowork>
+References: <DM6PR20MB2316366FC9ADCBC7B6E9C289AB7A2@DM6PR20MB2316.namprd20.prod.outlook.com>
+ <20261113124748.339778-1-chenyou910331@gmail.com>
+ <av2McZf10FiOKDcZ@inochi.infowork>
+ <CAKspUhLiZ8GwfVu5cs3f3nr0uFV=qEFs2r+xP+1CkZ5jT5rp6Q@mail.gmail.com>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -83,61 +101,30 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261122-b4-sg2042-efi-rtc-v2-1-6d087e03e4e8@iscas.ac.cn>
-References: <20261122-b4-sg2042-efi-rtc-v2-0-6d087e03e4e8@iscas.ac.cn>
-In-Reply-To: <20261122-b4-sg2042-efi-rtc-v2-0-6d087e03e4e8@iscas.ac.cn>
-To: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
- Jerome Brunet <jbrunet+clk@baylibre.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>, Yao Zi <me@ziyao.cc>
-Cc: Chen Wang <unicorn_wang@outlook.com>, Han Gao <rabenda.cn@gmail.com>, 
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
- sophgo@lists.linux.dev, linux-kernel@vger.kernel.org, 
- Han Gao <gaohan@iscas.ac.cn>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795285099; l=966;
- i=gaohan@iscas.ac.cn; s=20261021; h=from:subject:message-id;
- bh=UH/ltGBkhI4HWv393ZO1ftLc3kIT2ZoPiDb2EP7JazI=;
- b=zmlvbZFVIaQrl6XZFIezeydHolQUEOTmc+FSKHQENwcz/B4QFcXIDuxmrFsJuOyhenTIo7DYZ
- Wk2vsHYsIZjD3KfsFhi/e424pM/pBgEO2UuygCb2fh9m/uc99M3suZY
-X-Developer-Key: i=gaohan@iscas.ac.cn; a=ed25519;
- pk=J8WHEK3filS86QaCaIHDGafqhxKyQ4K7+vFgRirTIiY=
-X-Endpoint-Received: by B4 Relay for gaohan@iscas.ac.cn/20261021 with
- auth_id=1262
-X-Original-From: Han Gao <gaohan@iscas.ac.cn>
-Reply-To: gaohan@iscas.ac.cn
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKspUhLiZ8GwfVu5cs3f3nr0uFV=qEFs2r+xP+1CkZ5jT5rp6Q@mail.gmail.com>
 
-From: Han Gao <gaohan@iscas.ac.cn>
+On Thu, Nov 19, 2026 at 07:56:56PM +0800, 葉宸佑 wrote:
+> On Wed, Nov 18, 2026 at 07:32:50PM +0800, Inochi Amaoto wrote:
+> > If you want to take this patch, you need to add all watchdog device
+> > instead of the only one for RISC-V. There are three watchdog devices
+> > for A53/C906 0/C906 1. IIRC only one can take effect at the same
+> > time.
+> 
+> OK, I will add all three (WDT0-2) to the shared dtsi, so the arm64
+> SG2000/SG2002 DTS gets them too.
+> 
+> Since only one can take effect, should all three be enabled in the
+> dtsi, or should they be disabled there and enabled by the board DTS?
+> I will check in the TRM how the active one is selected and test each
+> of them on the Duo 256M.
+> 
+> Regards,
+> Chen-Yu
 
-Firmware may need some gates kept on for its runtime services, such as
-the APB I2C gate for the EFI RTC and the AHB serial flash gate for EFI
-variables. Which ones depends on the firmware, not the SoC, so let
-firmware list them in protected-clocks.
+All should be disabled, only needed one is enabled.
 
-Suggested-by: Yao Zi <me@ziyao.cc>
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- Documentation/devicetree/bindings/clock/sophgo,sg2042-clkgen.yaml | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/Documentation/devicetree/bindings/clock/sophgo,sg2042-clkgen.yaml b/Documentation/devicetree/bindings/clock/sophgo,sg2042-clkgen.yaml
-index e7a9255bcb58..76f123b84309 100644
---- a/Documentation/devicetree/bindings/clock/sophgo,sg2042-clkgen.yaml
-+++ b/Documentation/devicetree/bindings/clock/sophgo,sg2042-clkgen.yaml
-@@ -30,6 +30,8 @@ properties:
-       - const: dpll0
-       - const: dpll1
- 
-+  protected-clocks: true
-+
-   '#clock-cells':
-     const: 1
-     description:
-
--- 
-2.55.0
-
-
+Regards,
+Inochi
