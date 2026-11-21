@@ -1,78 +1,73 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795257499;
-	b=PeimqByo7B1Mb5Mz0osMqdPOAfKBOABSfOpv9s3g15aYIbyNTyGzu6Av1kqXGRvcJDov
-	 b8XKxns5rKTAHAvHT88r9NPxIoLjf3Z598aP2DLHEY6ivmc2TiCmanvyiCM9QR5HvWD9D
-	 2QwO9gxsho81nIBgi2OL57dCXtzH8zov4fhTlLOKV5Fj4QCJcj9TJn0ccyxWQ0SdKy2WO
-	 9XhI6UJp3/EtqBjk9OzYBWvFyHMuWpSHoFuNWBeSzmaPsfZbB3busdATj/bW3xqo0zaki
-	 PJX+8TV1smOpHY0j96tfyVzwme8/iLoD8eW4pOq6d9r7hHC8Sg6qdQDA8V6WGm6UBug==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795257499;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=W/y323rtHI4A6G9EZ6Uz12b8FGYlp7r0b2dLPeWwIb8=;
-	b=xMiiaMZAfrom5u4odgch3LZNNxOXcOSEVN7kFO6muhgHUmFxI1aNuEmgbJ0pKJhktw2t
-	 afyrzI5TSVkHVgLi9Uswz6K+1OxbtVnl+hlCdeqHOoMy7I7j49Ukzb972O9vnNmnNLfga
-	 rg0Kna2osp9zdlDmfYdesAo9FPxP1kpPuVBzPJnDkC0TC9Vx4JOWu2o5Hq8os2MxSCTMY
-	 gWD+aQVgcYj3yKtVyT2hi5J0HGqLnGvuNyGcTeNfcnsnnfRvEdlY8iXbxrjJTCwY7urN2
-	 LzMY6RWutohVx0Oo+80p0MQxYqIPxDRZHg9/RJOqIJ4PuiZsxMFs/XO9FYnQOAf4ZWQ==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dykeEpYc;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795264968;
+	b=BXxr+JMiAL8SIncZbRiQipItjUfrfS058PVcyjJ2Bc/1KfHUmdxIUh4vdEsu0Pki22Ld
+	 OwoK+si98IudZy/3mLmnVyCGlnyU53tt1BcggU3CIGW7BeO40f3JDY0s/nGJXTkr4cYV6
+	 C947B3exSFRTqvZ9R9T1/WWhKpJOj/W0tiqiHP4dpWDZ2CsxPP5bHVcQf3P3LZ+b73+Id
+	 IZMSfOlXQdePwmuFJilrRCVNFW3HCLj0/zUc5i5K6oq0iaaFFyK0nOBMvb011fHlC/t+j
+	 qRWMMqnZTZGTXFt/EE1RxmfgI03E0CD3npFcyiMp8j6Ti5A2MFWrEt5s0+2yM45Lx1g==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795264968;
+	h=Received:DKIM-Signature:Received:Received:X-ME-Sender:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 MIME-Version:X-ThreadId:Date:From:To:Cc:Message-Id:In-Reply-To:
+	 References:Subject:Content-Type:Content-Transfer-Encoding;
+	bh=RuNf+pePjIWf7fpgOl6kHLwN5HRwrqk6Ttj5H6K8/Jo=;
+	b=edwN9lGnY5HskDnsysl0Oi5NF+8ZFU2VQV5fxDCC5wAvw9krVGtwuKaE1Z4zXvfcfK9S
+	 qV1dfTUh3N8LrIYeVmLbSIHEDLG+G8Chy70U1AGWkv+VEjihW85TdrCM/aSt1kMJ+U37k
+	 NZXN4xCUyupQMLsRYOahphIyVMxx2OX4uqBbwpWZ9tKvV6Y3dkAbbQsssTyUiuKFDBep8
+	 o6mBRLT6YZvG04r0TXjTqXhWi+QF38KZtLDU4X/Fw+h05vsMzaUrK05Vp8tlT1aJkcolz
+	 8qO2YlM/IolCQapjGYCYvc5TTFq4gUyAlol8zzoaJhk1jrnvFW//4Kt8ikh/14Z/CgQ==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Edkrk0u9;
+	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E637B606A338;
-	Sat, 21 Nov 2026 10:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B173606A320;
+	Sat, 21 Nov 2026 12:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dykeEpYc
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795257498;
-	b=bxf6eHYjI/MJW0pI/cloCI7/ShxDTqBblypsvWxvHfgYe/v+lCIqU0CyooLR9vROiIs3
-	 9pnKl42WtM6YiVygldUvUjxk49L1r0ocV+r7Lt7nmgQF6u2Uuj/CC6OMCqHVzEzixkHBP
-	 mlOeSwa66Uw/6Z42VfaoDvncGe9XnrkGaHu68fEyqQLR1b2FmkHAoF65AqDM3ZLmmDJO3
-	 noKfOAi6GTlbdggOXe1K0+gWZhjW9Lnic0UJuWFoaLLhsiJHZ48RmblgQF9Odj+Dd69ng
-	 D//cR916LnQ5Xec3tdvWUnbPZlv/3TfmLRFhgWejM6EWPlhl9BFt3ZdS8K9EPTujDkw==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795257498;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=W/y323rtHI4A6G9EZ6Uz12b8FGYlp7r0b2dLPeWwIb8=;
-	b=kccpPT/vOWQu1Qa/OSmZ06BvbY3xsROUcwDn69sgNfoxFTsF3DhK/5YCvB3KTiwRNVse
-	 HdPWyK6FgAS+FgbTgLJ0fFv1onkMUCiGbs8sDluLXFny3EZxU2yajYvonRgQ3n+ZcyH91
-	 iFo+FQ14TfNija3G8r13ECKsf7fMXezzSnET2gntQp2Y/dObMUl6g+UakzF7aM7BNdprm
-	 rK/jes1SQXxf2Zs/qeYB0d/SB5w81DQktwPJihRS35JW28JxDAWQtJDEAh6vgdNpIpt6w
-	 TdUom2tmhYL8qKknL2MgYmfWr2G0hb+yFXhdJGn5Eid3cIkls1MYS2IgucwBFX90mdg==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 9065C1F000C4;
-	Sat, 21 Nov 2026 10:38:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Edkrk0u9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 494501F000C6;
+	Sat, 21 Nov 2026 12:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795257498;
-	bh=W/y323rtHI4A6G9EZ6Uz12b8FGYlp7r0b2dLPeWwIb8=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=dykeEpYcROTO59DQEUAkvm+1W5L4T2W957LzpyD79COQ8FYmQvk2WAY1uQJCTDoq5
-	 Gu8jGvFqsK3pJHEh4oDGzv1CoHVAJIgRD+utEXQkgRFAPhjiiOImXakY5WS+x8nudX
-	 x8smwr8dz1lLYpcm0em4sVbZ/WJZ6hL7uCpkKh98jeENBELfRSDNIHlcTdqovUMeEQ
-	 Hw0uV4sB9ZOjJk6rXupSVAZlo43BE1klae57Rhq05LPVFkWUmptyo+mbUj8m+NDeGz
-	 VyZ6fSf9Q0Qw6Rm4AjHl1c+amIw5V56vvdEbRwGDTFlXzLsKonK9TVQTobA1epTRGo
-	 NINuzfwg6jsGQ==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 155EC4BBE3;
-	Sat, 21 Nov 2026 10:38:17 +0000 (UTC)
-From: Han Gao via B4 Relay <devnull+gaohan.iscas.ac.cn@kernel.org>
-Date: Sat, 21 Nov 2026 18:38:07 +0800
-Subject: [PATCH 1/2] riscv: efi: Map runtime MMIO with device attributes
+	s=k20260515; t=1795264967;
+	bh=RuNf+pePjIWf7fpgOl6kHLwN5HRwrqk6Ttj5H6K8/Jo=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject;
+	b=Edkrk0u9ZBtn+sfvtyuaB/62cjo0kHZXc7JqL1+Jp4ysmhyM/WQWc+zX5yq5ntE+k
+	 PL91l3Ay41tESI8Ugjuvp2aENCO0yodQ5+tfIZLAi13ySYtAfEaVGuxx1E57xfWmis
+	 rEjsgGfnti4RQFMyOPd3QkzDs7JG5bd3LCiGn1+JSoIMwFGbjkMTaJam9jZPEqhKs9
+	 OQyjCnUOo+vaApoK20oxvbEZpoqIssyd7YG2tavubLveNtDjejhWiRSqVmCOp1ucF2
+	 q3YhaEZbxEysEJktsEXJmYai7zYBPzNQdPoOqVpcfVvZGgxERveq0jA9pmSyw/uW2I
+	 ilbvM8oWL2z4A==
+Received: from ams-compute-02.internal (ams-compute-02.internal [10.64.2.62])
+	by mailfauth.ams.internal (Postfix) with ESMTP id 8364D198003A;
+	Sat, 21 Nov 2026 07:42:44 -0500 (EST)
+Received: from ams-imap-11 ([10.64.2.31])
+  by ams-compute-02.internal (MEProxy); Sat, 21 Nov 2026 07:42:44 -0500
+X-ME-Sender: <xms:wJEBa-ZtDfskQiFzaQkxwVZMjq6DINcp4B6Qz1M2SaA5wwiI4_tiUw>
+    <xme:wJEBa8NCC5VQmS8G261kZ6ip0-tk_XJZFGroObPFb8iocwZNqWdOahCNPdXDHSQlM
+    HyN0W4dPkuG1m2gUPabxWiFTmCzFbJDkMhklxB0rrNmH-Y-fdyedhr5>
+X-ME-Proxy-Cause: dmFkZTE9e/DNRSP39ywX8YGfN8UoAyYP0CkDVl1avqiAO6xwU1q4JAb9xbXdWO/PpICXkX
+    zSe7F6+aKSXIivBTl4vZebp345mjcvLiZD9TrcN4QHwBOm4LthXKqGLtvIk6OB86Itx5kS
+    d/UV1jGeDDUTrmqovg7yftxuaJvfmdlHv1cqtQRmHAiOgfntYjw8a9G5ML3j1HE+rNqrVv
+    sJFYZ4GZgtsNvuRQjxcJtW6yVD0Woj3jL7EuAHCN2PhP3rLmluqpBpD3npZIKTrh/eJwu+
+    Lw3q/JjeWsgRzz3r5esxoF6oGSF9wTLqWumVmdUFgjUGa9Tpovw5aSjfTMwfCS592JTuoV
+    OcXXV3oeikv72LVep537lddmHM1Iut790jkACgOjIl+lEFO4p3xtlcZddXdPlBYFtphFDP
+    jV32RIJDx4tRZ2V5R/L0EsrklNVJbzl7ijr/T3nZVrJa82J4FoSmDH/wqpWF6Q/DzLC7UO
+    0GqxSPyYwOx8njcf0bDlwbbQQrKhDvHIkwvEcARRI/kQBu4gR7VcNwPUgpi5Vo+mq2sbbX
+    JsQXlL0ca+cqLynAiw8kIttg+OZmMDY42RhkY/ihzW1I+bJk+G9+JyYVViCb3eNHh6SNs7
+    Nga9lB9eHPZJC2iV/xvblxvv98by0fJIDxf0P1vn//Dnp0e2VImQzs8lz2wA
+X-ME-Proxy: <xmx:xJEBawZT-KsmJZzuUSa4Uls47l6wsD-ci_BoSZ8jlZQATSPlTA8QYQ>
+    <xmx:xJEBa6r1kDXzUi7QTo6cAoEOem3srPLfrattqzVlNKoAHexfPEQZJQ>
+    <xmx:xJEBa9xJhgpCROoCvfEgXfgfFrtmU2GSpQ2U0d49dLNbWRUuCUW-Zg>
+    <xmx:xJEBayLyKn1Qzc1vCBGkv0JyamZh9rl3O9Ev_HOOuNk6vN1DQ_UqaA>
+    <xmx:xJEBa_7sd8dXEJRNAg92aZYpU2HoUJd-Va-8yw61X00ejPrsRHaXKaZB>
+Feedback-ID: ice86485a:Fastmail
+Received: by mailuser.ams.internal (Postfix, from userid 501)
+	id B33E7F8008E; Sat, 21 Nov 2026 07:42:40 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -82,71 +77,70 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261121-b4-sg2042-efi-rtc-v1-1-19898b8ad497@iscas.ac.cn>
+X-ThreadId: Afc6hXNcC8eV
+Date: Sat, 21 Nov 2026 13:42:20 +0100
+From: "Ard Biesheuvel" <ardb@kernel.org>
+To: gaohan@iscas.ac.cn, "Ilias Apalodimas" <ilias.apalodimas@linaro.org>,
+ "Paul Walmsley" <pjw@kernel.org>, "Palmer Dabbelt" <palmer@dabbelt.com>,
+ "Albert Ou" <aou@eecs.berkeley.edu>, "Alexandre Ghiti" <alex@ghiti.fr>,
+ "Atish Patra" <atish.patra@linux.dev>, "Stephen Boyd" <sboyd@kernel.org>,
+ "Brian Masney" <bmasney+clk@redhat.com>,
+ "Jerome Brunet" <jbrunet+clk@baylibre.com>,
+ "Chen Wang" <chen.wang@linux.dev>, "Inochi Amaoto" <inochiama@gmail.com>
+Cc: "Han Gao" <rabenda.cn@gmail.com>, linux-efi@vger.kernel.org,
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-clk@vger.kernel.org, sophgo@lists.linux.dev
+Message-Id: <bb39f961-0589-4a3e-b649-888cf5edd3a1@app.fastmail.com>
+In-Reply-To: <20261121-b4-sg2042-efi-rtc-v1-1-19898b8ad497@iscas.ac.cn>
 References: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
-In-Reply-To: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
-To: Ard Biesheuvel <ardb@kernel.org>, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
- Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
- Atish Patra <atish.patra@linux.dev>, Stephen Boyd <sboyd@kernel.org>, 
- Brian Masney <bmasney+clk@redhat.com>, 
- Jerome Brunet <jbrunet+clk@baylibre.com>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, linux-efi@vger.kernel.org, 
- linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
- linux-clk@vger.kernel.org, sophgo@lists.linux.dev, 
- Han Gao <gaohan@iscas.ac.cn>
-X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795257496; l=1030;
- i=gaohan@iscas.ac.cn; s=20261021; h=from:subject:message-id;
- bh=AXs3CmUyHq0DbOalkM59cymNHEWwCflCrFagmnUXH40=;
- b=+R7iok8HWxtWVdFYvjuL61Ut91D/mbpDWKM53jRhVd4qqn7/sjzLv+Snse+8aZgLqEHJOOeid
- xXeqEtr/y3EDSWZSeiif9VMkcf+BUQn8NS0Qrt/IbRR23abw8rzSlfq
-X-Developer-Key: i=gaohan@iscas.ac.cn; a=ed25519;
- pk=J8WHEK3filS86QaCaIHDGafqhxKyQ4K7+vFgRirTIiY=
-X-Endpoint-Received: by B4 Relay for gaohan@iscas.ac.cn/20261021 with
- auth_id=1262
-X-Original-From: Han Gao <gaohan@iscas.ac.cn>
-Reply-To: gaohan@iscas.ac.cn
+ <20261121-b4-sg2042-efi-rtc-v1-1-19898b8ad497@iscas.ac.cn>
+Subject: Re: [PATCH 1/2] riscv: efi: Map runtime MMIO with device attributes
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 
-From: Han Gao <gaohan@iscas.ac.cn>
-
-EFI_MEMORY_MAPPED_IO regions are mapped with PAGE_KERNEL, so device
-registers end up mapped as normal memory.
-
-On Milk-V Pioneer, GetTime() reads the clock controller registers and
-faults:
-
-  Oops - load access fault [#1]
-  Workqueue: efi_runtime efi_call_rts
-  status: 0000000200000120 badaddr: 0000007030012000 cause: 0000000000000005
-
-Use PAGE_KERNEL_IO for these regions.
-
-Fixes: b91540d52a08 ("RISC-V: Add EFI runtime services")
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- arch/riscv/kernel/efi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/arch/riscv/kernel/efi.c b/arch/riscv/kernel/efi.c
-index 2d3cc57b4535..11e85d0ebc91 100644
---- a/arch/riscv/kernel/efi.c
-+++ b/arch/riscv/kernel/efi.c
-@@ -22,7 +22,7 @@ static __init pgprot_t efimem_to_pgprot_map(efi_memory_desc_t *md)
- 	u32 type = md->type;
- 
- 	if (type == EFI_MEMORY_MAPPED_IO)
--		return PAGE_KERNEL;
-+		return PAGE_KERNEL_IO;
- 
- 	/* R-- */
- 	if ((attr & (EFI_MEMORY_XP | EFI_MEMORY_RO)) ==
-
--- 
-2.55.0
 
 
+On Sat, 21 Nov 2026, at 11:38, Han Gao via B4 Relay wrote:
+> From: Han Gao <gaohan@iscas.ac.cn>
+>
+> EFI_MEMORY_MAPPED_IO regions are mapped with PAGE_KERNEL, so device
+> registers end up mapped as normal memory.
+>
+> On Milk-V Pioneer, GetTime() reads the clock controller registers and
+> faults:
+>
+>   Oops - load access fault [#1]
+>   Workqueue: efi_runtime efi_call_rts
+>   status: 0000000200000120 badaddr: 0000007030012000 cause: 0000000000000005
+>
+> Use PAGE_KERNEL_IO for these regions.
+>
+> Fixes: b91540d52a08 ("RISC-V: Add EFI runtime services")
+> Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+> ---
+>  arch/riscv/kernel/efi.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+
+I can take this as a fix via the EFI tree if you like.
+
+
+> diff --git a/arch/riscv/kernel/efi.c b/arch/riscv/kernel/efi.c
+> index 2d3cc57b4535..11e85d0ebc91 100644
+> --- a/arch/riscv/kernel/efi.c
+> +++ b/arch/riscv/kernel/efi.c
+> @@ -22,7 +22,7 @@ static __init pgprot_t 
+> efimem_to_pgprot_map(efi_memory_desc_t *md)
+>  	u32 type = md->type;
+> 
+>  	if (type == EFI_MEMORY_MAPPED_IO)
+> -		return PAGE_KERNEL;
+> +		return PAGE_KERNEL_IO;
+> 
+>  	/* R-- */
+>  	if ((attr & (EFI_MEMORY_XP | EFI_MEMORY_RO)) ==
+>
+> -- 
+> 2.55.0
