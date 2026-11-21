@@ -1,79 +1,79 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
 	t=1795257498;
-	b=ScdUG5nWesDVe9k3H7mUEzBjAkOowp5y1eY0knkfBFvABYMZ/gU8Bqm/CS+B69AIUJSZ
-	 DquHpixnx8P25D5yNW4ld7KG1t5AsNyC3p/OA6EC//0paM1xiceeKlXqVz/lAdkQZKbD7
-	 r5n344bhhV5lY3tBfwpeS9aPYtrBzVIj58aT6hGirpp7W34NRMkYbXoxU5FL+GEocYlk2
-	 0J5NUAIIKS/esolbj1YGRGjzjEFshvwQ9f9hbvTlq9+goFUT2B3tlAvw0tA0d10IY5C70
-	 2SmgF8fJ1+VbQqQkiRaYeRL1aBlvwcxOm03P/oIPEgKTUaBdXJ4kUjzS4pLCNZ27d5Q==
+	b=vRrH/DyQOOttMuLmBATHj0AeAxkCZIHXIGf4kdyigCVeX6U5eGd+0T1n3gTkt8eIAVom
+	 ErukzIMZjEB1XQkq/dCILumykFgMYxEzwJCfBI3z934T66kwwyp9pEi1vks6U25MLnAdD
+	 hJIdTcNjGqrLPOfx1uk4YmrGg7Gd+MfKZ1TxEmqda5s3jR/sIhaUFaH6xlQ7OMkIsZj/9
+	 Ga44IyfJs0P8l6SgdkOIufaZqncKy4QCFDoJDcGMSqh7DhRuEL4jLhr0Z6eOqENRrQzly
+	 RSL+Ts8T1xoKbbBsQaRfYp6DN6CaAZGyL3JyKPONSWVWl/i8C6D5DfKDbAIdDkjJJuA==
 ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
 	a=rsa-sha256; c=relaxed/relaxed; t=1795257498;
-	h=Received:DKIM-Signature:Received:From:Subject:Date:Message-Id:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
-	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
-	 X-Endpoint-Received:X-Original-From:Reply-To;
-	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
-	b=4jDiIncBjQin2Sc+6xFbGGYxfCDz3HS4ZFS7IZznbcCJ116eluimwyQEAHYHj8rwCrOL
-	 /dbs0HYqAGrbWrKDhtA/lpG5zJVu4Af2PaikLxsgj49/RWEECG8GI5c9M84xnpoSl7ADQ
-	 J5cQKjOD8AdrAA/e19QGl6p5s/auMVbQ3m+TKQPFvf7dVM59fMjXvpB4rq71yD9Hk+w31
-	 PtCghdxRRoSA2ovWVjo7bIUd+svvtRx5X/e6COy2dRUQQxd+lbAbg/rdNibG8DQvijIoC
-	 nJcP0An4ibAi7D2mbDW6QJNOE+hNa+w49148lOSxWSmM+L7xtoLWDK/6ye5ymY14z2g==
+	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
+	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=OG0c6l+y/8sOpyl1NqaqhQcf9W4FSCA1cHzu90CtLcs=;
+	b=gd6rFFE+iXxqMv0AIM/PPlEu1Lg6oG8E8f9dGS/UXJ0igjiKXHUnVGgdMz+V/cswmzDY
+	 Xw0aw/qSusrmpzhM1ROJ5PoDYo4qZ58DXFuAKq07M0aljetxswYOIzgV+Cso1vzpdenyR
+	 cKb7NpDEwv4LzYGIvGaivNshlgWnQJnPtnAmdijUzgXmRm2wPYwbJU9mFWQgkaGofM9Vj
+	 QL9wZqUVqRFhfK/ex3K62/cAHXLxJDEO7mrw2Tb9BLF9k1n38gT/u62hyGOs5tJ/66Em/
+	 GnZhu0eloz3a6KwfFWlAewlA+vt3PFErP+RKr9p0DfGFw65+Ny8JPX3cI1sPkzaaXTg==
 ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kop1P+bj;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dpyHBnf7;
 	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D7606A320;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54F0606A325;
 	Sat, 21 Nov 2026 10:38:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kop1P+bj
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=dpyHBnf7
 Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
 ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
 	t=1795257498;
-	b=zSzrvqgiNHtOz5gtXa077U7MaFHVl4lh1Lh/Mi4xqpquPMrsz0XupNWGBHHck+cdecBW
-	 wSdinURyuZR0862A8LcaOBn8/9HEkSzARvqGxkpaeFyBzEHs6i8aKZO49wX2t588DR7WK
-	 xHZKUG5PTT6amXesY+CsngVQTYnec628eu3QGuVFPYIW4DXjuy5b1dihTAuys2kTHT71U
-	 ctXnBEOmey09OqbGRFMeKFi27/aeaGRQTZNsbYinLBboOOhC7TuRCpcqxbD4MrudocCku
-	 lmWfbl5ESAO/9JuvKwMv3lma0xU+Wkz11t4kZCiHtFa0np910DdH5LJ97hpTTzvijvg==
+	b=GatvQPmaiOpF25DvV58ijjpjD6vJ0xx6gTrSnBKAceSPSTwI5R0RiT6jHDwaBAyCC0hx
+	 GryhqY1ku4YjKcHq4CCcULuz3Ek1dSFnddK+Q55tMeU2vh0437Y020zt6iasJ2AudoML8
+	 8kBw+uqGAJ82mxidoie3jToDqnHZduXOkF/ihL8vj3ThKt22zfFjmH2fPKH0s9K3+D3HB
+	 F1aDFFbXo6PgADrkQfprBgnO+9yPayQo4TJ1vdIVn7SuwcgRwnri/UbPULph/7Ufny91s
+	 Bpw4Few+gtzwpJb2KPCIVRNts0Brw8p3vIiXdeTTfvXIhbISIMJZrUZb7EKtTjUW17Q==
 ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
 	c=relaxed/relaxed; t=1795257498;
-	h=DKIM-Signature:Received:From:Subject:Date:Message-Id:MIME-Version:
-	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
-	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To;
-	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
-	b=QrhtKyGCWCww0KqHJzNErAauQdC6wJOeC+ZTsXigKBcggSmQm+kjdivYvrkIVlI3pjUx
-	 9AxcwenBB3y0tTRGQfb9A5r8cUvScZVRXNxa5DxTFWf9zou++1QTsdYSafZbolwZ3znB8
-	 0IJQ1JtvBpBOX0Rg9ljVuNjnVQftqG4hURlmVFYfOiFjPZyuz4j8+5E1eLBEMGSSErkiu
-	 LuXIKWiz/bbJ1Dp+337OGlOuDlhIvI34ROxWlx0/8w/iRFhHTpvaNu3ryEsMu6KDBGnoR
-	 QShlM24rfdiQv+XrRpCIr1dwDKRByM7AnI9H3qmG1kcY7Q7FK/6sBBGg7ogmt/32W5Q==
+	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
+	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
+	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To:Content-Transfer-Encoding;
+	bh=OG0c6l+y/8sOpyl1NqaqhQcf9W4FSCA1cHzu90CtLcs=;
+	b=PQdBLstlPWA2nh9JhY0lYtD3HraYGBve/LNoOzRChQpe+ZylkaPfteZBAfJpFO3046XS
+	 QQdKhBI4ut1s9g4z0uMFKkiwiT+opCqQu6D4I2UKuhxWR4HaD6eMgzKsreZ92n/aqXyHP
+	 q1+/K/j3xl5FCFUSOJ9wKl51bVT7w+p96wVKOa6UNk/jMnjQjn9hXZsMPyUpmWxsXs81s
+	 Clhkyo6IVWTGh9YkhJtgW3iQEXG2I2m8I0Xjat6hfpUgeP/dwYfC1hW1sLHg+vaQv/HwM
+	 dgL/aLz6gJyEq5mIC1O9KiMsolnNCLFPzfKHv89wdySduyFPmExNM97yfpc0PiE/vmQ==
 ARC-Authentication-Results: i=1; smtp.kernel.org; 
 	arc=none smtp.remote-ip=100.80.115.77
 Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id 906361F000C0;
+	by smtp.kernel.org (Postfix) with ESMTPS id A0A121F000C6;
 	Sat, 21 Nov 2026 10:38:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
 	s=k20260515; t=1795257498;
-	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
-	h=From:Subject:Date:To:Cc:Reply-To;
-	b=Kop1P+bjVy7M9sxkyQ8mtfKddSzXXWIlPQmdnKZtKXoWov5MGWZcnx7nWj5fEAd/+
-	 obHSPxMSv1iJ0Y5LgBglK4GpVKZ3uNMcaPnXXGKMNBnAGGGLo7cagOn4GsdW/U4bgy
-	 V4zHp0VEwbwogQR+0XcRVJNLb0p7rMkpP+gGlCb+jLgbyqO5MRR/HTnLi6OiO3XvW9
-	 wTWyoek4ZIOklPG7nBfe+GnsvWHYQwRJjvMyMiAZdZkNDmSirnib+eT11Nw1oPymeu
-	 P+owkKt+OftDXSk/KNs+KZW65Y7rCtVxzqM7CIXIB7qJbum2yps8txr8j59QewgEq1
-	 Q1EADrQV5jVBA==
+	bh=OG0c6l+y/8sOpyl1NqaqhQcf9W4FSCA1cHzu90CtLcs=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
+	b=dpyHBnf7GVP/4dU7w/wMGIWaaD3YUoLa3+I62ISoBZjWvDW9JZKLEi+Eqzn42tmZZ
+	 i7BZzwQ4hnUIOfBj0AFYycfj1uV9IwYrp+VOpRokoNh0FElvo/dYt4wegxJi5imsYr
+	 VFdkiKYzPb0VQCJ/CU2bl8GkkbPrd6qYEGwIVCfUHgGpQq4n0WHwh4LDVS0fPrVaXp
+	 ZKJPqzL1b53LEqI67RgMEMO4JcQL02MV/JNZhJTnOWXqdxMZd28UHVOyFlVbXkPr48
+	 Pwdyk6T2tD0xlXKvoiVMlRvNmDBhqvu43un7/oFkHtT3R8KaAUi1D6AAd/Uho+Lkw+
+	 T+sWJUdUG4Q7g==
 Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id E66CC4BBCB;
-	Sat, 21 Nov 2026 10:38:16 +0000 (UTC)
+	by lkml.kernel.org (Postfix) with ESMTP id 301264BBE7;
+	Sat, 21 Nov 2026 10:38:17 +0000 (UTC)
 From: Han Gao via B4 Relay <devnull+gaohan.iscas.ac.cn@kernel.org>
-Subject: [PATCH 0/2] riscv/clk: sophgo: Fix EFI RTC on Milk-V Pioneer
-Date: Sat, 21 Nov 2026 18:38:06 +0800
-Message-Id: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
+Date: Sat, 21 Nov 2026 18:38:08 +0800
+Subject: [PATCH 2/2] clk: sophgo: sg2042-clkgen: Keep gates of reserved
+ devices enabled
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -84,11 +84,9 @@ List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMMQ6DMAyF4asgz7UUm9CBq1QdSDDUDGkV06oSy
- t0JMH56ev8GJlnFoG82yPJT03eqoFsD8TWkWVDHamDHdyImDB5tZucZZVLMa0TxY8fMHbWDQP1
- 9cl3+Z/PxvGzfsEhcjxCUsgNqcxa+dQAAAA==
-X-Change-ID: 20261121-b4-sg2042-efi-rtc-e4d5222513ae
+Message-Id: <20261121-b4-sg2042-efi-rtc-v1-2-19898b8ad497@iscas.ac.cn>
+References: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
+In-Reply-To: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
 To: Ard Biesheuvel <ardb@kernel.org>, 
  Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
  Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
@@ -102,48 +100,110 @@ Cc: Han Gao <rabenda.cn@gmail.com>, linux-efi@vger.kernel.org,
  linux-clk@vger.kernel.org, sophgo@lists.linux.dev, 
  Han Gao <gaohan@iscas.ac.cn>
 X-Mailer: b4 0.16.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795257496; l=1142;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795257496; l=2910;
  i=gaohan@iscas.ac.cn; s=20261021; h=from:subject:message-id;
- bh=dT/cAMPkqhwiO+NmtZDAeUI+RgA0LLjV2VMwVQoEOVE=;
- b=FC7ThTXl38Ss0fnSg/4mwqUL1JUFP/nRR5YZZ9Bk32T3DV7XgF8zFNlDBS/VV/IdQ2NT1jZvE
- atOl+cn9WM9D1k1MLLRh6y5Gr2yM/TK/lvJwVM1CPf6X/Q5pk/UR3TE
+ bh=FkwMGNzzFP9SAcLoWWEAD8DpNa60dTDRuCtVoBpvCok=;
+ b=q3erWT1fwlHrNACKyfuHpCkIL80XgAGDT0V7qQ9mS+QUbZiQmrTwvliwagyujW22SWx/sZF6H
+ bwT8bv9x9O2AhcQ4V7L6UQij2B8Mnqdpeu0VWzecd1SoDkGktQ2wX4c
 X-Developer-Key: i=gaohan@iscas.ac.cn; a=ed25519;
  pk=J8WHEK3filS86QaCaIHDGafqhxKyQ4K7+vFgRirTIiY=
 X-Endpoint-Received: by B4 Relay for gaohan@iscas.ac.cn/20261021 with
  auth_id=1262
 X-Original-From: Han Gao <gaohan@iscas.ac.cn>
 Reply-To: gaohan@iscas.ac.cn
+Content-Transfer-Encoding: 7bit
 
-Pioneer firmware can take over the DS1307 on I2C0 and expose it through
-EFI runtime services, so Linux uses rtc-efi. I2C0 is then marked
-"reserved" in the device tree.
+From: Han Gao <gaohan@iscas.ac.cn>
 
-Two things break GetTime() in that setup:
+On Milk-V Pioneer, firmware can own I2C0 to back the EFI RTC, with the
+node marked status = "reserved". I2C0 shares GATE_CLK_APB_I2C with the
+I2C controllers Linux uses. When those runtime-suspend, the gate is
+switched off under the firmware and GetTime() returns EFI_NOT_READY.
 
-- RISC-V maps EFI runtime MMIO as normal memory, and firmware takes a
-  load access fault on the clock controller. Patch 1 maps it as I/O.
-
-- I2C0 shares a clock gate with the other I2C controllers. Once Linux
-  runtime-suspends them, the gate goes off and GetTime() returns
-  EFI_NOT_READY. Patch 2 keeps gates used by reserved devices on.
-
-Tested on Milk-V Pioneer.
+Walk the reserved children of /soc and match their clock references,
+as done in commit 6aa175476490 ("clk: renesas: cpg-mssr: Ignore all
+clocks assigned to non-Linux system"). Unlike that driver, use
+CLK_IS_CRITICAL rather than CLK_IGNORE_UNUSED: the gate is shared with
+devices Linux drives, and their runtime PM would still turn it off.
 
 Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
 ---
-Han Gao (2):
-      riscv: efi: Map runtime MMIO with device attributes
-      clk: sophgo: sg2042-clkgen: Keep gates of reserved devices enabled
-
- arch/riscv/kernel/efi.c                |  2 +-
  drivers/clk/sophgo/clk-sg2042-clkgen.c | 38 +++++++++++++++++++++++++++++++++-
- 2 files changed, 38 insertions(+), 2 deletions(-)
----
-base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
-change-id: 20261121-b4-sg2042-efi-rtc-e4d5222513ae
+ 1 file changed, 37 insertions(+), 1 deletion(-)
 
-Best regards,
---  
-Han Gao <gaohan@iscas.ac.cn>
+diff --git a/drivers/clk/sophgo/clk-sg2042-clkgen.c b/drivers/clk/sophgo/clk-sg2042-clkgen.c
+index 6abc2c973c49..414904965edf 100644
+--- a/drivers/clk/sophgo/clk-sg2042-clkgen.c
++++ b/drivers/clk/sophgo/clk-sg2042-clkgen.c
+@@ -11,6 +11,8 @@
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/io.h>
++#include <linux/of.h>
++#include <linux/of_clk.h>
+ #include <linux/platform_device.h>
+ #include <asm/div64.h>
+ 
+@@ -840,6 +842,35 @@ static int sg2042_clk_register_divs(struct device *dev,
+ 	return ret;
+ }
+ 
++static bool sg2042_clk_is_reserved(struct device_node *clkgen, unsigned int id)
++{
++	struct device_node *soc __free(device_node) = of_find_node_by_path("/soc");
++	struct device_node *node;
++
++	for_each_reserved_child_of_node(soc, node) {
++		unsigned int i, count = of_clk_get_parent_count(node);
++
++		for (i = 0; i < count; i++) {
++			struct of_phandle_args clkspec;
++			bool match;
++
++			if (of_parse_phandle_with_args(node, "clocks", "#clock-cells",
++						       i, &clkspec))
++				continue;
++
++			match = clkspec.np == clkgen && clkspec.args_count == 1 &&
++				clkspec.args[0] == id;
++			of_node_put(clkspec.np);
++			if (match) {
++				of_node_put(node);
++				return true;
++			}
++		}
++	}
++
++	return false;
++}
++
+ static int sg2042_clk_register_gates(struct device *dev,
+ 				     struct sg2042_clk_data *clk_data,
+ 				     const struct sg2042_gate_clock gate_clks[],
+@@ -850,7 +881,12 @@ static int sg2042_clk_register_gates(struct device *dev,
+ 	int i, ret = 0;
+ 
+ 	for (i = 0; i < num_gate_clks; i++) {
++		unsigned long flags;
++
+ 		gate = &gate_clks[i];
++		flags = gate->hw.init->flags;
++		if (sg2042_clk_is_reserved(dev->of_node, gate->id))
++			flags |= CLK_IS_CRITICAL;
+ 		hw = __devm_clk_hw_register_gate
+ 			(dev,
+ 			 NULL,
+@@ -858,7 +894,7 @@ static int sg2042_clk_register_gates(struct device *dev,
+ 			 NULL,
+ 			 gate->hw.init->parent_hws[0],
+ 			 NULL,
+-			 gate->hw.init->flags,
++			 flags,
+ 			 clk_data->iobase + gate->offset_enable,
+ 			 gate->bit_idx,
+ 			 0,
+
+-- 
+2.55.0
 
 
