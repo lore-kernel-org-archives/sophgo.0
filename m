@@ -1,85 +1,79 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.51
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1795200279;
-	b=oRv0EDzOR7YGXtpg/xnDfn6Q+vYDOci07Fsm2H2NAddsStLW5iAzkX0s/J7V/mNCveA+
-	 xx5CjWsCLkLcVSrmR8vE1FSFc4ncxJHhjTWVmGkdvobGrzYxvaIq71JB5GW0qCG8fEf1S
-	 l5SAcTMpgTfPu0c9RVfiHk7CqosExFeKLG4GE0s8Pp3qeiAgudPWHtPcZ5XE38+cP0657
-	 AE4BXe63/EyPtwf0Wjoh//T+30Q4bjYpdQ6ZgpQ3ncqHTKYy77+q0o467U8hCvKqdXsD1
-	 jF4qYi9zb56XVSlGf8cdGSbh/e2V7jsVLnayCmag0sMFJS+2GPHbT0inc+65TyDM/8Q==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795200279;
-	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:Received:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:Subject:From:To:
-	 Cc:In-Reply-To:References:Date:Message-Id:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key;
-	bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
-	b=NiiBKD6/sbUXPSOKSSyNHsWgCV2LockWAVWitdFsrcl6H7xc5SD+IfDOxhLrxSsC7Pzp
-	 fNB/gORa9m0zecfa8uPiQPpmbzJHYk0eVfBEGQ14oNZVC/SjxJBXZN2BDd/40l1gEeD10
-	 NGKS9Bchf3tg53ZO0t/VAVvtMWke28pibEc+k8y7vhRRaMkUIiakFYxTkOll2ZbQ5va72
-	 8uUfPXXYFrLph11ObsWuXM7XvuCskVUOvbyfwMbMZ6zGVPHZbSFX94HuBMXVLLAaG72Mj
-	 YkcfCJ/Xr4OCahd8a1AJJutJc3x3oMhrlXj7JjJpclb4EkDYOEuYogeRY7LUZwLMEJA==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=pass header.from=baylibre.com;
-	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=RW35N9UV;
-	arc=none smtp.remote-ip=209.85.221.51
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1795257498;
+	b=ScdUG5nWesDVe9k3H7mUEzBjAkOowp5y1eY0knkfBFvABYMZ/gU8Bqm/CS+B69AIUJSZ
+	 DquHpixnx8P25D5yNW4ld7KG1t5AsNyC3p/OA6EC//0paM1xiceeKlXqVz/lAdkQZKbD7
+	 r5n344bhhV5lY3tBfwpeS9aPYtrBzVIj58aT6hGirpp7W34NRMkYbXoxU5FL+GEocYlk2
+	 0J5NUAIIKS/esolbj1YGRGjzjEFshvwQ9f9hbvTlq9+goFUT2B3tlAvw0tA0d10IY5C70
+	 2SmgF8fJ1+VbQqQkiRaYeRL1aBlvwcxOm03P/oIPEgKTUaBdXJ4kUjzS4pLCNZ27d5Q==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795257498;
+	h=Received:DKIM-Signature:Received:From:Subject:Date:Message-Id:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:X-B4-Tracking:
+	 X-Change-ID:To:Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:
+	 X-Endpoint-Received:X-Original-From:Reply-To;
+	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
+	b=4jDiIncBjQin2Sc+6xFbGGYxfCDz3HS4ZFS7IZznbcCJ116eluimwyQEAHYHj8rwCrOL
+	 /dbs0HYqAGrbWrKDhtA/lpG5zJVu4Af2PaikLxsgj49/RWEECG8GI5c9M84xnpoSl7ADQ
+	 J5cQKjOD8AdrAA/e19QGl6p5s/auMVbQ3m+TKQPFvf7dVM59fMjXvpB4rq71yD9Hk+w31
+	 PtCghdxRRoSA2ovWVjo7bIUd+svvtRx5X/e6COy2dRUQQxd+lbAbg/rdNibG8DQvijIoC
+	 nJcP0An4ibAi7D2mbDW6QJNOE+hNa+w49148lOSxWSmM+L7xtoLWDK/6ye5ymY14z2g==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kop1P+bj;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988D7606A320;
+	Sat, 21 Nov 2026 10:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Kop1P+bj
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1795257498;
+	b=zSzrvqgiNHtOz5gtXa077U7MaFHVl4lh1Lh/Mi4xqpquPMrsz0XupNWGBHHck+cdecBW
+	 wSdinURyuZR0862A8LcaOBn8/9HEkSzARvqGxkpaeFyBzEHs6i8aKZO49wX2t588DR7WK
+	 xHZKUG5PTT6amXesY+CsngVQTYnec628eu3QGuVFPYIW4DXjuy5b1dihTAuys2kTHT71U
+	 ctXnBEOmey09OqbGRFMeKFi27/aeaGRQTZNsbYinLBboOOhC7TuRCpcqxbD4MrudocCku
+	 lmWfbl5ESAO/9JuvKwMv3lma0xU+Wkz11t4kZCiHtFa0np910DdH5LJ97hpTTzvijvg==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1795257498;
+	h=DKIM-Signature:Received:From:Subject:Date:Message-Id:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:X-B4-Tracking:X-Change-ID:To:
+	 Cc:X-Mailer:X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
+	 X-Original-From:Reply-To;
+	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
+	b=QrhtKyGCWCww0KqHJzNErAauQdC6wJOeC+ZTsXigKBcggSmQm+kjdivYvrkIVlI3pjUx
+	 9AxcwenBB3y0tTRGQfb9A5r8cUvScZVRXNxa5DxTFWf9zou++1QTsdYSafZbolwZ3znB8
+	 0IJQ1JtvBpBOX0Rg9ljVuNjnVQftqG4hURlmVFYfOiFjPZyuz4j8+5E1eLBEMGSSErkiu
+	 LuXIKWiz/bbJ1Dp+337OGlOuDlhIvI34ROxWlx0/8w/iRFhHTpvaNu3ryEsMu6KDBGnoR
+	 QShlM24rfdiQv+XrRpCIr1dwDKRByM7AnI9H3qmG1kcY7Q7FK/6sBBGg7ogmt/32W5Q==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	arc=none smtp.remote-ip=100.80.115.77
+Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314460A261E
-	for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 18:44:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org A314460A261E
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=RW35N9UV
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-48e3b22e971so698008f8f.0
-        for <sophgo@lists.linux.dev>; Fri, 20 Nov 2026 10:44:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1795200277; x=1795805077; darn=lists.linux.dev;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:from:to:cc
-         :subject:date:message-id:reply-to:content-type;
-        bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
-        b=RW35N9UVpDU0dvSo7y1DxCVNrcZecRPVfFSlDoW2TafSgL39W5Q6HCEWYUNCvqWxxr
-         HCl7pLpHe+bSSa7rY1nBl6kJhbBNms/ehKAhB0wGjaprwgWbXi0b6VZuqEyiWptcgpZJ
-         RqKHY3ELuloSrYjO021TsYi2bR41/8OrhFPUwomaep5uZNP+ga1yiNp2xhW/kkmbseyX
-         GLLUqk2HQv7NRmJyYSf7DzCTMOc1uPif24oNS67D6oBGrVqVYop9DYwg/+u3ny3PS/Kf
-         yDroboptAOp9StMNNh4pXxFQufIbpcaaIgz65mrdhb+IuOYukduLWVVrAOQ3cV88i+Rt
-         8N9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1795200277; x=1795805077;
-        h=message-id:date:references:in-reply-to:cc:to:from:subject
-         :content-transfer-encoding:content-type:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
-         :content-type;
-        bh=dbpUNDPZHadAmYIMfmFFaoO28ERPlPd7k31Pt+FAz5o=;
-        b=XVRpow7deeURXTDMgt/gevcTcta4m8Tczc42ErhLksqp5PIR4ZH1+cQQt8InOZ+0S3
-         iwZQ+fXwKDkgAc4GY9/Jmd4jHwoMYUnXzfoTilVqE+dtofXKu41OuD2YCjmjPYYRAGaj
-         VKU8MOxcWYi90S5rH18rGVeZaudBZXZi2QUZALzPT19H7O5AJBhHiFCtg8K/SU0e3TaU
-         9Sj5gopMpekNwD7SwqWJU89mZGikJQQ4nKUm9eT344AbogGWQ//g1bcR6XPVkwaSYtm5
-         9KFdodi15nTVjG3ehPl6V4l1cdjEQ8xDvc8prVFxIIPqbnIznbTTLFNbaPb2pjCayaKO
-         2LGg==
-X-Forwarded-Encrypted: i=1; AL+hErE0+gYIM92pyVnOoEVp+3203kb1GLnvO+2lp6HUMyuvyYiHxtChj1AKY/O6LDUfigg8ea6DPMY=@lists.linux.dev
-X-Gm-Message-State: APuU4Z9vtbQhIkKtOyqelnJhG4OoBFj2vgFLIeAlcB4yv7vGxdvuBNLp
-	8yZcG5JVIpnUVHx6Xbcu74pUcscYzoQsUM0F1rZHupWAtbrCY8H8lygynOYEVXn+f0g=
-X-Gm-Gg: AZFdTZdCQaesErvE0kT78VwQUfBIBmwQNxlwEkfjYXsS3z8RVH4hdPSm526p0dUShj/
-	ZyVXI0aS3nJNam8fSAaRTP6V9dZPjxnCQBMbDRR13cwf+Ebamv/wDUGWwS5PL6U2zPeQ6Mf5YRO
-	+W9hRxLzSyaYHWHYYCiEszAVAL+BBVgZEbsUAR39FtNBmXaW8Gk0234LBBgh8Dlj1a8+tBpJ5qm
-	zJg2JPxrcF55fxltuJDIEUE43I4UIu7wRSFwoyBRl9dYch0ORI4bppWsbLhBH4j+SuO38tE31G/
-	EHylsU0CWRwLmjpJB+mLfsrEx8VoYTdZqSpljT9pONOUHSkgGqn/uzEyafm3gZ9mAdH/sPYiw8P
-	ep/+XWRZAHMPdsma1BDxqqpJBnSBUrrCYi+DNAXa10lfJZrU2o1pl/HlZvNsHnalchmhrSCRutX
-	85MGADEtIHI0jRSV1OUr3FnM1md6Hhbuf06xIDuFHsurMAovV8JiwaV0F3yKvUBB0Iq0KUhghxe
-	il23o9JvOfEBZmCWZl0dmLq7wbqLTW4EVTeL4fqJIs3dZI8A9cP7NfENPTBvNtn/V/PCVE1HpN1
-	PxTW+vRa/wkygdyi8njKm8xe9mDRN4QIhlVUAUaNL1B5+Vf+
-X-Received: by 2002:a5d:6691:0:b0:4a6:c3f:9d0e with SMTP id ffacd0b85a97d-4abb3d2c0bemr5838892f8f.44.1795200277031;
-        Fri, 20 Nov 2026 10:44:37 -0800 (PST)
-Received: from localhost (82-67-6-57.subs.proxad.net. [82.67.6.57])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4ab6a67fe75sm7999128f8f.24.2026.11.20.10.44.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Nov 2026 10:44:36 -0800 (PST)
+	by smtp.kernel.org (Postfix) with ESMTPS id 906361F000C0;
+	Sat, 21 Nov 2026 10:38:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1795257498;
+	bh=WEuXb2RE8zSTJ0DUvVgVg41JYrBzTwV6rSqVaKBxb4I=;
+	h=From:Subject:Date:To:Cc:Reply-To;
+	b=Kop1P+bjVy7M9sxkyQ8mtfKddSzXXWIlPQmdnKZtKXoWov5MGWZcnx7nWj5fEAd/+
+	 obHSPxMSv1iJ0Y5LgBglK4GpVKZ3uNMcaPnXXGKMNBnAGGGLo7cagOn4GsdW/U4bgy
+	 V4zHp0VEwbwogQR+0XcRVJNLb0p7rMkpP+gGlCb+jLgbyqO5MRR/HTnLi6OiO3XvW9
+	 wTWyoek4ZIOklPG7nBfe+GnsvWHYQwRJjvMyMiAZdZkNDmSirnib+eT11Nw1oPymeu
+	 P+owkKt+OftDXSk/KNs+KZW65Y7rCtVxzqM7CIXIB7qJbum2yps8txr8j59QewgEq1
+	 Q1EADrQV5jVBA==
+Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
+	by lkml.kernel.org (Postfix) with ESMTP id E66CC4BBCB;
+	Sat, 21 Nov 2026 10:38:16 +0000 (UTC)
+From: Han Gao via B4 Relay <devnull+gaohan.iscas.ac.cn@kernel.org>
+Subject: [PATCH 0/2] riscv/clk: sophgo: Fix EFI RTC on Milk-V Pioneer
+Date: Sat, 21 Nov 2026 18:38:06 +0800
+Message-Id: <20261121-b4-sg2042-efi-rtc-v1-0-19898b8ad497@iscas.ac.cn>
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -91,42 +85,65 @@ Precedence: list
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Subject: Re: [PATCH] clk: sophgo: cv1800: set mux parent in
- bypass_mux_set_parent()
-From: Jerome Brunet <jbrunet@baylibre.com>
-To: Phuong Nguyen <ndp2809@gmail.com>
-Cc: Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney+clk@redhat.com>, 
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMMQ6DMAyF4asgz7UUm9CBq1QdSDDUDGkV06oSy
+ t0JMH56ev8GJlnFoG82yPJT03eqoFsD8TWkWVDHamDHdyImDB5tZucZZVLMa0TxY8fMHbWDQP1
+ 9cl3+Z/PxvGzfsEhcjxCUsgNqcxa+dQAAAA==
+X-Change-ID: 20261121-b4-sg2042-efi-rtc-e4d5222513ae
+To: Ard Biesheuvel <ardb@kernel.org>, 
+ Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Albert Ou <aou@eecs.berkeley.edu>, Alexandre Ghiti <alex@ghiti.fr>, 
+ Atish Patra <atish.patra@linux.dev>, Stephen Boyd <sboyd@kernel.org>, 
+ Brian Masney <bmasney+clk@redhat.com>, 
  Jerome Brunet <jbrunet+clk@baylibre.com>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>, linux-clk@vger.kernel.org, 
- sophgo@lists.linux.dev, Inochi Amaoto <inochiama@outlook.com>, 
- Jerome Brunet <jbrunet@baylibre.com>
-In-Reply-To: <20261120105737.7461-1-ndp2809@gmail.com>
-References: <20261120105737.7461-1-ndp2809@gmail.com>
-Date: Fri, 20 Nov 2026 19:44:34 +0100
-Message-Id: <179520027402.3795820.10625849754833863467.b4-review@b4>
-X-Mailer: b4 0.17-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=542; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=eYRKSzuppIIPsVALhR3By5BFF1H2aR0BnquIko5QzAY=;
- b=owGbwMvMwCW2VtK+WnvWU3HG02pJDNkMU4U3Hp2+zfeUxPVfFT9DCubkvvgZvIoneHLQgoWVu
- 9MLbXf5dpSyMIhxMciKKbLUcFeLv5PU+jJrus5tmDmsTCBDGLg4BWAi9tEMv5i1dNcrNVy+u1qq
- vWDC77kxUnMSZvdd5HG59dyL59s9ZmaGv/IBl2sXVJ+ttOPb7Xv00dqkq+duOxQnJ3WrhvhMqc3
- p4QIA
-X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
- fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
+ Inochi Amaoto <inochiama@gmail.com>
+Cc: Han Gao <rabenda.cn@gmail.com>, linux-efi@vger.kernel.org, 
+ linux-riscv@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ linux-clk@vger.kernel.org, sophgo@lists.linux.dev, 
+ Han Gao <gaohan@iscas.ac.cn>
+X-Mailer: b4 0.16.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1795257496; l=1142;
+ i=gaohan@iscas.ac.cn; s=20261021; h=from:subject:message-id;
+ bh=dT/cAMPkqhwiO+NmtZDAeUI+RgA0LLjV2VMwVQoEOVE=;
+ b=FC7ThTXl38Ss0fnSg/4mwqUL1JUFP/nRR5YZZ9Bk32T3DV7XgF8zFNlDBS/VV/IdQ2NT1jZvE
+ atOl+cn9WM9D1k1MLLRh6y5Gr2yM/TK/lvJwVM1CPf6X/Q5pk/UR3TE
+X-Developer-Key: i=gaohan@iscas.ac.cn; a=ed25519;
+ pk=J8WHEK3filS86QaCaIHDGafqhxKyQ4K7+vFgRirTIiY=
+X-Endpoint-Received: by B4 Relay for gaohan@iscas.ac.cn/20261021 with
+ auth_id=1262
+X-Original-From: Han Gao <gaohan@iscas.ac.cn>
+Reply-To: gaohan@iscas.ac.cn
 
-On Fri, 20 Nov 2026 17:57:33 +0700, Phuong Nguyen <ndp2809@gmail.com> wrote:
-> In bypass_mux_set_parent(), when index > 0, clearing the bypass bit
-> switches the clock to the mux path without updating the mux selector.
-> As a result, the hardware mux remains at parent 0 instead of selecting
-> the requested parent.
-> 
-> Call mux_set_parent(hw, index - 1) before clearing the bypass bit to
-> configure the mux selector before switching to the mux path.
-> 
-> [...]
+Pioneer firmware can take over the DS1307 on I2C0 and expose it through
+EFI runtime services, so Linux uses rtc-efi. I2C0 is then marked
+"reserved" in the device tree.
 
-Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Two things break GetTime() in that setup:
 
--- 
-Jerome
+- RISC-V maps EFI runtime MMIO as normal memory, and firmware takes a
+  load access fault on the clock controller. Patch 1 maps it as I/O.
+
+- I2C0 shares a clock gate with the other I2C controllers. Once Linux
+  runtime-suspends them, the gate goes off and GetTime() returns
+  EFI_NOT_READY. Patch 2 keeps gates used by reserved devices on.
+
+Tested on Milk-V Pioneer.
+
+Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
+---
+Han Gao (2):
+      riscv: efi: Map runtime MMIO with device attributes
+      clk: sophgo: sg2042-clkgen: Keep gates of reserved devices enabled
+
+ arch/riscv/kernel/efi.c                |  2 +-
+ drivers/clk/sophgo/clk-sg2042-clkgen.c | 38 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 38 insertions(+), 2 deletions(-)
+---
+base-commit: aebb7274476403040d582c61478df8f4a7bf9cd3
+change-id: 20261121-b4-sg2042-efi-rtc-e4d5222513ae
+
+Best regards,
+--  
+Han Gao <gaohan@iscas.ac.cn>
+
 
