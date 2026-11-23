@@ -1,78 +1,54 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1795354449;
-	b=cCpI+YFO2ieL2O1Y+jrfa9tsMwHX8WyyFsmRTyTuecO7UeWe+Ea8wRRT7tqRl2HiyEtC
-	 GsikoRSFDQWa/sn1oeZW9vYnavXgmXOiQNKGeIOaqfjjmZveXq1FSqW/pIW0CJsAHHwhs
-	 TFpmhcE1K2Awj/LmAdzcc1Si7eLnyHOdBTfSSSzczShDDR6yvyz6AiIqEQoF4GxuhkTE0
-	 EsI2kBLWGpk9PdRzEf7XHZBy8+uSzi09CU6ACOLTADtoB04NaQWmNeUmXJvL0kq2SgMDi
-	 g2hawrgYTGTx0y9syh3LleAMhSRdzqiDR5d8NQ166LAauABsKx2L6nTsPpKk35JIqyg==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1795354449;
-	h=Received:DKIM-Signature:Received:From:Date:Subject:MIME-Version:
-	 Content-Type:Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=6gKdivfkDsuonkEKXD54e3FJFyho7ssO1p7f34zC4sc=;
-	b=uOpw5BKb+/DSNlhJXdAzLWUvBKyrMcqu4Hsd6QtSoCKZnCfAz2VEfyGqV/KyI29PQoAL
-	 jkZtPa96KnpnfF7shMofWyUJsTMVXqqIUw+zrjr2uV35ky3m2+bsRCUn4iVAQnMEXoLnB
-	 nnUDGDQWNf/JETTpy1fQjNWJvD1rVBjiXg8rs22OzGuEBq6zcLzYE6vcWYsvPBLmPHEIi
-	 9jI/7yYAxpUpoLTBdGk/9Ar26Hq9V7mYdhttr8vEJz7qNt6ljheMvSA7xeFimPA9vWAhG
-	 3I6VP3AF40CgM9kLDB9ejHIp81rApOGRUHkQXR8utf3vPpf5c48uEgvXnHC205B6S/g==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j6ubBjpE;
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D38606A333;
-	Sun, 22 Nov 2026 13:34:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=j6ubBjpE
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=100.80.115.77
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1795354449;
-	b=dR4c3IbOXTh8suB+rkifGzrLzJMg3FCj13idiWiKWvCE64GchHxtvrxM2t5JY26S4R+f
-	 Ob7C8g07AwLaVM7TUL7Ro08ACkNcSeWyMcBMH5oDtJ0Du3jPfUmcN/KH6YdQpHW2jKKT2
-	 glNN1opUIVwkM5APVUwvQwYkBpK069zCXcSrTmGdC5tR1Odub5ShJEir9/MfjEr0X/jCA
-	 nU390SPi4or/i2irMiYUrV+DqHuH7rv4liTksqGSEXRGHnJEjWA66PYFeT9aCmVKQM9Pk
-	 gm/39YxGstgX6mEsEvjDPbxQWm9Q1Phu87RV+0k40CvtySN8asriByMTsDmBkUKbwsQ==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1795354449;
-	h=DKIM-Signature:Received:From:Date:Subject:MIME-Version:Content-Type:
-	 Message-Id:References:In-Reply-To:To:Cc:X-Mailer:
-	 X-Developer-Signature:X-Developer-Key:X-Endpoint-Received:
-	 X-Original-From:Reply-To:Content-Transfer-Encoding;
-	bh=6gKdivfkDsuonkEKXD54e3FJFyho7ssO1p7f34zC4sc=;
-	b=NSz44hxRApW3N5OcgeQdyx6gQTmRVTuExs+QDvtRopcal37Rg0hwsTIfpVp4tI4yXb20
-	 60xRNCzQWK0Kiqz1gntU93z3FWnqcD54NaELKvI8EOWba7CUcAzXX7IEwTxtdpBtIktMl
-	 sbzecyiboW0NAZQpOxEAdHkAOqOBSbgOaJd/pz2w41pjNuenFmrwYbSmNfAbBZvc8kqdi
-	 uJ9Y3+CZ69xDaH+elMBLpGE3AXHvh2afWUotRD2mr9JUOrhXVeYHSPtSVZ7DYudv6dU6m
-	 ufVaZXbSzjzwa+jTvawv8uJeLjv8kzHcll8rcnp0ckekPgzvuctYToIcfTWt8Nj8cnw==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	arc=none smtp.remote-ip=100.80.115.77
-Received: from lkml.kernel.org (nexus.subspace.kernel.org [100.80.115.77])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.196
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1795395427;
+	b=M1ZhzbL6Bmx24hLWpD+zsbKQd8Pz9/w6vewZOtGYmPAJDWlsleALSFyS0oE/NwQnoYGs
+	 J7Wr3nJ17YRfktyOEppmlhXvro1HpYlQaw7H9vfJNdH9rbwN0tXm6ZDKqRZw7bEtdVI/v
+	 C0XLLNG5nfUT65qssfRrpr+x9ydSZb9RGmWqmUkEyssrmEL6TTmNSjIOd0gYENNm5retT
+	 tUGBSA1FoE2gExW73Oxpgt8xGe3UgIhyWyU3DlFE2WMNE4I656u+2asoOijKGi4yTVuFS
+	 QXkogPmCdiz+wrAcKXTuFCv9WHW8mfKY7qjzqK6VwXPPcYljQPwZIIjPowLMsFNDUyQ==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1795395427;
+	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
+	 X-Mizu-Trace-ID:X-Migadu-Flow:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding;
+	bh=gxvaU6l29IKFaRAkpXOj2cOR3APQrTCBsOxVrKA4i9M=;
+	b=dW38qYBoSM9C0PKC8Q59U7mvWEJOvyt5Oko9B+OxD8mXQUVQJChE+qajzU+Tvf+fseo5
+	 h8OBmSvF75pCplL37+JKEs4Goio8dw/JOy+CrHLtokTlIcEYOjewlSD/L5FAY1YoaEXmR
+	 uBYnCpOTRsy/BeK95dek4Yk+LKPy+vnYijfOvFB08obokC7E8OoZjn6yQVo4tAro3pVe+
+	 QLZ3Awe5bv76DliUQi98RwvRxhRTbWzER/9/Z2KjOFLNwfLnfznyZJaKejsLVDlHs7x/d
+	 U4E8YxJgwpLD4CVX8wmhGIE2Z7dP9BQBX0KFNLr1ZXondf25UXm8nMcciA0gYr+Nfbg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=linux.dev;
+	spf=pass smtp.mailfrom=linux.dev;
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=E9fJI3Ds;
+	arc=none smtp.remote-ip=91.218.175.196
+Received: from mta0.migadu.com (out-196.mta0.migadu.com [91.218.175.196])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id AEBB41F000CF;
-	Sun, 22 Nov 2026 13:34:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1795354448;
-	bh=6gKdivfkDsuonkEKXD54e3FJFyho7ssO1p7f34zC4sc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To;
-	b=j6ubBjpE1Di561SNA2s9h/kbXL7cjk8KGbIFotssHdQJfdSEBvqhBxsyWudkUS5wN
-	 oKnK9rBNQEg1uzcYj+43LR9liFy6JwisI+Pfc/FVReBAfY4Zmjmdu7bXNowd5LsxTw
-	 ttq+5xbPL2DkfB1E5/E/49O1CKYGW+vVVxW+FrQGf1uSyG08ugD82eVm03fqDmItdr
-	 YsBH/ZlQD8Pi2weETXkfO4tHIHQhppR3VNQLBWkU/nacgJQbNgkyb1cSxkdHkMePWJ
-	 +074xkCYUobitkqUQBDRj7ioV2ACwzUfWszqWK0BxgaewhSLfzUqfYfHb2hwopUV4t
-	 jS+oRYLWe8T7A==
-Received: from nexus.subspace.kernel.org (localhost [IPv6:::1])
-	by lkml.kernel.org (Postfix) with ESMTP id 3E39A4C097;
-	Sun, 22 Nov 2026 13:34:00 +0000 (UTC)
-From: Han Gao via B4 Relay <devnull+gaohan.iscas.ac.cn@kernel.org>
-Date: Sun, 22 Nov 2026 21:33:52 +0800
-Subject: [PATCH 2/2] riscv: dts: sophgo: Enable the RTC on SG2042 EVB v2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B860C606A31A
+	for <sophgo@lists.linux.dev>; Mon, 23 Nov 2026 00:57:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org B860C606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=E9fJI3Ds
+X-Envelope-To: sophgo@lists.linux.dev
+DKIM-Signature: a=rsa-sha256; bh=eWEFZWHZfFCAhK2XmNa/wVqm+6q8zSGaxKeXW6zWVNY=;
+ c=simple/simple; d=linux.dev;
+ h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
+ t=1795395423; v=1; x=1796000223;
+ b=E9fJI3DsDB5cz5isO/HQiSAo1jOm3YV9R/iPtuUpw2slYkkPM0HkaIM4ab8iCv8piiKJAk3y
+ ZOZQ+Dg1c6jNCTN2wjfaruu1fLN4F7b/FeoILjEt84Acn6qMWaHoER+ZmzJvVe63hnDg7KDAzHx
+ vexa9QqkEWgeWIDb3m1lisUw=
+X-Envelope-To: sophgo@lists.linux.dev
+Received: by smtp.migadu.com with ESMTPS id 8e70aef377a98481;
+	Mon, 23 Nov 2026 00:57:03 +0000
+X-Mizu-Trace-ID: 8e70aef377a98481
+X-Migadu-Flow: FLOW_OUT
+Message-ID: <40455616-b1af-4801-865c-187bcb2e0c39@linux.dev>
+Date: Mon, 23 Nov 2026 08:56:56 +0800
 X-Mailing-List: sophgo@lists.linux.dev
 List-Id: <sophgo.lists.linux.dev>
 List-Post: <mailto:sophgo@lists.linux.dev>
@@ -82,83 +58,76 @@ List-Unsubscribe: <mailto:sophgo+unsubscribe@lists.linux.dev>
 List-Owner: <mailto:sophgo+owner@lists.linux.dev>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <20261122-sg2042-evb-rtc-v1-2-f222c64cc7b9@iscas.ac.cn>
-References: <20261122-sg2042-evb-rtc-v1-0-f222c64cc7b9@iscas.ac.cn>
-In-Reply-To: <20261122-sg2042-evb-rtc-v1-0-f222c64cc7b9@iscas.ac.cn>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Paul Walmsley <pjw@kernel.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Albert Ou <aou@eecs.berkeley.edu>, 
- Alexandre Ghiti <alex@ghiti.fr>, Chen Wang <chen.wang@linux.dev>, 
- Inochi Amaoto <inochiama@gmail.com>
-Cc: Han Gao <rabenda.cn@gmail.com>, devicetree@vger.kernel.org, 
- sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Han Gao <gaohan@iscas.ac.cn>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1795354439; l=1232;
- i=gaohan@iscas.ac.cn; s=20261021; h=from:subject:message-id;
- bh=dsm+CVwClowTlroI3X7kDbQ0hyzBtl6KTIdw4zXB9XQ=;
- b=qwqJvbtq8jL/cGsYM8JQ5HPgmkdDxYsgXikkAtQRg+8ODgaUl/jaCYQw+zMP2WMCqCC0RHIFp
- 3TSfMaGnVjbCUT8AKnKw9LwtrktPsPZ5cbSA1MNiai9u+pAYm1mpbSj
-X-Developer-Key: i=gaohan@iscas.ac.cn; a=ed25519;
- pk=J8WHEK3filS86QaCaIHDGafqhxKyQ4K7+vFgRirTIiY=
-X-Endpoint-Received: by B4 Relay for gaohan@iscas.ac.cn/20261021 with
- auth_id=1262
-X-Original-From: Han Gao <gaohan@iscas.ac.cn>
-Reply-To: gaohan@iscas.ac.cn
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] riscv: dts: sophgo: make sg2002-milkv-duo256m-eth
+ overlay generic
+To: Hiago De Franco <hfranco@baylibre.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Inochi Amaoto <inochiama@gmail.com>,
+ Paul Walmsley <pjw@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Albert Ou <aou@eecs.berkeley.edu>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Chen-Yu Yeh <chenyou910331@gmail.com>,
+ devicetree@vger.kernel.org, linux-riscv@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20261104-milkv-duo-eth-overlay-v2-0-e3d2d39cf229@baylibre.com>
+ <20261104-milkv-duo-eth-overlay-v2-1-e3d2d39cf229@baylibre.com>
+From: Chen Wang <chen.wang@linux.dev>
+In-Reply-To: <20261104-milkv-duo-eth-overlay-v2-1-e3d2d39cf229@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-From: Han Gao <gaohan@iscas.ac.cn>
 
-The SG2042 EVB v2 has a PT7C4307 RTC at 0x68 on I2C0. Enable I2C0
-and add the RTC node.
+On 11/4/2026 10:52 PM, Hiago De Franco wrote:
+> The overlay only enables gmac0 and the MDIO mux, which are common to the
+> CV180x and SG200x SoCs, so it can be reused by other boards such as the
+> Milk-V Duo (CV1800B).
+>
+> Rename it to cv18xx-eth.dtso.
+>
+> Signed-off-by: Hiago De Franco <hfranco@baylibre.com>
 
-Signed-off-by: Han Gao <gaohan@iscas.ac.cn>
----
- arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Reviewed-by: Chen Wang <chen.wang@linux.dev>
 
-diff --git a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-index d8c5814f22581076e6b5114f762d4fd090681b80..0dcc53b519971396a5ce734108ea0386fb186726 100644
---- a/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-+++ b/arch/riscv/boot/dts/sophgo/sg2042-evb-v2.dts
-@@ -124,6 +124,17 @@ &emmc {
- 	status = "okay";
- };
- 
-+&i2c0 {
-+	pinctrl-0 = <&i2c0_cfg>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+
-+	rtc@68 {
-+		compatible = "dallas,ds1307";
-+		reg = <0x68>;
-+	};
-+};
-+
- &i2c1 {
- 	pinctrl-0 = <&i2c1_cfg>;
- 	pinctrl-names = "default";
-@@ -189,6 +200,16 @@ sdhci-emmc-rst-pwr-pins {
- 		};
- 	};
- 
-+	i2c0_cfg: i2c0-cfg {
-+		i2c0-pins {
-+			pinmux = <PINMUX(PIN_IIC0_SDA, 0)>,
-+				 <PINMUX(PIN_IIC0_SCL, 0)>;
-+			bias-pull-up;
-+			drive-strength-microamp = <26800>;
-+			input-schmitt-enable;
-+		};
-+	};
-+
- 	i2c1_cfg: i2c1-cfg {
- 		i2c1-pins {
- 			pinmux = <PINMUX(PIN_IIC1_SDA, 0)>,
+Thanks.
 
--- 
-2.47.3
-
-
+> ---
+>   arch/riscv/boot/dts/sophgo/Makefile                                   | 4 ++--
+>   .../dts/sophgo/{sg2002-milkv-duo256m-eth.dtso => cv18xx-eth.dtso}     | 3 ++-
+>   2 files changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/riscv/boot/dts/sophgo/Makefile b/arch/riscv/boot/dts/sophgo/Makefile
+> index 49639cb0888b..440acd0aa55a 100644
+> --- a/arch/riscv/boot/dts/sophgo/Makefile
+> +++ b/arch/riscv/boot/dts/sophgo/Makefile
+> @@ -1,12 +1,12 @@
+>   # SPDX-License-Identifier: GPL-2.0
+>   dtb-$(CONFIG_ARCH_SOPHGO) += cv1800b-milkv-duo.dtb
+>   dtb-$(CONFIG_ARCH_SOPHGO) += cv1812h-huashan-pi.dtb
+> +dtb-$(CONFIG_ARCH_SOPHGO) += cv18xx-eth.dtbo
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2000-milkv-duo-s.dtb
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-licheerv-nano-b.dtb
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m.dtb
+> -sg2002-milkv-duo256m-eth-dtbs := sg2002-milkv-duo256m.dtb sg2002-milkv-duo256m-eth.dtbo
+> +sg2002-milkv-duo256m-eth-dtbs := sg2002-milkv-duo256m.dtb cv18xx-eth.dtbo
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m-eth.dtb
+> -dtb-$(CONFIG_ARCH_SOPHGO) += sg2002-milkv-duo256m-eth.dtbo
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-milkv-pioneer.dtb
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v1.dtb
+>   dtb-$(CONFIG_ARCH_SOPHGO) += sg2042-evb-v2.dtb
+> diff --git a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso b/arch/riscv/boot/dts/sophgo/cv18xx-eth.dtso
+> similarity index 66%
+> rename from arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso
+> rename to arch/riscv/boot/dts/sophgo/cv18xx-eth.dtso
+> index cc93746d932c..cdb8db063977 100644
+> --- a/arch/riscv/boot/dts/sophgo/sg2002-milkv-duo256m-eth.dtso
+> +++ b/arch/riscv/boot/dts/sophgo/cv18xx-eth.dtso
+> @@ -1,6 +1,7 @@
+>   // SPDX-License-Identifier: (GPL-2.0 OR MIT)
+>   /*
+> - * Enable ethernet on Milk-V Duo 256M with the USB & Ethernet IO board.
+> + * Enable ethernet on boards that use the internal ethernet PHY of the
+> + * CV180x and SG200x SoCs.
+>    *
+>    * Copyright (c) 2026, Chen-Yu Yeh <chenyou910331@gmail.com>
+>    */
+>
